@@ -24,23 +24,15 @@ def fetch_full_text_with_browser(url):
     """Opens a headless browser, waits for content, and extracts it."""
     try:
         with sync_playwright() as p:
-            # Launching browser
             browser = p.chromium.launch(headless=True)
             context = browser.new_context(
                 user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
             )
             page = context.new_page()
-            
-            # Navigate and wait for content to actually load
             page.goto(url, wait_until="networkidle", timeout=60000)
-            
-            # Some sites need a extra second for JS to render the article body
             time.sleep(2) 
-            
             html = page.content()
             browser.close()
-            
-            # Extract clean text from the rendered HTML
             content = trafilatura.extract(html, include_links=True)
             return content
     except Exception as e:
@@ -65,22 +57,18 @@ def generate_site():
         except Exception as e:
             print(f"  [!] Failed to parse feed {url}: {e}")
 
-    # Sort and slice to top 10
     all_entries.sort(key=lambda x: x['date'], reverse=True)
     top_10 = all_entries[:LIMIT]
 
     article_html = ""
     menu_html = ""
 
-    print(f"Step 2: Deep-Scraping {len(top_10)} articles (this will take a minute)...")
+    print(f"Step 2: Deep-Scraping {len(top_10)} articles...")
 
     for i, item in enumerate(top_10):
         print(f"[{i+1}/10] Extracting: {item['title'][:50]}...")
-        
-        # Corrected function call
         full_text = fetch_full_text_with_browser(item['link'])
         
-        # Fallback logic: if deep scrape fails or is too short, use RSS summary
         if full_text and len(full_text) > 400:
             final_body = full_text
         else:
@@ -90,11 +78,12 @@ def generate_site():
         menu_html += f"<li><button onclick=\"show('{art_id}')\">{item['title']}</button></li>"
         article_html += f"""
         <div id="{art_id}" class="article-body">
-            <h2 style="color:#00FF00">>>> {item['title']}</h2>
-            <p style="color:#666">Source: <a href="{item['link']}" target="_blank" style="color:#666;">{item['link']}</a></p>
+            <h2 class="article-title">{item['title']}</h2>
+            <p class="source-link">Source: <a href="{item['link']}" target="_blank">{item['link']}</a></p>
             <div class="content-text">{final_body}</div>
-            <button onclick="window.scrollTo(0,0)" style="margin-top:20px; color:#888; border:1px solid #444; padding:5px;">[↑ Back to Menu]</button>
-            <hr style="border:0; border-top:1px dashed #333; margin:40px 0;">
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
         </div>"""
 
     # Final HTML Construction
@@ -103,24 +92,63 @@ def generate_site():
     <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Cyber-Security Daily</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Daily Security Briefing</title>
         <style>
-            body {{ background:#000; color:#eee; font-family: 'Courier New', monospace; padding: 40px; line-height: 1.6; max-width: 900px; margin: auto; }}
-            h1 {{ border-bottom: 2px solid #00FF00; color: #00FF00; padding-bottom: 10px; }}
-            .menu {{ margin-bottom: 50px; background: #111; padding: 20px; border: 1px solid #333; }}
-            ul {{ list-style: decimal-leading-zero; padding-left: 25px; }}
-            li {{ margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 5px; color:#00FF00; }}
-            button {{ background:none; border:none; color:#eee; text-align:left; cursor:pointer; font-family:inherit; font-size: 1.1em; }}
-            button:hover {{ color: #00FF00; text-decoration: underline; }}
-            .article-body {{ display:none; padding: 20px; border: 1px solid #333; margin-top: 20px; }}
-            .content-text {{ white-space: pre-wrap; font-size: 1.1em; }}
-            .active {{ display:block; }}
+            body {{ 
+                background-color: #012456; 
+                color: #F2F2F2; 
+                font-family: 'Consolas', 'Lucida Console', monospace; 
+                padding: 20px; 
+                line-height: 1.6; 
+                max-width: 1000px; 
+                margin: auto; 
+            }}
+            h1 {{ color: #FFFFFF; font-size: 1.4em; border-bottom: 2px solid #F2F2F2; padding-bottom: 10px; margin-bottom: 30px; }}
+            .menu {{ margin-bottom: 40px; }}
+            ul {{ list-style-type: decimal-leading-zero; padding-left: 25px; }}
+            li {{ margin-bottom: 12px; color: #EBCB8B; }}
+            button {{ 
+                background: none; border: none; color: #F2F2F2; 
+                text-align: left; cursor: pointer; font-family: inherit; 
+                font-size: 1.05em; padding: 0;
+            }}
+            button:hover {{ color: #FFFF00; text-decoration: underline; }}
+            .article-body {{ display: none; margin-top: 20px; }}
+            .article-title {{ color: #FFFFFF; font-size: 1.3em; margin-bottom: 5px; }}
+            .source-link {{ color: #A3BE8C; font-size: 0.9em; }}
+            .source-link a {{ color: #A3BE8C; text-decoration: none; }}
+            .source-link a:hover {{ text-decoration: underline; }}
+            .content-text {{ 
+                white-space: pre-wrap; 
+                padding: 15px 0;
+                font-size: 1em;
+                border-top: 1px solid #4C566A;
+                margin-top: 15px;
+            }}
+            .back-btn {{ color: #FFFF00; border: 1px solid #FFFF00; padding: 6px 12px; margin-top: 15px; transition: 0.2s; }}
+            .back-btn:hover {{ background: #FFFF00; color: #012456; }}
+            .separator {{ border: 0; border-top: 1px dashed #4C566A; margin: 50px 0; }}
+            .active {{ display: block; }}
+            footer {{ 
+                text-align: center; 
+                margin-top: 60px; 
+                padding: 30px; 
+                border-top: 1px solid #4C566A; 
+                font-size: 0.85em; 
+                color: #A3BE8C;
+            }}
+            footer a {{ color: #A3BE8C; text-decoration: underline; }}
+            @media (max-width: 600px) {{
+                body {{ padding: 15px; font-size: 15px; }}
+                h1 {{ font-size: 1.2em; }}
+                ul {{ padding-left: 20px; }}
+            }}
         </style>
     </head>
     <body>
-        <h1>CYBER-SECURITY DAILY DEBRIEF // {datetime.date.today()}</h1>
+        <h1>Security Briefing // {datetime.date.today()}</h1>
         <div class="menu">
-            <p style="color:#888; font-size:0.8em;">[TOP {LIMIT} ARTICLES SELECTED]</p>
             <ul>{menu_html}</ul>
         </div>
         {article_html}
@@ -132,14 +160,16 @@ def generate_site():
                 target.scrollIntoView({{behavior: 'smooth'}});
             }}
         </script>
-        <p style="text-align:center; color:#444; margin-top:100px;">--- End of Data ---</p>
+        <footer>
+            Made by <a href="https://github.com/KleinMichalGit/security-feed" target="_blank">Michal Klein</a>
+        </footer>
     </body>
     </html>
     """
     
     with open(OUTPUT_FILE, "w", encoding='utf-8') as f:
         f.write(full_page)
-    print(f"\nSuccess! Open {OUTPUT_FILE} to read your news.")
+    print(f"\nSuccess! index.html has been generated.")
 
 if __name__ == "__main__":
     generate_site()
