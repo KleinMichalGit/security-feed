@@ -29,7 +29,7 @@ def fetch_full_text_with_browser(url):
                 user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
             )
             page = context.new_page()
-            page.goto(url, wait_until="networkidle", timeout=60000)
+            page.goto(url, wait_until="networkidle", timeout=30000)
             time.sleep(2) 
             html = page.content()
             browser.close()
@@ -139,6 +139,7 @@ def generate_site():
                 color: #A3BE8C;
             }}
             footer a {{ color: #A3BE8C; text-decoration: underline; }}
+            .disclaimer {{ opacity: 0.8; font-size: 0.9em; max-width: 700px; margin: 15px auto; line-height: 1.4; }}
             @media (max-width: 600px) {{
                 body {{ padding: 15px; font-size: 15px; }}
                 h1 {{ font-size: 1.2em; }}
@@ -161,7 +162,11 @@ def generate_site():
             }}
         </script>
         <footer>
-            Made by <a href="https://github.com/KleinMichalGit/security-feed" target="_blank">Michal Klein</a>
+            <p>News aggregator designed and maintained by <a href="https://github.com/KleinMichalGit/security-feed" target="_blank">Michal Klein</a></p>
+            <div class="disclaimer">
+                <p>This is an <strong>open-source educational project</strong> intended for research and personal productivity. The aggregator is available on <a href="https://github.com/KleinMichalGit/security-feed" target="_blank">GitHub</a>.</p>
+                <p><em>Notice: The articles above are automated scrapes from third-party RSS feeds. Full credit belongs to the original authors and publications linked in each source. This site does not claim ownership of the reported content.</em></p>
+            </div>
         </footer>
     </body>
     </html>
@@ -169,7 +174,7 @@ def generate_site():
     
     with open(OUTPUT_FILE, "w", encoding='utf-8') as f:
         f.write(full_page)
-    print(f"\nSuccess! index.html has been generated.")
+    print(f"\nSuccess! Build completed.")
 
 if __name__ == "__main__":
     generate_site()
