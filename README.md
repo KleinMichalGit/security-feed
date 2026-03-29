@@ -7,10 +7,10 @@ The live feed is hosted at: https://kleinmichalgit.github.io/security-feed/
 ## Key Features
 
 - **Balanced Selection**: Uses a Round-Robin approach to ensure independent research blogs aren't buried by high-frequency news sites.
-- **Smart Scoring**: Prioritizes content based on freshness, cross-feed trending topics, and high-impact keywords (e.g., zero-day, ransomware).
+- **Smart Scoring**: Prioritizes content based on freshness, cross-feed trending topics, and high-impact keywords.
 - **Deep Extraction**: Employs Playwright and Trafilatura to scrape actual article text, bypassing cookie walls for a unified reading experience.
-- **Terminal UI**: High-contrast, PowerShell-blue design optimized for desktop and mobile.
-- **Automated**: Powered by GitHub Actions for daily updates at 06:00 UTC.
+- **Terminal UI**: High-contrast design optimized for desktop and mobile.
+- **Automated**: Powered by GitHub Actions for daily updates at 06:17AM UTC.
 
 ## Tech Stack
 
@@ -44,11 +44,11 @@ python aggregator.py
 
 ## GitHub Actions Workflow
 
-The `.github/workflows/main.yml` script automates the process:
+The `.github/workflows/daily_update.yml` script automates the process:
 
-1. **Triggers**: Runs daily at 06:00 UTC or manually.
+1. **Triggers**: Runs daily at 06:17AM UTC or manually.
 2. **Execution**: Installs Chromium and runs `aggregator.py`.
-3. **Deployment**: Commits the new `index.html` to the `main` branch.
+3. **Deployment**: Commits the new `index.html` to the `master` branch.
 
 ## Disclaimer and Legal
 
