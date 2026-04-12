@@ -59,37 +59,65 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-04-11</h1>
+        <h1>Security Briefing // 2026-04-12</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Ghostwriter v6.3.0 and CLI v1.0.0: New Activity Logging, Faster Installs, and Better Writing QA</button></li><li><button onclick="show('art-1')">Google rolls out Gmail end-to-end encryption on mobile devices</button></li><li><button onclick="show('art-2')">Google Rolls Out DBSC in Chrome 146 to Block Session Theft on Windows</button></li><li><button onclick="show('art-3')">Intent redirection vulnerability in third-party SDK exposed millions of Android wallets to potential risk</button></li><li><button onclick="show('art-4')">Adobe Reader Zero-Day Exploited via Malicious PDFs Since December 2025</button></li><li><button onclick="show('art-5')">Russia Hacked Routers to Steal Microsoft Office Tokens</button></li><li><button onclick="show('art-6')">Building a Detection Foundation: Part 5 - Correlation in Practice</button></li><li><button onclick="show('art-7')">Germany Doxes “UNKN,” Head of RU Ransomware Gangs REvil, GandCrab</button></li><li><button onclick="show('art-8')">CISA Adds Five Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-9')">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors</button></li></ul>
+            <ul><li><button onclick="show('art-0')">CPUID Breach Distributes STX RAT via Trojanized CPU-Z and HWMonitor Downloads</button></li><li><button onclick="show('art-1')">Adobe Patches Actively Exploited Acrobat Reader Flaw CVE-2026-34621</button></li><li><button onclick="show('art-2')">Over 20,000 crypto fraud victims identified in international crackdown</button></li><li><button onclick="show('art-3')">Ghostwriter v6.3.0 and CLI v1.0.0: New Activity Logging, Faster Installs, and Better Writing QA</button></li><li><button onclick="show('art-4')">Intent redirection vulnerability in third-party SDK exposed millions of Android wallets to potential risk</button></li><li><button onclick="show('art-5')">Russia Hacked Routers to Steal Microsoft Office Tokens</button></li><li><button onclick="show('art-6')">Building a Detection Foundation: Part 5 - Correlation in Practice</button></li><li><button onclick="show('art-7')">Germany Doxes “UNKN,” Head of RU Ransomware Gangs REvil, GandCrab</button></li><li><button onclick="show('art-8')">CISA Adds Five Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-9')">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">Ghostwriter v6.3.0 and CLI v1.0.0: New Activity Logging, Faster Installs, and Better Writing QA</h2>
-            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/04/10/ghostwriter-v6-3-0-and-cli-v1-0-0-new-activity-logging-faster-installs-and-better-writing-qa/" target="_blank">Original Link</a></p>
-            <div class="content-text"><p>TL;DR: Ghostwriter v6.3.0 makes day-to-day operations faster and more integrated, with a redesigned activity log that ties actions directly to evidence and terminal recordings, dramatically faster installs via published container images, and built-in writing QA through passive voice detection. Alongside it, Ghostwriter CLI v1.0.0 standardizes deployment and configuration workflows. Together, these changes reduce operational friction [&#8230;]</p>
-<p>The post <a href="https://specterops.io/blog/2026/04/10/ghostwriter-v6-3-0-and-cli-v1-0-0-new-activity-logging-faster-installs-and-better-writing-qa/">Ghostwriter v6.3.0 and CLI v1.0.0: New Activity Logging, Faster Installs, and Better Writing QA</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
-
-[Full content could not be extracted. Visit source for details.]</div>
+            <h2 class="article-title">CPUID Breach Distributes STX RAT via Trojanized CPU-Z and HWMonitor Downloads</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/04/cpuid-breach-distributes-stx-rat-via.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Unknown threat actors compromised CPUID ("cpuid[.]com"), a website that hosts popular hardware monitoring tools like CPU-Z, HWMonitor, HWMonitor Pro, and PerfMonitor, for less than 24 hours to serve malicious executables for the software and deploy a remote access trojan called STX RAT.
+The incident lasted from approximately April 9, 15:00 UTC, to about April 10, 10:00 UTC, with the download URLs for CPU-Z and HWMonitor installers replaced with links to malicious websites.
+In a [post](https://x.com/d0cTB/status/2042520961824559150) shared on X, CPUID confirmed the breach, attributing it to a compromise of a "secondary feature (basically a side API)" that caused the main site to randomly display malicious links. It's worth noting that the attack did not impact its signed original files.
+According to [Kaspersky](https://securelist.com/tr/cpu-z/119365/), the names of the rogue websites are as follows -
+- cahayailmukreatif.web[.]id
+- pub-45c2577dbd174292a02137c18e7b1b5a.r2[.]dev
+- transitopalermo[.]com
+- vatrobran[.]hr
+"The trojanized software was distributed both as ZIP archives and as standalone installers for the aforementioned products," the Russian cybersecurity company said. "These files contain a legitimate signed executable for the corresponding product and a malicious DLL, which is named 'CRYPTBASE.dll' to leverage the DLL side-loading technique."
+The malicious DLL, for its part, contacts an external server and executes additional payloads, but not before performing anti-sandbox checks to sidestep detection. The end goal of the campaign is to deploy [STX RAT](https://www.esentire.com/blog/stx-rat-a-new-rat-in-2026-with-infostealer-capabilities), a RAT with HVNC and broad infostealer capabilities.
+STX RAT "exposes a broad command set for remote control, follow-on payload execution, and post-exploitation actions (e.g., in-memory execution of EXE/DLL/PowerShell/shellcode, reverse proxy/tunneling, desktop interaction)," eSentire said in an analysis of the malware last week.
+The command-and-control (C2) server address and the connection configuration have been reused from a [prior campaign](https://www.malwarebytes.com/blog/threat-intel/2026/03/a-fake-filezilla-site-hosts-a-malicious-download) that leveraged trojanized [FileZilla installers](https://www.malwarebytes.com/blog/threat-intel/2026/02/fake-7-zip-downloads-are-turning-home-pcs-into-proxy-nodes) hosted on bogus sites to deploy the same RAT malware. The activity was documented by Malwarebytes early last month.
+Kaspersky said it has identified more than 150 victims, mostly individuals who were affected by the incident. However, organizations in retail, manufacturing, consulting, telecommunications, and agriculture have also been impacted. Most of the infections are located in Brazil, Russia, and China.
+"The gravest mistake attackers made was to reuse the same infection chain involving STX RAT, and the same domain names for C2 communication, from the previous attack related to fake FileZilla installers," Kaspersky said. "The overall malware development/deployment and operational security capabilities of the threat actor behind this attack are quite low, which, in turn, made it possible to detect the watering hole compromise as soon as it started."
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-1" class="article-body">
-            <h2 class="article-title">Google rolls out Gmail end-to-end encryption on mobile devices</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/google/google-rolls-out-gmail-end-to-end-encryption-on-mobile-devices/" target="_blank">Original Link</a></p>
-            <div class="content-text">Google says Gmail end-to-end encryption (E2EE) is now available on all Android and iOS devices, allowing enterprise users to read and compose emails without additional tools.
-Starting this week, encrypted messages will be delivered as regular emails to Gmail recipients' inboxes if they use the Gmail app.
-Recipients who don't have the Gmail mobile app and use other email services can read them in a web browser, regardless of the device and service they're using.
-"For the first time, users can compose and read these E2EE messages natively within the Gmail app on Android and iOS. No need to download extra apps or use mail portals. Users with a Gmail E2EE license can send an encrypted message to any recipient, regardless of what email address the recipient has," [Google announced](https://workspaceupdates.googleblog.com/2026/04/gmail-end-to-end-encryption-now-available-on-mobile-devices.html) on Thursday.
-"This launch combines the highest level of privacy and data encryption with a user-friendly experience for all users, enabling simple encrypted email for all customers from small businesses to enterprises and public sector."
-This feature is now available for all client-side encryption (CSE) users with Enterprise Plus licenses and the Assured Controls or Assured Controls Plus add-on after admins enable the Android and iOS clients in the CSE admin interface [via the Admin Console](https://knowledge.workspace.google.com/admin/security/client-side-encryption-setup-overview).
-To send an end-to-end encrypted message, Gmail users have to turn on the "Additional encryption" option by clicking the Lock icon when writing the message.
-In October, Google also [announced](https://www.bleepingcomputer.com/news/google/gmail-business-users-can-now-send-encrypted-emails-to-anyone/) that Gmail enterprise users can now send end-to-end encrypted emails to recipients on any email service or platform.
-Gmail's end-to-end encryption (E2EE) feature is powered by the [client-side encryption](https://support.google.com/a/answer/10741897) (CSE) technical control, which allows Google Workspace organizations to use encryption keys they control and are stored outside Google's servers to protect sensitive documents and emails.
-This way, the messages and attachments are encrypted on the client before being sent to Google's servers, which helps meet regulatory requirements such as data sovereignty, HIPAA, and export controls by ensuring that Google and third parties can't read any of the data.
-Gmail CSE was [introduced in Gmail on the web](https://www.bleepingcomputer.com/news/security/google-introduces-end-to-end-encryption-for-gmail-on-the-web/) in December 2022 as a beta test, following an initial beta rollout to Google Drive, Google Docs, Sheets, Slides, Google Meet, and Google Calendar, and it reached general availability for Google Workspace Enterprise Plus, Education Plus, and Education Standard customers [in February 2023](https://www.bleepingcomputer.com/news/google/google-gmail-client-side-encryption-now-publicly-available/).
-The company began rolling out its new end-to-end encryption (E2EE) model in beta for Gmail enterprise users [in April 2025](https://www.bleepingcomputer.com/news/security/google-rolls-out-easy-end-to-end-encryption-for-gmail-business-users/).
+            <h2 class="article-title">Adobe Patches Actively Exploited Acrobat Reader Flaw CVE-2026-34621</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/04/adobe-patches-actively-exploited.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Adobe has released emergency updates to fix a critical security flaw in Acrobat Reader that has come under active exploitation in the wild.
+The vulnerability, assigned the CVE identifier [CVE-2026-34621](https://helpx.adobe.com/security/products/acrobat/apsb26-43.html), carries a CVSS score of 8.6 out of 10.0. Successful exploitation of the flaw could allow an attacker to run malicious code on affected installations.
+It has been described as a case of [prototype pollution](https://cwe.mitre.org/data/definitions/1321.html) that could result in arbitrary code execution. Prototype pollution refers to a [JavaScript security vulnerability](https://developer.mozilla.org/en-US/docs/Web/Security/Attacks/Prototype_pollution) that permits an attacker to manipulate an application'sobjects and properties.
+The issue impacts the following products and versions for both Windows and macOS -
+- Acrobat DC versions 26.001.21367 and earlier (Fixed in 26.001.21411)
+- Acrobat Reader DC versions 26.001.21367 and earlier (Fixed in 26.001.21411)
+- Acrobat 2024 versions 24.001.30356 and earlier (Fixed in 24.001.30362 for Windows and 24.001.30360 for macOS)
+Adobe acknowledged that it's "aware of CVE-2026-34621 being exploited in the wild."
+The development comes days after security researcher and EXPMON founder Haifei Li [disclosed](https://thehackernews.com/2026/04/adobe-reader-zero-day-exploited-via.html) details of zero-day exploitation of the flaw to run malicious JavaScript code when opening specially crafted PDF documents through Adobe Reader. There is evidence suggesting that the vulnerability may have been under exploitation since December 2025.
+"It appears that Adobe has determined the bug can lead to arbitrary code execution — not just an information leak," EXPMON [said](https://x.com/EXPMON_/status/2042982865345135006) in a post on X. "This aligns with our findings and those of other security researchers over the last few days."
+(The story was updated after publication to reflect the change in CVSS score from 9.6 to 8.6. In a revision to its advisory on April 12, 2026, Adobe said it adjusted the attack vector from Network (AV:N) to Local (AV:L).)
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">Over 20,000 crypto fraud victims identified in international crackdown</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/police-identifies-20-000-victims-in-international-crypto-fraud-crackdown/" target="_blank">Original Link</a></p>
+            <div class="content-text">An international law enforcement action led by the U.K.'s National Crime Agency (NCA) has identified over 20,000 victims of cryptocurrency fraud across Canada, the United Kingdom, and the United States.
+Dubbed "Operation Atlantic," this joint action took place last month, and it involved the NCA, the U.S. Secret Service, the Ontario Provincial Police, the Ontario Securities Commission, and multiple private industry partners.
+"The NCA hosted law enforcement agencies at their London HQ and through real time intelligence sharing, technical capabilities and victim outreach, multiple fraud networks were disrupted across the world," the [NCA said](http://www.nationalcrimeagency.gov.uk/news/fraudsters-targeting-cryptocurrency-stopped-and-12-million-frozen-in-nca-led-operation-atlantic). "City of London Police, Financial Conduct Authority and other international law enforcement bodies also joined the weeklong action."
+The investigators have also frozen more than $12 million in suspected criminal proceeds obtained through "approval phishing" attacks, in which scammers trick victims into granting them access to their cryptocurrency wallets, typically via investment scams. They also identified more than $45 million in stolen cryptocurrency connected to fraud schemes worldwide.
+Officials said the public-private partnership model used in Operation Atlantic will be a core element of the U.K. government's recently announced [Fraud Strategy](https://www.gov.uk/government/publications/fraud-strategy-2026-to-2029), which connects industry data and law enforcement expertise to enable fraud prevention.
+"Operation Atlantic is a powerful example of what is possible when international agencies and private industry work side by side," added Miles Bonfield, NCA Deputy Director of Investigations.
+"This intensive action has led to the safeguarding of thousands of victims in the UK and overseas, stopped criminals in their tracks and helped save others from losing their funds."
+The NCA added that, together with law enforcement and private-sector partners, it will continue to analyze intelligence gathered during this joint action to support other victims and pursue potential criminal activity.
+Since January 2024, the FBI has also identified more than 8,000 victims of cryptocurrency investment fraud (also known as pig butchering) with support from the U.S. Secret Service, as part of [Operation Level Up](https://www.fbi.gov/how-we-can-help-you/victim-services/national-crimes-and-victim-resources/operation-level-up). The FBI said that roughly 77% of those victims were unaware they were being scammed and that the estimated savings to victims is $511,511,288.
+In its [2025 Internet Crime Report](https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf), the FBI said it received 61,559 complaints of cryptocurrency investment fraud last year, linked to $7.228 billion in losses and representing a massive 48% increase in complaints and a 25% increase in losses from 2024.
 [Automated Pentesting Covers Only 1 of 6 Surfaces.](https://hubs.li/Q048zztN0)
 Automated pentesting proves the path exists. BAS proves whether your controls stop it. Most teams run one without the other.
 This whitepaper maps six validation surfaces, shows where coverage ends, and provides practitioners with three diagnostic questions for any tool evaluation.
@@ -100,28 +128,18 @@ Not a member yet? Register Now</div>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-2" class="article-body">
-            <h2 class="article-title">Google Rolls Out DBSC in Chrome 146 to Block Session Theft on Windows</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/04/google-rolls-out-dbsc-in-chrome-146-to.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Google has made Device Bound Session Credentials ([DBSC](https://thehackernews.com/2025/07/google-launches-dbsc-open-beta-in.html)) generally available to all Windows users of its Chrome web browser, months after it [began testing](https://thehackernews.com/2025/07/google-launches-dbsc-open-beta-in.html) the security feature in open beta.
-The public availability is currently limited to Windows users on Chrome 146, with macOS expansion planned in an upcoming Chrome release.
-"This project represents a significant step forward in our ongoing efforts to combat session theft, which remains a prevalent threat in the modern security landscape," Google's Chrome and Account Security teams [said](https://security.googleblog.com/2026/04/protecting-cookies-with-device-bound.html) in a Thursday post.
-Session theft involves the covert exfiltration of session cookies from the web browser, either by gathering existing ones or waiting for a victim to log in to an account, to an attacker-controlled server.
-Typically, this happens when users inadvertently download information-stealing malware into their systems. These stealer malware families – of which there are many, such as Atomic, Lumma, and Vidar Stealer – come with capabilities to harvest a wide range of information from compromised systems, including cookies.
-Because session cookies often have extended lifespans, attackers can leverage them to gain unauthorized access to victims' online accounts without having to know their passwords. Once collected, these tokens are packaged and sold to other threat actors for financial gain. Cybercriminals who acquire them can follow up with their attacks of their own.
-DBSC, first [announced](https://thehackernews.com/2024/04/google-chrome-beta-tests-new-dbsc.html) by Google in April 2024, aims to counter this abuse by cryptographically tying the authentication session to a specific device. In doing so, the idea is to render cookies worthless even if they get stolen by malware.
-"It does this using hardware-backed security modules, such as the Trusted Platform Module (TPM) on Windows and the Secure Enclave on macOS, to generate a unique public/private key pair that cannot be exported from the machine," Google explained.
-"The issuance of new short-lived session cookies is contingent upon Chrome proving possession of the corresponding private key to the server. Because attackers cannot steal this key, any exfiltrated cookies quickly expire and become useless to those attackers."
-In the event a user's device does not support secure key storage, DBSC gracefully falls back to standard behavior without breaking the authentication flow, Google [said](https://developer.chrome.com/docs/web-platform/device-bound-session-credentials) in its developer documentation.
-The tech giant said it has observed a significant reduction in session theft since its launch, an early indication of the success of the countermeasure. The official launch is just the start, as the company plans to bring DBSC to a broader range of devices and introduce advanced capabilities to better integrate with enterprise environments.
-Google, which worked with Microsoft to design the standard with an aim to make it an open web standard, also emphasized that the DBSC architecture is private by design and that the distinct key approach ensures that websites cannot use the session credentials to correlate a user's activity across different sessions or sites on the same device.
-"Furthermore, the protocol is designed to be lean: it does not leak device identifiers or attestation data to the server beyond the per-session public key required to certify proof of possession," it added. "This minimal information exchange ensures DBSC helps secure sessions without enabling cross-site tracking or acting as a device fingerprinting mechanism."
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+        <div id="art-3" class="article-body">
+            <h2 class="article-title">Ghostwriter v6.3.0 and CLI v1.0.0: New Activity Logging, Faster Installs, and Better Writing QA</h2>
+            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/04/10/ghostwriter-v6-3-0-and-cli-v1-0-0-new-activity-logging-faster-installs-and-better-writing-qa/" target="_blank">Original Link</a></p>
+            <div class="content-text"><p>TL;DR: Ghostwriter v6.3.0 makes day-to-day operations faster and more integrated, with a redesigned activity log that ties actions directly to evidence and terminal recordings, dramatically faster installs via published container images, and built-in writing QA through passive voice detection. Alongside it, Ghostwriter CLI v1.0.0 standardizes deployment and configuration workflows. Together, these changes reduce operational friction [&#8230;]</p>
+<p>The post <a href="https://specterops.io/blog/2026/04/10/ghostwriter-v6-3-0-and-cli-v1-0-0-new-activity-logging-faster-installs-and-better-writing-qa/">Ghostwriter v6.3.0 and CLI v1.0.0: New Activity Logging, Faster Installs, and Better Writing QA</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
+
+[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-3" class="article-body">
+        <div id="art-4" class="article-body">
             <h2 class="article-title">Intent redirection vulnerability in third-party SDK exposed millions of Android wallets to potential risk</h2>
             <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/04/09/intent-redirection-vulnerability-third-party-sdk-android/" target="_blank">Original Link</a></p>
             <div class="content-text">During routine security research, we identified a severe intent redirection vulnerability in a widely used third-party Android SDK called EngageSDK. This flaw allows apps on the same device to bypass Android security sandbox and gain unauthorized access to private data. With over 30 million installations of third-party crypto wallet applications alone, the exposure of PII, user credentials and financial data were exposed to risk. All of the detected apps using vulnerable versions have been removed from Google Play.
@@ -213,25 +231,6 @@ Review our documentation to learn more about our real-time protection capabiliti
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">Adobe Reader Zero-Day Exploited via Malicious PDFs Since December 2025</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/04/adobe-reader-zero-day-exploited-via.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Threat actors have been exploiting a previously unknown zero-day vulnerability in Adobe Reader using maliciously crafted PDF documents since at least December 2025.
-The finding, detailed by EXPMON's Haifei Li, has been [described](https://justhaifei1.blogspot.com/2026/04/expmon-detected-sophisticated-zero-day-adobe-reader.html) as a highly-sophisticated PDF exploit. The [artifact](https://www.virustotal.com/gui/file/54077a5b15638e354fa02318623775b7a1cc0e8c21e59bcbab333035369e377f) ("Invoice540.pdf") first appeared on the VirusTotal platform on November 28, 2025. A [second sample](https://www.virustotal.com/gui/file/65dca34b04416f9a113f09718cbe51e11fd58e7287b7863e37f393ed4d25dde7) was uploaded to VirusTotal on March 23, 2026.
-Given the name of the PDF document, it's likely that there is an element of social engineering involved, with the attackers luring unsuspecting users into opening the files on Adobe Reader. Once launched, it automatically triggers the execution of obfuscated JavaScript to harvest sensitive data and receive additional payloads.
-Security researcher Gi7w0rm, in an [X post](https://x.com/Gi7w0rm/status/2042003381158379554), said the PDF documents observed contain Russian language lures and refer to issues regarding current events related to the oil and gas industry in Russia.
-"The sample acts as an initial exploit with the capability to collect and leak various types of information, potentially followed by remote code execution (RCE) and sandbox escape (SBX) exploits," Li said.
-"It abuses zero-day/unpatched vulnerability in Adobe Reader that allows it to execute privileged Acrobat APIs, and it is confirmed to work on the latest version of Adobe Reader."
-It also comes with capabilities to exfiltrate the collected information to a remote server ("169.40.2[.]68:45191") and receive additional JavaScript code to be executed.
-This mechanism, Li argued, could be used to collect local data, perform advanced fingerprinting attacks, and set the stage for follow-on activity, including delivering additional exploits to achieve code execution or sandbox.
-The exact nature of this next-stage exploit remains unknown as no response was received from the server. This, in turn, could imply the local testing environment from which the request was issued did not meet the necessary criteria to receive the payload.
-"Nevertheless, this zero-day/unpatched capability for broad information harvesting and the potential for subsequent RCE/SBX exploitation is enough for the security community to remain on high alert," Li said.
-(This is a developing story. Please check back for more details.)
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
         <div id="art-5" class="article-body">
             <h2 class="article-title">Russia Hacked Routers to Steal Microsoft Office Tokens</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/04/russia-hacked-routers-to-steal-microsoft-office-tokens/" target="_blank">Original Link</a></p>
@@ -276,7 +275,12 @@ Ah, never mind, I see the clue is *only in the image*. So, it’s relying on a u
 Entire hack chain requires old, outdated and in fact deprecated SOHO routers in use in 2026.
 Some % of people reflexively will click ‘continue’ no matter what the rest says because they don’t understand the warnings, terms/grammar/language/importance any of it, are intimidated or are just set to click-thru inherently – same folks using 10 years defunct SOHO routers who’ve never read the words firmware nor deprecated in their happy lives as disease vectors. Mosquito spawns that ripe shouldn’t be on the internet in 2026.
 Vendors should have (mandated!) baked-in FW time bombs to FORCE updates/refurb on a 1-2 year window.
-If it dies because it’s not updated in that window, it dies. Send it in get a new one. No unattended zombies!</div>
+If it dies because it’s not updated in that window, it dies. Send it in get a new one. No unattended zombies!
+Any high security environment should’ve had their endpoint devices configured to prevent users bypassing any certificate warnings. Forced DNSSEC also would’ve helped. As a last resort, appropriate user training & awareness.
+It might get to the point where large corporations and ISPs need to start banning devices that are EOL/EOS. I don’t like it, but they seem to pose such a security risk to everyone else including themselves.
+The alternative is to force corporations who make these devices to forever provide security updates, which to me also isnt a great idea.
+But so many consumer devices and software use self signed certs, people are so used to simply clicking through.
+Perhaps start requiring anything requiring a certificate to be signed using something like certbot with auto rewnew enabled by default when possible?</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
