@@ -59,46 +59,96 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-05-01</h1>
+        <h1>Security Briefing // 2026-05-02</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">US ransomware negotiators get 4 years in prison over BlackCat attacks</button></li><li><button onclick="show('art-1')">What’s new, updated, or recently released in Microsoft Security</button></li><li><button onclick="show('art-2')">Anti-DDoS Firm Heaped Attacks on Brazilian ISPs</button></li><li><button onclick="show('art-3')">ARP Around and Find Out: Hijacking GPO UNC Paths for Code Execution and NTLM Relay</button></li><li><button onclick="show('art-4')">CISA Adds Actively Exploited ConnectWise and Windows Flaws to KEV</button></li><li><button onclick="show('art-5')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-6')">CISA Adds 4 Exploited Flaws to KEV, Sets May 2026 Federal Deadline</button></li><li><button onclick="show('art-7')">Patch Tuesday, April 2026 Edition</button></li><li><button onclick="show('art-8')">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
+            <ul><li><button onclick="show('art-0')">CVE-2026-31431: Copy Fail vulnerability enables Linux root privilege escalation across cloud environments</button></li><li><button onclick="show('art-1')">US ransomware negotiators get 4 years in prison over BlackCat attacks</button></li><li><button onclick="show('art-2')">Anti-DDoS Firm Heaped Attacks on Brazilian ISPs</button></li><li><button onclick="show('art-3')">ARP Around and Find Out: Hijacking GPO UNC Paths for Code Execution and NTLM Relay</button></li><li><button onclick="show('art-4')">CISA Adds Actively Exploited ConnectWise and Windows Flaws to KEV</button></li><li><button onclick="show('art-5')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-6')">CISA Adds 4 Exploited Flaws to KEV, Sets May 2026 Federal Deadline</button></li><li><button onclick="show('art-7')">Patch Tuesday, April 2026 Edition</button></li><li><button onclick="show('art-8')">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">US ransomware negotiators get 4 years in prison over BlackCat attacks</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/us-ransomware-negotiators-get-4-years-in-prison-over-blackcat-attacks/" target="_blank">Original Link</a></p>
-            <div class="content-text">Two former employees of cybersecurity incident response companies Sygnia and DigitalMint were sentenced to four years in prison each for targeting U.S. companies in BlackCat (ALPHV) ransomware attacks. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
+            <h2 class="article-title">CVE-2026-31431: Copy Fail vulnerability enables Linux root privilege escalation across cloud environments</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/05/01/cve-2026-31431-copy-fail-vulnerability-enables-linux-root-privilege-escalation/" target="_blank">Original Link</a></p>
+            <div class="content-text">Microsoft Defender is investigating a high-severity local privilege escalation vulnerability ([CVE-2026-31431](https://nvd.nist.gov/vuln/detail/CVE-2026-31431)) affecting multiple major Linux distributions including Red Hat, SUSE, Ubuntu, and AWS Linux. This vulnerability allows unauthorized escalation of privileges to root, impacting a significant portion of cloud Linux workloads and millions of Kubernetes clusters. Although active exploitation has been limited and primarily observed in proof-of-concept testing, the vulnerability’s broad applicability has caused widespread concern.
+Given the availability of a fully working exploit proof-of-concept (PoC) and the race to patch systems, Microsoft Defender is seeing preliminary testing activity that might result most likely in increased threat actor exploitation over the next few days, as also confirmed by the recent addition of this vulnerability to the Cybersecurity and Infrastructure Security Agency (CISA) [Known Exploited Vulnerability (KEV) catalog](https://www.cisa.gov/news-events/alerts/2026/05/01/cisa-adds-one-known-exploited-vulnerability-catalog).
+In this report, Microsoft Defender shares detailed analyses and detection insights for this vulnerability, as well as mitigation recommendations and hunting guidance for customers to act on. Further investigation towards providing stronger protection measures is in progress, and this report will be updated when more information becomes available.
+Vulnerability details
+| Technical element | Details |
+| Vulnerability type | Local privilege escalation |
+| Attack vector | Code execution from unprivileged user |
+| Prerequisites for exploitation | Local access to the machine as non-privileged user |
+| Brief technical explanation | A bug in the Linux kernel’s crypto-subsystem can be abused by an attacker to corrupt the cache of any readable file, including setuid binaries. This corruption could be carried out by unprivileged users and could result in code execution with root privilege, effectively escalating the unprivileged user to root in an unauthorized way. |
+The vulnerability affects virtually all Linux distributions running kernels released from 2017 until patched versions are applied, including but not limited to Ubuntu (for example, 24.04 LTS), Amazon Linux 2023, Red Hat Enterprise Linux (RHEL 10.1), and SUSE 16, as well as other distributions like Debian, Fedora, and Arch Linux. The CVSS score is 7.8 (High), reflecting its significant impact.
+From an impact assessment standpoint, successful exploitation leads to full root privilege escalation (high impact to confidentiality, integrity, and availability) and could facilitate container breakout, multi-tenant compromise, and lateral movement within shared environments. Its reliability, stealth (in-memory-only modification), and cross-platform applicability make it particularly dangerous in cloud, CI/CD, and Kubernetes environments where untrusted code execution is common.
+CVE-2026-31431 (also known as “Copy Fail”) is a high‑severity local privilege escalation (LPE) vulnerability affecting the Linux kernel’s cryptographic subsystem. The vulnerability type is a logic flaw within the algif_aead module of the AF_ALG (userspace crypto API), which results in improper handling of memory during in-place operations.
+The attack vector is local (AV:L) and requires low privileges with no user interaction, meaning any unprivileged user on a vulnerable system can attempt exploitation. Critically, this vulnerability is not remotely exploitable in isolation, but becomes highly impactful when chained with an initial access vector such as Secure Shell (SSH) access, malicious CI job execution, or container footholds. The primary prerequisite for exploitation is the ability to execute code as a local non-privileged user on a system running a vulnerable Linux kernel with the affected crypto module enabled.
+From a technical perspective, the flaw originates from an in-place optimization introduced in 2017, where the kernel reuses source memory as the destination during cryptographic operations. By abusing the interaction between the AF_ALG socket interface and the splice() system call, an attacker can perform a controlled 4-byte write into the kernel’s page cache of any readable file. This enables corruption of in-memory representations of privileged binaries (for example, /usr/bin/su) without modifying the on-disk file.
+When executed, the modified binary yields root privileges, effectively breaking the system’s privilege boundary. Notably, the exploit is deterministic, does not rely on race conditions, and could be implemented in a very small (~732‑byte) script that works across distributions. Because the page cache is shared across containers and the host , the vulnerability also enables cross-container impacts and container escape scenarios.
+The following is one possible exploitation attack chain.
+Phase 1: The attacker begins with reconnaissance. This may occur after gaining limited visibility into an environment (for example, a compromised CI runner, web container, or multi‑tenant host). Kernel version information is easily obtainable from within containers and user namespaces and does not require elevated privileges.
+Because containers share the host kernel, a single vulnerable kernel version immediately expands the impact radius from one container to the entire node.
+Phase 2: The attacker leverages a compact Python script that interacts only with standard kernel interfaces exposed to unprivileged users. The script does not rely on networking, compilation, or third‑party libraries, making it ideal for execution in restricted containers and hardened environments.
+Phase 3: The attacker runs the script as either a regular Linux user on a host, or a compromised container process with no special capabilities. Crucially, the vulnerability does not require root inside the container, Kernel modules, or network access. This makes it ideal for post‑exploitation scenarios where the attacker already has any foothold at all.
+Phase 4: The exploit abuses an interaction between the AF_ALG (asynchronous crypto) socket interface, the splice() system call and improper error handling during a failed copy operation. This results in a controlled 4‑byte overwrite in the kernel page cache, allowing the attacker to corrupt sensitive kernel‑managed data even though they are unprivileged. This corruption occurs entirely within the kernel, bypassing traditional user‑space protections.
+Phase 5: By corrupting kernel structures associated with credentials or execution context, the attacker escalates their process to UID 0. This completes the transition from unprivileged user to full root without touching the network. At this point, kernel trust boundaries are broken, SELinux/AppArmor protections are effectively neutralized, and local security controls are bypassed.
+Mitigation and protection guidance
+Immediate actions (0-24 hours):
+- Identify all instances of affected products/versions in your environment.
+- Apply mitigation based on patch availability:
+- If patches exist, apply immediately. Links to security bulletins and vendor patches are available at
+[NVD – CVE-2026-31431](https://nvd.nist.gov/vuln/detail/CVE-2026-31431).
+- If no patches exist, choose one of these interim mitigations:
+- If patches exist, apply immediately. Links to security bulletins and vendor patches are available at
+○ Disable affected feature
+○ Implement network isolation
+○ Apply access controls
+- Review logs for signs of exploitation.
+Because this vulnerability impacts a large swath of Linux devices, it is strongly recommended to do the following:
+- Patch or update your distribution’s kernel packages or to block AF_ALG socket creation.
+- Treat any container RCE as potential host compromise and enforce rapid node recycling after compromise indicators.
+Microsoft Defender XDR detections
+Microsoft Defender XDR customers can refer to the following list of applicable detections. Microsoft Defender XDR coordinates detection, prevention, investigation, and response across endpoints, identities, email, and apps to provide integrated protection against attacks like the threat discussed in this blog.
+Customers with provisioned access can also use Microsoft Security Copilot in Microsoft Defender to investigate and respond to incidents, hunt for threats, and protect their organization with relevant threat intelligence.
+| Tactic | Observed activity | Microsoft Defender coverage |
+| Execution | Exploitation of CVE-2026-31431 | Microsoft Defender Antivirus – Exploit:Linux/CopyFailExpDl.A – Exploit:Python/CopyFail.A – Exploit:Linux/CVE-2026-31431.A – Behavior:Linux/CVE-2026-31431 Microsoft Defender for Endpoint – Possible CVE-2026-31431 (“Copy Fail”) vulnerability exploitation Microsoft Defender for Cloud – Potential exploitation of copy-fail vulnerability detected |
+Microsoft Defender Vulnerability Management (MDVM) also surfaces devices in customer environments that might be vulnerable to CVE-2026-31431.
+References
+[NVD – CVE-2026-31431](https://nvd.nist.gov/vuln/detail/CVE-2026-31431)[CVE-2026-31431 – Red Hat Customer Portal](https://access.redhat.com/security/cve/cve-2026-31431)[Copy Fail: 732 Bytes to Root on Every Major Linux Distribution. – Xint](https://xint.io/blog/copy-fail-linux-distributions)[New Linux ‘Copy Fail’ flaw gives hackers root on major distros](https://www.bleepingcomputer.com/news/security/new-linux-copy-fail-flaw-gives-hackers-root-on-major-distros/)
+This research is provided by Microsoft Defender Security Research with contributions from Andrea Lelli, Dietrich Nembhard, Nir Avnery, Ori Glassman, and members of Microsoft Threat Intelligence.
+Learn more
+For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
+To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
+To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
+Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
+- Learn more about
+[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection) - Evaluate your AI readiness with our latest
+[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). - Learn more about
+[Protect your agents in real-time during runtime (Preview)](https://learn.microsoft.com/en-us/defender-cloud-apps/real-time-agent-protection-during-runtime) - Explore
+[how to build and customize agents with Copilot Studio Agent Builder](https://eurppc-word-edit.officeapps.live.com/we/%E2%80%A2%09https:/learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/copilot-studio-agent-builder) [Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-1" class="article-body">
-            <h2 class="article-title">What’s new, updated, or recently released in Microsoft Security</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/04/30/whats-new-updated-or-recently-released-in-microsoft-security/" target="_blank">Original Link</a></p>
-            <div class="content-text">New capabilities in Microsoft Agent 365; new Microsoft Defender and GitHub integration
-At Microsoft, security innovations are purpose-built to help every organization protect end-to-end with the speed and scale of AI. Our vision is simple: security should be ambient and autonomous, just like the AI it protects.
-In a world where AI agents can act autonomously to take action, access data, and interact across systems, every organization should have the confidence that their security posture can scale and keep pace with their AI investments. Microsoft is focused on helping organizations gain visibility into what their agents are doing, governance over what they’re allowed to do, and protection against emerging threats. With an AI-first, end-to-end security platform grounded in Zero Trust for AI, fueled by more than 100 trillion daily threat signals1, and shaped by the [Secure Future Initiative](https://www.microsoft.com/en-us/trust-center/security/secure-future-initiative), security and IT teams can harden their security posture with protection that is continuous, intelligent, and built for the agentic era.
-In the Loop is a new series from [Microsoft Security](https://www.microsoft.com/en-us/security) that delivers timely news and updates to the global security community. Today’s edition spotlights the latest capabilities designed to help security and IT teams secure their AI agents, secure their foundations, and defend against threats in real time with the powerful combination of agents and experts.
-New Microsoft Defender capabilities in Agent 365 tooling gateway
-Detect, block, and investigate threats to AI agents
-The [Agent 365](https://www.microsoft.com/en-us/microsoft-agent-365?msockid=3b984ce9af7a60fc00fd5be2ae466171) tooling gateway gives security teams the visibility and control they need to detect and respond to threats that target agentic workflows. New Microsoft Defender capabilities, now available in preview, enable security teams to detect, block and investigate anomalous behavior of their agents. Near real-time protection leverages webhooks to evaluate the actions an AI agent attempts to detect and block malicious or risky activities before they’re executed. [Read more](https://techcommunity.microsoft.com/blog/microsoftdefendercloudblog/defending-the-ai-era-new-microsoft-capabilities-to-protect-ai/4503885) and get started.
-AI-powered Defender and GitHub solution helps protect from code to runtime
-GitHub Advanced Security integration
-[Microsoft Defender for Cloud](https://www.microsoft.com/en-us/security/business/cloud-security/microsoft-defender-cloud?msockid=3b984ce9af7a60fc00fd5be2ae466171) integration with [GitHub Advanced Security](https://github.com/security/advanced-security), now generally available, provides unified security visibility across the development lifecycle. This integration automatically maps code changes to production environments, prioritizes security alerts based on real runtime context, and enables coordinated remediation workflows between development and security teams. Teams can track vulnerabilities from source code to deployed applications, focus on the security issues that affect production workloads, and take advantage of AI-powered remediation tools to speed resolution.2 [Get started today](https://aka.ms/SecureCodetoCloudBlog) and [watch the video](https://www.youtube.com/watch?v=q4nvbBpubOI).
-New demo: Run a data security investigation in Microsoft Purview
-Data Security Investigations
-Step into the role of a data security analyst and see how [Microsoft Purview Data Security Investigations](https://learn.microsoft.com/en-us/purview/data-security-investigations) helps you identify investigation‑relevant data, analyze it using AI‑powered deep content analysis, and mitigate sensitive data risks—all within a single, integrated solution. Follow the end‑to‑end investigation journey in this hands‑on demo.
-In the demo, you’ll learn how to:
-- Proactively assess data security risk across your data estate.
-- Reactively investigate data involved in security incidents, such as breaches, leaks, fraud, or bribery.
-- Visualize risk using the data risk graph, which shows correlations between sensitive content, users, and activities.
-Stay In the Loop
-Microsoft Security continually ships meaningful innovations across our portfolio and research-driven insights and reports for the security community. In the Loop posts are your reliable source of what’s new across Microsoft Security and what it means for your security strategy. Check back for the next drop and [connect with us at Microsoft Build](https://register.build.microsoft.com/flow/microsoft/build26/welcome/page/welcome), June 2-3, 2026 in San Francisco, to hear directly from Microsoft Security experts, learn more about today’s releases, and more.
-To learn more about Microsoft Security solutions, visit our [website](https://www.microsoft.com/en-us/security/business). Bookmark the [Security blog](https://www.microsoft.com/security/blog/) to keep up with our expert coverage on security matters. Also, follow us on LinkedIn ([Microsoft Security](https://www.linkedin.com/showcase/microsoft-security/)) and X ([@MSFTSecurity](https://twitter.com/@MSFTSecurity)) for the latest news and updates on cybersecurity.
-1[Microsoft Digital Defense Report 2025](https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/Microsoft-Digital-Defense-Report-2025.pdf#page=1), Safeguarding Trust in the AI Era
-2[GitHub Advanced Security Integration with Microsoft Defender for Cloud](https://learn.microsoft.com/en-us/azure/defender-for-cloud/github-advanced-security-overview), Microsoft Defender for Cloud | Microsoft Learn</div>
+            <h2 class="article-title">US ransomware negotiators get 4 years in prison over BlackCat attacks</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/us-ransomware-negotiators-get-4-years-in-prison-over-blackcat-attacks/" target="_blank">Original Link</a></p>
+            <div class="content-text">Two former employees of cybersecurity incident response companies Sygnia and DigitalMint were sentenced to four years in prison each for targeting U.S. companies in BlackCat (ALPHV) ransomware attacks.
+40-year-old Ryan Clifford Goldberg (a former Sygnia incident response manager) and 36-year-old Kevin Tyler Martin (a DigitalMint ransomware negotiator) [were charged in November](https://www.bleepingcomputer.com/news/security/us-cybersecurity-experts-indicted-for-blackcat-ransomware-attacks/) and [pleaded guilty](https://www.bleepingcomputer.com/news/security/us-cybersecurity-experts-plead-guilty-to-blackcat-alphv-ransomware-attacks/) in December to conspiracy to obstruct commerce by extortion.
+Together with 41-year-old Angelo Martino, a third accomplice who also pleaded guilty in April, the two acted as BlackCat ransomware affiliates between May 2023 and November 2023, breaching the networks of multiple victims across the United States.
+GO TO PAGE
+According to [court documents](https://legacy.www.documentcloud.org/documents/26212062-digital-mint-sygnia-indictment/), they paid a 20% share of ransoms in exchange for access to BlackCat's ransomware and extortion platform.
+The list of victims includes a Maryland pharmaceutical company, a Tampa medical device manufacturer, a California engineering firm, a Virginia drone manufacturer, and a California doctor's office.
+Prosecutors said the Tampa medical device company paid $1.27 million after its servers were encrypted and it received a $10 million ransom demand in May 2023, with the payment laundered and split three ways with Martino.
+While other companies whose networks were breached by Goldberg and Martin also received ransom demands ranging from $300,000 to $10 million, the indictment does not indicate whether they received any additional payments.
+"These defendants exploited specialized cybersecurity knowledge not to protect victims, but to extort them," [said U.S. Attorney Jason A. Reding Quiñones on Thursday](https://www.justice.gov/opa/pr/two-americans-who-attacked-multiple-us-victims-using-alphv-blackcat-ransomware-sentenced). "They used ransomware to lock down critical systems, steal sensitive data, and pressure American businesses into paying to regain access to their own information."
+"We strongly condemn these former employees' criminal behavior, which violated our values, ethical standards, and the law. When we learned about the conduct, we immediately terminated both individuals," DigitalMint CEO Jonathan Solomon also told BleepingComputer earlier this month after Martino pleaded guilty.
+The FBI previously linked the BlackCat ransomware gang to [more than 60 breaches](https://www.bleepingcomputer.com/news/security/fbi-blackcat-ransomware-breached-at-least-60-entities-worldwide/) between November 2021 and March 2022.
+In a separate advisory, the bureau added that the cybercrime operation [collected at least $300 million in ransom payments](https://www.bleepingcomputer.com/news/security/fbi-alphv-ransomware-raked-in-300-million-from-over-1-000-victims/) from more than 1,000 victims through September 2023.
+[99% of What Mythos Found Is Still Unpatched.](https://hubs.li/Q04crVgD0)
+AI chained four zero-days into one exploit that bypassed both renderer and OS sandboxes. A wave of new exploits is coming.
+At the Autonomous Validation Summit (May 12 & 14), see how autonomous, context-rich validation finds what's exploitable, proves controls hold, and closes the remediation loop.
+[Claim Your Spot](https://hubs.li/Q04crVgD0)
+Post a Comment Community Rules
+You need to login in order to post a comment
+Not a member yet? Register Now</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
@@ -135,10 +185,12 @@ Hubris.
 Pobody’s nerfect ya know?
 “Nascimento maintains he has “strong evidence stored on the blockchain” that this was all done by a competitor.”
 basically an admission, honestly
+Is that dove like the soap, like the scene in the Tonya Harding movie, like the chocolate, or like the Bible when Noah can’t find dry land? Inquiring minds wanna know.
 ” firm that specializes in protecting networks from distributed denial-of-service (DDoS) ”
 It blows my mind that this exists as a ‘thing’. Like people/companies pay a separate company for this?
 The attack described above is simple to resolve when compared to SYN ACK, which is truly destructive, and no foreign cleaning tool effectively resolves it to keep the service running. Only two Brazilian companies have been efficiently cleaning this specific attack. ISPs have been suffering from this type of criminal activity since December 2024 and throughout 2025. The CEO can deny it all he wants, but simply talking to any ISP that suffered throughout that year will clarify many things.
 E quais seriam essas empresas
+They weren’t truly able to stop these attacks in the mid-90s (eg, stuff like stradeldracht and the incident with panix.com in 1996) and they still really aren’t. Bears the question, why are these tools considered part of a pentester toolkit still? Imagine AI and DDoS in the hands of a really effed up human. Worse than this botnet.
 Was waiting for this to happen
 Wondering how many ‘butterflies’ all us real smart folks have killed here in the Paleozoic. Bad news, people who think the time machine in 2024 is gonna save us. There is none, and it sure ain’t. Enjoying watching AI convince you all how smart you all are though.
 Time for another distributed denial of a planet.
@@ -154,7 +206,8 @@ Eric, é você?
 Acho estranho falarem mal da Computize, porque a nossa experiência foi totalmente o contrário.
 Nós saímos da Huge e, depois de cancelarmos o contrato, começamos a sofrer ataques. Tivemos que contratar a Computize, e eles nos ajudaram a mitigar até que os ataques desapareceram.
 Hoje estamos sem proteção, mas uma coisa ficou clara para nós:
-Contratar a Huge foi como ficar refém.</div>
+Contratar a Huge foi como ficar refém.
+Era só deixar o cartão de visita com eles que vinha o presente.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
@@ -307,6 +360,9 @@ Finally, no matter what browser you use to surf the web, it’s important to com
 For a clickable, per-patch breakdown, check out the SANS Internet Storm Center [Patch Tuesday roundup](https://isc.sans.edu/forums/diary/Microsoft%20Patch%20Tuesday%20April%202026./32898/). Running into problems applying any of these updates? Leave a note about it in the comments below and there’s a decent chance someone here will pipe in with a solution.
 Let’s get used to hundreds of patches per cycle. It’s going to get intense.
 In 2026, either you are forced to use this abomination by Corporate, by applications you Jones for, or are a person with possible masochistic inclinations, IMHO…
+Windows? Perhaps. But MacOS, Linux, and every mobile OS out there is also an abomination now. Linux has gotten worse and worse since it eschewed a modular approach and systems became a behemoth, and now it’s got all sorts of other issues like Rust, and the stock market and prediction markets using it. And AWS is really just Linux. Does any of that mess need AI on top of the mess it has been for over 15 years now? Windows got annoying after Windows 7/8. MacOS seems to think disabling services on it is a suggestion for your life to be disabled.
+For most people it really doesn’t get much better (which isn’t to say it is any good) than Windows, since most people have no clue how to protect themselves.
+That’s systemd. Auto-correct auto-uncorrected me.
 The question is are the increased patch counts because AI is fixing more bugs or because AI is creating more bugs.
 The latter, of course. Sheeeesh…….
 I am more concerned about the AIs doing all of the coding than merely the AIs mass-auditing. Github is getting creepy enough.
