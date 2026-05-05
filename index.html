@@ -59,15 +59,15 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-05-04</h1>
+        <h1>Security Briefing // 2026-05-05</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Instructure confirms data breach, ShinyHunters claims attack</button></li><li><button onclick="show('art-1')">CISA Adds Actively Exploited Linux Root Access Bug CVE-2026-31431 to KEV</button></li><li><button onclick="show('art-2')">CVE-2026-31431: Copy Fail vulnerability enables Linux root privilege escalation across cloud environments</button></li><li><button onclick="show('art-3')">CISA Adds Actively Exploited ConnectWise and Windows Flaws to KEV</button></li><li><button onclick="show('art-4')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-5')">Patch Tuesday, April 2026 Edition</button></li><li><button onclick="show('art-6')">Building a Detection Foundation: Part 5 - Correlation in Practice</button></li><li><button onclick="show('art-7')">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors</button></li><li><button onclick="show('art-8')">Microsoft Patch Tuesday, March 2026 Edition</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Trellix discloses data breach after source code repository hack</button></li><li><button onclick="show('art-1')">Breaking the code: Multi-stage ‘code of conduct’ phishing campaign leads to AiTM token compromise</button></li><li><button onclick="show('art-2')">CISA Adds Actively Exploited Linux Root Access Bug CVE-2026-31431 to KEV</button></li><li><button onclick="show('art-3')">CISA Adds Actively Exploited ConnectWise and Windows Flaws to KEV</button></li><li><button onclick="show('art-4')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-5')">Patch Tuesday, April 2026 Edition</button></li><li><button onclick="show('art-6')">Building a Detection Foundation: Part 5 - Correlation in Practice</button></li><li><button onclick="show('art-7')">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors</button></li><li><button onclick="show('art-8')">Microsoft Patch Tuesday, March 2026 Edition</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">Instructure confirms data breach, ShinyHunters claims attack</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/instructure-confirms-data-breach-shinyhunters-claims-attack/" target="_blank">Original Link</a></p>
-            <div class="content-text">Educational tech giant Instructure has confirmed that data was stolen in a cyberattack, with the ShinyHunters extortion gang claiming responsibility. [...]
+            <h2 class="article-title">Trellix discloses data breach after source code repository hack</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/trellix-discloses-data-breach-after-source-code-repository-hack/" target="_blank">Original Link</a></p>
+            <div class="content-text">Cybersecurity firm Trellix disclosed a data breach after attackers gained access to "a portion" of its source code repository. [...]
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
@@ -75,6 +75,90 @@
             <hr class="separator">
         </div>
         <div id="art-1" class="article-body">
+            <h2 class="article-title">Breaking the code: Multi-stage ‘code of conduct’ phishing campaign leads to AiTM token compromise</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/05/04/breaking-the-code-multi-stage-code-of-conduct-phishing-campaign-leads-to-aitm-token-compromise/" target="_blank">Original Link</a></p>
+            <div class="content-text">Phishing campaigns continue to improve sophistication and refinement in blending social engineering, delivery and hosting infrastructure, and authentication abuse to remain effective against evolving security controls. A large-scale credential theft campaign observed by Microsoft Defender Research exemplifies this trend, using code of conduct-themed lures, a multi-step attack chain, and legitimate email services to distribute fully authenticated messages from attacker-controlled domains.
+The campaign targeted tens of thousands of users, primarily in the United States, and directed them through several stages of CAPTCHA and intermediate staging pages designed to reinforce legitimacy while filtering out automated defenses. The lures in this campaign used polished, enterprise-style HTML templates with structured layouts and preemptive authenticity statements, making them appear more credible than typical phishing emails and increasing their plausibility as legitimate internal communications. Because the messages contained concerning accusations and repeated time-bound action prompts, the campaign created a sense of urgency and pressure to act.
+Email threat landscape
+The attack chain ultimately led to a legitimate sign-in experience that was part of an [adversary‑in‑the‑middle (AiTM) phishing](https://www.microsoft.com/en-us/security/blog/tag/adversary-in-the-middle/) flow, which allowed the attackers to proxy the authentication session and capture authentication tokens that could provide immediate account access. Unlike traditional credential harvesting, AiTM attacks intercept authentication traffic in real time, bypassing non-phishing-resistant multifactor authentication (MFA).
+In this blog, we’re sharing our analysis of this campaign’s lures, infrastructure, and techniques. Organizations can defend against financial fraud initiated through phishing emails by educating users about phishing lures, investing in advanced anti-phishing solutions like [Microsoft Defender for Office 365](https://www.microsoft.com/security/business/siem-and-xdr/microsoft-defender-office-365) and configuring essential email security settings, and encouraging users to employ web browsers that support SmartScreen. Organizations can also enable network protection, which lets Windows use SmartScreen as a host-based web proxy.
+Multi-step social engineering campaign leading to credential theft
+Between April 14 and 16, 2026, the Microsoft Defender Research team observed a series of sophisticated phishing campaigns targeting more than 35,000 users across over 13,000 organizations in 26 countries, with majority of targets located in the United States (92%). The campaign did not focus on a single vertical but instead impacted a broad range of industries, most notably Healthcare & life sciences (19%), Financial services (18%), Professional services (11%), and Technology & software (11%). Messages were distributed in multiple distinct waves between 06:51 UTC on April 14 and 03:54 UTC on April 16.
+Emails in this campaign posed as internal compliance or regulatory communications, using display names such as “Internal Regulatory COC”, “Workforce Communications”, and “Team Conduct Report”. Subject lines included “Internal case log issued under conduct policy” and “Reminder: employer opened a non-compliance case log”.
+Message bodies claimed that a “code of conduct review” had been initiated, referenced organization-specific names embedded within the text, and instructed recipients to “open the personalized attachment” to review case materials. At the top of each message, a notice stated that the message had been “issued through an authorized internal channel” and that links and attachments had been “reviewed and approved for secure access”, reinforcing the email’s purported legitimacy. To further support the confidentiality of the supposed review, the end of each message contained a green banner stating that the contents had been encrypted using Paubox, a legitimate service associated with HIPAA-compliant communications.
+Analysis of the sending infrastructure indicated that the campaign emails were sent using a legitime email delivery service, likely originating from a cloud-hosted Windows virtual machine. The messages were sent from multiple sender addresses using domains that are likely attacker-controlled.
+Each campaign email included a PDF attachment with filenames such as Awareness Case Log File – Tuesday 14th, April 2026.pdf and Disciplinary Action – Employee Device Handling Case.pdf. The attachment provided additional context about the supposed conduct review, including a summary of the review process and instructions for accessing supporting documentation. Recipients were directed to click a “Review Case Materials” link within the PDF, which initiated the credential harvesting flow.
+When clicked, users were initially directed to one of two attacker-controlled domains (for example, acceptable-use-policy-calendly[.]de or compliance-protectionoutlook[.]de). These landing pages displayed a Cloudflare CAPTCHA, presented as a mechanism to validate that the user was coming “from a valid session”. This CAPTCHA likely served as a gating mechanism to impede automated analysis and sandbox detonation.
+After completing the CAPTCHA, users were redirected to an intermediate site designed to prepare them for the final stage of the attack. This page informed users that the requested documentation was encrypted and required account authentication. While this stage of the attack has several hallmarks of device code phishing, we were only able to confirm the AITM portion of the attack chain.
+After clicking the provided “Review & Sign” button, users were presented with a sign-in prompt requesting their email address.
+After submission, users were required to complete a second CAPTCHA involving image selection.
+Once these steps were completed, users were shown a message indicating that verification was successful and that their “case” was being prepared.
+Following these steps, users were redirected to a third site hosting the final stage of the attack. Analysis of the underlying code indicates that the final destination varied depending on whether the user accessed the workflow from a mobile device or a desktop system.
+On the final page, users were informed that all materials related to their code of conduct review had been “securely logged”, “time-stamped”, and “maintained within the organization’s centralized compliance tracking system”. They were then prompted to schedule a time to discuss the case, which required signing in to their account.
+Selecting the “Sign in with Microsoft” option redirected users to a Microsoft authentication page, initiating an AiTM session hijacking flow designed to capture authentication tokens and compromise user accounts.
+Mitigation and protection guidance
+Microsoft recommends the following mitigations to reduce the impact of this threat. Check the recommendations card for the deployment status of monitored mitigations.
+[Review the recommended settings](https://learn.microsoft.com/defender-office-365/recommended-settings-for-eop-and-office365)for Exchange Online Protection and Microsoft Defender for Office 365 to ensure your organization has established essential defenses and knows how to monitor and respond to threat activity.- Invest in user awareness training and phishing simulations.
+[Attack simulation training](https://learn.microsoft.com/defender-office-365/attack-simulation-training-get-started)in Microsoft Defender for Office 365, which also includes simulating phishing messages in Microsoft Teams, is one approach to running realistic attack scenarios in your organization. [Enable Zero-hour auto purge (ZAP)](https://learn.microsoft.com/defender-office-365/zero-hour-auto-purge)in Defender for Office 365 to quarantine sent mail in response to newly acquired threat intelligence and retroactively neutralize malicious phishing, spam, or malware messages that have already been delivered to mailboxes.- Responders could also manually check for and purge unwanted emails containing URLs and/or Subject fields that are similar, but not identical, to those of known bad messages.
+[Investigate malicious email that was delivered in Microsoft 365](https://learn.microsoft.com/defender-office-365/threat-explorer-investigate-delivered-malicious-email)and use[Threat Explorer](https://security.microsoft.com/threatexplorer)to find and delete phishing emails. - Turn on
+[Safe Links](https://learn.microsoft.com/defender-office-365/safe-links-about)and[Safe Attachments](https://learn.microsoft.com/defender-office-365/safe-attachments-about)in Microsoft Defender for Office 365. - Enable
+[network protection](https://learn.microsoft.com/defender-endpoint/enable-network-protection)in Microsoft Defender for Endpoint. - Encourage users to use Microsoft Edge and other web browsers that support
+[Microsoft Defender SmartScreen](https://learn.microsoft.com/deployedge/microsoft-edge-security-smartscreen), which identifies and blocks malicious websites, including phishing sites, scam sites, and sites that host malware. - Enable password-less authentication methods (for example, Windows Hello, FIDO keys, or Microsoft Authenticator) for accounts that support password-less. For accounts that still require passwords, use authenticator apps like Microsoft Authenticator for multifactor authentication (MFA).
+[Refer to this article](https://learn.microsoft.com/entra/identity/authentication/concept-authentication-methods)for the different authentication methods and features.- Conditional access policies can also be scoped to
+[strengthen privileged accounts with phishing resistant MFA](https://learn.microsoft.com/entra/identity/conditional-access/policy-admin-phish-resistant-mfa).
+- Conditional access policies can also be scoped to
+- Configure
+[automatic attack disruption](https://learn.microsoft.com/defender-xdr/automatic-attack-disruption)in Microsoft Defender XDR. Automatic attack disruption is designed to contain attacks in progress, limit the impact on an organization’s assets, and provide more time for security teams to remediate the attack fully.
+Microsoft Defender detections
+[Microsoft Defender](https://www.microsoft.com/security/business/microsoft-defender) customers can refer to the list of applicable detections below. Microsoft Defender coordinates detection, prevention, investigation, and response across endpoints, identities, email, apps to provide integrated protection against attacks like the threat discussed in this blog.
+| Tactic | Observed activity | Microsoft Defender coverage |
+| Initial access | Phishing emails |
+– A potentially malicious URL click was detected – A user clicked through to a potentially malicious URL – Suspicious email sending patterns detected – Email messages containing malicious URL removed after delivery – Email messages removed after delivery – Email reported by user as malware or phish |
+[Microsoft Entra ID Protection](https://www.microsoft.com/security/business/identity-access/microsoft-entra-id-protection)– Anomalous Token
+– Unfamiliar sign-in properties
+– Unfamiliar sign-in properties for session cookies
+[Microsoft Defender for Cloud Apps](https://www.microsoft.com/security/business/siem-and-xdr/microsoft-defender-cloud-apps)– Impossible travel activity
+Microsoft Security Copilot
+[Microsoft Security Copilot](https://www.microsoft.com/en-us/security/business/ai-machine-learning/microsoft-security-copilot) is [embedded in Microsoft Defender](https://learn.microsoft.com/defender-xdr/security-copilot-in-microsoft-365-defender) and provides security teams with AI-powered capabilities to summarize incidents, analyze files and scripts, summarize identities, use guided responses, and generate device summaries, hunting queries, and incident reports.
+Customers can also [deploy AI agents](https://learn.microsoft.com/defender-xdr/security-copilot-agents-defender), including the following [Microsoft Security Copilot agents](https://learn.microsoft.com/copilot/security/agents-overview), to perform security tasks efficiently:
+[Threat Intelligence Briefing agent](https://learn.microsoft.com/defender-xdr/threat-intel-briefing-agent-defender)[Phishing Triage agent](https://learn.microsoft.com/defender-xdr/phishing-triage-agent)[Threat Hunting agent](https://learn.microsoft.com/defender-xdr/advanced-hunting-security-copilot-threat-hunting-agent)[Dynamic Threat Detection agent](https://learn.microsoft.com/defender-xdr/dynamic-threat-detection-agent)
+Security Copilot is also available as a [standalone experience](https://learn.microsoft.com/en-us/copilot/security/experiences-security-copilot) where customers can perform specific security-related tasks, such as incident investigation, user analysis, and vulnerability impact assessment. In addition, Security Copilot offers [developer scenarios](https://learn.microsoft.com/copilot/security/developer/custom-agent-overview) that allow customers to build, test, publish, and integrate AI agents and plugins to meet unique security needs.
+Threat intelligence reports
+Microsoft Defender XDR customers can use the following [threat analytics](https://learn.microsoft.com/defender-xdr/threat-analytics) reports in the Defender portal (requires license for at least one Defender XDR product) to get the most up-to-date information about the threat actor, malicious activity, and techniques discussed in this blog. These reports provide the intelligence, protection information, and recommended actions to prevent, mitigate, or respond to associated threats found in customer environments.
+[Threat overview profile: Adversary-in-the-middle credential phishing](https://security.microsoft.com/threatanalytics3/edd01a8c-283d-42f6-bdd4-0b7b4dbd369b/overview)[Threat overview profile: Evolving phishing threats](https://security.microsoft.com/threatanalytics3/3b00014f-e854-4877-869e-204a0823dc99/overview)
+Microsoft Security Copilot customers can also use the [Microsoft Security Copilot integration](https://learn.microsoft.com/defender/threat-intelligence/security-copilot-and-defender-threat-intelligence?bc=%2Fsecurity-copilot%2Fbreadcrumb%2Ftoc.json&toc=%2Fsecurity-copilot%2Ftoc.json#turn-on-the-security-copilot-integration-in-defender-ti) in Microsoft Defender Threat Intelligence, either in the Security Copilot standalone portal or in the [embedded experience](https://learn.microsoft.com/defender/threat-intelligence/using-copilot-threat-intelligence-defender-xdr) in the Microsoft Defender portal to get more information about this threat actor.
+Hunting queries
+Microsoft Defender XDR customers can run the following [advanced hunting](https://learn.microsoft.com/defender-xdr/advanced-hunting-overview) queries to find related activity in their networks:
+Campaign emails by sender address
+The following query identifies emails associated with this campaign using a message’s sending email address.
+EmailEvents | where SenderMailFromAddress in (" cocpostmaster@cocinternal.com "," nationaladmin@gadellinet.com "," nationalintegrity@harteprn.com”,” m365premiumcommunications@cocinternal.com”,” documentviewer@na.businesshellosign.de”) |
+Indicators of compromise
+| Indicator | Type | Description | First seen | Last seen |
+| compliance-protectionoutlook[.]de | Domain | Domain hosting malicious campaign content | 2026-04-14 | 2026-04-16 |
+| acceptable-use-policy-calendly[.]de | Domain | Domain hosting malicious campaign content | 2026-04-14 | 2026-04-16 |
+| cocinternal[.]com | Domain | Domain hosting sender email address | 2026-04-14 | 2026-04-16 |
+| Gadellinet[.]com | Domain | Domain hosting sender email address | 2026-04-14 | 2026-04-16 |
+| Harteprn[.]com | Domain | Domain hosting sender email address | 2026-04-14 | 2026-04-16 |
+| Cocpostmaster[@]cocinternal.com | Email address | Email address used to send campaign emails | 2026-04-14 | 2026-04-16 |
+| Nationaladmin[@]gadellinet.com | Email address | Email address used to send campaign emails | 2026-04-14 | 2026-04-16 |
+| Nationalintegrity[@]harteprn.com | Email address | Email address used to send campaign emails | 2026-04-14 | 2026-04-16 |
+| M365premiumcommunications[@]cocinternal.com | Email address | Email address used to send campaign emails | 2026-04-14 | 2026-04-16 |
+| Documentviewer[@]na.businesshellosign.de | Email address | Email address used to send campaign emails | 2026-04-14 | 2026-04-16 |
+| Awareness Case Log File – Monday 13th, April 2026.pdf | Filename | Name of PDF attachment containing phishing link | 2026-04-14 | 2026-04-14 |
+| Awareness Case Log File – Tuesday 14th, April 2026.pdf | Filename | Name of PDF attachment containing phishing link | 2026-04-15 | 2026-04-15 |
+| Awareness Case Log File – Wednesday 15th, April 2026.pdf | Filename | Name of PDF attachment containing phishing link | 2026-04-16 | 2026-04-16 |
+| 5DB1ECBBB2C90C51D81BDA138D4300B90EA5EB2885CCE1BD921D692214AECBC6 | SHA-256 | File hash of campaign PDF attachment | 2026-04-14 | 2026-04-16 |
+| B5A3346082AC566B4494E6175F1CD9873B64ABE6C902DB49BD4E8088876C9EAD | SHA-256 | File hash of campaign PDF attachment | 2026-04-14 | 2026-04-16 |
+| 11420D6D693BF8B19195E6B98FEDD03B9BCBC770B6988BC64CB788BFABE1A49D | SHA-256 | File hash of campaign PDF attachment | 2026-04-14 | 2026-04-16 |
+Learn more
+For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
+To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
+To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
             <h2 class="article-title">CISA Adds Actively Exploited Linux Root Access Bug CVE-2026-31431 to KEV</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/05/cisa-adds-actively-exploited-linux-root.html" target="_blank">Original Link</a></p>
             <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Friday [added](https://www.cisa.gov/news-events/alerts/2026/05/01/cisa-adds-one-known-exploited-vulnerability-catalog) a recently disclosed security flaw impacting various Linux distributions to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, citing evidence of active exploitation in the wild.
@@ -97,69 +181,6 @@ The tech giant has also detailed one possible route attackers could take to expl
 - Attacker escalates their process to UID 0 and obtain full root privileges.
 Federal Civilian Executive Branch (FCEB) agencies have been advised to apply the fixes by May 15, 2026, as updates have been pushed by impacted Linux distributions. If patching is not an immediate option, organizations are recommended to disable the affected feature, implement network isolation, and apply access controls.
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-2" class="article-body">
-            <h2 class="article-title">CVE-2026-31431: Copy Fail vulnerability enables Linux root privilege escalation across cloud environments</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/05/01/cve-2026-31431-copy-fail-vulnerability-enables-linux-root-privilege-escalation/" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft Defender is investigating a high-severity local privilege escalation vulnerability ([CVE-2026-31431](https://nvd.nist.gov/vuln/detail/CVE-2026-31431)) affecting multiple major Linux distributions including Red Hat, SUSE, Ubuntu, and AWS Linux. This vulnerability allows unauthorized escalation of privileges to root, impacting a significant portion of cloud Linux workloads and millions of Kubernetes clusters. Although active exploitation has been limited and primarily observed in proof-of-concept testing, the vulnerability’s broad applicability has caused widespread concern.
-Given the availability of a fully working exploit proof-of-concept (PoC) and the race to patch systems, Microsoft Defender is seeing preliminary testing activity that might result most likely in increased threat actor exploitation over the next few days, as also confirmed by the recent addition of this vulnerability to the Cybersecurity and Infrastructure Security Agency (CISA) [Known Exploited Vulnerability (KEV) catalog](https://www.cisa.gov/news-events/alerts/2026/05/01/cisa-adds-one-known-exploited-vulnerability-catalog).
-In this report, Microsoft Defender shares detailed analyses and detection insights for this vulnerability, as well as mitigation recommendations and hunting guidance for customers to act on. Further investigation towards providing stronger protection measures is in progress, and this report will be updated when more information becomes available.
-Vulnerability details
-| Technical element | Details |
-| Vulnerability type | Local privilege escalation |
-| Attack vector | Code execution from unprivileged user |
-| Prerequisites for exploitation | Local access to the machine as non-privileged user |
-| Brief technical explanation | A bug in the Linux kernel’s crypto-subsystem can be abused by an attacker to corrupt the cache of any readable file, including setuid binaries. This corruption could be carried out by unprivileged users and could result in code execution with root privilege, effectively escalating the unprivileged user to root in an unauthorized way. |
-The vulnerability affects virtually all Linux distributions running kernels released from 2017 until patched versions are applied, including but not limited to Ubuntu (for example, 24.04 LTS), Amazon Linux 2023, Red Hat Enterprise Linux (RHEL 10.1), and SUSE 16, as well as other distributions like Debian, Fedora, and Arch Linux. The CVSS score is 7.8 (High), reflecting its significant impact.
-From an impact assessment standpoint, successful exploitation leads to full root privilege escalation (high impact to confidentiality, integrity, and availability) and could facilitate container breakout, multi-tenant compromise, and lateral movement within shared environments. Its reliability, stealth (in-memory-only modification), and cross-platform applicability make it particularly dangerous in cloud, CI/CD, and Kubernetes environments where untrusted code execution is common.
-CVE-2026-31431 (also known as “Copy Fail”) is a high‑severity local privilege escalation (LPE) vulnerability affecting the Linux kernel’s cryptographic subsystem. The vulnerability type is a logic flaw within the algif_aead module of the AF_ALG (userspace crypto API), which results in improper handling of memory during in-place operations.
-The attack vector is local (AV:L) and requires low privileges with no user interaction, meaning any unprivileged user on a vulnerable system can attempt exploitation. Critically, this vulnerability is not remotely exploitable in isolation, but becomes highly impactful when chained with an initial access vector such as Secure Shell (SSH) access, malicious CI job execution, or container footholds. The primary prerequisite for exploitation is the ability to execute code as a local non-privileged user on a system running a vulnerable Linux kernel with the affected crypto module enabled.
-From a technical perspective, the flaw originates from an in-place optimization introduced in 2017, where the kernel reuses source memory as the destination during cryptographic operations. By abusing the interaction between the AF_ALG socket interface and the splice() system call, an attacker can perform a controlled 4-byte write into the kernel’s page cache of any readable file. This enables corruption of in-memory representations of privileged binaries (for example, /usr/bin/su) without modifying the on-disk file.
-When executed, the modified binary yields root privileges, effectively breaking the system’s privilege boundary. Notably, the exploit is deterministic, does not rely on race conditions, and could be implemented in a very small (~732‑byte) script that works across distributions. Because the page cache is shared across containers and the host , the vulnerability also enables cross-container impacts and container escape scenarios.
-The following is one possible exploitation attack chain.
-Phase 1: The attacker begins with reconnaissance. This may occur after gaining limited visibility into an environment (for example, a compromised CI runner, web container, or multi‑tenant host). Kernel version information is easily obtainable from within containers and user namespaces and does not require elevated privileges.
-Because containers share the host kernel, a single vulnerable kernel version immediately expands the impact radius from one container to the entire node.
-Phase 2: The attacker leverages a compact Python script that interacts only with standard kernel interfaces exposed to unprivileged users. The script does not rely on networking, compilation, or third‑party libraries, making it ideal for execution in restricted containers and hardened environments.
-Phase 3: The attacker runs the script as either a regular Linux user on a host, or a compromised container process with no special capabilities. Crucially, the vulnerability does not require root inside the container, Kernel modules, or network access. This makes it ideal for post‑exploitation scenarios where the attacker already has any foothold at all.
-Phase 4: The exploit abuses an interaction between the AF_ALG (asynchronous crypto) socket interface, the splice() system call and improper error handling during a failed copy operation. This results in a controlled 4‑byte overwrite in the kernel page cache, allowing the attacker to corrupt sensitive kernel‑managed data even though they are unprivileged. This corruption occurs entirely within the kernel, bypassing traditional user‑space protections.
-Phase 5: By corrupting kernel structures associated with credentials or execution context, the attacker escalates their process to UID 0. This completes the transition from unprivileged user to full root without touching the network. At this point, kernel trust boundaries are broken, SELinux/AppArmor protections are effectively neutralized, and local security controls are bypassed.
-Mitigation and protection guidance
-Immediate actions (0-24 hours):
-- Identify all instances of affected products/versions in your environment.
-- Apply mitigation based on patch availability:
-- If patches exist, apply immediately. Links to security bulletins and vendor patches are available at
-[NVD – CVE-2026-31431](https://nvd.nist.gov/vuln/detail/CVE-2026-31431).
-- If no patches exist, choose one of these interim mitigations:
-- If patches exist, apply immediately. Links to security bulletins and vendor patches are available at
-○ Disable affected feature
-○ Implement network isolation
-○ Apply access controls
-- Review logs for signs of exploitation.
-Because this vulnerability impacts a large swath of Linux devices, it is strongly recommended to do the following:
-- Patch or update your distribution’s kernel packages or to block AF_ALG socket creation.
-- Treat any container RCE as potential host compromise and enforce rapid node recycling after compromise indicators.
-Microsoft Defender XDR detections
-Microsoft Defender XDR customers can refer to the following list of applicable detections. Microsoft Defender XDR coordinates detection, prevention, investigation, and response across endpoints, identities, email, and apps to provide integrated protection against attacks like the threat discussed in this blog.
-Customers with provisioned access can also use Microsoft Security Copilot in Microsoft Defender to investigate and respond to incidents, hunt for threats, and protect their organization with relevant threat intelligence.
-| Tactic | Observed activity | Microsoft Defender coverage |
-| Execution | Exploitation of CVE-2026-31431 | Microsoft Defender Antivirus – Exploit:Linux/CopyFailExpDl.A – Exploit:Python/CopyFail.A – Exploit:Linux/CVE-2026-31431.A – Behavior:Linux/CVE-2026-31431 Microsoft Defender for Endpoint – Possible CVE-2026-31431 (“Copy Fail”) vulnerability exploitation Microsoft Defender for Cloud – Potential exploitation of copy-fail vulnerability detected |
-Microsoft Defender Vulnerability Management (MDVM) also surfaces devices in customer environments that might be vulnerable to CVE-2026-31431.
-References
-[NVD – CVE-2026-31431](https://nvd.nist.gov/vuln/detail/CVE-2026-31431)[CVE-2026-31431 – Red Hat Customer Portal](https://access.redhat.com/security/cve/cve-2026-31431)[Copy Fail: 732 Bytes to Root on Every Major Linux Distribution. – Xint](https://xint.io/blog/copy-fail-linux-distributions)[New Linux ‘Copy Fail’ flaw gives hackers root on major distros](https://www.bleepingcomputer.com/news/security/new-linux-copy-fail-flaw-gives-hackers-root-on-major-distros/)
-This research is provided by Microsoft Defender Security Research with contributions from Andrea Lelli, Dietrich Nembhard, Nir Avnery, Ori Glassman, and members of Microsoft Threat Intelligence.
-Learn more
-For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
-To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
-To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
-Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
-- Learn more about
-[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection) - Evaluate your AI readiness with our latest
-[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). - Learn more about
-[Protect your agents in real-time during runtime (Preview)](https://learn.microsoft.com/en-us/defender-cloud-apps/real-time-agent-protection-during-runtime) - Explore
-[how to build and customize agents with Copilot Studio Agent Builder](https://eurppc-word-edit.officeapps.live.com/we/%E2%80%A2%09https:/learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/copilot-studio-agent-builder) [Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
@@ -247,7 +268,8 @@ Excellent Patch Tuesday roundup. Timely security updates like this naturally att
 The reminder to fully restart browsers is especially useful, since many users delay updates without realizing fixes are waiting to be applied. Helpful sections such as “how to verify Chrome is updated,” “what BlueHammer affects,” or “what to do after Patch Tuesday” can keep readers engaged longer and improve trust signals.
 There is also a smart crossover with PC-focused audiences interested in smooth and secure entertainment setups. Users searching for magis tv for pc often want optimized Windows performance, updated browsers, and safer software environments. Connecting security maintenance with PC streaming guides creates relevant long-tail traffic opportunities while serving readers with practical value.
 well this 1 broke windows explorer from running on reboot. on my win 11 25h2 pc, beware.
-Great article! The flow of the article really helps the message land. Keep them coming!</div>
+Great article! The flow of the article really helps the message land. Keep them coming!
+Excellent write-up. Mind if I share this with my team? It’s clearly written. Best,</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
