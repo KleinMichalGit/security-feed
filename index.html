@@ -59,12 +59,53 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-05-10</h1>
+        <h1>Security Briefing // 2026-05-11</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Active attack: Dirty Frag Linux vulnerability expands post-compromise risk</button></li><li><button onclick="show('art-1')">CISA gives feds four days to patch Ivanti flaw exploited as zero-day</button></li><li><button onclick="show('art-2')">Canvas Breach Disrupts Schools & Colleges Nationwide</button></li><li><button onclick="show('art-3')">Shift Happens – Uncovering Two Built-in Command Injections in Windows Context Menus</button></li><li><button onclick="show('art-4')">GRC in an AI World - Staying in the Fast Lane Without Losing the Race!</button></li><li><button onclick="show('art-5')">MuddyWater Uses Microsoft Teams to Steal Credentials in False Flag Ransomware Attack</button></li><li><button onclick="show('art-6')">CISA Adds Actively Exploited Linux Root Access Bug CVE-2026-31431 to KEV</button></li><li><button onclick="show('art-7')">CISA Adds Four Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-8')">Patch Tuesday, April 2026 Edition</button></li><li><button onclick="show('art-9')">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors</button></li></ul>
+            <ul><li><button onclick="show('art-0')">TrickMo Android banker adopts TON blockchain for covert comms</button></li><li><button onclick="show('art-1')">Fake OpenAI Privacy Filter Repo Hits #1 on Hugging Face, Draws 244K Downloads</button></li><li><button onclick="show('art-2')">Active attack: Dirty Frag Linux vulnerability expands post-compromise risk</button></li><li><button onclick="show('art-3')">Canvas Breach Disrupts Schools & Colleges Nationwide</button></li><li><button onclick="show('art-4')">GRC in an AI World - Staying in the Fast Lane Without Losing the Race!</button></li><li><button onclick="show('art-5')">CISA Adds Actively Exploited Linux Root Access Bug CVE-2026-31431 to KEV</button></li><li><button onclick="show('art-6')">CISA Adds Four Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-7')">Patch Tuesday, April 2026 Edition</button></li><li><button onclick="show('art-8')">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
+            <h2 class="article-title">TrickMo Android banker adopts TON blockchain for covert comms</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/trickmo-android-banker-adopts-ton-blockchain-for-covert-comms/" target="_blank">Original Link</a></p>
+            <div class="content-text">A new variant of the TrickMo Android banking malware, delivered in campaigns targeting users across Europe, introduces new commands and uses The Open Network (TON) for stealthy command-and-control communications. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">Fake OpenAI Privacy Filter Repo Hits #1 on Hugging Face, Draws 244K Downloads</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/05/fake-openai-privacy-filter-repo-hits-1.html" target="_blank">Original Link</a></p>
+            <div class="content-text">A malicious Hugging Face repository managed to take a spot in the platform's trending list by impersonating OpenAI's Privacy Filter open-weight model to deliver a Rust-based information stealer to Windows users.
+The project, named [Open-OSS/privacy-filter](https://huggingface.co/Open-OSS/privacy-filter), masqueraded as its legitimate counterpart, released by OpenAI late last month ([openai/privacy-filter](https://huggingface.co/openai/privacy-filter)), including copying the entire description verbatim to trick unsuspecting users into downloading it.Access to the malicious model has since been disabled by Hugging Face.
+Privacy Filter was [unveiled](https://openai.com/index/introducing-openai-privacy-filter/) in April 2026 by the artificial intelligence (AI) company as a way to detect and redact personally identifiable information (PII) in unstructured text with an aim to incorporate strong privacy and security protections into applications.
+"The repository had typosquatted OpenAI's legitimate Privacy Filter release, copied its model card nearly verbatim, and shipped a loader.py file that fetches and executes infostealer malware on Windows machines," the HiddenLayer Research Team [said](https://www.hiddenlayer.com/research/malware-found-in-trending-hugging-face-repository-open-oss-privacy-filter) in a report published last week.
+The malicious project instructs users to clone the repository and run a batch script ("start.bat") for Windows or a Python script ("loader.py") for Linux or macOS systems to configure all necessary dependencies and start the model.
+Once launched, the Python script triggers malicious code responsible for disabling SSL verification, decoding a Base64-encoded URL hosted on JSON Keeper, and using it to extract a command that's passed to PowerShell for subsequent execution.The use of JSON Keeper, a public JSON paste service, as a dead drop resolver allows the attackers to switch payloads on the fly without the need for modifying the repository.
+The PowerShell command is used to download a batch script from a remote server ("api.eth-fastscan[.]org") and launch it using "cmd.exe."The batch script functions as a second-stage downloader that prepares the environment by elevating its privileges by means of a User Account Control (UAC) prompt, configuring Microsoft Defender Antivirus exclusions, downloading the next-stage binary from the same domain, and setting up a scheduled task that launches a PowerShell script to run the executable.
+Once the scheduled task is launched, the malware waits for two seconds before deleting itself. The final stage is an information stealer that's designed to take screenshots and harvest data from Discord, cryptocurrency wallets and extensions, system metadata, files such as FileZilla configurations and wallet seed phrases, and web browsers based on the Chromium and Gecko rendering engines.
+"Despite using a scheduled task, this stage establishes no persistence: the task is destroyed before any reboot. It is being used as a one-shot SYSTEM-context launcher," HiddenLayer explained.
+The stealer also runs checks to detect debuggers and sandboxes, ascertains it's not running in a virtual machine, and tries to disable Windows Antimalware Scan Interface (AMSI) and Event Tracing for Windows (ETW) to evade behavioural detection. The stolen data is exfiltrated in JSON format to the "recargapopular[.]com" domain.
+Prior to it being disabled, the model is said to have reached the #1 trending position on Hugging Face with approximately 244,000 downloads and 667 likes within 18 hours.It's suspected that these numbers were artificially inflated to give the repository an illusion of trust and get users to download it.
+Further analysis of the activity has unearthed six more repositories that feature a similar Python loader to deploy the stealer -
+- anthfu/Bonsai-8B-gguf
+- anthfu/Qwen3.6-35B-A3B-APEX-GGUF
+- anthfu/DeepSeek-V4-Pro
+- anthfu/Qwopus-GLM-18B-Merged-GGUF
+- anthfu/Qwen3.6-35B-A3B-Claude-4.6-Opus-Reasoning-Distilled-GGUF
+- anthfu/supergemma4-26b-uncensored-gguf-v2
+HiddenLayer said it also observed the "api[.]eth-fastscan[.]org" domain being used to serve a different Windows executable ("[o0q2l47f.exe](https://www.virustotal.com/gui/file/c1b59cc25bdc1fe3f3ce8eda06d002dda7cb02dea8c29877b68d04cd089363c7/detection)") that beacons out to "welovechinatown[.]info," a command-and-control (C2) server that was previously put to use in a campaign that leveraged a malicious npm package named trevlo to deliver ValleyRAT (aka Winos 4.0).
+"The package's postinstall hook silently executes an obfuscated JavaScript loader that spawns a base64-encoded PowerShell command, which in turn fetches and executes a second-stage PowerShell script from attacker-controlled infrastructure," Panther [noted](https://panther.com/blog/sober-up-npm-typosquat-delivers-winos4.0-implant-via-multi-stage-powershell-dropper) last month.
+"That script downloads and runs a Winos 4.0 stager binary ("CodeRun102.exe") with full evasion, complete with hidden window execution, Zone Identifier removal, and process detachment."
+The attack is noteworthy for the fact that it represents a new initial access vector for ValleyRAT, a modular remote access trojan that's [known](https://thehackernews.com/2026/05/silver-fox-deploys-abcdoor-malware-via.html) to be [distributed](https://thehackernews.com/2025/12/silver-fox-uses-fake-microsoft-teams.html) via phishing emails and search engine optimization (SEO) poisoning. The use of ValleyRAT is exclusively attributed to a Chinese hacking group dubbed Silver Fox.
+"The shared infrastructure suggests these campaigns are possibly linked and likely part of a broader supply chain operation targeting open-source ecosystems," HiddenLayer said.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
             <h2 class="article-title">Active attack: Dirty Frag Linux vulnerability expands post-compromise risk</h2>
             <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/05/08/active-attack-dirty-frag-linux-vulnerability-expands-post-compromise-risk/" target="_blank">Original Link</a></p>
             <div class="content-text">A newly disclosed Linux local privilege escalation vulnerability known as “Dirty Frag” enables escalation from an unprivileged user to root through vulnerable kernel networking and memory-fragment handling components, including esp4, esp6 (CVE-2026-43284), and rxrpc (CVE-2026-43500). Public reporting and proof-of-concept activity indicate the exploit is designed to provide more reliable privilege escalation than traditional race-condition-dependent Linux local privilege escalation techniques.
@@ -133,17 +174,7 @@ Read about CopyFail (CVE-2026-31431), including mitigation and detection guidanc
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-1" class="article-body">
-            <h2 class="article-title">CISA gives feds four days to patch Ivanti flaw exploited as zero-day</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/cisa-gives-feds-four-days-to-patch-ivanti-flaw-exploited-as-zero-day/" target="_blank">Original Link</a></p>
-            <div class="content-text">CISA has given U.S. federal agencies four days to secure their networks against a high-severity vulnerability in Ivanti Endpoint Manager Mobile (EPMM) exploited in zero-day attacks. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-2" class="article-body">
+        <div id="art-3" class="article-body">
             <h2 class="article-title">Canvas Breach Disrupts Schools & Colleges Nationwide</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/05/canvas-breach-disrupts-schools-colleges-nationwide/" target="_blank">Original Link</a></p>
             <div class="content-text">An ongoing data extortion attack targeting the widely-used education technology platform Canvas disrupted classes and coursework at school districts and universities across the United States today, after a cybercrime group defaced the service’s login page with a ransom demand that threatened to leak data from 275 million students and faculty across nearly 9,000 educational institutions.
@@ -199,6 +230,7 @@ Canvas does not have information about who is LGBTQ+. Nor do they have informati
 And you don’t see how those are connected? Pretty dim bulb, ain’t you.
 Backdoor Canvas certainly does contain information on students, i.e. student i.d. numbers, students’ personnel phone and email, possibly bank account links … and possibly demographics. Even if all I could obtain was a student i.d. number, I could, in short order, obtain pretty much any information about a student that I wanted: financial, demographic, address, email, phone, social media … and on and on.
 That is why redundancy is important, but most in Government have no idea what that is…….
+Oh I think they understand redundancy lol.. it doesn’t impart usefulness per se.
 “Canvas is currently undergoing scheduled ransomware negotiation. Check back soon”
 Fixed it.
 Even in Europe, in the Netherlands, all universities and colleges have been hacked.
@@ -209,6 +241,8 @@ The company is private, not public: https://www.instructure.com/press-release/in
 Huh, they were taken private less than two years ago. I wonder what the new owners did with “unnecessary” spending on security?
 Oof, it’s like Instructure took every piece of advice on handling this type of attack and threw it out the window. It doesn’t make me super confident that anything they’ve stated regarding breached information is accurate. Great that the colleges might be able to pay up, but the cash-strapped public school systems don’t have an extra few million hanging around to give away.
 Those claims from Mann sure are something. Cybersecurity practices at Instructure did not appear to be immature: https://trust.instructure.com/.
+Doug: appreciate the link. To be clear, the post isn’t a claim that Instructure has no security program; SOC 2 and the trust portal are documented.
+The argument is narrower: the May 2 ‘contained’ assertion didn’t survive contact with May 7, and the choice to label that day’s outage ‘scheduled maintenance’ on the login surface while the status page lagged is the response posture I’m critiquing, not the underlying controls.
 I think it’s time to look at other platforms like blackboard instead of Canvas that might be more secure.
 Blackboard had many functioning issues so our schools got rid of it a while ago.
 The question is, why are ANY of these considered necessary? Why exactly?
@@ -244,18 +278,10 @@ I work at a university, fortunately in the library and not on the education side
 They say they’ve fixed the problem. If there’s no leak, can we assume they paid the ransom?
 > “Penn was the named victim,” Mann wrote. “Instructure was the mechanism.
 that’s like blaming the car manufacturer because you left it unlocked and someone stole your laptop from inside.
-As a CISO myself, I do have to wonder why Salesforce is not a bit in the crosshairs with Canvas running on their platform!</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-3" class="article-body">
-            <h2 class="article-title">Shift Happens – Uncovering Two Built-in Command Injections in Windows Context Menus</h2>
-            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/05/07/shift-happens-uncovering-two-built-in-command-injections-in-windows-context-menus/" target="_blank">Original Link</a></p>
-            <div class="content-text"><p>TL;DR: Two command injection vulnerabilities exist in the Windows Explorer “Open PowerShell window here” context menu due to improper quoting and command injection through user-controlled folder paths. By creating folders with crafted names (e.g., folder; calc), an attacker can trigger arbitrary PowerShell command execution when a user uses Shift + Right-Click → Open PowerShell window [&#8230;]</p>
-<p>The post <a href="https://specterops.io/blog/2026/05/07/shift-happens-uncovering-two-built-in-command-injections-in-windows-context-menus/">Shift Happens &#8211; Uncovering Two Built-in Command Injections in Windows Context Menus</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
-
-[Full content could not be extracted. Visit source for details.]</div>
+As a CISO myself, I do have to wonder why Salesforce is not a bit in the crosshairs with Canvas running on their platform!
+Don’t tell me, let me guess . . . Instructure will offer a year of free credit monitoring to the affected customers. Add that to the four other instances of free credit monitoring they already have courtesy of other irresponsible companies who lost their info.
+Hard to implement for sure, but it would be nice to see the big companies feel more pain for these incidents. Big financial punishment is all they will understand.
+So, the eight year old kids can claim it in nine years or so?</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
@@ -317,46 +343,6 @@ For assistance with Risk Assessments, Program Development, or other questions re
             <hr class="separator">
         </div>
         <div id="art-5" class="article-body">
-            <h2 class="article-title">MuddyWater Uses Microsoft Teams to Steal Credentials in False Flag Ransomware Attack</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/05/muddywater-uses-microsoft-teams-to.html" target="_blank">Original Link</a></p>
-            <div class="content-text">The Iranian state-sponsored hacking group known as [MuddyWater](https://thehackernews.com/2026/03/iran-linked-muddywater-hackers-target.html) (aka Mango Sandstorm, Seedworm, and Static Kitten) has been attributed to a ransomware attack in what has been described as a "false flag" operation.
-The attack, observed by Rapid7 in early 2026, has been found to leverage social engineering techniques via Microsoft Teams to initiate the infection sequence. Although the incident initially appeared to be consistent with a ransomware-as-a-service (RaaS) group operating under the [Chaos](https://thehackernews.com/2025/07/chaos-raas-emerges-after-blacksuit.html) brand, evidence points to it being a targeted state-backed attack that masquerades as opportunistic extortion.
-"The campaign was characterized by a high-touch [social engineering phase conducted via Microsoft Teams](https://thehackernews.com/2026/04/unc6692-impersonates-it-helpdesk-via.html), where the attackers utilized interactive screen-sharing to harvest credentials and manipulate multi-factor authentication (MFA)," Rapid7 said in a [report](https://www.rapid7.com/blog/post/tr-muddying-tracks-state-sponsored-shadow-behind-chaos-ransomware/) shared with The Hacker News.
-"Once inside, the group bypassed traditional ransomware workflows, forgoing file encryption in favor of data exfiltration and long-term persistence via remote management tools like DWAgent."
-The findings indicate that MuddyWater is attempting to muddy attribution efforts by increasingly relying on off-the-shelf tools available in the cybercrime underground to conduct its attacks. This shift has also been [documented](https://thehackernews.com/2026/04/iran-linked-hackers-disrupt-us-critical.html) by Ctrl-Alt-Intel, Broadcom, Check Point, and JUMPSEC in recent months, highlighting the adversary's use of CastleRAT and Tsundere.
-With that said, this is not the first time MuddyWater has conducted ransomware attacks. In September 2020, the threat actor was [attributed](https://thehackernews.com/2025/12/iran-linked-hackers-hits-israeli_2.html) to a campaign targeting prominent Israeli organizations with a loader called PowGoop that deployed a variant of Thanos ransomware with destructive capabilities.
-Then, in 2023, Microsoft [disclosed](https://thehackernews.com/2023/04/iran-based-hackers-caught-carrying-out.html) that the hacking group teamed up with DEV-1084, a threat actor known to use the DarkBit persona, to conduct destructive attacks under the pretext of deploying ransomware. As recently as October 2025, the attackers are believed to have [used the Qilin ransomware](https://thehackernews.com/2026/03/iran-linked-hackers-breach-fbi.html) to target an Israeli government hospital.
-"In this case, the emerging picture was that the attackers were likely Iranian-affiliated operators working through the cyber criminal ecosystem, using a criminal ransomware brand and methods associated with the broader extortion market, while serving a strategic Iranian objective," Check Point noted back in March.
-"The use of Qilin, and participation in its affiliate program, likely serves not only as a layer of cover and plausible deniability, but also as a meaningful operational enabler, especially as earlier attacks appear to have heightened security measures and monitoring by Israeli authorities."
-Chaos is a RaaS group that emerged in early 2025. Known for its double extortion model, the threat actor has advertised its affiliate program on cybercrime forums, like RAMP and RehubCom.
-Attacks mounted by the e-crime gang leverage a combination of mail flooding and vishing using Teams, often by impersonating IT support personnel, to trick victims into installing remote access tools like Microsoft Quick Assist, and then abuse that foothold to burrow deeper into the victim's environment and deploy ransomware.
-"The group has also demonstrated triple extortion by threatening distributed denial-of-service (DDoS) attacks against the victim's infrastructure," Rapid7 said. "These capabilities are reportedly offered to affiliates as part of bundled services, representing a notable feature of its RaaS model. Additionally, Chaos has been observed leveraging elements of quadruple extortion, including threats to contact customers or competitors to increase pressure on victims."
-As of late March 2026, Chaos has claimed 36 victims on its data leak site, most of which are located in the U.S. Construction, manufacturing, and business services are some of the prominent sectors targeted by the group.
-In the intrusion analyzed by Rapid7, the threat actor is said to have initiated external chat requests via Teams to engage with employees and obtain initial access through screen-sharing sessions, followed by using compromised user accounts to conduct reconnaissance, establish persistence using tools like DWAgent and AnyDesk, move laterally, and exfiltrate data. The victim was then contacted via email for ransom negotiations.
-"While connected, the TA [threat actor] executed basic discovery commands, accessed files related to the victim’s VPN configuration, and instructed users to enter their credentials into locally created text files," Rapid7 explained. "In at least one instance, the TA also deployed a remote management tool (AnyDesk) to further facilitate access."
-The threat actor has also been observed using RDP to download an executable ("ms_upd.exe") from an external server ("172.86.126[.]208") using the curl utility. Upon execution, the binary kicks off a multi-stage infection chain that delivers more malicious components.
-A brief description of the malware families is below -
-[ms_upd.exe](https://www.virustotal.com/gui/file/24857fe82f454719cd18bcbe19b0cfa5387bee1022008b7f5f3a8be9f05e4d14)(aka[Stagecomp](https://thehackernews.com/2026/03/iran-linked-muddywater-hackers-target.html)), which collects system information and reaches out to a command-and-control (C2) server to drop next-stage payloads (game.exe, WebView2Loader.dll, and visualwincomp.txt).[game.exe](https://www.virustotal.com/gui/file/1319d474d19eb386841732c728acf0c5fe64aa135101c6ceee1bd0369ecf97b6)(aka[Darkcomp](https://thehackernews.com/2026/03/iran-linked-muddywater-hackers-target.html)), which is a bespoke remote access trojan (RAT) that masquerades as a legitimate[Microsoft WebView2](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)application. It's a trojanized version of the official Microsoft[WebView2APISample project](https://github.com/MicrosoftEdge/WebView2Samples/tree/main/SampleApps/WebView2APISample).[WebView2Loader.dll](https://www.virustotal.com/gui/file/a47cd0dc12f0152d8f05b79e5c86bac9231f621db7b0e90a32f87b98b4e82f3a), a legitimate DLL downloaded by ms_upd.exe. It's required by Microsoft Edge WebView2 to embed web content in Windows applications.[visualwincomp.txt](https://www.virustotal.com/gui/file/c86ab27100f2a2939ac0d4a8af511f0a1a8116ba856100aae03bc2ad6cb0f1e0), an encrypted configuration used by the RAT to obtain the C2 information.
-The RAT connects to the C2 server and enters an infinite loop to poll for new commands every 60 seconds, allowing it to run commands or PowerShell scripts, perform file operations, and spawn an interactive cmd.exe shell or PowerShell.
-The campaign's links to MuddyWater stem from the use of a [code-signing certificate](https://www.seqrite.com/blog/iran-us-israel-cyberwar-2026-analysis/) attributed to "Donald Gay" to sign "ms_upd.exe." The certificate has been [previously put to use](https://thehackernews.com/2026/02/muddywater-targets-mena-organizations.html) by the threat cluster to sign its malware, including a CastleLoader downloader called [Fakeset](https://thehackernews.com/2026/03/iran-linked-hackers-breach-fbi.html).
-These findings underscore the growing convergence of state-sponsored intrusion activity and cybercriminal tradecraft to obscure attribution and delay appropriate defensive response.
-"The use of a RaaS framework in this context may enable the actor to blur distinctions between state-sponsored activity and financially motivated cybercrime, thereby complicating attribution," Rapid7 said. "Furthermore, the inclusion of extortion and negotiation elements could serve to focus defensive efforts on immediate impact, likely delaying the identification of underlying persistence mechanisms established via remote access tools such as DWAgent or AnyDesk."
-"Notably, the apparent absence of file encryption, despite the presence of Chaos ransomware artifacts, represents a deviation from typical ransomware behavior. This inconsistency may indicate that the ransomware component functioned primarily as a facilitating or obfuscation mechanism, rather than as the primary objective of the intrusion."
-In a statement shared with The Hacker News, Sergey Shykevich, group manager at Check Point Research, said the use of cyber crime tools among Iranian threat groups, including MuddyWater, has been growing.
-"This approach gives them considerably more operational flexibility and access to extensive toolkits without the need for internal development investment," Shykevich said. "It also makes attribution considerably more difficult, adding another layer of complexity for defenders tracking these actors."
-The development comes as Hunt.io revealed details of an Iranian-nexus operation targeting Omani government institutions to exfiltrate more than 26,000 Ministry of Justice user records, judicial case data, committee decisions, and SAM and SYSTEM registry hives.
-"An open directory on 172.86.76[.]127, a RouterHosting VPS in the United Arab Emirates, surfaced an active intrusion campaign against the Omani government, with the toolkit, C2 code, session logs, and exfiltrated data all sitting in plain sight," the company [said](https://hunt.io/blog/iranian-nexus-oman-government-intrusion). "The primary target was the Ministry of Justice and Legal Affairs (mjla.gov[.]om)."
-The discovery also coincides with continued activity from pro-Iran-aligned hacktivist groups, such as Handala Hack, which has claimed to have published details on nearly 400 U.S. Navy personnel in the Persian Gulf and carried out an attack on the Port of Fujairah in the United Arab Emirates, enabling it to gain access to its internal systems and leak about 11,000 sensitive documents related to invoices, shipping records, and customs documents.
-"A month ago, we documented a broad escalation in Iranian-linked cyber operations — [surveillance via hacked cameras](https://research.checkpoint.com/2026/interplay-between-iranian-targeting-of-ip-cameras-and-physical-warfare-in-the-middle-east/), the leak of thousands of highly sensitive documents from Israel's former Military Chief of Staff, and a measurable rise in attack volume across the region. We said then that further escalation was likely," Shykevich told the publication.
-"The claimed attack on the Port of Fujairah is that escalation, if confirmed. What's changed is the nature of the threat: this is no longer about intelligence gathering or public embarrassment. Stolen port infrastructure data was allegedly used to enable physical missile targeting."
-"The cyber and kinetic domains are now explicitly connected. This campaign is not slowing down. Every quiet period on the physical front has historically been followed by intensified cyber activity — and what we're seeing now is the most serious manifestation of that pattern to date."
-(The story was updated after publication to include a response from Check Point Research.)
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-6" class="article-body">
             <h2 class="article-title">CISA Adds Actively Exploited Linux Root Access Bug CVE-2026-31431 to KEV</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/05/cisa-adds-actively-exploited-linux-root.html" target="_blank">Original Link</a></p>
             <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Friday [added](https://www.cisa.gov/news-events/alerts/2026/05/01/cisa-adds-one-known-exploited-vulnerability-catalog) a recently disclosed security flaw impacting various Linux distributions to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, citing evidence of active exploitation in the wild.
@@ -383,7 +369,7 @@ Federal Civilian Executive Branch (FCEB) agencies have been advised to apply the
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-7" class="article-body">
+        <div id="art-6" class="article-body">
             <h2 class="article-title">CISA Adds Four Known Exploited Vulnerabilities to Catalog</h2>
             <p class="source-link">Source: All CISA Advisories | <a href="https://www.cisa.gov/news-events/alerts/2026/04/24/cisa-adds-four-known-exploited-vulnerabilities-catalog" target="_blank">Original Link</a></p>
             <div class="content-text">CISA Adds Four Known Exploited Vulnerabilities to Catalog
@@ -397,7 +383,7 @@ This product is provided subject to this [Notification](/notification) and this 
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-8" class="article-body">
+        <div id="art-7" class="article-body">
             <h2 class="article-title">Patch Tuesday, April 2026 Edition</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/04/patch-tuesday-april-2026-edition/" target="_blank">Original Link</a></p>
             <div class="content-text">Microsoft today pushed software updates to fix a staggering 167 security vulnerabilities in its Windows operating systems and related software, including a SharePoint Server zero-day and a publicly disclosed weakness in Windows Defender dubbed “BlueHammer.” Separately, Google Chrome fixed its fourth zero-day of 2026, and an emergency update for Adobe Reader nixes an actively exploited flaw that can lead to remote code execution.
@@ -459,7 +445,7 @@ Really nice post. Quick one — Either way, subscribing now.</div>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-9" class="article-body">
+        <div id="art-8" class="article-body">
             <h2 class="article-title">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors</h2>
             <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/darksword-ios-exploit-chain/" target="_blank">Original Link</a></p>
             <div class="content-text">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors
@@ -970,6 +956,17 @@ $ = "src/MigFilterBypassThread.js"
 condition:
 any of them
 }</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-9" class="article-body">
+            <h2 class="article-title">Updates to the MSSQLHound OpenGraph Collector for BloodHound</h2>
+            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/01/20/updates-to-the-mssqlhound-opengraph-collector-for-bloodhound/" target="_blank">Original Link</a></p>
+            <div class="content-text"><p>tl;dr: MSSQLHound, a PowerShell script that collects security information from remote MSSQL Server instances, now scans them to determine whether or not NTLM relay attacks are possible, accounts for a recent privilege escalation vulnerability, and includes queries you can import into the BloodHound attack path graph to visualize, navigate, and remediate misconfigurations in MSSQL. Updates [&#8230;]</p>
+<p>The post <a href="https://specterops.io/blog/2026/01/20/updates-to-the-mssqlhound-opengraph-collector-for-bloodhound/">Updates to the MSSQLHound OpenGraph Collector for BloodHound</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
+
+[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
