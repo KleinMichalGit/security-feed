@@ -59,12 +59,42 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-05-13</h1>
+        <h1>Security Briefing // 2026-05-14</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Accelerating detection engineering using AI-assisted synthetic attack logs generation</button></li><li><button onclick="show('art-1')">Patch Tuesday, May 2026 Edition</button></li><li><button onclick="show('art-2')">Webinar: Fixing the gaps in network incident response</button></li><li><button onclick="show('art-3')">New Exim BDAT Vulnerability Exposes GnuTLS Builds to Potential Code Execution</button></li><li><button onclick="show('art-4')">Slamming the Door on Quick Assist Tech Support Scams and Abuse</button></li><li><button onclick="show('art-5')">TeamPCP Compromises Checkmarx Jenkins AST Plugin Weeks After KICS Supply Chain Attack</button></li><li><button onclick="show('art-6')">GTIG AI Threat Tracker: Adversaries Leverage AI for Vulnerability Exploitation, Augmented Operations, and Initial Access</button></li><li><button onclick="show('art-7')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-8')">Patch Tuesday, April 2026 Edition</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
+            <ul><li><button onclick="show('art-0')">New Fragnesia Linux Kernel LPE Grants Root Access via Page Cache Corruption</button></li><li><button onclick="show('art-1')">New critical Exim mailer flaw allows remote code execution</button></li><li><button onclick="show('art-2')">Accelerating detection engineering using AI-assisted synthetic attack logs generation</button></li><li><button onclick="show('art-3')">Patch Tuesday, May 2026 Edition</button></li><li><button onclick="show('art-4')">New Exim BDAT Vulnerability Exposes GnuTLS Builds to Potential Code Execution</button></li><li><button onclick="show('art-5')">Slamming the Door on Quick Assist Tech Support Scams and Abuse</button></li><li><button onclick="show('art-6')">GTIG AI Threat Tracker: Adversaries Leverage AI for Vulnerability Exploitation, Augmented Operations, and Initial Access</button></li><li><button onclick="show('art-7')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-8')">Patch Tuesday, April 2026 Edition</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
+            <h2 class="article-title">New Fragnesia Linux Kernel LPE Grants Root Access via Page Cache Corruption</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/05/new-fragnesia-linux-kernel-lpe-grants.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Details have emerged about a new variant of the recent [Dirty Frag](https://thehackernews.com/2026/05/linux-kernel-dirty-frag-lpe-exploit.html) Linux local privilege escalation (LPE) vulnerability that allows local attackers to gain root access, making it the third such bug to be identified in the kernel within a span of two weeks.
+Codenamed [Fragnesia](https://github.com/v12-security/pocs/blob/main/fragnesia%2FREADME.md), the security vulnerability is tracked as CVE-2026-46300 (CVSS score: 7.8) and is rooted in the Linux kernel's XFRM ESP-in-TCP subsystem. It was discovered by researcher William Bowling of the V12 security team.
+"The vulnerability allows unprivileged local attackers to modify read-only file contents in the kernel page cache and achieve root privileges through a deterministic page-cache corruption primitive," Google-owned Wiz [said](https://www.wiz.io/blog/fragnesia-linux-kernel-local-privilege-escalation-via-esp-in-tcp).
+Advisories have been released by multiple Linux distributions -
+"This is a separate bug in the ESP/XFRM from Dirty Frag which has received its own patch," V12 said. "However, it is in the same surface and the mitigation is the same as for Dirty Frag. It abuses a logic bug in the Linux XFRM ESP-in-TCP subsystem to achieve arbitrary byte writes into the kernel page cache of read-only files, without requiring any race condition."
+Fragnesia is similar to [Copy Fail](https://unit42.paloaltonetworks.com/cve-2026-31431-copy-fail/) and [Dirty Frag](https://www.automox.com/blog/dirty-frag-what-you-need-to-know-and-how-to-respond) (aka Copy Fail 2) in that it immediately yields root on all major distributions by achieving a memory write primitive in the kernel and corrupting the page cache memory of the /usr/bin/su binary. A proof-of-concept (PoC) exploit has been released by V12.
+"Customers who have already applied the Dirty Frag mitigation need no further action until patched kernels are released," CloudLinux maintainers said. Red Hat [said](https://access.redhat.com/security/vulnerabilities/RHSB-2026-003) it's performing an assessment to confirm if existing mitigations extend to CVE-2026-46300.
+Wiz also noted that AppArmor restrictions on unprivileged user namespaces may serve as a partial mitigation, requiring additional bypasses for successful exploitation. However, unlike Dirty Frag, no host-level privileges are required.
+"A patch is available, and while no in-the-wild exploitation has been observed at this time, we urge users and organizations to apply the patch as soon as possible by running update tools," Microsoft [said](https://x.com/MsftSecIntel/status/2054701609024934064). "If patching is not possible at this point, consider applying the same mitigations for Dirty Frag."
+This includes disabling esp4, esp6, and related xfrm/IPsec functionality, restricting unnecessary local shell access, hardening containerized workloads, and increasing monitoring for abnormal privilege escalation activity.
+The development comes as a threat actor named "berz0k" has been observed advertising on cybercrime forums a zero-day Linux LPE exploit for $170,000, claiming it works on multiple major Linux distributions.
+"The threat actor claims the vulnerability is TOCTOU-based (Time-of-Check Time-of-Use), capable of stable local privilege escalation without causing system crashes, and leverages a shared object (.so) payload dropped into the /tmp directory," ThreatMon [said](https://x.com/MonThreat/status/2054516027912769579) in a post on X.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">New critical Exim mailer flaw allows remote code execution</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/new-critical-exim-mailer-flaw-allows-remote-code-execution/" target="_blank">Original Link</a></p>
+            <div class="content-text">A critical vulnerability affecting certain configurations of the Exim open-source mail transfer agent could be exploited by an unauthenticated remote attacker to execute arbitrary code. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
             <h2 class="article-title">Accelerating detection engineering using AI-assisted synthetic attack logs generation</h2>
             <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/05/12/accelerating-detection-engineering-using-ai-assisted-synthetic-attack-logs-generation/" target="_blank">Original Link</a></p>
             <div class="content-text">Logs and telemetry are the foundation of modern cybersecurity. They enable threat detection, incident response, forensic investigation, and compliance across endpoints, networks, and cloud environments. Yet, despite their importance, high‑quality security attack logs are notoriously difficult to collect, especially at scale.
@@ -141,7 +171,7 @@ Review our documentation to learn more about our real-time protection capabiliti
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-1" class="article-body">
+        <div id="art-3" class="article-body">
             <h2 class="article-title">Patch Tuesday, May 2026 Edition</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/05/patch-tuesday-may-2026-edition/" target="_blank">Original Link</a></p>
             <div class="content-text">Artificial intelligence platforms may be just as susceptible to social engineering as human beings, but they are proving remarkably good at finding security vulnerabilities in human-made computer code. That reality is on full display this month with some of the more widely-used software makers — including Apple, Google, Microsoft, Mozilla and Oracle — fixing near record volumes of security bugs, and/or quickening the tempo of their patch releases.
@@ -149,55 +179,34 @@ As it does on the second Tuesday of every month, Microsoft today released softwa
 Sixteen of the vulnerabilities earned Microsoft’s most-dire “critical” label, meaning malware or miscreants could abuse these bugs to seize remote control over a vulnerable Windows device with little or no help from the user. Rapid7 has done much of the heavy lifting in identifying some of the more concerning critical weaknesses this month, including:
 [CVE-2026-41089](https://msrc.microsoft.com/update-guide/en-US/vulnerability/CVE-2026-41089): A critical stack-based buffer overflow in Windows Netlogon that offers an attacker SYSTEM privileges on the domain controller. No privileges or user interaction are required, and attack complexity is low. Patches are available for all versions of Windows Server from 2012 onwards.[CVE-2026-41096](https://msrc.microsoft.com/update-guide/en-US/vulnerability/CVE-2026-41096): A critical RCE in the Windows DNS client implementation worthy of attention despite Microsoft assessing exploitation as less likely.[CVE-2026-41103](https://msrc.microsoft.com/update-guide/en-US/vulnerability/CVE-2026-41103): A critical elevation of privilege vulnerability that allows an unauthorized attacker to impersonate an existing user by presenting forged credentials, thus bypassing Entra ID. Microsoft expects that exploitation is more likely.
 May’s Patch Tuesday is a welcome respite from April, which saw Microsoft [fix a near-record 167 security flaws](https://krebsonsecurity.com/2026/04/patch-tuesday-april-2026-edition/). Microsoft was among a few dozen tech giants given access to a “Project Glasswing,” a much-hyped AI capability developed by Anthropic that appears quite effective at unearthing security vulnerabilities in code.
-Apple, another early participant in Project Glasswing, typically fixes an average of 20 vulnerabilities each time it ships a security update for iOS devices, said Chris Goettl, vice president of product management at Ivanti. On May 11, Apple shipped iOS 15, which addressed at least 52 vulnerabilities and backported the changes all the way to iPhone 6s and iOS 15.
+Apple, another early participant in Project Glasswing, typically fixes an average of 20 vulnerabilities each time it ships a security update for iOS devices, said Chris Goettl, vice president of product management at Ivanti. On May 11, Apple shipped updates to address at least 52 vulnerabilities and backported the changes all the way to iPhone 6s and iOS 15.
 Last month, Mozilla released Firefox 150, which resolved [a whopping 271 vulnerabilities](https://arstechnica.com/ai/2026/04/mozilla-anthropics-mythos-found-271-zero-day-vulnerabilities-in-firefox-150/) that were reportedly discovered during the Glasswing evaluation.
 “Since Firefox 150.0.0 released, they have been on a more aggressive weekly cadence for security updates including the release of Firefox 150.0.3 on May Patch Tuesday resolving between three to five CVEs in each release,” Goettl said.
 The software giant Oracle likewise recently increased its patch pace in response to their work with Glasswing. In its most recent quarterly patch update, Oracle addressed at least 450 flaws, including [more than 300 fixes for remotely exploitable, unauthenticated flaws](https://www.securityweek.com/oracle-patches-450-vulnerabilities-with-april-2026-cpu/). But at the end of April, Oracle announced it was switching to a monthly update cycle for critical security issues.
 On May 8, Google started rolling out updates to its Chrome browser that [fixed an astonishing 127 security flaws](https://www.forbes.com/sites/daveywinder/2026/05/08/critical-new-google-security-update-127-chrome-security-vulnerabilities-confirmed/) (up from just 30 the previous month). Chrome automagically downloads available security updates, but installing them requires fully restarting the browser.
 If you encounter any weirdness applying the updates from Microsoft or any other vendor mentioned here, feel free to sound off in the comments below. Meantime, if you haven’t backed up your data and/or drive lately, doing that before updating is generally sound advice. For a more granular look at the Microsoft updates released today, checkout [this inventory](https://isc.sans.edu/forums/diary/Microsoft%20May%202026%20Patch%20Tuesday/32980/) by the SANS Internet Storm Center.
 Typo: You wrote “On May 11, Apple shipped iOS 15”. I Believe you meant to write iOS 26.5.
-Nothing to do with this topic but I’m not sure where else to ask Brian about this: can you further explain your posting about the malign residential proxy networks and synthient.com? What can’t other anti-malware software find these and what should be done?</div>
+Nothing to do with this topic but I’m not sure where else to ask Brian about this: can you further explain your posting about the malign residential proxy networks and synthient.com? What can’t other anti-malware software find these and what should be done?
+patches went on fine on my win 11 25H2 system.
+All on one patch Tuesday.
+Ford had 150 Safety recalls for 2024 or 2025 [cant remember which].</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-2" class="article-body">
-            <h2 class="article-title">Webinar: Fixing the gaps in network incident response</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/webinar-fixing-the-gaps-in-network-incident-response/" target="_blank">Original Link</a></p>
-            <div class="content-text">Most network incidents do not escalate because of a lack of visibility. They escalate because IT teams are forced to manually triage alerts and coordinate responses across disparate systems during high-pressure incidents.
-On Tuesday, June 2, 2026, BleepingComputer will host a live webinar titled "[From alert to resolution: Fixing the gaps in network incident response](http://event.on24.com/wcc/r/5323220/4922233E55ACC9298C66A92674D53B5A?utm_source=bleepingcomputer&utm_medium=referral&utm_campaign=tines&utm_content=article)" with Tines.
-The webinar explores why IT teams need more coordinated response workflows to reduce response times, prevent outages, and move incidents from the initial alert to resolution faster.
-As environments become more complex, alerts now come from a wide variety of systems, including monitoring platforms, infrastructure systems, identity tools, and security products. As alert volumes continue to grow, many IT teams still rely on manual investigation and routing during high-pressure incidents, slowing response times and increasing the risk of disruptions.
-Tines helps teams build intelligent workflows that combine automation and AI to streamline incident response, reduce repetitive work, and coordinate action across systems.
-In this session, attendees will learn how IT teams can close the gaps between alerting, triage, analysis, routing, and resolution.
-Too many tools, not enough coordination
-Network incidents often force IT teams to jump between monitoring platforms, infrastructure tools, ticketing systems, and communication channels to understand what happened and coordinate next steps.
-This webinar will examine how automation and AI-assisted workflows can help reduce manual overhead, improve coordination, and speed incident resolution across complex environments.
-The upcoming webinar will cover:
-- How network incidents typically evolve from initial alert to service impact
-- Where triage, enrichment, and routing break down in real-world workflows
-- How to automatically enrich alerts with network, identity, and threat context
-- Techniques to prioritize and route incidents without manual intervention
-- How to move from fragmented response to coordinated resolution across systems
-Don’t miss this opportunity to learn how IT teams can reduce response delays and improve incident resolution with automation and AI-assisted workflows.
-Comments have been disabled for this article.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-3" class="article-body">
+        <div id="art-4" class="article-body">
             <h2 class="article-title">New Exim BDAT Vulnerability Exposes GnuTLS Builds to Potential Code Execution</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/05/new-exim-bdat-vulnerability-exposes.html" target="_blank">Original Link</a></p>
             <div class="content-text">Exim has released security updates to address a severe security issue affecting certain configurations that could enable memory corruption and potential code execution.
 Exim is an open-source Mail Transfer Agent (MTA) designed for Unix-like systems to receive, route, and deliver email.
-The vulnerability, tracked as CVE-2026-45185, aka Dead.Letter, has been described as a use-after-free
+The vulnerability, tracked as CVE-2026-45185 (CVSS score: 9.8), aka Dead.Letter, has been described as a
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-4" class="article-body">
+        <div id="art-5" class="article-body">
             <h2 class="article-title">Slamming the Door on Quick Assist Tech Support Scams and Abuse</h2>
             <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/slamming-the-door-on-quick-assist-tech-support-scams-and-abuse" target="_blank">Original Link</a></p>
             <div class="content-text">Slamming the Door on Quick Assist Tech Support Scams and Abuse
@@ -250,25 +259,6 @@ Additional References/Resources:
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-5" class="article-body">
-            <h2 class="article-title">TeamPCP Compromises Checkmarx Jenkins AST Plugin Weeks After KICS Supply Chain Attack</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/05/teampcp-compromises-checkmarx-jenkins.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Checkmarx has confirmed that a modified version of the [Jenkins AST plugin](https://plugins.jenkins.io/checkmarx-ast-scanner/) was published to the Jenkins Marketplace.
-"If you are using Checkmarx Jenkins AST plugin, you need to ensure that you are using the version 2.0.13-829.vc72453fa_1c16 that was published on December 17, 2025 or previously," the cybersecurity company [said](https://checkmarx.com/blog/ongoing-security-updates/) in a statement over the weekend.
-As of writing, Checkmarx has released 2.0.13-848.v76e89de8a_053 on both GitHub and the Jenkins Marketplace. A spokesperson for the company said the new version addresses the concerns associated with the incident. It's assessed that the malicious code was published after obtaining credentials from a [previous supply chain attack](https://thehackernews.com/2026/03/teampcp-hacks-checkmarx-github-actions.html)that took place in March 2026.
-The development is the latest attack orchestrated by TeamPCP targeting Checkmarx. It arrives a couple of weeks after the notorious cybercrime group was [attributed](https://thehackernews.com/2026/04/checkmarx-confirms-github-repository.html) to the compromise of its KICS Docker image, two VS Code extensions, and a GitHub Actions workflow to push credential-stealing malware.
-The breach, in turn, resulted in the [brief compromise](https://thehackernews.com/2026/04/bitwarden-cli-compromised-in-ongoing.html) of the Bitwarden CLI npm package to serve a similar stealer that can harvest a wide range of developer secrets.
-TeamPCP has been linked to a series of breaches since March 2026 as part of a sprawling campaign that exploits the inherent trust in the software supply chain to propagate its malware and expand its reach.
-According to details shared by security researcher [Adnan Khan](https://x.com/adnanthekhan/status/2053156381616676928) and [SOCRadar](https://socradar.io/blog/checkmarx-jenkins-plugin-teampcp-backdoor/), TeamPCP is said to have gained unauthorized access to the plugin's GitHub repository and renamed it to "Checkmarx-Fully-Hacked-by-TeamPCP-and-Their-Customers-Should-Cancel-Now."
-The defaced repository was also updated to include the description: "Checkmarx fails to rotate secrets again. with love – TeamPCP."
-"The fact that TeamPCP is back inside Checkmarx systems just weeks later points to one of two possibilities: either the initial remediation was incomplete and credentials were not fully rotated, or the group retained a foothold that wasn't identified during the March response," SOCRadar said.
-"A second Checkmarx incident happening this soon suggests the group is actively watching for re-entry points, testing the depth of past remediations, and capitalizing on any gaps."
-(The story was updated after publication to include a response from Checkmarx.)
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
         <div id="art-6" class="article-body">
             <h2 class="article-title">GTIG AI Threat Tracker: Adversaries Leverage AI for Vulnerability Exploitation, Augmented Operations, and Initial Access</h2>
             <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/ai-vulnerability-exploitation-initial-access/" target="_blank">Original Link</a></p>
@@ -308,7 +298,7 @@ In their pursuit of this vulnerability research, we see clear indications of aut
 To facilitate these activities, actors are also experimenting with agentic tools such as OpenClaw and OneClaw alongside intentionally vulnerable testing environments. The use of these tools alongside vulnerability research suggests an interest in refining AI-generated payloads within controlled settings to increase exploit reliability prior to deployment.
 Cyber Crime Threat Actors Discover and Weaponize Zero-Day Using AI
 Cyber crime threat actors remain interested in leveraging AI for vulnerability development as well. In one notable example, we observed prominent cyber crime threat actors partnering to plan a mass vulnerability exploitation operation. Our analysis of exploits associated with this campaign identified a zero-day vulnerability implemented in a Python script that enables the user to bypass two-factor authentication (2FA) on a popular open-source, web-based system administration tool. GTIG worked with the impacted vendor to responsibly disclose this vulnerability and disrupt this threat activity.
-Although we do not believe Gemini was used, based on the structure and content of these exploits, we have high confidence that the actor likely leveraged an AI model to support the discovery and weaponization of this vulnerability. For example, the script contains an abundance of educational docstrings, including a hallucinated CVSS score, and uses a structured, textbook Pythonic format highly characteristic of LLMs training data (e.g., detailed help menus and the clean _C ANSI color class).
+Although we do not believe Gemini was used, based on the structure and content of these exploits, we have high confidence that the actor leveraged an AI model to support the discovery and weaponization of this vulnerability. For example, the script contains an abundance of educational docstrings, including a hallucinated CVSS score, and uses a structured, textbook Pythonic format highly characteristic of LLMs training data (e.g., detailed help menus and the clean _C ANSI color class).
 Figure 2: Cyber crime threat actors leveraged AI to identify and exploit zero-day vulnerability
 The vulnerability can be classified as a 2FA bypass, though it requires valid user credentials in the first place. It stems not from common implementation errors like memory corruption or improper input sanitization, but a high-level semantic logic flaw where the developer hardcoded a trust assumption. While fuzzers and static analysis tools are optimized to detect sinks and crashes, frontier LLMs excel at identifying these types of high-level flaws and hardcoded static anomalies. Though frontier LLMs struggle to navigate complex enterprise authorization logic, they have an increasing ability to perform contextual reasoning, effectively reading the developer's intent to correlate the 2FA enforcement logic with the contradictions of its hardcoded exceptions. This capability can allow models to surface dormant logic errors that appear functionally correct to traditional scanners but are strategically broken from a security perspective.
 Figure 3: LLM vulnerability discovery capabilities compared with other discovery mechanisms
