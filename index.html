@@ -59,35 +59,26 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-05-14</h1>
+        <h1>Security Briefing // 2026-05-15</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">New Fragnesia Linux Kernel LPE Grants Root Access via Page Cache Corruption</button></li><li><button onclick="show('art-1')">New critical Exim mailer flaw allows remote code execution</button></li><li><button onclick="show('art-2')">Accelerating detection engineering using AI-assisted synthetic attack logs generation</button></li><li><button onclick="show('art-3')">Patch Tuesday, May 2026 Edition</button></li><li><button onclick="show('art-4')">New Exim BDAT Vulnerability Exposes GnuTLS Builds to Potential Code Execution</button></li><li><button onclick="show('art-5')">Slamming the Door on Quick Assist Tech Support Scams and Abuse</button></li><li><button onclick="show('art-6')">GTIG AI Threat Tracker: Adversaries Leverage AI for Vulnerability Exploitation, Augmented Operations, and Initial Access</button></li><li><button onclick="show('art-7')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-8')">Patch Tuesday, April 2026 Edition</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
+            <ul><li><button onclick="show('art-0')">CISA Adds Cisco SD-WAN CVE-2026-20182 to KEV After Admin Access Exploits</button></li><li><button onclick="show('art-1')">OpenAI confirms security breach in TanStack supply chain attack</button></li><li><button onclick="show('art-2')">Cisco Catalyst SD-WAN Controller Auth Bypass Actively Exploited to Gain Admin Access</button></li><li><button onclick="show('art-3')">When configuration becomes a vulnerability: Exploitable misconfigurations in AI apps</button></li><li><button onclick="show('art-4')">CISA Adds One Known Exploited Vulnerability to Catalog</button></li><li><button onclick="show('art-5')">Finding Your Way on the Passkey Path</button></li><li><button onclick="show('art-6')">Patch Tuesday, May 2026 Edition</button></li><li><button onclick="show('art-7')">GTIG AI Threat Tracker: Adversaries Leverage AI for Vulnerability Exploitation, Augmented Operations, and Initial Access</button></li><li><button onclick="show('art-8')">Patch Tuesday, April 2026 Edition</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">New Fragnesia Linux Kernel LPE Grants Root Access via Page Cache Corruption</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/05/new-fragnesia-linux-kernel-lpe-grants.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Details have emerged about a new variant of the recent [Dirty Frag](https://thehackernews.com/2026/05/linux-kernel-dirty-frag-lpe-exploit.html) Linux local privilege escalation (LPE) vulnerability that allows local attackers to gain root access, making it the third such bug to be identified in the kernel within a span of two weeks.
-Codenamed [Fragnesia](https://github.com/v12-security/pocs/blob/main/fragnesia%2FREADME.md), the security vulnerability is tracked as CVE-2026-46300 (CVSS score: 7.8) and is rooted in the Linux kernel's XFRM ESP-in-TCP subsystem. It was discovered by researcher William Bowling of the V12 security team.
-"The vulnerability allows unprivileged local attackers to modify read-only file contents in the kernel page cache and achieve root privileges through a deterministic page-cache corruption primitive," Google-owned Wiz [said](https://www.wiz.io/blog/fragnesia-linux-kernel-local-privilege-escalation-via-esp-in-tcp).
-Advisories have been released by multiple Linux distributions -
-"This is a separate bug in the ESP/XFRM from Dirty Frag which has received its own patch," V12 said. "However, it is in the same surface and the mitigation is the same as for Dirty Frag. It abuses a logic bug in the Linux XFRM ESP-in-TCP subsystem to achieve arbitrary byte writes into the kernel page cache of read-only files, without requiring any race condition."
-Fragnesia is similar to [Copy Fail](https://unit42.paloaltonetworks.com/cve-2026-31431-copy-fail/) and [Dirty Frag](https://www.automox.com/blog/dirty-frag-what-you-need-to-know-and-how-to-respond) (aka Copy Fail 2) in that it immediately yields root on all major distributions by achieving a memory write primitive in the kernel and corrupting the page cache memory of the /usr/bin/su binary. A proof-of-concept (PoC) exploit has been released by V12.
-"Customers who have already applied the Dirty Frag mitigation need no further action until patched kernels are released," CloudLinux maintainers said. Red Hat [said](https://access.redhat.com/security/vulnerabilities/RHSB-2026-003) it's performing an assessment to confirm if existing mitigations extend to CVE-2026-46300.
-Wiz also noted that AppArmor restrictions on unprivileged user namespaces may serve as a partial mitigation, requiring additional bypasses for successful exploitation. However, unlike Dirty Frag, no host-level privileges are required.
-"A patch is available, and while no in-the-wild exploitation has been observed at this time, we urge users and organizations to apply the patch as soon as possible by running update tools," Microsoft [said](https://x.com/MsftSecIntel/status/2054701609024934064). "If patching is not possible at this point, consider applying the same mitigations for Dirty Frag."
-This includes disabling esp4, esp6, and related xfrm/IPsec functionality, restricting unnecessary local shell access, hardening containerized workloads, and increasing monitoring for abnormal privilege escalation activity.
-The development comes as a threat actor named "berz0k" has been observed advertising on cybercrime forums a zero-day Linux LPE exploit for $170,000, claiming it works on multiple major Linux distributions.
-"The threat actor claims the vulnerability is TOCTOU-based (Time-of-Check Time-of-Use), capable of stable local privilege escalation without causing system crashes, and leverages a shared object (.so) payload dropped into the /tmp directory," ThreatMon [said](https://x.com/MonThreat/status/2054516027912769579) in a post on X.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <h2 class="article-title">CISA Adds Cisco SD-WAN CVE-2026-20182 to KEV After Admin Access Exploits</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/05/cisa-adds-cisco-sd-wan-cve-2026-20182.html" target="_blank">Original Link</a></p>
+            <div class="content-text">The U.S.Cybersecurity and Infrastructure Security Agency (CISA) on Thursday added a newly disclosed vulnerability impacting Cisco Catalyst SD-WAN Controller to its Known Exploited Vulnerabilities (KEV) catalog, requiring Federal Civilian Executive Branch (FCEB) agencies to remediate the issue by May 17, 2026.
+The vulnerability is a critical authentication bypass tracked as CVE-2026-20182. It's
+
+[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-1" class="article-body">
-            <h2 class="article-title">New critical Exim mailer flaw allows remote code execution</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/new-critical-exim-mailer-flaw-allows-remote-code-execution/" target="_blank">Original Link</a></p>
-            <div class="content-text">A critical vulnerability affecting certain configurations of the Exim open-source mail transfer agent could be exploited by an unauthenticated remote attacker to execute arbitrary code. [...]
+            <h2 class="article-title">OpenAI confirms security breach in TanStack supply chain attack</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/openai-confirms-security-breach-in-tanstack-supply-chain-attack/" target="_blank">Original Link</a></p>
+            <div class="content-text">OpenAI says two employees' devices were breached in the recent TanStack supply chain attack that impacted hundreds of npm and PyPI packages, causing the company to rotate code-signing certificates for its applications as a precaution. [...]
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
@@ -95,68 +86,71 @@ The development comes as a threat actor named "berz0k" has been observed adverti
             <hr class="separator">
         </div>
         <div id="art-2" class="article-body">
-            <h2 class="article-title">Accelerating detection engineering using AI-assisted synthetic attack logs generation</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/05/12/accelerating-detection-engineering-using-ai-assisted-synthetic-attack-logs-generation/" target="_blank">Original Link</a></p>
-            <div class="content-text">Logs and telemetry are the foundation of modern cybersecurity. They enable threat detection, incident response, forensic investigation, and compliance across endpoints, networks, and cloud environments. Yet, despite their importance, high‑quality security attack logs are notoriously difficult to collect, especially at scale.
-Real‑world security telemetry is often composed of repeated benign activity occurring across environments and with very rare malicious activity. Gathering, labeling, and maintaining datasets with real attack logs is costly and operationally challenging. It requires not only labeling malicious activities, but also fully reconstructing attack scenarios. These challenges significantly slow detection engineering and limit the quality of both the rule-based detection authoring and anomaly-detection approaches.
-In this post, we explore a different path: using AI to generate realistic, high‑fidelity synthetic security attack logs. By translating attacker behaviors, expressed as tactics, techniques, and procedures (TTPs)—directly into structured telemetry, we aim to accelerate detection development while preserving realism and security.
-Why is this work important for Microsoft Defender customers?
-For Microsoft Defender customers, this work is crucial because it directly addresses the challenge of obtaining high-quality, realistic security attack logs needed for effective threat detection and response. By leveraging AI-driven synthetic log generation, organizations can accelerate the development of detection rules and AI-based automation approaches, while ensuring privacy and reducing operational overhead. Synthetic logs enable customers to simulate a broader range of attack scenarios—including rare and emerging threats—without exposing sensitive data or relying on costly lab-based simulations. Ultimately, this approach enhances the agility and effectiveness of Microsoft Defender detection and response capabilities, helping customers stay ahead of evolving cyber threats.
-Why Synthetic Security Logs in addition to Lab Simulations?
-Synthetic data has been widely adopted in various fields as a privacy-conscious substitute for real data, and it offers even greater advantages in cybersecurity. It enables the creation of safe, shareable datasets that avoid exposure of sensitive customer information, allows simulation of rare or emerging attacks that are challenging to observe in real environments, accelerates the process of detection engineering and testing, and supports reproducible experiments for benchmarking and evaluation.
-While synthetic logs are not a replacement for all lab-based validation, they can complement lab simulations by speeding up early-stage detection design, testing, and coverage expansion. Traditionally, generating realistic attack telemetry requires executing real attacks in controlled lab environments. While accurate, this approach is slow, labor‑intensive, and difficult to scale. It also limits agility for the security teams responsible for defending our systems and delays the rollout of new threat detections into production. This blog examines whether AI-assisted synthetic log generation can provide similar fidelity, without the operational overhead of lab‑based attack execution.
-Core Idea: From TTPs to Logs
-Attackers can abuse TTP through various actions that exploit different processes. At a high level, the proposed workflow consumes “TTP + Action” as input and produces structured security logs as output.
-Input: High‑level attacker TTPs from the MITRE ATT&CK framework [1], a widely used knowledge base of adversary tactics and techniques, and concrete attacker actions. See the example below.
-| Tactic | Technique | Action |
-| Stealth | T1202 – Indirect Command Execution | The attackers executed forfiles and obfuscated their actions using variable expansion of %PROGRAMFILES and hex characters (for example, 0x5d). They obfuscated the use of echo, open, read, find, and exec to extract file contents, then passed the output to a Python interpreter for execution. |
-Output: Realistic log entries with correctly populated fields such as “Command Line”, “Process Name”, “Parent Process Name”, and other relevant telemetry fields.
-Goal: The goal is not to reproduce logs verbatim, but to generate realistic, semantically correct logs that would accurately trigger detections, mirroring real attacker behavior.
-Approaches for Synthetic Attack Log Generation
-We explore three increasingly sophisticated techniques for generating logs.
-- Prompt‑Engineered Generation: Our baseline approach uses a series of carefully designed expert‑crafted prompts. The workflow comprises a structured, multi‑stage dialogue:
-- Prompting: The model is given a detailed attack scenario and context.
-- Iterative Generation: Logs are generated across multiple turns to maintain coherence.
-- Evaluation: An independent large language model (LLM)-as-a-Judge assesses realism and consistency.
-As depicted in the following image, the prompts explicitly instruct the model to reason like a cybersecurity researcher, leverage MITRE ATT&CK knowledge, and produce coherent attack narratives.
-- Agentic Workflow-based Generation: While the first approach works well in simpler cases, it struggles with complex, multi‑stage scenarios. To address these limitations, we introduced an agentic workflow using three specialized agents focused on different tasks:
-- Generator Agent: Produces an initial set of logs based on the input.
-- Evaluator Agent: Reviews logs and provides structured feedback.
-- Improver Agent: Suggests targeted refinements based on feedback.
-As depicted in the image below, these agents collaborate in an iterative loop (generate, evaluate, improve), allowing the system to correct errors, fill gaps, and refine details over multiple turns. This collaborative process significantly improves log completeness and fidelity, especially for complex attack chains.
-- Multi-Turn Reinforcement Learning with Verifiable Rewards: While the synthetic logs generated by the agentic workflow are often semantically correct, preserving key properties like parent‑child process relationships and event ordering, they still differ noticeably from real event logs, especially in process paths, command‑line arguments, service names and so on. This limits the usage of these logs to test detection efficacy; effective detection engineering requires reliably distinguishing benign activity from malicious behavior.
-To address this challenge, we conduct experiments using Reinforcement Learning with Verifiable Rewards (RLVR). Instead of rigid rewards used by the evaluator agent in the previous agentic workflow approach, we use partial rewards to learn the policies as follows:- We use an LLM‑as‑a‑Judge as follows to compare the synthesized data against ground‑truth logs.
-- The model only awards partial rewards based on semantic alignment and imposes a penalty if the generated string is not an exact match of the ground-truth logs, producing a more context-aware and flexible reward signal to guide the learning process.
-- The judge also produces reasoning, making evaluations transparent, and auditable.
-While this direction of research shows a lot of promise, it is heavily dependent on the amount of labeled training data. To address this limitation, we applied data augmentations, including:
-- Paraphrasing attack narratives while preserving technical intent
-- Perturbing parameters (e.g., replacing executable names with plausible alternatives, re-ordering flags, etc.)
-This allowed us to scale from hundreds to thousands of training examples.
-Evaluation Datasets
-To ensure our approach generalizes across environments and attack types, we evaluated it on three complementary datasets:
-- Goal‑Driven (GD) Campaigns: These are tightly scoped datasets produced by repeatable attack simulations conducted by our threat researchers. GDs are built around a specific security objective (e.g., detecting credential dumping on Windows servers). They provide clean ground truth and well‑defined attacker actions. We used a total of 10 different GD executions to evaluate our approaches.
-- Security Datasets Project: An open‑source initiative [2] that provides malicious and benign datasets from multiple platforms, enabling broader evaluation and generalizability across different environments.
-- ATLASv2 Dataset: The ATLASv2 dataset [3] is comprised of Windows Security Auditing logs, Sysmon logs, Firefox logs, and Domain Name System (DNS) telemetry. These logs are generated across two Windows VMs by executing 10 multi‑stage attack scenarios and introducing realistic noise and cross‑host behaviors. We limited the evaluation of synthetic attack logs to malicious activity during the attack windows.
-Note: The external datasets from the Security Datasets Project and ATLASv2 are used strictly for research and validation of our log generation methods. These datasets are not used in the development, training, or deployment of any commercial products.
-Evaluation
-Methodology: We evaluated the prompt engineering and agentic workflow approach on the three datasets across multiple reasoning and non‑reasoning models, using recall as our primary metric. Recall measures the model’s ability to generate semantically relevant log instances (true positives) expected for a given attack scenario. Our LLM‑as‑a‑Judge performs flexible matching, focusing on:
-- New process name
-- Parent process name
-- Command line semantics
-For example, a synthetic log containing “forfiles.exe” can successfully match a ground‑truth entry with the full path “D:\Windows\System32\forfiles.exe”.
-Key Results: The results in experimental evaluation demonstrate that prompt-only approaches establish a baseline but show inconsistent performance. The agentic workflows deliver dramatic recall improvements across all datasets. Reasoning models, combined with agentic refinement, achieve the highest fidelity.
-Finally, our experiments training reinforcement learning approaches conclude that while it shows a significant promise, a substantial amount of labeled data will be required for the agent to learn effective policies to make the synthetic data identical to benign logs.
-Table 1 and Table 2 report the performance of the prompt-based and agentic workflow-based approaches, respectively. For reasoning models (o1, o3 and o3-mini), we report the recall values using a Medium reasoning effort. Overall, agentic collaboration emerges as the most effective technique for high‑quality synthetic attack logs generation.
-Across the evaluation datasets we used, AI‑driven synthetic log generation shows strong potential to produce semantically meaningful logs from TTPs and attacker actions. It can capture multi‑event sequences, preserve parent‑child process relationships, and generate realistic command lines.
-This capability can accelerate detection engineering by reducing dependence on costly lab setups and enabling rapid experimentation, without sacrificing realism or safety. Our early experiments with reinforcement learning with verifiable rewards also look promising and could improve verbatim alignment when sufficient training data is available.
-References
-- MITRE ATT&CK Framework:
-[MITRE ATT&CK®](https://attack.mitre.org/)
-- Security Datasets:
-[GitHub – OTRF/Security-Datasets: Re-play Security Events](https://github.com/OTRF/Security-Datasets)
-- ATLASv2: ATLAS Attack Engagements, Version 2:
-[2401.01341](https://arxiv.org/pdf/2401.01341)
-This research is provided by Microsoft Defender Security Research with contributions from Raghav Batta and members of Microsoft Threat Intelligence.
+            <h2 class="article-title">Cisco Catalyst SD-WAN Controller Auth Bypass Actively Exploited to Gain Admin Access</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/05/cisco-catalyst-sd-wan-controller-auth.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Cisco has released updates to address a maximum-severity authentication bypass flaw in Catalyst SD-WAN Controller that it said has been exploited in limited attacks.
+The vulnerability, tracked as CVE-2026-20182, carries a CVSS score of 10.0.
+"A vulnerability in the peering authentication in Cisco Catalyst SD-WAN Controller, formerly SD-WAN vSmart, and Cisco Catalyst SD-WAN Manager, formerly SD-WAN vManage, could allow an unauthenticated, remote attacker to bypass authentication and obtain administrative privileges on an affected system," Cisco [said](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-rpa2-v69WY2SW).
+The networking equipment major said the flaw stems from a malfunction of the peering authentication mechanism, which an attacker could exploit by sending crafted requests to the affected system.
+A successful exploit could permit the attacker to log in to the Cisco Catalyst SD-WAN Controller as an internal, high-privileged, non-root user account, and then weaponize it to access NETCONF and manipulate network configuration for the SD-WAN fabric..
+The vulnerability impacts the following deployments -
+- On-Prem Deployment
+- Cisco SD-WAN Cloud-Pro
+- Cisco SD-WAN Cloud (Cisco Managed)
+- Cisco SD-WAN for Government (FedRAMP)
+According to Rapid7, which discovered CVE-2026-20182, the shortcoming has its echoes in [CVE-2026-20127](https://thehackernews.com/2026/03/cisco-confirms-active-exploitation-of.html) (CVSS score: 10.0), another critical authentication bypass impacting the same component. The latter is said to have been exploited by a threat actor called UAT-8616 since at least 2023.
+"This new authentication bypass vulnerability affects the 'vdaemon' service over DTLS (UDP port 12346), which is the same service that was vulnerable to CVE-2026-20127," Rapid7 researchers Jonah Burgess and Stephen Fewer [said](https://www.rapid7.com/blog/post/ve-cve-2026-20182-critical-authentication-bypass-cisco-catalyst-sd-wan-controller-fixed/). "The new vulnerability is not a patch bypass of CVE-2026-20127. It is a different issue located in a similar part of the 'vdaemon' networking stack."
+That said, the end result is the same: a remote unauthenticated attacker can abuse CVE-2026-20182 to become an authenticated peer of the target appliance and carry out privileged operations.
+Cisco, in its advisory, noted that it became aware of "limited exploitation" of the flaw in May 2026, urging customers to apply the latest updates as soon as possible.
+The company also said Catalyst SD-WAN Controller systems that are accessible over the internet and that have ports exposed are at increased risk of compromise. It's recommending customers to audit the "/var/log/auth.log" file for entries related to Accepted publickey for vmanage-admin from unknown or unauthorized IP addresses.
+Another indicator is the presence of suspicious peering events in the logs, including unauthorized peer connections that occur at unexpected times and originate from unrecognized IP addresses, or involve device types that are inconsistent with the environment's architecture.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
+            <h2 class="article-title">When configuration becomes a vulnerability: Exploitable misconfigurations in AI apps</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/05/14/configuration-becomes-vulnerability-exploitable-misconfigurations-ai-apps/" target="_blank">Original Link</a></p>
+            <div class="content-text">AI and agentic application deployments on cloud-native platforms are increasing, and they often prioritize speed over secure configuration. Our observations from aggregated and anonymized Microsoft Defender for Cloud signals showed cases where AI services were publicly exposed with weak or missing authentication, creating exploitable misconfigurations that attackers actively abused. These issues enabled low-effort, high-impact outcomes such as remote code execution, credential theft, and access to sensitive internal tools and data.
+Exploitable misconfigurations bypass traditional vulnerability models, allowing threat actors to leverage them without using sophisticated techniques or zero-days. Organizations should therefore surface these misconfigurations early to reduce their attack surface and protect their critical AI workloads. Defender for Cloud can help customers identify and prioritize risks associated with such misconfigurations by detecting exposed Kubernetes services and unsafe deployment patterns.
+In this blog, we look at examples of exploitable misconfigurations we’ve observed in some of the popular AI applications and platforms. We also provide practical guidance on how to deploy AI agents securely.
+Background
+AI and agentic applications are being rolled out at scale, moving rapidly from experimentation to broadly deployed systems. These applications are no longer isolated components; rather, they sit at the center of workflows, automation, and decision-making across organizations.
+Based on our observation of the aggregated and anonymized signals coming from Microsoft Defender for Cloud, many of the AI deployments in real-world environments run on cloud-native infrastructure, with Kubernetes emerging as the preferred operating layer for AI workloads. This finding aligns with [Cloud Native Computing Foundation’s research](https://www.cncf.io/wp-content/uploads/2026/01/CNCF_Annual_Survey_Report_final.pdf), which shows that organizations rely heavily on Kubernetes clusters to run their AI workloads.
+As AI applications become connected to more internal systems and data sources, the impact of mistakes increases: a single misconfiguration could not only expose an application endpoint, it could also allow access to sensitive data, infrastructure, or operational capabilities behind it.
+In practice, many of the most dangerous risks in AI environments don’t come from novel attack techniques or zero-day vulnerabilities. Instead, they stem from exploitable misconfigurations—user’s configuration choices that make powerful capabilities externally reachable when insufficiently protected, creating clear paths to abuse.
+What is an exploitable misconfiguration?
+We use the term exploitable misconfiguration to describe a configuration issue where public exposure (for example, an internet-reachable user interface or API) is combined with missing or weak authentication and authorization. This combination creates a practical attack path that could result in serious outcomes such as remote code execution (RCE), sensitive data exposure, or tampering with pipelines and artifacts, often without requiring complex exploitation.
+Exploitable misconfigurations create low-effort paths to high-impact compromises, making hardening more than a nice-to-have. Defender for Cloud signals indicate that more than half of cloud-native workload exploitations, including AI applications, stem from misconfigurations. In that context, remediation becomes a race against the clock: organizations need to fix these issues quickly or attackers will leverage them first.
+Exploitable misconfigurations in popular AI applications
+In the following sections, we discuss examples of exploitable misconfigurations found in popular applications and platforms across the AI and agentic ecosystem.
+MCP servers
+The Model Context Protocol (MCP) lets AI agents discover and interact with external tools and data sources in a standardized way. MCP servers can be installed locally or accessed remotely, with support for Server-Sent Events (SSE) and streamable HTTP. While this protocol supports authorization mechanisms, including OAuth, it doesn’t enforce them. As a result, misconfigured MCP servers become a critical and easily exploitable issue in AI and agentic environments.
+We’ve observed multiple instances of remotely exposed MCP servers being deployed without authentication. In these instances, unauthenticated access allowed direct interaction with sensitive internal tools, including ticketing systems, HR systems, and private code repositories. This issue results from insecure MCP server implementations that execute tool actions in the server’s security context, instead of the context of the user (or agent). Signals from Defender for Cloud shows that 15% of remote MCP servers are severely insecure and allow unauthenticated access to sensitive internal data and operational capabilities.
+Mage AI
+Mage AI is an open-source platform for building, running, and orchestrating data and AI pipelines. We found that when Mage AI is deployed on Kubernetes using the [official Helm chart](https://mage-ai.github.io/helm-charts), the default installation exposed the application through an internet-facing LoadBalancer on port 6789 with no authentication enabled. The exposed web UI included functionality for executing shell commands, allowing arbitrary code execution inside the application using the mounted service account. In the default configuration, this service account was bound to highly privileged roles that effectively granted cluster-admin capabilities. This default setup was observed in the wild and was actively exploited, resulting in unauthenticated, internet-accessible shell access with high privileges.
+Through responsible disclosure, we reported this issue to Mage AI, and authentication is now enabled by default. We’d like to thank Mage AI for responding to and addressing this issue.
+kagent
+[kagent ](https://kagent.dev/)is an open-source framework under [CNCF’s CNAI landscape](https://landscape.cncf.io/?group=cnai) that’s designed to run AI agents on Kubernetes. When deployed using the official Helm chart, kagent comes with various AI agents configured as Kubernetes services, such as the k8s-agent, which assists with cluster operations. A user could then talk to the AI agent and ask it to perform operations (for example, deploy a privileged pod) on the Kubernetes cluster.
+While kagent isn’t publicly exposed by default, it does lack authentication by default, which means that if this application is exposed publicly, anonymous users would be able to ask the AI agents to deploy malicious and privileged workloads. These workloads could then facilitate cluster-to-cloud lateral movements. Using this unauthenticated access, the attackers could also exfiltrate credentials from other workloads running on the cluster and configure malicious models and AI agents, among others, in the kagent application.
+Figure 2 shows how threat actors could exfiltrate API keys for AI services supported by kagent, such as Azure OpenAI API keys, simply by interacting with the AI agent:
+Microsoft AutoGen Studio
+AutoGen Studio is a low‑code agentic framework for building multi‑agent workflows. It lets users configure agent skills, assign models, and design the workflows that coordinate tasks across agents. Microsoft AutoGen Studio ships without authentication enabled by default:
+AutoGen Studio isn’t publicly exposed by default. However, an attacker could tamper with components, deploy malicious agent configurations, or extract API keys from linked AI services on exposed ones, as shown in Figure 4:
+Minimizing the risk: Practical deployment guidance
+AI applications are at risk of misconfiguration as organizations race to adopt and integrate AI capabilities. Teams deploy agents, connect models to internal tools, and operationalize data pipelines, often stitching together new components on top of existing infrastructure. In such scenarios, speed might get prioritized over secure defaults, least-privilege access, and proper isolation. At the same time, code and configuration are increasingly produced through vibe coding, where AI-assisted code might get generated using weak security practices. These factors could result in AI applications getting deployed with insecure configurations, which could then lead to severe consequences.
+Apart from the applications discussed previously, we’ve observed instances misconfigurations in the following AI applications in the wild:
+[Agentgateway](https://github.com/agentgateway/agentgateway)[MLRun](https://landscape.cncf.io/?group=cnai&item=cnai--ci-cd-delivery--mlrun)[Numaflow](https://landscape.cncf.io/?group=cnai&item=cnai--data-architecture--numaflow)[OpenLIT](https://landscape.cncf.io/?group=cnai&item=cnai--model-llm-observability--openlit)[Microsoft Agent Framework Dev UI](https://learn.microsoft.com/en-us/agent-framework/user-guide/devui/security)[Nvidia Nemo Agent Toolkit](https://landscape.cncf.io/?group=cnai&item=cnai--general-orchestration--nivida-nemo)[Marimo](https://landscape.cncf.io/?group=cnai&item=cnai--data-science--marimo)[Comfy UI](https://www.comfy.org/)[Ray Dashboard](https://docs.ray.io/en/latest/ray-security/index.html#security)[MCP Hub Dashboard](https://github.com/samanhappy/mcphub)
+With AI systems being adopted and integrated at a rapid pace, the question is no longer whether to use AI, but how to deploy it safely. Organizations should ensure that their security controls are keeping pace, and that they start treating AI services like any other high-impact workload, not as experimental tooling:
+- Public access is a security choice: Some AI services need to be internet-facing, but public access should be an explicit decision and protected with authentication, authorization, and appropriate network controls.
+- Enforce authentication and authorization everywhere: Apply authentication controls consistently, including internal AI services and tool endpoints.
+- Context and least privilege: Workloads should operate in the context of an authenticated user or agent, not under broad service-level identities. Permissions should be scoped to the minimum required.
+- Continuously audit AI workloads: Track what AI services exist, what they can access, and how they are exposed as systems evolve.
+How Microsoft Defender for Cloud helps detect exposures in Kubernetes
+Exploitable misconfigurations are a reminder that many breaches in cloud-native environments don’t start with a zero-day, they start with something reachable that shouldn’t be, paired with improper access controls.
+If such misconfigured AI applications are exposed publicly, often through Kubernetes Services, Microsoft Defender for Containers customers can benefit from detection capabilities through the alert Exposed Kubernetes service detected. This alert identifies the creation or update of Kubernetes load-balancer services that expose these applications, helping teams prioritize the issues that represent the highest impact and lowest-effort paths for attackers.
+This research is provided by Microsoft Defender Security Research with contributions from Yossi Weizman, Tushar Mudi, and members of Microsoft Threat Intelligence.
 Learn more
 For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
 To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
@@ -171,7 +165,47 @@ Review our documentation to learn more about our real-time protection capabiliti
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-3" class="article-body">
+        <div id="art-4" class="article-body">
+            <h2 class="article-title">CISA Adds One Known Exploited Vulnerability to Catalog</h2>
+            <p class="source-link">Source: All CISA Advisories | <a href="https://www.cisa.gov/news-events/alerts/2026/05/14/cisa-adds-one-known-exploited-vulnerability-catalog" target="_blank">Original Link</a></p>
+            <div class="content-text">CISA Adds One Known Exploited Vulnerability to Catalog
+CISA has added one new vulnerability to its [Known Exploited Vulnerabilities (KEV) Catalog](/known-exploited-vulnerabilities-catalog), based on evidence of active exploitation.
+[CVE-2026-20182](https://www.cve.org/CVERecord?id=CVE-2026-20182)Cisco Catalyst SD-WAN Controller Authentication Bypass Vulnerability
+This type of vulnerability is a frequent attack vector for malicious cyber actors and poses significant risks to the federal enterprise.
+Note: Please adhere to CISA’s guidelines to assess exposure and mitigate risks associated with Cisco SD-WAN devices as outlined in [Emergency Directive 26-03: Mitigate Vulnerabilities in Cisco SD-WAN Systems](/news-events/directives/ed-26-03-mitigate-vulnerabilities-cisco-sd-wan-systems) and [Supplemental Direction ED 26-03: Hunt and Hardening Guidance for Cisco SD-WAN Systems](/news-events/directives/supplemental-direction-ed-26-03-hunt-and-hardening-guidance-cisco-sd-wan-systems). Adhere to the applicable [Binding Operational Directive (BOD) 22-01](/binding-operational-directive-22-01) guidance for cloud services or discontinue use of the product if mitigations are not available.
+[Binding Operational Directive (BOD) 22-01: Reducing the Significant Risk of Known Exploited Vulnerabilities](/binding-operational-directive-22-01) established the KEV Catalog as a living list of known Common Vulnerabilities and Exposures (CVEs) that carry significant risk to the federal enterprise. BOD 22-01 requires Federal Civilian Executive Branch (FCEB) agencies to remediate identified vulnerabilities by the due date to protect FCEB networks against active threats. See the [BOD 22-01 Fact Sheet](/sites/default/files/publications/Reducing_the_Significant_Risk_of_Known_Exploited_Vulnerabilities_211103.pdf) for more information.
+Although BOD 22-01 only applies to FCEB agencies, CISA strongly urges all organizations to reduce their exposure to cyberattacks by prioritizing timely remediation of [KEV Catalog vulnerabilities](/known-exploited-vulnerabilities-catalog) as part of their vulnerability management practice. CISA will continue to add vulnerabilities to the catalog that meet the [specified criteria](/known-exploited-vulnerabilities).
+This product is provided subject to this [Notification](/notification) and this [Privacy & Use](/privacy-policy) policy.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-5" class="article-body">
+            <h2 class="article-title">Finding Your Way on the Passkey Path</h2>
+            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/finding-your-way-on-the-passkey-path" target="_blank">Original Link</a></p>
+            <div class="content-text">Finding Your Way on the Passkey Path
+Introducing a choose-your-own-adventure guide to understanding, deploying, and supporting passkeys
+Several months ago, I set out to see what all the buzz was about passkeys. What started as a simple blog post quickly turned into something much bigger. The question organizations should be asking isn’t if they will adopt passkeys but when. Breaches almost always begin with a password—a shared secret for users to manage. Passkeys remove the known secret, instead binding it to a device and origin at time of registration, so there's nothing to phish, no database to dump, and nothing to reuse.
+Most of what’s out there is technically correct but operationally lacking. Such a broad topic cannot be narrowed to focus on a single narrative. That’s why I wrote [Passkey Path](https://techbrandon.github.io/passkey-path/), a guide that satisfies multiple audiences and gives the reader only the information they need based on interest or role. Whether you need to learn the basics or dig into the details, Passkey Path has something for everyone.
+Rolling out passkeys in a production environment is a systematic change in all things IT. Passkeys shift the end-user perspective of what it means to log in and challenge how security teams define MFA. The helpdesk no longer resets passwords, but the recovery flow they now own is the new attack vector. For IT admins, passkey implementation is far from a simple checkbox. Top to bottom, passkeys change everything.
+Ok, so that meme was probably a bad choice unless you’re on the side of “Thanos had a point.” Regardless of Marvel lore, rolling out passkeys is very much worth it, as long as it’s well-coordinated and calculated. Here’s where you might start.
+End Users (Consumers)
+We’re all consumers of some kind, and chances are high that you’ve been prompted by at least one of your applications to set up a passkey. Whether you’re starting with the foundational question of “[what is a passkey?](https://techbrandon.github.io/passkey-path/shared/what-is-a-passkey/)” or you're ready to [enroll your first FIDO2 security key](https://techbrandon.github.io/passkey-path/end-user/setup-security-key/), the end-user path has you covered. This path presents the basics and walks through setting up passkeys, signing in, and what to do when your device dies on a Sunday night.
+Security Leads
+“Security is everyone’s job.” Whether this phrase makes you smirk, shrug, or celebrate, it should at least carry a little weight. You may or may not care about [compliance frameworks](https://techbrandon.github.io/passkey-path/security/compliance/), but I think having an understanding of how [downgrade attacks](https://techbrandon.github.io/passkey-path/security/downgrade-attacks/) occur is pretty important for everyone (or perhaps I’m the only one fascinated with adversarial tradecraft).
+Helpdesk
+If you thought the helpdesk path was going to be boring, you didn’t realize this is where most of the [social engineering](https://techbrandon.github.io/passkey-path/helpdesk/escalation/) content landed. Passkeys are phish-resistant, not phish-proof. When passwords are no longer an attack vector, the path of least resistance usually shifts to the passkey recovery flow. This path also covers how to [issue a Temporary Access Pass (TAP)](https://techbrandon.github.io/passkey-path/helpdesk/tap-issuance/), which you may not have even known existed (I didn’t).
+IT Admins
+Everyone’s role in deploying passkeys is important. I’m not going to say that the IT Admin has it the hardest, but they do have the highest chance of a Resume Generating Event (RGE). Without a good [phased rollout strategy](https://techbrandon.github.io/passkey-path/it-admin/rollout-planning/), large groups of users get locked out at the worst possible moment. [Conditional Access](https://techbrandon.github.io/passkey-path/it-admin/conditional-access/), [AAGUIDs, and attestation](https://techbrandon.github.io/passkey-path/it-admin/attestation-aaguids/) are all critical aspects of the bigger picture.
+The Reader Experience
+Built by the ADHD mind, for the ADHD mind, [Passkey Path](https://techbrandon.github.io/passkey-path/) uses the above 4 tracks, but there is no starting point. With 25 pages of content and 67 cross-links, its value is in its flexibility. If you fit in multiple roles or you only need a piece of one, you’re the normal case, not the edge case. Pick a starting point and explore from there.
+One of my favorite additions to this project is the progress and achievement system. The site tracks your progress client-side, so you won’t accidentally read the same page twice. An achievement system is added for those looking to gamify their experience, earning badges as you complete paths.
+With over 2 hours of estimated reading time, you’re bound to find something you’re looking for. Follow a path or don’t. Passkey rollouts don’t follow a set structure, so [Passkey Path](https://techbrandon.github.io/passkey-path/) doesn’t either.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-6" class="article-body">
             <h2 class="article-title">Patch Tuesday, May 2026 Edition</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/05/patch-tuesday-may-2026-edition/" target="_blank">Original Link</a></p>
             <div class="content-text">Artificial intelligence platforms may be just as susceptible to social engineering as human beings, but they are proving remarkably good at finding security vulnerabilities in human-made computer code. That reality is on full display this month with some of the more widely-used software makers — including Apple, Google, Microsoft, Mozilla and Oracle — fixing near record volumes of security bugs, and/or quickening the tempo of their patch releases.
@@ -194,72 +228,7 @@ Ford had 150 Safety recalls for 2024 or 2025 [cant remember which].</div>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">New Exim BDAT Vulnerability Exposes GnuTLS Builds to Potential Code Execution</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/05/new-exim-bdat-vulnerability-exposes.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Exim has released security updates to address a severe security issue affecting certain configurations that could enable memory corruption and potential code execution.
-Exim is an open-source Mail Transfer Agent (MTA) designed for Unix-like systems to receive, route, and deliver email.
-The vulnerability, tracked as CVE-2026-45185 (CVSS score: 9.8), aka Dead.Letter, has been described as a
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-5" class="article-body">
-            <h2 class="article-title">Slamming the Door on Quick Assist Tech Support Scams and Abuse</h2>
-            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/slamming-the-door-on-quick-assist-tech-support-scams-and-abuse" target="_blank">Original Link</a></p>
-            <div class="content-text">Slamming the Door on Quick Assist Tech Support Scams and Abuse
-Over the past month or so, I've worked a number of Incident Response engagements that in some way dealt with social engineering attack vectors. Sure, there are the Business Email Compromise (BEC) situations that end up coming our way that dig into the Microsoft 365 tenant, reviewing all the logs and ultimately discovering what happened and to whom. However, with the success of ClickFix threat campaigns, we have seen an uptick in cases that have started with the use of social engineered “tech support”.
-This blog focuses on the Windows 10 and 11 provided tool Quick Assist. Quick Assist is a remote monitoring and management (RMM) utility that allows remote assistance. There are two (2) versions of Quick Assist, which can be identified by where they live on a Windows endpoint.
-Version | Location / Attribute |
-|---|---|
-Older edition | Present within C:\Windows\System32\ |
-Newer edition | Present within C:\ProgramFiles\WindowsApps\MicrosoftCorporationII.QuickAssist_<VERSIONVALUE>__8wekyb3d8bbwe\ |
-The newer editions of Quick Assist have greater logging features, so if that is present, you can take advantage of more useful pieces of evidence when you have to investigate
-In many cases, the attack starts with a series of phishing messages received by unsuspecting users, which after those are sent they are followed up by an unsolicited call through Microsoft Teams. The attacker claims to work in IT and is working to do something about the phishing messages. This marks when the attacker posing as a "helper" makes contact as an initial step.
-It’s important to note that the selection of Microsoft applications is deliberate because the attackers know they can expect the following:
-- Teams is likely to be used and available anywhere a Microsoft Windows endpoint is used
-- Quick Assist is included and enabled by default on Windows 10 and 11 workstations and laptops
-- The barrage of phishing emails immediately before the Teams call artificially creates a problem to be solved and a sense of urgency, increasing the odds that the user will accept the Teams call and agree to take part in the Quick Assist session
-Below are three (3) URLs that can be used for detection across the enterprise and have to do with outbound (egress) requests to legitimate Microsoft infrastructure:
-URL | Description |
-|---|---|
-https[:]//remoteassistance.support.services.microsoft[.]com/roleselection | Quick Assist Session Starts |
-https[:]//remoteassistance.support.services.microsoft[.]com/screenshare | Quick Assist Session Screenshare Begins |
-https[:]//remoteassistance.support.services.microsoft[.]com/status/ended | Quick Assist Session Ends |
-The URL ending with roleselection represents the official start of the Quick Assist RMM session. The session is initiated, and the user is presented with a prompt to enter a temporary 6-digit session value, which the attacker provides.
-The next URL has to do with the screensharing feature being enabled and started; at this point, the attacker has the ability to see the victim's screen (and potentially be provided control over the system allowed by the victim). Lastly, the URL ending with status/ended marks the end of the session.
-These indicators can be found in multiple places:
-- On a web proxy
-- When forensically examining endpoints
-- Within the user’s browser cache history
-It is helpful to train staff to look in all three (3) areas when suspecting a malicious takeover.
-If you are fortunate enough that the user endpoint is running the Quick Assist that was installed from the Microsoft Store repository, then the updated capabilities and logging of that newer version can be helpful. Specifically, there will be Application Event Log records for these later versions of Quick Assist, and they can be identified in the Event Log as Quick Assist in the source field. Those records can provide essential dates and times of activities to piece together what happened.
-Now for what you can DO about it. You have several options that you can employ in your environment. We can organize this into procedural and technical controls to consider, followed by evaluation.
-- Discuss with IT the protocols (or rules) for contacting users. Ensure there are established procedural outlines to ensure remote ID validation. Drill this regularly throughout the year to ensure that new and veteran users have a consistent process to follow. Educate and test this. This should be documented in a playbook and followed.
-- Next, talk to your staff/users. Encourage users to come forward about any occurrence that seems unusual or if they feel they might have been scammed. This is not the time for shame or worry—let them know that the enterprise supports them and there will be assistance to minimize the impact. Be sure to keep any commitments reasonable and within the capabilities of the organization.
-- Let staff know that when the IT department reaches out to them, it will be through accepted means of communication. If at any time they receive Teams (or any other type of remote call) purporting to be IT that does not match the established identification rules in place, they must report their suspicions. Now is the time to devise how authentication between staff happens in a practical and professional way that maintains the security of the computing environment.
-- In your education campaign about the dangers of unsolicited Teams calls and Quick Assist sessions, give the users on your team clear guidance on what correct tech support contact protocols look like through internal communication channels. Be sure to give them measurable steps to validate the IT calls as legitimate and the user is comfortable to proceed.
-Testing this regularly is extremely important. This is where we begin getting into technical controls.
-First, define your RMM solution policy. Reduce your perimeter of concerns by removing Quick Assist from endpoints if you don’t need it to conduct critical IT support functions. That means uninstall and preferably delete instances of the Quick Assist application from any local installation Microsoft Configuration Manager (formerly called SCCM). If you have application denylisting capability with Microsoft AppLocker or equivalent capability through your existing Endpoint Detection and Response (EDR) system, consider adding it so you are alerted when there are reinstallation attempts. If you really must use Quick Assist, remove that and then upgrade the organization’s deployment to use Remote Help for Microsoft Intune. This has features that enforce sign-in on both ends of the session, which increases accountability.
-Consider employing a web proxy and URL filtering for the ingress and egress paths to the enterprise if you haven’t already. Ensure any solution put into place gives you the option to create URL filtering and alerting while you block Quick Assist traffic. Keep in mind that this will also affect Microsoft Intune Remote Help, so be sure to evaluate how it will impact your operations. This is so you have detection and alerting. If you proceed here, you can have the ability to search outbound traffic that refers to the Quick Assist URLs that were discussed earlier and alert on any matches. You will have the capability to know whether a host system and user have taken part in a Quick Assist session.
-Once you have detection visibility, ensure the legitimate baselines of legitimate RMM tools are validated, and anything else that is not valid goes to alerting. This means an alert is generated if a Quick Assist session starts in an enterprise that uses a different RMM tool. Emails are sent out for response and ticketing to start the documentation processes for resolution.
-Discuss with your network and your host forensic team members. The network techs will need to know that Quick Assist works over HTTP (TCP/443) and not the usual means, which most of us think about remote desktop (TCP/3389). Browser history records will be essential for any data relating to the previously discussed URLs. Ensure these checks are part of their host exams if there is a suspicion of remote assistance scams.
-The last leg in the proactive response is to devise testing or evaluation of your controls. (In my time in the U.S. military, we would describe this phase as supervision.)
-- Test to ensure that alerts are generated when expected, and processes are kicked off beginning at the user level and extending through the response chain with IT tech support, security practitioners, and leaders supporting. Your annual social engineering tests that come in the form of phishing test should incorporate some of these tech support scams.
-- Network teams should be testing and evaluating the efficacy of network visibility and software deployment baseline tripwires. Expect them to determine if traffic goes to the Quick Assist URLs, or whether Quick Assist is being installed on endpoints. Be sure they are using playbooks and improving them as you test the capabilities.
-Before we wrap up, I want to leave you with a few things to consider.
-Think about how your IT team communicates with users in your business today. Do your people actually know what legitimate support looks like and, more importantly, what is suspicious? Make sure they know exactly what to do when something doesn’t feel right, because that gut reaction is often the first line of defense against remote assistance scams. Make sure they are aware this form of tech assistance scam is going around, and test that awareness.
-More importantly, don’t rely on users to always make the right call. Take steps to remove Quick Assist if you don’t need it, or upgrade to a more secure solution. Additionally, don't wait for an incident to find out your alerting and logging has blind spots. Take the preparatory steps now to make sure you have enough visibility and alerting in place so that if and when it happens, your team can respond quickly. Be sure to equip and train your staff so when they start to pull on a thread, the clues are actually there to find.
-My hope is simple: Consider this topic and implement these suggestions to keep your network and staff secure. We want to help you keep attackers from ever getting that initial foothold to quietly spread through your network undetected, all under the guise of "help" that nobody asked for and nobody needs.
-Additional References/Resources:
-[https://support.microsoft.com/en-us/windows/protect-yourself-from-tech-support-scams-2ebf91bd-f94c-2a8a-e541-f5c800d18435](https://support.microsoft.com/en-us/windows/protect-yourself-from-tech-support-scams-2ebf91bd-f94c-2a8a-e541-f5c800d18435)[https://www.microsoft.com/en-us/security/blog/2024/05/15/threat-actors-misusing-quick-assist-in-social-engineering-attacks-leading-to-ransomware/](https://www.microsoft.com/en-us/security/blog/2024/05/15/threat-actors-misusing-quick-assist-in-social-engineering-attacks-leading-to-ransomware/)[https://techcommunity.microsoft.com/blog/microsoftsecurityexperts/phish-click-breach-hunting-for-a-sophisticated-cyber-attack/4267916](https://techcommunity.microsoft.com/blog/microsoftsecurityexperts/phish-click-breach-hunting-for-a-sophisticated-cyber-attack/4267916)</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-6" class="article-body">
+        <div id="art-7" class="article-body">
             <h2 class="article-title">GTIG AI Threat Tracker: Adversaries Leverage AI for Vulnerability Exploitation, Augmented Operations, and Initial Access</h2>
             <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/ai-vulnerability-exploitation-initial-access/" target="_blank">Original Link</a></p>
             <div class="content-text">GTIG AI Threat Tracker: Adversaries Leverage AI for Vulnerability Exploitation, Augmented Operations, and Initial Access
@@ -381,20 +350,6 @@ Working closely with industry partners is crucial to building stronger protectio
 Google also continuously invests in AI research, helping to ensure [AI is built responsibly](https://ai.google/static/documents/ai-responsibility-update-published-february-2025.pdf), and that we're leveraging its potential to automatically find risks. Last year, we introduced [Big Sleep](https://blog.google/innovation-and-ai/technology/safety-security/cybersecurity-updates-summer-2025/), an AI agent developed by Google DeepMind and Google Project Zero, that actively searches and finds unknown security vulnerabilities in software. Big Sleep has since found its first real-world security vulnerability and assisted in finding a vulnerability that was imminently going to be used by threat actors, which GTIG was able to cut off beforehand. We're also experimenting with AI to not only find vulnerabilities, but also patch them. We recently introduced [CodeMender](https://deepmind.google/blog/introducing-codemender-an-ai-agent-for-code-security/), an experimental AI-powered agent using the advanced reasoning capabilities of our Gemini models to automatically fix critical code vulnerabilities.
 About the Authors
 Google Threat Intelligence Group focuses on identifying, analyzing, mitigating, and eliminating entire classes of cyber threats against Alphabet, our users, and our customers. Our work includes countering threats from government-backed actors, targeted zero-day exploits, coordinated IO, and serious cyber crime networks. We apply our intelligence to improve Google's defenses and protect our users and customers.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-7" class="article-body">
-            <h2 class="article-title">CISA Adds Two Known Exploited Vulnerabilities to Catalog</h2>
-            <p class="source-link">Source: All CISA Advisories | <a href="https://www.cisa.gov/news-events/alerts/2026/04/28/cisa-adds-two-known-exploited-vulnerabilities-catalog" target="_blank">Original Link</a></p>
-            <div class="content-text">CISA Adds Two Known Exploited Vulnerabilities to Catalog
-CISA has added two new vulnerabilities to its [Known Exploited Vulnerabilities (KEV) Catalog](/known-exploited-vulnerabilities-catalog), based on evidence of active exploitation.
-[CVE-2024-1708](https://www.cve.org/CVERecord?id=CVE-2024-1708)ConnectWise ScreenConnect Path Traversal Vulnerability[CVE-2026-32202](https://www.cve.org/CVERecord?id=CVE-2026-32202)Microsoft Windows Protection Mechanism Failure Vulnerability
-These types of vulnerabilities are frequent attack vectors for malicious cyber actors and pose significant risks to the federal enterprise.
-[Binding Operational Directive (BOD) 22-01: Reducing the Significant Risk of Known Exploited Vulnerabilities](/binding-operational-directive-22-01) established the KEV Catalog as a living list of known Common Vulnerabilities and Exposures (CVEs) that carry significant risk to the federal enterprise. BOD 22-01 requires Federal Civilian Executive Branch (FCEB) agencies to remediate identified vulnerabilities by the due date to protect FCEB networks against active threats. See the [BOD 22-01 Fact Sheet](/sites/default/files/publications/Reducing_the_Significant_Risk_of_Known_Exploited_Vulnerabilities_211103.pdf) for more information.
-Although BOD 22-01 only applies to FCEB agencies, CISA strongly urges all organizations to reduce their exposure to cyberattacks by prioritizing timely remediation of [KEV Catalog vulnerabilities](/known-exploited-vulnerabilities-catalog) as part of their vulnerability management practice. CISA will continue to add vulnerabilities to the catalog that meet the [specified criteria](/known-exploited-vulnerabilities).
-This product is provided subject to this [Notification](/notification) and this [Privacy & Use](/privacy-policy) policy.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
