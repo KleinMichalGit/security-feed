@@ -59,39 +59,267 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-05-19</h1>
+        <h1>Security Briefing // 2026-05-20</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Compromised Nx Console 18.95.0 Targeted VS Code Developers with Credential Stealer</button></li><li><button onclick="show('art-1')">How Storm-2949 turned a compromised identity into a cloud-wide breach</button></li><li><button onclick="show('art-2')">CISA Admin Leaked AWS GovCloud Keys on Github</button></li><li><button onclick="show('art-3')">⚡ Weekly Recap: Exchange 0-Day, npm Worm, Fake AI Repo, Cisco Exploit and More</button></li><li><button onclick="show('art-4')">Grafana says stolen GitHub token let hackers steal codebase</button></li><li><button onclick="show('art-5')">CISA Adds One Known Exploited Vulnerability to Catalog</button></li><li><button onclick="show('art-6')">Finding Your Way on the Passkey Path</button></li><li><button onclick="show('art-7')">Patch Tuesday, May 2026 Edition</button></li><li><button onclick="show('art-8')">GTIG AI Threat Tracker: Adversaries Leverage AI for Vulnerability Exploitation, Augmented Operations, and Initial Access</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Microsoft Releases Mitigation for YellowKey BitLocker Bypass CVE-2026-45585 Exploit</button></li><li><button onclick="show('art-1')">Microsoft shares mitigation for YellowKey Windows zero-day</button></li><li><button onclick="show('art-2')">Grafana GitHub Breach Exposes Source Code via TanStack npm Attack</button></li><li><button onclick="show('art-3')">Kieback & Peter DDC Building Controllers</button></li><li><button onclick="show('art-4')">Coverage-Driven Sustained Testing (CDST): A Graph-Oriented Model for Open-Ended Agentic Workflows</button></li><li><button onclick="show('art-5')">How Storm-2949 turned a compromised identity into a cloud-wide breach</button></li><li><button onclick="show('art-6')">CISA Admin Leaked AWS GovCloud Keys on Github</button></li><li><button onclick="show('art-7')">Patch Tuesday, May 2026 Edition</button></li><li><button onclick="show('art-8')">GTIG AI Threat Tracker: Adversaries Leverage AI for Vulnerability Exploitation, Augmented Operations, and Initial Access</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">Compromised Nx Console 18.95.0 Targeted VS Code Developers with Credential Stealer</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/05/compromised-nx-console-18950-targeted.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Cybersecurity researchers have flagged a compromised version of the Nx Console extension that was published to the Microsoft Visual Studio Code (VS Code) Marketplace.
-The extension in question is [rwl.angular-console](https://marketplace.visualstudio.com/items?itemName=nrwl.angular-console) (version 18.95.0), a popular user interface and plugin for code editors like VS Code, Cursor, and JetBrains. The VS Code extension has more than 2.2 million installations. The Open VSX version has not been affected by the incident.
-"Within seconds of a developer opening any workspace, the compromised extension silently fetched and executed a 498 KB obfuscated payload from a dangling orphan commit hidden inside the official nrwl/nx GitHub repository," StepSecurity researcher Ashish Kurmi [said](https://www.stepsecurity.io/blog/nx-console-vs-code-extension-compromised).
-The payload is a "multi-stage credential stealer and supply chain poisoning tool" that harvests developer secrets and exfiltrates them via HTTPS, the GitHub API, and DNS tunneling. It also installs a Python backdoor on macOS systems that abuses the GitHub Search API as a dead drop resolver for receiving further commands.
-In an advisory issued Monday, the maintainers of the extension [said](https://github.com/nrwl/nx-console/security/advisories/GHSA-c9j4-9m59-847w) the root cause has been traced to one of its developers, whose machine was compromised in a recent security incident that leaked their GitHub credentials. Although the nature of the prior "incident" was not disclosed, the developer's credentials have since been temporarily revoked.
-The access afforded by the credentials is said to have been abused to push an orphaned, unsigned commit to nrwl/nx, which introduces the stealer malware. The malicious action is triggered as soon as a developer opens any workspace in VS Code, leading to the installation of the Bun JavaScript runtime to run an obfuscated "index.js" payload.
-The malware runs checks to avoid infecting machines likely located in the Russian/CIS time zones and launches itself as a detached background process to kick off the credential harvesting workflow, allowing it to retrieve secrets from 1Password vaults and Anthropic Claude Code configurations, and secrets associated with npm, GitHub, and Amazon Web Services (AWS).
-"One capability that stands out: the payload contains full Sigstore integration, including Fulcio certificate issuance and SLSA provenance generation," StepSecurity said. "Combined with stolen npm OIDC tokens, this means the attacker could publish downstream npm packages with valid, cryptographically signed provenance attestations, making the malicious packages appear as legitimate, verified builds."
-The Nx team also acknowledged a "few users were compromised" as a result of this breach. Besides urging users to update to 18.100.0 or later, the maintainers have published the following indicators of compromise -
-- Nx Console version 18.95.0 was installed during the exposure window between May 18, 2026, at 2:36 p.m. CEST and 2:47 p.m. CEST.
-- Presence of files like ~/.local/share/kitty/cat.py, ~/Library/LaunchAgents/com.user.kitty-monitor.plist, /var/tmp/.gh_update_state, or /tmp/kitty-*.
-- Presence of any of the following running processes: a python process running cat.py and a process with __DAEMONIZED=1 in its environment.
-Affected users are recommended to terminate the aforementioned processes, delete artifacts on disk, and rotate all credentials reachable from the affected machine, including tokens, secrets, and SSH keys.
-The development marks the second time the Nx ecosystem has been targeted within a year. In August 2025, several npm packages were [infected](https://www.stepsecurity.io/blog/supply-chain-security-alert-popular-nx-build-system-package-compromised-with-data-stealing-malware) by a credential stealer as part of a supply chain attack campaign named [s1ngularity](https://thehackernews.com/2025/08/malicious-nx-packages-in-s1ngularity.html). Unlike the previous iteration, the latest attack targets the VS Code extension.
-Malicious npm Packages Galore
-The findings coincide with the discovery of various malicious packages in the open-source repositories -
-[iceberg-javascript, supabase-javascript, auth-javascript, microsoft-applicationinsights-common, and ms-graph-types](https://safedep.io/malicious-npm-packages-claude-code-hooks/): Five npm packages containing a hidden ELF binary that backdoors Claude Code sessions to steal developer credentials.[noon-contracts](https://safedep.io/malicious-noon-contracts-npm-defi-rat/): an npm package that impersonates a Noon Protocol smart contract SDK to exfiltrate SSH keys, crypto wallet private keys, AWS credentials, Kubernetes secrets, all .env files, shell history, Docker/Git/npm tokens, and browser wallet storage paths.[martinez-polygon-clipping-tony](https://safedep.io/malicious-martinez-polygon-clipping-tony-npm-telegram-rat/): a trojanized fork of martinez-polygon-clipping that uses a postinstall hook to download a 17MB PyInstaller-packed Windows remote access trojan (RAT) that uses Telegram for command-and-control (C2) for remote shell execution, screenshot capture, file upload/download, and arbitrary Python execution.[common-tg-service](https://safedep.io/malicious-common-tg-service-npm-telegram-hijacking-framework/): an npm package that contains functionality to take over a victim's Telegram account while masquerading as "Common Telegram service for NestJS applications."[exiouss](https://safedep.io/malicious-exiouss-npm-exam-cheating-tool/): an npm package that bundles a ChatGPT and OpenAI session cookie stealer targeting web browsers like Google Chrome, Microsoft Edge, and Brave.[k8s-pod-checker, dev-env-setup, and node-perf-utils](https://panther.com/blog/mapping-the-infrastructure-behind-the-kube-health-tools-supply-chain-malware): three npm packages[part](https://panther.com/blog/tunnel-vision-supply-chain-attack-targets-kubernetes-via-npm-and-pypi)of the[kube-health-tools cluster](https://thehackernews.com/2026/04/self-propagating-supply-chain-worm.html)that install a large language model (LLM) proxy service on the victim's machine, allowing the attacker to route LLM traffic through the compromised server- A
-[coordinated credential harvesting campaign](https://panther.com/blog/frankly-malicious-inside-a-38-package-npm-supply-chain-campaign-targeting-tech-giants)orchestrated by an Indonesian-speaking threat actor using a set of 38 npm packages that leverages[dependency confusion](https://thehackernews.com/2021/02/dependency-confusion-supply-chain.html)as a way to trick CI/CD pipelines to resolve malicious public packages ahead of legitimate private ones associated with Apple, Google, and Alibaba, among others. - An unusual campaign wherein seven npm packages under the
-[@hd-team organization](https://panther.com/blog/4-years-51-packages-3-organizations-how-npm-became-a-gambling-ring-s-config-server)have been found to act as a stager for configurations used by a Chinese sports gambling and pirated streaming platform named Douqiu to determine the backend servers to connect to.
+            <h2 class="article-title">Microsoft Releases Mitigation for YellowKey BitLocker Bypass CVE-2026-45585 Exploit</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/05/microsoft-releases-mitigation-for.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Microsoft on Tuesday released a mitigation for a BitLocker bypass vulnerability named [YellowKey](https://thehackernews.com/2026/05/windows-zero-days-expose-bitlocker.html) following its public disclosure last week.
+The zero-day flaw, now tracked as CVE-2026-45585, carries a CVSS score of 6.8. It has been described as a BitLocker security feature bypass.
+"Microsoft is aware of a security feature bypass vulnerability in Windows publicly referred to as 'YellowKey,'" the tech giant [said](https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-45585) in an advisory. "The proof of concept for this vulnerability has been made public, violating coordinated vulnerability best practices."
+The issue impacts Windows 11 version 26H1 for x64-based Systems, Windows 11 Version 24H2 for x64-based Systems, Windows 11 Version 25H2 for x64-based Systems, Windows Server 2025, and Windows Server 2025 (Server Core installation).
+YellowKey was disclosed by a security researcher named Chaotic Eclipse (aka Nightmare-Eclipse). It essentially allows placing specially crafted 'FsTx' files on a USB drive or EFI partition, plugging the USB drive into the target Windows computer with BitLocker protections turned on, rebooting into the Windows Recovery Environment (WinRE), and triggering a shell with unrestricted access by holding down the CTRL key.
+"If you did everything properly, a shell will spawn with unrestricted access to the BitLocker protected volume," the researcher noted in a GitHub post.
+Redmond noted that successful exploitation could permit an attacker with physical access to sidestep the BitLocker Device Encryption feature on the system storage device and gain access to encrypted data.
+To address the risk, the following mitigations have been outlined:
+- Mount the WinRE image on each device.
+- Mount the system registry hive of the mounted WinRE image.
+- Modify BootExecute by removing "autofstx.exe" value from Session Manager's BootExecute REG_MULTI_SZ value.
+- Save and unload
+[Registry hive](https://learn.microsoft.com/en-us/windows/win32/sysinfo/registry-hives). - Unmount and commit the updated WinRE image.
+- Reestablish BitLocker trust for WinRE.
+"Specifically, you prevent the FsTx Auto Recovery Utility, autofstx.exe, from automatically starting when the WinRE image launches," security researcher Will Dormann [said](https://infosec.exchange/@wdormann/116604563324444723). "With this change, the Transactional NTFS replaying that deletes winpeshl.ini no longer happens. It also recommends switching from TPM-only to TPM+PIN."
+Microsoft also emphasized that users can be safeguarded against exploitation by [configuring BitLocker](https://learn.microsoft.com/en-us/windows/security/operating-system-security/data-protection/bitlocker/configure) on already encrypted devices with "TPM-only" protector by switching to "TPM+PIN" mode via PowerShell, the command line, or the control panel. This will require a PIN to decrypt the drive at startup, effectively backing YellowKey attacks.
+On devices that are not encrypted, administrators are advised to enable the "Require additional authentication at startup" option via Microsoft Intune or Group Policies and ensure that "Configure TPM startup PIN" is set to "Require startup PIN with TPM."
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-1" class="article-body">
+            <h2 class="article-title">Microsoft shares mitigation for YellowKey Windows zero-day</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-shares-mitigation-for-yellowkey-windows-zero-day/" target="_blank">Original Link</a></p>
+            <div class="content-text">Microsoft has shared mitigations for YellowKey, a recently disclosed Windows BitLocker zero-day vulnerability that grants access to protected drives. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">Grafana GitHub Breach Exposes Source Code via TanStack npm Attack</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/05/grafana-github-breach-exposes-source.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Grafana Labs, on May 19, 2026, said an investigation into its [recent breach](https://thehackernews.com/2026/05/grafana-github-token-breach-led-to.html) found no evidence of customer production systems or operations being compromised.
+It said the scope of the incident is limited to the Grafana Labs GitHub environment, which includes public and private source code along with internal GitHub repositories.
+"After the initial assessment, we found that in addition to source code, the downloaded content included GitHub repositories that some Grafana Labs teams use to collaborate on and store internal operational information and other details about our business," it [said](https://grafana.com/blog/grafana-labs-security-update-latest-on-tanstack-npm-supply-chain-ransomware-incident/).
+"This includes business contact names and email addresses that would be exchanged in a professional relationship context, not information pulled from or processed through the use of production systems or the Grafana Cloud platform."
+The open-source visualization software maker also noted that the breach originated from the [TanStack npm supply chain attack](https://thehackernews.com/2026/05/tanstack-supply-chain-attack-hits-two.html) orchestrated by TeamPCP, which also hit OpenAI and Mistral AI, and that it detected the activity on May 11, 2026.
+"We performed analysis and quickly rotated a significant number of GitHub workflow tokens, but a missed token led to the attackers gaining access to our GitHub repositories," it said. "A subsequent review confirmed that a specific GitHub workflow we originally deemed not impacted had, in fact, been compromised."
+The company said it subsequently received an extortion demand from an unnamed threat actor on May 16, but opted against paying the ransom as there is no guarantee that the stolen data would actually be deleted, and could act as a catalyst for future campaigns.
+Since then, Grafana has taken steps to rotate automation tokens, implement enhanced monitoring, audit all commits for signs of malicious activity, and bolster its overall GitHub security posture.
+It's worth mentioning here that a data extortion crew named CoinbaseCartel listed Grafana Labs on its dark web site on May 15, 2026. The Hacker News has contacted Grafana for comment, and we will update the story if we hear back.
+The development comes as GitHub [said](https://thehackernews.com/2026/05/github-investigating-teampcp-claimed.html) it's investigating unauthorized access to its internal repositories after the notorious threat actor known as TeamPCP listed the platform's source code and internal organizations for sale on a cybercrime forum.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
+            <h2 class="article-title">Kieback & Peter DDC Building Controllers</h2>
+            <p class="source-link">Source: All CISA Advisories | <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-139-05" target="_blank">Original Link</a></p>
+            <div class="content-text">Kieback & Peter DDC Building Controllers
+Summary
+Successful exploitation of this vulnerability could allow an attacker to take control of the victim's browser.
+The following versions of Kieback & Peter DDC Building Controllers are affected:
+- DDC4002 <=1.12.14 (CVE-2026-4293)
+- DDC4100 <=1.12.14 (CVE-2026-4293)
+- DDC4200 <=1.12.14 (CVE-2026-4293)
+- DDC4200-L <=1.12.14 (CVE-2026-4293)
+- DDC4400 <=1.12.14 (CVE-2026-4293)
+- DDC4002e <=1.23.4 (CVE-2026-4293)
+- DDC4200e <=1.23.4 (CVE-2026-4293)
+- DDC4400e <=1.23.4 (CVE-2026-4293)
+- DDC4020e <=1.23.4 (CVE-2026-4293)
+- DDC4040e <=1.23.4 (CVE-2026-4293)
+- DDC520 <=1.24.1 (CVE-2026-4293)
+| CVSS | Vendor | Equipment | Vulnerabilities |
+|---|---|---|---|
+| CVSS v3 5.3 | Vendor Kieback & Peter | Equipment Kieback & Peter DDC Building Controllers | Vulnerabilities Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') |
+Background
+- Critical Infrastructure Sectors: Commercial Facilities, Communications, Financial Services, Food and Agriculture, Government Services and Facilities, Healthcare and Public Health, Information Technology
+- Countries/Areas Deployed: Austria, China, France, Germany, United Arab Emirates
+- Company Headquarters Location: Germany
+Vulnerabilities
+[CVE-2026-4293](#)
+The affected products are vulnerable to cross-site scripting (XSS), enabling JavaScript to be executed by the victim's browser, which allows the attacker to control the browser.
+Affected Products
+Kieback & Peter DDC Building Controllers
+Kieback & Peter
+Kieback & Peter DDC4002: <=1.12.14, Kieback & Peter DDC4100: <=1.12.14, Kieback & Peter DDC4200: <=1.12.14, Kieback & Peter DDC4200-L: <=1.12.14, Kieback & Peter DDC4400: <=1.12.14, Kieback & Peter DDC4002e: <=1.23.4, Kieback & Peter DDC4200e: <=1.23.4, Kieback & Peter DDC4400e: <=1.23.4, Kieback & Peter DDC4020e: <=1.23.4, Kieback & Peter DDC4040e: <=1.23.4, Kieback & Peter DDC520: <=1.24.1
+known_affected
+Remediations
+Mitigation
+Kieback & Peter DDC Building Controllers are developed and designed for use in closed building automation networks. The system is protected by a multi-level perimeter against attacks, especially from outside, by dividing it into operational technology (OT) zones with firewalls. Building automation systems (BA systems) in general should not be directly accessible from untrusted networks, especially from the Internet, but should be protected by consistently applying the defense-in-depth strategy. This concept is supported by organizational measures in the building as part of a safety management system. In order to achieve safety, measures are required at all levels.
+Vendor fix
+The DDC4002, DDC4100, DDC4200, DDC4200-L and DDC4400 controllers are end-of-maintenance, therefore the recommendations for these devices are as follows: These devices must be operated in a strictly separate OT environment.
+Vendor fix
+The DDC4002, DDC4100, DDC4200, DDC4200-L and DDC4400 controllers are end-of-maintenance, therefore the recommendations for these devices are as follows: Only trusted individuals should be granted network access to the DDC web portal.
+Vendor fix
+The DDC4002, DDC4100, DDC4200, DDC4200-L and DDC4400 controllers are end-of-maintenance, therefore the recommendations for these devices are as follows: Access to the web portal should be disabled in the device configuration if not required.
+Vendor fix
+The DDC4002, DDC4100, DDC4200, DDC4200-L and DDC4400 controllers are end-of-maintenance, therefore the recommendations for these devices are as follows: Users should be informed that only links from trusted sources should be used to access the web service.
+Vendor fix
+For the DDC520, DDC4002e, DDC4200e, DDC4400e, DDC4020e, and DDC4040e controllers, Kieback & Peter recommends the following safety measure: Restrict network access to the device
+Vendor fix
+For the DDC520, DDC4002e, DDC4200e, DDC4400e, DDC4020e, and DDC4040e controllers, Kieback & Peter recommends the following safety measure: Do not directly connect the device to the Internet
+Vendor fix
+Update the firmware to the latest available version: DDC4002e -> Update to version 1.23.5 or newer
+Vendor fix
+Update the firmware to the latest available version: DDC4200e -> Update to version 1.23.5 or newer
+Vendor fix
+Update the firmware to the latest available version: DDC4400e -> Update to version 1.23.5 or newer
+Vendor fix
+Update the firmware to the latest available version: DDC4020e -> Update to version 1.23.5 or newer
+Vendor fix
+Update the firmware to the latest available version: DDC4040e -> Update to version 1.23.5 or newer
+Vendor fix
+Update the firmware to the latest available version: DDC520 -> Update to version 1.24.2 or newer
+Relevant CWE: [CWE-79 Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')](https://cwe.mitre.org/data/definitions/79.html)
+Metrics
+| CVSS Version | Base Score | Base Severity | Vector String |
+|---|---|---|---|
+| CVSS Version 3.1 | Base Score 5.3 | Base Severity MEDIUM | Vector String
+|
+Acknowledgments
+- Maximilian Hildebrand of G DATA Advanced Analytics reported this vulnerability to CISA
+Legal Notice and Terms of Use
+This product is provided subject to this Notification (https://www.cisa.gov/notification) and this Privacy & Use policy (https://www.cisa.gov/privacy-policy).
+Recommended Practices
+CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability.
+Minimize network exposure for all control system devices and/or systems, ensuring they are not accessible from the internet.
+Locate control system networks and remote devices behind firewalls and isolating them from business networks.
+When remote access is required, use more secure methods, such as Virtual Private Networks (VPNs), recognizing VPNs may have vulnerabilities and should be updated to the most current version available. Also recognize VPN is only as secure as the connected devices.
+CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.
+CISA also provides a section for control systems security recommended practices on the ICS webpage on cisa.gov/ics. Several CISA products detailing cyber defense best practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.
+CISA encourages organizations to implement recommended cybersecurity strategies for proactive defense of ICS assets.
+Additional mitigation guidance and recommended practices are publicly available on the ICS webpage at cisa.gov/ics in the technical information paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.
+Organizations observing suspected malicious activity should follow established internal procedures and report findings to CISA for tracking and correlation against other incidents.
+CISA also recommends users take the following measures to protect themselves from social engineering attacks:
+Do not click web links or open attachments in unsolicited email messages.
+Refer to Recognizing and Avoiding Email Scams for more information on avoiding email scams.
+Refer to Avoiding Social Engineering and Phishing Attacks for more information on social engineering attacks.
+No known public exploitation specifically targeting this vulnerability has been reported to CISA at this time.
+Revision History
+- Initial Release Date: 2026-05-19
+| Date | Revision | Summary |
+|---|---|---|
+| Date 2026-05-19 | Revision 1 | Summary Initial Publication |
+Legal Notice and Terms of Use
+This product is provided subject to this [Notification](/notification) and this [Privacy & Use](/privacy-policy) policy.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-4" class="article-body">
+            <h2 class="article-title">Coverage-Driven Sustained Testing (CDST): A Graph-Oriented Model for Open-Ended Agentic Workflows</h2>
+            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/coverage-driven-sustained-testing-cdst-agentic-workflows" target="_blank">Original Link</a></p>
+            <div class="content-text">[Blog](https://trustedsec.com/blog)[Coverage-Driven Sustained Testing (CDST): A Graph-Oriented Model for Open-Ended Agentic Workflows](https://trustedsec.com/blog/coverage-driven-sustained-testing-cdst-agentic-workflows)
+Coverage-Driven Sustained Testing (CDST): A Graph-Oriented Model for Open-Ended Agentic Workflows
+Table of contents
+1.1 Introduction
+[Ralph](https://github.com/snarktank/ralph) is a solid tool that makes agents do…more. It's defined as: an autonomous AI agent loop that runs repeatedly until all PRD items are complete. The purpose is for it to handle bigger plans and ensure context and positioning of the development is maintained. It's an improvement over the plan mode in tools like [Claude Code](https://code.claude.com/docs/en/overview) and [Cursor](https://cursor.com/), as it expands the scope quite extensively.
+On that note, anybody using agents to do anything will typically follow the plan and execute model discussed in [Plan-Then-Execute: An Empirical Study of User Trust and Team Performance When Using LLM Agents As A Daily Assistant](https://arxiv.org/abs/2502.01390). This works, and it's what makes these agentic tools work well. You ramble at it, it formulates a plan, and it builds it out. With these agentic tools, we also get a judge-ish component with the allow/disallow lists as mentioned in [No Autonomy Without Scalable Oversight](https://hackbot.dad/writing/no-autonomy-without-scalable-oversight/.%20). However, where this gets tricky is when you want to distill the ability to be curious, dig deep, or generally get creative and keep going. This is where Coverage-Driven Sustained Testing (CDST) comes in.
+Ultimately, CDST is a self-expanding agent loop that is driven by a structured state graph where the “next step” is always derived from an unexplored, or under-explored, area. In this case, it’s a graph-driven exploration engine that is reminiscent of [Novelty Search](https://algorithmafternoon.com/novelty/novelty_search_algorithm/). While preparing for this blog, I found [Synthesizing Multi-Agent Harnesses for Vulnerability Discovery](https://arxiv.org/pdf/2604.20801), which discusses a similar node-based approach focusing on vulnerability hunting.
+1.2 Concept
+CDST is a mechanism to continuously give agents new ideas and new goals to pursue rather than fulfilling the plan and wrapping up. In this blog, I want to detail the implementation and ideas behind the concept. The bottom line comes down to: just don’t let agents determine what “done” means. More formally, “done” is not a semantic property of the agent but a property of the explored state space. CDST shifts termination logic away from the agent and into the system’s coverage model, allowing for open-ended work to be carried out.
+The loop queries the matrix for untested areas, picks whichever node has the most gaps, and builds a scoped briefing. For example, here are 30 endpoints, here are the credentials found so far, go test these for XSS.
+From there, the agent does whatever the harness needs it to. The simplest pattern is to enter the planning loop with a fresh context with data pulled from the matrix to seed it. If strongly typed data models are available before hitting the agentic component, that's additional context on top of what CDST provides. Another example is reverse engineering: extract every function from a binary and those become nodes in the matrix. Whether it's 10 functions or 10,000, the loop will work through them. Each function gets analyzed for whatever the desired outcome is. The matrix tracks what's been looked at and what hasn't, which becomes another starting point later on where untested or bad results can become starting points or places to avoid on another pass. This is fundamentally different from task-list loops like Ralph, where it works through a predefined list of stories in a [PRD](https://www.atlassian.com/agile/product-management/requirements); each one passes or it doesn't, and the loop picks the next incomplete one, spawns a fresh agent, and moves on.
+The work is known upfront and the loop is just execution. CDST doesn't have a predefined task list and the matrix generates the work. Gaps emerge from what hasn't been tested yet, credentials unlock new surface mid-run, and the loop keeps finding things to do that nobody wrote down. Ralph finishes when the list is empty. CDST finishes when the coverage says there's nothing left to test.
+Traditional systems converge toward completion. CDST systems expand until coverage saturates. One final note is that this concept is targeting projects that have no definitive end. So, using CDST for code would not be effective due to coding projects having that definitive end goal.
+A useful way to frame this is:
+- Task-based systems reduce entropy by consuming a known backlog .
+- CDST systems increase entropy locally (via discovery) while reducing global unknowns (via coverage).
+Coverage is not always binary. In some domains, coverage is clear and measurable, and in others it is heuristic. There, saturation simply means new exploration is producing little additional value, rather than everything being fully known. At that point, the system can shift effort elsewhere, deepen promising paths, or stop on economic grounds rather than theoretical completeness. Below is a diagram that shows how this flow could work to go from coverage to deep-dive and back again.
+The real shift is that work is no longer predefined. For penetration testing or hacking in general, findings don’t terminate execution, but they create new nodes to start the process again. Those nodes become first-class targets and act as starting nodes while the system generates its own backlog dynamically. The following diagram shows the initial scope going through the process.
+The matrix can be broken down into three (3) distinct phases:
+- State Storage
+- Discovery
+- Prioritization
+Importantly, “tested” is never a single boolean. Coverage is tracked against specific dimensions such as vulnerability class, technique used, authentication state, input path, or confidence level. A known endpoint may be tested for XSS but not SSRF, tested anonymously but not with credentials, or tested lightly but not deeply. The matrix, therefore, stores partial coverage states, not simple pass/fail labels.
+1.3 Examples
+The difference matters at scale because a traditional task list has a fixed size and the agent burns through it and stops. CDST's backlog is generated from the matrix. Every finding is a potential expansion, such as credentials unlock an authenticated surface or new endpoints enter the matrix mid-run. The loop has more to do after a successful exploit than before it. This is one of the key inversion points: successful work increases the future workload rather than reducing it.
+There are two immediate stopping points:
+- Time ceiling: after X minutes, quit
+- Intervention: judge agent or human manual stop
+1.3.1 Penetration Testing
+To ground this, consider a simple vulnerability-driven view like the below. There are three (3) top-level bug classes: SSRF, XXE, and SQLi. They all go through a testing loop; XXE and SQLi don’t find anything, but SSRF does. This then branches off into further loops.
+Now, using this loop, the agents agenda can grow with the scope. SSRF works, and the agents can hit internal services. An internal service is found, and cycle continues.
+This creates what can be thought of as a branching discovery tree, where each positive signal increases the branching factor of the system dynamically.
+An example Neo4j query could look like this:
+1.3.2 Reverse Engineering
+CDST becomes much more obvious in reverse engineering. Assume this diagram:
+There is no predefined list of “all functions worth analyzing.”
+In some cases this might be preferable, but assume a deep analysis is required. Functions emerge via cross-references, data flow, and structure. The loop scales naturally whether there are 10 functions or 10,000 functions, it’s the same mechanism. In this setting, CDST effectively turns reverse engineering into a progressive graph traversal problem, where edges are not static calls but inferred relationships discovered during execution. In a mock Neo4j implementation, radare2 and lief are using to extract the Call Flow Graph (CFG) before utilizing the tree to generate points of interest based on categorized imports ([Categorising DLL Exports with an LLM](https://mez0.cc/posts/dll-export-category/)).
+f.name | f.addr | f.role | f.cluster | focus_score | ||||
+fcn.140004d00 | 0x140004d00 | data_movement | 17 | |||||
+fcn.140004150 | 0x140004150 | data_movement | 14 | |||||
+fcn.140002790 | 0x140002790 | crypto_like | 13 | |||||
+fcn.140006660 | 0x140006660 | data_movement | 11 | |||||
+fcn.1400035c0 | 0x1400035c0 | data_movement | 8 | |||||
+fcn.140006760 | 0x140006760 | crypto_like | 7 | |||||
+fcn.140002fe0 | 0x140002fe0 | data_movement | 7 | |||||
+fcn.140002a60 | 0x140002a60 | data_movement | 6 | 7 | ||||
+fcn.140001190 | 0x140001190 | crypto_like | 7 | |||||
+fcn.140002c20 | 0x140002c20 | generic | 6 | |||||
+fcn.140003bd0 | 0x140003bd0 | generic | 6 | |||||
+fcn.140006a00 | 0x140006a00 | generic | 6 | |||||
+fcn.140002b10 | 0x140002b10 | generic | 6 | |||||
+fcn.140002680 | 0x140002680 | data_movement | 5 | 6 | ||||
+fcn.140003420 | 0x140003420 | data_movement | 1 | 6 | ||||
+fcn.140002630 | 0x140002630 | data_movement | 4 | 6 | ||||
+fcn.140003510 | 0x140003510 | data_movement | 6 | |||||
+fcn.1400067d0 | 0x1400067d0 | data_movement | 6 | |||||
+fcn.1400027f0 | 0x1400027f0 | generic | 5 | |||||
+fcn.1400073e0 | 0x1400073e0 | data_movement | 4 | 5 | ||||
+fcn.140002920 | 0x140002920 | data_movement | 5 | |||||
+fcn.140001890 | 0x140001890 | data_movement | 5 | |||||
+fcn.140007910 | 0x140007910 | data_movement | 1 | 5 | ||||
+fcn.140001ab0 | 0x140001ab0 | generic | 4 | |||||
+fcn.1400025f0 | 0x1400025f0 | generic | 2 | 4 |
+These can then serve as a starting point for agents. Next, CDST can be used to determine how things flow together and allow agents to have a backlog of tasks. From each of these, new CDST entries can be made, increasing the scope and execution time.
+1.4 Who Owns the Loop?
+Once CDST is framed as a separate orchestration layer, a question follows immediately: who owns the loop?
+There are two (2) model schools of thought: consultation and inversion.
+1.4.1 Consultation Model
+In the consultation model, the agent runtime owns the loop and it calls into CDST to ask what to work on next, gets a briefing back, runs a pass, and reports the results. CDST is an advisor. In practice, this can underperform because it relies on the agent deciding when to ask for external state. Many planner-style systems tend to stay within their immediate context unless strongly prompted otherwise, meaning useful matrix data may be ignored or consulted too late. As a result, performance is often better when relevant CDST context is injected upfront rather than left as an optional pull model.
+In the following diagram, we can see an example Cypher query for retrieving URLs by matching on:
+- Does it have credentials?
+- Has it been looked at before?
+- Where was it found?
+Again, these are placement concepts—this can be expanded as much as needed.
+1.4.2 Inversion Model
+In the inversion model, CDST owns the loop and agents are workers. CDST decides what needs doing, assembles a scoped briefing from matrix state, hands it to whatever agent is registered, gets the tool event log back, infers coverage, and picks the next target. The agent doesn't know it's in a coverage loop; it just got a job.
+The plug point is an ExecuteFn, which is a callable that accepts a briefing and returns a tool event log. What's behind it doesn't matter to CDST: it could be a full agent stack, a raw API call, or a human analyst.
+1.5 The Architecture
+My preferred model is the inversion model. Here, CDST has three (3) jobs:
+- Populate the matrix
+- Run the loop
+- Expose the interface
+The likely reason is incentive alignment. The model is rewarded for continuing the current reasoning chain, not for interrupting itself to fetch missing context. Pulling external state adds friction and expands the decision space. This requires the model to recognize what it does not yet know. Unless retrieval is strongly scaffolded, most agents default to acting on what is already in context rather than proactively seeking better inputs.
+Step one is the matrix population, where anything can be a starting point. For a penetration testing engagement, this is a reconnaissance phase: endpoint discovery, parameter extraction, and technology detection. If this was a web application assessment, then API endpoints could be starting points. For an internal penetration test, it would be computers, and so on. For reverse engineering, it could be functions, import references, string references, etc.; there are a ton of possibilities to keep agents working here.
+The core of it is the main loop. This is where gaps are queried, briefings are built, and surface expansion is addressed with three (3) layers of decision-making nested inside.
+Internally, [OODA](https://en.wikipedia.org/wiki/OODA_loop) (observe, orient, decide, act) governs each tool call within a pass. [Gibbs' reflection](https://reflection.ed.ac.uk/reflectors-toolkit/reflecting-on-experience/gibbs-reflective-cycle) is injected into the next briefing, asking what prior passes attempted, why techniques failed, and what to try differently. CDST governs the outer loop: which target, which mode, and when to transition from breadth sweep to depth retry.
+The interface is an ExecuteFn. For an embedded agent stack, this is a direct function call. For external agents, it's an MCP server. CDST exposes a small set of tools and any MCP-capable agent can register as a worker without knowing anything about coverage loops.
+The inversion model gives these agentic frameworks the ability to utilize CDST, which could be done via MCP. Some example commands could be get_briefing, submit_result, report_finding, etc.
+The agent registers as a worker, CDST hands briefings, the agent executes, and tool event logs come back. The agent never needs to know what a coverage matrix is. At this point, CDST can be thought of as a control plane.
+1.6 Viability
+Currently, agents do not maintain persistent memory in the same way external state systems do; they primarily operate within context windows. As sessions grow, earlier details can be compressed or lost. Summarization helps extend runtime but often trades detail for brevity. Plan-then-execute loops can reduce this pressure because they are typically shorter-lived, while CDST places more emphasis on solving it directly, since the loop may run continuously.
+The matrix provides one (1) practical approach. Each pass begins with a fresh context seeded from a Neo4j query rather than relying on what the previous agent instance retained. Prior passes, credentials, findings, failed techniques, and newly discovered surface become the structured state in the graph and can be reintroduced when relevant. The agent handles short-horizon reasoning while the matrix stores longer-horizon state. This separation can make larger workloads more manageable by analyzing 10,000-function binaries or running multi-day assessments.
+It is also worth noting that model memory is an active research area. Emerging architectures, including recurrent or memory-augmented transformer designs, may change how much external state management is needed over time.
+This creates a strict separation of concerns:
+- Short-term reasoning: agent
+- Long-term memory: graph
+- Orchestration: CDST loop
+1.7 Conclusion
+CDST reframes agent work as a coverage or search space problem over a dynamically expanding state graph, where execution is continuously re-seeded from discovered structure rather than pre-defined tasks. Instead of agents completing work, they continuously expand the space of what work "exists”. Granted, this has finite uses and isn’t viable for code, but it works well for open-ended objectives.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-5" class="article-body">
             <h2 class="article-title">How Storm-2949 turned a compromised identity into a cloud-wide breach</h2>
             <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/05/18/storm-2949-turned-compromised-identity-into-cloud-wide-breach/" target="_blank">Original Link</a></p>
             <div class="content-text">Microsoft Threat Intelligence recently uncovered a methodical, sophisticated, and multi-layered attack, where a threat actor we track as Storm-2949 launched a relentless campaign with a singular focus: to exfiltrate as much sensitive data from a target organization’s high-value assets as possible. The attack exfiltrated data from Microsoft 365 applications, file-hosting services, and Azure-hosted production environments, where the organization’s production application ecosystem resides.
@@ -227,7 +455,7 @@ Explore [how to build and customize agents with Copilot Studio Agent Builder](ht
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-2" class="article-body">
+        <div id="art-6" class="article-body">
             <h2 class="article-title">CISA Admin Leaked AWS GovCloud Keys on Github</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/05/cisa-admin-leaked-aws-govcloud-keys-on-github/" target="_blank">Original Link</a></p>
             <div class="content-text">Until this past weekend, a contractor for the Cybersecurity & Infrastructure Security Agency (CISA) maintained a public GitHub repository that exposed credentials to several highly privileged AWS GovCloud accounts and a large number of internal CISA systems. Security experts said the public archive included files detailing how CISA builds, tests and deploys software internally, and that it represents one of the most egregious government data leaks in recent history.
@@ -235,7 +463,7 @@ On May 15, KrebsOnSecurity heard from Guillaume Valadon, a researcher with the s
 The GitHub repository that Valadon flagged was named “Private-CISA,” and it harbored a vast number of internal CISA/DHS credentials and files, including cloud keys, tokens, plaintext passwords, logs and other sensitive CISA assets.
 Valadon said the exposed CISA credentials represent a textbook example of poor security hygiene, noting that the commit logs in the offending GitHub account show that the CISA administrator disabled the default setting in GitHub that blocks users from publishing SSH keys or other secrets in public code repositories.
 “Passwords stored in plain text in a csv, backups in git, explicit commands to disable GitHub secrets detection feature,” Valadon wrote in an email. “I honestly believed that it was all fake before analyzing the content deeper. This is indeed the worst leak that I’ve witnessed in my career. It is obviously an individual’s mistake, but I believe that it might reveal internal practices.”
-One of the exposed files, titled “importantAWStokens,” included the administrative credentials to three Amazon AWS GovCloud servers. Another file exposed in their public GitHub repository — “AWS-Workspace-Firefox-Passwords.csv” — listed plaintext usernames and passwords for dozens of internal CISA systems. According to Caturegli, those system included one called “LZ-DSO,” which appears short for “Landing Zone DevSecOps,” the agency’s secure code development environment.
+One of the exposed files, titled “importantAWStokens,” included the administrative credentials to three Amazon AWS GovCloud servers. Another file exposed in their public GitHub repository — “AWS-Workspace-Firefox-Passwords.csv” — listed plaintext usernames and passwords for dozens of internal CISA systems. According to Caturegli, those systems included one called “LZ-DSO,” which appears short for “Landing Zone DevSecOps,” the agency’s secure code development environment.
 Philippe Caturegli, founder of the security consultancy Seralys, said he tested the AWS keys only to see whether they were still valid and to determine which internal systems the exposed accounts could access. Caturegli said the GitHub account that exposed the CISA secrets exhibits a pattern consistent with an individual operator using the repository as a working scratchpad or synchronization mechanism rather than a curated project repository.
 “The use of both a CISA-associated email address and a personal email address suggests the repository may have been used across differently configured environments,” Caturegli observed. “The available Git metadata alone does not prove which endpoint or device was used.”
 Caturegli said he validated that the exposed credentials could authenticate to three AWS GovCloud accounts at a high privilege level. He said the archive also includes plain text credentials to CISA’s internal “artifactory” — essentially a repository of all the code packages they are using to build software — and that this would represent a juicy target for malicious attackers looking for ways to maintain a persistent foothold in CISA systems.
@@ -252,12 +480,43 @@ The incompetence of this government is beyond compare. They are all just so stup
 Easy there sunshine. This is a contractor, not a government employee. What i will say, is that CISA did not have enough controls in place over the years to have been able to snoop this. So they can’t blame Trump Cuts for that incompetence. Also, Nightingale failed in managing their employees. They’re are a LOT of really smart talented people in government, you just won’t hear about them, because they don’t make these kinds of mistakes.
 Trump is blamed for everything.
 He’s called head of state for a reason. It’s not just a title.
+Mostly just lying all the time. All the time.
+LOL “LOT of really smart talented people…dont make these kinds of mistakes”. May I introduce you to the Iran school strike? WHose boot are you licking?
+Also, the mistake isn’t just technical. It’s failure to correctly supervise the contractor – definitely the government’s fault…bad contracting management, project management, process management…should I continue?
+How could the US military striking a school in Iran possibly contradict the claim that there are a lot of really smart and talented people in government? For example, there are a lot of government scientists and engineers in NOAA who have made weather tracking technology that has made weather prediction massively more accurate and precise over my lifetime. How does the strike on that school in Iran contradict the talent and success of those scientists and engineers?
+330 million people live in the US, and 2.7 million of them are civilian employees of the US government, doing things like keeping your food and water safe, your air breathable, the infrastructure you take for granted running so smoothly that you are liberated from having to think about it. If your worldview can’t handle the fact that there are many, many incredibly talented, capable, and dedicated people working for the US government, you’re just never going to understand the systemic problems well enough to have anything intelligent to say about government.
+a well done job goes unnoticed(the good workers understand that one).
+And even though this was a contractor who I’m assuming passed a through back ground check(I had to pass one to just lay the carpet at the coast guards on base housing and I didn’t even get a gate code), and probably had at least some top secret clearance access, who was just working for the government in its cyber security division?! (and had this out grievous practice of making all his note transfers public and all organized by contracts) and not just a citizen you would hope a world power government would keep a better eye on it’s employees.
+So I’d be asking the hard to see questions,
+1. So how long has this ip been transferring notes publicly(not just in this cases recovered intel)
+You would assume someone using GitHub as a horrible replacement for something more private like idk something like gnupg and KDE connect (for something of the top of the head that’s free even), would be unstructured and globed together with other subjects initially while they learned the environment.
+2. Time frame those beginning scratch pages started being organizationally structured.
+3. Now how long before the notes got their own respiratory per contract (especially this one) or do they normally go by subject pertained within the notes or do they normally glob notes and go by date(if I was to use a respiratory to transfer my classified notes I would want to just transfer the days notes every night I dealt with that contract right(got to keep receipts for those big paying hours right).
+And like I said I’m looking at the ip uploading and accessing this persons respiratories for all accounts that even connected to look this and may have resent any in whole or parts. Just to remind everyone who we are and that we don’t take kindly to this kind of incident
+No one cares who you are any more than the Chinese care about my job in New Jersey in 1997, or the Russians care about a pastrami sandwich.
+Who hired the contractors?
+Kristy Noem
+Speaking as a former fed, there is vanishingly little work in government IT that isn’t done by contractors, including nearly all security oversight. There are feds ‘in charge’, but the churn at CISA has likely only left those people who are incompetent or purely administrative.
+At least until recently, the federal government was largely staffed by incredibly dedicated people doing good work under trying conditions. But federal IT departments have never been a good place to find those people, and CISA in particular has always been a bit of an embarassment.
+Sorry, but those super talented government employees should have insider risk in place or basically any other 40 security layers that could prevent this.
+This wasn’t incompetence. This was a deliberate act of sabotage. The contractor will almost certainly face criminal charges.
+specs,
+You have no idea what you are talking about!!!!
+specs,
+You have no idea what you are talking about! Why do the people with the least knowledge about a subject believe that they are an expert in that subject?
+Specs, you have no idea what you are talking about! Why do the people with the least knowledge about a subject believe that they are an expert in that subject?
+Fifi, catch.
+Did you read the article?? It’s not “the government” that sucks , it’s the people that came in to run it and instead of running it, fired and laid off career experts only to hired incompetent temporary contract replacements.
 The DOGE circus continues. No surprise when you cut essential people in an essential agency.
 The DOGE circus continues. A predictable outcome when you cut essential, experienced personnel from an essential agency. It can only get worse. This is cybersecurity 101 stuff….
 My money is on infiltration of the contractor by a faux employee candidate. Got that idea from the AWS key staying valid for 48 hours. Some of the mistakes seem those of a fly by Nightwing noob operation, but where better to insert the droud…
 The incompetence is breathtaking. One is left to wonder if the responsible parties (DOGE?) weren’t working for foreign entities. When this administration is finally held accountable I hope that everyone involved is identified and publicly humiliated.
 Does it even surprise anyone? At the current level of the incompetency of the U.S. government it’s just something that would preoccupy the news cycle for less than a day. And then there will be another gaff… and another one. I mean is it even that bad when our commander in chief is an open Russian asset?
 Hmmmm who would have warned them about this when they first put that stuff in the cloud? If only there was someone who would have told them this was a very bad idea? Oh wait, I remember.
+Hey Jason!
+We have finally located the onr and only fictional novel inside the one true closet and near the one true suitcase!
+Pargin will soon make a bajillion dollars and we will all teach me also about the REAL GOOD LUNCH I just did not go eat from my groceries in the friend fridge!
+But the closet is your mental hospital lantzy not mine
 CISA is a hollow shell of itself since Chris Krebs (no relation) was removed.
 Actually more related than you think the two of them are. Sorta like us.
 C’mon, you cannot blame the administration for this. Any employee/contractor and especially one working for CISA should know better than this particularly given the current “climate” where cyber espionage is so prevalent. The employee/contractor should be marched off the premises asap.
@@ -267,100 +526,71 @@ Excellence starts from the top. When something good happens, the administration 
 The government cannot escape blame and accountability for this.When agencies are literally run by DEI hires – cronies with no qualifications – who aren’t held to account for literal crimes, it sets the tone.
 Nice try. All the DEI hires were already removed, remember?
 These problems are caused by what’s left after the department was gutted.
+I believe Teddy was using “DEI” in a parodistic way, effectively as in “the people in charge here were exactly what DEI hires have been accused of being = hired for politically desirable attributes rather than competence”.
+In reality, here the inverse of DEI would be the more fitting abbreviation… so they should be called IED hires?
+“IED hires” is right on at many levels.
 Yes, the contractor screwed up epically but that also means there was a catastrophic failure in oversight and monitoring. Just as your bank doesn’t trust each teller to be impeccably honest, there should have been auditing mechanisms on GitHub and on those services preventing long-lived credentials, forcing strong passwords, preventing reuse, etc. .
 Chris
 > there should have been auditing mechanisms on GitHub
 The article states there were default-on auditing mechanisms on Github which were explicitly turned off by the offending user.
+And the offending user should have been blocked from turning those Github *defaults* by an organization policy applied to all their users.
+This only works if the account was listed under an organization though. I expect that this was a case of the contractor used their private account for it, which wouldn’t be under restriction of the company. I find it super unlikely that the contractor would have been allowed to publish that information publicly in a official organization, it would have been at the very least forced private if it was allowed to be published at all
+I’m more concerned at the fact that it didn’t flag anything network logging side though, files such as “passwords”, “tokens” or “config” I would have thought would have been blocked or at the very least logged as a potential malicious actor.
+Exactly: the fact that someone was allowed to turn them off and nobody asked about it is what elevates it to a senior management issue, especially at a security-centric organization. One person making a bad decision shouldn’t be catastrophic.
 This seems on par for anyone who has ever had the misfortune of having to work with CISA. There are good folks there, and many are doing their best, but that level of responsibility simply doesn’t come from the prices or bureaucratic structure provided by DHS, even in the best of times.
 Rhonda,
-This just goes to show how mistakes can happen very easy with lack of carelessness, making personal information very vulnerable to hackers, I think CISA/Nightingale should better screen the contract /worker, there is blame on both sides, It’s so sad that this happened and caused most of the others to lose their jobs.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-3" class="article-body">
-            <h2 class="article-title">⚡ Weekly Recap: Exchange 0-Day, npm Worm, Fake AI Repo, Cisco Exploit and More</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/05/weekly-recap-exchange-0-day-npm-worm.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Monday opens with a trust problem. A mail server flaw is under active use. A network control system was targeted. Trusted packages were poisoned. A fake model page pushed a stealer. Then came the familiar ransom claim: the data was returned and deleted.
-The pattern is clear. One weak dependency can leak keys. One leaked key can open cloud access. One cloud foothold can become a production incident. AI is speeding up vulnerability discovery, attackers are moving quickly, and old exposure still keeps paying off.
-Patch the quiet risks first. Let’s get into it.
-⚡ Threat of the Week
-[On-Prem Microsoft Exchange Server Exploited in the Wild](https://thehackernews.com/2026/05/on-prem-microsoft-exchange-server-cve.html)—Microsoft disclosed a security vulnerability impacting on-premise versions of Exchange Server, which has come under active exploitation in the wild. The vulnerability, tracked as CVE-2026-42897 (CVSS score: 8.1), has been described as a spoofing bug stemming from a cross-site scripting flaw. An anonymous researcher has been credited with discovering and reporting the issue. Microsoft is providing a temporary mitigation through its Exchange Emergency Mitigation Service, while it's readying a permanent fix for the security defect. There are currently no details on how the vulnerability is being exploited, the identity of the threat actor behind the activity, or the scale of such efforts. It's also unclear who the targets are and if any of those attacks were successful.
-The Case for Autonomous Validation in Four On-Demand Sessions
-The Case for Autonomous Validation in Four On-Demand Sessions
-Enterprise CISOs, an industry analyst, and security leaders covered why point-in-time testing no longer matches the speed of modern threats, and how teams are using validation evidence to prioritize remediation, prove control effectiveness, and report risk to leadership. Four sessions, all on demand.
-[Watch Now ➝](https://thehackernews.uk/auto-exposure-summit-2026)
-🔔 Top News
-[Cisco Catalyst SD-WAN Controller Flaw Under Attack](https://thehackernews.com/2026/05/cisa-adds-cisco-sd-wan-cve-2026-20182.html)—A sophisticated threat actor tracked as UAT-8616 has been attributed to the exploitation of CVE-2026-20182, a critical authentication bypass in Cisco Catalyst SD-WAN Controller. "8616 performed similar post-compromise actions after successfully exploiting CVE-2026-20182, as was observed in the exploitation of CVE-2026-20127 by the same threat actor," Cisco Talos said. "UAT-8616 attempted to add SSH keys, modify NETCONF configurations, and escalate to root privileges." UAT-8616 is the same threat actor that was behind the weaponization of CVE-2026-20127 earlier this year to gain unauthorized access to SD-WAN systems. Cisco isn't the only security vendor facing a barrage of attacks on its customers, but it is among the most heavily targeted, along with Fortinet and Ivanti. "For nation-state operators, a bug like this (as seen with the actively exploited CVE-2026-20127) is ideal for pre-positioning," Rapid7[said](https://www.rapid7.com/blog/post/tr-efficiencys-dark-side-network-controllers-in-god-mode-attackers-sd-wan/). "They are usually not looking for a smash and grab. They want persistence. They want access that blends in. They want to sit in the right place long enough to observe, influence, and pivot when the time is right. An SD-WAN controller is a great place to do that, because it lives in the middle of trust relationships most organizations rarely question."[Blast Radius of TeamPCP Attacks Expands](https://thehackernews.com/2026/05/tanstack-supply-chain-attack-hits-two.html)—A new wave of the[Mini Shai-Hulud](https://www.akamai.com/blog/security-research/mini-shai-hulud-worm-returns-goes-public)campaign compromised dozens of[TanStack npm packages](https://securitylabs.datadoghq.com/articles/node-ipc-npm-malware-analysis/)as part of a broader supply chain attack[worming through developer ecosystems](https://www.cynet.com/blog/mini-shai-hulud-supply-chain-compromise-in-the-age-of-ai-driven-development/), including packages tied to UiPath, Mistral AI, OpenSearch and PyPI. The activity has been attributed to TeamPCP, which has orchestrated a series of high-profile supply chain attacks targeting popular open-source projects in recent months. The goal is the same across all attack campaigns — use poisoned, open-source software to deploy stealer malware and harvest user credentials, API keys, SSH keys, and other secrets. TeamPCP is said to be weaponizing credentials and secrets obtained in the supply chain attacks to access organizations' cloud infrastructure, not to mention turn into an initial access broker for follow-on attacks like ransomware by teaming up with other cybercrime groups. In some waves, the attackers used the Trufflehog scanner to validate those credentials. The[escalating attacks](https://www.ox.security/blog/node-ipc-npm-package-infostealer-malware/)show that TeamPCP prioritizes speed rather than subtlety and stealth. Supply chain attacks have become an increasingly serious concern because of the sheer scale at which trusted dependencies are reused. A single poisoned package can rapidly propagate into thousands of downstream applications, enterprise environments, and production systems. The development[coincided](https://thehackernews.com/2026/05/stealer-backdoor-found-in-3-node-ipc.html)with the compromise of the node-ipc package to distribute a stealer malware. It's currently not known who is behind the attack. Since the library is a dependency for hundreds of other packages, which in turn could be dependencies for even more packages, the attack could have cascading consequences.[Apple and Google Roll Out Cross-Platform E2EE for RCS Messages](https://thehackernews.com/2026/05/ios-265-brings-default-end-to-end.html)—End-to-end encrypted (E2EE) Rich Communication Services (RCS) messaging is being rolled out in beta between iPhone and Android devices, closing one of the biggest interoperability gaps in mainstream mobile messaging. The feature is available to iPhone users on iOS 26.5 with supported carriers and to Android users on the latest version of Google Messages. Encrypted conversations are marked with a padlock icon in the chat interface. The wider rollout to iPadOS, macOS, and watchOS will follow in future software updates, Apple said.[Instructure Reaches Ransom Agreement with ShinyHunters](https://thehackernews.com/2026/05/instructure-reaches-ransom-agreement.html)—Instructure, the developer of school information portal Canvas, said it struck a deal with the ShinyHunters group, which breached its systems, stole a massive amount of data, and disrupted thousands of schools that rely on the company's software. The company did not say what it had given the threat actors in exchange for the destruction of the data, but it's fair to say it likely made the controversial decision to make a ransom payment. The company said it also received "digital confirmation" that the hackers destroyed any remaining copies in the form of "shred logs." In addition, the agreement included the return of the stolen data, assurances that affected customers would not be extorted, and a commitment that individual institutions would not need to engage with the threat actor. While it remains to be seen if the threat actors will keep their side of the bargain, it's worth highlighting a key problem with paying a ransom: once attackers have a victim's data, there is no guarantee it was not copied or shared with others. As of May 12, the listing for Instructure has been removed from the ShinyHunters' data leak site. The group said: "The data is deleted, gone. The company and it's [sic] customers will not further be targeted or contacted for payment by us."[Fake Hugging Face Repository Delivers Stealer Malware](https://thehackernews.com/2026/05/fake-openai-privacy-filter-repo-hits-1.html)—A malicious Hugging Face repository managed to take a spot in the platform's trending list by impersonating OpenAI's Privacy Filter open-weight model to deliver a Rust-based information stealer to Windows users. The project, named Open-OSS/privacy-filter, masqueraded as its legitimate counterpart, released by OpenAI late last month (openai/privacy-filter), including copying the entire description verbatim to trick unsuspecting users into downloading it. The description accompanying the fake model diverged from the legitimate project in one aspect: instructing users to run start.bat on Windows or execute python loader.py on Linux and macOS to deploy the stealer. Access to the malicious model has since been disabled by Hugging Face. The incident highlights how public AI model registries are emerging as a new software supply chain risk for enterprises, emphasizing why AI model supply chain security needs the same level of rigor as software supply chain security. It's essential to verify publisher identity, check model card provenance, and scan for unexpected binary downloads.[OpenAI Announces Daybreak](https://thehackernews.com/2026/05/openai-launches-daybreak-for-ai-powered.html)—OpenAI announced Daybreak, a new initiative based on its frontier large language models (LLMs) and its artificial intelligence (AI)-powered coding assistant, Codex, to help developers secure their software from the ground up. Like Anthropic's Mythos and Project Glasswing, the initiative makes it possible to scan a codebase to identify flaws and fix them, triage vulnerability backlog and prioritize fixes by severity, impact, or exploitability, and automate vulnerability detection, validation and response. In a related development, Microsoft detailed its own AI-assisted vulnerability discovery system called[MDASH](https://thehackernews.com/2026/05/microsofts-mdash-ai-system-finds-16.html), which orchestrates more than 100 specialized AI agents across multiple frontiers and distilled AI models to find vulnerabilities in the tech giant's own codebases. MDASH is designed to run a structured pipeline that goes through distinct stages: preparation, scanning, validation, deduplication, and proof construction. The emergence of Daybreak and MDASH comes amid a spike in vulnerability discovery, mainly fueled by the use of AI tools. Five months into 2026, Microsoft has already patched more than 500 vulnerabilities in its software, a rate that could see the company break its own annual record for the most number of security fixes in a year. The U.K. National Cyber Security Centre (NCSC) has also warned organizations that they should prepare for a surge of software updates driven by AI-assisted vulnerability discovery. At this stage, access to these advanced tools is tightly controlled. OpenAI has framed the access controls as a response to the dual-use nature of the underlying technology. The same AI capabilities that allow defenders to identify vulnerabilities and accelerate remediation could be misused by bad actors. Per Google, hacking groups are[already using AI models](https://thehackernews.com/2026/05/hackers-used-ai-to-develop-first-known.html)to boost the speed, scale, and sophistication of their attacks, as well as perform reconnaissance and build better malware.
-🔥 Trending CVEs
-Bugs drop weekly, and the gap between a patch and an exploit is shrinking fast. These are the heavy hitters for the week: high-severity, widely used, or already being poked at in the wild.
-Check the list, patch what you have, and hit the ones marked urgent first — [CVE-2026-42945](https://thehackernews.com/2026/05/nginx-cve-2026-42945-exploited-in-wild.html) (NGINX Plus and NGINX Open), [CVE-2026-44112](https://thehackernews.com/2026/05/four-openclaw-flaws-enable-data-theft.html) (OpenClaw), [CVE-2026-42897](https://thehackernews.com/2026/05/on-prem-microsoft-exchange-server-cve.html) (Microsoft Exchange Server), [CVE-2026-41096](https://thehackernews.com/2026/05/microsoft-patches-138-vulnerabilities.html) (Microsoft Windows DNS), [CVE-2026-42826](https://thehackernews.com/2026/05/microsoft-patches-138-vulnerabilities.html) (Microsoft Azure DevOps), [CVE-2026-20182](https://thehackernews.com/2026/05/cisa-adds-cisco-sd-wan-cve-2026-20182.html) (Cisco Catalyst SD-WAN Controller), [CVE-2026-44338](https://thehackernews.com/2026/05/praisonai-cve-2026-44338-auth-bypass.html) (PraisonAI), [CVE-2026-46300](https://thehackernews.com/2026/05/new-fragnesia-linux-kernel-lpe-grants.html), [CVE-2026-46333](https://nvd.nist.gov/vuln/detail/CVE-2026-46333) (Linux Kernel), [CVE-2026-45185](https://thehackernews.com/2026/05/new-exim-bdat-vulnerability-exposes.html) (Exim), [CVE-2026-8043](https://thehackernews.com/2026/05/ivanti-fortinet-sap-vmware-n8n-patch.html) (Ivanti Xtraction), [CVE-2026-44277](https://thehackernews.com/2026/05/ivanti-fortinet-sap-vmware-n8n-patch.html) (Fortinet FortiAuthenticator), [CVE-2026-26083](https://thehackernews.com/2026/05/ivanti-fortinet-sap-vmware-n8n-patch.html) (Fortinet FortiSandbox, FortiSandbox Cloud, and FortiSandbox PaaS), [CVE-2026-34260, CVE-2026-34263](https://thehackernews.com/2026/05/ivanti-fortinet-sap-vmware-n8n-patch.html) (SAP), [CVE-2026-42231, CVE-2026-42232, CVE-2026-44791, CVE-2026-44789, CVE-2026-44790](https://thehackernews.com/2026/05/ivanti-fortinet-sap-vmware-n8n-patch.html), [CVE-2026-42236](https://github.com/n8n-io/n8n/security/advisories/GHSA-49m9-pgww-9vq6), [CVE-2026-42230](https://github.com/n8n-io/n8n/security/advisories/GHSA-f6x8-65q6-j9m9) ([n8n](https://checkmarx.com/zero-post/n8n-overdos-vulnerability-cve-2026-42236/)), [CVE-2026-6815](https://kb.cert.org/vuls/id/937808) (Casdoor), [CVE-2026-2291, CVE-2026-4890, CVE-2026-4891, CVE-2026-4892, CVE-2026-4893, CVE-2026-5172](https://kb.cert.org/vuls/id/471747) (dnsmasq), [CVE-2026-6787, CVE-2026-6788](https://www.watchguard.com/wgrd-psirt/advisory/wgsa-2026-00013) (WatchGuard Agent on Windows), [CVE-2026-23479, CVE‑2026‑25243, CVE-2026-25588, CVE‑2026‑25589](https://redis.io/blog/security-advisory-cve202623479-cve202625243-cve-2026-25588-cve202625589-cve-2026-23631/) (Redis), [CVE-2026-41002](https://spring.io/security/cve-2026-41002), [CVE-2026-40982](https://spring.io/security/cve-2026-40982), [CVE-2026-40981](https://spring.io/security/cve-2026-40981), [CVE-2026-41713](https://spring.io/security/cve-2026-41713), [CVE-2026-41712](https://spring.io/security/cve-2026-41712), [CVE-2026-41705](https://spring.io/security/cve-2026-41705) (Spring), [CVE-2026-6722](https://github.com/php/php-src/security/advisories/GHSA-85c2-q967-79q5) (PHP ext-soap), [CVE-2026-43824](https://github.com/argoproj/argo-cd/security/advisories/GHSA-3v3m-wc6v-x4x3) (Argo CD), [CVE-2026-27174](https://www.resecurity.com/blog/article/critical-majordomo-rce-cve-2026-27174-unauthenticated-remote-code-execution-analysis) (MajorDoMo), [CVE-2026-25254, CVE-2026-25293](https://docs.qualcomm.com/securitybulletin/may-2026-bulletin.html) (Qualcomm), [CVE-2026-28819, CVE-2026-43668, CVE-2026-28972 (Apple macOS), CVE-2026-44413](https://blog.jetbrains.com/teamcity/2026/05/cve-2026-44413/) (JetBrains TeamCity), [CVE-2026-42010, CVE-2026-33845, CVE-2026-42009, CVE-2026-33846, CVE-2026-1584](https://www.gnutls.org/security-new.html) (GnuTLS), [CVE-2026-30905](https://www.zoom.com/en/trust/security-bulletin/zsb-26007/), [CVE-2026-30906](https://www.zoom.com/en/trust/security-bulletin/zsb-26008/) (Zoom), [CVE-2026-4782, CVE-2026-4798](https://www.wordfence.com/blog/2026/05/1000000-wordpress-sites-affected-by-arbitrary-file-read-and-sql-injection-vulnerabilities-in-avada-builder-wordpress-plugin/) (Avada Builder plugin), [CVE-2026-43898](https://github.com/nyariv/SandboxJS/security/advisories/GHSA-g8f2-4f4f-5jqw) (SandboxJS), [CVE-2026-8509, CVE-2026-8510](https://chromereleases.googleblog.com/2026/05/stable-channel-update-for-desktop_12.html) (Google Chrome), [CVE-2026-44578](https://hadrian.io/blog/next-js-websocket-ssrf-unauthenticated-access-to-internal-resources-cve-2026-44578-2) (Next.js), [CVE-2025-14177](https://swarm.ptsecurity.com/hack-the-elephant-one-bite-at-a-time-jpeg-related-memory-safety-bugs-in-php/) (PHP), [CVE-2026-33439](https://www.hacktron.ai/blog/openam-deserialization-pre-auth-rce) (OpenAM), [CVE-2025-66335](https://www.akamai.com/blog/security-research/one-fluke-3-pattern-mcp-back-end-vulnerabilities) (Apache Doris MCP), an [authentication validation bypass](https://www.akamai.com/blog/security-research/one-fluke-3-pattern-mcp-back-end-vulnerabilities) in Apache Pinot MCP, and an [information disclosure flaw](https://www.akamai.com/blog/security-research/one-fluke-3-pattern-mcp-back-end-vulnerabilities) in Alibaba RDS MCP.
-🎥 Cybersecurity Webinars
-[AppSec Tools Blind to Lethal Chains: Code → Pipeline → Cloud Attacks](https://thehacker.news/top-attack-paths-appsec): Your AppSec tools are drowning in alerts but completely blind to how real attackers breach you. Modern threats don’t exploit single bugs — they chain tiny weaknesses across code, pipelines, and cloud into lethal attack paths. Join the webinar to discover the 3 deadliest cross-lifecycle patterns from Wiz experts (ex-Okta/GitLab) and learn how to map & stop them.[AI is making DDoS attacks dangerously intelligent. Are you ready?](https://thehacker.news/ai-ddos-attacks)AI is turning DDoS attacks into smart, adaptive weapons that scan weaknesses in real-time, mimic legit traffic, and dodge traditional defenses. With a 358% surge in incidents, it's time to upgrade your strategy. Join the webinar to learn the latest tactics and how to defend effectively.
-📰 Around the Cyber World
-- Flaw in Apple's Memory Integrity Enforcement —Calif said it
-[discovered](https://blog.calif.io/p/first-public-kernel-memory-corruption)a new way of circumventing Apple's Memory Integrity Enforcement (MIE), a new hardware-assisted memory safety system, and achieved privilege escalation. The discovery was made possible while testing an early version of Anthropic's Mythos Preview in April. "It's the first public macOS kernel memory corruption exploit on M5 silicon, surviving MIE," Calif said. "The exploit is a data-only kernel local privilege escalation chain targeting macOS 26.4.1 (25E253). It starts from an unprivileged local user, uses only normal system calls, and ends with a root shell. The implementation path involves two vulnerabilities and several techniques, targeting bare-metal M5 hardware with kernel MIE enabled." Additional details are currently withheld to give Apple time to address the issues. - Mustang Panda Delivers Updated FDMTP Tool —A new campaign consistent with tradecraft associated with Mustang Panda has been
-[observed](https://www.darktrace.com/blog/chinese-apt-campaign-targets-entities-with-updated-fdmtp-backdoor)targeting the Asia-Pacific and Japan (APJ) region to deliver an updated version of[FDMTP](https://thehackernews.com/2024/09/mustang-panda-deploys-advanced-malware.html)using DLL side-loading. The malware is designed to connect to an external server and receive commands from the remote server, profile compromised hosts, and load additional plugins to handle scheduled tasks, manage Windows Registry persistence, or retrieve files or commands. The activity has been spotted since September 2025. - New Flaw in Burst Statistics Plugin Exploited —Threat actors are
-[exploiting](https://www.wordfence.com/blog/2026/05/200000-wordpress-sites-at-risk-from-critical-authentication-bypass-vulnerability-in-burst-statistics-plugin/)a critical flaw in the Burst Statistics WordPress plugin (CVE-2026-8181, CVSS score: 9.8), which "allows unauthenticated attackers who know a valid administrator username to fully impersonate that administrator for the duration of any REST API request, including WordPress core endpoints such as /wp-json/wp/v2/users, by supplying any arbitrary and incorrect password in a Basic Authentication header," per Wordfence. An attacker could exploit this flaw to create a new administrator-level account with no prior authentication and seize control of the site. The plugin has over 200,000 installations. Wordfence said it has[blocked](https://www.wordfence.com/threat-intel/vulnerabilities/wordpress-plugins/burst-statistics/burst-statistics-340-3411-authentication-bypass-to-admin-account-takeover)thousands of attacks targeting this vulnerability. - CISA and Others Release Guidance to Strengthen AI Supply Chain —Multiple government cyber agencies
-[issued](https://www.cisa.gov/resources-tools/resources/software-bill-materials-ai-minimum-elements)a joint guidance to help public and private sector stakeholders improve transparency in their AI systems and supply chains. "A software bill of materials (SBOM) acts as an 'ingredients list' for software that better positions organizations to understand their supply chains and make risk-informed decisions about how to protect their critical systems," the agencies said. "Because AI systems are software systems, these recommendations should be considered in addition to the general[minimum elements for an SBOM](https://www.cisa.gov/resources-tools/resources/2025-minimum-elements-software-bill-materials-sbom)." - Stealer Malware Continues to Evolve —Cybersecurity researchers disclosed details of various new and emerging information stealers like
-[Salat](https://darkatlas.io/blog/salat-stealer-analysis-go-based-rat-c2-resilience-and-info-stealing-capabilities),[Gremlin](https://unit42.paloaltonetworks.com/gremlin-stealer-evolution/), and[Reaper](https://www.sentinelone.com/blog/shub-reaper-macos-stealer-spoofs-apple-google-and-microsoft-in-a-single-attack-chain/), the last of which is a new SHub macOS stealer variant that spoofs Apple, Google, and Microsoft across a multi-stage attack chain to steal credentials, exfiltrate business files, and establish persistent backdoor access. "Reaper uses fake WeChat and Miro installers as lures," SentinelOne researcher Phil Stokes said. "The payload may be hosted on a typo-squatted Microsoft domain, executed under the guise of an Apple security update, and persist from a fake Google Software Update directory." Unlike other[macOS stealers](https://thehackernews.com/2026/03/clickfix-campaigns-spread-macsync-macos.html)that trick users into opening and pasting malicious commands into the Terminal app, Reaper relies on the applescript:// URL scheme to trigger the execution of a malicious AppleScript, thereby bypassing Terminal-based mitigations Apple introduced in late March 2026. According to a report published by Flare.io last week, one in four infostealer victims has active access to corporate infrastructure: VPN credentials, SaaS sessions, cloud platforms. "One in six gaming-related infections involves a user with corporate infrastructure access," it[said](https://flare.io/learn/resources/blog/one-out-of-four-infostealer-victims-corporate-infrastructure-access). "16% of victims infected through gaming lures also held active credentials for VPNs, SaaS platforms, or cloud environments, creating a direct pipeline from personal device use to enterprise compromise." - Flaws in myAudi Platform —Multiple security flaws have been
-[discovered](https://decoder.cloud/2026/05/08/oh-myaudi/)in the myAudi connected car platform, allowing anyone with knowledge of a vehicle's VIN to add it to their account as a guest and access sensitive data. The leaked information included the embedded SIM's IMEI and ICCID identifiers, the GPS location of the primary owner when they triggered a "honk & flash" command, and vehicle lock status. One of the identified issues has been fixed by Audi and CARIAD.
-🔧 Cybersecurity Tools
-[Rustinel](https://github.com/Karib0u/rustinel)→ It is an open-source endpoint detection tool for Windows and Linux. It collects system activity using ETW on Windows and eBPF on Linux, checks events against Sigma rules, YARA rules, and IOCs, and writes alerts in ECS NDJSON format for use in SIEM or log pipelines. It is built for blue teams, detection engineers, researchers, and testing environments, not as a full replacement for commercial EDR.[Giskard](https://github.com/Giskard-AI/giskard-oss)→ It is an open-source Python tool for testing and evaluating LLM agents and AI systems. It helps developers check whether an AI app behaves correctly, stays grounded in context, follows safety rules, and handles multi-turn conversations reliably. Its current version focuses on lightweight evaluation workflows, while related scanning and RAG evaluation features are still being developed or are available in older versions.[VanGuard](https://github.com/ridgelinecyberdefence/vanguard)→ It is a cross-platform incident response toolkit for Windows and Linux that lets security teams collect evidence, run triage, perform threat hunting, capture memory, gather disk artifacts, manage Velociraptor workflows, and generate reports from a single portable binary without installation. It includes 28 pre-built investigation workflows, supports offline use, and tracks evidence with hashing, chain of custody, and audit logging.
-Disclaimer: This is strictly for research and learning. It hasn't been through a formal security audit, so don't just blindly drop it into production. Read the code, break it in a sandbox first, and make sure whatever you’re doing stays on the right side of the law.
-Conclusion
-The message is simple: trust less, check more. Bad packages, fake pages, weak plugins, leaked keys, and old bugs all lead to the same place.
-Patch first. Rotate keys. Review what you run in prod. That’s the work. That’s the recap.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">Grafana says stolen GitHub token let hackers steal codebase</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/grafana-says-stolen-github-token-let-hackers-steal-codebase/" target="_blank">Original Link</a></p>
-            <div class="content-text">Grafana Labs disclosed that hackers have downloaded its source code after breaching its GitHub environment using a stolen access token. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-5" class="article-body">
-            <h2 class="article-title">CISA Adds One Known Exploited Vulnerability to Catalog</h2>
-            <p class="source-link">Source: All CISA Advisories | <a href="https://www.cisa.gov/news-events/alerts/2026/05/15/cisa-adds-one-known-exploited-vulnerability-catalog" target="_blank">Original Link</a></p>
-            <div class="content-text">CISA Adds One Known Exploited Vulnerability to Catalog
-CISA has added one new vulnerability to its [Known Exploited Vulnerabilities (KEV) Catalog](/known-exploited-vulnerabilities-catalog), based on evidence of active exploitation.
-[CVE-2026-42897](https://www.cve.org/CVERecord?id=CVE-2026-42897)Microsoft Exchange Server Cross-Site Scripting Vulnerability
-This type of vulnerability is a frequent attack vector for malicious cyber actors and poses significant risks to the federal enterprise.
-[Binding Operational Directive (BOD) 22-01: Reducing the Significant Risk of Known Exploited Vulnerabilities](/binding-operational-directive-22-01) established the KEV Catalog as a living list of known Common Vulnerabilities and Exposures (CVEs) that carry significant risk to the federal enterprise. BOD 22-01 requires Federal Civilian Executive Branch (FCEB) agencies to remediate identified vulnerabilities by the due date to protect FCEB networks against active threats. See the [BOD 22-01 Fact Sheet](/sites/default/files/publications/Reducing_the_Significant_Risk_of_Known_Exploited_Vulnerabilities_211103.pdf) for more information.
-Although BOD 22-01 only applies to FCEB agencies, CISA strongly urges all organizations to reduce their exposure to cyberattacks by prioritizing timely remediation of [KEV Catalog vulnerabilities](/known-exploited-vulnerabilities-catalog) as part of their vulnerability management practice. CISA will continue to add vulnerabilities to the catalog that meet the [specified criteria](/known-exploited-vulnerabilities).
-This product is provided subject to this [Notification](/notification) and this [Privacy & Use](/privacy-policy) policy.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-6" class="article-body">
-            <h2 class="article-title">Finding Your Way on the Passkey Path</h2>
-            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/finding-your-way-on-the-passkey-path" target="_blank">Original Link</a></p>
-            <div class="content-text">Finding Your Way on the Passkey Path
-Introducing a choose-your-own-adventure guide to understanding, deploying, and supporting passkeys
-Several months ago, I set out to see what all the buzz was about passkeys. What started as a simple blog post quickly turned into something much bigger. The question organizations should be asking isn’t if they will adopt passkeys but when. Breaches almost always begin with a password—a shared secret for users to manage. Passkeys remove the known secret, instead binding it to a device and origin at time of registration, so there's nothing to phish, no database to dump, and nothing to reuse.
-Most of what’s out there is technically correct but operationally lacking. Such a broad topic cannot be narrowed to focus on a single narrative. That’s why I wrote [Passkey Path](https://techbrandon.github.io/passkey-path/), a guide that satisfies multiple audiences and gives the reader only the information they need based on interest or role. Whether you need to learn the basics or dig into the details, Passkey Path has something for everyone.
-Rolling out passkeys in a production environment is a systematic change in all things IT. Passkeys shift the end-user perspective of what it means to log in and challenge how security teams define MFA. The helpdesk no longer resets passwords, but the recovery flow they now own is the new attack vector. For IT admins, passkey implementation is far from a simple checkbox. Top to bottom, passkeys change everything.
-Ok, so that meme was probably a bad choice unless you’re on the side of “Thanos had a point.” Regardless of Marvel lore, rolling out passkeys is very much worth it, as long as it’s well-coordinated and calculated. Here’s where you might start.
-End Users (Consumers)
-We’re all consumers of some kind, and chances are high that you’ve been prompted by at least one of your applications to set up a passkey. Whether you’re starting with the foundational question of “[what is a passkey?](https://techbrandon.github.io/passkey-path/shared/what-is-a-passkey/)” or you're ready to [enroll your first FIDO2 security key](https://techbrandon.github.io/passkey-path/end-user/setup-security-key/), the end-user path has you covered. This path presents the basics and walks through setting up passkeys, signing in, and what to do when your device dies on a Sunday night.
-Security Leads
-“Security is everyone’s job.” Whether this phrase makes you smirk, shrug, or celebrate, it should at least carry a little weight. You may or may not care about [compliance frameworks](https://techbrandon.github.io/passkey-path/security/compliance/), but I think having an understanding of how [downgrade attacks](https://techbrandon.github.io/passkey-path/security/downgrade-attacks/) occur is pretty important for everyone (or perhaps I’m the only one fascinated with adversarial tradecraft).
-Helpdesk
-If you thought the helpdesk path was going to be boring, you didn’t realize this is where most of the [social engineering](https://techbrandon.github.io/passkey-path/helpdesk/escalation/) content landed. Passkeys are phish-resistant, not phish-proof. When passwords are no longer an attack vector, the path of least resistance usually shifts to the passkey recovery flow. This path also covers how to [issue a Temporary Access Pass (TAP)](https://techbrandon.github.io/passkey-path/helpdesk/tap-issuance/), which you may not have even known existed (I didn’t).
-IT Admins
-Everyone’s role in deploying passkeys is important. I’m not going to say that the IT Admin has it the hardest, but they do have the highest chance of a Resume Generating Event (RGE). Without a good [phased rollout strategy](https://techbrandon.github.io/passkey-path/it-admin/rollout-planning/), large groups of users get locked out at the worst possible moment. [Conditional Access](https://techbrandon.github.io/passkey-path/it-admin/conditional-access/), [AAGUIDs, and attestation](https://techbrandon.github.io/passkey-path/it-admin/attestation-aaguids/) are all critical aspects of the bigger picture.
-The Reader Experience
-Built by the ADHD mind, for the ADHD mind, [Passkey Path](https://techbrandon.github.io/passkey-path/) uses the above 4 tracks, but there is no starting point. With 25 pages of content and 67 cross-links, its value is in its flexibility. If you fit in multiple roles or you only need a piece of one, you’re the normal case, not the edge case. Pick a starting point and explore from there.
-One of my favorite additions to this project is the progress and achievement system. The site tracks your progress client-side, so you won’t accidentally read the same page twice. An achievement system is added for those looking to gamify their experience, earning badges as you complete paths.
-With over 2 hours of estimated reading time, you’re bound to find something you’re looking for. Follow a path or don’t. Passkey rollouts don’t follow a set structure, so [Passkey Path](https://techbrandon.github.io/passkey-path/) doesn’t either.</div>
+This just goes to show how mistakes can happen very easy with lack of carelessness, making personal information very vulnerable to hackers, I think CISA/Nightingale should better screen the contract /worker, there is blame on both sides, It’s so sad that this happened and caused most of the others to lose their jobs.
+“CISA’s internal “artifactory””
+Artifactory (a software repository/caching/proxy solution) doesn’t need to be in quotes, it needs to be capitalized.
+Since when is krebsonsecurity comment section filled with lunatics makng political comments? You guys do know this is a cybersecurity blog?
+I guess the TDS is overwhelming and you guys gotta bounce some conspiracies around the echo chamber just to feel good. Must be a depressing way to go through life, constantly angry and constantly the victim
+It is not TDS to point out that Trump has favored people who will do exactly what he wants over more qualified candidates. I give you Patel, Hegseth, Bondi, Lindsay Halligan, etc. This is in addition to dismissing competent staff already in place.
+Right, because Biden only hired stellar people like Mayorkas or Brinton.
+Who’s talking about Biden? He’s not ever running again and has been out of office for almost 18 months. It’s time to move on.
+sure man, it ended with the chemo. Just like hunter’s corruption and mamdani’s incredible fake generosity.
+It’s like trusting your software vendor to do the right thing with an open credit card. Some people just shouldn’t be trusted.
+was it correctly supervised? weakness in contracting process and management maybe
+My first thought is it just a mistake or did a Chinese National or other type of anti-gov insider get the contracting job. I have no idea, but was this an accident????
+Hey man, .va was hard, even in 2009, Polly-0.
+Quit trying to be phishers of men.
+This is nothing more than a glaring example of the lack of qualified IT Security Professionals. The contractor hired whoever they could find to fill the spot without qualifying the individual and then granting them too much trust.
+Man, Brian, look at that rush of comments to avoid comments numbered in the teens, twenties, or thirties.
+Reminds me of the GIAC breach.
+I guess one of the DOGE Bros is working for Nightwing now.
+I would go straight to this guy’s house. I bet he leaves his keys under the doormat with a label, “Totally Not The Keys To My House”. You do have to wonder about an AWS engineer who isn’t paranoid about any presence of static creds — considering the wide array of alternative solutions these days.
+How much more of this ‘winning’ can we take!
+We have just won again! Finally twitter employees can go hang out with other employees and do their removals without consequence some more!
+Hail eris!
+Ps of course identity thieving presidents of both ‘parties’ deserve no repercussions, otherwise how can we just keep winning so much.
+There is always one @sshat who is smart enough to evade the security rules, but not smart enough understand why the rules should apply to them too.
+The “importantAWStokens” filename is almost poetic —
+someone knew these were important, just not important
+enough to keep off GitHub.
+The deeper issue here isn’t the individual mistake, it’s
+that there’s no automated last-resort protection.
+GitGuardian caught it externally after the fact.
+The pattern is always the same: credentials exist in
+plaintext somewhere “temporary” that becomes permanent.
+The only reliable defense is assuming breach and designing
+for it — encrypt locally before any sync, treat every
+cloud path as compromised by default.
+Disabling GitHub’s secret detection feature is the part
+that’s hardest to explain. That’s not an accident, that’s
+a deliberate choice with consequences.
+This seems deliberate to me as well. The company he works for may have things like USB ports locked down to prevent any data from leaving the building. Using Github for “backups” is a way around that kind of restriction because often using Github as a repo is not only allowed but encouraged for version control. Setting the repo to public is also pretty damning.
+Still, could be a mistake I suppose…. but you’d have to be a superior moron to use Github as a backup for credentials like this… even if you did make it private.
+Apparently the BipIP section of our universal my resume I haven’t been able it to write is hanging out at Denny’s again, making sure the Kubernetes section of the diner in my wallet scorns me for not tipping thousands of miles away again for the imaginary life we insist we returned.
+Ps: Matt died. Good luck, licking a pole in a movie we really all enjoyed over and over here with Jimmy You on Christmas 1997, forever.
+Now go bring that thirty year old toilet back for Warren Buffett and the retards in King of Prussia. Or maybe the awesome we are sharing too an imaginary love in the country of an olive flag is a bag near us all me
+Time for my docent at the museum of our universal is me
+This incident underscores the critical importance of robust secrets management and developer security training, especially when dealing with highly sensitive environments like GovCloud. Implementing automated static application security testing (SAST) and dynamic application security testing (DAST) in CI/CD pipelines can help detect such exposures pre-deployment. Furthermore, integrating credential scanning tools into version control systems is essential to prevent accidental commits of sensitive keys. Regular audits of access controls and least privilege principles are also fundamental to mitigating insider threats, whether malicious or accidental. This serves as a stark reminder that even well-resourced organizations face challenges in maintaining perfect operational security.
+Calling this a clown show is a disservice to actual clowns.
+Capital T, Trump-level ineptitude here.
+Anyone who works in cloud security knows that this is not uncommon incident. It is why organizations need to invest in github monitoring tools like GitGuardian.
+As soon as git became attached to a public company that IPOed in the past this became not only about git, same as reddit.
+Ask me to explain git in 2010 (roughly August through early Autumn) or reddit, especially since its IPO date (and its soundalikes, also public, if you ever have the balls to discuss the things tech, blockchain, and the stock markets are doing now. Not homophones but similar. You are all soaking in it).
+I mean most of us that have been around for a while know it. And it is only part of why so many people are treating their friends like things to hunt down and remove. It is ugly.
+I remember clearance work. I do not mean K-Mart.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
