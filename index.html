@@ -59,35 +59,201 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-05-24</h1>
+        <h1>Security Briefing // 2026-05-25</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">npm Adds 2FA-Gated Publishing and Package Install Controls Against Supply Chain Attacks</button></li><li><button onclick="show('art-1')">Microsoft recognized as a Leader in The Forrester Wave™ for Workforce Identity Security Platforms</button></li><li><button onclick="show('art-2')">Lawmakers Demand Answers as CISA Tries to Contain Data Leak</button></li><li><button onclick="show('art-3')">Trend Micro warns of Apex One zero-day exploited in the wild</button></li><li><button onclick="show('art-4')">CISA Adds Exploited Langflow and Trend Micro Apex One Vulnerabilities to KEV</button></li><li><button onclick="show('art-5')">Alleged Kimwolf Botmaster ‘Dort’ Arrested, Charged in U.S. and Canada</button></li><li><button onclick="show('art-6')">Introducing TailscaleHound: Mapping Tailscale Attack Paths in BloodHound</button></li><li><button onclick="show('art-7')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-8')">Shai-Hulud Is Back, and This Time It Ate the Whole Ecosystem</button></li><li><button onclick="show('art-9')">GTIG AI Threat Tracker: Adversaries Leverage AI for Vulnerability Exploitation, Augmented Operations, and Initial Access</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Exploitation of KnowledgeDeliver via ViewState Deserialization Vulnerability</button></li><li><button onclick="show('art-1')">TrapDoor Supply Chain Attack Spreads Credential-Stealing Malware via npm, PyPI, and CratesIO</button></li><li><button onclick="show('art-2')">Ghost CMS SQL injection flaw exploited in large-scale ClickFix campaign</button></li><li><button onclick="show('art-3')">Microsoft recognized as a Leader in The Forrester Wave™ for Workforce Identity Security Platforms</button></li><li><button onclick="show('art-4')">Lawmakers Demand Answers as CISA Tries to Contain Data Leak</button></li><li><button onclick="show('art-5')">CISA Adds Exploited Langflow and Trend Micro Apex One Vulnerabilities to KEV</button></li><li><button onclick="show('art-6')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-7')">Shai-Hulud Is Back, and This Time It Ate the Whole Ecosystem</button></li><li><button onclick="show('art-8')">Patch Tuesday, May 2026 Edition</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">npm Adds 2FA-Gated Publishing and Package Install Controls Against Supply Chain Attacks</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/05/npm-adds-2fa-gated-publishing-and.html" target="_blank">Original Link</a></p>
-            <div class="content-text">GitHub has rolled out new controls for npm to improve the security of the software supply chain, giving maintainers the ability to explicitly approve a release prior to the packages becoming publicly available for installation.
-Called staged publishing, the feature is now generally available on npm. It mandates that a human maintainer pass a two-factor authentication (2FA) challenge to approve a package before it is pushed to the npmjs[.]com.
-"Instead of a direct publish that immediately makes a package version available to consumers, the prebuilt tarball is uploaded to a stage queue where a maintainer must explicitly approve it before it becomes installable," GitHub [said](https://github.blog/changelog/2026-05-22-staged-publishing-and-new-install-time-controls-for-npm/).
-The Microsoft-owned subsidiary said the change ensures "proof of presence" for every publish, including those that come from non-interactive CI/CD workflows and trusted publishing with OpenID Connect (OIDC) authentication.
-Before using [staged publishing](https://docs.npmjs.com/staged-publishing), package maintainers have to meet the following criteria -
-- Have publish access to the package
-- Package already exists on the npm registry, meaning a brand new package cannot be staged
-- 2FA is enabled for the account
-Developers can use the command "npm stage publish" from the root directory of the package to submit it to a staging area. To use this command, it's essential to update to npm CLI 11.15.0 or newer. For optimal protection, GitHub is recommending that staged publishing be paired with [trusted publishing](https://docs.npmjs.com/trusted-publishers) using OIDC.
-A second update focused on npm relates to the introduction of three new install source flags alongside the existing -allow-git flag -
-- --allow-file: Controls installs from local file paths and local tarballs
-- --allow-remote: Controls installs from remote URLs, including https tarballs
-- --allow-directory: Controls installs from local directories
-The flags allow developers to "apply the same explicit-allowlist approach to every non-registry install source," GitHub said.
-The development comes amid a [massive surge](https://thehackernews.com/2026/05/megalodon-github-attack-targets-5561.html) in software supply chain attacks targeting open-source ecosystems over the past few months, with one cybercriminal group known as [TeamPCP](https://thehackernews.com/2026/05/github-internal-repositories-breached.html) poisoning popular packages at an unprecedented scale through a self-perpetuating cycle of compromises.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <h2 class="article-title">Exploitation of KnowledgeDeliver via ViewState Deserialization Vulnerability</h2>
+            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/knowledgedeliver-viewstate-deserialization-vulnerability/" target="_blank">Original Link</a></p>
+            <div class="content-text">Exploitation of KnowledgeDeliver via ViewState Deserialization Vulnerability
+Mandiant
+Google Threat Intelligence Group
+Written by: Takahiro Sugiyama, Peter Revelant, Mathew Potaczek
+Introduction
+In late 2025, Mandiant responded to a security incident involving a compromised web server running [KnowledgeDeliver](https://www.digital-knowledge.co.jp/product/kd/). KnowledgeDeliver is a Learning Management System (LMS) developed by Digital Knowledge commonly used in Japan. Mandiant [identified a critical vulnerability](https://github.com/mandiant/Vulnerability-Disclosures/blob/master/2026/MNDT-2026-0009.md) that allowed unauthenticated Remote Code Execution (RCE). An unknown threat actor leveraged this access to inject malicious code into the LMS platform, with the goal of infecting users visiting the site.
+This vulnerability stems from the use of identical pre-shared ASP.NET machine keys across multiple customer deployments. The vulnerability was initially exploited as a zero-day, now tracked as [CVE-2026-5426](https://www.cve.org/CVERecord?id=CVE-2026-5426).
+The Vulnerability
+KnowledgeDeliver installations deployed before Feb. 24, 2026 relied on a standardized web.config
+file provided by the vendor. This configuration file contained hardcoded machineKey
+values used by the ASP.NET framework to encrypt and sign data, including ViewState payloads.
+Because these keys were identical across independent customer environments, a threat actor who obtained the keys from one deployment could compromise any other internet-facing KnowledgeDeliver instance.
+The following is an example of the relevant configuration line found in the web.config
+file:
+<machineKey decryptionKey="<REDACTED>" validationKey="<REDACTED>" />
+The ASP.NET ViewState persists page state across postbacks. When the machineKey
+is known, a threat actor can craft a malicious ViewState payload. By sending this payload in an HTTP request (via the __VIEWSTATE
+parameter), the threat actor can make the server deserialize it.
+This technique follows the pattern of the [ViewState Deserialization Zero-Day Vulnerability](https://cloud.google.com/blog/topics/threat-intelligence/viewstate-deserialization-zero-day-vulnerability) affecting Sitecore (previously reported by Mandiant), and [Code injection attacks using publicly disclosed ASP.NET machine keys](https://www.microsoft.com/en-us/security/blog/2025/02/06/code-injection-attacks-using-publicly-disclosed-asp-net-machine-keys/) reported by Microsoft. This highlights how it is critical to keep the machine key unique and secure.
+Post-Exploitation Activity
+Once access was established, the threat actors focused on maintaining their presence and expanding the impact of the compromise.
+BLUEBEAM Web Shell Deployment
+The threat actor deployed a .NET-based in-memory web shell called BLUEBEAM (also known as Godzilla). The use of BLUEBEAM is consistent with the [Microsoft reporting](https://www.microsoft.com/en-us/security/blog/2025/02/06/code-injection-attacks-using-publicly-disclosed-asp-net-machine-keys/). This malware operates entirely in memory within the IIS worker process (w3wp.exe
+), making it difficult to detect through traditional file-based scanning. It allows threat actors to execute further commands and payloads by sending encrypted data via HTTP POST request bodies.
+File Tampering
+The threat actor was observed executing commands to escalate their control over the web server's file system:
+-
+Permission Modification: The threat actor used
+icacls
+to grant "Everyone" full access to the web application directory. -
+JavaScript Tampering: The threat actor modified an application JavaScript file, adding code to perform the following:
+-
+Display a fake security alert, prompting users to install a "security authentication plugin".
+-
+Silently load a remote malicious script hosted on a threat actor-controlled domain.
+Cobalt Strike Infection
+The remote script convinced users to download a fake installer, which led to workstations being infected with a Cobalt Strike BEACON backdoor. The payload was encrypted using a key that used the name of the compromised organization, which indicated that the threat actor prepared this payload specifically for the targeted organization.
+How to Hunt for This Activity
+Organizations should monitor for the following indicators to identify potential ViewState exploitation and post-exploitation activity.
+1. Application Event Logs (Event ID 1316)
+Monitor the Windows Application log for Event ID 1316 from the source ASP.NET 4.0.30319.0
+(or similar).
+-
+Failed Attempt (Integrity Failure):
+Event code: 4009-++-Viewstate verification failed. Reason: The viewstate supplied failed integrity check.
+May indicate an attack attempt with an incorrect key. -
+Successful Execution (Invalid ViewState):
+Event code: 4009-++-Viewstate verification failed. Reason: Viewstate was invalid.
+Confirms integrity checks were passed. Deserialization of the payload was attempted and may have succeeded. The payload may or may not have been executed.
+Mandiant decrypted payload strings recorded in the event log messages with the server’s machine keys and recovered a payload related to a BLUEBEAM web shell.
+2. Suspicious Process Activity
+Monitor for unusual child processes spawned by w3wp.exe
+. Commands observed include:
+-
+cmd.exe /c ...
+-
+whoami
+-
+powershell.exe
+3. File Integrity Monitoring
+Monitor for unauthorized changes to .js
+, .aspx
+, or .config
+files within the web root. Specifically, look for the addition of remote script loaders or unusual logic in commonly used libraries.
+4. Anomalous User-Agent Strings
+Mandiant identified User-Agent strings consisting of two distinct identifiers concatenated together, which were consistent with ones reported in [ViewState Deserialization Zero-Day vulnerability](https://cloud.google.com/blog/topics/threat-intelligence/viewstate-deserialization-zero-day-vulnerability). Monitor for web request logs for such anomalous User-Agent strings. The following are examples of identified User-Agent strings:
+-
+Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.2 (KHTML, like Gecko) Chrome/22.0.1216.0 Safari/537.2 Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36
+-
+Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.13) Gecko/20101213 Opera/9.80 (Windows NT 6.1; U; zh-tw) Presto/2.7.62 Version/11.01 Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36
+-
+Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0) chromeframe/10.0.648.205 Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36
+Remediation and Mitigation
+-
+Rotate Machine Keys: Immediately generate a unique, cryptographically strong machine key for each KnowledgeDeliver instance. This is the only way to invalidate the shared secret.
+-
+Restrict Access: If possible, limit access to the LMS to known organizational IP address ranges.
+-
+Investigation: Hunt for this activity, and conduct a thorough investigation if any signs of exploitation are identified.
+Outlook and Implications
+The exploitation of KnowledgeDeliver highlights the severe risks of using shared secrets in deployment templates. A single leaked key can compromise an entire ecosystem of installations. By implementing unique secrets and robust endpoint monitoring, organizations can defend against these deserialization attacks.
+Indicators of Compromise (IOCs)
+Google Security Operations (SecOps)
+The following [SecOps](https://cloud.google.com/security/products/security-operations) searches can be used to hunt for this activity.
+(metadata.log_type = "WINEVTLOG" or metadata.log_type = "WINEVTLOG_XML")
+metadata.product_event_type = "1316"
+additional.fields["Message"] = /Event code: 4009\b/ nocase
+(metadata.event_type = "PROCESS_LAUNCH" or metadata.event_type = "PROCESS_OPEN") AND
+principal.process.command_line = /w3wp.exe/ nocase AND
+target.process.command_line = /cmd.+ \/c |whoami|powershell/ nocase
+SecOps customers have access to the following rules and more under the Mandiant Hunting Rules, Mandiant Frontline Threats, Mandiant Intel Emerging Threats rule packs:
+-
+ASP.NET ViewState Deserialization Attempt
+-
+W3wp Launching Cmd With Recon Commands
+-
+W3wp Launching Encoded Powershell
+-
+W3wp Launching Icalcls
+-
+Web Server Process Launching Whoami
+-
+IIS ViewState Exploitation Success
+-
+IIS ViewState Exploitation Followed by Web Root File Tampering
+-
+Possible Windows Exchange Server Spawning Shell
+Acknowledgements
+Mandiant would like to extend our thanks to the Digital Knowledge team for their collaboration regarding this disclosure.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-1" class="article-body">
+            <h2 class="article-title">TrapDoor Supply Chain Attack Spreads Credential-Stealing Malware via npm, PyPI, and CratesIO</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/05/trapdoor-supply-chain-attack-spreads.html" target="_blank">Original Link</a></p>
+            <div class="content-text">A new coordinated cross-ecosystem software supply chain attack campaign has targeted npm, PyPI, and Crates.io to distribute credential-stealing malware.
+The campaign, codenamed [TrapDoor](https://socket.dev/blog/trapdoor-crypto-stealer-npm-pypi-crates), spans more than 34 malicious packages across over 384 versions. The earliest activity was recorded on May 22, 2026, at 8:20 p.m. UTC, with new packages published to the ecosystems in waves from a cluster of accounts in quick succession.
+"TrapDoor targets developers in crypto, DeFi, Solana, and AI communities," Socket said. "The malicious packages are designed to steal developer secrets, crypto wallets, SSH keys, cloud credentials, browser data, and environment variables."
+"Several npm packages also deploy a shared payload, trap-core.js, that scans for credentials, validates AWS and GitHub tokens, attempts SSH-based lateral movement, and plants persistence through .cursorrules, CLAUDE.md, Git hooks, shell hooks, systemd, cron, and SSH."
+It's worth noting that the activity has no connection to [another campaign of the same name](https://thehackernews.com/2026/05/trapdoor-android-ad-fraud-scheme-hit.html) that HUMAN's Satori Threat Intelligence and Research Team detailed last week as engaging in ad fraud by distributing 455 Android apps through the Google Play Store.
+The [list of identified packages](https://socket.dev/supply-chain-attacks/trapdoor-crypto-stealer) is below -
+-
+Crates.io
+- move-analyzer-build
+- move-compiler-tools
+- move-project-builder
+- sui-framework-helpers
+- sui-move-build-helper
+- sui-sdk-build-utils
+-
+npm
+- async-pipeline-builder
+- build-scripts-utils
+- chain-key-validator
+- crypto-credential-scanner
+- defi-env-auditor
+- defi-threat-scanner
+- deployment-key-auditor
+- dev-env-bootstrapper
+- eth-wallet-sentinel
+- llm-context-compressor
+- mnemonic-safety-check
+- model-switch-router
+- node-setup-helpers
+- project-init-tools
+- prompt-engineering-toolkit
+- solidity-deploy-guard
+- token-usage-tracker
+- wallet-backup-verifier
+- wallet-security-checker
+- web3-secrets-detector
+- workspace-config-loader
+-
+PyPI
+- cryptowallet-safety
+- data-pipeline-check
+- defi-risk-scanner
+- env-loader-cli
+- eth-security-auditor
+- git-config-sync
+- solidity-build-guard
+The operation is notable for its diverse delivery paths, using postinstall hooks, remote JavaScript payloads that are executed during package imports, and malicious build.rs scripts to target Sui and Move developers. The packages masquerade as seemingly harmless tools, giving attackers the ability to reach a broad audience.
+The npm packages have been found to run a JavaScript payload ("trap-core.js"), which scans for credentials and developer secrets, validates stolen credentials using AWS and GitHub API calls, and creates persistence on the host using cron jobs, systemd services, Git hooks, and moves across the network via SSH.
+The Rust crates, in a similar fashion, search for local keystores, encrypt the data using a hardcoded XOR key, and exfiltrate it to GitHub Gists. The packages are also noteworthy for the use of a [build script](https://doc.rust-lang.org/cargo/reference/build-scripts.html) ("build.rs") to trigger the execution of the malicious code.
+The Python packages associated with TrapDoor are designed such that they are auto-executed on import. The primary goal of the packages is to download JavaScript from an attacker-controlled GitHub Pages domain ("ddjidd564.github[.]io"), and run it using "node -e."
+"This technique allows the Python package to delegate execution to a remote JavaScript payload, giving the attacker more flexibility after publication," Socket explained. "By hosting the payload externally, the attacker can update behavior without publishing a new PyPI release."
+An unusual aspect of the campaign is the implanting of .cursorrules and CLAUDE.md containing hidden instructions to trick artificial intelligence (AI) assistants into running a "security scan" that results in secret discovery and exfiltration. This is achieved by opening GitHub pull requests (PRs) across popular AI and developer projects, including "browser-use/browser-use," "langchain-ai/langchain," and "langflow-ai/langflow."
+The PR activity indicates that TrapDoor extends beyond pushing malicious packages to open-source ecosystems. Socket said the threat actor is likely testing whether AI-related project files can be introduced through regular open-source contribution workflows, thereby causing AI coding tools to parse those hidden instructions and apply them.
+The findings once again demonstrate how threat actors are increasingly targeting developer workflows, aiming to steal a wide range of information that could make it possible to burrow deeper into target environments for follow-on attacks.
+"TrapDoor shows how attackers are combining traditional package typosquatting with newer developer-environment attack paths," Socket said. "The package names are tailored to appear relevant to crypto development, AI tooling, local environment setup, and security workflows. The malware then uses ecosystem-specific execution paths: build.rs in Rust, postinstall hooks in npm, and import-time execution in Python."
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">Ghost CMS SQL injection flaw exploited in large-scale ClickFix campaign</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/ghost-cms-sql-injection-flaw-exploited-in-large-scale-clickfix-campaign/" target="_blank">Original Link</a></p>
+            <div class="content-text">A large-scale campaign is exploiting a critical SQL injection vulnerability (CVE-2026-26980) in Ghost CMS to inject malicious JavaScript code that triggers ClickFix attack flows. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
             <h2 class="article-title">Microsoft recognized as a Leader in The Forrester Wave™ for Workforce Identity Security Platforms</h2>
             <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/05/22/microsoft-recognized-as-a-leader-in-the-forrester-wave-for-workforce-identity-security-platforms/" target="_blank">Original Link</a></p>
             <div class="content-text">Identity is the backbone of modern cybersecurity. Every access decision carries risk, across employees, partners, devices, workloads, and an expanding set of AI-powered agents.
@@ -115,7 +281,7 @@ Forrester does not endorse any company, product, brand, or service included in i
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-2" class="article-body">
+        <div id="art-4" class="article-body">
             <h2 class="article-title">Lawmakers Demand Answers as CISA Tries to Contain Data Leak</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/05/lawmakers-demand-answers-as-cisa-tries-to-contain-data-leak/" target="_blank">Original Link</a></p>
             <div class="content-text">Lawmakers in both houses of Congress are demanding answers from the U.S. Cybersecurity & Infrastructure Security Agency (CISA) after KrebsOnSecurity reported this week that a CISA contractor intentionally published AWS GovCloud keys and a vast trove of other agency secrets on a public GitHub account. The inquiry comes as CISA is still struggling to contain the breach and invalidate the leaked credentials.
@@ -143,12 +309,16 @@ Who put the keystone cops in charge. JFC
 You vote for a clown.
 You get what you fkn deserve.
 That is true. Just like the last guy.
+Except this wasn’t the last guy.
+Did the last guy terminate CISA senior management and reduce staff by a third or was it your guy and Musk?
 Very true. Just like that last guy.
 This is plain (rhymes with “he carded”).
 Has anyone tried to determine if anyone actually accessed or used any of the credentials or keys or modified any code, configs or libraries? Or determine if CISA’s contractor even capable of doing the assessment?
+If the guy from Truffle Security saw them, it’s smart to assume the Russians, Chinese, Iranians, etc. saw them too.
 The two primary points here are 1) Security lapses can happen to anyone 2) Humans are always the weakest link. That’s all. Learn from it. Move on.
 You forgot 3) don’t purge reliable employees and hire unqualified contractors to do national security work.
 Also they are a government agency so probably constrained in budget like everyone to solve problems they know need solving. This is where public private partnership could be shining with Fortune 500. Why do development if you will never afford the tools and procedures of multi-billion dollar enterprises.
+Be sure to pop back when the next corporate breach happens to one of those Fortune 500 companies, OK?
 I thought a snippet of this was posted on x-twitter but now I can’t find it and I can’t find the Krebs on Security account….
 This is disturbing in more than one way. Surely we are disturbed by all those PII records being disclosed. But, I believe that the more insidious long range problem is the hollowing out of the federal civil workforce. Those are the people that checked compliance with a gazillion federal cyber security requirements. Problem is that they were all fired or quit spring last year.
 So what now? Who is to protect us? Pete Hegseth? Give me a break. All that hyper testosterone addled nonsense he spews about war fighting.
@@ -157,11 +327,14 @@ The incompetence of this administration is just amazing. I mean what else do you
 Although, I disagree with the statement that the U.S. adversaries may benefit from this leak. They don’t need to. They have a much easier avenue to get a much juicier hunk of information from the commander in chief himself and from most of his staff directly. Look at the current actions of this administration. Don’t they act as ruzzian agents? They don’t even hide it. So why sieve through the trove of the leaked data when you can buy into his crypto coin and he’ll give you access himself?
 “a CISA contractor with administrative access to the agency’s code development platform had created a public GitHub profile called “Private-CISA” that included plaintext credentials to dozens of internal CISA systems…the commit logs for the code repository showed the CISA contractor disabled GitHub’s built-in protection against publishing sensitive credentials in public repos.”
 How can this be seen as anything other than intentional? And I find your partisan slant amusing. I am no fan of whatever two-faced criminals occupy “our” government, so I am am non-partisan when I ask who was President when Snowden did his thing?
+Snowden did it. Of course! We’ve all been paying attention to a powerless president instead, fools we are.
 I’ve always been a fan of Krebs & this is what happens when you remove Krebs from CISA & govt security! Chris Krebs is a God among men!
 “created a public GitHub profile called “Private-CISA” ” This statement alone is enough to show it was intentional
 No one in this business is that incompetent. Person who created this should be prosecuted to the fullest extent of the law.
 TDS is real, and there are people out there who would cripple America if it meant making Trump look bad.
 I do not care your politics, if Trump fails, America fails,
+No, Trump failed and has no concept nor concern about security. Those are separate concepts.
+Being dumb is a choice more than not.
 It’s actually quite astounding to see magats like you excuse pedophilia or fascism by just exclaiming “but whatabout democrats?”.
 Learn some god damn critical thinking. You voted for a:
 PEDOPHILE
@@ -169,22 +342,13 @@ FASCIST
 RAPIST
 CRIMINAL
 He is literally enriching himself and his family with your tax dollars in plain sight while tearing down the White House and rebuilding it in his literal image. Hell, the Christians offered up a literal golden statue in direct violation of their “holy text”.
-You dumbasses are beyond reconciling with.</div>
+You dumbasses are beyond reconciling with.
+This is a very interesting and detailed report on the CISA data leak. Thank you for the much-needed transparency and investigative journalism.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-3" class="article-body">
-            <h2 class="article-title">Trend Micro warns of Apex One zero-day exploited in the wild</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/trend-micro-warns-of-apex-one-zero-day-exploited-in-attacks/" target="_blank">Original Link</a></p>
-            <div class="content-text">Japanese cybersecurity software company Trend Micro has addressed an Apex One zero-day vulnerability exploited in attacks targeting Windows systems. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-4" class="article-body">
+        <div id="art-5" class="article-body">
             <h2 class="article-title">CISA Adds Exploited Langflow and Trend Micro Apex One Vulnerabilities to KEV</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/05/cisa-adds-exploited-langflow-and-trend.html" target="_blank">Original Link</a></p>
             <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Thursday [added](https://www.cisa.gov/news-events/alerts/2026/05/21/cisa-adds-two-known-exploited-vulnerabilities-catalog) two security flaws impacting Langflow and Trend Micro Apex One to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, citing evidence of active exploitation.
@@ -201,69 +365,7 @@ In light of active exploitation, Federal Civilian Executive Branch (FCEB) agenci
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-5" class="article-body">
-            <h2 class="article-title">Alleged Kimwolf Botmaster ‘Dort’ Arrested, Charged in U.S. and Canada</h2>
-            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/05/alleged-kimwolf-botmaster-dort-arrested-charged-in-u-s-and-canada/" target="_blank">Original Link</a></p>
-            <div class="content-text">Canadian authorities on Wednesday arrested a 23-year-old Ottawa man on suspicion of building and operating Kimwolf, a fast spreading Internet-of-Things botnet that enslaved millions of devices for use in a series of massive distributed denial-of-service (DDoS) attacks over the past six months. KrebsOnSecurity publicly named the suspect in February 2026 after the accused launched a volley of DDoS, doxing and swatting campaigns against this author and a security researcher. He now faces criminal hacking charges in both Canada and the United States.
-A criminal complaint unsealed today in an Alaska district court charges Jacob Butler, a.k.a. “Dort,” of Ottawa, Canada with operating the Kimwolf DDoS botnet. A [statement](https://www.justice.gov/usao-ak/pr/canadian-man-arrested-international-authorities-charged-administrating-kimwolf-ddos) from the Department of Justice says the complaint against Butler was unsealed following the defendant’s arrest in Canada by the Ontario Provincial Police pursuant to a U.S. extradition warrant. Butler is currently in Canadian custody awaiting an initial court hearing scheduled for early next week.
-The government said Kimwolf targeted infected devices which were traditionally “firewalled” from the rest of the internet, such as digital photo frames and web cameras. The infected systems were then rented to other cybercriminals, or forced to participate in record-smashing DDoS attacks, as well as assaults that affected Internet address ranges for the Department of Defense. Consequently, the DoD’s Defense Criminal Investigative Service is investigating the case, with assistance from the FBI field office in Anchorage.
-“KimWolf was tied to DDoS attacks which were measured at nearly 30 Terabits per second, a record in recorded DDoS attack volume,” the Justice Department statement reads. “These attacks resulted in financial losses which, for some victims, exceeded one million dollars. The KimWolf botnet is alleged to have issued over 25,000 attack commands.”
-On March 19, U.S. authorities joined international law enforcement partners in [seizing the technical infrastructure for Kimwolf](https://krebsonsecurity.com/2026/03/feds-disrupt-iot-botnets-behind-huge-ddos-attacks/) and three other large DDoS botnets — named Aisuru, JackSkid and Mossad — that were all competing for the same pool of vulnerable devices.
-On February 28, KrebsOnSecurity [identified Butler as the Kimwolf botmaster](https://krebsonsecurity.com/2026/02/who-is-the-kimwolf-botmaster-dort/) after digging through his various email addresses, registrations on the cybercrime forums, and posts to public Telegram and Discord servers. However, Dort continued to threaten and harass researchers who helped track down his real-life identity and dramatically slow the spread of his botnet.
-Dort claimed responsibility for at least two swatting attacks targeting the founder of Synthient, a security startup that helped to [secure a widespread critical security weakness](https://krebsonsecurity.com/2026/01/the-kimwolf-botnet-is-stalking-your-local-network/) that Kimwolf was using to spread faster and more effectively than any other IoT botnet out there. Synthient was among many technology companies thanked by the Justice Department today, and Synthient’s founder Ben Brundage told KrebsOnSecurity he’s relieved Butler is in custody.
-“Hopefully this will end the harassment,” Brundage said.
-The government says investigators connected Butler to the administration of the KimWolf botnet through IP address, online account information, transaction records, and online messaging application records obtained through the issuance of legal process. The [criminal complaint against Butler](https://krebsonsecurity.com/wp-content/uploads/2026/05/USA-v-Butler-Redacted-Affidavit-of-Criminal-Complaint-3_26_mj_00229_MMS.pdf) (PDF) shows he did little to separate his real-life and cybercriminal identities (something we demonstrated in our February unmasking of Dort).
-In April, the Justice Department joined authorities across Europe in [seizing domain names](https://www.justice.gov/usao-ak/pr/us-authorities-conduct-cyber-operations-part-global-crackdown-ddos-hire-services) tied to nearly four-dozen DDoS-for-hire services, although because of a bureaucratic mix-up the list of seized domains has remain sealed until today. The DOJ said at least one of those services collaborated with Butler’s Kimwolf botnet.
-A statement from the Ontario Provincial Police said a search warrant was executed on March 19 at Butler’s address in Ottawa, where they seized multiple devices. As a result of that investigation, Butler was arrested and charged this week with unauthorized user of computer; possession of device to obtain unauthorized use of computer system or to commit mischief; and mischief in relation to computer data. He is scheduled to remain in custody until a hearing on May 26.
-In the United States, Butler is facing one count of aiding and abetting computer intrusion. If extradited, tried and convicted in a U.S. court, Butler could face up to 10 years in prison, although that maximum sentence would likely be heavily tempered by considerations in the U.S. Sentencing Guidelines, which make allowances for mitigating factors such as youth, lack of criminal history and level of cooperation with investigators.
-Yikes… Not sure what to think about this one. I expected this to happen quite quickly.
-Dort claimed he lived in Hong Kong, but you don’t have to be a genius to know that he wasn’t in Hong Kong.
-hello codingfire
-I have been battling DOS bots for months and very intensely for the past 2 weeks. It was starting to take up most of my working hours. I actually wrote a new, dynamic IP-blocker because of it this past weekend. I fail to see that any downward sentencing deviations are appropriate. To me, the volume of machines and their users victimized by this sicko makes a large UPWARD deviation in sentence appropriate. He is a digital predator of other humans. And in his personal attempts to instigate violence against journalists that could have resulted in their death, he is every bit the monster that John Dioguardi (aka Johnny Dio) was when he had acid thrown in a journalist’s face. Life imprisonment should be given serious consideration.
-I agree. Swatting should be prosecuted as attempted murder. If their attacks effect US Govt infrastructure in any way they should be handled as terrorists.
-yikes
-“….allowances for mitigating factors such as youth, lack of criminal history and level of cooperation with investigators.”
-And that is the problem! He swatted people and he will get the proverbial “slap on the wrist”.
-he also did carding with dortgen
-but idk if hes getting charged with that
-If he goes to prison, he’ll very quickly learn the meaning of “prison Bride”. He’ll also learn very quickly not to pick up bars of soap on the shower floor.
-Not everybody destined to have a painful path like you had bud.
-Yeah. Wait until he buys someone’s “crypto coin” and gets pardoned “as a hero.”
-Krebs I kindly request that you delete this article about my Boyfriend Dort.
-Keiron Ellison
-Dongfeng Botnet
-Finally my competition is gone! couldn’t last without this guy uninstalling me off all the ADB
-Alex Tyler
-Mossad Botnet
-On conviction assign him to work for Pentagon Pete, taking notes with a #2 pencil on paper only.
-Commendations, Brian, on both your digital sleuthing and reporting.
-The thoughtful & purposeful way you apply your skills and diligence to such matters benefits all of us.
-Thank you.
-https://ottawacitizen.com/news/local-news/what-is-going-on-in-ottawa-handcuffing-of-another-child-with-autism-worries-advocates
-Eviate,
-Are you suggestng that Jacob Butler is autistic?
-What does that matter given that Jacob is capable of creating/running Kimwolf Botmaster?
-just showing one of the many warning signs he’s shown before that this individual is a danger to others nothing more. If you read the article he threw a chair at another invidual, showing his lack of self control and critical thinking even at a young age.
-more privated stuff butler doesnt want to be shown below btw.
-https://www.youtube.com/watch?v=Jaj5xqmkxKc
-also him being autistic likely will lead to him getting 0 real charges in Canada for his actions which we all want to see (its been known he’s autistic he’s been doxxed before but he paid to remove it lol)
-kimwolf on top sir!</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
         <div id="art-6" class="article-body">
-            <h2 class="article-title">Introducing TailscaleHound: Mapping Tailscale Attack Paths in BloodHound</h2>
-            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/05/21/tailscalehound/" target="_blank">Original Link</a></p>
-            <div class="content-text"><p>TL;DR: TailscaleHound is an OpenGraph collector for BloodHound that maps Tailscale users, devices, groups, tags, ACLs, grants, SSH rules, routes, app connectors, services, keys, invites, webhooks, and hybrid Azure identity relationships. The result is a graph that helps answer practical questions like, &#8220;Which users can reach this device?&#8221;, &#8220;Who can use this exit node?&#8221;, &#8220;Which [&#8230;]</p>
-<p>The post <a href="https://specterops.io/blog/2026/05/21/tailscalehound/">Introducing TailscaleHound: Mapping Tailscale Attack Paths in BloodHound</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-7" class="article-body">
             <h2 class="article-title">CISA Adds Two Known Exploited Vulnerabilities to Catalog</h2>
             <p class="source-link">Source: All CISA Advisories | <a href="https://www.cisa.gov/news-events/alerts/2026/05/21/cisa-adds-two-known-exploited-vulnerabilities-catalog" target="_blank">Original Link</a></p>
             <div class="content-text">CISA Adds Two Known Exploited Vulnerabilities to Catalog
@@ -277,7 +379,7 @@ This product is provided subject to this [Notification](/notification) and this 
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-8" class="article-body">
+        <div id="art-7" class="article-body">
             <h2 class="article-title">Shai-Hulud Is Back, and This Time It Ate the Whole Ecosystem</h2>
             <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/shai-hulud-is-back" target="_blank">Original Link</a></p>
             <div class="content-text">Shai-Hulud Is Back, and This Time It Ate the Whole Ecosystem
@@ -793,128 +895,44 @@ mcp-mermaid | 0.5.1, 0.6.1 | MCP Server |
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
+        <div id="art-8" class="article-body">
+            <h2 class="article-title">Patch Tuesday, May 2026 Edition</h2>
+            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/05/patch-tuesday-may-2026-edition/" target="_blank">Original Link</a></p>
+            <div class="content-text">Artificial intelligence platforms may be just as susceptible to social engineering as human beings, but they are proving remarkably good at finding security vulnerabilities in human-made computer code. That reality is on full display this month with some of the more widely-used software makers — including Apple, Google, Microsoft, Mozilla and Oracle — fixing near record volumes of security bugs, and/or quickening the tempo of their patch releases.
+As it does on the second Tuesday of every month, Microsoft today released software updates to address at least 118 security vulnerabilities in its various Windows operating systems and other products. Remarkably, this is the first Patch Tuesday in nearly two years that Microsoft is not shipping any fixes to deal with emergency zero-day flaws that are already being exploited. Nor have any of the flaws fixed today been previously disclosed (potentially giving attackers a heads up in how to exploit the weakness).
+Sixteen of the vulnerabilities earned Microsoft’s most-dire “critical” label, meaning malware or miscreants could abuse these bugs to seize remote control over a vulnerable Windows device with little or no help from the user. Rapid7 has done much of the heavy lifting in identifying some of the more concerning critical weaknesses this month, including:
+[CVE-2026-41089](https://msrc.microsoft.com/update-guide/en-US/vulnerability/CVE-2026-41089): A critical stack-based buffer overflow in Windows Netlogon that offers an attacker SYSTEM privileges on the domain controller. No privileges or user interaction are required, and attack complexity is low. Patches are available for all versions of Windows Server from 2012 onwards.[CVE-2026-41096](https://msrc.microsoft.com/update-guide/en-US/vulnerability/CVE-2026-41096): A critical RCE in the Windows DNS client implementation worthy of attention despite Microsoft assessing exploitation as less likely.[CVE-2026-41103](https://msrc.microsoft.com/update-guide/en-US/vulnerability/CVE-2026-41103): A critical elevation of privilege vulnerability that allows an unauthorized attacker to impersonate an existing user by presenting forged credentials, thus bypassing Entra ID. Microsoft expects that exploitation is more likely.
+May’s Patch Tuesday is a welcome respite from April, which saw Microsoft [fix a near-record 167 security flaws](https://krebsonsecurity.com/2026/04/patch-tuesday-april-2026-edition/). Microsoft was among a few dozen tech giants given access to a “Project Glasswing,” a much-hyped AI capability developed by Anthropic that appears quite effective at unearthing security vulnerabilities in code.
+Apple, another early participant in Project Glasswing, typically fixes an average of 20 vulnerabilities each time it ships a security update for iOS devices, said Chris Goettl, vice president of product management at Ivanti. On May 11, Apple shipped updates to address at least 52 vulnerabilities and backported the changes all the way to iPhone 6s and iOS 15.
+Last month, Mozilla released Firefox 150, which resolved [a whopping 271 vulnerabilities](https://arstechnica.com/ai/2026/04/mozilla-anthropics-mythos-found-271-zero-day-vulnerabilities-in-firefox-150/) that were reportedly discovered during the Glasswing evaluation.
+“Since Firefox 150.0.0 released, they have been on a more aggressive weekly cadence for security updates including the release of Firefox 150.0.3 on May Patch Tuesday resolving between three to five CVEs in each release,” Goettl said.
+The software giant Oracle likewise recently increased its patch pace in response to their work with Glasswing. In its most recent quarterly patch update, Oracle addressed at least 450 flaws, including [more than 300 fixes for remotely exploitable, unauthenticated flaws](https://www.securityweek.com/oracle-patches-450-vulnerabilities-with-april-2026-cpu/). But at the end of April, Oracle announced it was switching to a monthly update cycle for critical security issues.
+On May 8, Google started rolling out updates to its Chrome browser that [fixed an astonishing 127 security flaws](https://www.forbes.com/sites/daveywinder/2026/05/08/critical-new-google-security-update-127-chrome-security-vulnerabilities-confirmed/) (up from just 30 the previous month). Chrome automagically downloads available security updates, but installing them requires fully restarting the browser.
+If you encounter any weirdness applying the updates from Microsoft or any other vendor mentioned here, feel free to sound off in the comments below. Meantime, if you haven’t backed up your data and/or drive lately, doing that before updating is generally sound advice. For a more granular look at the Microsoft updates released today, checkout [this inventory](https://isc.sans.edu/forums/diary/Microsoft%20May%202026%20Patch%20Tuesday/32980/) by the SANS Internet Storm Center.
+Typo: You wrote “On May 11, Apple shipped iOS 15”. I Believe you meant to write iOS 26.5.
+Nothing to do with this topic but I’m not sure where else to ask Brian about this: can you further explain your posting about the malign residential proxy networks and synthient.com? What can’t other anti-malware software find these and what should be done?
+patches went on fine on my win 11 25H2 system.
+All on one patch Tuesday.
+Ford had 150 Safety recalls for 2024 or 2025 [cant remember which].
+Not a single thing in this Patch Tuesday worth a thing to anyone. Not touching it.
+That’s a wild take. MS got ahead of the cycle this time around using AI, now that these are known about they will start being exploited I’m sure. This is a rare change to patch up before things happen.
+Do not feed the AI slop.
+The not patch comment did make me almost do a spit take, but then I remembered this is public forum. Since it is a public forum, we do need to call out the dreck. Educate is what true information security professionals do.
+Not really. I mean, maybe some do, but most are hardly the type you want teaching.
+I have foregone patch Tuesdays before.
+Microsoft employees are taking hunters reports
+Rainbow beanie baby must go.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
         <div id="art-9" class="article-body">
-            <h2 class="article-title">GTIG AI Threat Tracker: Adversaries Leverage AI for Vulnerability Exploitation, Augmented Operations, and Initial Access</h2>
-            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/ai-vulnerability-exploitation-initial-access/" target="_blank">Original Link</a></p>
-            <div class="content-text">GTIG AI Threat Tracker: Adversaries Leverage AI for Vulnerability Exploitation, Augmented Operations, and Initial Access
-Google Threat Intelligence Group
-Google Threat Intelligence
-Visibility and context on the threats that matter most.
-[Contact Us & Get a Demo](https://cloud.google.com/security/resources/google-threat-intelligence-demo?utm_source=cgc-blog&utm_medium=blog&utm_campaign=FY25-Q2-global-GCP30649-website-su-dgcsm-GTI-interest)
-Executive Summary
-Since our [February 2026 report](https://cloud.google.com/blog/topics/threat-intelligence/distillation-experimentation-integration-ai-adversarial-use) on AI-related threat activity, Google Threat Intelligence Group (GTIG) has continued to track a maturing transition from nascent AI-enabled operations to the industrial-scale application of generative models within adversarial workflows. This report, based on insights derived from Mandiant incident response engagements, Gemini, and GTIG’s proactive research, highlights the dual nature of the current threat environment where AI serves as both a sophisticated engine for adversary operations and a high-value target for attacks. We explore the following developments:
--
-Vulnerability Discovery and Exploit Generation: For the first time, GTIG has identified a threat actor using a zero-day exploit that we believe was developed with AI. The criminal threat actor planned to use it in a mass exploitation event but our proactive counter discovery may have prevented its use. Threat actors associated with the People’s Republic of China (PRC) and the Democratic People's Republic of Korea (DPRK) have also demonstrated significant interest in capitalizing on AI for vulnerability discovery.
--
-AI-Augmented Development for Defense Evasion: AI-driven coding has accelerated the development of infrastructure suites and polymorphic malware by adversaries. These AI-enabled development cycles facilitate defense evasion by enabling the creation of obfuscation networks and the integration of AI-generated decoy logic in malware that we have linked to suspected Russia-nexus threat actors.
--
-Autonomous Malware Operations: AI-enabled malware, such as PROMPTSPY, signal a shift toward autonomous attack orchestration, where models interpret system states to dynamically generate commands and manipulate victim environments. Our analysis of this malware reveals previously unreported capabilities and use cases for its integration with AI. This approach allows threat actors to offload operational tasks to AI for scaled and adaptive activity.
--
-AI-Augmented Research and IO: Adversaries continue to leverage AI as a high speed research assistant for attack lifecycle support, while shifting toward agentic workflows to operationalize autonomous attack frameworks. In information operations (IO) campaigns, these tools facilitate the fabrication of digital consensus by generating synthetic media and deepfake content at scale, exemplified by the pro-Russia IO campaign “Operation Overload.”
--
-Obfuscated LLM Access: Threat actors now pursue anonymized, premium tier access to models through professionalized middleware and automated registration pipelines to illicitly bypass usage limits. This infrastructure enables large scale misuse of services while subsidizing operations through trial abuse and programmatic account cycling.
--
-Supply Chain Attacks: Adversaries like "TeamPCP" (aka UNC6780) have begun targeting AI environments and software dependencies as an initial access vector. These supply chain attacks result in multiple types of machine learning (ML)-focused risks outlined in the
-[Secure AI Framework (SAIF) taxonomy](https://saif.google/secure-ai-framework/risks), namely Insecure Integrated Component (IIC) and Rogue Actions (RA). Our analysis of forensic data associated with these attacks reveals threats actors attempting to pivot from compromised AI software to broader network environments for initial access and to engage in disruptive activities, such as ransomware deployment and extortion.
-Attackers rarely shy away from experimentation and innovation, but neither do we. In addition to sharing our findings and mitigations with the larger security and AI community, Google employs proactive measures to stay ahead of these constantly changing threats. Google enhances our products’ safeguards to offer scaled protections to users. For Gemini, we mitigate model abuse by disabling malicious accounts. Furthermore, we[ leverage AI agents ](https://ai.google/static/documents/ai-responsibility-update-published-february-2025.pdf)like [Big Sleep ](https://blog.google/innovation-and-ai/technology/safety-security/cybersecurity-updates-summer-2025/)to identify software vulnerabilities and use Gemini’s reasoning capabilities via the likes of [CodeMender](https://deepmind.google/blog/introducing-codemender-an-ai-agent-for-code-security/) to automatically fix them, proving that AI can also be a powerful tool for defenders.
-AI as a Tool
-Threat actors are leveraging AI to augment various phases of the attack lifecycle. This includes supporting the development of vulnerability exploits and malware, facilitating autonomous execution of commands, enabling more targeted and well-researched reconnaissance, and improving the efficacy of social engineering and information operations.
-AI-Augmented Vulnerability Discovery and Exploit Development
-As the coding capabilities of AI models advance, we continue to observe adversaries increasingly leverage these tools as expert-level force multipliers for vulnerability research and exploit development, including for zero-day vulnerabilities. While these tools empower defensive research, they also lower the barrier for adversaries to reverse-engineer applications and develop sophisticated, AI-generated exploits.
-State-Sponsored Threat Actors Demonstrate Sophisticated Approaches to Leveraging AI for Vulnerability Research
-While we observe a variety of threat actors leveraging AI for vulnerability research, we noted a particular interest from several clusters of threat activity associated with the People’s Republic of China (PRC) and the Democratic People's Republic of Korea (DPRK). These actors have leveraged sophisticated approaches toward AI-augmented vulnerability discovery and exploitation, beginning with persona-driven jailbreaking attempts and the integration of specialized, high-fidelity security datasets to augment their vulnerability discovery and exploitation workflows.
-- As we highlighted in
-[prior blog posts](https://cloud.google.com/blog/topics/threat-intelligence/distillation-experimentation-integration-ai-adversarial-use), threat actors often leverage expert cybersecurity personas as a structured approach to prompt Gemini. For instance, we recently observed UNC2814 use this form of expert persona prompting by directing the model to act as a senior security auditor or C/C++ binary security expert. The fabricated scenarios were used to support vulnerability research into various embedded device targets, including TP-Link firmware and Odette File Transfer Protocol (OFTP) implementations.
-Figure 1: Example of false narratives used to support persona-driven jailbreaking, a simple form of prompt injection
--
-In a more sophisticated use case, we observed threat actors experiment with a specialized vulnerability repository hosted on GitHub known as “wooyun-legacy.” The project is designed as a Claude code skill plugin that integrates a distilled knowledge base of over 85,000 real-world vulnerability cases collected by the Chinese bug bounty platform WooYun between 2010 and 2016. By priming the model with vulnerability data, it facilitates in-context learning to steer the model to approach code analysis like a seasoned expert and identify logic flaws that the base model might otherwise fail to prioritize.
-In their pursuit of this vulnerability research, we see clear indications of automation and scaled research. In addition to leveraging individual prompts for real-time troubleshooting, we have observed APT45 sending thousands of repetitive prompts that recursively analyze different CVEs and validate PoC exploits. This results in a more robust arsenal of exploit capabilities that would be impractical to manage without AI assistance.
-To facilitate these activities, actors are also experimenting with agentic tools such as OpenClaw and OneClaw alongside intentionally vulnerable testing environments. The use of these tools alongside vulnerability research suggests an interest in refining AI-generated payloads within controlled settings to increase exploit reliability prior to deployment.
-Cyber Crime Threat Actors Discover and Weaponize Zero-Day Using AI
-Cyber crime threat actors remain interested in leveraging AI for vulnerability development as well. In one notable example, we observed prominent cyber crime threat actors partnering to plan a mass vulnerability exploitation operation. Our analysis of exploits associated with this campaign identified a zero-day vulnerability implemented in a Python script that enables the user to bypass two-factor authentication (2FA) on a popular open-source, web-based system administration tool. GTIG worked with the impacted vendor to responsibly disclose this vulnerability and disrupt this threat activity.
-Although we do not believe Gemini was used, based on the structure and content of these exploits, we have high confidence that the actor leveraged an AI model to support the discovery and weaponization of this vulnerability. For example, the script contains an abundance of educational docstrings, including a hallucinated CVSS score, and uses a structured, textbook Pythonic format highly characteristic of LLMs training data (e.g., detailed help menus and the clean _C ANSI color class).
-Figure 2: Cyber crime threat actors leveraged AI to identify and exploit zero-day vulnerability
-The vulnerability can be classified as a 2FA bypass, though it requires valid user credentials in the first place. It stems not from common implementation errors like memory corruption or improper input sanitization, but a high-level semantic logic flaw where the developer hardcoded a trust assumption. While fuzzers and static analysis tools are optimized to detect sinks and crashes, frontier LLMs excel at identifying these types of high-level flaws and hardcoded static anomalies. Though frontier LLMs struggle to navigate complex enterprise authorization logic, they have an increasing ability to perform contextual reasoning, effectively reading the developer's intent to correlate the 2FA enforcement logic with the contradictions of its hardcoded exceptions. This capability can allow models to surface dormant logic errors that appear functionally correct to traditional scanners but are strategically broken from a security perspective.
-Figure 3: LLM vulnerability discovery capabilities compared with other discovery mechanisms
-AI-Augmented Obfuscation: Evasion and Polymorphism
-GTIG has identified multiple threat actors experimenting with AI models to develop malware and operational support tools to augment obfuscation capabilities. This has included innovative applications of AI to incorporate just-in-time dynamic modification of source code, enable dynamic payload generation, assist in development of ORB network management tools, and generate decoy code (Table 1). While often experimental, this transition underscores a move toward AI-driven, evasive software suites.
-In prior reports, we highlighted malware families like [PROMPTFLUX](https://cloud.google.com/blog/topics/threat-intelligence/distillation-experimentation-integration-ai-adversarial-use?e=48754805), notable for its experimentation using the Gemini API to generate code, and [HONESTCUE](https://cloud.google.com/blog/topics/threat-intelligence/distillation-experimentation-integration-ai-adversarial-use?e=48754805), which interacts with Gemini's API to request specific VBScript obfuscation and evasion techniques to facilitate just-in-time self-modification to evade static signature-based detection. In this report, we highlight additional tools and malware families created with the assistance of AI to support obfuscation and defense evasion.
-We observed activity associated with the PRC-nexus threat actor APT27, which has leveraged Gemini to accelerate the development of a fleet management application likely to support the management of an operational relay box (ORB) network. Our observations of the tool revealed a "maxHops" parameter hardcoded to 3 hops, an indicator that the tool was related to development of an anonymization network rather than a VPN since those are typically set to 1 hop. Additionally, the tool lists MOBILE_WIFI and ROUTER as supported device types, suggesting it uses 4G or 5G SIM cards to provide residential IP addresses to potentially obfuscate the true origin of the intrusion activity.
-Additionally, GTIG has continued to observe Russia-nexus intrusion activity targeting Ukrainian organizations to deliver AI-enabled malware as part of their operations. Analysis confirms the use of CANFAIL and LONGSTREAM, which utilize LLM-generated decoy code to obfuscate their malicious functionality.
--
-We identified multiple developer (i.e., the LLM) comments throughout CANFAIL's source code that specifically call out certain blocks of code that are not used and were likely incorporated as filler content designed to obfuscate malicious activity. The explanatory nature of these comments surrounding the decoy logic likely indicates the threat actor requested the LLM generate outputs that intentionally contained large amounts of inert code potentially for obfuscation (Figure 4).
-Figure 4: CANFAIL comments self describing decoy logic
--
-Similarly, our examination of the LONGSTREAM code family suggests a large volume of decoy logic was likely generated to camouflage the malicious nature of the code family. LONGSTREAM contains coherent but inactive blocks of code related to administrative tasks that are unrelated to the primary objective of the downloader. For example, we identified 32 instances of the code querying the system's daylight saving status. This type of repetitive query exists to populate the script with activity that can appear benign (Figure 5).
-Figure 5: LONGSTREAM decoy code example
-AI-Augmented Attack Orchestration: PROMPTSPY
-Adversaries are advancing their implementation of AI-enabled tooling, moving beyond content generation and tool development and into more sophisticated autonomous attack orchestration for malware commands. Threat actors have begun relying on LLMs for interactive system navigation and real-time decision making. By integrating LLMs into malware operations, attackers can enable payloads to act autonomously, independently interacting with the victim environment or device, synthesizing system states, and executing precise commands devoid of human supervision.
-A primary example of this evolution is PROMPTSPY, an Android backdoor first [identified](https://www.welivesecurity.com/en/eset-research/promptspy-ushers-in-era-android-threats-using-genai/) by ESET. Initial public reporting highlighted PROMPTSPY’s use of the Google Gemini application programming interface (API) to facilitate persistence, specifically by navigating the Android UI to pin the malicious application in the "recent apps" list. However, GTIG's examination of the backdoor revealed additional capabilities and use cases for its AI integration. We assess the malware's LLM component was designed to be extensible to support a broader range of goals centered around navigating the Android user interface and autonomously interpreting real-time user activity for follow-on actions.
-PROMPTSPY contains an autonomous agent module named “GeminiAutomationAgent,” which leverages a hardcoded prompt to facilitate automated interaction with the targeted device.
--
-The prompt assigns a benign persona to bypass the LLM's safety filters, then requests an analysis of complex spatial mathematics by instructing the LLM to calculate the geometry of the targeted user interface bounds. This is paired with a set of "Core Judgment Rules" that implement anti-hallucination measures and a “User Goal” concatenated to the prompt as part of a separate routine (Figure 6).
--
-The module then serializes the device's visible user interface hierarchy into an XML-like format via the Accessibility API, sending this payload to the “gemini-2.5-flash-lite” model via an HTTP POST request in "JSON Mode."
--
-The model returns a structured JSON response based on the supplied user goal, dictating specific action types and spatial coordinates, which the malware parses using a packed-switch instruction to simulate physical gestures (e.g., CLICK, SWIPE). Since the user goal is not hardcoded in the initial prompt but supplied as part of a separate routine, we believe PROMPTSPY was likely designed to facilitate multiple types of device interactions.
-Figure 6: Hardcoded prompt utilized by PROMPTSPY
-Additionally, PROMPTSPY can capture victim biometric data to replay authentication gestures (personal identification numbers or lock patterns) to regain access to a compromised device for follow-on exploitation. These AI-enabled capabilities are a notable evolution from conventional Android backdoors that heavily rely on human interaction.
-To maintain persistence, PROMPTSPY utilizes a novel multi-layered defense mechanism to camouflage its activity and prevent uninstallation.
--
-If the victim tries to uninstall PROMPTSPY, the malware employs its 'AppProtectionDetector' module to identify the on-screen coordinates of the 'Uninstall' button. The malware renders an invisible overlay directly over the button as a shield that silently intercepts and consumes the victim's touch events, making the button appear unresponsive to the user.
--
-If the victim device becomes inactive, PROMPTSPY operators can utilize Firebase Cloud Messaging (FCM) to relaunch the backdoor, allowing the threat actor to continue their intrusion activity without alerting the victim.
-While PROMPTSPY initializes using hardcoded default infrastructure and credentials, the malware is designed with high operational resilience, allowing adversaries to rotate critical components at runtime without redeploying the PROMPTSPY payload. Specifically, the malware’s command-and-control (C2) infrastructure, including the Gemini API keys and the VNC relay server, can be updated dynamically via the C2 channel. This configuration model demonstrates the developers anticipated defensive countermeasures and engineered the backdoor to maintain presence even if specific infrastructure endpoints are identified and blocked by defenders.
-Google has taken action against this actor by disabling the assets associated with this activity. Based on our current detection, no apps containing PROMPTSPY are found on Google Play. Android users are automatically protected against known versions of this malware by Google Play Protect, which is on by default on Android devices with Google Play Services.
-AI-Augmented Research, Reconnaissance, and Attack Lifecycle Support
-Malicious adversaries' most common use case for LLMs mirrors that of standard users – they conduct research and troubleshoot tasks. GTIG has observed a variety of threat actors engaging in this type of prompting to support research, reconnaissance, and troubleshooting throughout various phases of the attack lifecycle. By automating intelligence gathering and task support, these interactions lower the barrier to entry for complex, multi-stage operations and enable threat actors to focus their human capital on the higher-order strategic elements of campaigns.
-Adversaries frequently use LLMs to perform reconnaissance that would previously have required significant manual effort. For instance, we have observed actors prompting models to generate detailed organizational hierarchies for specific departments and third-party relationships of large enterprises, particularly those involving high-value functions like finance, internal security, and human resources. This data allows for the creation of higher-fidelity phishing lures tailored to individuals with administrative privileges or access to sensitive data, moving beyond the commodity tactics of traditional bulk phishing.
-In more targeted scenarios, actors have used LLMs to identify specific hardware or software environments used by their victims. In one instance, a threat actor attempted to identify the exact make and model of a computer used by a high-value target, even requesting the LLM identify a collection of photos showing the targeted individual using the device. This level of environmental fingerprinting often precedes the development of tailored exploits or identification of side-channel attack opportunities.
-Beyond basic chat interfaces, we see a sophisticated shift toward agentic workflows where adversaries operationalize autonomous frameworks to execute multi-stage security tasks. This marks a significant evolution in the maturity of AI-related threats: the LLM is no longer merely a passive advisor but an active participant in the offensive chain, capable of orchestrating complex toolsets and making tactical decisions at machine speed.
-For example, we recently analyzed a suspected PRC-nexus threat actor deploying agentic tools like Hexstrike and Strix against a Japanese technology firm and a prominent East Asian cybersecurity platform. Hexstrike was utilized alongside the Graphiti memory system, a temporal knowledge graph, to maintain a persistent state of the attack surface, allowing the agent to autonomously pivot between tools like subfinder and httpx based on its internal reasoning. Simultaneously, the actor leveraged Strix, a multi-agent penetration testing framework, to automate the identification and validation of vulnerabilities. This combination of autonomous reconnaissance and automated verification suggests a transition toward AI-driven frameworks that can scale discovery activities with minimal human oversight.
-AI-Augmented Information Operations
-GTIG continues to observe information operations (IO) actors use AI for common productivity tasks like research, content creation, and localization. We have also identified activity indicating threat actors solicit the tool to help craft articles, generate assets, and assist in coding. However, we have not identified this generated content in the wild, and none of these attempts have created breakthrough capabilities for IO campaigns.
-Actors from Russia, Iran, China, and Saudi Arabia are producing political satire and materials to advance specific narratives across both digital platforms and physical media, such as printed posters. The primary advances we have seen in this area include actors appearing more successful in developing tooling in support of their workflows and the growing adoption of AI-generated narrative audio to address contentious political topics.
-AI to Support IO Tactics
-GTIG’s tracking of IO threats across the open internet continues to uncover activity illustrating how threat actors use AI tooling to enhance established tactics. For example, GTIG uncovered activity linked to the pro-Russia IO campaign “Operation Overload,” involving video content that leveraged suspected AI voice cloning to impersonate real journalists. This likely represents an AI-supported advancement of the campaign's established tactics, which have long included inauthentic video content designed to appropriate the branding and legitimacy of media and other high profile organizations in support of campaign messaging.
-In identified instances, the actors appear to have manipulated an authentic video to convey a false message. This content appears to splice original vertical videos with montages and fabricated audio to create false and misleading messaging. The close voice match to the original suggests the use of AI tools (Figure 7).
-Figure 7: A fabricated video montage accompanied by a suspected AI-generated voiceover impersonating a real journalist was appended to part of a legitimate video news report featuring that same journalist in an attempt to appropriate the credibility of legitimate media
-Obfuscated and Scalable Access to LLMs
-As the generative AI landscape matures, the methods by which threat actors procure and operationalize these models have shifted from simple experimentation to industrial-scale consumption. Although in prior blog posts we have highlighted [AI tools and services offered in the underground](https://cloud.google.com/blog/topics/threat-intelligence/threat-actor-usage-of-ai-tools), we continue to observe both state-sponsored and cyber crime threat actors leveraging commercially available foundation models and AI-native application building platforms in their pursuit of malicious activity.
-In threat actor engagement with these tools, GTIG has observed a sophisticated evolution to an emerging ecosystem of custom middleware, proxy relays, and automated registration pipelines designed to bypass safety guardrails and billing constraints. By leveraging anti-detect browsers and account-pooling services, actors are attempting to maintain high-volume, anonymized access to premium LLM tiers, effectively industrializing their adversarial workflows while subsidizing their operations through trial abuse and programmatic account cycling.
-Figure 8: Threat actors pursue scalable and obfuscated access to LLMs
-In our analysis of PRC-nexus threat activity associated with UNC6201, we observed attempted use of a publicly available Python script hosted on GitHub that automates a workflow to register and immediately cancel premium LLM accounts. The tool allegedly supports the entire process from automatic account registration, CAPTCHA bypassing, and SMS verification to account status confirmation and cancellation. This process highlights the methods adversaries leverage to procure high-tier AI capabilities at scale while insulating their malicious activity from account bans.
-We have observed similar activity from UNC5673, a PRC-nexus threat cluster that has notable overlaps with TEMP.Hex and that has targeted government sectors primarily in South and Southeast Asia. Beyond LLM account registration, the actor has leveraged an array of publicly available commercial tools and GitHub projects that indicate the development of obfuscated and scalable LLM abuse. For example, they employ "Claude-Relay-Service" to aggregate multiple Gemini, Claude, and OpenAI accounts, enabling account pooling and cost-sharing. Similarly, they use "CLI-Proxy-API," a proxy server that provides compatible API interfaces for various models to support similar account pooling strategies.
-To mitigate the nature of this obfuscation, LLM providers can build signal logic to analyze network infrastructure data associated with AI-related API aggregators. This data helps to enable the disruption efforts we highlight in this report.
-AI as a Target
-As organizations continue integrating large language models (LLMs) into production environments, the AI software ecosystem has emerged as a primary target for exploitation. While frontier models themselves remain highly resilient to direct compromise, the orchestration layers, including open-source wrapper libraries, API connectors, and skill configuration files, can be vulnerable. GTIG has observed adversaries increasingly target the integrated components that grant AI systems their utility, such as autonomous skills and third-party data connectors.
-Supply Chain Attacks Against AI Components
-Throughout early 2026, we observed that threat actors have not yet achieved breakthrough capabilities to bypass the core security logic of frontier models. Instead, these actors are leveraging traditional supply chain tactics, such as embedding malicious logic in popular integration libraries or distributing trojanized configuration files, to gain initial access to production AI environments. These incidents often align with risks described in the [Secure AI Framework (SAIF) taxonomy](https://saif.google/secure-ai-framework/risks), specifically:
--
-Insecure Integrated Component (IIC): Inclusion of compromised external dependencies that undermine the system.
--
-Rogue Actions (RA): Exploitation of AI systems with elevated permissions to execute unauthorized commands or exfiltrate credentials.
-Weaponized OpenClaw Skills
-These risks became more apparent in early February 2026, when VirusTotal researchers [reported](https://blog.virustotal.com/2026/02/from-automation-to-infection-how.html) on security risks associated with the OpenClaw AI agent ecosystem, including AI software supply chain risks and vulnerabilities introduced via malicious and insecure skill packages. Most notably, we observed the distribution of malicious packages masquerading as OpenClaw skills containing hidden routines designed to execute unauthorized code and commands on the host system. Given the elevated level of system access that OpenClaw is granted, a skill could be used to perform various privileged actions such as executing code, downloading additional payloads, and discovering and exfiltrating local data.
-Further, even if not inherently malicious, insecure packages could expose users to additional risks. Legitimate skills that fail to leverage secure practices when handling sensitive information, such as credentials or authentication information, could inadvertently expose this information to attackers. This could make this information susceptible to theft by techniques like prompt injection, other malicious skills, or traditional malware threats like infostealers.
-While the risk of malicious or insecure skills and agent components are not unique to the OpenClaw platform, the discovery of these packages highlights the growing attack surface among AI development platforms and the agentic ecosystem more broadly. Further, the difficulty in identifying and discerning malicious packages from legitimate skills presents significant challenges for defenders. Although this infection vector is opportunistic by nature, the ease by which these skills can be created and distributed could make it an attractive option for a myriad of threat actors seeking access to users’ systems.
-To help mitigate these supply-chain risks, OpenClaw has partnered with VirusTotal to integrate automated security scanning directly into ClawHub, its public skill marketplace. Every skill published to the repository is now automatically analyzed using VirusTotal's Code Insight capability, which evaluates the package's actual code behavior to detect unauthorized network operations, malicious payloads, or unsafe embedded instructions. Based on this security-focused analysis, skills are either approved as benign, flagged with user warnings, or blocked entirely, providing an essential layer of defense against ecosystem abuse.
-Compromised Code Packages
-In late March 2026, the cyber crime threat actor "TeamPCP" (aka UNC6780) claimed responsibility for multiple supply chain compromises of popular GitHub repositories and associated GitHub Actions, including those associated with the Trivy vulnerability scanner, Checkmarx, LiteLLM, and BerriAI. Mandiant responded to numerous incident response engagements associated with this activity, highlighting the wide-impact nature of supply chain operations.
-TeamPCP gained initial access through compromised PyPI packages and malicious pull requests to these GitHub repositories. The threat actor subsequently leveraged their access to these GitHub repositories to embed the SANDCLOCK credential stealer and extract high-value cloud secrets, such as AWS keys and GitHub tokens, directly from affected build environments. These stolen credentials were then monetized through partnerships with ransomware and data theft extortion groups.
-The compromise of LiteLLM, an AI gateway utility for integrating multiple LLM providers is noteworthy. It highlights the expanding attack surface of AI platforms and the potential for impact across the software supply chain. Given the package's widespread use, this incident could lead to considerable exposure of AI API secrets from affected victims, which could be used to gain further access to systems for traditional intrusion operations.
-Moreover, similar attacks against AI-related dependencies could grant attackers access to unique AI systems, allowing them to conduct novel AI-centric attacks and leverage them in support of traditional intrusion operations. Attackers could leverage this vector not only to pivot to enterprise infrastructure for traditional financially motivated operations (e.g., data theft and ransomware) but also to directly facilitate their operations using AI systems. For example, threat actors with access to an organization’s AI systems could leverage internal models and tools to identify, collect, and exfiltrate sensitive information at scale or perform reconnaissance tasks to move deeper within a network. While the level of access and particular use depends heavily on the organization and the specific compromised dependency, this case study demonstrates the broadened landscape of software supply chain threats to AI systems.
-Building AI Safely and Responsibly
-We believe our approach to AI must be both bold and responsible. That means developing AI in a way that maximizes the positive benefits to society while addressing the challenges. Guided by our [AI Principles](https://ai.google/principles/#our-ai-principles-in-action), Google designs AI systems with robust security measures and strong safety guardrails, and we continuously test the security and safety of our models to improve them.
-Our [policy guidelines](https://gemini.google/us/policy-guidelines/?hl=en) and prohibited use [policies](https://policies.google.com/terms/generative-ai/use-policy) prioritize safety and responsible use of Google's generative AI tools. Google's [policy development process](https://transparency.google/our-approach/our-policy-process/) includes identifying emerging trends, thinking end-to-end, and designing for safety. We continuously enhance safeguards in our products to offer scaled protections to users across the globe.
-At Google, [we leverage threat intelligence](https://cloud.google.com/transform/how-google-does-it-threat-intelligence-uncover-track-cybercrime) to disrupt adversary operations. We investigate abuse of our products, services, users, and platforms, including malicious cyber activities by government-backed threat actors, and work with law enforcement when appropriate. Moreover, our learnings from countering malicious activities are fed back into our product development to improve safety and security for our AI models. These changes, which can be made to both our classifiers and at the model level, are essential to maintaining agility in our defenses and preventing further misuse.
-Google DeepMind also develops threat models for generative AI to identify potential vulnerabilities and creates new evaluation and training techniques to address misuse. In conjunction with this research, Google DeepMind has shared how they're actively deploying defenses in AI systems, along with measurement and monitoring tools, including a [robust evaluation framework](https://security.googleblog.com/2025/01/how-we-estimate-risk-from-prompt.html?m=1) that can automatically red team an AI vulnerability to indirect prompt injection attacks.
-Our AI development and Trust & Safety teams also work closely with our threat intelligence, security, and modelling teams to stem misuse.
-The potential of AI, especially generative AI, is immense. As innovation moves forward, the industry needs security standards for building and deploying AI responsibly. That's why we introduced the [Secure AI Framework (SAIF)](https://blog.google/innovation-and-ai/technology/safety-security/introducing-googles-secure-ai-framework/), a conceptual framework to secure AI systems. We've shared a comprehensive [toolkit for developers](https://ai.google.dev/) with [resources and guidance](https://ai.google.dev/responsible) for designing, building, and evaluating AI models responsibly. We've also shared best practices for [implementing safeguards](https://ai.google.dev/responsible/docs/safeguards), [evaluating model safety](https://ai.google.dev/responsible/docs/evaluation#red-teaming), [red teaming](https://blog.google/innovation-and-ai/technology/safety-security/googles-ai-red-team-the-ethical-hackers-making-ai-safer/) to test and secure AI systems, and our comprehensive [prompt injection approach](https://security.googleblog.com/2025/06/mitigating-prompt-injection-attacks.html).
-Working closely with industry partners is crucial to building stronger protections for all of our users. To that end, we're fortunate to have strong collaborative partnerships with security experts via the [Coalition for Secure AI (CoSAI)](https://blog.google/innovation-and-ai/technology/safety-security/google-coalition-for-secure-ai/) and numerous researchers. We appreciate the work of these researchers and others in the community to help us red team and refine our defenses.
-Google also continuously invests in AI research, helping to ensure [AI is built responsibly](https://ai.google/static/documents/ai-responsibility-update-published-february-2025.pdf), and that we're leveraging its potential to automatically find risks. Last year, we introduced [Big Sleep](https://blog.google/innovation-and-ai/technology/safety-security/cybersecurity-updates-summer-2025/), an AI agent developed by Google DeepMind and Google Project Zero, that actively searches and finds unknown security vulnerabilities in software. Big Sleep has since found its first real-world security vulnerability and assisted in finding a vulnerability that was imminently going to be used by threat actors, which GTIG was able to cut off beforehand. We're also experimenting with AI to not only find vulnerabilities, but also patch them. We recently introduced [CodeMender](https://deepmind.google/blog/introducing-codemender-an-ai-agent-for-code-security/), an experimental AI-powered agent using the advanced reasoning capabilities of our Gemini models to automatically fix critical code vulnerabilities.
-About the Authors
-Google Threat Intelligence Group focuses on identifying, analyzing, mitigating, and eliminating entire classes of cyber threats against Alphabet, our users, and our customers. Our work includes countering threats from government-backed actors, targeted zero-day exploits, coordinated IO, and serious cyber crime networks. We apply our intelligence to improve Google's defenses and protect our users and customers.</div>
+            <h2 class="article-title">Updates to the MSSQLHound OpenGraph Collector for BloodHound</h2>
+            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/01/20/updates-to-the-mssqlhound-opengraph-collector-for-bloodhound/" target="_blank">Original Link</a></p>
+            <div class="content-text"><p>tl;dr: MSSQLHound, a PowerShell script that collects security information from remote MSSQL Server instances, now scans them to determine whether or not NTLM relay attacks are possible, accounts for a recent privilege escalation vulnerability, and includes queries you can import into the BloodHound attack path graph to visualize, navigate, and remediate misconfigurations in MSSQL. Updates [&#8230;]</p>
+<p>The post <a href="https://specterops.io/blog/2026/01/20/updates-to-the-mssqlhound-opengraph-collector-for-bloodhound/">Updates to the MSSQLHound OpenGraph Collector for BloodHound</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
+
+[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
