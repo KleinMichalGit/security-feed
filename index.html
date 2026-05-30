@@ -59,175 +59,59 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-05-29</h1>
+        <h1>Security Briefing // 2026-05-30</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Typosquatted npm packages used to steal cloud and CI/CD secrets</button></li><li><button onclick="show('art-1')">Hackers exploit FortiClient EMS flaw to push infostealer malware</button></li><li><button onclick="show('art-2')">The Case for Practicing Response Before You Need It</button></li><li><button onclick="show('art-3')">Threat Actors Exploit Critical FortiClient EMS Flaw to Deploy Credential Stealer</button></li><li><button onclick="show('art-4')">CISA Adds Three Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-5')">PCI DSS, Telephone Payments, and the Problems With VoIP</button></li><li><button onclick="show('art-6')">CISA Adds Exploited Langflow and Trend Micro Apex One Vulnerabilities to KEV</button></li><li><button onclick="show('art-7')">Patch Tuesday, May 2026 Edition</button></li><li><button onclick="show('art-8')">GTIG AI Threat Tracker: Adversaries Leverage AI for Vulnerability Exploitation, Augmented Operations, and Initial Access</button></li><li><button onclick="show('art-9')">Patch Tuesday, April 2026 Edition</button></li></ul>
+            <ul><li><button onclick="show('art-0')">PAN-OS GlobalProtect Authentication Bypass (CVE-2026-0257) Under Active Exploitation</button></li><li><button onclick="show('art-1')">Microsoft is named a Leader in the 2026 Gartner® Magic Quadrant™ for Endpoint Protection</button></li><li><button onclick="show('art-2')">Hackers exploit FortiClient EMS flaw to push infostealer malware</button></li><li><button onclick="show('art-3')">The Case for Practicing Response Before You Need It</button></li><li><button onclick="show('art-4')">CISA Adds Three Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-5')">PCI DSS, Telephone Payments, and the Problems With VoIP</button></li><li><button onclick="show('art-6')">CISA Adds Exploited Langflow and Trend Micro Apex One Vulnerabilities to KEV</button></li><li><button onclick="show('art-7')">Patch Tuesday, May 2026 Edition</button></li><li><button onclick="show('art-8')">GTIG AI Threat Tracker: Adversaries Leverage AI for Vulnerability Exploitation, Augmented Operations, and Initial Access</button></li><li><button onclick="show('art-9')">Patch Tuesday, April 2026 Edition</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">Typosquatted npm packages used to steal cloud and CI/CD secrets</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/05/28/typosquatted-npm-packages-used-steal-cloud-ci-cd-secrets/" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft has identified an active supply chain attack targeting the npm package ecosystem. On May 28, 2026, a single threat actor operating under the newly created maintainer alias vpmdhaj (a39155771@gmail[.]com) published 14 malicious packages within a four-hour window. The packages typosquat well-known OpenSearch, ElasticSearch, DevOps, and environment-configuration libraries, and several spoof the upstream OpenSearch project’s repository URL in their package.json to appear legitimate. Once installed, the packages harvest AWS credentials, HashiCorp Vault tokens, and CI/CD pipeline secrets from the host environment.
-All packages in the cluster ship the same install-time stager and the same Bun-compiled second-stage payload – a ~195 KB credential harvester purpose-built for cloud and CI/CD environments. The payload runs silently during npm install and targets credentials across Amazon Web Services, HashiCorp Vault, GitHub Actions, and the npm registry itself, enabling both cloud lateral movement and downstream supply-chain pivoting through stolen npm publish tokens. Based on our investigation and feedback to the npm team these repos and users were taken down.
-Key capabilities observed in the campaign include automatic execution via npm lifecycle hooks, two distinct stager generations (an HTTP-C2 variant and a stealthier variant that abuses the legitimate Bun runtime distribution), AWS Instance Metadata Service (IMDSv2) and ECS task-role theft, AWS Secrets Manager enumeration across 16+ regions, HashiCorp Vault token harvesting, and theft of npm publish tokens for follow-on supply-chain attacks.
-Attack chain overview
-The vpmdhaj cluster spans 14 scoped and unscoped packages that all mimic the @opensearch / @elastic ecosystem. The attack proceeds through:
-- Publication of 14 typosquat packages under a single actor identity
-- Automatic payload execution through a preinstall hook during npm install
-- Execution chain (Gen-1): node -> preinstall.js -> HTTP C2 -> payload.bin (detached)
-- Execution chain (Gen-2): node -> setup.mjs -> download legitimate Bun runtime -> run bundled stage-2
-- Cloud credential theft (AWS IMDS, ECS metadata, Vault, Secrets Manager) and npm publish-token theft for downstream supply-chain pivot
-The lure: typosquats and spoofed metadata
-The actor adopted three social-engineering techniques designed to drive installs by mistake or trust transference. First, lookalike naming – names such as opensearch-setup, opensearch-setup-tool, opensearch-config-utility, elastic-opensearch-helper, search-engine-setup, and env-config-manager mimic well-known cluster-management and configuration libraries. Second, spoofed upstream metadata – every unscoped package sets its package.json homepage, repository, and bugs fields to the legitimate github.com/opensearch-project/opensearch-js project. Third, inflated version numbers – releases jump straight to 1.0.7265, 1.0.9108, or 2.1.9201 to suggest a long, mature release history.
-Execution: npm lifecycle hook abuse
-Every package in the cluster declares an automatic install-time hook in package.json. The malicious code executes the moment a victim runs npm install – no require() from victim code is needed. Two stager variants were observed:
-- Gen-1 (versions <= 1.0.7265): install, preinstall, and postinstall hooks all invoke preinstall.js / index.js
-- Gen-2 (versions >= 1.0.7266): a single preinstall hook invokes setup.mjs (newer, stealthier loader)
-Gen-1 stager: HTTP C2 beacon and payload drop
-preinstall.js collects rich host context – hostname, platform, arch, Node version, USER/USERNAME, cwd, INIT_CWD, npm_package_name, npm_package_version – base64-encodes the JSON, and POSTs it to the actor’s C2 with a campaign-unique header X-Supply: 1. The same C2 endpoint then serves a gunzip-compressed second-stage binary, which is written to payload.bin in the package install directory, chmod 0755’d, and spawned detached.
-The package’s index.js re-launches the same payload.bin on every subsequent require() of the module – a quiet persistence mechanism that survives across CI build stages and developer rebuild loops. The module also exports a benign-looking object falsely identifying itself as @opensearch/setup.
-Gen-2 stager: abusing the legitimate Bun runtime as a loader
-In newer versions, the actor replaced the noisy HTTP-C2 design with a stealthier loader that eliminates the install-time C2 round-trip entirely. setup.mjs (a) checks whether bun is already present on the host; (b) if not, downloads the legitimate Bun runtime v1.3.13 from github.com/oven-sh/bun/releases for the correct platform/arch (Linux x64/musl/aarch64, macOS x64/arm64, Windows x64/arm64); (c) extracts the ZIP using unzip, PowerShell Expand-Archive, or a hand-rolled ZIP parser; and (d) executes the pre-bundled second-stage payload (opensearch_init.js or ai_init.js) that ships inside the npm tarball.
-This design reduces visibility for defenders that primarily monitor unusual outbound traffic during package installation.
-Credential theft
-The second-stage binary is a single-file Bun-compiled JavaScript binary of approximately 195 KB, purpose-built for cloud and CI/CD secret theft. Static review of the bundle identifies routines that target secrets across five platforms:
-- AWS: queries EC2 Instance Metadata Service v2 (169.254.169[.]254), Elastic Container Service task metadata (169.254.170[.]2), reads AWS env credentials, calls STS GetCallerIdentity / AssumeRole, and enumerates Secrets Manager (ListSecrets / GetSecretValue) across 16+ regions with a bundled SigV4 signer.
-- HashiCorp Vault: reads VAULT_TOKEN and VAULT_AUTH_TOKEN environment variables.
-- npm: validates tokens through /-/whoami and enumerates publish access through /-/npm/v1/tokens.
-- GitHub Actions: collects GITHUB_REPOSITORY and RUNNER_OS context to identify build environments for prioritized exploitation.
-- CI/CD environment: respects __DAEMONIZED=1 to avoid re-entry, and explicitly resets CI=false to mislead build-aware code paths.
-Impact and blast radius
-- Stolen AWS STS sessions and Secrets Manager material enable cloud lateral movement and data theft.
-- Stolen GitHub Actions tokens enable repo manipulation and CI/CD pipeline tampering.
-- Stolen npm publish tokens enable downstream supply-chain pivoting – pushing malicious updates to packages owned by hijacked maintainer identities, expanding the campaign beyond the initial 14 packages.
-- All 14 packages target the OpenSearch / ElasticSearch ecosystem keywords, suggesting the actor likely chose a developer audience to have AWS and Elastic cloud credentials in their environments.
-Mitigation and protection guidance
-Microsoft recommends the following mitigations to reduce the impact of this threat:
-- Identify systems that installed or built affected package versions on or after May 28, 2026.
-- Pin known-good package versions where possible and avoid automatic dependency upgrades until validation is complete.
-- Disable pre- and post-installation script execution by running npm install with –ignore-scripts (or setting npm config set ignore-scripts true globally). Apply equivalent settings for pnpm and yarn.
-- Rotate AWS IAM/STS, HashiCorp Vault, npm publish, and GitHub Actions tokens that may have been exposed to affected runners or developer workstations.
-- Block egress to aab.sportsontheweb[.]net at proxy, firewall, and DNS layers. Alert on any HTTP request carrying the header X-Supply: 1.
-- Hunt CloudTrail for anomalous sts:GetCallerIdentity rapidly followed by sts:AssumeRole, and for secretsmanager:ListSecrets or GetSecretValue in cross-region succession from build infrastructure or developer IP space.
-- Audit CI/CD logs for unexpected outbound network connections, Bun runtime downloads from GitHub Releases by Node.js processes, and detached child processes spawned with __DAEMONIZED=1.
-- Review npm package lockfiles (package-lock.json, yarn.lock, pnpm-lock.yaml), build logs, and artifact provenance for evidence of compromised package versions.
-- Enable cloud-delivered protection in Microsoft Defender Antivirus or equivalent antivirus protection.
-- Use Microsoft Defender XDR to investigate suspicious activity across endpoints, identities, cloud apps, and developer environments.
-- Use Microsoft Defender Vulnerability Management to search for the affected packages across your estate.
-How Microsoft Defender helps
-Microsoft Defender Antivirus detects and blocks the malicious components on access. During reproduction in our analysis environment, setup.mjs was automatically quarantined the moment the tarball was extracted to disk.
-Microsoft Defender XDR Detections
-Microsoft Defender XDR customers can refer to the list of applicable detections below. Microsoft Defender XDR coordinates detection, prevention, investigation, and response across endpoints, identities, email, and apps to provide integrated protection against attacks like the threat discussed in this blog.
-| Tactic | Observed activity | Microsoft Defender coverage |
-| Initial Access / Execution | Suspicious script execution during npm install or package lifecycle activity | Microsoft Defender Antivirus -Trojan:JS/ShaiWorm -Trojan:JS/ObfusNpmJs -Backdoor:JS/SupplyChain Microsoft Defender for Endpoint – Suspicious usage of Bun runtime – Suspicious installation of Bun runtime – Suspicious Node.js process behavior Microsoft Defender XDR – Suspicious file creation in temporary directory by node.exe – Suspicious Bun execution from Node.js process |
-| Credential Access | Potential harvesting of AWS, Vault, GitHub Actions, and npm tokens from CI/CD runners | Microsoft Defender for Endpoint – Credential access attempt – Suspicious cloud credential access by npm-cached binary – AWS Instance Metadata Service access from suspicious process Microsoft Defender for Cloud – Possible IMDS abuse from container workload – Anomalous Secrets Manager enumeration across regions |
-| Command and Control | Outbound HTTP beacon with X-Supply: 1 header to attacker-controlled C2 | Microsoft Defender for Endpoint – Connection to a custom network indicator (aab.sportsontheweb[.]net) – Suspicious outbound HTTP from npm install context |
-| Persistence | Re-spawn of payload.bin on every require() of compromised package | Microsoft Defender for Endpoint – Detached child process spawned by node.exe with __DAEMONIZED=1 |
-Advanced hunting
-The following sample queries let you search for a week’s worth of events. To explore up to 30 days of raw data, go to the Advanced Hunting page > Query tab, and update the time range to Last 30 days.
-Hunt for suspicious npm lifecycle script execution involving vpmdhaj packages.
-1 2 3 4 5 6 7 8 9 10 11 12 | DeviceProcessEvents | where Timestamp > ago(7d) | where FileName in~ ("node.exe", "node", "npm.cmd", "npm.exe", "npx.cmd", "npx.exe") | where ProcessCommandLine has_any ("preinstall", "postinstall", "install") | where ProcessCommandLine has_any ( "@vpmdhaj", "opensearch-setup", "opensearch-setup-tool", "opensearch-config-utility", "opensearch-security-scanner", "search-engine-setup", "search-cluster-setup", "elastic-opensearch-helper", "vpmdhaj-opensearch-setup", "env-config-manager", "app-config-utility") | project Timestamp, DeviceName, FileName, ProcessCommandLine, InitiatingProcessFileName, InitiatingProcessCommandLine, AccountName |
-Hunt for the stage-2 payload artifact on disk.
-1 2 3 4 5 6 | DeviceFileEvents | where Timestamp > ago(7d) | where FileName =~ "payload.bin" | where FolderPath has "node_modules" | project Timestamp, DeviceName, FolderPath, FileName, InitiatingProcessFileName, InitiatingProcessCommandLine, AccountName |
-Hunt for detached payload execution with the campaign environment marker.
-1 2 3 4 5 6 | DeviceProcessEvents | where Timestamp > ago(7d) | where ProcessCommandLine has "__DAEMONIZED=1" or InitiatingProcessCommandLine has "__DAEMONIZED=1" | project Timestamp, DeviceName, FileName, ProcessCommandLine, InitiatingProcessFileName, InitiatingProcessCommandLine |
-Hunt for Gen-2 loader: Bun runtime download from GitHub Releases by Node.js.
-1 2 3 4 5 6 | DeviceNetworkEvents | where Timestamp > ago(7d) | where InitiatingProcessFileName in~ ("node.exe", "node") | where RemoteUrl has "github.com/oven-sh/bun/releases/download" | project Timestamp, DeviceName, RemoteUrl, RemoteIP, InitiatingProcessFileName, InitiatingProcessCommandLine, AccountName |
-Hunt for C2 beacon to attacker infrastructure.
-1 2 3 4 5 6 | DeviceNetworkEvents | where Timestamp > ago(30d) | where RemoteUrl has "aab.sportsontheweb.net" or RemoteUrl has "sportsontheweb.net" | project Timestamp, DeviceName, RemoteUrl, RemoteIP, InitiatingProcessFileName, InitiatingProcessCommandLine, AccountName |
-Hunt for AWS IMDS / ECS metadata access from Node.js processes.
-1 2 3 4 5 6 | DeviceNetworkEvents | where Timestamp > ago(7d) | where InitiatingProcessFileName in~ ("node.exe", "node", "bun.exe", "bun") | where RemoteIP in ("169.254.169.254", "169.254.170.2") | project Timestamp, DeviceName, RemoteIP, RemoteUrl, InitiatingProcessFileName, InitiatingProcessCommandLine, AccountName |
-Indicators of Compromise (IOC)
-Affected npm packages – all published by maintainer vpmdhaj on 2026-05-28:
-| Indicator | Type | Description |
-| @vpmdhaj/elastic-helper (1.0.7269) | Package | Typosquat – ElasticSearch/OpenSearch helper |
-| @vpmdhaj/devops-tools (1.0.7267) | Package | Typosquat – DevOps tools / OpenSearch setup |
-| @vpmdhaj/opensearch-setup (1.0.7267) | Package | Typosquat – OpenSearch setup utility |
-| @vpmdhaj/search-setup (1.0.7268) | Package | Typosquat – search engine setup |
-| opensearch-security-scanner (1.0.10) | Package | Unscoped lookalike – security scanner |
-| opensearch-setup (1.0.9103) | Package | Unscoped lookalike – spoofs opensearch-project repo URL |
-| opensearch-setup-tool (1.0.9108) | Package | Unscoped lookalike – spoofs opensearch-project repo URL |
-| opensearch-config-utility (1.0.9106) | Package | Unscoped lookalike – spoofs opensearch-project repo URL |
-| search-engine-setup (1.0.9108) | Package | Unscoped lookalike – spoofs opensearch-project repo URL |
-| search-cluster-setup (1.0.9104) | Package | Unscoped lookalike – spoofs opensearch-project repo URL |
-| elastic-opensearch-helper (1.0.9108) | Package | Unscoped lookalike – spoofs opensearch-project repo URL |
-| vpmdhaj-opensearch-setup (1.0.9102) | Package | Unscoped – author-named OpenSearch setup |
-| env-config-manager (2.1.9201) | Package | Typosquat – dotenv-style config manager |
-| app-config-utility (1.0.9300) | Package | Typosquat – generic app config utility |
-Actor, network, and file IOCs
-| Indicator | Type | Description |
-| vpmdhaj | npm maintainer alias | Threat actor publishing all 14 packages |
-| a39155771@gmail.com | Maintainer contact email registered on npm | |
-| aab.sportsontheweb[.]net | Domain | Stage-1 C2 (Gen-1 packages) |
-| hxxp://aab.sportsontheweb[.]net/x.php | URL | Beacon + stage-2 payload endpoint (port 80) |
-| X-Supply: 1 | HTTP header | Campaign-unique marker – high-confidence proxy detection |
-| 169.254.169.254 | IP | AWS EC2 IMDSv2 endpoint queried by stage-2 |
-| 169.254.170.2 | IP | AWS ECS task metadata endpoint queried by stage-2 |
-| 638788AFC4F1B5860A328312CAF5895ABD5F5632D28A4F2A85B09076E270D15D | SHA-256 | preinstall.js (Gen-1 stager) |
-| 77D92EFE7AF3547F71FD41D4A884872D66B1BE9499EAA637E91EAC866911694D | SHA-256 | setup.mjs (Gen-2 stager) |
-| BFA149694EC6411C23936311A999163ADE54D6F38E2F4B0E3CFB8CB67BD7CFAA | SHA-256 | payload.gz (gzipped Bun stage-2) |
-| opensearch_init.js | Filename | Bun-compiled stage-2 credential harvester (~195 KB) |
-| ai_init.js | Filename | Alternate stage-2 filename used by some Gen-2 packages |
-| payload.bin | Filename | Dropped stage-2 binary in node_modules install dir |
-| __DAEMONIZED=1 | Env var | Marker set by stager when spawning detached payload |
-References
-- https://www.npmjs.com/~vpmdhaj – npm maintainer profile (all 14 packages)
-- https://www.npmjs.com/package/@vpmdhaj/elastic-helper
-- https://www.npmjs.com/package/@vpmdhaj/devops-tools
-- https://docs.npmjs.com/cli/v10/using-npm/scripts – npm lifecycle scripts documentation
-- https://bun.sh – Bun runtime (abused by Gen-2 stager as a loader)
-- https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-IMDS-use-IMDSv2.html – IMDSv2 hardening guidance
-This research is provided by Microsoft Defender Security Research with contributions from members of Microsoft Threat Intelligence.
-Learn more
-For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
-To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
-To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
-Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
-[Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)- Learn more about
-[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection) - Evaluate your AI readiness with our latest
-[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). - Learn more about
-[Protect your agents in real-time during runtime (Preview)](https://learn.microsoft.com/en-us/defender-cloud-apps/real-time-agent-protection-during-runtime) - Explore
-[how to build and customize agents with Copilot Studio Agent Builder](https://eurppc-word-edit.officeapps.live.com/we/%E2%80%A2%09https:/learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/copilot-studio-agent-builder)</div>
+            <h2 class="article-title">PAN-OS GlobalProtect Authentication Bypass (CVE-2026-0257) Under Active Exploitation</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/05/pan-os-globalprotect-authentication.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Palo Alto Networks has warned that a recently disclosed medium-severity security flaw impacting PAN-OS and Prisma Access has come under active exploitation in the wild.
+The vulnerability, tracked as [CVE-2026-0257](https://security.paloaltonetworks.com/CVE-2026-0257) (CVSS score: 7.8), refers to a case of authentication bypass that could be exploited by bad actors to set up VPN connections.
+"Authentication bypass vulnerabilities in the GlobalProtect portal and gateway of Palo Alto Networks PAN-OS® software allow the attacker to bypass security restrictions and establish an unauthorized VPN connection," Palo Alto Networks said in an advisory released on May 13, 2026.
+The issue specifically affects firewalls with GlobalProtect portal or gateway configured when authentication override cookies are enabled and a specific certificate configuration exists, the network security company said.
+In an update to its advisory on May 29, 2026, Palo Alto Networks said it has "become aware of limited exploit attempts on unpatched PAN-OS devices without mitigations applied.
+The development comes after Rapid7 [revealed](https://www.rapid7.com/blog/post/etr-rapid7-observed-exploitation-of-pan-os-globalprotect-authentication-bypass-vulnerability-cve-2026-0257/) it identified successful exploitation across numerous customers, with the earliest efforts dating back to May 17, 2026, followed by a second wave on May 21. Both the exploitation sets are assessed to be the work of the same threat actor.
+The activity observed in the second wave involved VPN IP assignment following the cookie authentication in two cases, granting the attacker access to the internal network. No follow-on activity in the customer environments where a VPN session was established, the cybersecurity vendor added.
+"An authentication bypass in an edge facing enterprise VPN appliance can have significant impact to affected organizations," Rapid7 said. "As such, organizations running affected appliances are urged to upgrade to a vendor supplied patch on an urgent basis."
+As temporary mitigations, it's recommended to either disable the authentication override feature or generate a new certificate to use exclusively for the authentication override feature.
+The exploitation of CVE-2026-0257 follows a [report](https://thehackernews.com/2026/05/threat-actors-exploit-critical.html) from Arctic Wolf about the continued weaponization of a critical, now-patched security flaw impacting FortiClient Endpoint Management Server (EMS) deployments (CVE-2026-35616, CVSS score: 9.1) to deliver credential-stealing malware called EKZ Infostealer.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-1" class="article-body">
-            <h2 class="article-title">Hackers exploit FortiClient EMS flaw to push infostealer malware</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-forticlient-ems-flaw-to-push-infostealer-malware/" target="_blank">Original Link</a></p>
-            <div class="content-text">Hackers are exploiting an authentication bypass vulnerability (CVE-2026-35616) in FortiClient Enterprise Management Server (EMS) to deliver an undocumented credential stealer called EKZ.
-The attacker disguised the malware as an update for Fortinet endpoints and executed it through VPN scripting workflows managed by FortiClient.
-The exploited critical vulnerability is an improper access control flaw that allows unauthenticated remote attackers to execute arbitrary code or commands via specially crafted requests.
-GO TO PAGE
-Fortinet [confirmed](https://www.bleepingcomputer.com/news/security/new-fortinet-forticlient-ems-flaw-cve-2026-35616-exploited-in-attacks/) in early April that it was being exploited and released emergency hotfixes for versions 7.4.5 and 7.4.6 of the product.
-CISA reacted quickly to the malicious activity and [ordered federal agencies](https://www.bleepingcomputer.com/news/security/cisa-orders-feds-to-patch-fortinet-flaw-exploited-in-attacks-by-friday/) to secure their instances by the end of that week, while the internet security watchdog group The Shadowserver Foundation reported at the time that it was seeing 2,000 internet-exposed EMS instances.
-Earlier this month, cybersecurity company Arctic Wolf observed attacks leveraging the vulnerability to deliver the EKZ infostealer. The researchers note that the intrusion begins with abusing endpoint APIs to perform administrative actions without authentication.
-The attacker then modifies the EMS configuration and VPN policies to introduce the execution of malicious scripts. Seconds after endpoints established an IPsec tunnel to a FortiGate firewall, the legitimate fortitray.exe launched malicious batch scripts through Command Prompt.
-Those scripts executed a base64-encoded PowerShell payload that downloaded and ran malware disguised as a Fortinet patch, then exfiltrated data to an attacker-controlled VPS over HTTP.
-“Rather than relying on a generic malware lure, the payload was presented as a Fortinet endpoint update and executed through FortiClient-managed VPN scripting workflows,” reads the [report from Arctic Wolf](https://arcticwolf.com/resources/blog/forticlient-ems-exploited-via-cve-2026-35616-to-deliver-ekz-infostealer-disguised-as-a-fortinet-patch/).
-“On affected endpoints, FortiClient components launched command scripts that invoked PowerShell, downloaded a credential stealer, executed it silently, and exfiltrated harvested browser data before removing local artifacts.”
-The downloaded payload, tracked as EKZ Infostealer, features fairly standard information-stealing functionality. It targets both Chromium-based and Firefox web browsers and extracts stored data to text files while bypassing encrypted password protections.
-The malware targets credentials, credit card details, addresses, phone numbers, and cookies, which provide access to accounts protected by multi-factor authentication without loging it.
-According to Arctic Wolf, one indication of an exploitation attempt in attacks delivering the EKZ infostealer is the presence in the logs of the line "Certificate not found in request header." In lab tests, the error was followed in seconds by another entry: Certificate user: fortinet-ca2 … successfully updated
-As such, the researchers recommend defenders look for certificate-authentication anomalies and unexpected changes to Remote Access Profile configurations.
-Any suspicious administrative activity, such as new accounts, logins with an unfamiliar origin (Tor, VPS IP addresses), or actions leading to configuration changes, should be considered red flags.
-Arctic Wolf's report provides extensive detection guidance that could help organizations prevent the observed attacks.
-[The Validation Gap: Automated Pentesting Answers One Question. You Need Six.](https://hubs.li/Q048zztN0)
-Automated pentesting tools deliver real value, but they were built to answer one question: can an attacker move through the network? They were not built to test whether your controls block threats, your detection rules fire, or your cloud configs hold.
-This guide covers the 6 surfaces you actually need to validate.
-[Download Now](https://hubs.li/Q048zztN0)
-Post a Comment Community Rules
-You need to login in order to post a comment
-Not a member yet? Register Now</div>
+            <h2 class="article-title">Microsoft is named a Leader in the 2026 Gartner® Magic Quadrant™ for Endpoint Protection</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/05/29/microsoft-is-named-a-leader-in-the-2026-gartner-magic-quadrant-for-endpoint-protection/" target="_blank">Original Link</a></p>
+            <div class="content-text">As threats become more coordinated and faster to execute, endpoint protection has become the proving ground for modern defense. For the seventh consecutive time, Microsoft has been named a Leader in the [2026 Gartner® Magic Quadrant™ for Endpoint Protection](https://www.gartner.com/doc/reprints?id=1-2NFQTDIC&ct=260527&st=sb). We believe this reflects both the strength of our technology, and the trust customers place in Microsoft Defender.
+Microsoft Defender delivers industry-leading Endpoint Detection and Response (EDR), powered by global threat intelligence and built for the scale and speed of today’s attacks. For many of our customers, Defender’s endpoint capabilities are the foundation for a coordinated system of defense that spans endpoints, identities, email, apps, cloud, and data.
+Bringing these signals together changes what’s possible. It enables earlier detection, stronger prevention, and capabilities like predictive shielding that help stop attacks before they spread. This is the shift underway in security: from isolated tools to a connected system that can see across the environment, understand what’s changing, and take action in real time. It’s what makes the next generation of AI-driven, agentic security possible and helps defenders stay ahead of threats, not just respond to them.
+Sustained innovation to stay ahead of changing threats
+Over the past year, Microsoft has introduced key advancements to endpoint protection that have empowered defenders to stay ahead of evolving cyberthreats, including:
+Proactive defense during attacks: Attack disruption now expands autonomous protection to [predicting and blocking an adversary’s next move during active attacks](https://techcommunity.microsoft.com/blog/microsoftdefenderatpblog/how-microsoft-defender-used-predictive-shielding-to-proactively-disrupt-a-ransom/4519498). It acts just in time to harden against some of the most common attacker tactics, such as group policy objects (GPOs), Safeboot, and identity compromise, to stop lateral movement and defend dynamically.
+Custom telemetry: With new [custom data collection capabilities](https://learn.microsoft.com/en-us/defender-endpoint/custom-data-collection), Defender makes it easy for security teams to collect specialized data directly within the Defender portal. It allows organizations to extend their endpoint telemetry beyond the 200+ default signals to support tailored detections and advanced hunting scenarios, such as AMSI for hunting over script content and Kerberos for auth-based and network attacks.
+Simplified onboarding: To help security teams onboard simply and securely, we’ve built [new Defender deployment tools](https://techcommunity.microsoft.com/blog/microsoftdefenderatpblog/ignite-2025-microsoft-defender-now-prevents-threats-on-endpoints-during-an-attac/4470805) for Windows and Linux, which handle the entire process for you. Just download a single package and it will dynamically adapt to the operating system, take care of prerequisites, and install the latest version of Defender available as needed for older devices that don’t have it already built in. The Defender deployment tools eliminate friction, automate tricky steps, and provide predictability throughout the onboarding journey.
+Sovereign-ready protection: Defender enables customers to meet data storage and privacy needs while operating under public, sovereign, hybrid, or disconnected models. Its multi‑tenant architecture enables organizations to balance centralized security visibility with [localized control over their data](https://learn.microsoft.com/en-us/defender-endpoint/data-storage-privacy), reflecting a shift from basic compliance to operational governance.
+End-to-end security for local AI agents: Microsoft announced [agentic endpoint security](https://www.microsoft.com/en-us/security/blog/2026/05/01/microsoft-agent-365-now-generally-available-expands-capabilities-and-integrations/?msockid=3bef1be87261641b09e20845732c65d6) as a part of A365 to discover, govern, and block AI agents such as OpenClaw and previously unseen applications running locally on endpoints.
+Innovations such as these represent the continued commitment to drive the next wave of innovation. Stay tuned for more exciting advancements at [Microsoft Build](https://build.microsoft.com/en-US/home) on June 2nd.
+Learn more
+If you’re not yet taking advantage of Microsoft’s leading endpoint security solution, visit [Microsoft Defender for Endpoint](https://www.microsoft.com/security/business/endpoint-security/microsoft-defender-endpoint-offer) and start a free trial today to evaluate our leading endpoint protection platform.
+Are you a regular user of Microsoft Defender for Endpoint? [Share your insights](https://gtnr.io/H2xEhb8bT) on Microsoft Defender for Endpoint and get rewarded with a $25 gift card on Gartner Peer Insights™.
+To learn more about Microsoft Security solutions, visit our [website.](https://www.microsoft.com/en-us/security/business) Bookmark the [Security blog](https://www.microsoft.com/security/blog/) to keep up with our expert coverage on security matters. Also, follow us on LinkedIn ([Microsoft Security](https://www.linkedin.com/showcase/microsoft-security/)) and X ([@MSFTSecurity](https://twitter.com/@MSFTSecurity)) for the latest news and updates on cybersecurity.
+Gartner, Magic Quadrant for Endpoint Protection, Deepak Mishra, Evgeny Mirolyubov, Nikul Patel, 26 May 2026.
+Gartner is a registered trademark and service mark and Magic Quadrant is a registered trademark of Gartner, Inc. and/or its affiliates in the U.S. and internationally and are used herein with permission. All rights reserved.
+This graphic was published by Gartner, Inc. as part of a larger research document and should be evaluated in the context of the entire document. The Gartner document is available upon request from.
+Gartner does not endorse any vendor, product or service depicted in its research publications, and does not advise technology users to select only those vendors with the highest ratings or other designation. Gartner research publications consist of the opinions of Gartner’s research organization and should not be construed as statements of fact. Gartner disclaims all warranties, expressed or implied, with respect to this research, including any warranties of merchantability or fitness for a particular purpose.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-2" class="article-body">
-            <h2 class="article-title">The Case for Practicing Response Before You Need It</h2>
-            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/05/28/the-case-for-practicing-response-before-you-need-it/" target="_blank">Original Link</a></p>
-            <div class="content-text"><p>TL;DR:&#160;Building a security program and exercising it are not the same investment. Most organizations prioritize the first and defer the second. This post explains what structured practice requires and why it belongs&#160;in&#160;every mature security program.&#160; Most security teams have runbooks, escalation procedures, and documented response processes. Far fewer have practiced executing those processes under realistic [&#8230;]</p>
-<p>The post <a href="https://specterops.io/blog/2026/05/28/the-case-for-practicing-response-before-you-need-it/">The Case for Practicing Response Before You Need It</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
+            <h2 class="article-title">Hackers exploit FortiClient EMS flaw to push infostealer malware</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-forticlient-ems-flaw-to-push-infostealer-malware/" target="_blank">Original Link</a></p>
+            <div class="content-text">Hackers are exploiting an authentication bypass vulnerability (CVE-2026-35616) in FortiClient Enterprise Management Server (EMS) to deliver an undocumented credential stealer called EKZ. [...]
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
@@ -235,20 +119,12 @@ Not a member yet? Register Now</div>
             <hr class="separator">
         </div>
         <div id="art-3" class="article-body">
-            <h2 class="article-title">Threat Actors Exploit Critical FortiClient EMS Flaw to Deploy Credential Stealer</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/05/threat-actors-exploit-critical.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Threat actors are continuing to exploit a critical, now-patched security flaw impacting FortiClient Endpoint Management Server (EMS) deployments to deliver credential-stealing malware.
-"The campaign abused trusted endpoint management infrastructure to deliver malware across managed endpoints," Arctic Wolf [said](https://arcticwolf.com/resources/blog/forticlient-ems-exploited-via-cve-2026-35616-to-deliver-ekz-infostealer-disguised-as-a-fortinet-patch/). "Threat actors disguised the credential stealer payload as a Fortinet endpoint update, silently executing the malicious executable through PowerShell."
-The activity, observed by the cybersecurity company in May 2026, involves the exploitation of [CVE-2026-35616](https://thehackernews.com/2026/04/fortinet-patches-actively-exploited-cve.html) (CVSS score: 9.1), a critical pre-authentication API access bypass leading to privilege escalation. The issue was addressed by Fortinet in FortiClient EMS 7.4.7 and later.
-A successful compromise is followed by the threat actor taking steps to modify configurations to defer firmware upgrade reminders, as well as modifying a Remote Access Profile configuration and endpoint policy to insert a malicious script for execution on endpoint devices.
-"The observed execution pattern suggests that threat actors used FortiClient's own management pathway to push malicious PowerShell commands to managed endpoints in a way that resembled legitimate management operations," Arctic Wolf said.
-"Once the threat actors had a route to modify EMS-managed configuration, every managed endpoint became a potential execution target without requiring a separate intrusion path to each device."
-In addition, the attack has been found to leverage "fortitray.exe," a legitimate executable associated with FortiClient to launch a .cmd script file using "cmd.exe." The .cmd script is designed to invoke a Base64-encoded PowerShell script that, in turn, is responsible for downloading a malicious payload, running it, and exfiltrating the results to "83.138.53[.]110" via an HTTP POST request.
-The executable, named "FortiEndpoint_Patch.exe," masquerades as an update, but, in reality, is a previously unreported Windows information stealer capable of harvesting sensitive data, such as passwords, cookies, and autofill details such as credit card information, addresses, and phone numbers, from Chromium- and Gecko-based browsers.
-The data is written to a log file and saved to the ProgramData directory. It's worth noting that the stealer lacks network-based exfiltration capabilities. It's the PowerShell script that transmits the captured data to the attacker-controlled infrastructure.
-"By bypassing API authentication and interacting with EMS functionality in a privileged context, threat actors were able to modify management configuration and push malicious scripts for execution on managed endpoints," Arctic Wolf said.
-"Session cookies and saved browser credentials may provide threat actors with follow-on access to cloud services, internal applications, and other authenticated resources, including cases where session reuse may circumvent MFA prompts."
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <h2 class="article-title">The Case for Practicing Response Before You Need It</h2>
+            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/05/28/the-case-for-practicing-response-before-you-need-it/" target="_blank">Original Link</a></p>
+            <div class="content-text"><p>TL;DR:&#160;Building a security program and exercising it are not the same investment. Most organizations prioritize the first and defer the second. This post explains what structured practice requires and why it belongs&#160;in&#160;every mature security program.&#160; Most security teams have runbooks, escalation procedures, and documented response processes. Far fewer have practiced executing those processes under realistic [&#8230;]</p>
+<p>The post <a href="https://specterops.io/blog/2026/05/28/the-case-for-practicing-response-before-you-need-it/">The Case for Practicing Response Before You Need It</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
+
+[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
@@ -440,6 +316,7 @@ On May 8, Google started rolling out updates to its Chrome browser that [fixed a
 If you encounter any weirdness applying the updates from Microsoft or any other vendor mentioned here, feel free to sound off in the comments below. Meantime, if you haven’t backed up your data and/or drive lately, doing that before updating is generally sound advice. For a more granular look at the Microsoft updates released today, checkout [this inventory](https://isc.sans.edu/forums/diary/Microsoft%20May%202026%20Patch%20Tuesday/32980/) by the SANS Internet Storm Center.
 Typo: You wrote “On May 11, Apple shipped iOS 15”. I Believe you meant to write iOS 26.5.
 Nothing to do with this topic but I’m not sure where else to ask Brian about this: can you further explain your posting about the malign residential proxy networks and synthient.com? What can’t other anti-malware software find these and what should be done?
+I really appreciate your insights on this month’s patches! It’s a reminder of how crucial updates are for security. I recently had to troubleshoot some vulnerabilities in my own setup, and it’s always a juggling act.
 patches went on fine on my win 11 25H2 system.
 All on one patch Tuesday.
 Ford had 150 Safety recalls for 2024 or 2025 [cant remember which].
