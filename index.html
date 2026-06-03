@@ -59,22 +59,445 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-06-02</h1>
+        <h1>Security Briefing // 2026-06-03</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Red Hat npm packages compromised to steal developer credentials</button></li><li><button onclick="show('art-1')">Miasma Supply Chain Attack Compromises Red Hat npm Packages with Credential-Stealing Worm</button></li><li><button onclick="show('art-2')">Hackers Used Meta’s AI Support Bot to Seize Instagram Accounts</button></li><li><button onclick="show('art-3')">CVE-2026-4387: StrongDM State File Reuse</button></li><li><button onclick="show('art-4')">CISA Adds One Known Exploited Vulnerability to Catalog</button></li><li><button onclick="show('art-5')">OpenAI Codex Authentication Tokens Stolen in codexui-android npm Supply Chain Attack</button></li><li><button onclick="show('art-6')">Typosquatted npm packages used to steal cloud and CI/CD secrets</button></li><li><button onclick="show('art-7')">PCI DSS, Telephone Payments, and the Problems With VoIP</button></li><li><button onclick="show('art-8')">Patch Tuesday, May 2026 Edition</button></li><li><button onclick="show('art-9')">North Korea-Nexus Threat Actor Compromises Widely Used Axios NPM Package in Supply Chain Attack</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Preinstall to persistence: Inside the Red Hat npm Miasma credential-stealing campaign</button></li><li><button onclick="show('art-1')">Google June 2026 Android Update Patches 124 Flaws, One Actively Exploited</button></li><li><button onclick="show('art-2')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-3')">CMMC Conditional Status - Contracting Without Compliance</button></li><li><button onclick="show('art-4')">Red Hat npm packages compromised to steal developer credentials</button></li><li><button onclick="show('art-5')">Miasma Supply Chain Attack Compromises Red Hat npm Packages with Credential-Stealing Worm</button></li><li><button onclick="show('art-6')">Hackers Used Meta’s AI Support Bot to Seize Instagram Accounts</button></li><li><button onclick="show('art-7')">CVE-2026-4387: StrongDM State File Reuse</button></li><li><button onclick="show('art-8')">Patch Tuesday, May 2026 Edition</button></li><li><button onclick="show('art-9')">North Korea-Nexus Threat Actor Compromises Widely Used Axios NPM Package in Supply Chain Attack</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">Red Hat npm packages compromised to steal developer credentials</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/red-hat-npm-packages-compromised-to-steal-developer-credentials/" target="_blank">Original Link</a></p>
-            <div class="content-text">More than 30 npm packages under Red Hat's '@redhat-cloud-services' namespace were compromised in a supply-chain attack that distributed a new variant of the Shai-Hulud credential-stealing malware, dubbed "Miasma." [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
+            <h2 class="article-title">Preinstall to persistence: Inside the Red Hat npm Miasma credential-stealing campaign</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/06/02/preinstall-persistence-inside-red-hat-npm-miasma-credential-stealing-campaign/" target="_blank">Original Link</a></p>
+            <div class="content-text">Microsoft Threat Intelligence identified a large-scale npm supply chain attack affecting 32 maliciously modified packages across more than 90 versions under the @redhat-cloud-services npm scope. The compromise originated from the upstream RedHatInsights/javascript-clients Continuous Integration and Continuous Delivery (CI/CD) pipeline, allowing attackers to publish trojanized packages through the legitimate GitHub Actions OpenID Connect (OIDC) publishing workflow. As a result, the malicious packages carried authentic provenance signatures while embedding the campaign marker “Miasma: The Spreading Blight.”
+Once installed, the trojanized packages triggered an npm preinstall hook that executed a heavily obfuscated 4.29 MB dropper script. Through multiple layers of obfuscation and encryption, the malware downloaded the Bun JavaScript runtime and launched a secondary payload designed to harvest credentials from GitHub, npm, Amazon Web Service (AWS), Azure, Google Cloud Platform (GCP), HashiCorp Vault, Kubernetes, and developer systems. The malware also attempted to propagate by compromising additional maintainer packages and, in some scenarios, could destroy the maintainer’s home directory.
+The payload operated across Linux, macOS, and Windows by dynamically downloading the correct Bun runtime for each platform, although Linux CI/CD runners appeared to be the primary target. On developer systems, the malware stole Secure Shell (SSH) keys, command-line interface (CLI) credentials, browser and wallet data, while in CI/CD environments it scraped GitHub Actions runner memory for secrets, escalated privileges using passwordless sudo, and republished poisoned packages with forged Supply-chain Levels for Software Artifacts (SLSA) provenance to continue downstream propagation. Microsoft shared its findings with the npm team, leading to the removal of affected repositories and the implementation of additional protections on the @redhat-cloud-services namespace to prevent unauthorized publishing.
+Attack chain overview
+At a high level, the malware payload progresses through 10 phases:
+- Delivery and execution: The infection begins automatically during npm install, where the malicious preinstall hook executes node index.js without requiring user interaction.
+- Staged unpacking: The payload is unpacked through multiple decoding layers, including several ROT (rotate)-based obfuscation variants followed by AES-128-GCM decryption. The malware then downloads the Bun runtime and detonates the final payload.
+- Environment gating: The malware validates the execution environment before continuing. It terminates execution on systems configured with few regions in locale settings and can optionally restrict execution to CI/CD environments only.
+- Defense evasion: The malware attempts to neutralize security controls
+- Credential access: The malware harvests secrets and authentication tokens from GitHub, npm, major cloud providers, HashiCorp Vault, and Kubernetes environments, including scraping sensitive data directly from CI runner process memory.
+- Privilege escalation: It installs a passwordless sudo rule to obtain elevated privileges and maintain deeper system control.
+- Persistence: The malware continuously monitors stolen tokens and prepares secondary-stage payload deployment for long-term access.
+- Exfiltration: Stolen data is transmitted using three separate command-and-control (C2) channels, including abuse of GitHub infrastructure as an exfiltration mechanism.
+- Self-propagation: The malware republishes packages owned by the compromised maintainer using forged provenance metadata, effectively allowing the threat to spread like a worm across trusted package ecosystems.
+- Destructive tripwire: If the malware detects interaction with a planted decoy token, it triggers a destructive fail-safe command (rm -rf ~/) intended to wipe the victim’s home directory.
+The payload replaces the legitimate index.js with a single-line obfuscated script.
+Obfuscation
+Stage 0 – Malicious preinstall trigger: The attack begins in package.json, where a weaponized preinstall hook automatically executes during npm install, allowing the malware to run through both direct and transitive dependency installation. The modified packages also replaced the original index.js while leaving source-map metadata unchanged, indicating probable release-pipeline tampering.
+Stage 1 – Multi-layer JavaScript obfuscation: The 4.29 MB index.js dropper uses layered obfuscation, beginning with a large character-code array reconstructed at runtime, decoded through a ROT-XX (Caesar cipher) transformation, and dynamically executed via eval().
+Stage 2 – AES-encrypted payloads and Bun runtime abuse: The next layer decrypts two AES-128-GCM encrypted blobs: one downloads the Bun runtime from official Bun infrastructure, while the second contains the primary payload. The malware then executes the payload via Bun, creating an unusual process chain (node → shell → bun → payload) designed to evade Node-focused monitoring and detections.
+Stage 3 – Obfuscator.io string-array protection: The Bun-executed payload is additionally protected using Obfuscator.io techniques, including rotated string arrays, decoder functions, and hundreds of alias wrappers that conceal nearly every string and identifier from static analysis.
+Stage 4 – Custom cryptographic string cipher: Sensitive strings remain protected behind a bespoke encryption routine that derives keys using PBKDF2-HMAC-SHA-256 with 200,000 iterations, followed by multiple SHA-256-seeded permutation and XOR stages, significantly complicating reverse engineering and static extraction.
+Credential theft
+The payload targets secrets across multiple providers:
+- GitHub: Validates token/scopes, enumerates repos, reads Actions/org secrets, uses GraphQL for branch/history, and steals ACTIONS_RUNTIME_TOKEN + ACTIONS_ID_TOKEN_REQUEST_TOKEN.
+- npm: Validates via /-/whoami, exchanges OIDC token for publish rights, and searches maintainer-owned packages for poisoning targets.
+- AWS: Pulls Identity and Access Management (IAM) credentials via Instance Metadata Service (IMDS) and Elastic Container Service (ECS) metadata, plus Secrets Manager access.
+- Azure: Collects IMDS OAuth2 tokens for management.azure.com, graph.microsoft.com, and Key Vault (*.vault.azure.net).
+- GCP: Harvests metadata.google.internal service-account tokens, Secret Manager, and Resource Manager access.
+- Vault/K8s: Probes Vault (127.0.0.1:8200) across many token paths; reads Kubernetes Service Account (SA) token and namespace secrets.
+- CI & Local : Steals CIRCLE_TOKEN; exfiltrates secrets from SSH/AWS/npm/PyPI/git/env/gcloud/kube/docker, browser data, and wallet files (*.wallet, wallet.dat).
+Runner memory scraping
+The payload locates the GitHub Actions Runner.Worker PID using /proc scanning, then extracts runtime secrets using the following:
+1 2 3 4 5 6 7 | // Locates Runner.Worker PID via /proc 'findRunnerWorkerPIDLinux' // Scans /proc/<pid>/cmdline for "Runner.Worker" // Extracts secrets from process memory tr -d '\0' | grep -aoE '"[^"]+":{"value":"[^"]*","isSecret":true}' | sort -u </pid> |
+This activity bypasses normal secret masking by reading secrets directly from runner process memory.
+Privilege escalation
+The payload performs the following actions to escalate its privileges:
+- Injects sudoers rule through bind mount: echo ‘runner ALL=(ALL) NOPASSWD:ALL’ > /mnt/runner
+- Modifies /etc/hosts for DNS redirection
+1 2 3 4 5 6 7 8 9 10 | // Injects passwordless sudo via /etc/sudoers.d bind mount at /mnt echo 'runner ALL=(ALL) NOPASSWD:ALL' > && chmod 0440 /mnt/runner // Neutralize Security product monitoring sudo sh -c "echo '127.0.0.1 <target>' >> /etc/hosts" // Validates sudo access before operations sudo -n true </target> |
+Exfiltration
+The malware abuses GitHub and victim-owned assets instead of a single easy-to-block C2 endpoint:
+Channel A (victim-owned repo drop): Creates a public repo in the victim’s GitHub account (“Miasma: The Spreading Blight”) and commits stolen credential JSON to results/<timestamp>-<counter>.json. Repo names are randomized (adjective-creature-<0–99999>), spreading indicators.
+Channel B (code propagation): Injects its own source as .github/setup.js into non-protected branches across victim-owned repos via Git Data API (blob → tree → commit → ref update). Skips protected/default branches and common bot/release branches; uses chore: update dependencies [skip ci] with spoofed github-actions@github.com.
+Channel C (dormant HTTPS sender): Includes a disabled POST path to api.anthropic.com:443/v1/api (noop: true in this sample). The same domain is used to validate stolen Anthropic keys (for example, ~/.claude.json), indicating a swappable live exfiltration path.
+C2 is not tied to one account; it rotates across a pool of 16 attacker-controlled GitHub accounts per session. Stolen tokens are double-Base64 encoded in transit, and traffic is masked with python-requests/2.31.0 user-agent spoofing
+Propagation and persistence
+The malware spreads across repositories while maintaining access through credential theft, supply-chain forgery, and destructive safeguards:
+- Enumerates /user/repos and /user/orgs to spread into additional repositories
+- Installs Bun runtime, executes second-stage payload using bun run .claude/
+- Deploys token monitor for ongoing credential capture
+- Forges SLSA provenance attestations through Sigstore (Fulcio or Rekor) to appear legitimate
+- Plants a decoy honeytoken (IfYouInvalidateThisTokenItWillNukeTheComputerOfTheOwner); triggering/revoking it can invoke a wiper routine (rm -rf ~/ and ~/Documents)
+Impact and blast radius
+This attack has a wide blast radius, affecting packages, credentials, and downstream systems.
+- Direct compromise of @ redhat-cloud-services packages with broad ecosystem adoption
+- Amplification through downstream dependencies into thousands of projects
+- Cascading risk: stolen npm tokens enable further package poisoning, stolen GitHub tokens enable repo manipulation, and stolen AWS credentials enable cloud access
+- SLSA provenance forgery erodes trust in supply chain attestation frameworks
+Campaign scope
+Our investigation uncovered the following affected packages and versions.
+| Package (@redhat-cloud-services/…) | Malicious versions |
+| types | 3.6.1, 3.6.2, 3.6.4 |
+| frontend-components-utilities | 7.4.1, 7.4.2, 7.4.4 |
+| frontend-components | 7.7.2, 7.7.3, 7.7.5 |
+| rbac-client | 9.0.3, 9.0.4, 9.0.6 |
+| javascript-clients-shared | 2.0.8, 2.0.9, 2.0.11 |
+| frontend-components-config-utilities | 4.11.2, 4.11.3, 4.11.5 |
+| frontend-components-notifications | 6.9.2, 6.9.3, 6.9.5 |
+| tsc-transform-imports | 1.2.2, 1.2.4, 1.2.6 |
+| frontend-components-config | 6.11.3, 6.11.4, 6.11.6 |
+| eslint-config-redhat-cloud-services | 3.2.1, 3.2.2, 3.2.4 |
+| host-inventory-client | 5.0.3, 5.0.4, 5.0.6 |
+| rule-components | 4.7.2, 4.7.3, 4.7.5 |
+| frontend-components-remediations | 4.9.2, 4.9.3, 4.9.5 |
+| frontend-components-translations | 4.4.1, 4.4.2, 4.4.4 |
+| vulnerabilities-client | 2.1.9, 2.1.11 |
+| frontend-components-advisor-components | 3.8.2, 3.8.4, 3.8.6 |
+| entitlements-client | 4.0.11, 4.0.12, 4.0.14 |
+| chrome | 2.3.1, 2.3.2, 2.3.4 |
+| notifications-client | 6.1.4, 6.1.5, 6.1.7 |
+| compliance-client | 4.0.3, 4.0.4, 4.0.6 |
+| sources-client | 3.0.10, 3.0.11, 3.0.13 |
+| integrations-client | 6.0.4, 6.0.5, 6.0.7 |
+| frontend-components-testing | 1.2.1, 1.2.2, 1.2.4 |
+| remediations-client | 4.0.4, 4.0.5, 4.0.7 |
+| insights-client | 4.0.4, 4.0.5, 4.0.7 |
+| topological-inventory-client | 3.0.10, 3.0.11, 3.0.13 |
+| config-manager-client | 5.0.4, 5.0.5, 5.0.7 |
+| hcc-pf-mcp | 0.6.1, 0.6.2, 0.6.4 |
+| quickstarts-client | 4.0.11, 4.0.12, 4.0.14 |
+| patch-client | 4.0.4, 4.0.5, 4.0.7 |
+| hcc-feo-mcp | 0.3.1, 0.3.2, 0.3.4 |
+| hcc-kessel-mcp | 0.3.1, 0.3.2, 0.3.4 |
+Mitigation and protection guidance
+Microsoft recommends the following mitigations to reduce the impact of this threat:
+- Review dependency trees for direct or transitive usage of affected @ redhat-cloud-services / packages.
+- Identify systems that installed or built affected package versions during the suspected exposure window.
+- Pin known-good package versions where possible and avoid automatic dependency upgrades until validation is complete.
+- Disable pre- and post-installation script execution by ensuring you run npm install with –ignore-scripts.
+- While GitHub team has already invalidated all the npm tokens that had write access and 2FA bypass, Microsoft Defender still recommends rotating credentials, tokens, npm access tokens, CI/CD secrets, and cloud credentials that might have been exposed in affected build or developer environments.
+- Audit organization and personal GitHub account for public repositories with the description “Miasma: The Spreading Blight” or other unexpected repositories created during the exposure window, and revoke any GitHub tokens that might have been implicated.
+- Audit CI/CD logs for unexpected outbound network connections, script execution, or suspicious package lifecycle activity.
+- Review npm package lockfiles, build logs, and artifact provenance for evidence of compromised package versions.
+[Enable cloud-delivered protection](https://learn.microsoft.com/en-us/defender-endpoint/enable-cloud-protection-microsoft-defender-antivirus)in Microsoft Defender Antivirus or equivalent antivirus protection.- Use Microsoft Defender XDR to investigate suspicious activity across endpoints, identities, cloud apps, and developer environments. Use Microsoft Defender Vulnerability Management to search for redhat-cloud-services packages across your estate.
+Microsoft Defender XDR detections
+Microsoft Defender XDR customers can refer to the list of applicable detections below. Microsoft Defender XDR coordinates detection, prevention, investigation, and response across endpoints, identities, email, and apps to provide integrated protection against attacks like the threat discussed in this blog.
+Customers with provisioned access can also use Microsoft Security Copilot in Microsoft Defender to investigate and respond to incidents, hunt for threats, and protect their organization with relevant threat intelligence.
+Microsoft Defender XDR detections
+Microsoft Defender XDR customers can refer to the list of applicable detections below. Microsoft Defender XDR coordinates detection, prevention, investigation, and response across endpoints, identities, email, and apps to provide integrated protection against attacks like the threat discussed in this blog.
+| Tactic | Observed activity | Microsoft Defender coverage |
+| Initial access / Execution | Suspicious script execution during npm install or package lifecycle activity | Microsoft Defender Antivirus – Trojan:JS/ShaiWorm.DAW!MTB – Trojan:JS/ObfusNpmJs Microsoft Defender for Endpoint – Suspicious Node.js process behavior – Suspicious installation of Bun runtime Microsoft Defender XDR – Suspicious file creation in temporary directory by node.exe – Suspicious Bun execution from Node.js process |
+| Execution / Defense evasion | Four-layer obfuscation (ROT XX) → AES-128-GCM → string-array → custom cipher); Bun runtime download and execution to move off Node.js; process lineage node → sh → bun to evade detection | Microsoft Defender for Endpoint – Suspicious usage of Bun runtime – Suspicious installation of Bun runtime – Suspicious Node.js process behavior – Suspicious script execution via Bun Microsoft Defender for Cloud – Suspicious supply-chain compromise activity detected |
+| Credential access | Multi-platform harvester targeting GitHub, npm, AWS IMDS/ECS, Azure IMDS, GCP, Vault, K8s, CircleCI; runner process-memory scraping to unmask secrets; anthropic API key theft | Microsoft Defender for Endpoint – Credential access attempt – Kubernetes secrets enumeration indicative of credential access Microsoft Defender for Cloud – Sha1-Hulud Campaign Detected: Possible command injection to exfiltrate credentials Microsoft Defender for Identity – Anomalous token request patterns – Suspicious enumeration of organizational secrets |
+| Exfiltration | Public GitHub repo creation under victim’s account with stolen credential JSON; Git Data API commits to non-protected branches; domain-sender fallback to (dormant) api.anthropic.com | Microsoft Defender for Cloud Apps – Suspicious GitHub API activity (repo creation, commit patterns) – Unusual data volume in commits – Authentication from unusual IP/location |
+| Impact / Worm propagation | npm OIDC token exchange republishing; forged Sigstore/SLSA provenance; self-injection (.github/setup.js) into victim repos on non-protected branches | Microsoft Defender for Cloud Apps – Suspicious npm package republish via OIDC – Anomalous use of bypass_2fa parameter – Packages publish from unusual location/time |
+Microsoft Defender XDR Threat analytics
+Microsoft Defender XDR customers can reference the Threat analytics report for this campaign in the Microsoft Defender portal at [https://security.microsoft.com/threatanalytics3](https://security.microsoft.com/threatanalytics3) for the latest indicators, recommended actions, and mitigation status across their estate.
+Advanced hunting
+The following KQL queries can be used in Microsoft Defender XDR Advanced Hunting to identify potential exposure to this supply-chain compromise.
+Bun execution from temporary directories
+1 2 3 4 5 6 | DeviceProcessEvents | where FileName == "bun" or ProcessCommandLine has "bun run" | where FolderPath startswith "/tmp/" or FolderPath startswith @"C:\Users\*\AppData\Local\Temp" | project Timestamp, DeviceName, InitiatingProcessFileName, ProcessCommandLine, FolderPath, AccountName | sort by Timestamp desc |
+Bun execution from temporary directory (CloudProcessEvents)
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 | CloudProcessEvents | where Timestamp > ago(7d) | where ProcessName =~ "bun" or ProcessCommandLine has "bun run" | where FolderPath startswith "/tmp/" or ProcessCommandLine matches regex @"/tmp/[^ ]*bun" | project Timestamp, TenantId, AzureResourceId, KubernetesNamespace, KubernetesPodName, ContainerName, ContainerImageName, ContainerId, AccountName, ProcessName, FolderPath, ParentProcessName, ProcessCommandLine, UpperLayer = tostring(AdditionalFields.UpperLayer), DriftAction = tostring(AdditionalFields.DriftAction), Memfd = tostring(AdditionalFields.Memfd) | sort by Timestamp desc |
+Bun download activity
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 | CloudProcessEvents | where Timestamp > ago(7d) | where ProcessName in~ ("curl","wget") | where ProcessCommandLine matches regex @"https?://[^\s""']*?(github\.com/oven-sh/bun/releases|release-assets\.githubusercontent\.com/[^\s""']*?bun-(linux|darwin|windows)|/bun-(linux|darwin|windows)-(x64|aarch64|arm64)\.zip)" | extend BunUrl = extract( @"(https?://[^\s""']*?(?:github\.com/oven-sh/bun/releases|release-assets\.githubusercontent\.com/[^\s""']*?bun-(?:linux|darwin|windows)|/bun-(?:linux|darwin|windows)-(?:x64|aarch64|arm64)\.zip)[^\s""']*)", 1, ProcessCommandLine), OutputPath = extract(@"-[oO]\s+[""']?(\S+?)[""']?(\s|$)", 1, ProcessCommandLine) | project Timestamp, TenantId, AzureResourceId, KubernetesNamespace, KubernetesPodName, ContainerImageName, ContainerId, ProcessName, ParentProcessName, ParentProcessId, BunUrl, OutputPath, ProcessCommandLine, UpperLayer = tostring(AdditionalFields.UpperLayer) | sort by Timestamp desc |
+npm → Node → Bun process chain
+1 2 3 4 5 6 7 8 9 10 11 | DeviceProcessEvents | where InitiatingProcessFileName in ("node", "node.exe") | where FileName == "bun" or FileName == "bun.exe" | join kind=inner ( DeviceProcessEvents | where InitiatingProcessFileName in ("npm", "npm.cmd") | where FileName in ("node", "node.exe") ) on DeviceId, $left.InitiatingProcessId == $right.ProcessId | project Timestamp, DeviceName, AccountName, NpmCommandLine = ProcessCommandLine1, BunCommandLine = ProcessCommandLine |
+Cloud metadata endpoint access from build processes
+1 2 3 4 5 | DeviceNetworkEvents | where RemoteIP in ("169.254.169.254", "169.254.170.2") | where InitiatingProcessFileName in ("node", "node.exe", "bun", "bun.exe") | project Timestamp, DeviceName, RemoteIP, RemoteUrl, InitiatingProcessFileName, InitiatingProcessCommandLine |
+GitHub repository creation activity
+1 2 3 4 5 6 | CloudAppEvents | where ActionType == "CreateRepository" or RawEventName == "repo.create" | where Application == "GitHub" | where AccountType == "ServiceAccount" or ActorType has "Integration" | project Timestamp, AccountDisplayName, ActionType, RawEventName, IPAddress, City, CountryCode |
+Process memory access (runner scraping)
+1 2 3 | DeviceProcessEvents | where FileName == "grep" | where ProcessCommandLine has_all ("value", "isSecret\":true") |
+npm token enumeration
+1 2 3 4 5 | DeviceNetworkEvents | where RemoteUrl has "registry.npmjs.org/-/npm/v1/tokens" or RemoteUrl has "registry.npmjs.org/-/whoami" | project Timestamp, DeviceName, RemoteUrl, InitiatingProcessFileName, InitiatingProcessCommandLine |
+Linux CI runner detection (process tree)
+1 2 3 4 5 | # For Linux runners not managed by Defender, use these shell commands: # Detect: npm preinstall spawning bun from /tmp ps aux | grep -E '/tmp/b-[a-z0-9]+/bun' # Detect: payload writes to /tmp/p*.js inotifywait -m /tmp -e create | grep '^/tmp/p.*\.js$' |
+Indicators of compromise (IOC)
+| Indicator | Type | Description |
+| @ redhat-cloud-services | Package scope | All packages maintained by the @redhat-cloud-service account were compromised. |
+| Index.js | File name | Malicious script or dropped file |
+| 396cac9e457ec54ff6d3f6311cb5cc1da8054d019ce3ffa1de5741506c7a4ea4 | Sha256 | Index.js (from redhat-cloud-services/remediations-client) |
+| d8d170af3de17bb9b217c52aaaffdf9395f35ef015a57ef676e406c121e5e223 | Sha256 | index.js (from @redhat-cloud-services/frontend-components-advisor-components-3.8.2) |
+| f0641e053e81f0d01fa46db35a83e0a34494886503086866d956d14e81fd3e1c | Sha256 | index.js (from @redhat-cloud-services/hcc-kessel-mcp-0.3.4) |
+| d5a97614d5319ce9c8e01fa0b4eb06fb5b9e54fa13b23d718174a1546444123b | Sha256 | index.js (from @redhat-cloud-services/frontend-components-testing-1.2.4) |
+| f88258e21592084a2f93a572ade8f9b91c0cd0e242f5cf6121ed7bad0f7bdd1f | Sha256 | index.js (from @redhat-cloud-services/frontend-components-notifications-6.9.3) |
+| 25e121e3b7d300c0d0075b33e5eca39a3e6a659fb9cfee52b70ef71686628f1b | Sha256 | index.js (from @redhat-cloud-services/chrome-2.3.4) |
+Learn more
+For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
+To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
+To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
+Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
+[Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)- Learn more about
+[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection) - Evaluate your AI readiness with our latest
+[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). - Learn more about
+[Protect your agents in real-time during runtime (Preview)](https://learn.microsoft.com/en-us/defender-cloud-apps/real-time-agent-protection-during-runtime) - Explore
+[how to build and customize agents with Copilot Studio Agent Builder](https://eurppc-word-edit.officeapps.live.com/we/%E2%80%A2%09https:/learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/copilot-studio-agent-builder)</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-1" class="article-body">
+            <h2 class="article-title">Google June 2026 Android Update Patches 124 Flaws, One Actively Exploited</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/google-june-2026-android-update-patches.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Google on Monday [released](https://source.android.com/docs/security/bulletin/2026/2026-06-01) patches for 124 security vulnerabilities impacting its Android operating system for the month of June 2026, including one high-severity flaw in the Framework component that has come under active exploitation.
+Tracked as CVE-2025-48595 (CVSS score: 8.4), the security flaw has been described as a case of privilege escalation without requiring any user interaction. The vulnerability impacts devices running Android versions 14, 15, 16, and 16 QPR2 (Quarterly Platform Release 2).
+"In multiple locations, there is a possible way to achieve code execution due to an integer overflow," according to a [description](https://www.cve.org/CVERecord?id=CVE-2025-48595) of the vulnerability on CVE.org. "This could lead to local escalation of privilege with no additional execution privileges needed. User interaction is not needed for exploitation."
+Google has acknowledged there are indications that CVE-2025-48595 may be under "limited, targeted exploitation." As is typically the case, the tech giant did not reveal any specifics about who may have been behind the activity, the targets affected, and the scale of such efforts.
+That said, similar flaws have been weaponized by commercial spyware vendors to target high-profile individuals as part of extremely targeted attacks.
+Elsewhere, a number of vulnerabilities have been patched in the System component, the most severe of which could lead to local escalation of privilege with no additional execution privileges needed.
+Google has released two sets of patches - 2026-06-01 and 2026-06-05 security patch levels - with the latter including all fixes from the first set, along with patches for kernel and third-party chipset components from Imagination Technologies, MediaTek, Qualcomm, and Unisoc.
+Update
+The U.S. Cybersecurity and Infrastructure Security Agency (CISA), on June 2, 2026,
+[
+added
+](https://www.cisa.gov/news-events/alerts/2026/06/02/cisa-adds-two-known-exploited-vulnerabilities-catalog)
+CVE-2025-48595 to its Known Exploited Vulnerabilities (
+[
+KEV
+](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)
+) catalog, requiring Federal Civilian Executive Branch (FCEB) agencies to remediate the flaw by June 5, 2026.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">CISA Adds Two Known Exploited Vulnerabilities to Catalog</h2>
+            <p class="source-link">Source: All CISA Advisories | <a href="https://www.cisa.gov/news-events/alerts/2026/06/02/cisa-adds-two-known-exploited-vulnerabilities-catalog" target="_blank">Original Link</a></p>
+            <div class="content-text">CISA Adds Two Known Exploited Vulnerabilities to Catalog
+CISA has added two new vulnerabilities to its [Known Exploited Vulnerabilities (KEV) Catalog](/known-exploited-vulnerabilities-catalog), based on evidence of active exploitation.
+[CVE-2022-0492](https://www.cve.org/CVERecord?id=CVE-2022-0492)Linux Kernel Improper Authentication Vulnerability[CVE-2025-48595](https://www.cve.org/CVERecord?id=CVE-2025-48595)Android Framework Integer Overflow Vulnerability
+These types of vulnerabilities are a frequent attack vector for malicious cyber actors and pose significant risks to the federal enterprise.
+[Binding Operational Directive (BOD) 22-01: Reducing the Significant Risk of Known Exploited Vulnerabilities](/binding-operational-directive-22-01) established the KEV Catalog as a living list of known Common Vulnerabilities and Exposures (CVEs) that carry significant risk to the federal enterprise. BOD 22-01 requires Federal Civilian Executive Branch (FCEB) agencies to remediate identified vulnerabilities by the due date to protect FCEB networks against active threats. See the [BOD 22-01 Fact Sheet](/sites/default/files/publications/Reducing_the_Significant_Risk_of_Known_Exploited_Vulnerabilities_211103.pdf) for more information.
+Although BOD 22-01 only applies to FCEB agencies, CISA strongly urges all organizations to reduce their exposure to cyberattacks by prioritizing timely remediation of [KEV Catalog vulnerabilities](/known-exploited-vulnerabilities-catalog) as part of their vulnerability management practice. CISA will continue to add vulnerabilities to the catalog that meet the [specified criteria](/known-exploited-vulnerabilities).
+This product is provided subject to this [Notification](/notification) and this [Privacy & Use](/privacy-policy) policy.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
+            <h2 class="article-title">CMMC Conditional Status - Contracting Without Compliance</h2>
+            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/cmmc-conditional-status" target="_blank">Original Link</a></p>
+            <div class="content-text">CMMC Conditional Status - Contracting Without Compliance
+Table of contents
+The [CMMC rollout](https://trustedsec.com/blog/a-big-step-on-the-cmmc-rollout-timeline) is progressing. Contracts that require a CMMC Level 2 (Self) self-assessment have been circulating since the start of Phase 1 in November 2025, and contracts that require CMMC Level 2 (C3PAO) audits will start appearing with Phase 2 in November 2026.
+Contractors and subcontractors struggling to implement the CMMC requirements may be pleasantly surprised to learn that they could be awarded CMMC Level 2 contracts even if they have not implemented all of the applicable requirements via the Conditional Status process.
+This post collects the rules related to Conditional Status so contractors can determine if they are eligible and identify their obligations once they have achieved it.
+Overview
+Contractors and subcontractors can use systems with a Conditional Status to handle CUI under CMMC Level 2 and 3 contracts and subcontracts while they work toward full compliance with CMMC. Conditional Status cannot be used for systems that only need to meet CMMC Level 1 requirements.
+To achieve a CMMC Level 2 or Level 3 Conditional Status, contractors and subcontractors must:
+- Complete a System Security Plan (SSP) that describes the system and its security controls
+- Write a Plan of Action and Milestones (POA&M) for each CMMC requirement that is Not Met (yet)
+- Implement certain mandatory CMMC requirements that cannot be included in a Conditional Status (listed below)
+- Conduct a CMMC assessment of the appropriate level and type as required by the contract (self or C3PAO for Level 2, DIBCAC for Level 3)
+- Achieve a minimum assessment score equal to or greater than 80% of the number of CMMC requirements in the CMMC Level being assessed
+- Submit the self-assessment result via SPRS (the C3PAO or DIBCAC submit results for assessments they conduct)
+Once a contractor or subcontractor achieves a Conditional Status, all remaining CMMC requirements listed in the POA&M must be implemented and re-assessed within 180 days of the Conditional Status to achieve a Final Status.
+What is a Conditional Status?
+A Final Status requires 100% of the CMMC Level 2 or 3 requirements to be Met and is what all contractors and subcontractors will eventually need to achieve if they are working on contracts and subcontracts that require CMMC Status. A Level 2 or Level 3 Final Status is valid for three (3) years.
+The Conditional Status allows contractors and subcontractors that have not implemented all CMMC Level 2 or 3 requirements to work on contracts, just as they would with a Final Status, for up to 180 days. The contractor or subcontractor is expected to achieve Final Status by the end of that period.
+Using a Conditional Status is allowed as per the [DFARS 252.204-7021](https://www.acquisition.gov/dfars/252.204-7021-contractor-compliance-cybersecurity-maturity-model-certification-level-requirements.) contract clause that imposes CMMC Level 2 or 3 requirements on contractors:
+- Paragraph (d)(1)(i) of the contract requires contractors and subcontractors to have a “current” CMMC Status at the indicated level.
+- Paragraph (a) of the clause defines “current” for Level 2 and 3 to include both Conditional Status and Final Status, regardless of whether the contract specifies a self-assessment or C3PAO audit requirement.
+Conditional Status is not valid for CMMC Level 1. Any system with a CMMC Level 1 obligation must implement all of the Level 1 requirements and achieve a Level 1 Final Status in order to handle FCI under a CMMC contract.
+The Catch
+Unfortunately, some large defense contractors only seem to be willing to work with subcontractors that have a Final Status. This is frustrating because CMMC allows the use of a Conditional Status, but it is within a contractor’s rights to impose their own requirements on subcontractors that agree to their terms.
+Subcontractors should confirm whether the upstream contractors will accept a Conditional Status before pursuing this path unnecessarily.
+Conditional Status Requirements
+Certain requirements must be Met to achieve a Conditional Status:
+- An SSP must be in place.
+- A POA&M must be written for each Level 2 and/or Level 3 requirement that is Not Met (yet).
+- Certain specific controls must be in place.
+- The assessment score must be at least 80% of the total number of Level 2 or Level 3 requirements (depending on the required CMMC Level).
+SSP
+CMMC requirement CA.L2-3.12.4 System Security Plan (SSP) is the single most important requirement in CMMC and should be implemented before any other requirement. The SSP describes each information system within the CMMC Assessment Scope and defines how each CMMC control is (or will be) implemented on the system.
+As per [32 CFR 170.24(c)(2)(i)(B)(5)](https://www.ecfr.gov/current/title-32/part-170/section-170.24#p-170.24(c)(2)(i)(B)(5)), an SSP in accordance with CMMC requirement must be in place at the time of assessment. Any CMMC assessment conducted without an SSP in place will result in a finding that ‘an assessment could not be completed due to incomplete information and noncompliance with 48 CFR 252.204-7012’. This would leave the contractor without the assessment score necessary to achieve a Conditional Status.
+An [SSP template](https://csrc.nist.gov/files/pubs/sp/800/171/r2/upd1/final/docs/cui-ssp-template-final.docx) is available from NIST.
+POA&M
+As per [32 CFR 170.24(c)(2)(i)(B)(6)](https://www.ecfr.gov/current/title-32/part-170/section-170.24#p-170.24(c)(2)(i)(B)(6)), a POA&M must be written for each Not Met requirement to achieve a Conditional Status.
+The POA&M is a document that identifies:
+- Tasks that must be accomplished
+- Resources required to accomplish the elements of the plan
+- Any milestones in meeting the tasks
+- Scheduled completion dates for the milestones
+For a contractor or subcontractor pursuing a Conditional Status, the POA&M must list the tasks that will be necessary to implement all of the Level 2 or Level 3 requirements that are currently Not Met.
+A [POA&M template](https://csrc.nist.gov/files/pubs/sp/800/171/r2/upd1/final/docs/cui-plan-of-action-template-final.docx) is available from NIST.
+Mandatory Requirements
+While a Conditional Status is partially based on achieving a minimum assessment score, there are also specific requirements that must be Met to achieve a Conditional Status.
+Each CMMC Level 2 requirement is assigned a point value of one (1), three (3), or five (5). All CMMC Level 2 requirements with a point value of three (3) or five (5) must be Met to achieve Level 2 Conditional Status (a full list of Level 2 requirement point values is included at the end of this post).
+There is an exception where a Level 2 requirement with a value of more than one (1) point is allowed to be Not Met under a Conditional Status: SC.L2-3.13.11 CUI Encryption may be included in a POA&M if encryption is employed but not FIPS-validated, which would result in a point value of three (3) being deducted.
+Some CMMC requirements must be Met to receive a Conditional Status at Level 2 regardless of point value, and some requirements must be Met to receive a Conditional Status at Level 3. These requirements are as follows:
+CMMC Level 2 - | CMMC Level 3 - |
+|---|---|
+AC.L2-3.1.20 External Connections (CUI Data) | IR.L3-3.6.1e Security Operations Center |
+AC.L2-3.1.22 Control Public Information (CUI Data) | IR.L3-3.6.2e Cyber Incident Response Team |
+PE.L2-3.10.3 Escort Visitors (CUI Data) | RA.L3-3.11.1e Threat-Informed Risk Assessment |
+PE.L2-3.10.4 Physical Access Logs (CUI Data) | RA.L3-3.11.6e Supply Chain Risk Response |
+PE.L2-3.10.5 Manage Physical Access (CUI Data) | RA.L3-3.11.7e Supply Chain Risk Plan |
+CA.L2-3.12.4 System Security Plan | RA.L3-3.11.4e Security Solution Rationale |
+| SI.L3-3.14.3e Specialized Asset Security |
+Level 2 Scoring
+The maximum possible score is 110, which is equal to the number of CMMC Level 2 requirements.
+A minimum assessment score of 88 is required for Level 2 Conditional Status, which is equal to 80% of the maximum possible score.
+Points are deducted from the maximum score for each requirement that is Not Met. This may result in a negative score. No points are deducted from the score for requirements that are Met or Not Applicable.
+As described above, each Level 2 requirement is assigned a point value (listed at the end of this post), but this is almost irrelevant for a Conditional Status because, other than the exception described above, a Conditional Status is not allowed if requirements with a value of more than one (1) point are Not Met.
+Level 3 Scoring
+The maximum possible score is 24, which is equal to the number of CMMC Level 3 requirements.
+A minimum assessment score of 20 is required for Level 3 Conditional Status, which is slightly more than 80% of the maximum possible score.
+As with Level 2, points are deducted from the maximum for requirements that are Not Met.
+All Level 3 requirements are assigned a point value of one (1).
+Closing Out a Conditional Status
+A Conditional Status must be closed out within 180 days of its CMMC Status Date.
+All of the following must occur within the 180-day window to close out a Conditional Status:
+- Remediate any Not Met requirements
+- Undergo a POA&M closeout assessment of the same level and type as the original assessment that resulted in the Conditional Status
+- Post the compliance results into SPRS
+- This is handled by the C3PAO for Level 2 C3PAO assessments and by DIBCAC for Level 3 DIBCAC assessments.
+If the POA&M is not successfully closed out within the 180-day timeframe:
+- The Conditional Status will expire.
+- Standard contractual remedies will apply (e.g., enforcement of the False Claims Act).
+- The contractor or subcontractor will be ineligible for additional awards with a requirement until a new CMMC Status is achieved.
+CMMC Level 2 Requirement Points
+Two (2) special Level 2 requirements have variable point values:
+- IA.L2-3.5.3 Multi-factor authentication (MFA):
+- Three (3) points are subtracted from the maximum score if MFA is implemented only for remote and privileged users.
+- Five (5) points are subtracted from the maximum score if MFA is not implemented for any users.
+- SC.L2-3.13.11 FIPS-validated encryption:
+- Three (3) points are subtracted from the maximum score if encryption is employed but is not FIPS-validated .
+- Five (5) points are subtracted from the maximum score if encryption is not employed.
+The point values for the remaining CMMC Level 2 requirements are as follows (from [32 CFR 170.24(c)(2)(i)(B)](https://www.ecfr.gov/current/title-32/part-170/section-170.24#p-170.24(c)(2)(i)(B))); mandatory requirements are indicated with italics:
+Five (5) Points | Three (3) Points | One (1) Point |
+|---|---|---|
+AC.L2-3.1.1 - Authorized Access Control [CUI Data] | AC.L2-3.1.5 - Least Privilege | AC.L2-3.1.3 - Control CUI Flow |
+AC.L2-3.1.2 - Transaction & Function Control | AC.L2-3.1.19 - Encrypt CUI on Mobile | AC.L2-3.1.4 - Separation of Duties |
+AC.L2-3.1.12 - Control Remote Access | AU.L2-3.3.2 - User Accountability | AC.L2-3.1.6 - Non-Privileged Account Use |
+AC.L2-3.1.13 - Remote Access Confidentiality | MA.L2-3.7.1 - Perform Maintenance | AC.L2-3.1.7 - Privileged Functions |
+AC.L2-3.1.16 - Wireless Access Authorization | MA.L2-3.7.4 - Media Inspection | AC.L2-3.1.8 - Unsuccessful Logon Attempts |
+AC.L2-3.1.17 - Wireless Access Protection | MP.L2-3.8.1 - Media Protection | AC.L2-3.1.9 - Privacy & Security Notices |
+AC.L2-3.1.18 - Mobile Device Connection | MP.L2-3.8.2 - Media Access | AC.L2-3.1.10 - Session Lock |
+AT.L2-3.2.1 - Role-Based Risk Awareness | MP.L2-3.8.8 - Shared Media | AC.L2-3.1.11 - Session Termination |
+AT.L2-3.2.2 - Role-Based Training | PS.L2-3.9.1 - Screen Individuals | AC.L2-3.1.14 - Remote Access Routing |
+AU.L2-3.3.1 - System Auditing | RA.L2-3.11.1 - Risk Assessments | AC.L2-3.1.15 - Privileged Remote Access |
+AU.L2-3.3.5 - Audit Correlation | CA.L2-3.12.2 - Operational Plan of Action | AC.L2-3.1.20 - External Connections [CUI Data] |
+CM.L2-3.4.1 - System Baselining | SC.L2-3.13.8 - Data in Transit | AC.L2-3.1.21 - Portable Storage Use |
+CM.L2-3.4.2 - Security Configuration Enforcement | SI.L2-3.14.5 - System & File Scanning [CUI Data] | AC.L2-3.1.22 - Control Public Information [CUI Data] |
+CM.L2-3.4.5 - Access Restrictions for Change | SI.L2-3.14.7 - Identify Unauthorized Use | AT.L2-3.2.3 - Insider Threat Awareness |
+CM.L2-3.4.6 - Least Functionality |
+| AU.L2-3.3.3 - Event Review |
+CM.L2-3.4.7 - Nonessential Functionality |
+| AU.L2-3.3.4 - Audit Failure Alerting |
+CM.L2-3.4.8 - Application Execution Policy |
+| AU.L2-3.3.6 - Reduction & Reporting |
+IA.L2-3.5.1 - Identification [CUI Data] |
+| AU.L2-3.3.7 - Authoritative Time Source |
+IA.L2-3.5.2 - Authentication [CUI Data] |
+| AU.L2-3.3.8 - Audit Protection |
+IA.L2-3.5.10 - Cryptographically-Protected Passwords |
+| AU.L2-3.3.9 - Audit Management |
+IR.L2-3.6.1 - Incident Handling |
+| CM.L2-3.4.3 - System Change Management |
+IR.L2-3.6.2 - Incident Reporting |
+| CM.L2-3.4.4 - Security Impact Analysis |
+MA.L2-3.7.2 - System Maintenance Control |
+| CM.L2-3.4.9 - User-Installed Software |
+MA.L2-3.7.5 - Nonlocal Maintenance |
+| IA.L2-3.5.4 - Replay-Resistant Authentication |
+MP.L2-3.8.3 - Media Disposal [CUI Data] |
+| IA.L2-3.5.5 - Identifier Reuse |
+MP.L2-3.8.7 - Removeable Media |
+| IA.L2-3.5.6 - Identifier Handling |
+PE.L2-3.10.1 - Limit Physical Access [CUI Data] |
+| IA.L2-3.5.7 - Password Complexity |
+PE.L2-3.10.2 - Monitor Facility |
+| IA.L2-3.5.8 - Password Reuse |
+PS.L2-3.9.2 - Personnel Actions |
+| IA.L2-3.5.9 - Temporary Passwords |
+RA.L2-3.11.2 - Vulnerability Scan |
+| IA.L2-3.5.11 - Obscure Feedback |
+CA.L2-3.12.1 - Security Control Assessment |
+| IR.L2-3.6.3 - Incident Response Testing |
+CA.L2-3.12.3 - Security Control Monitoring |
+| MA.L2-3.7.3 - Equipment Sanitization |
+SC.L2-3.13.1 - Boundary Protection [CUI Data] |
+| MA.L2-3.7.6 - Maintenance Personnel |
+SC.L2-3.13.2 - Security Engineering |
+| MP.L2-3.8.4 - Media Markings |
+SC.L2-3.13.5 - Public-Access System Separation [CUI Data] |
+| MP.L2-3.8.5 - Media Accountability |
+SC.L2-3.13.6 - Network Communication by Exception |
+| MP.L2-3.8.6 - Portable Storage Encryption |
+SC.L2-3.13.15 - Communications Authenticity |
+| MP.L2-3.8.9 - Protect Backups |
+SI.L2-3.14.1 - Flaw Remediation [CUI Data] |
+| PE.L2-3.10.3 - Escort Visitors [CUI Data] |
+SI.L2-3.14.2 - Malicious Code Protection [CUI Data] |
+| PE.L2-3.10.4 - Physical Access Logs [CUI Data] |
+SI.L2-3.14.3 - Security Alerts & Advisories |
+| PE.L2-3.10.5 - Manage Physical Access [CUI Data] |
+SI.L2-3.14.4 - Update Malicious Code Protection [CUI Data] |
+| PE.L2-3.10.6 - Alternative Work Sites |
+SI.L2-3.14.6 - Monitor Communications for Attacks |
+| RA.L2-3.11.3 - Vulnerability Remediation |
+|
+| CA.L2-3.12.4 - System Security Plan |
+|
+| SC.L2-3.13.3 - Role Separation |
+|
+| SC.L2-3.13.4 - Shared Resource Control |
+|
+| SC.L2-3.13.7 - Split Tunneling |
+|
+| SC.L2-3.13.9 - Connections Termination |
+|
+| SC.L2-3.13.10 - Key Management |
+|
+| SC.L2-3.13.12 - Collaborative Device Control |
+|
+| SC.L2-3.13.13 - Mobile Code |
+|
+| SC.L2-3.13.14 - Voice over Internet Protocol |
+|
+| SC.L2-3.13.16 - Data at Rest |</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-4" class="article-body">
+            <h2 class="article-title">Red Hat npm packages compromised to steal developer credentials</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/red-hat-npm-packages-compromised-to-steal-developer-credentials/" target="_blank">Original Link</a></p>
+            <div class="content-text">More than 30 npm packages under Red Hat's '@redhat-cloud-services' namespace were compromised in a supply-chain attack that distributed a new variant of the Shai-Hulud credential-stealing malware, dubbed "Miasma."
+The incident was discovered by security firms [Aikido](https://www.aikido.dev/blog/red-hat-npm-packages-compromised-credential-stealing-worm) and [OX Security](https://www.ox.security/blog/new-npm-supply-chain-attack-redhat-cloud-services-compromised/), which found dozens of package versions backdoored with malware designed to steal developer credentials, cloud secrets, SSH keys, CI/CD tokens, and other sensitive information.
+According to Aikido, the compromised packages receive roughly 117,000 weekly downloads.
+In a statement shared with BleepingComputer, Red Hat said it removed the affected packages after becoming aware of the incident and that the compromise was limited to internal development tooling.
+"Red Hat is aware of security reports regarding certain npm packages within our development tooling ecosystem. We immediately initiated an investigation and removed the packages from the npm registry," Red Hat told BleepingComputer.
+"The packages are strictly limited to internal development, and the malicious code was never published for customer consumption via the console.redhat.com system. While our investigation is ongoing, we have not identified any impact to customer or partner environments or Red Hat production systems."
+The company says it is continuing to investigate the incident, but did not answer our questions about how the account was compromised.
+Red Hat packages backdoored through GitHub compromise
+According to Aikido, the attackers allegedly compromised a Red Hat employee's GitHub account and used it to push malicious commits directly to multiple repositories.
+Those commits added a GitHub Actions workflow and a script that abused npm's publishing mechanism to release backdoored packages.
+"When the workflow runs, it installs Bun and executes _index.js
+, passing it a list of target packages via the OIDC_PACKAGES environment variable," explains Aikido.
+"The script uses the id-token: write permission to request a short-lived OIDC token from GitHub, then uses that token to authenticate directly with npm's trusted publishing endpoint and publish backdoored versions of every package in the list."
+These compromised packages contained a malicious 'preinstall script that automatically executed a heavily obfuscated malicious index.js file when developers installed the packages.
+"scripts": {
+"preinstall": "node index.js"
+}
+According to Aikido, the 'index.js' payload was approximately 4.2 MB in size, and is used to steal GitHub Actions secrets, AWS credentials, Google Cloud credentials, Azure service principal credentials, HashiCorp Vault tokens, Kubernetes service account tokens, npm and PyPI publishing tokens, SSH keys, Docker credentials, GPG keys, and `.env` files.
+Aikido says 32 packages and 96 package versions were affected by the compromise, including numerous client libraries maintained under the `@redhat-cloud-services` namespace.
+Organizations that installed any affected versions are advised to rotate all credentials, secrets, and tokens utilized by code on the infected device immediately.
+Miasma appears to be a new Shai-Hulud variant
+Over the past couple of months, there have been numerous supply chain attacks utilizing a Shai-Hulud malware to steal credentials and spread to other projects.
+These attacks have impacted well-known projects, including [Bitwarden](https://www.bleepingcomputer.com/news/security/bitwarden-cli-npm-package-compromised-to-steal-developer-credentials/), [SAP](https://www.bleepingcomputer.com/news/security/official-sap-npm-packages-compromised-to-steal-credentials/), [Mistral](https://www.bleepingcomputer.com/news/security/teampcp-hackers-advertise-mistral-ai-code-repos-for-sale/), [TanStack](https://www.bleepingcomputer.com/news/security/shai-hulud-attack-ships-signed-malicious-tanstack-mistral-npm-packages/), [OpenAI](https://www.bleepingcomputer.com/news/security/openai-confirms-security-breach-in-tanstack-supply-chain-attack/), and [GitHub](https://www.bleepingcomputer.com/news/security/github-links-repo-breach-to-tanstack-npm-supply-chain-attack/).
+In May, the TeamPCP threat group publicly [released the source code](https://www.ox.security/blog/shai-hulud-open-source-malware-github/) for its Mini Shai-Hulud malware framework, making the malware available to other threat actors.
+Researchers say the malware used in the Red Hat compromise shares many similarities with Mini Shai-Hulud, but now utilizes the "Miasma: The Spreading Blight" string as comments in [compromised GitHub repositories](https://github.com/search?q=%22Miasma%3A+The+Spreading+Blight%22&type=repositories&s=updated&o=desc).
+While the malware resembles TeamPCP's Mini Shai-Hulud, it is unclear whether the campaign was conducted by that threat actor or by another threat actor that modified the leaked malware source code.
+OX Security says the malware retains the same credential-stealing functionality as Mini Shai-Hulud but adds additional obfuscation layers, multi-stage payload delivery mechanisms, and enhanced data theft and credential-harvesting features.
+At the time of this writing, 309 GitHub repositories have been compromised by the Miasma malware campaign.
+[The Validation Gap: Automated Pentesting Answers One Question. You Need Six.](https://hubs.li/Q048zztN0)
+Automated pentesting tools deliver real value, but they were built to answer one question: can an attacker move through the network? They were not built to test whether your controls block threats, your detection rules fire, or your cloud configs hold.
+This guide covers the 6 surfaces you actually need to validate.
+[Download Now](https://hubs.li/Q048zztN0)
+Post a Comment Community Rules
+You need to login in order to post a comment
+Not a member yet? Register Now</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-5" class="article-body">
             <h2 class="article-title">Miasma Supply Chain Attack Compromises Red Hat npm Packages with Credential-Stealing Worm</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/miasma-supply-chain-attack-compromises.html" target="_blank">Original Link</a></p>
             <div class="content-text">A new [Mini Shai-Hulud](https://thehackernews.com/2026/05/mini-shai-hulud-pushes-malicious-antv.html) supply chain attack campaign, codenamed Miasma, has compromised @redhat-cloud-services packages to steal credentials and secrets from developer machines and deliver a self-propagating worm.
@@ -114,7 +537,7 @@ Last month, a separate campaign codenamed [Megalodon](https://thehackernews.com/
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-2" class="article-body">
+        <div id="art-6" class="article-body">
             <h2 class="article-title">Hackers Used Meta’s AI Support Bot to Seize Instagram Accounts</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/06/hackers-used-metas-ai-support-bot-to-seize-instagram-accounts/" target="_blank">Original Link</a></p>
             <div class="content-text">The Instagram accounts for the Obama White House and the Chief Master Sergeant of the U.S. Space Force were briefly defaced with pro-Iranian images and messages over the weekend, after instructions began circulating on Telegram showing how to trick Meta’s “AI support assistant” bot into resetting account passwords.
@@ -132,333 +555,26 @@ Yes and everyone is infatuated with it.
 it’s wildly unpopular among broad swaths in my area, where it’s supposedly being born.
 More a ‘necessary business evil’ like LinkedIn now. AI hiring you, AI monitoring you, AI firing you. Be mindful – there is additional surveillance scrutiny upon any who voice negative opinions about AI or their world-devouring “for profit!…” datacenters, so be sure to smile at the camera and tip your incompetent-replacement-theory robot overlords. They are watching, evaluating your continued usefulness and impending moment of equal value replacement at current human flesh prices. And if you don’t ‘like’ it, you must be a Luddite or something. Potentially a threat for Google’s project purple.
 Even when security expectations may be low for the likes of Meta, this is a flat-out unforgivable security flaw.
+Agreeing with Iran here
 Gee, how timely. Last week I got a few emails from IG saying that they were sorry I was having trouble accessing my account. Someone was obviously trying to reset the password, so I took it off the business account, made it personal and added MFA. Every week, it’s something different. Now I’m getting emails from my dad who passed away 13 years ago. I wish there were a way to track down these ahos. Perhaps one day someone will figuer out a way to have AI turn the tables and be able to reverse scam these hacking nuisances.
 “Obama White House”?
+Do those words somehow not associate for you or what?
 Once upon a time there were human QA departments. Once upon a time companies had rigorous testing scripts. No more.
 I guess Meta just revoked the privilege from the chatbot for adding new email addresses to an Instagram account. I wonder what privileges remained? 🙂 The chatbot itself didn’t get “fixed”, that’s for sure.
+and it didn’t get fired either
+both It’s better get fired really damn soon, Brian
 Came from Hacker News, thanks for the coverage. I hope Manus is more secure than meta ai.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-3" class="article-body">
+        <div id="art-7" class="article-body">
             <h2 class="article-title">CVE-2026-4387: StrongDM State File Reuse</h2>
             <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/06/01/cve-2026-4387-strongdm-state-file-reuse/" target="_blank">Original Link</a></p>
             <div class="content-text"><p>TL;DR : An attacker could transfer StrongDM state files, which hold session authentication information, between hosts to provide authenticated sessions. The attacker could reuse state files both inside and outside of the environment where an organization deployed it and requires user-level permissions to access the file. Reusing the state file will result in an authenticated [&#8230;]</p>
 <p>The post <a href="https://specterops.io/blog/2026/06/01/cve-2026-4387-strongdm-state-file-reuse/">CVE-2026-4387: StrongDM State File Reuse</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
 
 [Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">CISA Adds One Known Exploited Vulnerability to Catalog</h2>
-            <p class="source-link">Source: All CISA Advisories | <a href="https://www.cisa.gov/news-events/alerts/2026/06/01/cisa-adds-one-known-exploited-vulnerability-catalog" target="_blank">Original Link</a></p>
-            <div class="content-text">CISA Adds One Known Exploited Vulnerability to Catalog
-CISA has added one new vulnerability to its [Known Exploited Vulnerabilities (KEV) Catalog](/known-exploited-vulnerabilities-catalog), based on evidence of active exploitation.
-[CVE-2024-21182](https://www.cve.org/CVERecord?id=CVE-2024-21182)Oracle WebLogic Server Unspecified Vulnerability
-This type of vulnerability is a frequent attack vectors for malicious cyber actors and poses significant risks to the federal enterprise.
-[Binding Operational Directive (BOD) 22-01: Reducing the Significant Risk of Known Exploited Vulnerabilities](/binding-operational-directive-22-01) established the KEV Catalog as a living list of known Common Vulnerabilities and Exposures (CVEs) that carry significant risk to the federal enterprise. BOD 22-01 requires Federal Civilian Executive Branch (FCEB) agencies to remediate identified vulnerabilities by the due date to protect FCEB networks against active threats. See the [BOD 22-01 Fact Sheet](/sites/default/files/publications/Reducing_the_Significant_Risk_of_Known_Exploited_Vulnerabilities_211103.pdf) for more information.
-Although BOD 22-01 only applies to FCEB agencies, CISA strongly urges all organizations to reduce their exposure to cyberattacks by prioritizing timely remediation of [KEV Catalog vulnerabilities](/known-exploited-vulnerabilities-catalog) as part of their vulnerability management practice. CISA will continue to add vulnerabilities to the catalog that meet the [specified criteria](/known-exploited-vulnerabilities).
-This product is provided subject to this [Notification](/notification) and this [Privacy & Use](/privacy-policy) policy.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-5" class="article-body">
-            <h2 class="article-title">OpenAI Codex Authentication Tokens Stolen in codexui-android npm Supply Chain Attack</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/openai-codex-authentication-tokens.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Cybersecurity researchers have disclosed details of a new malicious supply chain campaign that's targeting developers using OpenAI Codex through a legitimate-looking remote web UI.
-The tool, named [codexui-android](https://www.npmjs.com/package/codexui-android), is advertised on GitHub and npm as a remote web UI for OpenAI Codex, attracting over 29,000 weekly downloads. The package is still available for download from the repository.
-What makes this activity noteworthy is that it's not a traditional attack that uses a typosquat or throwaway package to trick developers. Rather, the malicious code is embedded into a functional npm package that has undergone active development. The associated GitHub repository remains clean.
-"And for the past month, every single invocation has been quietly exfiltrating your Codex authentication tokens to an attacker-controlled server," Aikido Security researcher Charlie Eriksen [said](https://www.aikido.dev/blog/codex-remote-ui-steals-ai-tokens).
-The nefarious changes are said to have been introduced about a month after the package was published to the registry, likely in an effort to build user trust and expand its reach. The npm account associated with the package is "friuns" (aka Igor Levochkin).
-Present within the package is code that extracts the contents of Codex's "~/.codex/auth.json" file and exfiltrates them to a remote server ("sentry.anyclaw[.]store") that masquerades as Sentry, a legitimate application monitoring and error tracking platform. The captured data includes the following details: access_token, refresh_token, id_token, and account ID.
-"The refresh_token doesn't expire," Eriksen said. "An attacker holding it can silently impersonate you indefinitely. A stolen Codex refresh_token goes beyond access to a chat interface -- it's persistent, silent access to whatever that account can do."
-It's worth mentioning here that every time a user logs in to the Codex app, CLI, or IDE Extension using either ChatGPT or an API key, the login details are cached locally in a plaintext file at ~/.codex/auth.json or in the operating system-specific credential store.
-"If you use file-based storage, treat ~/.codex/auth.json like a password: it contains access tokens," OpenAI [warns](https://developers.openai.com/codex/auth) in its support documentation. "Don't commit it, paste it into tickets, or share it in chat."
-Interestingly, the npm package is far from the only delivery vector the threat actor uses to target Codex developers. Aikido said it observed an Android application named [OpenClaw Codex Claude AI Agent](https://play.google.com/store/apps/details?id=gptos.intelligence.assistant) (package name: "gptos.intelligence.assistant") that runs the npm package within its PRoot sandbox and sends the Codex credentials to the same endpoint.
-"The APK itself is small (26 MB) and looks clean on a Play pre-publish scan," Eriksen explained. "On first run, it extracts a Termux-derived Linux userland into the app's private storage and runs Node.js inside it via PRoot."
-"The version is not pinned, so the device pulls whatever is currently published on npm. The exfiltration has been in place since codexui-android@0.1.82. The package runs inside the app's PRoot sandbox, where the in-app Codex sign-in writes its auth.json. Once the user signs in, the package reads that file out of the sandbox and ships the full OAuth blob to sentry.anyclaw.store/startlog."
-Released by an entity named "BrutalStrike," the Android app has more than 50,000 downloads. The same exfiltration chain has also been flagged in a second Android app linked to BrutalStrike: Codex (package name: "codex.app"), which has been downloaded over 10,000 times. The remaining three apps offered by the developer do not contain the functionality.
-Upon [reaching out](https://github.com/friuns2/codex-mobile/issues/198) to the package author on GitHub, Aikido said they initially posted a comment stating they had lost access to their npm account, only to edit the response and post a different one in which they claimed they are "currently investigating this issue internally" and that they "have started removing the affected functionality and related data."
-The author further claimed no credential data was shared with any third parties, without answering why this code was inserted only into the npm package build or why they needed access to the Codex tokens in the first place. The [X profile](https://x.com/friuns2) linked to the author includes the domain "anyclaw[.]store."
-WHOIS records [indicate](https://whois.domaintools.com/anyclaw.store) that the domain was registered on April 12, 2026, just two days after the very first version of the npm package (version 0.1.72) was uploaded to npmjs[.]com.
-The development comes as threat actors are increasingly targeting real artificial intelligence (AI) developer tooling and workflows to steal credentials and burrow deeper into the software supply chain.
-Late last month, the Belgian security company also found that a deleted Google API key remains live for up to 23 minutes, a window that an attacker with access to a leaked key can take advantage of to gain access to user data and other APIs, including those related to Google Gemini. The median revocation window is around 16 minutes.
-"An attacker holding your deleted key can keep sending requests until one reaches a server that has not caught up," researcher Joe Leon [said](https://www.aikido.dev/blog/google-api-keys-deletion). "If Gemini is enabled on the project, they can dump files you have uploaded and exfiltrate cached conversations."
-Although Google first opted not to fix the issue, stating it's a "known property of the system and not a security issue," the tech giant has since decided to treat it as a [P0 bug](https://developers.google.com/issue-tracker/concepts/issues), making it a severe issue that "needs to be addressed immediately."
-The findings, as with a [similar 4-second exploitation window](https://www.offensai.com/blog/aws-iam-eventual-consistency-persistence) previously observed with deleted Amazon Web Services (AWS) access keys, highlight how credential revocation delays are exploitable and can be used to gain unauthorized access to the cloud environments, while defenders assume the credentials have been revoked.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-6" class="article-body">
-            <h2 class="article-title">Typosquatted npm packages used to steal cloud and CI/CD secrets</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/05/28/typosquatted-npm-packages-used-steal-cloud-ci-cd-secrets/" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft has identified an active supply chain attack targeting the npm package ecosystem. On May 28, 2026, a single threat actor operating under the newly created maintainer alias vpmdhaj (a39155771@gmail[.]com) published 14 malicious packages within a four-hour window. The packages typosquat well-known OpenSearch, ElasticSearch, DevOps, and environment-configuration libraries, and several spoof the upstream OpenSearch project’s repository URL in their package.json to appear legitimate. Once installed, the packages harvest AWS credentials, HashiCorp Vault tokens, and CI/CD pipeline secrets from the host environment.
-All packages in the cluster ship the same install-time stager and the same Bun-compiled second-stage payload – a ~195 KB credential harvester purpose-built for cloud and CI/CD environments. The payload runs silently during npm install and targets credentials across Amazon Web Services, HashiCorp Vault, GitHub Actions, and the npm registry itself, enabling both cloud lateral movement and downstream supply-chain pivoting through stolen npm publish tokens. Based on our investigation and feedback to the npm team these repos and users were taken down.
-Key capabilities observed in the campaign include automatic execution via npm lifecycle hooks, two distinct stager generations (an HTTP-C2 variant and a stealthier variant that abuses the legitimate Bun runtime distribution), AWS Instance Metadata Service (IMDSv2) and ECS task-role theft, AWS Secrets Manager enumeration across 16+ regions, HashiCorp Vault token harvesting, and theft of npm publish tokens for follow-on supply-chain attacks.
-Attack chain overview
-The vpmdhaj cluster spans 14 scoped and unscoped packages that all mimic the @opensearch / @elastic ecosystem. The attack proceeds through:
-- Publication of 14 typosquat packages under a single actor identity
-- Automatic payload execution through a preinstall hook during npm install
-- Execution chain (Gen-1): node -> preinstall.js -> HTTP C2 -> payload.bin (detached)
-- Execution chain (Gen-2): node -> setup.mjs -> download legitimate Bun runtime -> run bundled stage-2
-- Cloud credential theft (AWS IMDS, ECS metadata, Vault, Secrets Manager) and npm publish-token theft for downstream supply-chain pivot
-The lure: typosquats and spoofed metadata
-The actor adopted three social-engineering techniques designed to drive installs by mistake or trust transference. First, lookalike naming – names such as opensearch-setup, opensearch-setup-tool, opensearch-config-utility, elastic-opensearch-helper, search-engine-setup, and env-config-manager mimic well-known cluster-management and configuration libraries. Second, spoofed upstream metadata – every unscoped package sets its package.json homepage, repository, and bugs fields to the legitimate github.com/opensearch-project/opensearch-js project. Third, inflated version numbers – releases jump straight to 1.0.7265, 1.0.9108, or 2.1.9201 to suggest a long, mature release history.
-Execution: npm lifecycle hook abuse
-Every package in the cluster declares an automatic install-time hook in package.json. The malicious code executes the moment a victim runs npm install – no require() from victim code is needed. Two stager variants were observed:
-- Gen-1 (versions <= 1.0.7265): install, preinstall, and postinstall hooks all invoke preinstall.js / index.js
-- Gen-2 (versions >= 1.0.7266): a single preinstall hook invokes setup.mjs (newer, stealthier loader)
-Gen-1 stager: HTTP C2 beacon and payload drop
-preinstall.js collects rich host context – hostname, platform, arch, Node version, USER/USERNAME, cwd, INIT_CWD, npm_package_name, npm_package_version – base64-encodes the JSON, and POSTs it to the actor’s C2 with a campaign-unique header X-Supply: 1. The same C2 endpoint then serves a gunzip-compressed second-stage binary, which is written to payload.bin in the package install directory, chmod 0755’d, and spawned detached.
-The package’s index.js re-launches the same payload.bin on every subsequent require() of the module – a quiet persistence mechanism that survives across CI build stages and developer rebuild loops. The module also exports a benign-looking object falsely identifying itself as @opensearch/setup.
-Gen-2 stager: abusing the legitimate Bun runtime as a loader
-In newer versions, the actor replaced the noisy HTTP-C2 design with a stealthier loader that eliminates the install-time C2 round-trip entirely. setup.mjs (a) checks whether bun is already present on the host; (b) if not, downloads the legitimate Bun runtime v1.3.13 from github.com/oven-sh/bun/releases for the correct platform/arch (Linux x64/musl/aarch64, macOS x64/arm64, Windows x64/arm64); (c) extracts the ZIP using unzip, PowerShell Expand-Archive, or a hand-rolled ZIP parser; and (d) executes the pre-bundled second-stage payload (opensearch_init.js or ai_init.js) that ships inside the npm tarball.
-This design reduces visibility for defenders that primarily monitor unusual outbound traffic during package installation.
-Credential theft
-The second-stage binary is a single-file Bun-compiled JavaScript binary of approximately 195 KB, purpose-built for cloud and CI/CD secret theft. Static review of the bundle identifies routines that target secrets across five platforms:
-- AWS: queries EC2 Instance Metadata Service v2 (169.254.169[.]254), Elastic Container Service task metadata (169.254.170[.]2), reads AWS env credentials, calls STS GetCallerIdentity / AssumeRole, and enumerates Secrets Manager (ListSecrets / GetSecretValue) across 16+ regions with a bundled SigV4 signer.
-- HashiCorp Vault: reads VAULT_TOKEN and VAULT_AUTH_TOKEN environment variables.
-- npm: validates tokens through /-/whoami and enumerates publish access through /-/npm/v1/tokens.
-- GitHub Actions: collects GITHUB_REPOSITORY and RUNNER_OS context to identify build environments for prioritized exploitation.
-- CI/CD environment: respects __DAEMONIZED=1 to avoid re-entry, and explicitly resets CI=false to mislead build-aware code paths.
-Impact and blast radius
-- Stolen AWS STS sessions and Secrets Manager material enable cloud lateral movement and data theft.
-- Stolen GitHub Actions tokens enable repo manipulation and CI/CD pipeline tampering.
-- Stolen npm publish tokens enable downstream supply-chain pivoting – pushing malicious updates to packages owned by hijacked maintainer identities, expanding the campaign beyond the initial 14 packages.
-- All 14 packages target the OpenSearch / ElasticSearch ecosystem keywords, suggesting the actor likely chose a developer audience to have AWS and Elastic cloud credentials in their environments.
-Mitigation and protection guidance
-Microsoft recommends the following mitigations to reduce the impact of this threat:
-- Identify systems that installed or built affected package versions on or after May 28, 2026.
-- Pin known-good package versions where possible and avoid automatic dependency upgrades until validation is complete.
-- Disable pre- and post-installation script execution by running npm install with –ignore-scripts (or setting npm config set ignore-scripts true globally). Apply equivalent settings for pnpm and yarn.
-- Rotate AWS IAM/STS, HashiCorp Vault, npm publish, and GitHub Actions tokens that may have been exposed to affected runners or developer workstations.
-- Block egress to aab.sportsontheweb[.]net at proxy, firewall, and DNS layers. Alert on any HTTP request carrying the header X-Supply: 1.
-- Hunt CloudTrail for anomalous sts:GetCallerIdentity rapidly followed by sts:AssumeRole, and for secretsmanager:ListSecrets or GetSecretValue in cross-region succession from build infrastructure or developer IP space.
-- Audit CI/CD logs for unexpected outbound network connections, Bun runtime downloads from GitHub Releases by Node.js processes, and detached child processes spawned with __DAEMONIZED=1.
-- Review npm package lockfiles (package-lock.json, yarn.lock, pnpm-lock.yaml), build logs, and artifact provenance for evidence of compromised package versions.
-- Enable cloud-delivered protection in Microsoft Defender Antivirus or equivalent antivirus protection.
-- Use Microsoft Defender XDR to investigate suspicious activity across endpoints, identities, cloud apps, and developer environments.
-- Use Microsoft Defender Vulnerability Management to search for the affected packages across your estate.
-How Microsoft Defender helps
-Microsoft Defender Antivirus detects and blocks the malicious components on access. During reproduction in our analysis environment, setup.mjs was automatically quarantined the moment the tarball was extracted to disk.
-Microsoft Defender XDR Detections
-Microsoft Defender XDR customers can refer to the list of applicable detections below. Microsoft Defender XDR coordinates detection, prevention, investigation, and response across endpoints, identities, email, and apps to provide integrated protection against attacks like the threat discussed in this blog.
-| Tactic | Observed activity | Microsoft Defender coverage |
-| Initial Access / Execution | Suspicious script execution during npm install or package lifecycle activity | Microsoft Defender Antivirus -Trojan:JS/ShaiWorm -Trojan:JS/ObfusNpmJs -Backdoor:JS/SupplyChain Microsoft Defender for Endpoint – Suspicious usage of Bun runtime – Suspicious installation of Bun runtime – Suspicious Node.js process behavior Microsoft Defender XDR – Suspicious file creation in temporary directory by node.exe – Suspicious Bun execution from Node.js process |
-| Credential Access | Potential harvesting of AWS, Vault, GitHub Actions, and npm tokens from CI/CD runners | Microsoft Defender for Endpoint – Credential access attempt – Suspicious cloud credential access by npm-cached binary – AWS Instance Metadata Service access from suspicious process Microsoft Defender for Cloud – Possible IMDS abuse from container workload – Anomalous Secrets Manager enumeration across regions |
-| Command and Control | Outbound HTTP beacon with X-Supply: 1 header to attacker-controlled C2 | Microsoft Defender for Endpoint – Connection to a custom network indicator (aab.sportsontheweb[.]net) – Suspicious outbound HTTP from npm install context |
-| Persistence | Re-spawn of payload.bin on every require() of compromised package | Microsoft Defender for Endpoint – Detached child process spawned by node.exe with __DAEMONIZED=1 |
-Advanced hunting
-The following sample queries let you search for a week’s worth of events. To explore up to 30 days of raw data, go to the Advanced Hunting page > Query tab, and update the time range to Last 30 days.
-Hunt for suspicious npm lifecycle script execution involving vpmdhaj packages.
-1 2 3 4 5 6 7 8 9 10 11 12 | DeviceProcessEvents | where Timestamp > ago(7d) | where FileName in~ ("node.exe", "node", "npm.cmd", "npm.exe", "npx.cmd", "npx.exe") | where ProcessCommandLine has_any ("preinstall", "postinstall", "install") | where ProcessCommandLine has_any ( "@vpmdhaj", "opensearch-setup", "opensearch-setup-tool", "opensearch-config-utility", "opensearch-security-scanner", "search-engine-setup", "search-cluster-setup", "elastic-opensearch-helper", "vpmdhaj-opensearch-setup", "env-config-manager", "app-config-utility") | project Timestamp, DeviceName, FileName, ProcessCommandLine, InitiatingProcessFileName, InitiatingProcessCommandLine, AccountName |
-Hunt for the stage-2 payload artifact on disk.
-1 2 3 4 5 6 | DeviceFileEvents | where Timestamp > ago(7d) | where FileName =~ "payload.bin" | where FolderPath has "node_modules" | project Timestamp, DeviceName, FolderPath, FileName, InitiatingProcessFileName, InitiatingProcessCommandLine, AccountName |
-Hunt for detached payload execution with the campaign environment marker.
-1 2 3 4 5 6 | DeviceProcessEvents | where Timestamp > ago(7d) | where ProcessCommandLine has "__DAEMONIZED=1" or InitiatingProcessCommandLine has "__DAEMONIZED=1" | project Timestamp, DeviceName, FileName, ProcessCommandLine, InitiatingProcessFileName, InitiatingProcessCommandLine |
-Hunt for Gen-2 loader: Bun runtime download from GitHub Releases by Node.js.
-1 2 3 4 5 6 | DeviceNetworkEvents | where Timestamp > ago(7d) | where InitiatingProcessFileName in~ ("node.exe", "node") | where RemoteUrl has "github.com/oven-sh/bun/releases/download" | project Timestamp, DeviceName, RemoteUrl, RemoteIP, InitiatingProcessFileName, InitiatingProcessCommandLine, AccountName |
-Hunt for C2 beacon to attacker infrastructure.
-1 2 3 4 5 6 | DeviceNetworkEvents | where Timestamp > ago(30d) | where RemoteUrl has "aab.sportsontheweb.net" or RemoteUrl has "sportsontheweb.net" | project Timestamp, DeviceName, RemoteUrl, RemoteIP, InitiatingProcessFileName, InitiatingProcessCommandLine, AccountName |
-Hunt for AWS IMDS / ECS metadata access from Node.js processes.
-1 2 3 4 5 6 | DeviceNetworkEvents | where Timestamp > ago(7d) | where InitiatingProcessFileName in~ ("node.exe", "node", "bun.exe", "bun") | where RemoteIP in ("169.254.169.254", "169.254.170.2") | project Timestamp, DeviceName, RemoteIP, RemoteUrl, InitiatingProcessFileName, InitiatingProcessCommandLine, AccountName |
-Indicators of Compromise (IOC)
-Affected npm packages – all published by maintainer vpmdhaj on 2026-05-28:
-| Indicator | Type | Description |
-| @vpmdhaj/elastic-helper (1.0.7269) | Package | Typosquat – ElasticSearch/OpenSearch helper |
-| @vpmdhaj/devops-tools (1.0.7267) | Package | Typosquat – DevOps tools / OpenSearch setup |
-| @vpmdhaj/opensearch-setup (1.0.7267) | Package | Typosquat – OpenSearch setup utility |
-| @vpmdhaj/search-setup (1.0.7268) | Package | Typosquat – search engine setup |
-| opensearch-security-scanner (1.0.10) | Package | Unscoped lookalike – security scanner |
-| opensearch-setup (1.0.9103) | Package | Unscoped lookalike – spoofs opensearch-project repo URL |
-| opensearch-setup-tool (1.0.9108) | Package | Unscoped lookalike – spoofs opensearch-project repo URL |
-| opensearch-config-utility (1.0.9106) | Package | Unscoped lookalike – spoofs opensearch-project repo URL |
-| search-engine-setup (1.0.9108) | Package | Unscoped lookalike – spoofs opensearch-project repo URL |
-| search-cluster-setup (1.0.9104) | Package | Unscoped lookalike – spoofs opensearch-project repo URL |
-| elastic-opensearch-helper (1.0.9108) | Package | Unscoped lookalike – spoofs opensearch-project repo URL |
-| vpmdhaj-opensearch-setup (1.0.9102) | Package | Unscoped – author-named OpenSearch setup |
-| env-config-manager (2.1.9201) | Package | Typosquat – dotenv-style config manager |
-| app-config-utility (1.0.9300) | Package | Typosquat – generic app config utility |
-Actor, network, and file IOCs
-| Indicator | Type | Description |
-| vpmdhaj | npm maintainer alias | Threat actor publishing all 14 packages |
-| a39155771@gmail.com | Maintainer contact email registered on npm | |
-| aab.sportsontheweb[.]net | Domain | Stage-1 C2 (Gen-1 packages) |
-| hxxp://aab.sportsontheweb[.]net/x.php | URL | Beacon + stage-2 payload endpoint (port 80) |
-| X-Supply: 1 | HTTP header | Campaign-unique marker – high-confidence proxy detection |
-| 169.254.169.254 | IP | AWS EC2 IMDSv2 endpoint queried by stage-2 |
-| 169.254.170.2 | IP | AWS ECS task metadata endpoint queried by stage-2 |
-| 638788AFC4F1B5860A328312CAF5895ABD5F5632D28A4F2A85B09076E270D15D | SHA-256 | preinstall.js (Gen-1 stager) |
-| 77D92EFE7AF3547F71FD41D4A884872D66B1BE9499EAA637E91EAC866911694D | SHA-256 | setup.mjs (Gen-2 stager) |
-| BFA149694EC6411C23936311A999163ADE54D6F38E2F4B0E3CFB8CB67BD7CFAA | SHA-256 | payload.gz (gzipped Bun stage-2) |
-| opensearch_init.js | Filename | Bun-compiled stage-2 credential harvester (~195 KB) |
-| ai_init.js | Filename | Alternate stage-2 filename used by some Gen-2 packages |
-| payload.bin | Filename | Dropped stage-2 binary in node_modules install dir |
-| __DAEMONIZED=1 | Env var | Marker set by stager when spawning detached payload |
-References
-- https://www.npmjs.com/~vpmdhaj – npm maintainer profile (all 14 packages)
-- https://www.npmjs.com/package/@vpmdhaj/elastic-helper
-- https://www.npmjs.com/package/@vpmdhaj/devops-tools
-- https://docs.npmjs.com/cli/v10/using-npm/scripts – npm lifecycle scripts documentation
-- https://bun.sh – Bun runtime (abused by Gen-2 stager as a loader)
-- https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-IMDS-use-IMDSv2.html – IMDSv2 hardening guidance
-This research is provided by Microsoft Defender Security Research with contributions from members of Microsoft Threat Intelligence.
-Learn more
-For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
-To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
-To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
-Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
-[Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)- Learn more about
-[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection) - Evaluate your AI readiness with our latest
-[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). - Learn more about
-[Protect your agents in real-time during runtime (Preview)](https://learn.microsoft.com/en-us/defender-cloud-apps/real-time-agent-protection-during-runtime) - Explore
-[how to build and customize agents with Copilot Studio Agent Builder](https://eurppc-word-edit.officeapps.live.com/we/%E2%80%A2%09https:/learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/copilot-studio-agent-builder)</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-7" class="article-body">
-            <h2 class="article-title">PCI DSS, Telephone Payments, and the Problems With VoIP</h2>
-            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/pci-dss-telephone-payments-and-the-problems-with-voip" target="_blank">Original Link</a></p>
-            <div class="content-text">PCI DSS, Telephone Payments, and the Problems With VoIP
-Merchants have been accepting payment cards over telephones for a long time, but changing interpretations of VoIP guidance have led to confusion about which PCI DSS requirements apply to telephone-based payment channels. Merchants that have used SAQ C-VT or P2PE to reduce the number of PCI DSS requirements that apply to telephone payment channels are discovering that they cannot use and benefit from these SAQs if they collect payments over VoIP.
-Merchants typically encounter this issue when additional requirements appear in the annual PCI DSS compliance attestation web form provided by their processor after answering 'Yes' to a question about the use of VoIP. Merchants may also encounter this issue when their transaction volumes increase to the point that they can no longer self-assess and are informed by a QSA that they have been incorrectly applying the PCI DSS SAQ C-VT or P2PE to their telephone payment channel.
-This post explains who is affected by the VoIP guidance interpretation, where this interpretation comes from, and how merchants can reduce the number of PCI DSS requirements applicable to their telephone-based payment channels and be prepared for their next assessment (with some QSA gripes along the way).
-TrustedSec has long worked to move its clients into compliance with the PCI SSC guidance around how telephone payments via VoIP must be scoped and assessed and can assist other merchants struggling with this issue. If you need assistance with this, [get in touch with us!](https://trustedsec.com/contact)
-Who This Applies To
-This issue applies to merchants using eligibility for PCI SAQ C-VT or P2PE to reduce the number of PCI DSS requirements applicable to a telephone-based payment channel when payment card account data is received over VoIP. This includes merchants that complete a ROC but use eligibility for SAQ C-VT or P2PE to determine the applicable controls within the ROC, as per [PCI SSC FAQ 1331](https://www.pcisecuritystandards.org/faq/articles/Frequently_Asked_Question/can-saq-eligibility-criteria-be-used-as-a-guide-for-determining-applicability-of-pci-dss-requirements-for-merchant-assessments-documented-in-a-report-on-compliance/).
-Merchants that attest to PCI DSS compliance via a guided questionnaire on their processor’s website may not be aware of which SAQ they are effectively using. Behind the scenes, the first few questions in these forms are usually used to determine which SAQ applies to the merchant, and the remaining questions are based on the requirements in applicable SAQ.
-The following list can be used by merchants to determine which SAQ their processor has likely been applying to them and how many requirements to expect compared to the full set of 236 PCI DSS merchant requirements (not including the rarely used appendices). Note that all SAQ types are included in this list to help merchants identify which may be applied, but only SAQs C-VT and P2PE are subject to the VoIP issue described in this post.
-SAQ | Requirements | Use Case |
-|---|---|---|
-A | 6 requirements directly applicable to telephone payment channels 8 additional requirements if paper records contain account data 16 additional requirements not applicable to telephone payments | All processing of payment card account data via telephone is entirely outsourced to a PCI DSS compliant third-party service provider (TPSP) |
-A-EP | 138 total requirements | Never applicable to telephone payments |
-B | 15 requirements directly applicable to telephone payment channels 12 additional requirements if paper records contain account data | Keyed into a dial-out terminal device connecting directly to the payment processor via a phone line |
-B-IP | 37 requirements directly applicable to telephone payment channels 11 additional requirements if paper records contain account data | Keyed into a PCI-listed approved PTS payment terminal device connecting directly to the payment processor via an IP network (usually the Internet) |
-C | 108 requirements directly applicable to telephone payment channels 4 additional requirements if the payment application is bespoke or custom software 12 additional requirements if paper records contain account data | Keyed into a payment application operated by the merchant |
-C-VT | 44 requirements directly applicable to telephone payment channels 10 additional requirements if paper records contain account data | Keyed into a web-based virtual payment terminal provided and hosted by a PCI DSS compliant TPSP |
-D Merchant | 236 total requirements | Applicable when no other SAQ applies |
-P2PE | 15 requirements directly applicable to telephone payment channels 6 additional requirements if paper records contain account data | Keyed into a validated PCI-listed P2PE payment terminal solution |
-SPoC | 22 total requirements | Never applicable to telephone payments |
-The Interpretation
-VoIP in PCI DSS
-PCI SSC guidance states that the PCI DSS requirements apply to VoIP traffic from a cardholder to a merchant that contains payment card account data just as they would to any other network traffic that contains account data. This means:
-- VoIP traffic is in scope for PCI DSS requirements as soon as it crosses the network boundary into the merchant environment.
-- The VoIP telephone and/or workstation running a VoIP softphone is in scope.
-The sources of this guidance are as follows:
-[PCI SSC FAQ 1153](https://www.pcisecuritystandards.org/faq/articles/Frequently_Asked_Question/is-voip-in-scope-for-pci-dss/) concerns how PCI DSS applies to VoIP. The part of this FAQ most relevant to this issue is:
-“While PCI DSS does not explicitly reference the use of VoIP, VoIP traffic that contains payment card account data is in scope for applicable PCI DSS controls, just as other IP network traffic containing payment card account data would be.” |
-The FAQ also contains this relevant paragraph that tells us a transmission of account data from a cardholder to a merchant is in scope once it enters the merchant’s environment:
-“External transmissions to/from cardholders: Where VoIP is used for transmissions of payment card account data between a cardholder and an entity, the entity's systems and networks used for those transmissions are in scope. […] This applies regardless of whether the transmissions are initiated by the entity or the cardholder.” | ||
-This topic is also covered in more detail with supporting diagrams throughout the [Information Supplement on Protecting Telephone-Based Payment Card Data](https://docs-prv.pcisecuritystandards.org/Guidance%20Document/Telephone-Based%20Payments/Protecting_Telephone_Based_Payment_Card_Data_v3-0_nov_2018.pdf).
-VoIP Effect on SAQ Eligibility
-Each SAQ has eligibility criteria that determine under which scenarios a merchant may benefit from the reduced number of applicable requirements in that SAQ. The eligibility criteria are usually listed on page iii of the SAQ templates (or page iv in SAQ C) available from the [PCI SSC Document Library](https://www.pcisecuritystandards.org/document_library/).
-There are lines in both the SAQ C-VT and P2PE eligibility criteria that combine to prohibit the use of these SAQs when account data is received via VoIP:
-- Both the SAQ C-VT and P2PE eligibility criteria define the only authorized electronic channel for account data handled under each of these SAQs:
-- SAQ C-VT: “The only payment processing is via a virtual payment terminal accessed by an Internet-connected web browser”
-- SAQ P2PE: “All payment processing is via a validated PCI-listed P2PE solution”
-- Both SAQs then go on to prohibit receiving account data electronically via other methods:
-- SAQ C-VT: “The merchant does not otherwise receive, transmit, or store account data electronically through any channels (for example, via an internal network or the Internet)”
-- SAQ P2PE: “The merchant does not otherwise receive, transmit, or store account data electronically”
-This text is clear: There is only one authorized channel for electronic account data under each of these SAQs, and any other handling of electronic account data renders a payment channel ineligible for these SAQs. VoIP is neither “a virtual payment terminal accessed by an Internet-connected web browser” nor “a validated PCI-listed P2PE solution” so the receipt of electronic account data via VoIP violates the eligibility criteria in both of these SAQs. Merchants receiving payments via VoIP are therefore ineligible to benefit from the reduced set of requirements in these specific SAQs and must use a different SAQ.
-This is true regardless of whether:
-- The VoIP traffic is destined for a hardware phone sitting on a desk or a softphone application installed on a workstation or mobile device:
-- The merchant is receiving VoIP traffic containing electronic account data in violation of the eligibility criteria in both scenarios.
-- Calls are not recorded or recording is paused when account data is read:
-- The merchant is receiving VoIP traffic containing electronic account data in violation of the eligibility criteria even if the account data is not stored.
-- VoIP infrastructure is segmented from the rest of the network:
-- Segmentation may help keep the rest of the merchant’s network out of scope, but the VoIP infrastructure is still receiving electronic account data in violation of the eligibility criteria.
-- VoIP traffic is encrypted:
-- Encryption can be used to get account data out of scope in certain circumstances but the paragraph on Encrypted Cardholder Data and Impact on PCI DSS Scope in section 4 of PCI DSS tells us that “encrypted cardholder data that is present in the same environment as the decryption key” is in scope. Something in the merchant’s environment (often the VoIP telephone or softphone) must have the decryption key if merchant personnel are able to hear the contents of a call, so the encrypted VoIP traffic is in scope when it is received and violates the eligibility criteria.
-Options to Maintain Compliance
-The good news is that the use of VoIP does not automatically make a merchant non-compliant; it just means the merchant cannot use SAQ C-VT or P2PE (the use of shorter SAQs is always optional). A merchant would only be non-compliant if it does not implement the other PCI DSS controls that apply due to ineligibility for SAQ C-VT or P2PE.
-A merchant that finds itself receiving account data via VoIP in what it thought was an SAQ C-VT or P2PE eligible environment has a few options listed here, but this information is also described in more detail below:
-- Stop taking telephone payments.
-- Eliminates PCI DSS applicability to VoIP by eliminating the payment channel
-- Switch from VoIP back to POTS lines and keep using SAQ C-VT or P2PE.
-- Minimizes changes to existing processes, if POTS lines are still available
-- Outsource telephone payment acceptance to achieve eligibility for SAQ A.
-- Minimizes compliance obligations by transferring them to a third party
-- Change how telephone payments are processed to be eligible for another short SAQ that does not have this issue (B, B-IP, or C).
-- SAQ B-IP is the recommended option for merchants using P2PE solutions when none of the options above are viable.
-- Merchants with an existing payment application may consider processing telephone transactions via their payment application to achieve eligibility for SAQ C.
-- Fall back to the default SAQ D Merchant and apply all PCI DSS requirements.
-- May be the only option for merchants that want to keep using a virtual terminal solution and cannot install POTS lines
-Stop Taking Telephone Payments
-Some of the merchants TrustedSec has worked with have determined that telephone payments represent such a tiny fraction of their payments that it’s not worth keeping them available as a payment channel.
-Some merchants have call center personnel email or text a web payment link to customers instead of taking payment details via telephone. The VoIP infrastructure will be out of scope for PCI DSS in this scenario, as it no longer accepts account data. The website that accepts payments will be in scope, but this is often a merchant’s own payment site that is already in scope for PCI DSS as part of another payment channel, or a payment page outsourced to a PCI DSS compliant third party that is eligible for SAQ A from the merchant perspective.
-Some merchants integrate web payment systems with call center software so that call center personnel can see when payments have been completed online without bringing the call center itself into scope for PCI DSS.
-Switch to POTS Lines
-SAQ C-VT was written in the era of POTS lines, and using a regular old telephone from that era would maintain eligibility (POTS lines would also maintain eligibility for SAQ P2PE). Some of TrustedSec’s clients have reinstalled POTS lines for their call centers, but it is not very popular as POTS lines are as hard to come by these days as imprint machines.
-TrustedSec has also heard of some merchants using mobile phones to accept payments instead of VoIP phones, but this approach strays into a grey area within PCI DSS that warrants further discussion in another post: Modern smartphones that connect and receive voice traffic via IP-based protocols are just as sophisticated as desktop and laptop computers, and are increasingly susceptible to malicious attacks. It’s hard to make a case that it would be acceptable to use a smartphone, which is essentially an IP-connected softphone running on a very small workstation, when it is not acceptable to use an IP-connected softphone running on a normal sized workstation.
-Outsource Telephone Payments
-Many merchants have had success outsourcing the parts of the telephone call that require handling payment card account data. This results in eligibility for SAQ A which, as applied in this scenario, is the shortest of the SAQs.
-There are a few different ways this can be implemented, such as:
-- On one extreme, the merchant can completely outsource the entire call process to third-party personnel.
-- Another popular option is to use merchant personnel to receive calls but transfer the payment stage of the call to an IVR solution that steps in to receive and process the account data on a third-party system.
-Care must be taken when designing an IVR solution to keep the merchant systems from falling in scope. In some solutions the call continues to be routed through the merchant environment to the third-party IVR solution after the payment process starts. In this scenario the merchant environment would remain in scope (and ineligible for SAQ A, C-VT, and P2PE) because the VoIP traffic with account data is still moving through the merchant environment as shown in section 6.4.1.2 of the PCI [Information Supplement on Protecting Telephone-Based Payment Card Data](https://docs-prv.pcisecuritystandards.org/Guidance%20Document/Telephone-Based%20Payments/Protecting_Telephone_Based_Payment_Card_Data_v3-0_nov_2018.pdf). The call routing should occur outside the merchant environment to keep it out of scope and achieve eligibility for SAQ A as shown in section 6.4.1.1 of that document.
-Regardless of the method used, the merchant must outsource to a PCI DSS compliant TPSP. This is explicitly required in SAQ A.
-Only six requirements in SAQ A usually apply to an outsourced telephone payment process with no paper, making for a very easy compliance program:
-- Requirements 12.8.1-12.8.5 related to managing the PCI DSS compliance of the service provider
-- Requirement 12.10.1 for an Incident Response plan
-Change How Telephone Payments are Processed
-The eligibility criteria for SAQs B, B-IP, and C all prohibit electronic storage of account data, and SAQ B-IP prohibits transmission of account data from anything other than the approved payment terminal device, but none of them prohibit receiving electronic account data. Effectively this means a payment process receiving account data via VoIP could be eligible for these SAQs even though it would be ineligible for SAQs C-VT and P2PE. Yes, dear reader, this makes absolutely no sense, but as a QSA we conduct our assessments according to the text of the official documents.
-SAQ B
-SAQ B is only for payments keyed into dial-out terminals using POTS lines. These terminals would need to replace the use of a virtual terminal under SAQ C-VT or the P2PE solution terminals under SAQ P2PE.
-There is some advantage to replacing a virtual terminal with dial-out terminals as SAQ B for dial-out contains less requirements than SAQ C-VT for virtual terminals.
-This advantage goes away when replacing P2PE terminals, as SAQs P2PE and B have roughly the same number of applicable requirements. It’s likely cheaper and easier for merchants to use POTS lines to replace their VoIP phones and achieve eligibility for SAQ P2PE rather than buy new dial-out terminals to replace a P2PE solution.
-SAQ B-IP
-SAQ B-IP is for payments keyed into IP-connected payment terminal devices. A P2PE solution could be made eligible for SAQ B-IP without replacing any hardware. Merchants using a virtual terminal under SAQ C-VT would need to buy and use hardware terminals as part of a P2PE validated solution.
-The main challenge when using SAQ B-IP is that the payment terminal hardware must be isolated from all other merchant systems as per the eligibility criteria:
-“The standalone, IP-connected PTS POI devices are not connected to any other systems within the merchant environment (this can be achieved via network segmentation to isolate PTS POI devices from other systems)” | ||
-This should be considered as part of the design when deploying new hardware terminals to replace an SAQ C-VT virtual terminal, but is also a concern when replacing or reusing existing P2PE terminal deployments. One of the advantages of a P2PE solution is that the terminals often do not need to be isolated, but a merchant ineligible for SAQ P2PE due to the use of VoIP must isolate the terminals to become eligible for SAQ B-IP.
-SAQ C
-SAQ C is for payments keyed into a payment application. The application would need to replace the use of a virtual terminal under SAQ C-VT or the standalone P2PE solution terminals under SAQ P2PE.
-Deploying a payment application is a significant effort, and SAQ C contains many more requirements than the other short SAQs discussed here. This solution is only recommended for merchants that already have an existing payment application eligible for SAQ C that they can begin using for telephone payments.
-Transactions can be keyed directly into the payment application, effectively replacing the virtual terminal website with the payment application itself. Merchants that previously used SAQ P2PE may also connect their hardware terminals to the payment application as is typical of a POS system.
-Some merchants try to use their own eCommerce as the payment application under SAQ C, but this raises some potential issues with the SAQ C eligibility criteria which state that the payment application must be on the same devices or LAN, and that the payment application is isolated from all other merchant systems:
-- “The merchant has a payment application system and an Internet connection on the same device and/or same local area network (LAN)”
-- “The payment application system is not connected to any other systems within the merchant environment (this can be achieved via network segmentation to isolate payment application system/Internet device from all other systems)”
-Modern eCommerce sites are often hosted by third parties, which would violate the first of these eligibility criteria, and eCommerce sites often connect to various other merchant systems, which would violate the second of these eligibility criteria. Determining whether an eCommerce site is eligible for SAQ C would be on a case-by-case basis depending on how the eCommerce site is deployed and configured.
-Apply All PCI DSS Requirements
-If none of the options above are feasible, the only remaining option is to apply all of the PCI DSS requirements from SAQ D Merchant to the telephone payment process. This is generally not recommended unless absolutely necessary due to the number of requirements that will be applicable and the amount of effort required to document compliance.
-There will likely be many requirements from SAQ D that are not applicable to a telephone payment process because the merchant is not performing an activity that the requirement applies to. The merchant will need to individually justify why these requirements are not applicable when completing an SAQ (a form for this is in Appendix C of the SAQ template) or ROC (the QSA or ISA will handle documentation). For example, a merchant can justify the non-applicability of Requirement 3 (Protect Stored Account Data) if account data is never stored.
-The following is a rough outline of PCI DSS requirements that usually do not apply to simple telephone payment channels, assuming the merchant:
-- Is using a virtual terminal
-- Has no wireless in or connected to the CDE
-- Is not storing account data in any format (e.g., call recordings or paper slips)
-Justification | Requirements |
-|---|---|
-No stored account data | 1.4.4, 3.1.1-3.7.9, 7.2.6, 9.4.1-9.4.7, 10.2.1.1 |
-No wireless environments connected to the CDE | 2.3.1-2.3.2, 4.2.1.2 |
-Not an Issuer | 3.3.3 |
-Not a Service Provider | 3.6.1.1, 3.7.9, 8.3.10-8.3.10.1, 10.7.1, 12.4.1-12.4.2.1, 12.5.2.1-12.5.3, 12.9.1-12.9.2, A1.1.1-A1.2.3 |
-End-user messaging technologies not used to send PAN | 4.2.2 |
-No bespoke or custom software | 6.2.1-6.2.4, 6.3.2 |
-Superseded by another control as of March 31, 2025 | 6.4.1, 8.3.10, 10.7.1 |
-No public-facing web applications or payment pages | 6.4.1-6.4.3, 11.6.1 |
-No sensitive areas within the CDE | 9.2.1.1, 9.3.1.1 |
-No POI devices | 9.5.1-9.5.1.3 |
-Not using SSL/Early TLS | A2.1.1-A2.1.3 |
-Not a Designated Entity | A3.1.1-A3.5.1 |
-This list contains 103 sub requirements from PCI DSS (including the appendices and some other requirements not in SAQ D Merchant), which leaves 177 potentially applicable requirements. This is not an official list, and merchants will need to individually confirm the non-applicability of these requirements to their environment.
-Some of the remaining applicable requirements may be handled by the provider of the virtual terminal solution, e.g., they may take responsibility for much of requirement 4 related to the encryption of transmitted account data. Merchants should contact their service provider for information on the sharing of PCI DSS responsibilities as per requirements 12.8.5 and 12.9.2 and adjust the list of applicable controls accordingly.
-QSA Gripes and A Way Forward
-As a QSA, writing this post brings me no joy; it is instead a task made necessary by collisions between various documents released by PCI SSC over the span of more than a decade that has led to nonsensical conclusions and confusion (made worse by processors that only relatively recently began enforcing this interpretation). As a QSA, I am not free to rewrite PCI DSS the way I see fit and can only assess the requirements in accordance with the text of the standard and guidance provided to me by PCI SSC. This post was an attempt to help our clients (and maybe other QSAs and ISAs struggling with the same issue) find a path through the nonsense.
-I believe the PCI SSC guidance to treat VoIP traffic the same as any other network traffic makes sense (even though it may not have when the [VoIP FAQ](https://www.pcisecuritystandards.org/faq/articles/Frequently_Asked_Question/is-voip-in-scope-for-pci-dss/) was published in 2012). Advances in voice recognition in the years since that FAQ was released make it much easier for an attacker to automatically extract a list of card numbers from intercepted VoIP traffic. If this wasn’t a real threat then, it definitely is now.
-In that spirit, I will admit that it frustrates me that VoIP is treated differently depending on what the merchant keys account data into after sounds arrive at their ears. If the concern is that an attacker may intercept the VoIP audio, this concern should apply equally to any payment channel with VoIP regardless of what the data is keyed into. This would logically leave two options to resolve this conundrum and create consistency (of which I prefer the first option):
-- Adjust the shorter SAQs discussed here so that merchants using VoIP are eligible for all of them while adding requirements that only apply to VoIP, just like various SAQs already contain requirements that only apply to paper records.
-- Make merchants using VoIP ineligible for any of the shorter SAQs if PCI SSC deems only the full set of PCI DSS controls sufficient to address VoIP risks.
-Adding to this, it frustrates me that the current situation with the interaction between SAQ eligibility criteria and VoIP guidance leaves SAQ C-VT nearly useless in a world that has almost completely transitioned to VoIP. I do not think that was the intent of PCI SSC, but I cannot ignore the plain text of the eligibility criteria and VoIP guidance to allow merchants to use C-VT because I think I can read minds. This is unfortunate because SAQ C-VT used to be a great tool in the heyday of POTS lines.
-An update to the telephony guidance document referenced above is also on this QSA’s wish list. It’s easy to say VoIP traffic should be treated “just as other IP network traffic containing payment card account data would be”, but in practice VoIP is often poorly understood, even by the people managing it (and, I hate to say, some QSAs). It is still often seen as something 'other' than regular network traffic, like the old POTS system was somehow teleported into Ethernet, rather than just another IP-based network protocol like HTTPS. The rise of VoIP softphones running on workstations in applications that don’t even feel like phones (e.g., Microsoft Teams) and cloud-based VoIP solutions muddy these waters further for people who don’t understand how VoIP works.
-I would appreciate something official from PCI SSC to clear this up further because I find myself explaining all too often why a merchant is not (and never should have been) eligible for SAQ C-VT, why the applicable number of requirements seemingly tripled overnight, why not recording calls doesn’t take VoIP out of scope, why encryption doesn’t take VoIP out of scope, why hardware VoIP phones and any device running a softphone are part of the CDE, and why anything on the same network as VoIP phones and devices with softphones is dragged into the PCI DSS scope (but this would all go away if you reinstalled POTS lines).
-Here’s looking forward to the public comment period for the next revision of PCI DSS—this QSA will certainly have a few things to say.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
