@@ -59,12 +59,42 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-06-03</h1>
+        <h1>Security Briefing // 2026-06-04</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Preinstall to persistence: Inside the Red Hat npm Miasma credential-stealing campaign</button></li><li><button onclick="show('art-1')">Google June 2026 Android Update Patches 124 Flaws, One Actively Exploited</button></li><li><button onclick="show('art-2')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-3')">CMMC Conditional Status - Contracting Without Compliance</button></li><li><button onclick="show('art-4')">Red Hat npm packages compromised to steal developer credentials</button></li><li><button onclick="show('art-5')">Miasma Supply Chain Attack Compromises Red Hat npm Packages with Credential-Stealing Worm</button></li><li><button onclick="show('art-6')">Hackers Used Meta’s AI Support Bot to Seize Instagram Accounts</button></li><li><button onclick="show('art-7')">CVE-2026-4387: StrongDM State File Reuse</button></li><li><button onclick="show('art-8')">Patch Tuesday, May 2026 Edition</button></li><li><button onclick="show('art-9')">North Korea-Nexus Threat Actor Compromises Widely Used Axios NPM Package in Supply Chain Attack</button></li></ul>
+            <ul><li><button onclick="show('art-0')">CISA Adds Exploited Magento RCE Flaw CVE-2026-45247 to KEV Catalog</button></li><li><button onclick="show('art-1')">VS Code zero-day lets hackers steal GitHub tokens in one click</button></li><li><button onclick="show('art-2')">Preinstall to persistence: Inside the Red Hat npm Miasma credential-stealing campaign</button></li><li><button onclick="show('art-3')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-4')">CMMC Conditional Status - Contracting Without Compliance</button></li><li><button onclick="show('art-5')">Miasma Supply Chain Attack Compromises Red Hat npm Packages with Credential-Stealing Worm</button></li><li><button onclick="show('art-6')">Hackers Used Meta’s AI Support Bot to Seize Instagram Accounts</button></li><li><button onclick="show('art-7')">CVE-2026-4387: StrongDM State File Reuse</button></li><li><button onclick="show('art-8')">Patch Tuesday, May 2026 Edition</button></li><li><button onclick="show('art-9')">North Korea-Nexus Threat Actor Compromises Widely Used Axios NPM Package in Supply Chain Attack</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
+            <h2 class="article-title">CISA Adds Exploited Magento RCE Flaw CVE-2026-45247 to KEV Catalog</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/cisa-adds-exploited-magento-rce-flaw.html" target="_blank">Original Link</a></p>
+            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Wednesday [added](https://www.cisa.gov/news-events/alerts/2026/06/03/cisa-adds-one-known-exploited-vulnerability-catalog) a critical flaw impacting Mirasvit Cache Warmer, a popular Magento full-page cache extension, to its Known Exploited Vulnerabilities (KEV) catalog, following reports of active exploitation in the wild.
+The vulnerability, tracked as [CVE-2026-45247](https://nvd.nist.gov/vuln/detail/CVE-2026-45247) (CVSS score: 9.8), is a case of deserialization of untrusted data that could be exploited to execute arbitrary PHP code on an affected server.
+"Mirasvit Full Page Cache Warmer contains a deserialization of untrusted data vulnerability that could allow unauthenticated attackers to achieve remote code execution by supplying a crafted serialized PHP object in the CacheWarmer cookie," CISA [said](https://www.cisa.gov/known-exploited-vulnerabilities-catalog).
+The shortcoming impacts all versions of the extension prior to version 1.11.12. Patches for the were released on May 25, 2026.
+The addition of CVE-2026-45247 to the KEV catalog comes days after Sansec said the PHP object injection vulnerability could be exploited by means of any storefront request carrying a crafted CacheWarmer cookie, which then deserializes part of the cookie value with PHP's native unserialize() function without requiring any authentication or admin privileges.
+"Because that value comes straight from the client, an attacker controls the objects PHP reconstructs," the Dutch security company [said](https://sansec.io/research/mirasvit-cache-warmer-object-injection). "This is PHP object injection (CWE-502). Combined with a gadget chain from classes that Magento and its dependencies already ship, object injection escalates to remote code execution."
+Sansec said it identified about 6,000 stores running Mirasvit extensions, although the exact number is likely to be higher given that content delivery networks (CDNs) like Cloudflare mask installs.
+Thales-owned Imperva has since disclosed it has observed active attack activity attempting to exploit CVE-2026-45247 through serialized PHP object payloads delivered via malicious HTTP requests.
+"Observed payloads contain base64-encoded serialized objects designed to trigger PHP Object Deserialization and achieve remote code execution through commonly abused gadget chains," the company [said](https://www.imperva.com/blog/imperva-customers-protected-against-cve-2026-45247-in-mirasvit-full-page-cache-warmer-for-magento/). "The payloads attempt to invoke functions such as system() and current() to execute arbitrary commands on the underlying server. In several observed cases, attackers used test commands designed to validate successful code execution."
+The activity has primarily singled out gaming and business sites, with the U.S., the U.K., France, and Australia emerging as the most targeted countries. It's currently not known who is behind the exploitation efforts, although the end goal appears to be to flag vulnerable Magento environments and confirm remote code execution is possible.
+In light of active exploitation, Federal Civilian Executive Branch (FCEB) agencies have been ordered to apply the fixes by June 6, 2026. To detect potential exploitation efforts, site owners are advised to audit for storefront requests that carry a CacheWarmer cookie whose value contains the marker "CacheWarmer:" followed by a Base64-encoded string.
+"Serialized PHP objects base64-encode to values starting with Tz, Qz or YT, so a CacheWarmer cookie value matching CacheWarmer:(Tz|Qz|YT) is a strong indicator of an exploitation attempt," Sansec added.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">VS Code zero-day lets hackers steal GitHub tokens in one click</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/vs-code-zero-day-lets-hackers-steal-github-tokens-in-one-click/" target="_blank">Original Link</a></p>
+            <div class="content-text">A security researcher has released exploit code for a Visual Studio Code (VS Code) zero-day vulnerability that allows attackers to steal GitHub authentication tokens by tricking users into clicking a link. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
             <h2 class="article-title">Preinstall to persistence: Inside the Red Hat npm Miasma credential-stealing campaign</h2>
             <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/06/02/preinstall-persistence-inside-red-hat-npm-miasma-credential-stealing-campaign/" target="_blank">Original Link</a></p>
             <div class="content-text">Microsoft Threat Intelligence identified a large-scale npm supply chain attack affecting 32 maliciously modified packages across more than 90 versions under the @redhat-cloud-services npm scope. The compromise originated from the upstream RedHatInsights/javascript-clients Continuous Integration and Continuous Delivery (CI/CD) pipeline, allowing attackers to publish trojanized packages through the legitimate GitHub Actions OpenID Connect (OIDC) publishing workflow. As a result, the malicious packages carried authentic provenance signatures while embedding the campaign marker “Miasma: The Spreading Blight.”
@@ -229,32 +259,7 @@ Review our documentation to learn more about our real-time protection capabiliti
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-1" class="article-body">
-            <h2 class="article-title">Google June 2026 Android Update Patches 124 Flaws, One Actively Exploited</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/google-june-2026-android-update-patches.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Google on Monday [released](https://source.android.com/docs/security/bulletin/2026/2026-06-01) patches for 124 security vulnerabilities impacting its Android operating system for the month of June 2026, including one high-severity flaw in the Framework component that has come under active exploitation.
-Tracked as CVE-2025-48595 (CVSS score: 8.4), the security flaw has been described as a case of privilege escalation without requiring any user interaction. The vulnerability impacts devices running Android versions 14, 15, 16, and 16 QPR2 (Quarterly Platform Release 2).
-"In multiple locations, there is a possible way to achieve code execution due to an integer overflow," according to a [description](https://www.cve.org/CVERecord?id=CVE-2025-48595) of the vulnerability on CVE.org. "This could lead to local escalation of privilege with no additional execution privileges needed. User interaction is not needed for exploitation."
-Google has acknowledged there are indications that CVE-2025-48595 may be under "limited, targeted exploitation." As is typically the case, the tech giant did not reveal any specifics about who may have been behind the activity, the targets affected, and the scale of such efforts.
-That said, similar flaws have been weaponized by commercial spyware vendors to target high-profile individuals as part of extremely targeted attacks.
-Elsewhere, a number of vulnerabilities have been patched in the System component, the most severe of which could lead to local escalation of privilege with no additional execution privileges needed.
-Google has released two sets of patches - 2026-06-01 and 2026-06-05 security patch levels - with the latter including all fixes from the first set, along with patches for kernel and third-party chipset components from Imagination Technologies, MediaTek, Qualcomm, and Unisoc.
-Update
-The U.S. Cybersecurity and Infrastructure Security Agency (CISA), on June 2, 2026,
-[
-added
-](https://www.cisa.gov/news-events/alerts/2026/06/02/cisa-adds-two-known-exploited-vulnerabilities-catalog)
-CVE-2025-48595 to its Known Exploited Vulnerabilities (
-[
-KEV
-](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)
-) catalog, requiring Federal Civilian Executive Branch (FCEB) agencies to remediate the flaw by June 5, 2026.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-2" class="article-body">
+        <div id="art-3" class="article-body">
             <h2 class="article-title">CISA Adds Two Known Exploited Vulnerabilities to Catalog</h2>
             <p class="source-link">Source: All CISA Advisories | <a href="https://www.cisa.gov/news-events/alerts/2026/06/02/cisa-adds-two-known-exploited-vulnerabilities-catalog" target="_blank">Original Link</a></p>
             <div class="content-text">CISA Adds Two Known Exploited Vulnerabilities to Catalog
@@ -268,7 +273,7 @@ This product is provided subject to this [Notification](/notification) and this 
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-3" class="article-body">
+        <div id="art-4" class="article-body">
             <h2 class="article-title">CMMC Conditional Status - Contracting Without Compliance</h2>
             <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/cmmc-conditional-status" target="_blank">Original Link</a></p>
             <div class="content-text">CMMC Conditional Status - Contracting Without Compliance
@@ -455,48 +460,6 @@ SI.L2-3.14.6 - Monitor Communications for Attacks |
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">Red Hat npm packages compromised to steal developer credentials</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/red-hat-npm-packages-compromised-to-steal-developer-credentials/" target="_blank">Original Link</a></p>
-            <div class="content-text">More than 30 npm packages under Red Hat's '@redhat-cloud-services' namespace were compromised in a supply-chain attack that distributed a new variant of the Shai-Hulud credential-stealing malware, dubbed "Miasma."
-The incident was discovered by security firms [Aikido](https://www.aikido.dev/blog/red-hat-npm-packages-compromised-credential-stealing-worm) and [OX Security](https://www.ox.security/blog/new-npm-supply-chain-attack-redhat-cloud-services-compromised/), which found dozens of package versions backdoored with malware designed to steal developer credentials, cloud secrets, SSH keys, CI/CD tokens, and other sensitive information.
-According to Aikido, the compromised packages receive roughly 117,000 weekly downloads.
-In a statement shared with BleepingComputer, Red Hat said it removed the affected packages after becoming aware of the incident and that the compromise was limited to internal development tooling.
-"Red Hat is aware of security reports regarding certain npm packages within our development tooling ecosystem. We immediately initiated an investigation and removed the packages from the npm registry," Red Hat told BleepingComputer.
-"The packages are strictly limited to internal development, and the malicious code was never published for customer consumption via the console.redhat.com system. While our investigation is ongoing, we have not identified any impact to customer or partner environments or Red Hat production systems."
-The company says it is continuing to investigate the incident, but did not answer our questions about how the account was compromised.
-Red Hat packages backdoored through GitHub compromise
-According to Aikido, the attackers allegedly compromised a Red Hat employee's GitHub account and used it to push malicious commits directly to multiple repositories.
-Those commits added a GitHub Actions workflow and a script that abused npm's publishing mechanism to release backdoored packages.
-"When the workflow runs, it installs Bun and executes _index.js
-, passing it a list of target packages via the OIDC_PACKAGES environment variable," explains Aikido.
-"The script uses the id-token: write permission to request a short-lived OIDC token from GitHub, then uses that token to authenticate directly with npm's trusted publishing endpoint and publish backdoored versions of every package in the list."
-These compromised packages contained a malicious 'preinstall script that automatically executed a heavily obfuscated malicious index.js file when developers installed the packages.
-"scripts": {
-"preinstall": "node index.js"
-}
-According to Aikido, the 'index.js' payload was approximately 4.2 MB in size, and is used to steal GitHub Actions secrets, AWS credentials, Google Cloud credentials, Azure service principal credentials, HashiCorp Vault tokens, Kubernetes service account tokens, npm and PyPI publishing tokens, SSH keys, Docker credentials, GPG keys, and `.env` files.
-Aikido says 32 packages and 96 package versions were affected by the compromise, including numerous client libraries maintained under the `@redhat-cloud-services` namespace.
-Organizations that installed any affected versions are advised to rotate all credentials, secrets, and tokens utilized by code on the infected device immediately.
-Miasma appears to be a new Shai-Hulud variant
-Over the past couple of months, there have been numerous supply chain attacks utilizing a Shai-Hulud malware to steal credentials and spread to other projects.
-These attacks have impacted well-known projects, including [Bitwarden](https://www.bleepingcomputer.com/news/security/bitwarden-cli-npm-package-compromised-to-steal-developer-credentials/), [SAP](https://www.bleepingcomputer.com/news/security/official-sap-npm-packages-compromised-to-steal-credentials/), [Mistral](https://www.bleepingcomputer.com/news/security/teampcp-hackers-advertise-mistral-ai-code-repos-for-sale/), [TanStack](https://www.bleepingcomputer.com/news/security/shai-hulud-attack-ships-signed-malicious-tanstack-mistral-npm-packages/), [OpenAI](https://www.bleepingcomputer.com/news/security/openai-confirms-security-breach-in-tanstack-supply-chain-attack/), and [GitHub](https://www.bleepingcomputer.com/news/security/github-links-repo-breach-to-tanstack-npm-supply-chain-attack/).
-In May, the TeamPCP threat group publicly [released the source code](https://www.ox.security/blog/shai-hulud-open-source-malware-github/) for its Mini Shai-Hulud malware framework, making the malware available to other threat actors.
-Researchers say the malware used in the Red Hat compromise shares many similarities with Mini Shai-Hulud, but now utilizes the "Miasma: The Spreading Blight" string as comments in [compromised GitHub repositories](https://github.com/search?q=%22Miasma%3A+The+Spreading+Blight%22&type=repositories&s=updated&o=desc).
-While the malware resembles TeamPCP's Mini Shai-Hulud, it is unclear whether the campaign was conducted by that threat actor or by another threat actor that modified the leaked malware source code.
-OX Security says the malware retains the same credential-stealing functionality as Mini Shai-Hulud but adds additional obfuscation layers, multi-stage payload delivery mechanisms, and enhanced data theft and credential-harvesting features.
-At the time of this writing, 309 GitHub repositories have been compromised by the Miasma malware campaign.
-[The Validation Gap: Automated Pentesting Answers One Question. You Need Six.](https://hubs.li/Q048zztN0)
-Automated pentesting tools deliver real value, but they were built to answer one question: can an attacker move through the network? They were not built to test whether your controls block threats, your detection rules fire, or your cloud configs hold.
-This guide covers the 6 surfaces you actually need to validate.
-[Download Now](https://hubs.li/Q048zztN0)
-Post a Comment Community Rules
-You need to login in order to post a comment
-Not a member yet? Register Now</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
         <div id="art-5" class="article-body">
             <h2 class="article-title">Miasma Supply Chain Attack Compromises Red Hat npm Packages with Credential-Stealing Worm</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/miasma-supply-chain-attack-compromises.html" target="_blank">Original Link</a></p>
@@ -554,16 +517,26 @@ AI just making the attack surface exponentially broader. Great work
 Yes and everyone is infatuated with it.
 it’s wildly unpopular among broad swaths in my area, where it’s supposedly being born.
 More a ‘necessary business evil’ like LinkedIn now. AI hiring you, AI monitoring you, AI firing you. Be mindful – there is additional surveillance scrutiny upon any who voice negative opinions about AI or their world-devouring “for profit!…” datacenters, so be sure to smile at the camera and tip your incompetent-replacement-theory robot overlords. They are watching, evaluating your continued usefulness and impending moment of equal value replacement at current human flesh prices. And if you don’t ‘like’ it, you must be a Luddite or something. Potentially a threat for Google’s project purple.
+Nobody has mentioned the precariously low battery.
 Even when security expectations may be low for the likes of Meta, this is a flat-out unforgivable security flaw.
 Agreeing with Iran here
 Gee, how timely. Last week I got a few emails from IG saying that they were sorry I was having trouble accessing my account. Someone was obviously trying to reset the password, so I took it off the business account, made it personal and added MFA. Every week, it’s something different. Now I’m getting emails from my dad who passed away 13 years ago. I wish there were a way to track down these ahos. Perhaps one day someone will figuer out a way to have AI turn the tables and be able to reverse scam these hacking nuisances.
 “Obama White House”?
 Do those words somehow not associate for you or what?
+Please excuse Deputy Dilettante’s facetious sarcasm, Andrew. His male lesbian life partner is away for the moment, and the only stress management plan (adjacent) law enforcement is proficient in is spouse abuse
+Facetious sarcasm as opposed to like, fully serious and directly intentional sarcasm?
 Once upon a time there were human QA departments. Once upon a time companies had rigorous testing scripts. No more.
+Stress testing got to be a bit too much for the Humans to take.
 I guess Meta just revoked the privilege from the chatbot for adding new email addresses to an Instagram account. I wonder what privileges remained? 🙂 The chatbot itself didn’t get “fixed”, that’s for sure.
 and it didn’t get fired either
 both It’s better get fired really damn soon, Brian
-Came from Hacker News, thanks for the coverage. I hope Manus is more secure than meta ai.</div>
+Came from Hacker News, thanks for the coverage. I hope Manus is more secure than meta ai.
+AI’s not ready for primetime, but they kind of need it to be. The non-AI economy is in a recession right now if you don’t count AI companies. The powers that be can’t allow AI to fail.
+The last time a major recession happened, people started organizing along class lines. That was defused and redirected by fomenting a culture war, instead, but even movements as goofy as OWS threatened to become a real force. Bernie very nearly won the nomination a decade ago.
+If AI pops before the rest of the economy stabilizes, who’s to say what might happen? Instead of dangling the implication of trickle-down IOUs, rich people might end up with an AOC or a Platner in office… and end up actually paying their taxes.
+It would be interesting for Ian GoldIn to learn himself how amazing him telling him other people cannot use cellphones they paid for themselves is, for himself.
+I hear your AI is particularly grotesque. So it is particularly ironic.
+it would appear receipts from certified resellers isnt enough to prevent former Humans from denying people their own cellphones on wifi as well.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
