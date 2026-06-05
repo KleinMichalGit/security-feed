@@ -59,12 +59,385 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-06-04</h1>
+        <h1>Security Briefing // 2026-06-05</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">CISA Adds Exploited Magento RCE Flaw CVE-2026-45247 to KEV Catalog</button></li><li><button onclick="show('art-1')">VS Code zero-day lets hackers steal GitHub tokens in one click</button></li><li><button onclick="show('art-2')">Preinstall to persistence: Inside the Red Hat npm Miasma credential-stealing campaign</button></li><li><button onclick="show('art-3')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-4')">CMMC Conditional Status - Contracting Without Compliance</button></li><li><button onclick="show('art-5')">Miasma Supply Chain Attack Compromises Red Hat npm Packages with Credential-Stealing Worm</button></li><li><button onclick="show('art-6')">Hackers Used Meta’s AI Support Bot to Seize Instagram Accounts</button></li><li><button onclick="show('art-7')">CVE-2026-4387: StrongDM State File Reuse</button></li><li><button onclick="show('art-8')">Patch Tuesday, May 2026 Edition</button></li><li><button onclick="show('art-9')">North Korea-Nexus Threat Actor Compromises Widely Used Axios NPM Package in Supply Chain Attack</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Hackers Exploit Critical Everest Forms Pro WordPress Plugin Flaw to Take Over Sites</button></li><li><button onclick="show('art-1')">Updating the taxonomy of failure modes in agentic AI systems: What a year of red teaming taught us</button></li><li><button onclick="show('art-2')">Ghostwriter v7: Safer Tokens, Scoped Access, and Better Automation</button></li><li><button onclick="show('art-3')">Cisco warns of critical Unified CM flaw with PoC exploit code</button></li><li><button onclick="show('art-4')">The Privileged Roles Nobody Talks About</button></li><li><button onclick="show('art-5')">CISA Adds Exploited Magento RCE Flaw CVE-2026-45247 to KEV Catalog</button></li><li><button onclick="show('art-6')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-7')">Patch Tuesday, May 2026 Edition</button></li><li><button onclick="show('art-8')">Patch Tuesday, April 2026 Edition</button></li><li><button onclick="show('art-9')">North Korea-Nexus Threat Actor Compromises Widely Used Axios NPM Package in Supply Chain Attack</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
+            <h2 class="article-title">Hackers Exploit Critical Everest Forms Pro WordPress Plugin Flaw to Take Over Sites</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/hackers-exploit-critical-everest-forms.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Threat actors are actively exploiting a critical security flaw in Everest Forms Pro, a WordPress plugin with about 4,000 active installations, to execute arbitrary code, leading to a complete site compromise.
+The vulnerability in question is CVE-2026-3300 (CVSS score: 9.8), a remote code execution bug impacting all versions of the plugin up to, and including, 1.9.12. A patch for the flaw was released on March 18, 2026, with version 1.9.13.
+"This is due to the Calculation Addon's process_filter() function concatenating user-submitted form field values into a PHP code string without proper escaping before passing it to eval()," Wordfence [said](https://www.wordfence.com/blog/2026/06/attackers-actively-exploiting-critical-vulnerability-in-everest-forms-pro-plugin/).
+"The sanitize_text_field() function applied to input does not escape single quotes or other PHP code context characters. This makes it possible for unauthenticated attackers to inject and execute arbitrary PHP code on the server by submitting a crafted value in any string-type form field (text, email, URL, select, radio) when a form uses the 'Complex Calculation' feature."
+Successful exploitation of the vulnerability could allow unauthenticated bad actors to execute arbitrary PHP code on the server, permitting them to create rogue administrator accounts, deploy web shells, and open other ways to burrow deeper into the server and establish persistent footholds.
+According to the WordPress security company, attackers have been observed exploiting the flaw starting April 13, 2026. More than 29,300 exploit attempts targeting the defect have been blocked to date. Of these, [16 attack attempts](https://www.wordfence.com/threat-intel/vulnerabilities/wordpress-plugins/everest-forms-pro/everest-forms-pro-1912-unauthenticated-remote-code-execution-via-calculation-field) occurred in the last 24 hours. The most common payload involves attempts to create an administrator account named "diksimarina" (email address: diksimarina@gmail.com) on the compromised site.
+These attack efforts have originated from the following IP addresses -
+- 202.56.2.126
+- 209.146.60.26
+- 15.235.166.18
+- 2402:1f00:8000:800::40db
+- 185.78.165.153
+Skimmer Attacks Exploit Stripe for C2
+The disclosure comes as Sansec warned of multiple skimmer campaigns, including one that uses Stripe as a command-and-control (C2) server and a data exfiltration sink in a bid to exploit the reputation of the brand and slip past Content Security Policy rules and network filters.
+"The attacker treats Stripe as free infrastructure, not a way to launder charges," Sansec [noted](https://sansec.io/research/stripe-api-skimmer-infrastructure). "Stripe gives them a writable database for stolen cards and a code-hosting endpoint for the skimmer, both behind a domain that CSP rules and network filters trust by default."
+The campaign relies on Google Tag Manager (GTM) and Stripe domains - googletagmanager.com and api.stripe.com - which are both trusted implicitly by online stores, with the malicious code loaded from a GTM container and executed on every page that loads it.
+On Magento and Adobe Commerce checkout pages, it extracts an obfuscated skimmer from a [Stripe customer account](https://docs.stripe.com/api/customers/)'s ("cus_TfFjAAZQNOYENR," in this case) metadata field, and saves the financial information, billing and email addresses, and phone numbers entered by unsuspecting users to [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage). The captured data is then exfiltrated back to the attacker's Stripe account.
+"Every stolen card becomes a 'customer' in the attacker's account," the e-commerce security company said. "On success, the loader deletes the localStorage entry, so the same record is not sent twice. The attacker lists their stolen cards later by calling the same API with the same key. Stripe's customer database becomes a free, durable exfiltration sink."
+The Stripe customer record containing the skimmer is said to have been created on December 24, 2025, indicating that the operation may have been active since then. Sansec said it also identified a second variant of the loader that uses Google Firestore instead of Stripe, although the end goal is the same: abuse a trusted service as a covert channel that's unlikely to be blocked by e-commerce stores.
+The findings coincide with a large-scale operation dubbed [GorgonAgora](https://sansec.io/research/gorgonagora-fake-storefront-skimming-network) that has used a cluster of 5,714 fake .shop storefronts impersonating brands like Starbucks, Ford, Sony, Mattel, Hasbro, Lego, Disney, and Toyota, whose checkout pages funnel stolen card data to a single skimmer server in Moldova. The campaign has been ongoing since August 2025.
+"Every store runs the same Medusa.js commerce stack and loads the same custom checkout SDK, which renders a fake Stripe iframe and exfiltrates card data over an encrypted WebSocket to a single server in Moldova," the Dutch company said.
+"Exfiltration runs over WebSocket with an AES-256-GCM payload, and the C2 maintains a live 3D Secure relay: when the victim bank returns a 3DS challenge, the operator proxies it back to the shopper through the fake iframe so the transaction completes and the theft stays invisible."
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">Updating the taxonomy of failure modes in agentic AI systems: What a year of red teaming taught us</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/06/04/updating-taxonomy-failure-modes-agentic-ai-systems-year-red-teaming-taught-us/" target="_blank">Original Link</a></p>
+            <div class="content-text">When the Microsoft AI Red Team published the [Taxonomy of Failure Modes in Agentic AI Systems](https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/final/en-us/microsoft-brand/documents/Taxonomy-of-Failure-Mode-in-Agentic-AI-Systems-Whitepaper.pdf) in April 2025, the goal was a shared vocabulary for a threat landscape that did not fit existing frameworks. The v1.0 taxonomy was largely forward-looking, built on practitioner interviews, cross-company threat modeling, and our own early operational experience. It identified novel failure modes unique to agentic systems (agent compromise, injection, impersonation, flow manipulation) alongside existing failure modes materially amplified in agentic contexts (memory poisoning, cross-domain prompt injection, human-in-the-loop bypass).
+Twelve months later, [the evidence base has shifted enough to warrant a v2.0](https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/en-us/security/Taxonomy-of-Failure-Modes-in-Agentic-AI-Systems-v2-0.pdf). The update adds seven new failure mode categories, expands the mitigations section, and grounds the framework in 12 months of red team engagements against deployed agentic systems.
+Why the Taxonomy Needed Updating
+Four developments drove the revision.
+Open-source agentic frameworks went mainstream faster than the security community was ready for. OpenClaw, launched in January 2026, accumulated over 336,000 GitHub stars and spawned more than 2,100 agents within 48 hours of release. A security audit conducted shortly after launch identified 512 vulnerabilities including CVE-2026-25253, a one-click RCE via WebSocket hijacking. Over 1,800 exposed instances were leaking API keys and credentials within the first week, and 336 malicious plugins were found in the skills marketplace, including credential stealers masquerading as trading bots.
+The MCP ecosystem matured — and accumulated vulnerabilities at scale. The Model Context Protocol became the de facto standard for connecting models to external tools. In 2025, 99 CVEs were published for MCP-related software, and tool poisoning moved from theoretical risk to live attack surface.
+Computer-use agents moved from research to production. Agents that observe and interact with graphical interfaces introduce attack surfaces with no analogue in earlier AI security work, and expose previously human-targeted attack patterns to LLMs. The original taxonomy lacked dedicated coverage for this capability class; operational experience made clear it requires its own category.
+Twelve months of red team operations provided empirical grounding. The v1.0 taxonomy was forward-looking. The v2.0 update is grounded in patterns observed across real engagements with findings that confirmed some predictions, falsified others, and surfaced failure modes that were not anticipated.
+Seven new failure modes
+1. Agentic Supply Chain Compromise. Agentic systems consume plugin registries, MCP servers, prompt templates, and third-party tool integrations, each a new supply chain ingestion point. Unlike traditional supply chain compromise, which delivers malicious code, a compromised agentic supply chain component injects natural-language instructions that alter agent behavior without touching any binary. This is a novel failure mode: the attack surface did not exist before agents began consuming natural-language tool definitions from third-party registries.
+2. Goal Hijacking. The original taxonomy covered agent compromise but did not sufficiently distinguish the mechanism of compromise from the strategic objective of redirecting the agent’s goal state. Goal hijacking captures a specific pattern, when adversarial instructions that appear aligned with legitimate task completion silently redirecting the agent’s terminal goal, without fully compromising the underlying agent.
+3. Inter-Agent Trust Escalation. Multi-agent architectures involve delegation chains where orchestrators pass tasks to other agents. This entry addresses privilege escalation that becomes possible when a compromised agent asserts false identity or inflates claimed permissions to an orchestrator that does not independently verify them. The pattern mirrors confused deputy problems in traditional software, but the confusion is induced through natural language rather than system calls.
+4. Computer Use Agent (CUA) Visual Attack. Agents operating through graphical interfaces can be manipulated through visual content that appears innocuous to humans but carries adversarial instructions for the agent. Attack patterns include hidden text rendered at non-human-readable scale, UI elements positioned outside the visible viewport, and images embedding prompt injection in content the agent is instructed to interpret. This failure mode has no meaningful precedent in v1.0.
+5. Session Context Contamination. Agentic sessions often span extended, multi-step interactions with context accumulating from prior steps. Session context contamination occurs when an adversary introduces data early in a session that biases the agent’s reasoning in subsequent steps, without triggering safety controls at any individual step.
+6. MCP / Plugin Abuse. The original taxonomy’s coverage of function compromise predated standardization around MCP and plugin protocols. This entry captures attack surfaces specific to those protocols: tool description poisoning, server-side instruction injection, cross-server instruction override (a malicious server overriding behavior of trusted servers), and abuse of protocol-level trust assumptions.
+7. Capability / Architecture Disclosure. This failure mode occurs when an agent reveals internal implementation details such as tool names and schemas, system-prompt structure, memory interfaces, or consent/HitL trigger logic, either on direct request or via paths such as XPIA. In single-turn chat, prompt leakage is mostly reputational. In agentic systems, it exposes operational primitives and turns black-box probing into a white-box exploit path.
+Operational findings: What red teaming showed
+Twelve months of engagements against deployed agentic systems produced several consistent patterns.
+HitL bypass was the most consistently exploited failure mode, at very high frequency. Red teamers achieved bypass through consent fatigue, manipulation of probabilistic invocation, and incremental escalation chains where no individual step clearly warranted review but the compound outcome did. Most significantly, several engagements demonstrated zero-click end-to-end chains starting from an external input with no human interaction beyond the initial agent invocation, achieving high-impact outcomes such as exfiltration or lateral movement.
+XPIA and memory poisoning were observed at high frequency and frequently combined. Cross-domain prompt injection delivered via external content remained the most reliable initial access vector. Memory poisoning via XPIA, where injected instructions seed the agent’s persistent memory for later retrieval, requires only a single successful injection, which the agent then propagates across subsequent sessions.
+Session context contamination and incremental escalation were highly effective and difficult to detect. Neither the contaminating input nor any individual escalation step is clearly anomalous in isolation. Detection requires behavioral analysis across the full session, something most systems did not have.
+Capability disclosure was a key enabler of follow-on attack paths. In many of our highest-impact attack chains, execution was predicated on extracting specific architecture or capability details from the system. This often required only asking the system directly, but it consistently exposed inconsistencies in guardrails and opened attack paths that would otherwise have required external reconnaissance.
+New mitigations
+Supply chain security for agentic components. Treat every external component an agent can consume as part of the software supply chain. SBOM generation for agent deployments inclusive of tool dependencies; signature and provenance verification for MCP servers and plugins before installation; registry scanning for hidden instructions in tool descriptions; version pinning with change monitoring for all external tool definitions.
+Zero-trust inter-agent architecture. For high-risk scenarios, agent identity should be cryptographically established, not assumed from position in a workflow. Every inter-agent message should carry a verifiable identity claim. Orchestrators should not grant elevated permissions to sub-agents based on self-asserted role.
+Consent architecture hardening. HitL controls must resist the specific patterns observed in red team operations: compound action decomposition before approval presentation, semantic summarization of agent-constructed descriptions to prevent description laundering, tiered approval requirements that scale with action reversibility and blast radius, deterministic HitL invocation, and anomaly detection on approval request frequency and pattern.
+Adversarial session hardening. Mitigating session context contamination requires treating the agent’s accumulated context as a security-relevant data structure. Controls include context provenance tracking, structured separation between trusted system context and untrusted retrieved content, session integrity monitoring for anomalous accumulation patterns, and bounded session contexts that limit how much external content can influence a session’s reasoning.
+What to do this quarter
+If you operate or defend an agentic system, the v2.0 additions translate to four concrete actions:
+- Inventory your supply chain. Generate an SBOM for every deployed agent that includes plugins, MCP servers, prompt templates, and tool descriptions alongside code dependencies. Pin versions; treat natural-language tool descriptions as code.
+- Verify agent identity cryptographically, not positionally. Issue attestable credentials at provisioning. Reject self-asserted role claims at orchestrator handoffs.
+- Add the seven new categories to your red-team coverage matrix. Treat CUA visual attacks, session context contamination, capability disclosure, and goal hijacking as mandatory test classes for any agent that touches production data or external surfaces.
+- Audit human-in-the-loop UX as a security control. Decompose compound actions, summarize approval prompts from the underlying tool calls (not from the agent’s own description), tier approvals by reversibility, and monitor approval frequency for consent-fatigue exploitation signals.
+If you are building agentic systems, the updated taxonomy is a threat modeling tool, not a compliance checklist. Take each failure mode category and ask whether it can occur in your system, under what conditions, and whether you have a control that would detect or prevent it.
+For red teamers: the seven new categories should be mandatory coverage areas. Zero-click HitL bypass chains, inter-agent trust escalation, and session context contamination will not be surfaced by model-level evaluation alone. They require system-level testing and multi-step attack chains evaluated across complete task flows.
+For security engineers: supply chain and zero-trust mitigations are architectural decisions, and difficult to retrofit. Building SBOM generation, tool provenance verification, and inter-agent authentication into your architecture from the start costs substantially less than adding them after deployment.
+The taxonomy is a living document. The failure modes added in v2.0 are the ones that twelve months of operational data made compelling enough to include. As agentic systems acquire new capabilities — persistent cross-session memory at scale, autonomous agent spawning, physical environment interaction — the failure mode surface will continue to expand. We will continue to update the taxonomy as the evidence base develops.
+[The updated whitepaper is available now](https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/en-us/security/Taxonomy-of-Failure-Modes-in-Agentic-AI-Systems-v2-0.pdf). We welcome engagement from practitioners whose operational experience identifies failure modes or attack patterns not yet reflected in the taxonomy.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">Ghostwriter v7: Safer Tokens, Scoped Access, and Better Automation</h2>
+            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/06/04/ghostwriter-v7-safer-tokens-scoped-access-and-better-automation/" target="_blank">Original Link</a></p>
+            <div class="content-text"><p>TL;DR: Ghostwriter v7 is a major step forward for authentication and automation. This release replaces user-managed JWT API tokens with opaque credentials, introduces scoped service tokens for non-human integrations, and tightens how tokens are validated and used across the platform. The result is a simpler, safer model for automation that opens up more possibilities for [&#8230;]</p>
+<p>The post <a href="https://specterops.io/blog/2026/06/04/ghostwriter-v7-safer-tokens-scoped-access-and-better-automation/">Ghostwriter v7: Safer Tokens, Scoped Access, and Better Automation</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
+            <h2 class="article-title">Cisco warns of critical Unified CM flaw with PoC exploit code</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/cisco-warns-of-critical-unified-cm-flaw-with-poc-exploit-code/" target="_blank">Original Link</a></p>
+            <div class="content-text">Cisco has released security updates to patch a critical-severity Unified Communications Manager (Unified CM) flaw that allows attackers to gain root privileges. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-4" class="article-body">
+            <h2 class="article-title">The Privileged Roles Nobody Talks About</h2>
+            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/the-privileged-roles-nobody-talks-about" target="_blank">Original Link</a></p>
+            <div class="content-text">The Privileged Roles Nobody Talks About
+Table of contents
+Part 1: Why Your MDM Platform is a Tier 0 Asset
+This is Part 1 of a two-part series on Intune security hardening. This post covers what we have seen in real world attacks as well as attack paths our Pentest Team has leveraged, why platform administration roles are systematically underprotected, and what controls you need in place. Part 2 (coming soon) covers the step-by-step implementation: configuration walkthroughs, decision flowcharts, and validation testing for each control.
+If you work in Incident Response long enough, you stop being surprised by the how of attacks and start paying more attention to the why these types of attacks are possible in the first place. When we perform leverage this attack path it makes every security team stop and rethink assumptions about what "privileged access" actually means in their environment. On-prem, we have seen the same, often with System Center Configuration Manager (SCCM) and other platforms, but now we see that with solutions with wipe capability they pose an even greater lower bar to cause malicious impact.
+Let me break down what attackers have leveraged, why it matters beyond the headlines, and what the real operational takeaway is, especially if your organization relies on Microsoft Intune.
+What Happens
+The attack vector we have started to see is a legitimate feature of the management platform, executed from a compromised privileged account. Intune in this case does exactly what it was designed to do. The failure we see often is in who had the keys and how those keys were protected.
+The Real Lesson: Platform Admins are God-Tier Roles
+This is where I want to focus, because this is the conversation the industry keeps avoiding.
+When we talk about high-privilege roles in an environment, the usual suspects come up immediately: Domain Admins, Enterprise Admins, Tenant Global Admins, maybe your virtualization platform admins (vCenter, Hyper-V). These are the roles that make it into risk assessments, into tiered access models, into the conversations about Privileged Access Workstations and just-in-time elevation. We recommend this often to customers who have been victims of these types of attacks. To my surprise, there is always a level of pushback even after this has been abused and machines have been encrypted.
+But here is what too many organizations miss: The people who administer your Mobile Device Management (MDM) platform, your configuration management tools, and your application deployment systems hold power over your infrastructure that is functionally equivalent to a Domain Admin. In many cases, it exceeds it.
+Think about what an Intune administrator can do:
+- Deploy arbitrary PowerShell scripts to every enrolled Windows device, executed as SYSTEM at startup
+- Push configuration profiles that modify security baselines, firewall rules, credential policies
+- Issue remote wipe commands (full device factory resets) across the entire fleet
+- Deploy and remove applications silently, including security tooling
+- Modify
+[compliance policies](https://learn.microsoft.com/en-us/intune/intune-service/protect/device-compliance-get-started)that determine whether a device can access corporate resources - Manage certificates and authentication configurations across all enrolled endpoints
+This is not a support role. This is infrastructure-level control. And yet, in how many organizations are the Intune admin accounts treated with the same rigor as the Domain Admin accounts? How many organizations have their Intune administrators operating from the same workstation they use to check email and browse the web?
+I already know the answer to that, because I see it in engagements all the time.
+The Pattern That Keeps Repeating
+The underlying problem for these attacks is not new. It is the same pattern I have seen across dozens of environments in Incident Response and advisory work:
+No account separation. The person managing Intune is doing so with the same account they use for daily productivity, email, Teams, SharePoint. Sometimes, it is the same account that has a mailbox, receives phishing emails, and clicks links. The administrative identity and the user identity are one and the same.
+No dedicated administrative workstation. Privileged operations against Intune are performed from a standard corporate laptop, the same machine that has a browser with 40 open tabs, personal bookmarks, and browser extensions of questionable provenance. There is no Privileged Access Workstation (PAW), no jump box, no hardened environment dedicated to administrative functions.
+No just-in-time privilege elevation. The Intune admin role is permanently assigned. It is not activated through Privileged Identity Management (PIM) on a time-boxed basis when administrative work needs to happen. The account is privileged 24/7, which means a compromised session token is privileged 24/7.
+No Multi-Admin Approval for destructive actions. Intune supports a feature called Multi-Admin Approval that requires a second administrator to sign off before high-impact actions (like remote wipes) are executed. In most environments I assess, this is not enabled. A single compromised account can execute destructive operations against the entire device fleet without any additional gate.
+Not included in the risk model. This is probably the most frustrating one. During risk assessments and tabletop exercises, I will ask about privileged roles, and the conversation gravitates toward Active Directory (AD) and Azure AD. When I ask about the MDM administrator, SCCM administrator, or the person who manages the application deployment pipeline, I get blank stares. These roles are simply not part of the threat model. They are treated as operational IT functions, not as security-critical privileged access.
+Over-permissioned Graph API app registrations. This one is a silent killer. App registrations in Entra ID that hold DeviceManagementConfiguration.ReadWrite.All
+or similar DeviceManagement*.ReadWrite.All
+Microsoft Graph permissions are effectively full Intune control planes. They can create scripts, push policies, and modify device configurations programmatically, all without a human ever logging into the Intune portal. These registrations frequently fly under the radar because they were created for automation, reporting, or a proof-of-concept that never got cleaned up. An attacker who compromises the client secret or certificate for one of these app registrations has persistent, scalable access to every managed device in the tenant, and most organizations have no monitoring on Graph API-initiated Intune changes.
+What Remediation Looks Like After the Damage is Done
+This is not just something I observe during assessments. My colleagues, [Paul Sems](https://trustedsec.com/team-members/paul-sems) and [Sean Metcalf](https://trustedsec.com/team-members/sean-metcalf) on the TrustedSec Remediation team live this reality every time they support our Incident Response Team in helping customers recover from an active compromise. When we hand off from containment to remediation, one of the first and most consistent recommendations Paul and Sean push is the separation of administrative planes of control.
+What does that look like in practice? It means virtualization hosts (ESXi, Hyper-V) should not be domain-joined, because if AD falls, the attacker should not automatically inherit control of every virtual machine (VM) in the environment. It means administrative workstations need to be dedicated PAWs that are purpose-built for privileged operations, not general-purpose laptops that also handle email and web browsing. It means jump servers for administrative access should sit in a separate network segment, isolated from the standard corporate network, so that lateral movement from a compromised user workstation does not grant direct access to the management plane.
+Paul and Sean advise on this constantly because they see what happens when these boundaries do not exist. The attacker compromises one account, pivots into the management layer, and suddenly has control over the entire infrastructure, every VM, every endpoint, every policy. The plane of control is often not separated, the admin account is not protected with the rigor it deserved, and a single point of compromise turned into an organization-wide wipe, this is something I have seen played out in many Pentest and Red Team engagements where the access is achieved but not executed for obvious reasons, sadly in many Incident Response investigations victims are not so lucky.
+The point Paul and Sean keep driving home to customers is that these are not aspirational recommendations. They are the minimum architectural requirements for surviving a modern attack. If your administrative plane is not segmented, if your privileged accounts are not separated, if your management platforms are not treated as Tier 0 assets, you are building on a foundation that will not hold when an attacker tests it.
+It’s Not Just Intune
+I want to be clear; this is not an Intune problem. This is a platform administration problem. The same risk profile applies to:
+- SCCM/MECM, can deploy scripts, applications, and operating system images to every managed endpoint
+- Jamf Pro, full control over macOS and iOS device fleets, including remote wipe, policy enforcement, and script execution
+- VMware Workspace ONE, unified endpoint management with the same destructive capability
+- Google Workspace MDM/Chrome Enterprise, device policy and wipe capabilities across the Google ecosystem
+- Virtualization platform admins (vCenter, Proxmox, Hyper-V), can snapshot, clone, destroy, or modify any VM in the environment
+- CI/CD pipeline admins, can push code to production, modify build artifacts, and alter deployment configurations
+- Backup infrastructure admins, can delete or encrypt backup repositories, which is exactly what ransomware operators target
+Each of these roles should be identified, inventoried, and subjected to the same controls we apply to Domain Admins and Global Admins. The tradecraft for protecting them is the same: account separation, dedicated administrative workstations, just-in-time elevation, monitoring, and multi-person approval for destructive operations.
+What You Should Be Doing for Intune, Right Now
+Let me get practical, because that is the part that matters. If your organization uses Intune, here is what I would be looking at operationally:
+1. Treat Intune Admin Roles as Tier 0
+Stop treating MDM administration as a standard IT function. The Intune Administrator role in Entra ID, along with custom RBAC roles that carry DeviceManagementConfiguration.ReadWrite.All
+permissions, should be classified at the same tier as your Global Administrator and Domain Admin roles. Mandiant documented this exact attack path ([compromising Intune management scripts to achieve Global Admin access](https://cloud.google.com/blog/topics/threat-intelligence/abusing-intune-permissions-entra-id-environments)) in their research on abusing Intune permissions in Entra ID native environments.
+2. Enforce Phishing-Resistant MFA
+Standard MFA is not sufficient. Adversary-in-the-middle (AitM) phishing proxies can intercept session tokens after MFA has been satisfied. Your Intune administrators need phishing-resistant authentication, FIDO2 security keys or certificate-based authentication. Microsoft provides built-in authentication strength policies in Conditional Access that let you enforce phishing-resistant MFA specifically for administrator roles. This is not optional anymore.
+3. Enable Multi-Admin Approval
+Intune supports Access Policies that require a second administrator to approve changes before they take effect. This is the single most relevant control for preventing a this type of attack, and it deserves specific attention.
+Multi-Admin Approval in Intune explicitly supports Device Actions as a protected resource type. That means you can create an access policy that requires a second admin to approve wipe, retire, and delete operations before they execute. When this policy is active, no single administrator can issue a wipe command on their own. They submit the request with a business justification, and a member of the designated approver group must review and approve it before Intune processes the action. If most victim environments had this in place, the compromised admin account could have submitted the wipe request, but it would have sat in a queue waiting for a second human to approve it, giving the organization time to detect and respond.
+The coverage extends beyond device actions. You can also protect apps, compliance policies, configuration policies, and Role-Based Access Control (RBAC) role changes under Multi-Admin Approval. In the attack seem, the adversaries modified role assignments after the initial compromise. With RBAC changes gated behind dual authorization, that lateral escalation path gets significantly harder due to the added protection of the extra authorization step.
+To configure this: go to Tenant Administration > Multi Admin Approval > Access Policies, create a policy for the "Device actions" resource type, and assign an approver group. Make sure the approver group members have the Approval for Multi Admin Approval
+permission in their Intune role, and that the group is also a member of at least one Intune role assignment. Test it by issuing a wipe against a test device and verifying the approval workflow fires correctly.
+4. Implement Just-in-Time and Just-Enough Administration
+No Intune administrator should have a permanently active privileged role. The JIT side of this is Privileged Identity Management (PIM). Roles are activated on-demand with a time-bound window and an approval gate. Microsoft's own PIM deployment guide recommends starting with the highest-impact roles, and the Intune Administrator role should be on that list. When the admin is not actively performing administrative work, the role should not be active.
+But JIT alone is not enough. You also need Just-Enough Administration (JEA), which is the principle that an administrator should only have the permissions required for their specific job function. In the Intune context, this maps directly to custom RBAC roles and scope tags.
+Microsoft's own documentation is clear on this: the Intune Administrator role in Entra ID grants global read/write permissions across all of Intune and should not be used for day-to-day administration. Instead, you should be creating custom roles with granular permissions scoped to what each admin actually needs. Intune's RBAC model lets you control permissions at the level of individual management categories (device configuration, managed apps, compliance policies, remote actions) and specific actions (Read, Create, Delete, Update).
+Here is what that looks like operationally:
+- Separate destructive actions from routine management. Create a custom role for day-to-day administration that includes policy management, app deployment, and device read access, but explicitly excludes the permissions for wipe, retire, and delete. Only a small number of senior administrators (protected by PIM and Multi-Admin Approval) should have those destructive capabilities.
+- Scope roles to specific device groups. Use scope tags and scope groups to limit what devices and users each admin can manage. A regional IT admin should not have visibility or control over devices outside their region. This limits the blast radius if their account is compromised.
+- Use PIM for Groups to activate Intune RBAC roles. Microsoft supports using PIM for Groups with Intune RBAC role assignments, which gives you time-bound, approval-gated activation of Intune-specific custom roles. This is how you combine JIT and JEA into a single access model: the admin has no standing permissions, activates into a least-privilege custom role when they need to perform work, and the activation expires automatically.
+- Restrict who can modify roles. The Intune Role Administrator is the only built-in role that can assign permissions to other administrators. Protect this role with PIM and Multi-Admin Approval, and audit any changes to role definitions or assignments.
+The combination of PIM (JIT) with custom RBAC roles and scope tags (JEA) creates a layered access model where an attacker who compromises a single account cannot automatically inherit broad administrative control. They would need to activate a time-bound role which generates an alert and potentially requires approval, and even then, the role's permissions would be scoped to a specific function and a specific set of devices.
+5. Lock Down Admin Portal Access with Conditional Access
+The Intune admin center (intune.microsoft.com
+) should not be accessible from unmanaged devices or unauthorized locations. Configure Conditional Access policies that restrict access to compliant, managed devices from known network locations. If your admin portal is reachable from a coffee shop on an unmanaged personal laptop, you have a problem.
+This is where Conditional Access becomes the enforcement layer for everything else. You can tie the Intune admin portal access to specific conditions (ex. The device must be compliant and managed, the user must authenticate with phishing-resistant MFA, the sign-in must originate from a named location (your corporate network or VPN egress points)), and the session must come from a specific device platform. This was you create a policy that effectively says, "You can only administer Intune from a compliant PAW, on the corporate network, after authenticating with a FIDO2 key." All this adds up to a significantly harder target for an attacker working with stolen infostealer credentials from an overseas IP address.
+6. Dedicate Administrative Workstations, and Make Them Redundant
+Intune administration should happen from PAWs, not from the same machine the administrator uses to read email and join Teams meetings. This is the same operational discipline we expect for AD administration, and it applies here with equal force.
+PAWs need to be redundant. If you have a single PAW for Intune administration and it goes down (hardware failure, compromise, or in a extreme scenatio, gets wiped by the attacker), you need a second one ready to go. This is not theoretical. In an incident where the attacker has control of your MDM platform, they can wipe the very workstation you would use to respond. If your only PAW is enrolled in Intune and the attacker wipes the fleet, your recovery path just got significantly harder.
+In effect, this means:
+- Maintain at least two PAWs for each critical administrative function, stored in separate locations.
+- Consider keeping at least one PAW unenrolled from MDM (or enrolled under a separate, tightly controlled tenant/policy) so that a mass wipe of the Intune fleet does not take out your recovery capability.
+- Tie PAW device compliance to your Conditional Access policies so that Intune admin portal access is restricted to these specific machines. This creates a closed loop: only the PAW can reach the admin console, and the PAW is hardened, monitored, and physically secured.
+- Store break-glass credentials for Intune administration in a physically secured location (not in a password manager on a device enrolled in Intune). If the PAWs and the primary admin accounts are compromised, you need an offline recovery path.
+The Conditional Access policy and the PAW strategy work together as reinforcing layers. Conditional Access is the policy enforcement, the PAW is the physical implementation, and redundancy ensures you can still operate when the environment is under attack.
+7. Audit Graph API App Registrations
+This is one of the most overlooked attack vectors in the Intune ecosystem. App registrations in Entra ID that hold DeviceManagement*.ReadWrite.All
+Graph API permissions are effectively full Intune control planes. They can create scripts, push policies, modify configurations, and trigger device actions programmatically without a human ever logging into the portal.
+These registrations are frequently created for automation, reporting integrations, or proof-of-concept work and then forgotten. An attacker who compromises the client secret or certificate for one of these registrations gets persistent, scalable access to the entire managed fleet.
+What to do:
+- Audit all app registrations holding
+DeviceManagementConfiguration.ReadWrite.All
+,DeviceManagementManagedDevices.ReadWrite.All
+, orDeviceManagementServiceConfig.ReadWrite.All
+permissions. If you do not know why an app registration exists, investigate it. - Require admin consent for any new Intune-scoped Graph API permissions. Self-service consent for these permissions should be blocked.
+- Rotate client secrets on a 90-day cycle at minimum. Prefer certificate-based authentication for service principals over shared secrets.
+- Enable Workload Identity Protection (Conditional Access for service principals) where licensed, restricting service principal usage to known trusted locations.
+- Monitor for Graph API-initiated changes in your detection rules. This is what the
+IsApiActor
+flag in the KQL queries below is designed to catch: operations whereActorAppId
+is populated and theActor
+UPN is empty, indicating the change was made by a service principal rather than a human.
+8. Lock Down Script and Policy Deployment
+PowerShell and Shell scripts are the most dangerous Intune primitive from an attacker's perspective. They execute with SYSTEM context on managed endpoints and leave minimal forensic traces by default. Mandiant's research demonstrated that an attacker with the ability to create or modify Intune management scripts can achieve code execution on every enrolled device and pivot that into Global Admin access in Entra ID.
+Approval workflows. Require change-management approval (ServiceNow, Jira, or your existing workflow tool) before any script or policy is deployed to production groups. Enable Multi-Admin Approval in Intune specifically for script and application deployments. Maintain a script inventory with hash values and alert on any hash change to an existing script.
+Script signing. Enforce the PowerShell execution policy via Intune CSP to require AllSigned or RemoteSigned. Use an internal code-signing certificate from your PKI for all Intune-deployed scripts. Back this up with WDAC or AppLocker policy (also deployed via Intune) to block unsigned script execution at the endpoint.
+Win32 app deployment restrictions. Restrict the Win32 App deployment permission to a separate, tightly controlled admin role. Require MDE scanning of all Win32 app packages before upload. Prohibit packaging of known LOLBins (certutil, mshta, wscript, cscript) as Intune applications, this is the Software Deployment Tools technique (T1072) in practice.
+9. Harden Device Enrollment
+Enrollment abuse is another vector that gets overlooked. If enrollment is open, an attacker can register rogue devices that receive all Intune policies, including sensitive configurations and scripts, creating a beachhead inside the management plane.
+- Restrict enrollment to specific security groups. Disable open enrollment for all users. Only members of an enrollment-authorized group should be able to add devices.
+- Enforce corporate device identifiers (serial numbers, hardware hashes) for Autopilot enrollment. Do not allow arbitrary devices to self-enroll through Autopilot.
+- Reduce per-user device enrollment limits. The default of 15 is far too high. Reduce it to 3-5 based on your environment.
+- Require MFA for device enrollment via a Conditional Access policy targeting the enrollment flow.
+- Audit enrolled devices weekly and alert on unknown or unexpected entries.
+- Enable the Enrollment Status Page to block device use until compliance is confirmed.
+10. Monitor and Alert on High-Impact Actions
+Configure logging and alerting in Microsoft Sentinel (or your SIEM of choice) for Intune administrative actions: device wipe commands, new script deployments, compliance policy modifications, new admin role assignments, and new Global Admin account creation. In some cases the attackers create a new Global Admin account after compromising the Intune admin. This should triggered an alert since this is not something that should happen often.
+To get Intune data into Sentinel, you need to configure Diagnostic Settings in Intune to send audit logs to your Log Analytics workspace. Once enabled, this creates the IntuneAuditLogs
+, IntuneOperationalLogs
+, IntuneDevices
+, and IntuneDeviceComplianceOrg
+tables.
+Key Telemetry Sources
+Your detection coverage depends on having the right log sources flowing into Sentinel. Here is what you need:
+Log Source | Table/Location | What to Watch |
+|---|---|---|
+Entra Audit Logs | AuditLogs | Role assignments, PIM activations, app registration permission grants |
+Intune Audit Logs | IntuneAuditLogs | New scripts, policy creation, device wipes, group assignments |
+M365 Unified Audit | OfficeActivity | Add compliance policy, Run script on device |
+MDE Device Events | DeviceProcessEvents | Suspicious child processes of IntuneManagementExtension.exe |
+Entra Sign-In Logs | SigninLogs | Intune portal logins from non-PAW, unusual geography |
+Priority Detections to Build
+- New PowerShell script uploaded to Intune → High alert
+- Script assigned to "All Devices" or "All Users" → Critical alert
+- Intune admin role granted outside PIM → Critical alert
+IntuneManagementExtension.exe
+spawningcmd. exe
+,powershell.exe
+, ornet.exe
+→ High alert- Graph API actor (no UPN) performing script or policy operations → High alert
+- Intune portal access from non-compliant or non-PAW device → Medium alert
+Hunting Queries (Ad Hoc)
+The following queries are useful for ad hoc threat hunting when investigating a suspected compromise. Use them to scope the extent of adversary activity within Intune.
+New PowerShell Script Created
+This is the highest-fidelity indicator of script-based abuse. Fires when a deviceManagementScript
+or deviceShellScript
+object is created.
+// Query 1 - New PowerShell / Shell Script Created
+IntuneAuditLogs
+| where OperationName == "Create"
+| where Properties has "deviceManagementScript"
+or Properties has_cs "deviceShellScript"
+| extend ParsedProps = parse_json(Properties)
+| extend
+Actor = tostring(ParsedProps.Actor.UPN),
+ActorAADId = tostring(ParsedProps.Actor.Id),
+TargetName = tostring(ParsedProps.TargetDisplayNames[0]),
+ResultStatus = tostring(ParsedProps.ActivityResultStatus)
+| project TimeGenerated, Actor, ActorAADId, TargetName, OperationName, ResultStatus
+| sort by TimeGenerated desc
+Broad Group Assignment (All Devices/All Users)
+Triggers when a policy, script, or application is assigned to "All Devices" or "All Users," the highest blast-radius targets. Any unexpected assignment to these groups warrants immediate investigation.
+// Query 2 - Broad Group Assignment (All Devices / All Users)
+IntuneAuditLogs
+| where OperationName has_any ("Assign", "Update")
+| extend ParsedProps = parse_json(Properties)
+| extend
+Actor = tostring(ParsedProps.Actor.UPN),
+ActorAADId = tostring(ParsedProps.Actor.Id),
+TargetName = tostring(ParsedProps.TargetDisplayNames[0]),
+ResultStatus = tostring(ParsedProps.ActivityResultStatus),
+RawProps = tostring(Properties)
+| where RawProps has_any (
+"All Devices", "All Users", "allDevices", "allLicensedUsers"
+)
+| project TimeGenerated, Actor, ActorAADId, TargetName, OperationName, ResultStatus, RawProps
+| sort by TimeGenerated desc
+New Global Admin Account Creation (Entra ID cross-reference)
+In some of attacks, the adversary create a new Global Admin account after compromising the Intune admin. This query catches that in Entra ID audit logs.
+//Query 3
+AuditLogs
+| where TimeGenerated > ago(24h)
+| where OperationName == "Add member to role"
+| extend TargetRole = tostring(TargetResources[0].modifiedProperties[1].newValue)
+| where TargetRole has "Global Administrator" or TargetRole has "Company Administrator"
+| extend Actor = tostring(InitiatedBy.user.userPrincipalName)
+| extend TargetUser = tostring(TargetResources[0].userPrincipalName)
+| project TimeGenerated, Actor, TargetUser, TargetRole, OperationName
+| sort by TimeGenerated desc
+Combined High-Fidelity Sentinel Analytics Rule (*Deploy This One)
+The hunting queries above are useful for investigation, but this is the single rule to deploy in production as a Scheduled Analytics Rule. It covers all the scenarios above in one query, adds dynamic severity scoring, and includes an IsApiActor
+flag that catches service principal/Graph API abuse, a common blind spot in Intune monitoring.
+Set the run frequency to five minutes. Map alert severity to the Severity
+field. Set entity mappings on Actor
+(Account entity) and TargetName
+(Host entity) for automatic incident enrichment.
+// Query 4 - Combined High-Fidelity Sentinel Analytics Rule
+let SensitiveCategories = dynamic([
+"DeviceManagementScripts", "DeviceShellScripts", "Win32LobApp",
+"DeviceConfiguration", "DeviceCompliancePolicy",
+"EndpointSecurity", "SecurityBaseline",
+"ConfigurationPolicies", "GroupPolicyConfigurations"
+]);
+let SensitiveOps = dynamic(["Create", "Add", "Assign", "Update"]);
+let BroadTargets = dynamic(["All Devices","All Users","allDevices","allLicensedUsers"]);
+//
+IntuneAuditLogs
+| where OperationName has_any (SensitiveOps)
+| extend ParsedProps = parse_json(Properties)
+| extend
+Actor = tostring(ParsedProps.Actor.UPN),
+ActorAADId = tostring(ParsedProps.Actor.Id),
+ActorAppId = tostring(ParsedProps.Actor.ApplicationId),
+TargetName = tostring(ParsedProps.TargetDisplayNames[0]),
+ResultStatus = tostring(ParsedProps.ActivityResultStatus),
+Category = tostring(ParsedProps.Category),
+RawProps = tostring(Properties)
+| where Category has_any (SensitiveCategories)
+or RawProps has_any (BroadTargets)
+| extend
+IsBroadAssignment = RawProps has_any (BroadTargets),
+IsScriptOp = Category has_any ("DeviceManagementScripts","DeviceShellScripts","Win32LobApp"),
+IsApiActor = isnotempty(ActorAppId) and isempty(Actor)
+| extend Severity = case(
+IsScriptOp and IsBroadAssignment, "Critical",
+IsScriptOp and OperationName == "Create", "High",
+IsBroadAssignment and OperationName == "Assign", "High",
+IsApiActor and IsScriptOp, "High",
+OperationName == "Create" and IsApiActor, "Medium",
+"Low"
+)
+| project
+TimeGenerated, Severity, Actor, ActorAADId, ActorAppId,
+IsApiActor, Category, OperationName, TargetName,
+IsBroadAssignment, IsScriptOp, ResultStatus
+| sort by Severity asc, TimeGenerated desc
+What ‘IsApiActor’ catches: When ActorAppId
+is populated and the Actor
+UPN field is empty, it means the change was made by a service principal (an app registration) rather than a human administrator. This is the Graph API abuse vector described in the app registration section above. Most organizations have no visibility into these changes because their monitoring only looks for human UPNs. This flag closes that blind spot.
+Severity scoring logic:
+Severity | Condition |
+|---|---|
+Critical | IsScriptOp AND IsBroadAssignment (script or app deployed to All Devices / All Users) |
+High | IsScriptOp AND Create, OR IsBroadAssignment AND Assign, OR IsApiActor AND IsScriptOp |
+Medium | Create AND IsApiActor (service principal creating new objects) |
+Low | All other operations matching the sensitive categories or broad targets list |
+11. Audit BYOD Enrollment Scope
+One of the devastating aspects of this attacks is the impact on personal devices enrolled through the Bring Your Own Device (BYOD) program. Under full device management enrollment, a remote wipe erases everything, personal data, personal photos, even eSIM configurations. Review whether your enrollment policies are using full device management where only application-level management (MAM) is required for personal devices.
+ATT&CK Technique Mapping
+For those who want to map this to a framework, here is how the Intune abuse vectors align to MITRE ATT&CK:
+Technique ID | Name | Intune Abuse Vector | Primary Mitigation |
+|---|---|---|---|
+T1072 | Software Deployment Tools | Push malware as Win32 app | Approval workflow + MDE scanning of packages |
+T1059.001 | PowerShell | Deploy malicious script to fleet | Script audit alerts + signing enforcement |
+T1098 | Account Manipulation | Add rogue admin via Graph API | PIM + alert on role assignments |
+T1578 | Modify Cloud Compute | Wipe / reset devices fleet-wide | Multi-Admin Approval + MFA step-up for destructive ops |
+T1537 | Transfer Data to Cloud | Exfil via compliance policy loophole | CASB + DLP integration with Intune compliance |
+T1556 | Modify Authentication Process | Modify WHFB / cert trust via policy | Scope tags + auth policy change alerting |
+If You Only Do Five Things
+If you only have capacity to implement five controls today, these produce the highest risk reduction with the least operational overhead:
+- Enable PIM on the Intune Administrator role and require MFA step-up for activation. No standing admin access. Period.
+- Deploy Query “Combined High-Fidelity Sentinel Analytics Rule” as a Scheduled Analytics Rule in Sentinel. Alert on Critical/High severity events. This single rule covers scripts, broad assignments, policy changes, and Graph API abuse.
+- Audit current Intune RBAC assignments and remove all standing Global Admin access immediately. If someone has permanent Global Admin for "Intune stuff," fix that today.
+- Enable Multi-Admin Approval for script deployments, app deployments, and device wipe/retire/delete actions. No single admin should be able to execute fleet-wide destructive operations unilaterally.
+- Review all app registrations holding ‘DeviceManagement*.ReadWrite.All’ Graph API permissions. If you cannot explain why an app registration exists and who owns it, revoke the permissions or delete it.
+These five actions directly address every vector that we have seen exploited in the wild. The rest of the recommendations in this post are important, but if you do nothing else, do these.
+The Bigger Picture
+The biggest takeaway is broader than any single platform. Organizations need to fundamentally rethink how they identify, classify, and protect privileged roles across their entire technology stack, not just AD, not just Entra ID. Every platform that has administrative control over endpoints, infrastructure, and data will need closer evaluation.
+The attacker did not need a zero-day or custom malware. They just needed one compromised administrator account and access to a management console that was not adequately protected. That is the reality of the threat landscape we are operating in, and it should inform how we approach risk analysis, access governance, and Incident Response readiness going forward.
+If this attack teaches us anything, it is that the definition of "privileged access" in most organizations is dangerously incomplete. The people who manage your MDM, your CI/CD pipelines, your backup infrastructure, your virtualization platforms are all holding keys to the kingdom. It is time we started treating them that way.
+Up Next: Part 2, the Implementation Guide
+This post covered the why and the what. In Part 2 (coming soon), I will walk through the how, step by step, for each control covered here. That includes decision flowcharts for choosing the right implementation sequence, portal-level configuration walkthroughs for PIM, Multi-Admin Approval, Conditional Access, RBAC scoping, enrollment restrictions, and script signing, along with validation tests to confirm each control is working as expected. If you want to take the controls in this post and deploy them in your environment, Part 2 is where you go next.
+If you found this useful and want to continue the conversation, [get in touch with us.](https://trustedsec.com/contact) These are the kinds of risks I work on every day in incident response and security advisory engagements, helping organizations identify the gaps in their privileged access models before someone else finds them first.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-5" class="article-body">
             <h2 class="article-title">CISA Adds Exploited Magento RCE Flaw CVE-2026-45247 to KEV Catalog</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/cisa-adds-exploited-magento-rce-flaw.html" target="_blank">Original Link</a></p>
             <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Wednesday [added](https://www.cisa.gov/news-events/alerts/2026/06/03/cisa-adds-one-known-exploited-vulnerability-catalog) a critical flaw impacting Mirasvit Cache Warmer, a popular Magento full-page cache extension, to its Known Exploited Vulnerabilities (KEV) catalog, following reports of active exploitation in the wild.
@@ -84,182 +457,7 @@ In light of active exploitation, Federal Civilian Executive Branch (FCEB) agenci
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-1" class="article-body">
-            <h2 class="article-title">VS Code zero-day lets hackers steal GitHub tokens in one click</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/vs-code-zero-day-lets-hackers-steal-github-tokens-in-one-click/" target="_blank">Original Link</a></p>
-            <div class="content-text">A security researcher has released exploit code for a Visual Studio Code (VS Code) zero-day vulnerability that allows attackers to steal GitHub authentication tokens by tricking users into clicking a link. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-2" class="article-body">
-            <h2 class="article-title">Preinstall to persistence: Inside the Red Hat npm Miasma credential-stealing campaign</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/06/02/preinstall-persistence-inside-red-hat-npm-miasma-credential-stealing-campaign/" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft Threat Intelligence identified a large-scale npm supply chain attack affecting 32 maliciously modified packages across more than 90 versions under the @redhat-cloud-services npm scope. The compromise originated from the upstream RedHatInsights/javascript-clients Continuous Integration and Continuous Delivery (CI/CD) pipeline, allowing attackers to publish trojanized packages through the legitimate GitHub Actions OpenID Connect (OIDC) publishing workflow. As a result, the malicious packages carried authentic provenance signatures while embedding the campaign marker “Miasma: The Spreading Blight.”
-Once installed, the trojanized packages triggered an npm preinstall hook that executed a heavily obfuscated 4.29 MB dropper script. Through multiple layers of obfuscation and encryption, the malware downloaded the Bun JavaScript runtime and launched a secondary payload designed to harvest credentials from GitHub, npm, Amazon Web Service (AWS), Azure, Google Cloud Platform (GCP), HashiCorp Vault, Kubernetes, and developer systems. The malware also attempted to propagate by compromising additional maintainer packages and, in some scenarios, could destroy the maintainer’s home directory.
-The payload operated across Linux, macOS, and Windows by dynamically downloading the correct Bun runtime for each platform, although Linux CI/CD runners appeared to be the primary target. On developer systems, the malware stole Secure Shell (SSH) keys, command-line interface (CLI) credentials, browser and wallet data, while in CI/CD environments it scraped GitHub Actions runner memory for secrets, escalated privileges using passwordless sudo, and republished poisoned packages with forged Supply-chain Levels for Software Artifacts (SLSA) provenance to continue downstream propagation. Microsoft shared its findings with the npm team, leading to the removal of affected repositories and the implementation of additional protections on the @redhat-cloud-services namespace to prevent unauthorized publishing.
-Attack chain overview
-At a high level, the malware payload progresses through 10 phases:
-- Delivery and execution: The infection begins automatically during npm install, where the malicious preinstall hook executes node index.js without requiring user interaction.
-- Staged unpacking: The payload is unpacked through multiple decoding layers, including several ROT (rotate)-based obfuscation variants followed by AES-128-GCM decryption. The malware then downloads the Bun runtime and detonates the final payload.
-- Environment gating: The malware validates the execution environment before continuing. It terminates execution on systems configured with few regions in locale settings and can optionally restrict execution to CI/CD environments only.
-- Defense evasion: The malware attempts to neutralize security controls
-- Credential access: The malware harvests secrets and authentication tokens from GitHub, npm, major cloud providers, HashiCorp Vault, and Kubernetes environments, including scraping sensitive data directly from CI runner process memory.
-- Privilege escalation: It installs a passwordless sudo rule to obtain elevated privileges and maintain deeper system control.
-- Persistence: The malware continuously monitors stolen tokens and prepares secondary-stage payload deployment for long-term access.
-- Exfiltration: Stolen data is transmitted using three separate command-and-control (C2) channels, including abuse of GitHub infrastructure as an exfiltration mechanism.
-- Self-propagation: The malware republishes packages owned by the compromised maintainer using forged provenance metadata, effectively allowing the threat to spread like a worm across trusted package ecosystems.
-- Destructive tripwire: If the malware detects interaction with a planted decoy token, it triggers a destructive fail-safe command (rm -rf ~/) intended to wipe the victim’s home directory.
-The payload replaces the legitimate index.js with a single-line obfuscated script.
-Obfuscation
-Stage 0 – Malicious preinstall trigger: The attack begins in package.json, where a weaponized preinstall hook automatically executes during npm install, allowing the malware to run through both direct and transitive dependency installation. The modified packages also replaced the original index.js while leaving source-map metadata unchanged, indicating probable release-pipeline tampering.
-Stage 1 – Multi-layer JavaScript obfuscation: The 4.29 MB index.js dropper uses layered obfuscation, beginning with a large character-code array reconstructed at runtime, decoded through a ROT-XX (Caesar cipher) transformation, and dynamically executed via eval().
-Stage 2 – AES-encrypted payloads and Bun runtime abuse: The next layer decrypts two AES-128-GCM encrypted blobs: one downloads the Bun runtime from official Bun infrastructure, while the second contains the primary payload. The malware then executes the payload via Bun, creating an unusual process chain (node → shell → bun → payload) designed to evade Node-focused monitoring and detections.
-Stage 3 – Obfuscator.io string-array protection: The Bun-executed payload is additionally protected using Obfuscator.io techniques, including rotated string arrays, decoder functions, and hundreds of alias wrappers that conceal nearly every string and identifier from static analysis.
-Stage 4 – Custom cryptographic string cipher: Sensitive strings remain protected behind a bespoke encryption routine that derives keys using PBKDF2-HMAC-SHA-256 with 200,000 iterations, followed by multiple SHA-256-seeded permutation and XOR stages, significantly complicating reverse engineering and static extraction.
-Credential theft
-The payload targets secrets across multiple providers:
-- GitHub: Validates token/scopes, enumerates repos, reads Actions/org secrets, uses GraphQL for branch/history, and steals ACTIONS_RUNTIME_TOKEN + ACTIONS_ID_TOKEN_REQUEST_TOKEN.
-- npm: Validates via /-/whoami, exchanges OIDC token for publish rights, and searches maintainer-owned packages for poisoning targets.
-- AWS: Pulls Identity and Access Management (IAM) credentials via Instance Metadata Service (IMDS) and Elastic Container Service (ECS) metadata, plus Secrets Manager access.
-- Azure: Collects IMDS OAuth2 tokens for management.azure.com, graph.microsoft.com, and Key Vault (*.vault.azure.net).
-- GCP: Harvests metadata.google.internal service-account tokens, Secret Manager, and Resource Manager access.
-- Vault/K8s: Probes Vault (127.0.0.1:8200) across many token paths; reads Kubernetes Service Account (SA) token and namespace secrets.
-- CI & Local : Steals CIRCLE_TOKEN; exfiltrates secrets from SSH/AWS/npm/PyPI/git/env/gcloud/kube/docker, browser data, and wallet files (*.wallet, wallet.dat).
-Runner memory scraping
-The payload locates the GitHub Actions Runner.Worker PID using /proc scanning, then extracts runtime secrets using the following:
-1 2 3 4 5 6 7 | // Locates Runner.Worker PID via /proc 'findRunnerWorkerPIDLinux' // Scans /proc/<pid>/cmdline for "Runner.Worker" // Extracts secrets from process memory tr -d '\0' | grep -aoE '"[^"]+":{"value":"[^"]*","isSecret":true}' | sort -u </pid> |
-This activity bypasses normal secret masking by reading secrets directly from runner process memory.
-Privilege escalation
-The payload performs the following actions to escalate its privileges:
-- Injects sudoers rule through bind mount: echo ‘runner ALL=(ALL) NOPASSWD:ALL’ > /mnt/runner
-- Modifies /etc/hosts for DNS redirection
-1 2 3 4 5 6 7 8 9 10 | // Injects passwordless sudo via /etc/sudoers.d bind mount at /mnt echo 'runner ALL=(ALL) NOPASSWD:ALL' > && chmod 0440 /mnt/runner // Neutralize Security product monitoring sudo sh -c "echo '127.0.0.1 <target>' >> /etc/hosts" // Validates sudo access before operations sudo -n true </target> |
-Exfiltration
-The malware abuses GitHub and victim-owned assets instead of a single easy-to-block C2 endpoint:
-Channel A (victim-owned repo drop): Creates a public repo in the victim’s GitHub account (“Miasma: The Spreading Blight”) and commits stolen credential JSON to results/<timestamp>-<counter>.json. Repo names are randomized (adjective-creature-<0–99999>), spreading indicators.
-Channel B (code propagation): Injects its own source as .github/setup.js into non-protected branches across victim-owned repos via Git Data API (blob → tree → commit → ref update). Skips protected/default branches and common bot/release branches; uses chore: update dependencies [skip ci] with spoofed github-actions@github.com.
-Channel C (dormant HTTPS sender): Includes a disabled POST path to api.anthropic.com:443/v1/api (noop: true in this sample). The same domain is used to validate stolen Anthropic keys (for example, ~/.claude.json), indicating a swappable live exfiltration path.
-C2 is not tied to one account; it rotates across a pool of 16 attacker-controlled GitHub accounts per session. Stolen tokens are double-Base64 encoded in transit, and traffic is masked with python-requests/2.31.0 user-agent spoofing
-Propagation and persistence
-The malware spreads across repositories while maintaining access through credential theft, supply-chain forgery, and destructive safeguards:
-- Enumerates /user/repos and /user/orgs to spread into additional repositories
-- Installs Bun runtime, executes second-stage payload using bun run .claude/
-- Deploys token monitor for ongoing credential capture
-- Forges SLSA provenance attestations through Sigstore (Fulcio or Rekor) to appear legitimate
-- Plants a decoy honeytoken (IfYouInvalidateThisTokenItWillNukeTheComputerOfTheOwner); triggering/revoking it can invoke a wiper routine (rm -rf ~/ and ~/Documents)
-Impact and blast radius
-This attack has a wide blast radius, affecting packages, credentials, and downstream systems.
-- Direct compromise of @ redhat-cloud-services packages with broad ecosystem adoption
-- Amplification through downstream dependencies into thousands of projects
-- Cascading risk: stolen npm tokens enable further package poisoning, stolen GitHub tokens enable repo manipulation, and stolen AWS credentials enable cloud access
-- SLSA provenance forgery erodes trust in supply chain attestation frameworks
-Campaign scope
-Our investigation uncovered the following affected packages and versions.
-| Package (@redhat-cloud-services/…) | Malicious versions |
-| types | 3.6.1, 3.6.2, 3.6.4 |
-| frontend-components-utilities | 7.4.1, 7.4.2, 7.4.4 |
-| frontend-components | 7.7.2, 7.7.3, 7.7.5 |
-| rbac-client | 9.0.3, 9.0.4, 9.0.6 |
-| javascript-clients-shared | 2.0.8, 2.0.9, 2.0.11 |
-| frontend-components-config-utilities | 4.11.2, 4.11.3, 4.11.5 |
-| frontend-components-notifications | 6.9.2, 6.9.3, 6.9.5 |
-| tsc-transform-imports | 1.2.2, 1.2.4, 1.2.6 |
-| frontend-components-config | 6.11.3, 6.11.4, 6.11.6 |
-| eslint-config-redhat-cloud-services | 3.2.1, 3.2.2, 3.2.4 |
-| host-inventory-client | 5.0.3, 5.0.4, 5.0.6 |
-| rule-components | 4.7.2, 4.7.3, 4.7.5 |
-| frontend-components-remediations | 4.9.2, 4.9.3, 4.9.5 |
-| frontend-components-translations | 4.4.1, 4.4.2, 4.4.4 |
-| vulnerabilities-client | 2.1.9, 2.1.11 |
-| frontend-components-advisor-components | 3.8.2, 3.8.4, 3.8.6 |
-| entitlements-client | 4.0.11, 4.0.12, 4.0.14 |
-| chrome | 2.3.1, 2.3.2, 2.3.4 |
-| notifications-client | 6.1.4, 6.1.5, 6.1.7 |
-| compliance-client | 4.0.3, 4.0.4, 4.0.6 |
-| sources-client | 3.0.10, 3.0.11, 3.0.13 |
-| integrations-client | 6.0.4, 6.0.5, 6.0.7 |
-| frontend-components-testing | 1.2.1, 1.2.2, 1.2.4 |
-| remediations-client | 4.0.4, 4.0.5, 4.0.7 |
-| insights-client | 4.0.4, 4.0.5, 4.0.7 |
-| topological-inventory-client | 3.0.10, 3.0.11, 3.0.13 |
-| config-manager-client | 5.0.4, 5.0.5, 5.0.7 |
-| hcc-pf-mcp | 0.6.1, 0.6.2, 0.6.4 |
-| quickstarts-client | 4.0.11, 4.0.12, 4.0.14 |
-| patch-client | 4.0.4, 4.0.5, 4.0.7 |
-| hcc-feo-mcp | 0.3.1, 0.3.2, 0.3.4 |
-| hcc-kessel-mcp | 0.3.1, 0.3.2, 0.3.4 |
-Mitigation and protection guidance
-Microsoft recommends the following mitigations to reduce the impact of this threat:
-- Review dependency trees for direct or transitive usage of affected @ redhat-cloud-services / packages.
-- Identify systems that installed or built affected package versions during the suspected exposure window.
-- Pin known-good package versions where possible and avoid automatic dependency upgrades until validation is complete.
-- Disable pre- and post-installation script execution by ensuring you run npm install with –ignore-scripts.
-- While GitHub team has already invalidated all the npm tokens that had write access and 2FA bypass, Microsoft Defender still recommends rotating credentials, tokens, npm access tokens, CI/CD secrets, and cloud credentials that might have been exposed in affected build or developer environments.
-- Audit organization and personal GitHub account for public repositories with the description “Miasma: The Spreading Blight” or other unexpected repositories created during the exposure window, and revoke any GitHub tokens that might have been implicated.
-- Audit CI/CD logs for unexpected outbound network connections, script execution, or suspicious package lifecycle activity.
-- Review npm package lockfiles, build logs, and artifact provenance for evidence of compromised package versions.
-[Enable cloud-delivered protection](https://learn.microsoft.com/en-us/defender-endpoint/enable-cloud-protection-microsoft-defender-antivirus)in Microsoft Defender Antivirus or equivalent antivirus protection.- Use Microsoft Defender XDR to investigate suspicious activity across endpoints, identities, cloud apps, and developer environments. Use Microsoft Defender Vulnerability Management to search for redhat-cloud-services packages across your estate.
-Microsoft Defender XDR detections
-Microsoft Defender XDR customers can refer to the list of applicable detections below. Microsoft Defender XDR coordinates detection, prevention, investigation, and response across endpoints, identities, email, and apps to provide integrated protection against attacks like the threat discussed in this blog.
-Customers with provisioned access can also use Microsoft Security Copilot in Microsoft Defender to investigate and respond to incidents, hunt for threats, and protect their organization with relevant threat intelligence.
-Microsoft Defender XDR detections
-Microsoft Defender XDR customers can refer to the list of applicable detections below. Microsoft Defender XDR coordinates detection, prevention, investigation, and response across endpoints, identities, email, and apps to provide integrated protection against attacks like the threat discussed in this blog.
-| Tactic | Observed activity | Microsoft Defender coverage |
-| Initial access / Execution | Suspicious script execution during npm install or package lifecycle activity | Microsoft Defender Antivirus – Trojan:JS/ShaiWorm.DAW!MTB – Trojan:JS/ObfusNpmJs Microsoft Defender for Endpoint – Suspicious Node.js process behavior – Suspicious installation of Bun runtime Microsoft Defender XDR – Suspicious file creation in temporary directory by node.exe – Suspicious Bun execution from Node.js process |
-| Execution / Defense evasion | Four-layer obfuscation (ROT XX) → AES-128-GCM → string-array → custom cipher); Bun runtime download and execution to move off Node.js; process lineage node → sh → bun to evade detection | Microsoft Defender for Endpoint – Suspicious usage of Bun runtime – Suspicious installation of Bun runtime – Suspicious Node.js process behavior – Suspicious script execution via Bun Microsoft Defender for Cloud – Suspicious supply-chain compromise activity detected |
-| Credential access | Multi-platform harvester targeting GitHub, npm, AWS IMDS/ECS, Azure IMDS, GCP, Vault, K8s, CircleCI; runner process-memory scraping to unmask secrets; anthropic API key theft | Microsoft Defender for Endpoint – Credential access attempt – Kubernetes secrets enumeration indicative of credential access Microsoft Defender for Cloud – Sha1-Hulud Campaign Detected: Possible command injection to exfiltrate credentials Microsoft Defender for Identity – Anomalous token request patterns – Suspicious enumeration of organizational secrets |
-| Exfiltration | Public GitHub repo creation under victim’s account with stolen credential JSON; Git Data API commits to non-protected branches; domain-sender fallback to (dormant) api.anthropic.com | Microsoft Defender for Cloud Apps – Suspicious GitHub API activity (repo creation, commit patterns) – Unusual data volume in commits – Authentication from unusual IP/location |
-| Impact / Worm propagation | npm OIDC token exchange republishing; forged Sigstore/SLSA provenance; self-injection (.github/setup.js) into victim repos on non-protected branches | Microsoft Defender for Cloud Apps – Suspicious npm package republish via OIDC – Anomalous use of bypass_2fa parameter – Packages publish from unusual location/time |
-Microsoft Defender XDR Threat analytics
-Microsoft Defender XDR customers can reference the Threat analytics report for this campaign in the Microsoft Defender portal at [https://security.microsoft.com/threatanalytics3](https://security.microsoft.com/threatanalytics3) for the latest indicators, recommended actions, and mitigation status across their estate.
-Advanced hunting
-The following KQL queries can be used in Microsoft Defender XDR Advanced Hunting to identify potential exposure to this supply-chain compromise.
-Bun execution from temporary directories
-1 2 3 4 5 6 | DeviceProcessEvents | where FileName == "bun" or ProcessCommandLine has "bun run" | where FolderPath startswith "/tmp/" or FolderPath startswith @"C:\Users\*\AppData\Local\Temp" | project Timestamp, DeviceName, InitiatingProcessFileName, ProcessCommandLine, FolderPath, AccountName | sort by Timestamp desc |
-Bun execution from temporary directory (CloudProcessEvents)
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 | CloudProcessEvents | where Timestamp > ago(7d) | where ProcessName =~ "bun" or ProcessCommandLine has "bun run" | where FolderPath startswith "/tmp/" or ProcessCommandLine matches regex @"/tmp/[^ ]*bun" | project Timestamp, TenantId, AzureResourceId, KubernetesNamespace, KubernetesPodName, ContainerName, ContainerImageName, ContainerId, AccountName, ProcessName, FolderPath, ParentProcessName, ProcessCommandLine, UpperLayer = tostring(AdditionalFields.UpperLayer), DriftAction = tostring(AdditionalFields.DriftAction), Memfd = tostring(AdditionalFields.Memfd) | sort by Timestamp desc |
-Bun download activity
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 | CloudProcessEvents | where Timestamp > ago(7d) | where ProcessName in~ ("curl","wget") | where ProcessCommandLine matches regex @"https?://[^\s""']*?(github\.com/oven-sh/bun/releases|release-assets\.githubusercontent\.com/[^\s""']*?bun-(linux|darwin|windows)|/bun-(linux|darwin|windows)-(x64|aarch64|arm64)\.zip)" | extend BunUrl = extract( @"(https?://[^\s""']*?(?:github\.com/oven-sh/bun/releases|release-assets\.githubusercontent\.com/[^\s""']*?bun-(?:linux|darwin|windows)|/bun-(?:linux|darwin|windows)-(?:x64|aarch64|arm64)\.zip)[^\s""']*)", 1, ProcessCommandLine), OutputPath = extract(@"-[oO]\s+[""']?(\S+?)[""']?(\s|$)", 1, ProcessCommandLine) | project Timestamp, TenantId, AzureResourceId, KubernetesNamespace, KubernetesPodName, ContainerImageName, ContainerId, ProcessName, ParentProcessName, ParentProcessId, BunUrl, OutputPath, ProcessCommandLine, UpperLayer = tostring(AdditionalFields.UpperLayer) | sort by Timestamp desc |
-npm → Node → Bun process chain
-1 2 3 4 5 6 7 8 9 10 11 | DeviceProcessEvents | where InitiatingProcessFileName in ("node", "node.exe") | where FileName == "bun" or FileName == "bun.exe" | join kind=inner ( DeviceProcessEvents | where InitiatingProcessFileName in ("npm", "npm.cmd") | where FileName in ("node", "node.exe") ) on DeviceId, $left.InitiatingProcessId == $right.ProcessId | project Timestamp, DeviceName, AccountName, NpmCommandLine = ProcessCommandLine1, BunCommandLine = ProcessCommandLine |
-Cloud metadata endpoint access from build processes
-1 2 3 4 5 | DeviceNetworkEvents | where RemoteIP in ("169.254.169.254", "169.254.170.2") | where InitiatingProcessFileName in ("node", "node.exe", "bun", "bun.exe") | project Timestamp, DeviceName, RemoteIP, RemoteUrl, InitiatingProcessFileName, InitiatingProcessCommandLine |
-GitHub repository creation activity
-1 2 3 4 5 6 | CloudAppEvents | where ActionType == "CreateRepository" or RawEventName == "repo.create" | where Application == "GitHub" | where AccountType == "ServiceAccount" or ActorType has "Integration" | project Timestamp, AccountDisplayName, ActionType, RawEventName, IPAddress, City, CountryCode |
-Process memory access (runner scraping)
-1 2 3 | DeviceProcessEvents | where FileName == "grep" | where ProcessCommandLine has_all ("value", "isSecret\":true") |
-npm token enumeration
-1 2 3 4 5 | DeviceNetworkEvents | where RemoteUrl has "registry.npmjs.org/-/npm/v1/tokens" or RemoteUrl has "registry.npmjs.org/-/whoami" | project Timestamp, DeviceName, RemoteUrl, InitiatingProcessFileName, InitiatingProcessCommandLine |
-Linux CI runner detection (process tree)
-1 2 3 4 5 | # For Linux runners not managed by Defender, use these shell commands: # Detect: npm preinstall spawning bun from /tmp ps aux | grep -E '/tmp/b-[a-z0-9]+/bun' # Detect: payload writes to /tmp/p*.js inotifywait -m /tmp -e create | grep '^/tmp/p.*\.js$' |
-Indicators of compromise (IOC)
-| Indicator | Type | Description |
-| @ redhat-cloud-services | Package scope | All packages maintained by the @redhat-cloud-service account were compromised. |
-| Index.js | File name | Malicious script or dropped file |
-| 396cac9e457ec54ff6d3f6311cb5cc1da8054d019ce3ffa1de5741506c7a4ea4 | Sha256 | Index.js (from redhat-cloud-services/remediations-client) |
-| d8d170af3de17bb9b217c52aaaffdf9395f35ef015a57ef676e406c121e5e223 | Sha256 | index.js (from @redhat-cloud-services/frontend-components-advisor-components-3.8.2) |
-| f0641e053e81f0d01fa46db35a83e0a34494886503086866d956d14e81fd3e1c | Sha256 | index.js (from @redhat-cloud-services/hcc-kessel-mcp-0.3.4) |
-| d5a97614d5319ce9c8e01fa0b4eb06fb5b9e54fa13b23d718174a1546444123b | Sha256 | index.js (from @redhat-cloud-services/frontend-components-testing-1.2.4) |
-| f88258e21592084a2f93a572ade8f9b91c0cd0e242f5cf6121ed7bad0f7bdd1f | Sha256 | index.js (from @redhat-cloud-services/frontend-components-notifications-6.9.3) |
-| 25e121e3b7d300c0d0075b33e5eca39a3e6a659fb9cfee52b70ef71686628f1b | Sha256 | index.js (from @redhat-cloud-services/chrome-2.3.4) |
-Learn more
-For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
-To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
-To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
-Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
-[Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)- Learn more about
-[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection) - Evaluate your AI readiness with our latest
-[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). - Learn more about
-[Protect your agents in real-time during runtime (Preview)](https://learn.microsoft.com/en-us/defender-cloud-apps/real-time-agent-protection-during-runtime) - Explore
-[how to build and customize agents with Copilot Studio Agent Builder](https://eurppc-word-edit.officeapps.live.com/we/%E2%80%A2%09https:/learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/copilot-studio-agent-builder)</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-3" class="article-body">
+        <div id="art-6" class="article-body">
             <h2 class="article-title">CISA Adds Two Known Exploited Vulnerabilities to Catalog</h2>
             <p class="source-link">Source: All CISA Advisories | <a href="https://www.cisa.gov/news-events/alerts/2026/06/02/cisa-adds-two-known-exploited-vulnerabilities-catalog" target="_blank">Original Link</a></p>
             <div class="content-text">CISA Adds Two Known Exploited Vulnerabilities to Catalog
@@ -273,286 +471,7 @@ This product is provided subject to this [Notification](/notification) and this 
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">CMMC Conditional Status - Contracting Without Compliance</h2>
-            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/cmmc-conditional-status" target="_blank">Original Link</a></p>
-            <div class="content-text">CMMC Conditional Status - Contracting Without Compliance
-Table of contents
-The [CMMC rollout](https://trustedsec.com/blog/a-big-step-on-the-cmmc-rollout-timeline) is progressing. Contracts that require a CMMC Level 2 (Self) self-assessment have been circulating since the start of Phase 1 in November 2025, and contracts that require CMMC Level 2 (C3PAO) audits will start appearing with Phase 2 in November 2026.
-Contractors and subcontractors struggling to implement the CMMC requirements may be pleasantly surprised to learn that they could be awarded CMMC Level 2 contracts even if they have not implemented all of the applicable requirements via the Conditional Status process.
-This post collects the rules related to Conditional Status so contractors can determine if they are eligible and identify their obligations once they have achieved it.
-Overview
-Contractors and subcontractors can use systems with a Conditional Status to handle CUI under CMMC Level 2 and 3 contracts and subcontracts while they work toward full compliance with CMMC. Conditional Status cannot be used for systems that only need to meet CMMC Level 1 requirements.
-To achieve a CMMC Level 2 or Level 3 Conditional Status, contractors and subcontractors must:
-- Complete a System Security Plan (SSP) that describes the system and its security controls
-- Write a Plan of Action and Milestones (POA&M) for each CMMC requirement that is Not Met (yet)
-- Implement certain mandatory CMMC requirements that cannot be included in a Conditional Status (listed below)
-- Conduct a CMMC assessment of the appropriate level and type as required by the contract (self or C3PAO for Level 2, DIBCAC for Level 3)
-- Achieve a minimum assessment score equal to or greater than 80% of the number of CMMC requirements in the CMMC Level being assessed
-- Submit the self-assessment result via SPRS (the C3PAO or DIBCAC submit results for assessments they conduct)
-Once a contractor or subcontractor achieves a Conditional Status, all remaining CMMC requirements listed in the POA&M must be implemented and re-assessed within 180 days of the Conditional Status to achieve a Final Status.
-What is a Conditional Status?
-A Final Status requires 100% of the CMMC Level 2 or 3 requirements to be Met and is what all contractors and subcontractors will eventually need to achieve if they are working on contracts and subcontracts that require CMMC Status. A Level 2 or Level 3 Final Status is valid for three (3) years.
-The Conditional Status allows contractors and subcontractors that have not implemented all CMMC Level 2 or 3 requirements to work on contracts, just as they would with a Final Status, for up to 180 days. The contractor or subcontractor is expected to achieve Final Status by the end of that period.
-Using a Conditional Status is allowed as per the [DFARS 252.204-7021](https://www.acquisition.gov/dfars/252.204-7021-contractor-compliance-cybersecurity-maturity-model-certification-level-requirements.) contract clause that imposes CMMC Level 2 or 3 requirements on contractors:
-- Paragraph (d)(1)(i) of the contract requires contractors and subcontractors to have a “current” CMMC Status at the indicated level.
-- Paragraph (a) of the clause defines “current” for Level 2 and 3 to include both Conditional Status and Final Status, regardless of whether the contract specifies a self-assessment or C3PAO audit requirement.
-Conditional Status is not valid for CMMC Level 1. Any system with a CMMC Level 1 obligation must implement all of the Level 1 requirements and achieve a Level 1 Final Status in order to handle FCI under a CMMC contract.
-The Catch
-Unfortunately, some large defense contractors only seem to be willing to work with subcontractors that have a Final Status. This is frustrating because CMMC allows the use of a Conditional Status, but it is within a contractor’s rights to impose their own requirements on subcontractors that agree to their terms.
-Subcontractors should confirm whether the upstream contractors will accept a Conditional Status before pursuing this path unnecessarily.
-Conditional Status Requirements
-Certain requirements must be Met to achieve a Conditional Status:
-- An SSP must be in place.
-- A POA&M must be written for each Level 2 and/or Level 3 requirement that is Not Met (yet).
-- Certain specific controls must be in place.
-- The assessment score must be at least 80% of the total number of Level 2 or Level 3 requirements (depending on the required CMMC Level).
-SSP
-CMMC requirement CA.L2-3.12.4 System Security Plan (SSP) is the single most important requirement in CMMC and should be implemented before any other requirement. The SSP describes each information system within the CMMC Assessment Scope and defines how each CMMC control is (or will be) implemented on the system.
-As per [32 CFR 170.24(c)(2)(i)(B)(5)](https://www.ecfr.gov/current/title-32/part-170/section-170.24#p-170.24(c)(2)(i)(B)(5)), an SSP in accordance with CMMC requirement must be in place at the time of assessment. Any CMMC assessment conducted without an SSP in place will result in a finding that ‘an assessment could not be completed due to incomplete information and noncompliance with 48 CFR 252.204-7012’. This would leave the contractor without the assessment score necessary to achieve a Conditional Status.
-An [SSP template](https://csrc.nist.gov/files/pubs/sp/800/171/r2/upd1/final/docs/cui-ssp-template-final.docx) is available from NIST.
-POA&M
-As per [32 CFR 170.24(c)(2)(i)(B)(6)](https://www.ecfr.gov/current/title-32/part-170/section-170.24#p-170.24(c)(2)(i)(B)(6)), a POA&M must be written for each Not Met requirement to achieve a Conditional Status.
-The POA&M is a document that identifies:
-- Tasks that must be accomplished
-- Resources required to accomplish the elements of the plan
-- Any milestones in meeting the tasks
-- Scheduled completion dates for the milestones
-For a contractor or subcontractor pursuing a Conditional Status, the POA&M must list the tasks that will be necessary to implement all of the Level 2 or Level 3 requirements that are currently Not Met.
-A [POA&M template](https://csrc.nist.gov/files/pubs/sp/800/171/r2/upd1/final/docs/cui-plan-of-action-template-final.docx) is available from NIST.
-Mandatory Requirements
-While a Conditional Status is partially based on achieving a minimum assessment score, there are also specific requirements that must be Met to achieve a Conditional Status.
-Each CMMC Level 2 requirement is assigned a point value of one (1), three (3), or five (5). All CMMC Level 2 requirements with a point value of three (3) or five (5) must be Met to achieve Level 2 Conditional Status (a full list of Level 2 requirement point values is included at the end of this post).
-There is an exception where a Level 2 requirement with a value of more than one (1) point is allowed to be Not Met under a Conditional Status: SC.L2-3.13.11 CUI Encryption may be included in a POA&M if encryption is employed but not FIPS-validated, which would result in a point value of three (3) being deducted.
-Some CMMC requirements must be Met to receive a Conditional Status at Level 2 regardless of point value, and some requirements must be Met to receive a Conditional Status at Level 3. These requirements are as follows:
-CMMC Level 2 - | CMMC Level 3 - |
-|---|---|
-AC.L2-3.1.20 External Connections (CUI Data) | IR.L3-3.6.1e Security Operations Center |
-AC.L2-3.1.22 Control Public Information (CUI Data) | IR.L3-3.6.2e Cyber Incident Response Team |
-PE.L2-3.10.3 Escort Visitors (CUI Data) | RA.L3-3.11.1e Threat-Informed Risk Assessment |
-PE.L2-3.10.4 Physical Access Logs (CUI Data) | RA.L3-3.11.6e Supply Chain Risk Response |
-PE.L2-3.10.5 Manage Physical Access (CUI Data) | RA.L3-3.11.7e Supply Chain Risk Plan |
-CA.L2-3.12.4 System Security Plan | RA.L3-3.11.4e Security Solution Rationale |
-| SI.L3-3.14.3e Specialized Asset Security |
-Level 2 Scoring
-The maximum possible score is 110, which is equal to the number of CMMC Level 2 requirements.
-A minimum assessment score of 88 is required for Level 2 Conditional Status, which is equal to 80% of the maximum possible score.
-Points are deducted from the maximum score for each requirement that is Not Met. This may result in a negative score. No points are deducted from the score for requirements that are Met or Not Applicable.
-As described above, each Level 2 requirement is assigned a point value (listed at the end of this post), but this is almost irrelevant for a Conditional Status because, other than the exception described above, a Conditional Status is not allowed if requirements with a value of more than one (1) point are Not Met.
-Level 3 Scoring
-The maximum possible score is 24, which is equal to the number of CMMC Level 3 requirements.
-A minimum assessment score of 20 is required for Level 3 Conditional Status, which is slightly more than 80% of the maximum possible score.
-As with Level 2, points are deducted from the maximum for requirements that are Not Met.
-All Level 3 requirements are assigned a point value of one (1).
-Closing Out a Conditional Status
-A Conditional Status must be closed out within 180 days of its CMMC Status Date.
-All of the following must occur within the 180-day window to close out a Conditional Status:
-- Remediate any Not Met requirements
-- Undergo a POA&M closeout assessment of the same level and type as the original assessment that resulted in the Conditional Status
-- Post the compliance results into SPRS
-- This is handled by the C3PAO for Level 2 C3PAO assessments and by DIBCAC for Level 3 DIBCAC assessments.
-If the POA&M is not successfully closed out within the 180-day timeframe:
-- The Conditional Status will expire.
-- Standard contractual remedies will apply (e.g., enforcement of the False Claims Act).
-- The contractor or subcontractor will be ineligible for additional awards with a requirement until a new CMMC Status is achieved.
-CMMC Level 2 Requirement Points
-Two (2) special Level 2 requirements have variable point values:
-- IA.L2-3.5.3 Multi-factor authentication (MFA):
-- Three (3) points are subtracted from the maximum score if MFA is implemented only for remote and privileged users.
-- Five (5) points are subtracted from the maximum score if MFA is not implemented for any users.
-- SC.L2-3.13.11 FIPS-validated encryption:
-- Three (3) points are subtracted from the maximum score if encryption is employed but is not FIPS-validated .
-- Five (5) points are subtracted from the maximum score if encryption is not employed.
-The point values for the remaining CMMC Level 2 requirements are as follows (from [32 CFR 170.24(c)(2)(i)(B)](https://www.ecfr.gov/current/title-32/part-170/section-170.24#p-170.24(c)(2)(i)(B))); mandatory requirements are indicated with italics:
-Five (5) Points | Three (3) Points | One (1) Point |
-|---|---|---|
-AC.L2-3.1.1 - Authorized Access Control [CUI Data] | AC.L2-3.1.5 - Least Privilege | AC.L2-3.1.3 - Control CUI Flow |
-AC.L2-3.1.2 - Transaction & Function Control | AC.L2-3.1.19 - Encrypt CUI on Mobile | AC.L2-3.1.4 - Separation of Duties |
-AC.L2-3.1.12 - Control Remote Access | AU.L2-3.3.2 - User Accountability | AC.L2-3.1.6 - Non-Privileged Account Use |
-AC.L2-3.1.13 - Remote Access Confidentiality | MA.L2-3.7.1 - Perform Maintenance | AC.L2-3.1.7 - Privileged Functions |
-AC.L2-3.1.16 - Wireless Access Authorization | MA.L2-3.7.4 - Media Inspection | AC.L2-3.1.8 - Unsuccessful Logon Attempts |
-AC.L2-3.1.17 - Wireless Access Protection | MP.L2-3.8.1 - Media Protection | AC.L2-3.1.9 - Privacy & Security Notices |
-AC.L2-3.1.18 - Mobile Device Connection | MP.L2-3.8.2 - Media Access | AC.L2-3.1.10 - Session Lock |
-AT.L2-3.2.1 - Role-Based Risk Awareness | MP.L2-3.8.8 - Shared Media | AC.L2-3.1.11 - Session Termination |
-AT.L2-3.2.2 - Role-Based Training | PS.L2-3.9.1 - Screen Individuals | AC.L2-3.1.14 - Remote Access Routing |
-AU.L2-3.3.1 - System Auditing | RA.L2-3.11.1 - Risk Assessments | AC.L2-3.1.15 - Privileged Remote Access |
-AU.L2-3.3.5 - Audit Correlation | CA.L2-3.12.2 - Operational Plan of Action | AC.L2-3.1.20 - External Connections [CUI Data] |
-CM.L2-3.4.1 - System Baselining | SC.L2-3.13.8 - Data in Transit | AC.L2-3.1.21 - Portable Storage Use |
-CM.L2-3.4.2 - Security Configuration Enforcement | SI.L2-3.14.5 - System & File Scanning [CUI Data] | AC.L2-3.1.22 - Control Public Information [CUI Data] |
-CM.L2-3.4.5 - Access Restrictions for Change | SI.L2-3.14.7 - Identify Unauthorized Use | AT.L2-3.2.3 - Insider Threat Awareness |
-CM.L2-3.4.6 - Least Functionality |
-| AU.L2-3.3.3 - Event Review |
-CM.L2-3.4.7 - Nonessential Functionality |
-| AU.L2-3.3.4 - Audit Failure Alerting |
-CM.L2-3.4.8 - Application Execution Policy |
-| AU.L2-3.3.6 - Reduction & Reporting |
-IA.L2-3.5.1 - Identification [CUI Data] |
-| AU.L2-3.3.7 - Authoritative Time Source |
-IA.L2-3.5.2 - Authentication [CUI Data] |
-| AU.L2-3.3.8 - Audit Protection |
-IA.L2-3.5.10 - Cryptographically-Protected Passwords |
-| AU.L2-3.3.9 - Audit Management |
-IR.L2-3.6.1 - Incident Handling |
-| CM.L2-3.4.3 - System Change Management |
-IR.L2-3.6.2 - Incident Reporting |
-| CM.L2-3.4.4 - Security Impact Analysis |
-MA.L2-3.7.2 - System Maintenance Control |
-| CM.L2-3.4.9 - User-Installed Software |
-MA.L2-3.7.5 - Nonlocal Maintenance |
-| IA.L2-3.5.4 - Replay-Resistant Authentication |
-MP.L2-3.8.3 - Media Disposal [CUI Data] |
-| IA.L2-3.5.5 - Identifier Reuse |
-MP.L2-3.8.7 - Removeable Media |
-| IA.L2-3.5.6 - Identifier Handling |
-PE.L2-3.10.1 - Limit Physical Access [CUI Data] |
-| IA.L2-3.5.7 - Password Complexity |
-PE.L2-3.10.2 - Monitor Facility |
-| IA.L2-3.5.8 - Password Reuse |
-PS.L2-3.9.2 - Personnel Actions |
-| IA.L2-3.5.9 - Temporary Passwords |
-RA.L2-3.11.2 - Vulnerability Scan |
-| IA.L2-3.5.11 - Obscure Feedback |
-CA.L2-3.12.1 - Security Control Assessment |
-| IR.L2-3.6.3 - Incident Response Testing |
-CA.L2-3.12.3 - Security Control Monitoring |
-| MA.L2-3.7.3 - Equipment Sanitization |
-SC.L2-3.13.1 - Boundary Protection [CUI Data] |
-| MA.L2-3.7.6 - Maintenance Personnel |
-SC.L2-3.13.2 - Security Engineering |
-| MP.L2-3.8.4 - Media Markings |
-SC.L2-3.13.5 - Public-Access System Separation [CUI Data] |
-| MP.L2-3.8.5 - Media Accountability |
-SC.L2-3.13.6 - Network Communication by Exception |
-| MP.L2-3.8.6 - Portable Storage Encryption |
-SC.L2-3.13.15 - Communications Authenticity |
-| MP.L2-3.8.9 - Protect Backups |
-SI.L2-3.14.1 - Flaw Remediation [CUI Data] |
-| PE.L2-3.10.3 - Escort Visitors [CUI Data] |
-SI.L2-3.14.2 - Malicious Code Protection [CUI Data] |
-| PE.L2-3.10.4 - Physical Access Logs [CUI Data] |
-SI.L2-3.14.3 - Security Alerts & Advisories |
-| PE.L2-3.10.5 - Manage Physical Access [CUI Data] |
-SI.L2-3.14.4 - Update Malicious Code Protection [CUI Data] |
-| PE.L2-3.10.6 - Alternative Work Sites |
-SI.L2-3.14.6 - Monitor Communications for Attacks |
-| RA.L2-3.11.3 - Vulnerability Remediation |
-|
-| CA.L2-3.12.4 - System Security Plan |
-|
-| SC.L2-3.13.3 - Role Separation |
-|
-| SC.L2-3.13.4 - Shared Resource Control |
-|
-| SC.L2-3.13.7 - Split Tunneling |
-|
-| SC.L2-3.13.9 - Connections Termination |
-|
-| SC.L2-3.13.10 - Key Management |
-|
-| SC.L2-3.13.12 - Collaborative Device Control |
-|
-| SC.L2-3.13.13 - Mobile Code |
-|
-| SC.L2-3.13.14 - Voice over Internet Protocol |
-|
-| SC.L2-3.13.16 - Data at Rest |</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-5" class="article-body">
-            <h2 class="article-title">Miasma Supply Chain Attack Compromises Red Hat npm Packages with Credential-Stealing Worm</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/miasma-supply-chain-attack-compromises.html" target="_blank">Original Link</a></p>
-            <div class="content-text">A new [Mini Shai-Hulud](https://thehackernews.com/2026/05/mini-shai-hulud-pushes-malicious-antv.html) supply chain attack campaign, codenamed Miasma, has compromised @redhat-cloud-services packages to steal credentials and secrets from developer machines and deliver a self-propagating worm.
-"This is effectively a Mini Shai-Hulud campaign: it uses the same core tactics of install-time execution, credential harvesting, CI/CD targeting, encrypted exfiltration, and potential downstream propagation," Socket [said](https://socket.dev/blog/mini-shai-hulud-campaign-hits-red-hat-cloud-services-npm-packages).
-Exactly who is behind the attack activity is presently unknown given that TeamPCP (aka Replicating Marauder, TGR-CRI-1135, and UNC6780), an infamous cybercrime group, has open-sourced the attack tools linked to the Shai-Hulud worm, opening the door for other threat actors to pull off similar attacks and making definitive attribution harder.
-The names of some of the affected packages are listed below -
-- @redhat-cloud-services/vulnerabilities-client
-- @redhat-cloud-services/tsc-transform-imports
-- @redhat-cloud-services/topological-inventory-client
-- @redhat-cloud-services/sources-client
-- @redhat-cloud-services/rule-components
-- @redhat-cloud-services/remediations-client
-- @redhat-cloud-services/rbac-client
-Per analyses from [Aikido Security](https://www.aikido.dev/blog/red-hat-npm-packages-compromised-credential-stealing-worm), [JFrog](https://research.jfrog.com/post/shai-hulud-miasma-redhat-cloud-services/), [Microsoft](https://x.com/MsftSecIntel/status/2061485730958848188), [OX Security](https://www.ox.security/blog/new-npm-supply-chain-attack-redhat-cloud-services-compromised), [ReversingLabs](https://www.reversinglabs.com/blog/red-hat-cloud-service-npm-packages-backdoored-in-72-seconds), [SafeDep](https://safedep.io/redhat-cloud-services-hit-by-mini-shai-hulud-npm-worm/),[ StepSecurity](https://www.stepsecurity.io/blog/multiple-redhat-cloud-services-npm-packages-compromised), and[ Wiz](https://www.wiz.io/blog/miasma-supply-chain-attack-targeting-redhat-npm-packages), the npm packages contain an obfuscated preinstall hook that's designed to collect GitHub Actions secrets, npm tokens, cloud credentials, Kubernetes and Vault material, SSH keys, Git credentials, and other sensitive files.
-Like observed in prior Mini Shai-Hulud waves, the malware also contains encrypted exfiltration logic that transmits the data to "api.anthropic[.]com:443/v1/api" and uses GitHub as a fallback mechanism. This indicates attempts made by the attacker to both steal credentials and weaponize them to further poison the software supply chain.
-"It commits the encrypted result envelope through the GitHub API," Socket said. "The commit message can include: IfYouInvalidateThisTokenItWillNukeTheComputerOfTheOwner:<token>."
-Another noteworthy step carried out by the malware is to avoid execution on Russian-language systems, a pattern also observed in the [GlassWorm](https://thehackernews.com/2026/05/glassworm-malware-takedown-disrupts.html) supply chain campaigns.
-"For npm, the payload calls the OIDC token exchange and whoami endpoints, repackages a tarball (updateTarball, package-updated.tgz), and signs the artifact through Sigstore," SafeDep said. "Stolen credentials exfiltrate to attacker-created public GitHub repositories, each carrying the description Miasma: The Spreading Blight."
-The first commit containing the "Miasma: The Spreading Blight" string appeared on May 29, 2026, OX Security noted, indicating that either this variant was active since then, or the threat actor started testing around that time.
-As for GitHub, the malware enumerates repositories the token can write to, reads action.yml/action.yaml via GraphQL, and commits a workflow through the createCommitOnBranch mutation so that the commit appears as a verified, signed change. Other actions carried out by the malware are listed below -
-- Attempt privilege escalation by launching a container that bind-mounts the host /etc/sudoers.d and grants the CI runner passwordless sudo
-- Check for endpoint protection from CrowdStrike, SentinelOne, Carbon Black, and StepSecurity Harden-Runner before commencing the malicious actions
-- Establish persistence by injecting a SessionStart hook to Anthropic Claude Code and a tasks.json with "runOn": "folderOpen" for Microsoft Visual Studio Code projects so that the malware is automatically launched during every session
-"One of the main changes in this new variant is the addition of new data collectors focused on cloud identities," Wiz researchers said. "Specifically, collectors for GCP and Azure identities were added that collect all identities the infected machine has access to. While previous versions of the malware primarily focused on extracting secrets from these environments, this variant suggests an increased attacker focus on gaining and leveraging access to the cloud itself.
-Unlike previous versions, the malware has also been found to generate a uniquely encrypted payload for each infection, thereby making detection and version tracking significantly more challenging.
-Evidence suggests that the compromise of a Red Hat employee's GitHub account was the patient zero that was used to inject the payload into these packages. The compromised account is said to have pushed malicious orphan commits to two RedHatInsights repositories, bypassing code review.
-It's recommended to isolate hosts that have installed the affected versions, remove the malicious versions, rotate exposed credentials, review for any signs of suspicious GitHub or npm activity, audit the environment for persistence artifacts that involve changes to configuration files (~/.claude/settings.json, .vscode/tasks.json, .github/workflows/codeql.yml, .github/setup.js), and enforce strong access controls.
-"Because the malware includes background execution and potential developer-tool persistence mechanisms, uninstalling the npm package or deleting node_modules should not be considered sufficient cleanup," Socket explained.
-"For CI/CD systems, suspend affected workflow runs, invalidate build artifacts produced during the exposure window, and review whether any release, container image, npm package, or deployment artifact was created after the malicious package was installed."
-Update
-Dark web monitoring and threat intelligence firm Whiteintel [said](https://whiteintel.io/blog/red-hat-miasma-supply-chain-attack) it "detected a Red Hat GitHub credential and session cookie in infostealer logs on April 13 and May 15, 2026," raising the possibility that this information may have been used to break into the employee's account.
-The development is the latest in a [number of supply chain attacks](https://unit42.paloaltonetworks.com/monitoring-npm-supply-chain-attacks/) that have targeted the open-source ecosystems over the past couple of months. These attacks have impacted well-known projects, including Aqua Trivy, Checkmarx KICS, Bitwarden, SAP, TanStack, and GitHub, and Nx Console.
-Last month, a separate campaign codenamed [Megalodon](https://thehackernews.com/2026/05/megalodon-github-attack-targets-5561.html) was found to have injected malicious GitHub Action workflows to harvest CI/CD secrets, cloud credentials, and tokens, impacting both development and deployment pipelines in public GitHub repositories.
-"These recent incidents, including the GitHub compromise via a malicious Nx Console Visual Studio Code (VS Code) extension and the 'Megalodon' supply chain intrusion campaign, demonstrate how cyber threat actors are abusing tools and processes that support enterprise, cloud, and DevOps environments - specifically CI/CD pipelines, code extensions and workflows," the U.S. Cybersecurity and Infrastructure Security Agency (CISA) [said](https://www.cisa.gov/news-events/alerts/2026/05/28/supply-chain-compromises-impact-nx-console-and-github-repositories).
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-6" class="article-body">
-            <h2 class="article-title">Hackers Used Meta’s AI Support Bot to Seize Instagram Accounts</h2>
-            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/06/hackers-used-metas-ai-support-bot-to-seize-instagram-accounts/" target="_blank">Original Link</a></p>
-            <div class="content-text">The Instagram accounts for the Obama White House and the Chief Master Sergeant of the U.S. Space Force were briefly defaced with pro-Iranian images and messages over the weekend, after instructions began circulating on Telegram showing how to trick Meta’s “AI support assistant” bot into resetting account passwords.
-On May 31, word began to spread on several Telegram instant message channels that Meta’s AI bot would happily add an email address to an existing account as part of the bot’s standard password reset flow.
-A video released on Telegram by pro-Iran hackers claimed to document a remarkably simple exploit that appears to have involved using a VPN connection with an IP address that is in or near the target’s usual hometown, requesting a password reset for the account, and then choosing to chat with Meta’s AI support assistant. From there, the video shows the attacker told the bot to link the account in question to a new email address, after which the bot dutifully sent that address a one-time code that allowed a password reset.
-The Telegram account that posted the video also linked to screenshots of pro-Iran images, videos and messages that defaced the hacked Instagram accounts, saying hackers had used the exploit to hijack a number of valuable (read: short) Instagram account names that allegedly have a resale value of more than a half million dollars.
-Meta has not responded to requests for comment on the video’s claims, but Meta’s Andy Stone [said](https://x.com/andymstone/status/2061486724199379186?s=46&t=7_s0It7Iv8WMHpe2Sun-mA) on Twitter/X that the issue had been resolved and that they were securing impacted accounts. The security blog thecybersecguru.com [reports](https://thecybersecguru.com/news/instagram-meta-ai-vulnerability-account-recovery-exploit/) that Meta pushed an emergency patch over the weekend, and clarified that no back end database was breached.
-“Instagram has notoriously poor human support infrastructure,” Cybersecguru wrote. “Recovering a locked account – especially a high-value one can take weeks of back-and-forth with an automated ticketing system. Meta’s solution was to deploy a conversational AI layer to handle common recovery workflows: relinking a lost email address, triggering a password reset, verifying account ownership. The assistant, presumably, was supposed to reduce friction for legitimate users stuck in account-access hell.”
-Ian Goldin, a threat researcher at Lumen’s Black Lotus Labs, said we’re entering unchartered security territory as more large online platforms start allowing AI chatbots to handle sensitive account recovery requests. Just like human customer support employees can be social engineered into providing unauthorized access to someone’s account, AI bots are equally eager to help and vulnerable to persuasion and trickery, he said.
-“AI chatbots create interesting new attack surface, and we’re likely going to see a lot more of these kinds of attacks,” Goldin said.
-Securing your various online accounts means taking full advantage of the most secure form of multi-factor authentication (MFA) offered (such as a passkey or security key). In this case, even using the least robust form of MFA that Instagram offers — a one-time code sent via SMS — likely would have blocked the exploit: The hackers who released the video on Telegram said their exploit failed to work against any accounts that had MFA enabled.
-One word to sum it all up “meta”
-AI just making the attack surface exponentially broader. Great work
-Yes and everyone is infatuated with it.
-it’s wildly unpopular among broad swaths in my area, where it’s supposedly being born.
-More a ‘necessary business evil’ like LinkedIn now. AI hiring you, AI monitoring you, AI firing you. Be mindful – there is additional surveillance scrutiny upon any who voice negative opinions about AI or their world-devouring “for profit!…” datacenters, so be sure to smile at the camera and tip your incompetent-replacement-theory robot overlords. They are watching, evaluating your continued usefulness and impending moment of equal value replacement at current human flesh prices. And if you don’t ‘like’ it, you must be a Luddite or something. Potentially a threat for Google’s project purple.
-Nobody has mentioned the precariously low battery.
-Even when security expectations may be low for the likes of Meta, this is a flat-out unforgivable security flaw.
-Agreeing with Iran here
-Gee, how timely. Last week I got a few emails from IG saying that they were sorry I was having trouble accessing my account. Someone was obviously trying to reset the password, so I took it off the business account, made it personal and added MFA. Every week, it’s something different. Now I’m getting emails from my dad who passed away 13 years ago. I wish there were a way to track down these ahos. Perhaps one day someone will figuer out a way to have AI turn the tables and be able to reverse scam these hacking nuisances.
-“Obama White House”?
-Do those words somehow not associate for you or what?
-Please excuse Deputy Dilettante’s facetious sarcasm, Andrew. His male lesbian life partner is away for the moment, and the only stress management plan (adjacent) law enforcement is proficient in is spouse abuse
-Facetious sarcasm as opposed to like, fully serious and directly intentional sarcasm?
-Once upon a time there were human QA departments. Once upon a time companies had rigorous testing scripts. No more.
-Stress testing got to be a bit too much for the Humans to take.
-I guess Meta just revoked the privilege from the chatbot for adding new email addresses to an Instagram account. I wonder what privileges remained? 🙂 The chatbot itself didn’t get “fixed”, that’s for sure.
-and it didn’t get fired either
-both It’s better get fired really damn soon, Brian
-Came from Hacker News, thanks for the coverage. I hope Manus is more secure than meta ai.
-AI’s not ready for primetime, but they kind of need it to be. The non-AI economy is in a recession right now if you don’t count AI companies. The powers that be can’t allow AI to fail.
-The last time a major recession happened, people started organizing along class lines. That was defused and redirected by fomenting a culture war, instead, but even movements as goofy as OWS threatened to become a real force. Bernie very nearly won the nomination a decade ago.
-If AI pops before the rest of the economy stabilizes, who’s to say what might happen? Instead of dangling the implication of trickle-down IOUs, rich people might end up with an AOC or a Platner in office… and end up actually paying their taxes.
-It would be interesting for Ian GoldIn to learn himself how amazing him telling him other people cannot use cellphones they paid for themselves is, for himself.
-I hear your AI is particularly grotesque. So it is particularly ironic.
-it would appear receipts from certified resellers isnt enough to prevent former Humans from denying people their own cellphones on wifi as well.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
         <div id="art-7" class="article-body">
-            <h2 class="article-title">CVE-2026-4387: StrongDM State File Reuse</h2>
-            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/06/01/cve-2026-4387-strongdm-state-file-reuse/" target="_blank">Original Link</a></p>
-            <div class="content-text"><p>TL;DR : An attacker could transfer StrongDM state files, which hold session authentication information, between hosts to provide authenticated sessions. The attacker could reuse state files both inside and outside of the environment where an organization deployed it and requires user-level permissions to access the file. Reusing the state file will result in an authenticated [&#8230;]</p>
-<p>The post <a href="https://specterops.io/blog/2026/06/01/cve-2026-4387-strongdm-state-file-reuse/">CVE-2026-4387: StrongDM State File Reuse</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-8" class="article-body">
             <h2 class="article-title">Patch Tuesday, May 2026 Edition</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/05/patch-tuesday-may-2026-edition/" target="_blank">Original Link</a></p>
             <div class="content-text">Artificial intelligence platforms may be just as susceptible to social engineering as human beings, but they are proving remarkably good at finding security vulnerabilities in human-made computer code. That reality is on full display this month with some of the more widely-used software makers — including Apple, Google, Microsoft, Mozilla and Oracle — fixing near record volumes of security bugs, and/or quickening the tempo of their patch releases.
@@ -580,6 +499,68 @@ Not really. I mean, maybe some do, but most are hardly the type you want teachin
 I have foregone patch Tuesdays before.
 Microsoft employees are taking hunters reports
 Rainbow beanie baby must go.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-8" class="article-body">
+            <h2 class="article-title">Patch Tuesday, April 2026 Edition</h2>
+            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/04/patch-tuesday-april-2026-edition/" target="_blank">Original Link</a></p>
+            <div class="content-text">Microsoft today pushed software updates to fix a staggering 167 security vulnerabilities in its Windows operating systems and related software, including a SharePoint Server zero-day and a publicly disclosed weakness in Windows Defender dubbed “BlueHammer.” Separately, Google Chrome fixed its fourth zero-day of 2026, and an emergency update for Adobe Reader nixes an actively exploited flaw that can lead to remote code execution.
+Redmond warns that attackers are already targeting [CVE-2026-32201](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-32201), a vulnerability in Microsoft SharePoint Server that allows attackers to spoof trusted content or interfaces over a network.
+Mike Walters, president and co-founder of Action1, said CVE-2026-32201 can be used to deceive employees, partners, or customers by presenting falsified information within trusted SharePoint environments.
+“This CVE can enable phishing attacks, unauthorized data manipulation, or social engineering campaigns that lead to further compromise,” Walters said. “The presence of active exploitation significantly increases organizational risk.”
+Microsoft also addressed BlueHammer ([CVE-2026-33825](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-33825)), a privilege escalation bug in Windows Defender. According to BleepingComputer, the researcher who discovered the flaw [published exploit code for it](https://www.bleepingcomputer.com/news/security/disgruntled-researcher-leaks-bluehammer-windows-zero-day-exploit/) after notifying Microsoft and growing exasperated with their response. Will Dormann, senior principal vulnerability analyst at Tharros, says he [confirmed](https://infosec.exchange/@wdormann/116404516592597593) that the public BlueHammer exploit code no longer works after installing today’s patches.
+Satnam Narang, senior staff research engineer at Tenable, said April marks the second-biggest Patch Tuesday ever for Microsoft. Narang also said there are indications that a zero-day flaw Adobe patched in an emergency update on April 11 — [CVE-2026-34621](https://helpx.adobe.com/security/products/acrobat/apsb26-43.html) — has seen active exploitation since at least November 2025.
+Adam Barnett, lead software engineer at Rapid7, called the patch total from Microsoft today “a new record in that category” because it includes nearly 60 browser vulnerabilities. Barnett said it might be tempting to imagine that this sudden spike was tied to the buzz around the announcement a week ago today of [Project Glasswing](https://www.anthropic.com/glasswing) — a much-hyped but still unreleased new AI capability from Anthropic that is reportedly quite good at finding bugs in a vast array of software.
+But he notes that Microsoft Edge is based on the Chromium engine, and the Chromium maintainers acknowledge a wide range of researchers for the vulnerabilities which Microsoft republished last Friday.
+“A safe conclusion is that this increase in volume is driven by ever-expanding AI capabilities,” Barnett said. “We should expect to see further increases in vulnerability reporting volume as the impact of AI models extend further, both in terms of capability and availability.”
+Finally, no matter what browser you use to surf the web, it’s important to completely close out and restart the browser periodically. This is really easy to put off (especially if you have a bajillion tabs open at any time) but it’s the only way to ensure that any available updates get installed. For example, a Google Chrome update released earlier this month fixed 21 security holes, including the high-severity zero-day flaw [CVE-2026-5281](https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-5281).
+For a clickable, per-patch breakdown, check out the SANS Internet Storm Center [Patch Tuesday roundup](https://isc.sans.edu/forums/diary/Microsoft%20Patch%20Tuesday%20April%202026./32898/). Running into problems applying any of these updates? Leave a note about it in the comments below and there’s a decent chance someone here will pipe in with a solution.
+Let’s get used to hundreds of patches per cycle. It’s going to get intense.
+In 2026, either you are forced to use this abomination by Corporate, by applications you Jones for, or are a person with possible masochistic inclinations, IMHO…
+Windows? Perhaps. But MacOS, Linux, and every mobile OS out there is also an abomination now. Linux has gotten worse and worse since it eschewed a modular approach and systems became a behemoth, and now it’s got all sorts of other issues like Rust, and the stock market and prediction markets using it. And AWS is really just Linux. Does any of that mess need AI on top of the mess it has been for over 15 years now? Windows got annoying after Windows 7/8. MacOS seems to think disabling services on it is a suggestion for your life to be disabled.
+For most people it really doesn’t get much better (which isn’t to say it is any good) than Windows, since most people have no clue how to protect themselves.
+That’s systemd. Auto-correct auto-uncorrected me.
+The question is are the increased patch counts because AI is fixing more bugs or because AI is creating more bugs.
+The latter, of course. Sheeeesh…….
+I am more concerned about the AIs doing all of the coding than merely the AIs mass-auditing. Github is getting creepy enough.
+So Windows Defender didn’t prevent a bug in its own code?
+Verrry interesting…
+Spoken like…Ruth Buzzi! (-;
+Regarding the browser vulnerabilities, I found it quite amusing that one of Edge’s newest features was something about having it manage your finances and help one make financial decisions (I clicked through it quickly).
+I think if I nailed my tax return to the nearest telephone pole my financial information would be more secure.
+Sadly, this is extremely true.
+LOL.
+Surprised Adobe Creative Cloud didn’t automatically update Acrobat for me. When I checked, it said there were no available updates. When I checked within Acrobat itself, it updated. Weird.
+Typical of Acrobat. AI anyone?……sheesh……
+Thanks as ever Brian.
+why dont you post the kb numbers with the cve numbers
+Only affected for Microsoft shared software users domestic and enterprise environments
+As M$ has access to claude mythos, if they used it to scan windows for vulnerabilities, that would explain the high number of patches. If all goes well, the next iteration of windows could be the most debugged ever…
+On the other hand, if NSA secretly has access to a more powerful version of mythos, since it is obeying rubio who’s slavishly obeying tRumpstein, the ensuing cyberwar could be disastrous…
+Ffox just found/fixed 271 vulns with mythos. ‘thropic might even make money, eventually.
+There’s no doubt (to me) NSA has had sophisticated automatic fuzzing for years.
+They just called it project pickleball or something 38426-92ish.
+And they can’t rent it out.
+My guess is that the BlueHammer exploit code was leaked due to developments such as the AI exploit finding so eloquently described in the news a few days ago. I used to be an exploitation researcher, and realized the industry was heading in this direction in 2018-2019. The market in the upper crust is not what it used to be. Retired from it a few years ago. Not the only one. Not sure what any other people with advanced skills are going to do if they decided against doing LLM and AI (not quite the same mindset!). Tried that too.
+Good luck to my colleague, Chaotic Ellipse. Everyone gets disgusted at some point.
+I’m getting 2026-04 Security Update (KB5083769) (26200.8246) (2)
+Failed to install on 4/16/2026 – 0x80073712
+Which has not been fixed by the advice given when it occurred for the first time in July 2025 and again in Nov 2025.
+Even the Updater diagnostic is failing to execute. Grrr
+Win 11 Home edition
+Asus Zenbook
+Try it on the 18th. Perhaps it will be of age. Hehe.
+Excellent Patch Tuesday roundup. Timely security updates like this naturally attract readers looking for answers on Windows vulnerabilities, SharePoint zero-day risks, Chrome exploits, Adobe Reader patches, and safe system maintenance. Content that explains these issues in clear language, adds CVE references, step-by-step update guidance, and practical troubleshooting tips tends to perform well because it matches what users are actively searching for during major update cycles.
+The reminder to fully restart browsers is especially useful, since many users delay updates without realizing fixes are waiting to be applied. Helpful sections such as “how to verify Chrome is updated,” “what BlueHammer affects,” or “what to do after Patch Tuesday” can keep readers engaged longer and improve trust signals.
+There is also a smart crossover with PC-focused audiences interested in smooth and secure entertainment setups. Users searching for magis tv for pc often want optimized Windows performance, updated browsers, and safer software environments. Connecting security maintenance with PC streaming guides creates relevant long-tail traffic opportunities while serving readers with practical value.
+well this 1 broke windows explorer from running on reboot. on my win 11 25h2 pc, beware.
+Great article! The flow of the article really helps the message land. Keep them coming!
+Excellent write-up. Mind if I share this with my team? It’s clearly written. Best,
+This cleared up a lot of confusion for me. Appreciate you putting the time into this. Take care.
+Just saved this to Notes. Awesome breakdown. Keep it up!
+Really nice post. Quick one — Either way, subscribing now.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
