@@ -59,12 +59,42 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-06-06</h1>
+        <h1>Security Briefing // 2026-06-07</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">CISA Adds Actively Exploited SolarWinds Serv-U DoS Flaw to KEV Catalog</button></li><li><button onclick="show('art-1')">CISA: Hackers now exploit SolarWinds Serv-U flaw to crash servers</button></li><li><button onclick="show('art-2')">Securing CI/CD in an agentic world: Claude Code Github action case</button></li><li><button onclick="show('art-3')">Ghostwriter v7: Safer Tokens, Scoped Access, and Better Automation</button></li><li><button onclick="show('art-4')">The Privileged Roles Nobody Talks About</button></li><li><button onclick="show('art-5')">CISA Adds Exploited Magento RCE Flaw CVE-2026-45247 to KEV Catalog</button></li><li><button onclick="show('art-6')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-7')">Patch Tuesday, May 2026 Edition</button></li><li><button onclick="show('art-8')">Patch Tuesday, April 2026 Edition</button></li><li><button onclick="show('art-9')">North Korea-Nexus Threat Actor Compromises Widely Used Axios NPM Package in Supply Chain Attack</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Critical Everest Forms Pro flaw exploited to take over WordPress sites</button></li><li><button onclick="show('art-1')">CISA Adds Actively Exploited SolarWinds Serv-U DoS Flaw to KEV Catalog</button></li><li><button onclick="show('art-2')">Securing CI/CD in an agentic world: Claude Code Github action case</button></li><li><button onclick="show('art-3')">Ghostwriter v7: Safer Tokens, Scoped Access, and Better Automation</button></li><li><button onclick="show('art-4')">The Privileged Roles Nobody Talks About</button></li><li><button onclick="show('art-5')">CISA Adds Exploited Magento RCE Flaw CVE-2026-45247 to KEV Catalog</button></li><li><button onclick="show('art-6')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-7')">Patch Tuesday, May 2026 Edition</button></li><li><button onclick="show('art-8')">Patch Tuesday, April 2026 Edition</button></li><li><button onclick="show('art-9')">North Korea-Nexus Threat Actor Compromises Widely Used Axios NPM Package in Supply Chain Attack</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
+            <h2 class="article-title">Critical Everest Forms Pro flaw exploited to take over WordPress sites</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/critical-everest-forms-pro-flaw-exploited-to-take-over-wordpress-sites/" target="_blank">Original Link</a></p>
+            <div class="content-text">Hackers are actively exploiting a critical vulnerability (CVE-2026-3300) in the Everest Forms Pro plugin, which lets them take complete control of a WordPress website.
+The security issue affects versions 1.9.12 and earlier of the plugin and can be leveraged without authentication to execute arbitrary code on the server.
+Everest Forms Pro is a commercial add-on for the WordPress form builder plugin Everest Forms. It is used to create contact, registration, payment, and other custom application forms.
+The CVE-2026-3300 vulnerability is in the plugin’s Complex Calculation feature, which accepts values submitted through form fields and inserts them into a PHP code string. Then, it executes the resulting code using PHP’s ‘eval ()’ function.
+Although user input is passed through a ‘sanitize_text_field()’ function, which does not escape single quotes (') or other characters that influence PHP syntax.
+As a result, an attacker can close the intended string, inject arbitrary PHP code, and comment out the remaining generated code to achieve code execution on the server.
+Telemetry data from Wordfence firewall and malware scanner for WordPress shows that the vulnerability is being exploited in the wild to create rogue administrator accounts.
+“The attacker submits a value for a text field that begins with a single quote to close the wrapping string literal, followed by a PHP statement that calls wp_insert_user() to create a new administrator account with the username 'diksimarina’,” explains a [report from Wordfence](https://www.wordfence.com/blog/2026/06/attackers-actively-exploiting-critical-vulnerability-in-everest-forms-pro-plugin/).
+“The trailing // comment marker ensures the rest of the generated PHP code, including the closing quote, is treated as a comment and does not cause a syntax error.”
+“When the form is processed, and the calculation is evaluated, the injected PHP code is executed, and the malicious administrator account is created.”
+Administrator-level access gives attackers full power to perform high-risk actions on the breached website, including modifying content, installing plugins and themes, planting backdoors and webshells, and accessing private databases.
+Researcher h0xilo submitted the CVE-2026-3300 vulnerability through Wordfence in February, and on March 18, the Everest Forms developer released a patch that addresses the issue.
+According to Wordfence data, active exploitation started on April 13, with the firewall blocking over 29,300 attempts.
+Wordfence says exploitation attempts originate primarily from two IP addresses, 202.56.2[.]126 and 209.146.60.26, and recommends defenders block them.
+However, Wordfence's report provides several offending IP addresses as indicators of compromise (IOCs).
+Website administrators are also recommended to review log files and administrator accounts for any suspicious activity, especially containing the string “diksimarina.”
+[Test every layer before attackers do](https://hubs.li/Q04jQ9z40)
+Security teams log 54% of successful attacks and alert on just 14%. The rest move through your environment unseen.
+The Picus whitepaper shows how breach and attack simulation tests your SIEM and EDR rules so threats stop slipping by detection.
+[Get the whitepaper](https://hubs.li/Q04jQ9z40)
+Post a Comment Community Rules
+You need to login in order to post a comment
+Not a member yet? Register Now</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-1" class="article-body">
             <h2 class="article-title">CISA Adds Actively Exploited SolarWinds Serv-U DoS Flaw to KEV Catalog</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/cisa-adds-actively-exploited-solarwinds.html" target="_blank">Original Link</a></p>
             <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) has [added](https://www.cisa.gov/news-events/alerts/2026/06/05/cisa-adds-one-known-exploited-vulnerability-catalog) a high-severity security flaw impacting SolarWinds Serv-U multi-protocol file server software to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, citing evidence of active exploitation.
@@ -74,34 +104,6 @@ The issue has been addressed in SolarWinds Serv-U version 15.5.4 HF1. As mitigat
 There are currently no details on how the vulnerability is being exploited in real-world attacks, or who is behind them. It's also unclear how many internet-exposed Serv-U instances are compromised, if any.
 CISA has ordered Federal Civilian Executive Branch (FCEB) agencies to address the flaw by June 19, 2026. In the past, [multiple flaws](https://thehackernews.com/2022/01/microsoft-hackers-exploiting-new.html) in [Serv-U](https://thehackernews.com/2021/09/microsoft-says-chinese-hackers-were.html) have been [exploited](https://thehackernews.com/2024/06/solarwinds-serv-u-vulnerability-under.html) by bad actors, including those associated with the [Cl0p ransomware gang](https://www.nccgroup.com/research/ta505-exploits-solarwinds-serv-u-vulnerability-cve-2021-35211-for-initial-access/).
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-1" class="article-body">
-            <h2 class="article-title">CISA: Hackers now exploit SolarWinds Serv-U flaw to crash servers</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/cisa-hackers-now-exploit-solarwinds-serv-u-flaw-to-crash-servers/" target="_blank">Original Link</a></p>
-            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) warned today that hackers are now actively exploiting a recently patched high-severity SolarWinds Serv-U flaw to crash servers.
-Serv-U is the company's Windows and Linux file transfer software that offers Managed File Transfer (MFT) and FTP server capabilities, which allow users to securely exchange files via HTTP/HTTPS, FTP, FTPS, and SFTP.
-SolarWinds released Serv-U 15.5.4 Hotfix 1 [on Thursday](https://documentation.solarwinds.com/en/success_center/servu/content/release_notes/servu_15-5-4-hotfix-1_release_notes.htm) to patch this denial-of-service vulnerability (tracked as [CVE-2026-28318](https://www.solarwinds.com/trust-center/security-advisories/cve-2026-28318)) and said it stems from an uncontrolled resource consumption weakness.
-"SolarWinds Serv-U is susceptible to specially crafted POST requests that crash the Serv-U service without authentication using Content-Encoding: deflate," the company said.
-Remote attackers can exploit the security flaw without privileges in low-complexity attacks that don't require user interaction.
-SolarWinds also advised admins who can't immediately deploy the patch to limit access to known addresses and to block any POST request containing "content-encoding," since the vulnerable Serv-U service does not require this functionality.
-The Internet intelligence platform Shodan currently [tracks over 12,000 Serv-U servers exposed online,](https://www.shodan.io/search?query=%22Serv-U+FTP+Server%22) and Internet security watchdog Shadowserver [just over 3,100](https://dashboard.shadowserver.org/statistics/iot-devices/time-series/?date_range=7&vendor=solarwinds&type=other-software&model=serv-u+managed+file+transfer&tag=serv-u%2B&dataset=count&limit=100&group_by=geo&stacking=stacked), but there is no information on how many have already been patched.
-Days after SolarWinds addressed the vulnerability, CISA [flagged it as exploited in the wild](https://www.cisa.gov/news-events/alerts/2026/06/05/cisa-adds-one-known-exploited-vulnerability-catalog) and [added it to the Known Exploited Vulnerabilities Catalog](https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-28318), ordering all Federal Civilian Executive Branch agencies to patch their servers against ongoing attacks by June 19, as mandated by [Binding Operational Directive (BOD) 22-01](https://www.cisa.gov/binding-operational-directive-22-01).
-While BOD 22-01 applies only to U.S. government agencies, the cybersecurity agency also urged all network defenders, including the private sector, to secure their networks against ongoing CVE-2026-28318 attacks as soon as possible.
-"This type of vulnerability is a frequent attack vector for malicious cyber actors and poses significant risks to the federal enterprise," CISA warned. "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable."
-In recent years, multiple cybercrime and state-backed hacking groups have targeted vulnerabilities in Serv-U to steal sensitive corporate and customer data.
-For instance, the Clop ransomware gang exploited a Serv-U remote code execution vulnerability (CVE-2021-35211) to [breach corporate networks](https://www.bleepingcomputer.com/news/security/clop-gang-exploiting-solarwinds-serv-u-flaw-in-ransomware-attacks/) in a 2021 campaign. DEV-0322 Chinese hackers also deployed CVE-2021-35211 exploits [in zero-day attacks](https://www.bleepingcomputer.com/news/microsoft/chinese-hackers-use-new-solarwinds-zero-day-in-targeted-attacks/) starting in July 2021.
-More recently, in June 2024, cybersecurity companies GreyNoise and Rapid7 tagged a Serv-U path-traversal vulnerability (CVE-2024-28995) [as actively exploited](https://www.bleepingcomputer.com/news/security/solarwinds-serv-u-path-traversal-flaw-actively-exploited-in-attacks/).
-Over the past several years, CISA has tagged [11 vulnerabilities across various SolarWinds products](https://www.cisa.gov/known-exploited-vulnerabilities-catalog?f%5B0%5D=vendor_project%3A837) as actively exploited in attacks, one of which has also been abused by ransomware gangs.
-[Test every layer before attackers do](https://hubs.li/Q04jQ9z40)
-Security teams log 54% of successful attacks and alert on just 14%. The rest move through your environment unseen.
-The Picus whitepaper shows how breach and attack simulation tests your SIEM and EDR rules so threats stop slipping by detection.
-[Get the whitepaper](https://hubs.li/Q04jQ9z40)
-Comments
-ZeroYourHero - 11 hours ago
-Another SolarWinds vulnerability. Just like the sun rises in the morning and sets in the evening. Since 2000.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
@@ -529,31 +531,9 @@ This product is provided subject to this [Notification](/notification) and this 
         <div id="art-7" class="article-body">
             <h2 class="article-title">Patch Tuesday, May 2026 Edition</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/05/patch-tuesday-may-2026-edition/" target="_blank">Original Link</a></p>
-            <div class="content-text">Artificial intelligence platforms may be just as susceptible to social engineering as human beings, but they are proving remarkably good at finding security vulnerabilities in human-made computer code. That reality is on full display this month with some of the more widely-used software makers — including Apple, Google, Microsoft, Mozilla and Oracle — fixing near record volumes of security bugs, and/or quickening the tempo of their patch releases.
-As it does on the second Tuesday of every month, Microsoft today released software updates to address at least 118 security vulnerabilities in its various Windows operating systems and other products. Remarkably, this is the first Patch Tuesday in nearly two years that Microsoft is not shipping any fixes to deal with emergency zero-day flaws that are already being exploited. Nor have any of the flaws fixed today been previously disclosed (potentially giving attackers a heads up in how to exploit the weakness).
-Sixteen of the vulnerabilities earned Microsoft’s most-dire “critical” label, meaning malware or miscreants could abuse these bugs to seize remote control over a vulnerable Windows device with little or no help from the user. Rapid7 has done much of the heavy lifting in identifying some of the more concerning critical weaknesses this month, including:
-[CVE-2026-41089](https://msrc.microsoft.com/update-guide/en-US/vulnerability/CVE-2026-41089): A critical stack-based buffer overflow in Windows Netlogon that offers an attacker SYSTEM privileges on the domain controller. No privileges or user interaction are required, and attack complexity is low. Patches are available for all versions of Windows Server from 2012 onwards.[CVE-2026-41096](https://msrc.microsoft.com/update-guide/en-US/vulnerability/CVE-2026-41096): A critical RCE in the Windows DNS client implementation worthy of attention despite Microsoft assessing exploitation as less likely.[CVE-2026-41103](https://msrc.microsoft.com/update-guide/en-US/vulnerability/CVE-2026-41103): A critical elevation of privilege vulnerability that allows an unauthorized attacker to impersonate an existing user by presenting forged credentials, thus bypassing Entra ID. Microsoft expects that exploitation is more likely.
-May’s Patch Tuesday is a welcome respite from April, which saw Microsoft [fix a near-record 167 security flaws](https://krebsonsecurity.com/2026/04/patch-tuesday-april-2026-edition/). Microsoft was among a few dozen tech giants given access to a “Project Glasswing,” a much-hyped AI capability developed by Anthropic that appears quite effective at unearthing security vulnerabilities in code.
-Apple, another early participant in Project Glasswing, typically fixes an average of 20 vulnerabilities each time it ships a security update for iOS devices, said Chris Goettl, vice president of product management at Ivanti. On May 11, Apple shipped updates to address at least 52 vulnerabilities and backported the changes all the way to iPhone 6s and iOS 15.
-Last month, Mozilla released Firefox 150, which resolved [a whopping 271 vulnerabilities](https://arstechnica.com/ai/2026/04/mozilla-anthropics-mythos-found-271-zero-day-vulnerabilities-in-firefox-150/) that were reportedly discovered during the Glasswing evaluation.
-“Since Firefox 150.0.0 released, they have been on a more aggressive weekly cadence for security updates including the release of Firefox 150.0.3 on May Patch Tuesday resolving between three to five CVEs in each release,” Goettl said.
-The software giant Oracle likewise recently increased its patch pace in response to their work with Glasswing. In its most recent quarterly patch update, Oracle addressed at least 450 flaws, including [more than 300 fixes for remotely exploitable, unauthenticated flaws](https://www.securityweek.com/oracle-patches-450-vulnerabilities-with-april-2026-cpu/). But at the end of April, Oracle announced it was switching to a monthly update cycle for critical security issues.
-On May 8, Google started rolling out updates to its Chrome browser that [fixed an astonishing 127 security flaws](https://www.forbes.com/sites/daveywinder/2026/05/08/critical-new-google-security-update-127-chrome-security-vulnerabilities-confirmed/) (up from just 30 the previous month). Chrome automagically downloads available security updates, but installing them requires fully restarting the browser.
-If you encounter any weirdness applying the updates from Microsoft or any other vendor mentioned here, feel free to sound off in the comments below. Meantime, if you haven’t backed up your data and/or drive lately, doing that before updating is generally sound advice. For a more granular look at the Microsoft updates released today, checkout [this inventory](https://isc.sans.edu/forums/diary/Microsoft%20May%202026%20Patch%20Tuesday/32980/) by the SANS Internet Storm Center.
-Typo: You wrote “On May 11, Apple shipped iOS 15”. I Believe you meant to write iOS 26.5.
-Nothing to do with this topic but I’m not sure where else to ask Brian about this: can you further explain your posting about the malign residential proxy networks and synthient.com? What can’t other anti-malware software find these and what should be done?
-I really appreciate your insights on this month’s patches! It’s a reminder of how crucial updates are for security. I recently had to troubleshoot some vulnerabilities in my own setup, and it’s always a juggling act.
-patches went on fine on my win 11 25H2 system.
-All on one patch Tuesday.
-Ford had 150 Safety recalls for 2024 or 2025 [cant remember which].
-Not a single thing in this Patch Tuesday worth a thing to anyone. Not touching it.
-That’s a wild take. MS got ahead of the cycle this time around using AI, now that these are known about they will start being exploited I’m sure. This is a rare change to patch up before things happen.
-Do not feed the AI slop.
-The not patch comment did make me almost do a spit take, but then I remembered this is public forum. Since it is a public forum, we do need to call out the dreck. Educate is what true information security professionals do.
-Not really. I mean, maybe some do, but most are hardly the type you want teaching.
-I have foregone patch Tuesdays before.
-Microsoft employees are taking hunters reports
-Rainbow beanie baby must go.</div>
+            <div class="content-text">Artificial intelligence platforms may be just as susceptible to social engineering as human beings, but they are proving remarkably good at finding security vulnerabilities in human-made computer code. That reality is on full display this month with some of the more widely-used software makers -- including Apple, Google, Microsoft, Mozilla and Oracle -- fixing near record volumes of security bugs, and/or quickening the tempo of their patch releases.
+
+[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
@@ -561,61 +541,9 @@ Rainbow beanie baby must go.</div>
         <div id="art-8" class="article-body">
             <h2 class="article-title">Patch Tuesday, April 2026 Edition</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/04/patch-tuesday-april-2026-edition/" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft today pushed software updates to fix a staggering 167 security vulnerabilities in its Windows operating systems and related software, including a SharePoint Server zero-day and a publicly disclosed weakness in Windows Defender dubbed “BlueHammer.” Separately, Google Chrome fixed its fourth zero-day of 2026, and an emergency update for Adobe Reader nixes an actively exploited flaw that can lead to remote code execution.
-Redmond warns that attackers are already targeting [CVE-2026-32201](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-32201), a vulnerability in Microsoft SharePoint Server that allows attackers to spoof trusted content or interfaces over a network.
-Mike Walters, president and co-founder of Action1, said CVE-2026-32201 can be used to deceive employees, partners, or customers by presenting falsified information within trusted SharePoint environments.
-“This CVE can enable phishing attacks, unauthorized data manipulation, or social engineering campaigns that lead to further compromise,” Walters said. “The presence of active exploitation significantly increases organizational risk.”
-Microsoft also addressed BlueHammer ([CVE-2026-33825](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-33825)), a privilege escalation bug in Windows Defender. According to BleepingComputer, the researcher who discovered the flaw [published exploit code for it](https://www.bleepingcomputer.com/news/security/disgruntled-researcher-leaks-bluehammer-windows-zero-day-exploit/) after notifying Microsoft and growing exasperated with their response. Will Dormann, senior principal vulnerability analyst at Tharros, says he [confirmed](https://infosec.exchange/@wdormann/116404516592597593) that the public BlueHammer exploit code no longer works after installing today’s patches.
-Satnam Narang, senior staff research engineer at Tenable, said April marks the second-biggest Patch Tuesday ever for Microsoft. Narang also said there are indications that a zero-day flaw Adobe patched in an emergency update on April 11 — [CVE-2026-34621](https://helpx.adobe.com/security/products/acrobat/apsb26-43.html) — has seen active exploitation since at least November 2025.
-Adam Barnett, lead software engineer at Rapid7, called the patch total from Microsoft today “a new record in that category” because it includes nearly 60 browser vulnerabilities. Barnett said it might be tempting to imagine that this sudden spike was tied to the buzz around the announcement a week ago today of [Project Glasswing](https://www.anthropic.com/glasswing) — a much-hyped but still unreleased new AI capability from Anthropic that is reportedly quite good at finding bugs in a vast array of software.
-But he notes that Microsoft Edge is based on the Chromium engine, and the Chromium maintainers acknowledge a wide range of researchers for the vulnerabilities which Microsoft republished last Friday.
-“A safe conclusion is that this increase in volume is driven by ever-expanding AI capabilities,” Barnett said. “We should expect to see further increases in vulnerability reporting volume as the impact of AI models extend further, both in terms of capability and availability.”
-Finally, no matter what browser you use to surf the web, it’s important to completely close out and restart the browser periodically. This is really easy to put off (especially if you have a bajillion tabs open at any time) but it’s the only way to ensure that any available updates get installed. For example, a Google Chrome update released earlier this month fixed 21 security holes, including the high-severity zero-day flaw [CVE-2026-5281](https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-5281).
-For a clickable, per-patch breakdown, check out the SANS Internet Storm Center [Patch Tuesday roundup](https://isc.sans.edu/forums/diary/Microsoft%20Patch%20Tuesday%20April%202026./32898/). Running into problems applying any of these updates? Leave a note about it in the comments below and there’s a decent chance someone here will pipe in with a solution.
-Let’s get used to hundreds of patches per cycle. It’s going to get intense.
-In 2026, either you are forced to use this abomination by Corporate, by applications you Jones for, or are a person with possible masochistic inclinations, IMHO…
-Windows? Perhaps. But MacOS, Linux, and every mobile OS out there is also an abomination now. Linux has gotten worse and worse since it eschewed a modular approach and systems became a behemoth, and now it’s got all sorts of other issues like Rust, and the stock market and prediction markets using it. And AWS is really just Linux. Does any of that mess need AI on top of the mess it has been for over 15 years now? Windows got annoying after Windows 7/8. MacOS seems to think disabling services on it is a suggestion for your life to be disabled.
-For most people it really doesn’t get much better (which isn’t to say it is any good) than Windows, since most people have no clue how to protect themselves.
-That’s systemd. Auto-correct auto-uncorrected me.
-The question is are the increased patch counts because AI is fixing more bugs or because AI is creating more bugs.
-The latter, of course. Sheeeesh…….
-I am more concerned about the AIs doing all of the coding than merely the AIs mass-auditing. Github is getting creepy enough.
-So Windows Defender didn’t prevent a bug in its own code?
-Verrry interesting…
-Spoken like…Ruth Buzzi! (-;
-Regarding the browser vulnerabilities, I found it quite amusing that one of Edge’s newest features was something about having it manage your finances and help one make financial decisions (I clicked through it quickly).
-I think if I nailed my tax return to the nearest telephone pole my financial information would be more secure.
-Sadly, this is extremely true.
-LOL.
-Surprised Adobe Creative Cloud didn’t automatically update Acrobat for me. When I checked, it said there were no available updates. When I checked within Acrobat itself, it updated. Weird.
-Typical of Acrobat. AI anyone?……sheesh……
-Thanks as ever Brian.
-why dont you post the kb numbers with the cve numbers
-Only affected for Microsoft shared software users domestic and enterprise environments
-As M$ has access to claude mythos, if they used it to scan windows for vulnerabilities, that would explain the high number of patches. If all goes well, the next iteration of windows could be the most debugged ever…
-On the other hand, if NSA secretly has access to a more powerful version of mythos, since it is obeying rubio who’s slavishly obeying tRumpstein, the ensuing cyberwar could be disastrous…
-Ffox just found/fixed 271 vulns with mythos. ‘thropic might even make money, eventually.
-There’s no doubt (to me) NSA has had sophisticated automatic fuzzing for years.
-They just called it project pickleball or something 38426-92ish.
-And they can’t rent it out.
-My guess is that the BlueHammer exploit code was leaked due to developments such as the AI exploit finding so eloquently described in the news a few days ago. I used to be an exploitation researcher, and realized the industry was heading in this direction in 2018-2019. The market in the upper crust is not what it used to be. Retired from it a few years ago. Not the only one. Not sure what any other people with advanced skills are going to do if they decided against doing LLM and AI (not quite the same mindset!). Tried that too.
-Good luck to my colleague, Chaotic Ellipse. Everyone gets disgusted at some point.
-I’m getting 2026-04 Security Update (KB5083769) (26200.8246) (2)
-Failed to install on 4/16/2026 – 0x80073712
-Which has not been fixed by the advice given when it occurred for the first time in July 2025 and again in Nov 2025.
-Even the Updater diagnostic is failing to execute. Grrr
-Win 11 Home edition
-Asus Zenbook
-Try it on the 18th. Perhaps it will be of age. Hehe.
-Excellent Patch Tuesday roundup. Timely security updates like this naturally attract readers looking for answers on Windows vulnerabilities, SharePoint zero-day risks, Chrome exploits, Adobe Reader patches, and safe system maintenance. Content that explains these issues in clear language, adds CVE references, step-by-step update guidance, and practical troubleshooting tips tends to perform well because it matches what users are actively searching for during major update cycles.
-The reminder to fully restart browsers is especially useful, since many users delay updates without realizing fixes are waiting to be applied. Helpful sections such as “how to verify Chrome is updated,” “what BlueHammer affects,” or “what to do after Patch Tuesday” can keep readers engaged longer and improve trust signals.
-There is also a smart crossover with PC-focused audiences interested in smooth and secure entertainment setups. Users searching for magis tv for pc often want optimized Windows performance, updated browsers, and safer software environments. Connecting security maintenance with PC streaming guides creates relevant long-tail traffic opportunities while serving readers with practical value.
-well this 1 broke windows explorer from running on reboot. on my win 11 25h2 pc, beware.
-Great article! The flow of the article really helps the message land. Keep them coming!
-Excellent write-up. Mind if I share this with my team? It’s clearly written. Best,
-This cleared up a lot of confusion for me. Appreciate you putting the time into this. Take care.
-Just saved this to Notes. Awesome breakdown. Keep it up!
-Really nice post. Quick one — Either way, subscribing now.</div>
+            <div class="content-text">Microsoft today pushed software updates to fix a staggering 167 security vulnerabilities in its Windows operating systems and related software, including a SharePoint Server zero-day and a publicly disclosed weakness in Windows Defender dubbed "BlueHammer." Separately, Google Chrome fixed its fourth zero-day of 2026, and an emergency update for Adobe Reader nixes an actively exploited flaw that can lead to remote code execution.
+
+[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
