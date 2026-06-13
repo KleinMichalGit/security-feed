@@ -59,9 +59,9 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-06-12</h1>
+        <h1>Security Briefing // 2026-06-13</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">CISA orders feds to patch actively exploited Ivanti flaw by Sunday</button></li><li><button onclick="show('art-1')">Building an Indirect Prompt Injection Workflow</button></li><li><button onclick="show('art-2')">ShinyHunters Targets Education Sector with Oracle PeopleSoft Exploit</button></li><li><button onclick="show('art-3')">Hardening Intune: The Implementation Guide</button></li><li><button onclick="show('art-4')">Turn specs into evals for any agent with ASSERT</button></li><li><button onclick="show('art-5')">CISA Adds Cisco, Chrome, and Arista Flaws to KEV Catalog Amid Active Exploitation</button></li><li><button onclick="show('art-6')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li><li><button onclick="show('art-7')">A Record-Breaking Patch Tuesday for June 2026</button></li><li><button onclick="show('art-8')">CISA Adds Three Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-9')">CISA Adds Actively Exploited SolarWinds Serv-U DoS Flaw to KEV Catalog</button></li></ul>
+            <ul><li><button onclick="show('art-0')">CISA orders feds to patch actively exploited Ivanti flaw by Sunday</button></li><li><button onclick="show('art-1')">JS-Tap v3: Endpoint Post-Exploitation With JavaScript Implants</button></li><li><button onclick="show('art-2')">Building an Indirect Prompt Injection Workflow</button></li><li><button onclick="show('art-3')">ShinyHunters Targets Education Sector with Oracle PeopleSoft Exploit</button></li><li><button onclick="show('art-4')">Turn specs into evals for any agent with ASSERT</button></li><li><button onclick="show('art-5')">CISA Adds Cisco, Chrome, and Arista Flaws to KEV Catalog Amid Active Exploitation</button></li><li><button onclick="show('art-6')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li><li><button onclick="show('art-7')">CISA Adds Three Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-8')">CISA Adds Actively Exploited SolarWinds Serv-U DoS Flaw to KEV Catalog</button></li><li><button onclick="show('art-9')">Canvas Breach Disrupts Schools & Colleges Nationwide</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
@@ -91,6 +91,53 @@ Not a member yet? Register Now</div>
             <hr class="separator">
         </div>
         <div id="art-1" class="article-body">
+            <h2 class="article-title">JS-Tap v3: Endpoint Post-Exploitation With JavaScript Implants</h2>
+            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/js-tap-v3-endpoint-post-exploitation-with-javascript-implants" target="_blank">Original Link</a></p>
+            <div class="content-text">JS-Tap v3: Endpoint Post-Exploitation With JavaScript Implants
+When I first wrote JS-Tap, the goal was to provide red teamers with a generic JavaScript payload that works without prior knowledge of a web application and without an authenticated user running it. Instrument the client side, collect loot, attack the application with stolen creds.
+That original payload, what I now call the DOM beacon, still works just fine, but in the past year, I wanted to expand the reach of JS-Tap. JavaScript, sadly, has escaped the web application DOM and is now used extensively in desktop applications and software. Browser extensions are JavaScript. Electron desktop apps (Slack, Signal, VS Code, Discord, lots of the corporate tooling you'll find on a workstation) are JavaScript. The new wave of CLI tools built on Node and Bun, including the AI coding assistants everyone is suddenly running, are JavaScript.
+Here’s the part that makes all of this worse—all of these application environments run JavaScript with less sandboxing than the browser DOM where the original JS-Tap payload lives. The same monkeypatching tricks JS-Tap has always used to intercept network calls and scrape data work in these environments, too—except now, there's no Same-Origin Policy in the way, and in many cases, there's full access to the underlying operating system.
+So, JS-Tap v3 grows beyond the browser to post-exploitation of the endpoint. It introduces three (3) new beacon types, all reporting back to the same JS-Tap C2, integrated for your engagement data collection needs.
+The New Beacons
+BEX Beacon (Browser Extension)
+The BEX beacon is JS-Tap as a browser extension, for Chrome, Chromium, Edge, and Firefox across Windows, Linux, and Mac. The DOM beacon lives inside a single page, and the BEX beacon sits at the browser level and sees all.
+Because it runs with extension privileges rather than page privileges, it sidesteps a lot of what limits the DOM beacon. It captures cookies across all domains, including httpOnly cookies, which the DOM beacon simply can't touch. It grabs localStorage, sessionStorage, and request headers and tracks browsing across every tab. Note that there are very important scoping settings about what domains the BEX beacon is allowed to work on, compiled in and critical for use in an engagement. Make sure you have that scoping conversation with your client before you use this in an assessment.
+The BEX beacon also works as a dropper. From the JS-Tap portal, you can task it to inject a full DOM beacon into a specific domain being used in that browser. A DOM beacon spawned this way gets pixel-perfect screenshots through the extension's captureVisibleTab API instead of relying on the html2canvas library baked into the DOM beacon.
+The BEX beacon also allows proxying of network traffic through the beacon.
+Pair the BEX beacon with the optional new Sidecar, a small Go binary installed alongside the extension and used via the browser's native messaging feature, and you get OS-level file browsing and command execution from a browser extension. There is an OPSEC tradeoff here. Native messaging is the least stealthy of the OS-access options in JS-Tap v3 beacons, since it requires a registered native host and a separate binary on disk, and the Atom and V8 beacons get host access in cleaner ways. For situations where the browser extension is your foothold, it is very powerful if you’re in a position to install Sidecar alongside the BEX extension.
+Atom Beacon (Electron App Implant)
+The Atom beacon is an implant for Electron desktop applications. You patch it into the target app's ASAR archive with the included atomize.py
+, and on next launch, it connects back to the JS-Tap C2.
+The main process agent runs in Electron's Node.js runtime, so it gets native OS access (file system, command execution) with no separate Sidecar binary needed. If the Electron app has set security fuses that block node functionality or sandboxing, the patcher resets the fuses. Note that you have to have write access to the app.asar file to be able to modify the Electron app.
+The usual JS-Tap functionality follows: screenshots, keylogs, and network intercepts. The proxy feature is also supported.
+While the Atom beacon is generic, there are commonly used Electron apps that we can implement custom JS-Tap functionality for, and these are implemented in runtime-delivered plugins specific to the application. JS-Tap v3 ships with the following Electron app plugins:
+- VS Code Infiltrator - Targets the VS Code Electron app and reaches into the editor environment to copy and edit files and “borrow” GitHub tokens for accessing private repos
+- 1Password Vault Raider - Targets the 1Password desktop app and goes after vault contents through the running unlocked application, capturing the unencrypted copy of the password vault
+- Signal Interceptor - Targets Signal Desktop; Signal's whole value proposition is end-to-end encryption, but an implant living inside the desktop client can access all messages, send messages from the user to others, or spoof messages to them
+- Mattermost Masher - Targets the Mattermost desktop client; same functionality as the Signal plugin, just ported to Mattermost
+- Slack Wrecker - The Slack equivalent; same functionality as Signal and Mattermost plugins
+Adding new plugins is not terribly time-consuming. I accept pull requests. 🙂
+V8 Beacon (Node.js/Bun CLI Implant)
+The V8 beacon targets Node.js and Bun command-line applications, and unlike the Atom beacon, there's no app patching at all.
+You drop the beacon's .js
+file on disk and set an environment variable—NODE_OPTIONS
+for Node or BUN_OPTIONS
+for Bun. The runtime pulls in the malicious JavaScript before the target app's own code runs, and from there, it's what you would expect from a JS-Tap beacon. It keylogs, intercepts network traffic, and allows code execution and file system access and proxies network traffic through the beacon.
+The obvious targets here are the AI CLI tools everyone has suddenly installed, like Gemini CLI and Claude Code, which make a lot of interesting authenticated API calls.
+Also New in v3
+JS-Tap Proxy - All three (3) new beacons can act as a network relay. Route your own browser through the victim's browser, Electron app, or Node process over a WebSocket relay, and reach internal application servers from the victim's network context, using their IP address and TLS fingerprint.
+JS-Tap Conductor - This is a standalone Firefox extension that takes session data and proxy configurations generated by the JS-Tap C2 portal (session and proxy “tickets” you paste into Conductor) and reconfigures Firefox to clone the session or route traffic through a JS-Tap beacon. Session cloning captures cookies, headers, and local/session storage and spoofs the user-agent.
+General Usability Improvements - As I’ve scaled out my use of JS-Tap, I’ve added features for searching and filtering clients and loot. This really helps in finding needles in haystacks.
+Wrapping Up
+The original DOM beacon hasn't gone anywhere, and for attacking web applications via XSS or web server-side implant, it's still exactly what it always was. The latest features are intended to target JavaScript where it has shifted to—sadly, into endpoint application environments that hand you more access than the browser ever did.
+As always, this is tooling meant for authorized engagements and education. If you run into issues or have ideas on how to make it better, my DMs are open [@hoodoer](https://x.com/hoodoer), or you can reach me at [hoodoer@bitwisemunitions.dev](mailto:hoodoer@bitwisemunitions.dev).
+Please let me know if you run into bugs. There will be bugs. This is a very large change in the code base.
+[https://github.com/hoodoer/JS-Tap](https://github.com/hoodoer/JS-Tap)(JS-Tap Repository)</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
             <h2 class="article-title">Building an Indirect Prompt Injection Workflow</h2>
             <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/06/11/building-an-indirect-prompt-injection-workflow/" target="_blank">Original Link</a></p>
             <div class="content-text"><p>TL;DR: This post covers how I used OpenAI’s Codex to automate the generation, testing, and refinement of indirect prompt injection payloads against an agentic system using Sonnet 4.5 and 4.6 models on Amazon Bedrock. Introduction This project began as a relatively straightforward effort. I wanted to build a basic AI chatbot, evaluate it against AI-specific [&#8230;]</p>
@@ -101,7 +148,7 @@ Not a member yet? Register Now</div>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-2" class="article-body">
+        <div id="art-3" class="article-body">
             <h2 class="article-title">ShinyHunters Targets Education Sector with Oracle PeopleSoft Exploit</h2>
             <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/shinyhunters-targets-education-sector-oracle-exploit/" target="_blank">Original Link</a></p>
             <div class="content-text">ShinyHunters Targets Education Sector with Oracle PeopleSoft Exploit
@@ -300,419 +347,20 @@ Staging & C2 Network Indicators
 -
 142.11.200.190
 -
-azurenetfiles.net</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-3" class="article-body">
-            <h2 class="article-title">Hardening Intune: The Implementation Guide</h2>
-            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/hardening-intune-the-implementation-guide" target="_blank">Original Link</a></p>
-            <div class="content-text">Hardening Intune: The Implementation Guide
-Table of contents
-Part 2: Step-by-Step Configuration for Every Control
-This is Part 2 of a two-part series on Intune security hardening. [Part 1](https://trustedsec.com/blog/the-privileged-roles-nobody-talks-about) covers the attacks we have seen against this types of platforms, why platform administration roles are Tier 0 assets, and the controls you need. This post walks you through how to implement each one.
-[In Part 1](https://trustedsec.com/blog/the-privileged-roles-nobody-talks-about), I made the case that these attacks are not an Intune vulnerability, it is a access governance failure. In most incident the attacker compromises an Intune administrator account, created a new Global Admin, and used the platform's built-in remote wipe capability to factory reset devices in the most destructive cases. No malware, no zero-day, just a legitimate management feature executed from a compromised privileged account.
-I laid out 11 controls and a prioritized quick-win list. This post is the implementation guide. For each control, I will walk through the configuration path, decision points, and a validation test so you can confirm it is working. I am organizing these in the order I would implement them during a hardening engagement, not the order they appeared in Part 1.
-Implementation Sequence
-The order matters. Some controls are prerequisites for others, and some produce immediate risk reduction with minimal operational disruption. Here is how I sequence these in engagements:
-Phase 1: Immediate (Day 1, no dependencies)
-1. Audit and remove standing Global Admin and Intune Administrator role assignments
-2. Enable PIM on Intune-related roles
-3. Enable Multi-Admin Approval for destructive actions
-4. Review Graph API app registrations
-Phase 2: Short-term (Week 1-2, requires planning)
-5. Enforce phishing-resistant MFA via Conditional Access authentication strength
-6. Configure RBAC custom roles and scope tags
-7. Lock down Intune portal access with Conditional Access
-Phase 3: Medium-term (Week 2-4, requires testing)
-8. Deploy Privileged Access Workstations and configure redundancy
-9. Enforce script signing and lock down Win32 app deployment
-10. Harden device enrollment restrictions
-Phase 4: Detection (can run in parallel)
-11. Deploy Sentinel analytics rule and configure telemetry pipeline
-Prerequisites: Microsoft Graph PowerShell
-Throughout this guide, I provide PowerShell commands alongside the portal navigation steps. Some of these are faster and more thorough than clicking through the GUI, especially for auditing and enumeration. You will need the Microsoft Graph PowerShell SDK installed.
-I have packaged all of the PowerShell in this post as a module of advanced functions: Invoke-IntuneSecurityAudit.ps1. Download the module, dot-source it, and every function is available with full Get-Help
-documentation and -Verbose
-output.
-# Install the Graph PowerShell SDK (if not already installed)
-Install-Module Microsoft.Graph -Scope CurrentUser
-# Dot-source the audit module
-. .\Invoke-IntuneSecurityAudit.ps1
-# Connect with read-only scopes for the audit
-Connect-IntuneSecurityAudit -Verbose
-# If you need write scopes later for configuration changes
-Connect-IntuneSecurityAudit -IncludeWriteScopes -Verbose
-Every function uses [CmdletBinding()]
-and Write-Verbose
-so you can control output verbosity. Use -Verbose
-to see progress and detail, or omit it for clean pipeline output suitable for Export-Csv
-or further processing.
-You will be prompted for permissions when connecting:
-Phase 1: Immediate Actions
-1. Audit and Remove Standing Privileged Access
-Why this is first: Every other control assumes you know who has privileged access today. You cannot enable PIM on roles that are permanently assigned to accounts you do not know about.
-Steps:
-1a. Enumerate current Intune-related role assignments in Entra ID.
-Navigate to: Entra admin center > Identity > Roles & admins
-Or use PowerShell to pull all active assignments for the roles that matter:
-# Enumerate Entra ID role assignments for all Intune-critical roles
-Get-EntraPrivilegedRoleAssignment -Verbose
-# Export to CSV for team review
-Get-EntraPrivilegedRoleAssignment | Export-Csv -Path .\01_EntraRoleAssignments.csv -NoTypeInformation
-# Check PIM eligible vs active (permanent) assignments for a specific role
-Get-IntunePIMAssignment -RoleName "Intune Administrator" -Verbose
-# Check all critical roles at once
-"Global Administrator","Intune Administrator","Security Administrator" | ForEach-Object {
-Get-IntunePIMAssignment -RoleName $_ -Verbose
-} | Export-Csv -Path .\02_PIMAssignments.csv -NoTypeInformation
-Any account showing AssignmentType = "Active (Permanent)"
-is a candidate for conversion to PIM-eligible in Step 2.
-Review assignments for each of these roles:
-- Global Administrator
-- Intune Administrator (also called Intune Service Administrator)
-- Policy and Profile Manager
-- Endpoint Security Manager
-- Cloud Device Administrator
-For each assigned account, answer these questions:
-- Is this a dedicated admin account, or a dual-use account that also has a mailbox and receives email?
-- Is this assignment permanent or time-bound?
-- Is there a documented business justification for this assignment?
-- Was this account created by a known process, or could it have been created by an attacker (relevant for this style of incidents)?
-1b. Enumerate Intune RBAC role assignments.
-Navigate to: Intune admin center > Tenant administration > Roles > All roles
-Or enumerate via PowerShell:
-# List all Intune RBAC role definitions and assignments
-Get-IntuneRBACAssignment -Verbose
-# Find overly broad assignments (All Devices / All Users scope)
-Get-IntuneRBACAssignment | Where-Object { $_.ScopeType -eq 'allDevicesAndLicensedUsers' }
-For each built-in and custom role, review the assignments tab. Check for:
-- Roles with "All Devices" or "All Users" in scope groups (overly broad)
-- Assignments to large groups rather than specific admin security groups
-- Custom roles that include remote action permissions (wipe, retire, delete) alongside routine management permissions
-1c. Remove standing Global Admin access.
-Any account that has permanent Global Admin assigned for "Intune purposes" should have that assignment removed immediately. Global Admin is not required for routine Intune administration. Replace it with a scoped Intune RBAC role, and protect that role with PIM (next step).
-Validation: After cleanup, re-run the role enumeration. You should have zero permanently assigned Global Admin accounts used for Intune management. All remaining Intune-related role assignments should be documented with a business justification.
-2. Enable Privileged Identity Management (PIM)
-Why second: Once you have cleaned up standing access, PIM ensures it stays clean. No one gets a permanently active privileged role again.
-Decision points before you configure:
-- Do you have Entra ID P2 or Entra ID Governance licensing? PIM requires this.
-- Which roles will you put under PIM? At minimum: Global Administrator, Intune Administrator, Policy and Profile Manager, Endpoint Security Manager.
-- What is the maximum activation duration? I recommend 4 hours for Intune roles, 1 hour for Global Admin.
-- Will you require approval for activation? I recommend requiring approval for Global Admin activations. Intune Administrator can be self-activation with justification.
-- Will you require MFA step-up at activation? Yes, always.
-Steps:
-2a. Configure PIM for the Intune Administrator role.
-Navigate to: Entra admin center > Identity Governance > Privileged Identity Management > Microsoft Entra roles > Roles > Intune Administrator > Settings > Edit
-Configure:
-- Activation maximum duration: 4 hours
-- On activation, require: Azure MFA (or authentication context if using phishing-resistant MFA)
-- Require justification on activation: Yes
-- Require ticket information on activation: Optional (useful if you want to tie activations to change tickets)
-- Require approval to activate: No (for Intune Admin, self-activation with justification is operationally reasonable)
-2b. Convert permanent assignments to eligible.
-For each account that currently has a permanent active assignment, change it to "Eligible" instead. The admin will need to activate the role through PIM when they need it, and it will automatically deactivate when the time window expires.
-Navigate to: PIM > Microsoft Entra roles > Assignments > select the role > change "Active" to "Eligible"
-2c. Configure PIM for Global Administrator.
-Same as above, but with stricter settings:
-- Activation maximum duration: 1 hour
-- Require approval to activate: Yes
-- Designate an approver group (a small group of senior security or IT leadership)
-2d. Configure alerts.
-Navigate to: PIM > Microsoft Entra roles > Settings > Alerts
-Enable alerts for:
-- Roles are being assigned outside of PIM
-- Roles do not require MFA for activation
-- Potential stale accounts in a privileged role
-Validation: Have an admin attempt to access the Intune admin center without activating their role. They should be denied. Then have them activate through PIM, confirm the justification is required, confirm MFA is prompted, and confirm the role deactivates after the configured window.
-3. Enable Multi-Admin Approval
-Why third: PIM controls who can activate a role. Multi-Admin Approval controls what they can do once they have it. This is the control that would have directly prevented the most fleet wipe attacks.
-Steps:
-3a. Create an approver group.
-Navigate to: Entra admin center > Groups > New group
-Create a security group (e.g., "Intune MAA Approvers") containing two to three senior administrators who will review and approve high-impact actions. These should not be the same people who perform day-to-day Intune administration.
-3b. Ensure the approver group has the right permissions.
-The approver group must be a member of at least one Intune role assignment, and members need the Approval for Multi Admin Approval
-permission. The simplest path: assign a custom Intune role to the approver group that includes this permission.
-3c. Create access policies for each protected resource type.
-Navigate to: Intune admin center > Tenant administration > Multi Admin Approval > Access policies > Create
-Create separate policies for:
-Policy Name | Profile Type | Approver Group |
-|---|---|---|
-Protect Device Actions | Device actions (wipe, retire, delete) | Intune MAA Approvers |
-Protect Script Deployments | Device Management Scripts | Intune MAA Approvers |
-Protect App Deployments | Apps | Intune MAA Approvers |
-Protect Compliance Policies | Compliance policies | Intune MAA Approvers |
-Protect Configuration Policies | Configuration policies | Intune MAA Approvers |
-Protect RBAC Changes | Role-based access control | Intune MAA Approvers |
-3d. Finalize each policy.
-After creating a policy, you must sign in with a different admin account and finalize it by selecting "Complete." This is itself a dual-authorization step, the policy does not take effect until a second admin confirms it.
-Validation: Attempt to wipe a test device. Instead of the wipe executing immediately, you should be prompted to enter a business justification and submit the request. The request should appear in the approver's Received Requests queue. Only after the approver approves it should the wipe execute.
-4. Audit Graph API App Registrations
-Why fourth: This closes the non-human access path. PIM and MAA protect human admin accounts, but app registrations with Intune permissions are an entirely separate control plane that most organizations do not monitor.
-Steps:
-4a. Enumerate all app registrations with Intune-scoped permissions.
-Navigate to: Entra admin center > Applications > App registrations > All applications
-Or use PowerShell for a thorough, automated sweep:
-# Find all app registrations with Intune-scoped Graph API permissions
-Get-IntuneAppRegistration -Verbose
-# Include read-only permissions in the scan for full visibility
-Get-IntuneAppRegistration -IncludeReadOnly -Verbose | Export-Csv -Path .\04_IntuneAppRegistrations.csv -NoTypeInformation
-# Then audit credential expiry for every flagged app (pipeline support)
-Get-IntuneAppRegistration | Get-IntuneAppCredentialStatus -Verbose
-# Find the most urgent issues: expired or expiring secrets
-Get-IntuneAppRegistration | Get-IntuneAppCredentialStatus |
-Where-Object { $_.Status -in @("EXPIRED","EXPIRING_SOON") }
-For each application, review: API permissions tab
-Look for any of these Microsoft Graph permissions:
-DeviceManagementConfiguration.ReadWrite.All
-DeviceManagementManagedDevices.ReadWrite.All
-DeviceManagementServiceConfig.ReadWrite.All
-DeviceManagementApps.ReadWrite.All
-DeviceManagementManagedDevices.PrivilegedOperations.All
-PrivilegedOperations.All
-is particularly dangerous as it includes the ability to perform remote wipe operations programmatically.
-4b. For each app registration found, document:
-- Who created it and when (check the audit log)
-- What business process depends on it
-- Whether the client secret or certificate has been rotated in the last 90 days
-- Whether the permissions granted exceed what the application actually needs
-4c. Remediate.
-- Remove any app registration you cannot justify. If no one knows what it does and no one owns it, delete it.
-- Downgrade permissions where possible (ReadWrite to Read if the app only reads data).
-- Rotate all client secrets immediately and set a 90-day rotation policy going forward.
-- Prefer certificate-based credentials over shared secrets.
-- Block admin consent for new Intune-scoped permissions (Entra admin center > Enterprise applications > Consent and permissions > set "Users can consent to apps" to No, and require admin consent for Graph API permissions).
-4d. Enable ongoing monitoring.
-This is where Query 7.5 from Part 1 comes in. The IsApiActor
-flag in the Sentinel analytics rule specifically detects when Intune operations are performed by a service principal rather than a human User Principal Name (UPN). Deploy the query now (Phase 4 covers the full Sentinel setup) so you have visibility into any app registration performing Intune operations.
-Validation: Run the Graph API enumeration again and confirm that all remaining app registrations are documented, justified, and have recently rotated credentials. Set a calendar reminder for a quarterly re-audit.
-Phase 2: Short-Term Hardening
-5. Enforce Phishing-Resistant MFA
-Decision points:
-- What phishing-resistant methods are available in your environment? FIDO2 security keys, Windows Hello for Business, or certificate-based authentication?
-- Have your Intune administrators registered phishing-resistant methods? If not, you will need to issue FIDO2 keys or configure certificate enrollment before enforcing.
-- Do you have break-glass accounts? These must also use phishing-resistant MFA (FIDO2 keys stored in a safe).
-Steps:
-5a. Verify admin MFA method registration.
-Navigate to: Entra admin center > Users > select an admin account > Authentication methods
-Or audit all admins at once:
-# Audit MFA methods for all members of your admin group
-Get-AdminPhishingResistantMFA -AdminGroupName "Intune Administrators" -Verbose
-# Find admins who are at risk (no phishing-resistant method registered)
-Get-AdminPhishingResistantMFA -AdminGroupName "Intune Administrators" |
-Where-Object { -not $_.HasPhishResistant }
-Any admin showing HasPhishResistant = False
-needs a FIDO2 key issued before you enforce the phishing-resistant MFA Conditional Access policy.
-Confirm that at least one phishing-resistant method is registered (FIDO2 security key, Windows Hello for Business, or certificate-based authentication). If not, issue a Temporary Access Pass and have the admin register a FIDO2 key.
-5b. Create a Conditional Access policy with authentication strength.
-Navigate to: Entra admin center > Protection > Conditional Access > Policies > New policy
-- Name: "Require phishing-resistant MFA for Intune admins"
-- Assignments > Users: Include the security group containing your Intune administrators. Exclude your break-glass accounts.
-- Target resources: All resources (or scope to specific apps if you prefer to start narrow)
-- Grant > Require authentication strength > select "Phishing-resistant MFA"
-- Enable policy: Report-only (start here, monitor for 1-2 weeks, then switch to On)
-5c. Block legacy authentication.
-If you have not already done this tenant-wide, create a Conditional Access policy that blocks all legacy authentication protocols. These protocols do not support MFA at all, and a stolen credential can bypass every MFA policy through Basic Auth.
-Validation: In Report-only mode, check the Conditional Access insights workbook to confirm that admin sign-ins are being evaluated against the policy and that phishing-resistant methods would be required. Once you switch to enforcement, have an admin attempt to sign in with a standard TOTP code and confirm they are blocked. Then have them sign in with their FIDO2 key and confirm access is granted.
-6. Configure RBAC Custom Roles and Scope Tags
-Decision points:
-- What admin functions exist in your environment? Common ones: policy management, app deployment, help desk (remote actions), compliance management, security baseline management.
-- Which of these functions need destructive action permissions (wipe, retire, delete)?
-- How do you segment your device fleet? By geography, business unit, device type, or department?
-Steps:
-6a. Define your role structure.
-Create custom roles that separate routine management from destructive actions. A starting model:
-Custom Role Name | Key Permissions | Excludes |
-|---|---|---|
-Intune Policy Manager | Configuration policies, compliance policies, security baselines (Create, Read, Update, Assign) | Wipe, Retire, Delete, Script deployment |
-Intune App Manager | Mobile apps, Win32 apps (Create, Read, Update, Assign) | Wipe, Retire, Delete, Script deployment |
-Intune Help Desk | Managed devices (Read), remote actions (lock, sync, restart) | Wipe, Retire, Delete |
-Intune Security Ops | Read-only across all categories, audit data read | All write operations |
-Intune Senior Admin | Full permissions including destructive actions | Nothing (this is the elevated role, protected by PIM + MAA) |
-Navigate to: Intune admin center > Tenant administration > Roles > All roles > Create
-6b. Create scope tags.
-Scope tags limit what devices and policies each admin role can see and manage.
-Navigate to: Intune admin center > Tenant administration > Roles > Scope (Tags) > Create
-Create tags that match your organizational structure (e.g., "US-East," "EU," "BYOD," "Corporate," "Engineering").
-6c. Assign scope tags to devices, policies, and role assignments.
-When you create a role assignment, specify both the Admin Group (who gets the role) and the Scope Groups (what devices/users they can manage). Combine this with scope tags for policy visibility.
-6d. Protect the Intune Role Administrator role with PIM.
-The Intune Role Administrator is the only built-in role that can assign permissions to other administrators. Treat this as a Tier 0 role. Put it under PIM with approval required, and enable Multi-Admin Approval for RBAC changes.
-Validation: Sign in as a user assigned to the Intune Policy Manager custom role. Confirm they can create and assign configuration policies but cannot issue a device wipe. Then sign in as a user with the Intune Senior Admin role (activated via PIM) and confirm they can perform destructive actions, subject to Multi-Admin Approval.
-7. Lock Down Intune Portal Access with Conditional Access
-Decision points:
-- Do you have PAWs deployed yet? If not, you can still restrict by device compliance and named locations while you build the PAW program (Phase 3).
-- What named locations represent your corporate network? Office egress IP addresses, VPN egress IP addresses.
-- Do you want to restrict access to specific device platforms? (e.g., only Windows devices that are Entra-joined and compliant)
-Steps:
-7a. Define named locations.
-Navigate to: Entra admin center > Protection > Conditional Access > Named locations > New location
-Add your corporate office egress IPs and VPN egress IPs as trusted named locations.
-7b. Create the Conditional Access policy.
-Navigate to: Conditional Access > Policies > New policy
-- Name: "Restrict Intune admin portal access"
-- Assignments > Users: Include the security group containing your Intune administrators
-- Target resources > Select apps > Microsoft Intune, Microsoft Intune Enrollment
-- Conditions > Locations: Exclude your trusted named locations (this blocks access from everywhere else)
-- Conditions > Device platforms: Include only Windows (or whatever platform your PAWs run)
-- Grant > Require device to be marked as compliant, AND require authentication strength > Phishing-resistant MFA
-- Session: Sign-in frequency of 4 hours (forces re-authentication, limits session token lifetime)
-- Enable policy: Report-only first, then On
-7c. Stack with the phishing-resistant MFA policy.
-These two policies work together. The MFA policy (Step 5) ensures strong authentication everywhere. This portal policy adds location and device compliance requirements specifically for Intune administration.
-Validation: From a compliant device on your corporate network, confirm Intune portal access works normally. From an unmanaged device on a different network, confirm access is blocked. Check the Conditional Access sign-in logs to verify both the grant and block are logged correctly.
-Phase 3: Medium-Term Hardening
-8. Deploy Privileged Access Workstations
-Decision points:
-- How many PAWs do you need? At minimum two per critical admin function (primary + redundant).
-- Will PAWs be enrolled in Intune? If yes, consider keeping at least one recovery PAW unenrolled so a fleet-wide wipe does not take out your recovery capability.
-- Where will PAWs be physically stored? They need to be physically secured, not sitting on a desk in an open office.
-Implementation guidance:
-- PAWs should be Entra-joined, compliant, and hardened with a dedicated Intune compliance and configuration profile.
-- PAWs should have no email client, no web browser for general use (or a locked-down browser that only allows access to admin portals), and no personal applications.
-- Use Conditional Access to tie Intune admin portal access exclusively to PAW device compliance status.
-- Store break-glass credentials (for Intune and Global Admin) in a physically secured location (sealed envelope in a safe, not in a password manager on a device enrolled in Intune).
-- Document the recovery procedure: if PAWs are compromised or wiped, how do you regain access to the Intune console? Test this procedure at least annually.
-Validation: Confirm that Intune admin portal access is only possible from a PAW. Confirm that the redundant PAW works. Simulate a scenario where the primary PAW is unavailable and the recovery procedure is followed.
-9. Enforce Script Signing and Lock Down App Deployment
-Before implementing controls, audit what is currently deployed:
-# List all PowerShell scripts in Intune with content preview
-Get-IntuneScriptInventory -Verbose
-# Export full script content for offline review
-Get-IntuneScriptInventory -PreviewLength -1 | Export-Csv -Path .\06_IntuneScripts.csv -NoTypeInformation
-# List all Win32 (LOB) applications
-Get-IntuneWin32AppInventory -Verbose
-# Flag any Win32 apps packaging known LOLBins
-Get-IntuneWin32AppInventory | Where-Object {
-$_.InstallCmd -match 'certutil|mshta|wscript|cscript|bitsadmin'
-}
-Review every script and Win32 app in the output. If you cannot explain what it does and who approved it, investigate before proceeding.
-Steps:
-9a. Set PowerShell execution policy via Intune.
-Navigate to: Intune admin center > Devices > Configuration > Create > Settings catalog
-Search for "PowerShell Execution Policy" and set to AllSigned or RemoteSigned. Assign to all managed devices.
-9b. Establish a code-signing workflow.
-- Issue a code-signing certificate from your internal PKI (or purchase one from a public CA if you do not have internal PKI).
-- All PowerShell scripts deployed through Intune must be signed with this certificate before upload.
-- Maintain a script inventory with filename, hash (SHA256), signer, approval ticket number, and deployment date.
-9c. Restrict Win32 app deployment permissions.
-Create a custom RBAC role specifically for Win32 app deployment that is separate from routine app management. Protect this role with PIM. Require MDE scanning of all .intunewin
-packages before upload.
-9d. Block LOLBin packaging.
-Establish a policy (enforced through your change management process and audited via the Sentinel analytics rule) that prohibits packaging known living-off-the-land binaries (certutil, mshta, wscript, cscript, bitsadmin) as Intune Win32 applications.
-Validation: Attempt to deploy an unsigned PowerShell script to a managed device. It should fail to execute. Deploy a signed script and confirm it executes successfully. Verify that the Sentinel analytics rule fires when a new script is uploaded.
-10. Harden Device Enrollment
-Steps:
-Before making changes, audit your current enrollment posture:
-# Review current enrollment restrictions and per-user device limits
-Get-IntuneEnrollmentConfig -Verbose
-# Export full device inventory with compliance status
-Get-IntuneManagedDeviceInventory -Verbose
-# Find non-compliant devices specifically
-Get-IntuneManagedDeviceInventory -NoExport | Where-Object { $_.ComplianceState -ne 'compliant' }
-# List all Autopilot registered devices
-Get-IntuneAutopilotDevice -Verbose
-# Find Autopilot devices without a group tag (potential unknowns)
-Get-IntuneAutopilotDevice | Where-Object { -not $_.GroupTag }
-10a. Restrict enrollment to specific security groups.
-Navigate to: Intune admin center > Devices > Enrollment > Device platform restrictions
-Set default enrollment to "Block" for all platforms, then create platform-specific restriction profiles assigned to security groups of authorized users.
-10b. Configure Autopilot with hardware hash enforcement.
-Navigate to: Intune admin center > Devices > Enrollment > Windows Autopilot > Devices
-Only devices whose hardware hashes have been pre-registered should be able to enroll through Autopilot. Block self-enrollment of unknown devices.
-10c. Reduce per-user device enrollment limits.
-Navigate to: Intune admin center > Devices > Enrollment > Device limit restrictions
-Reduce the default from 15 to 3-5 depending on your environment. This limits the number of rogue devices an attacker can register with a single compromised account.
-10d. Require MFA for enrollment.[[ED1]](#_msocom_1) [[CP2]](#_msocom_2)
-Create a Conditional Access policy targeting the Microsoft Intune Enrollment app that requires MFA. This forces an MFA challenge during the device enrollment flow.
-10e. Enable Enrollment Status Page.
-Navigate to: Intune admin center > Devices > Enrollment > Enrollment Status Page
-Configure it to block device use until all required policies and applications have been installed and compliance has been confirmed. This prevents a rogue device from accessing resources before compliance checks complete.
-Validation: Attempt to enroll a device that is not in an authorized security group. It should be blocked. Attempt to enroll a device that has not been pre-registered in Autopilot. It should fail. Confirm that the MFA challenge fires during enrollment.
-10f. Require MFA for device registration and join via Conditional Access
-Navigate to: Microsoft Entra admin center > Entra ID > Conditional Access > Policies Select New policy and set the Target resource to User actions > Register or join devices. Under Grant, choose Require authentication strength and select the built-in Multifactor authentication strength. Set Include to All users, exclude break-glass accounts, and enable the policy. Ensure Entra ID > Devices > Device Settings > Require MFA to register or join devices is set to No. Otherwise, the Conditional Access policy will not be properly enforced.
-Phase 4: Detection
-11. Deploy Sentinel Telemetry and Analytics Rules
-Steps:
-11a. Configure Intune diagnostic settings.
-Navigate to: Intune admin center > Tenant administration > Diagnostics settings > Add diagnostics setting
-- Select all log categories: Audit Logs, Operational Logs, Device Compliance Org, Devices
-- Destination: Send to Log Analytics workspace (your Sentinel workspace)
-11b. Verify data flow.
-After enabling diagnostics, wait 15-30 minutes, then run this in your Log Analytics workspace:
-IntuneAuditLogs
-| take 10
-If rows return, data is flowing. If not, check the diagnostics setting and confirm the workspace is correct.
-11c. Deploy Query 7.5 as a Scheduled Analytics Rule.
-Navigate to: Microsoft Sentinel > Analytics > Create > Scheduled query rule
-- Name: "Intune High-Risk Administrative Operation"
-- Severity: Map to the dynamic Severity field in the query
-- MITRE ATT&CK tactics: Execution, Persistence, Privilege Escalation, Impact
-- Run query every: 5 minutes
-- Lookup data from the last: 10 minutes
-- Alert threshold: Greater than 0
-- Entity mapping: Actor → Account entity, TargetName → Host entity
-- Incident settings: Enable incident creation, group alerts into incidents by Actor within 1 hour
-Paste the full Query 7.5 from Part 1 into the rule query field.
-11d. Configure additional cross-reference rules.
-Deploy separate analytics rules for:
-- New Global Admin account creation (from Part 1, Entra AuditLogs query)
-- Intune portal access from non-compliant device (SigninLogs query against your Conditional Access policy)
-IntuneManagementExtension.exe
-spawning suspicious child processes (DeviceProcessEvents in MDE)
-11e. Test the detection pipeline.
-Perform a controlled action that should trigger the rule: create a test PowerShell script in Intune and assign it to a test device group. Within 5-10 minutes, confirm that a Sentinel incident is created with the correct severity, actor, and target name.
-Validation: The test incident should appear in Sentinel with all entity mappings populated. Verify that the severity scoring logic is working: a script deployment to a test group should be "High," while a script deployment to "All Devices" (which you should never do in production) would be "Critical."
-Appendix: Running the Full Audit
-If you want to run the complete audit before starting the implementation phases, the module includes Invoke-IntuneSecurityAudit
-, which combines every enumeration function into a single execution. It produces a timestamped output directory with eight CSV files covering the full Intune security posture.
-# Dot-source the module
-. .\Invoke-IntuneSecurityAudit.ps1
-# Connect and run the full audit
-Connect-IntuneSecurityAudit -Verbose
-Invoke-IntuneSecurityAudit -Verbose
-# Customize the admin group name and output location
-Invoke-IntuneSecurityAudit -AdminGroupName "Tier0 Admins" -OutputDirectory "C:\Audits" -Verbose
-The audit produces these output files:
-File | Contents |
-|---|---|
-01_EntraRoleAssignments.csv | Entra ID privileged role members (Global Admin, Intune Admin, etc.) |
-02_PIMAssignments.csv | PIM eligible vs permanent assignments for critical roles |
-03_IntuneRBACAssignments.csv | Intune RBAC role definitions and scope assignments |
-04_IntuneAppRegistrations.csv | App registrations with Intune Graph API permissions |
-05_AdminMFAMethods.csv | Admin authentication methods (flags missing phishing-resistant MFA) |
-06_IntuneScripts.csv | All deployed PowerShell/Shell scripts with content preview |
-07_EnrolledDevices.csv | Full device inventory with compliance state |
-08_EnrollmentConfig.csv | Enrollment restrictions and per-user device limits |
-When run with -Verbose
-, the function provides a running summary including the number of admins lacking phishing-resistant MFA, the count of flagged app registrations, and the total deployed scripts. Review the CSV files with your team and use the results to prioritize which Phase 1 actions need the most attention in your environment.
-Every function in the module supports standard PowerShell pipeline operations. You can pipe output between functions (Get-IntuneAppRegistration | Get-IntuneAppCredentialStatus
-), filter with Where-Object
-, export with Export-Csv
-, and control verbosity with -Verbose
-. Run Get-Help <FunctionName> -Full
-for detailed parameter documentation and examples.
-Implementation Checklist
-Use this as a tracking sheet as you work through the phases, this is how one would look, please do not skip this step:
-# | Control | Phase | Status | Validated |
-|---|---|---|---|---|
-1 | Audit/remove standing privileged access | 1 | ☐ | ☐ |
-2 | Enable PIM on Intune roles | 1 | ☐ | ☐ |
-3 | Enable Multi-Admin Approval | 1 | ☐ | ☐ |
-4 | Audit Graph API app registrations | 1 | ☐ | ☐ |
-5 | Enforce phishing-resistant MFA | 2 | ☐ | ☐ |
-6 | Configure RBAC custom roles + scope tags | 2 | ☐ | ☐ |
-7 | Lock down portal access (Conditional Access) | 2 | ☐ | ☐ |
-8 | Deploy PAWs with redundancy | 3 | ☐ | ☐ |
-9 | Script signing + app deployment controls | 3 | ☐ | ☐ |
-10 | Harden device enrollment | 3 | ☐ | ☐ |
-11 | Deploy Sentinel analytics (Query 7.5) | 4 | ☐ | ☐ |
-Closing Thought
-If you got through all 11 controls, you have built a layered defense model that addresses every vector that we have seen attackers abuse and several more that have been documented in research but have not yet made headlines. The controls reinforce each other: PIM controls who can activate a role, MAA controls what they can do with it, Conditional Access controls where they can do it from, RBAC controls the scope of what they can see, and Sentinel tells you when something abnormal happens despite all those gates.
-No single control is sufficient. The value is in the stack. And if something does get through, you will know about it in minutes rather than days.
-If you want help assessing your Intune security posture or implementing these controls in your environment, [get in touch with us.](https://trustedsec.com/contact) This is the work the Remediation Team at Trustedsec does every day.</div>
+azurenetfiles.net
+Staging Payloads & Attacker Files
+Google Security Operations (SecOps)
+SecOps customers will have access to the following pending-deployment rules. Once fully deployed, these rules will be available under the Mandiant Frontline Threats rule pack:
+-
+Oracle PeopleSoft Configuration Inspection
+-
+Oracle PeopleSoft Suspicious JSP File Write to PSEMHUB
+-
+Sshpass Interactive File Deployment
+-
+Data Archiving or Compression via Zstd Utility
+-
+MeshCentral Command Execution via Meshctrl</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
@@ -834,6 +482,7 @@ Update, June 11, 10:23 a.m. ET: The threat research group PRODAFT has released [
 True operational secrecy is a pain in the butt, hard to maintain, and easy to screw up. That’s why it’s better to be able to act in your real name and not have to worry about it…
 It’s amazing how these ransomware gangs are able to maintain military intelligence level opsec
 Almost as if…
+Um, almost as if their business model provides enough income to afford it? Enough with the conspiracy theories. Brian understands that most of these sorts of operations have a learning curve. They are most vulnerable at three or four times in each ransom cycle (three, if it is an established affiliate relationship for long enough to have ascertained they aren’t involved in a sting). Once they figure out how to proxy, manage their toolchain properly, and successfully get ahold of the money they asked for, the only thing left to worry about is how to make it look legitimate. Ransomware removes the long-term upkeep and gradual profit model of a botnet. Now that companies are willing to pay hundreds of thousands or millions per incident, you don’t need to be ‘Russian’ or ‘Ukrainian’, or have connections to any sort of corrupt officials, you just have to throw someone else under the bus faster than the other person, it looks like.
 Has anyone told Apple about “Hastalamuerte registered on Raidforums in 2020 using the email address hastalamuerte1488@protonmail.com (1488 is a common combination of two numeric symbols associated with white supremacy). A lookup on this address at the open source intelligence service Epieos shows it is connected to an account at Apple and to a phone number ending in 04.”
 Can they disable his account?
 I don’t see why. He’s not infringing on any of Apple’s terms with his account, nor has he attacked Apple. Simply *being* a criminal shouldn’t get you disbarred from using any services.
@@ -846,6 +495,7 @@ I think the reason it’s so easy to track there people down (aside from the Rus
 @Dennis – I think if you have money, are careful and discreet, and stay out of politics… Russia can be a veery pleasant place to live.
 Hmmm. Never seemed to work for Arkady Renko.
 “Nasty country” – pray tell where you’ve found so entirely free of nastiness to live, Mr. Menace?
+Might as well be living on the sun.
 I believe his identity is BIG BALLS! You know the guy that got beat up by a girl in DC and even of more surprise he was on a date with a GIRL.
 Seems like something the snowflake orange one would be involved with.
 There was some chatter on Telegram about ShinyHunters running The Gentlemen ransomware group, but oh well…
@@ -880,50 +530,6 @@ Lots of AI slop puppeting every meatpuppet now (no offense, Brian).</div>
             <hr class="separator">
         </div>
         <div id="art-7" class="article-body">
-            <h2 class="article-title">A Record-Breaking Patch Tuesday for June 2026</h2>
-            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/06/a-record-breaking-patch-tuesday-for-june-2026/" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft today released software updates to plug nearly 200 security holes across its Windows operating systems and supported software, a record number of fixes for the company’s monthly Patch Tuesday cycle. Nearly three dozen of those bugs earned Microsoft’s most dire “critical” rating, and exploit code for at least three of the weaknesses is now publicly available.
-The software giant said in [a blog post](https://www.microsoft.com/en-us/msrc/blog/2026/05/a-note-on-patch-tuesday) last month that both its engineers and the security community are increasing using artificial intelligence tools to find bugs, meaning this month’s heavy Patch Tuesday may start to become the norm, said Satnam Narang, senior staff research engineer at Tenable.
-“Some surveys put AI usage among security professionals generally at 90%, so it’s unsurprising that this volume of patches may be the norm,” Narang said. “Pandora’s proverbial box has been opened, and as more advanced AI models become available, we expect the norm to continue upward across the board, not just for Patch Tuesday.”
-June’s zero-day bugs include [CVE-2026-49160](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-49160), a denial of service vulnerability affecting a range of web servers, including Microsoft Internet Information Services (IIS). Microsoft says the flaw was reported by OpenAI’s Codex.
-Two of the zero-days addressed this month appear to stem from recent vulnerability disclosures by Nightmare Eclipse, the nickname chosen by a security researcher who has been dropping exploits for various Windows flaws. One of those, dubbed “GreenPlasma,” leverages an elevation of privilege weakness in the Windows Collaborative Translation Framework, the same framework patched today in [CVE-2026-45586](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-45586).
-Nightmare Eclipse also last month released “YellowKey,” an exploit for a Windows BitLocker vulnerability that allows an attacker with physical access to view encrypted data, and [CVE-2026-50507](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-50507) is a patch for an elevation of privilege bug in BitLocker.
-Microsoft received heavy blowback on social media last month after it said in [a blog post](https://www.microsoft.com/en-us/msrc/blog/2026/05/a-shared-responsibility-protecting-customers-through-coordinated-vulnerability-disclosure) that it was considering taking legal action against the security researcher. The company later clarified on Twitter/X that while it has no intention of pursuing legal actions against researchers, it would report them to authorities if they break the law. The advisories for CVE-2026-49160 and CVE-2026-50507 do not credit any researchers in the acknowledgement section, saying only that “Microsoft recognizes the efforts of those in the security community who help us protect customers through coordinated vulnerability disclosure.”
-Nightmare Eclipse claims to be [a former employee](https://infosec.exchange/@briankrebs/116661298779426573) of Microsoft, although Microsoft has not responded to questions about this claim. Rapid7 notes that a recent blog post by Nightmare Eclipse included an image of [Albert Wesker](https://residentevil.fandom.com/wiki/Albert_Wesker), a character from the Resident Evil video game series who formerly worked as a researcher for a technology company before going rogue.
-Nightmare Eclipse has pledged to release even more zero-day exploits for Windows in what they called a “bone shattering” drop planned for July 14 (the same day as next month’s Patch Tuesday). Immediately following the release of Microsoft patches today, the researcher [published an exploit](https://deadeclipse666.blogspot.com/2026/06/its-patch-tuesday.html) for what they claimed was a zero-day bug in Windows Defender.
-While 200 vulnerabilities may be a record for Patch Tuesday, the actual number of security flaws Microsoft addressed this month is far higher, said Rapid7’s Adam Barnett.
-“So far this month, Microsoft has provided patches to address 360 browser vulnerabilities, which is an order of magnitude more than has been typical in any given month over the past few years,” Barnett wrote. “As usual, browser [flaws] are not included in the Patch Tuesday count above. Indeed, the vast, and presumably sustained, uptick in the number of browser vulnerabilities has led to Microsoft no longer enumerating Chromium CVEs in the Security Update Guide.”
-Microsoft also patched a zero-day vulnerability in Visual Studio Code that allows attackers to steal GitHub tokens with a single click. The company was forced to push a stopgap fix for the flaw on June 3, after a researcher [published instructions](https://blog.ammaraskar.com/github-token-stealing/) showing how to exploit it. The researcher said they opted not to work with Microsoft because of a recent experience wherein Redmond silently patched a flaw they reported without offering credit or recognition.
-Microsoft battled its own internal zero-day emergencies last week, after at least 72 of the company’s public code repositories were infected with [a variant of the Shai-Hulud worm](https://www.stepsecurity.io/blog/miasma-worm-hits-microsoft-again-azure-functions-action-and-72-other-repositories-disabled-after-supply-chain-attack-targeting-ai-coding-agents). Researchers found that all of the affected packages were connected to Microsoft official Azure Durable Task SDK, which got [hit by the same Shai-Hulud worm](https://opensourcemalware.com/blog/miasma-reaches-azure) in May.
-Other major software makers are also shipping outsized update bundles this month. Adobe has released updates to fix a massive number of critical vulnerabilities [across a range of products](https://helpx.adobe.com/security/security-bulletin.html), including Adobe Experience Manager, Acrobat Reader and Cold Fusion. On June 3, Google resolved [a whopping 429 vulnerabilities](https://securityboulevard.com/2026/06/google-patches-429-chrome-vulnerabilities-in-major-browser-update/) in its latest Chrome browser update (Chrome automatically downloads updates but installing them usually requires a complete restart of the browser).
-As ever, please consider backing up your data before applying operating system updates, and drop a note in the comments if you run into any problems with this month’s patches.
-Further reading:
-[Microsoft’s Security Update Guide](https://msrc.microsoft.com/update-guide/releaseNote/2026-Jun)
-I suspect some of the exploits were found by Claude Mythos from Anthropic. That advanced version of Claude was only shared with some key tech firms including Microsoft.
-I forgot. Today was Microsoft Update Tuesday. It’s been like 40 years, how could one forget? It’s like forgetting your wedding anniversary. That shows how much Windows 10 is being used., and only for business at that. Windows 11 isn’t installed at all, that partition became the E-File Archive. Ubuntu/Kali/FreeBSD, and I’m starting to think that BSD is the way to go, IMHO.
-I remember FreeBSD back in 1998, when I had to use PAO to install drivers for stuff like networking on my 1996 laptop. As far ass I can tell, browsers from back then aren’t very useful unless people are patching an out of date installation of qmail from 1997. I did experiment with a branch of BSD in spring of 2009, but most of the software needed to run a proper desktop isn’t there, and don’t get me started on trying to develop anything, especially without a decent Virtualization software.
-But still, it existed side-by-side with Windows 7 for at least a season. I killed off any instance in running an installation of a BSD-based operating system long ago and finally said farewell to my last existing version of it in 2019. The box was named Jonathan, like the character in the classic tv series Seven Days.
-Interesting update June 2026 Patch Tuesday looks like a major one, especially with so many security fixes and system improvements.
-Keeping Windows updated is really important for stability and protection. For users who are still looking for setup information, I’ve also shared a guide about Windows 11 download and installation steps here:
-What do you think — are these monthly patches becoming more critical for everyday users now?
-The number of bugs being fixed by all vendors shows the overall poor quality of human created code. Heads should be rolling everywhere! It’s time to turn all coding and QA over to the machines.
-So what about Win10 now, where even the extended support version dies in Oct? MS should extend Win10 support for another year of security patches.
-Meanwhile, Microsoft AI should be given the task to write a complete new OS (call it Win12) from the ground up, with new code and almost no bugs.
-Thanks to you Brian for continuing to cover this topic of Windows Updates. As I’ve been following your recent posts about AI-based vulnerability detection, I’m not surprised that there were so many updates. We are truly in a new threat environment era. Keep up the great work!
-The intersect is not real.
-That should be Albert Wesker, not Vesker.
-Thanks!
-Your welkum.
-> “Pandora’s proverbial box has been opened, and as more advanced AI models become available, we expect the norm to continue upward across the board, not just for Patch Tuesday.”
-Does not compute. If the use of LLMs to help find vulnerabilities is greater than the vulnerabilities introduced by the use of LLMs to write code, surely that would mean only a short spike to fix the backlog of human generated errors. Otherwise, this is just another net negative of this stupid bubble.
-*albert Wesker btw 😉
-well, it’s that or Wexler.
-Waiting for a reboot of Castle involving Bill Gates and the Chair Company hanging out with Norm drinking apple spyder.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-8" class="article-body">
             <h2 class="article-title">CISA Adds Three Known Exploited Vulnerabilities to Catalog</h2>
             <p class="source-link">Source: All CISA Advisories | <a href="https://www.cisa.gov/news-events/alerts/2026/06/09/cisa-adds-three-known-exploited-vulnerabilities-catalog" target="_blank">Original Link</a></p>
             <div class="content-text">CISA Adds Three Known Exploited Vulnerabilities to Catalog
@@ -937,7 +543,7 @@ This product is provided subject to this [Notification](/notification) and this 
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-9" class="article-body">
+        <div id="art-8" class="article-body">
             <h2 class="article-title">CISA Adds Actively Exploited SolarWinds Serv-U DoS Flaw to KEV Catalog</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/cisa-adds-actively-exploited-solarwinds.html" target="_blank">Original Link</a></p>
             <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) has [added](https://www.cisa.gov/news-events/alerts/2026/06/05/cisa-adds-one-known-exploited-vulnerability-catalog) a high-severity security flaw impacting SolarWinds Serv-U multi-protocol file server software to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, citing evidence of active exploitation.
@@ -947,6 +553,155 @@ The issue has been addressed in SolarWinds Serv-U version 15.5.4 HF1. As mitigat
 There are currently no details on how the vulnerability is being exploited in real-world attacks, or who is behind them. It's also unclear how many internet-exposed Serv-U instances are compromised, if any.
 CISA has ordered Federal Civilian Executive Branch (FCEB) agencies to address the flaw by June 19, 2026. In the past, [multiple flaws](https://thehackernews.com/2022/01/microsoft-hackers-exploiting-new.html) in [Serv-U](https://thehackernews.com/2021/09/microsoft-says-chinese-hackers-were.html) have been [exploited](https://thehackernews.com/2024/06/solarwinds-serv-u-vulnerability-under.html) by bad actors, including those associated with the [Cl0p ransomware gang](https://www.nccgroup.com/research/ta505-exploits-solarwinds-serv-u-vulnerability-cve-2021-35211-for-initial-access/).
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-9" class="article-body">
+            <h2 class="article-title">Canvas Breach Disrupts Schools & Colleges Nationwide</h2>
+            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/05/canvas-breach-disrupts-schools-colleges-nationwide/" target="_blank">Original Link</a></p>
+            <div class="content-text">An ongoing data extortion attack targeting the widely-used education technology platform Canvas disrupted classes and coursework at school districts and universities across the United States today, after a cybercrime group defaced the service’s login page with a ransom demand that threatened to leak data from 275 million students and faculty across nearly 9,000 educational institutions.
+Canvas parent firm Instructure responded to today’s defacement attacks by disabling the platform, which is used by thousands of schools, universities and businesses to manage coursework and assignments, and to communicate with students.
+Instructure acknowledged a data breach earlier this week, after the cybercrime group ShinyHunters claimed responsibility and said they would leak data on tens of millions of students and faculty unless paid a ransom. The stated deadline for payment was initially set at May 6, but it was later pushed back to May 12.
+In [a statement](https://status.instructure.com/incidents/9wm4knj2r64z) on May 6, Instructure said the investigation so far shows the stolen information includes “certain identifying information of users at affected institutions, such as names, email addresses, and student ID numbers, as well as as messages among users.” The company said it found no evidence the breached data included more sensitive information, such as passwords, dates of birth, government identifiers or financial information.
+The May 6 update stated that Canvas was fully operational, and that Instructure was not seeing any ongoing unauthorized activity on their platform. “At this stage, we believe the incident has been contained,” Instructure wrote.
+However, by mid-day on Thursday, May 7, students and faculty at dozens of schools and universities were flooding social media sites with comments saying that a ransom demand from ShinyHunters had replaced the usual Canvas login page. Instructure responded by pulling Canvas offline and replacing the portal with the message, “Canvas is currently undergoing scheduled maintenance. Check back soon.”
+“We anticipate being up soon, and will provide updates as soon as possible,” reads the current message on Instructure’s [status page](https://status.instructure.com/incidents/m88d7ymwpzpy).
+While the data stolen by ShinyHunters may or may not contain particularly sensitive information (ShinyHunters claims it includes several billion private messages among students and teachers, as well as names, phone numbers and email addresses), this attack could hardly have come at a worse time for Instructure: Many of the affected schools and universities are in the middle of final exams, and a prolonged outage could be highly damaging for the company.
+The extortion message that greeted countless Canvas users today advised the affected schools to negotiate their own ransom payments to prevent the publication of their data — regardless of whether Instructure decides to pay.
+“ShinyHunters has breached Instructure (again),” the extortion message read. “Instead of contacting us to resolve it they ignored us and did some ‘security patches.'”
+A source close to the investigation who was not authorized to speak to the press told KrebsOnSecurity that a number of universities have already approached the cybercrime group about paying. The same source also pointed out that the ShinyHunters data leak blog no longer lists Instructure among its current extortion victims, and that the samples of data stolen from Canvas customers were removed as well. Data extortion groups like ShinyHunters will typically only remove victims from their leak sites after receiving an extortion payment or after a victim agrees to negotiate.
+Dipan Mann, founder and CEO of the security firm Cloudskope, slammed Instructure for referring to today’s outage as a “scheduled maintenance” event on its status page. Mann said Shiny Hunters first demonstrated they’d breached Instructure on May 1, prompting Instructure’s Chief Information Security Officer Steve Proud to declare the following day that the incident had been contained. But Mann said today’s attack is at least the third time in the past eight months that Instructure has been breached by ShinyHunters.
+In a blog post today, Mann noted that in September 2025, ShinyHunters released thousands of internal University of Pennsylvania files — donor records, internal memos, and other confidential materials — through what the Daily Pennsylvanian and other outlets later determined was, in part, a Canvas/Instructure-mediated access path.
+“Penn was the named victim,” Mann [wrote](https://www.cloudskope.com/insights/post/instructure-canvas-ransomware-attack-hits-universities-2026). “Instructure was the mechanism. The incident was treated as a Penn-specific story by most of the national press and quietly handled by Instructure as a customer-specific matter. That framing was wrong then. It is dramatically more wrong in light of the May 2026 events, which now look like the planned escalation of an attack pattern that ShinyHunters had been working against Instructure’s environment for at least eight months prior. The September 2025 Penn breach was the proof of concept. The May 1, 2026 incident was the production run. The May 7, 2026 recompromise was ShinyHunters demonstrating publicly that the May 2 ‘containment’ did not happen.”
+In February, a ShinyHunters spokesperson told The Daily Pennsylvanian that Penn [failed to pay a $1 million ransom demand](https://www.thedp.com/article/2026/02/penn-hack-donor-data-ransom-one-million-shinyhunters-gse-emai). On March 5, ShinyHunters published 461 megabytes worth of data stolen from Penn, including thousands of files such as donor records and internal memos.
+ShinyHunters is a prolific and fluid cybercriminal group that specializes in data theft and extortion. They typically gain access to companies through voice phishing and social engineering attacks that often involve impersonating IT personnel or other trusted members of a targeted organization.
+Last month, ShinyHunters relieved the home security giant ADT of personal information on 5.5 million customers. The extortion group [told BleepingComputer](https://www.bleepingcomputer.com/news/security/home-security-giant-adt-data-breach-affects-55-million-people/) they breached the company by compromising an employee’s Okta single sign-on account in a voice phishing attack that enabled access to ADT’s Salesforce instance. BleepingComputer says ShinyHunters recently has taken credit for a number of extortion attacks against high-profile organizations, including Medtronic, Rockstar Games, McGraw Hill, 7-Eleven and the cruise line operator Carnival.
+The attack on Canvas customers is just one of several major cybercrime campaigns being launched by ShinyHunters at the moment, said Charles Carmakal, chief technology officer at the Google-owned Mandiant Consulting. Carmakal declined to comment specifically on the Canvas breach, but said “there are multiple concurrent and discrete ShinyHunters intrusion and extortion campaigns happening right now.”
+Cloudskope’s Mann said what happens next depends largely on whether Instructure’s customers — the universities, K-12 districts, and education ministries paying for Canvas — choose to apply pressure or absorb the breach quietly.
+“The history of education-vendor incidents suggests the path of least resistance is the second one,” he concluded.
+Update, May 8, 11:05 a.m. ET: Instructure has published [an incident update page](https://www.instructure.com/incident_update) that includes more information about the breach. Instructure said its Canvas portal is functioning normally again, and that the hackers exploited an issue related to Free-for-Teacher accounts.
+“This is the same issue that led to the unauthorized access the prior week,” Instructure wrote. “As a result, we have made the difficult decision to temporarily shut down Free-for-Teacher accounts. These accounts have been a core part of our platform, and we’re committed to resolving the issues with these accounts.”
+Instructure said affected organizations were notified on May 6.
+“If your organization is affected, Instructure will contact your organization’s primary contacts directly,” the update states. “Please don’t rely on third-party lists or social media posts naming potentially affected organizations as those lists aren’t verified. Instructure will confirm validated information through direct outreach to all affected organizations.”
+Update, May 11, 10:16 p.m. ET: Instructure posted [an update](https://www.instructure.com/incident_update) saying they paid their extortionists in exchange for a promise to destroy the stolen data. “The data was returned to us,” the update reads. “We received digital confirmation of data destruction (shred logs). We have been informed that no Instructure customers will be extorted as a result of this incident, publicly or otherwise.”
+These hackers have no honor. They have brought shame to both their families and their ancestors. Their parents should be embarrassed by them.
+To be entirely honest, what they just accomplished is groundbreaking. Horrible for sure, but for a system that literally robs their students- what a HUGE pull of attention to a system that needs to be scrutinized. Hopefully the schools do the right thing by their students, and pay the hackers. They do nothing but generate money and put students in to massive amounts of debt just for information that can be self taught, but not looked at because it wasn’t “Credited” by a university…
+You’re going to get your wish and see a wave of universities closing across the country, because critical thought is just too dangerous and anyway it can all be self-taught with Youtube videos.
+Get me out of this stupid fucking country.
+“Hopefully the schools do the right thing by their students, and pay the hackers”…is a horrible way to deal with this. You really think by paying the ransom they are actually going to honor what they say? There are actual laws in some states that bar against paying cyber ransoms. If a cyber criminal is good at their job, which it seems to be for this one, they are quite good at it, they are going to make copies/backups as SOON as they get the data they are after. They will just take the money and sell the data to the blackmarket. Sometimes you just have to cut your losses and rebuild stronger.
+You might be responding to a SH affiliate performing their duties as “Public Relations content creator”…
+Perfecto !!
+Easy to guess
+honor? shame? embarressed ancestors?
+dude, are you living in the 17th century???
+lol
+Spoken like a true Klingon!
+Yer no True Klingsmon!
+It is entirely IN STRUCTURES FAULT. THEY WARNED THEM MULTIPLE TIMES. INSTRUCTOR IGNORED THEIR WARNINGS FOR BUG FIXING.
+Bigger issues than their parents or the FBI.
+Yet take a computer away from these turds and what are they? Small insignificant manchildren. They have no life skills and owe their parents so much for babying them and letting them learn the ability to… be a criminal? Seriously, is that it?
+Idiots can’t go after places that matter, so they go after education…? Which is already poorly funded as is, mind you…
+I pray to all deities known to man and hope that just a little karmic justice will come to light. They should be considered cyberterrorists for this act alone.
+Karmic justice would be awesome. But as someone else pointed out, the U.S. educational industrial complex is not poorly funded, at least not the larger universities. All the local colleges and below are usually strapped. But this whole thing is indeed big money, but we’ll have to see if Instructure takes the bait and coughs up some of its millions for this. I doubt even an ivy-league university will pay for Instructure’s lack of security or for its pride, wanting to act like the emperor still has clothes.
+projection is strong with this one
+‘projection’ is strong with all hypocritical liars and most scammers (generally same imaginary skills bracket as ‘crypto’, ‘derivatives’, and using the identity of pets to use publicly traded companies like reddit to commit fraud.
+like my name being a starving kid, or an AI calling a blanket a poor black son.
+Regarding “Canvas parent firm Instructure [NYSE:INST]”, Instructure was taken private in 2024. It is no longer a public company.
+If it was bought by private equity you know exactly why it has gone to crap.
+Given the current political climate in the U.S., my foremost concern is access to which classes students are taking, what pronouns they use, and the papers and discussion posts they are writing. I also see far too little attention to the fact that **they stole personal information about children** since Canvas is heavily used in K-12. We’ve got plenty of ways to protect ourselves against identity theft, but nobody’s talking about how to protect children who experiment with using “they/them” pronouns, or who wrote a term paper for or against gay marriage, abortion, or capitalism? Or adult scholars working on gender studies, black studies, Christianity, Islam, or the Israeli-Palestinian crisis? Those early papers (high school and college) tend to be very un-nuanced and “read” as more extreme than the person’s actual beliefs, and could even be an assignment or thought exercise in arguing the opposite of what they really believe. In the past, all of that would be inaccessible to the wider world. Making all of that public, especially right now, especially for children and young adults, is very concerning.
+THAT’s your concern, out of EVERYTHING else that was stolen?! And you think THAT’s what the hackers, any hackers, are after?!
+Your dismissive comment towards MYOB shows your privilege, Sara.
+I am as concerned as MYOB is. The real sensitive information is anything that the US’s right-wing authoritarian regime is opposed to — like anyone not white, straight, cis, and the correct flavor of Christian — being tied to one’s name. The 20-somethin’ year-old Elon-fanboys with surely use AI to pour over the hacked data, build a list, and use it to harm dissenters.
+they were after $ – nothing else, they could care less about politics, or religion, or other social issues
+That’s not really the point, it’s not that the hackers are after that data, but if it becomes public, certain things might land you on certain lists, and you could become a political target regardless of what the hackers’ intentions are
+Canvas does not have information about who is LGBTQ+. Nor do they have information about what color people are, who they believe in, etc. What you will find on Canvas is exams, discussion boards, reading materials, and grades.
+And you don’t see how those are connected? Pretty dim bulb, ain’t you.
+Backdoor Canvas certainly does contain information on students, i.e. student i.d. numbers, students’ personnel phone and email, possibly bank account links … and possibly demographics. Even if all I could obtain was a student i.d. number, I could, in short order, obtain pretty much any information about a student that I wanted: financial, demographic, address, email, phone, social media … and on and on.
+That is why redundancy is important, but most in Government have no idea what that is…….
+Oh I think they understand redundancy lol.. it doesn’t impart usefulness per se.
+Whaaat?
+“Canvas is currently undergoing scheduled ransomware negotiation. Check back soon”
+Fixed it.
+Even in Europe, in the Netherlands, all universities and colleges have been hacked.
+” this attack could hardly have come at a worse time for Instructure: Many of the affected schools and universities are in the middle of final exams, and a prolonged outage could be highly damaging for the company.”
+I don’t feel bad for the company, except any employee that was screaming about security and wasn’t listened to.
+The week or two before, then finals week was always a very stressful time for me, so I feel for the students going through this hell. Plus the added burden of wondering what info on them is now floating around the Internet…
+The company is private, not public: https://www.instructure.com/press-release/instructure-to-be-acquired-by-KKR. See also KKR: https://www.kkr.com/invest/portfolio?cfnode=instructure-holdings-inc-. This matters because it means the company is subject to different regulatory and enforcement rules.
+Huh, they were taken private less than two years ago. I wonder what the new owners did with “unnecessary” spending on security?
+Oof, it’s like Instructure took every piece of advice on handling this type of attack and threw it out the window. It doesn’t make me super confident that anything they’ve stated regarding breached information is accurate. Great that the colleges might be able to pay up, but the cash-strapped public school systems don’t have an extra few million hanging around to give away.
+Those claims from Mann sure are something. Cybersecurity practices at Instructure did not appear to be immature: https://trust.instructure.com/.
+Doug: appreciate the link. To be clear, the post isn’t a claim that Instructure has no security program; SOC 2 and the trust portal are documented.
+The argument is narrower: the May 2 ‘contained’ assertion didn’t survive contact with May 7, and the choice to label that day’s outage ‘scheduled maintenance’ on the login surface while the status page lagged is the response posture I’m critiquing, not the underlying controls.
+What does “didn’t survive contact with” mean, here, exactly?
+Mr. Choudhury, military phrasing on my part. There’s an old line from a Prussian general named von Moltke: “no plan survives contact with the enemy.” It’s proving just as true in modern cyber as it was on the battlefield. The May 2 “contained” statement didn’t hold. ShinyHunters hit Instructure again on May 7 using the same access path. They said it was over. But unfortunately, it wasn’t.
+I am pretty sure it is the same scam as Aitel pulled selling to Sister Act for over half a billion dollars for essentially a pack of not really 0 Days packaged, ironically, under the name CANVAS also,
+total coinkytiddlywinky. enjoying the old ‘security community’ morphing into sociopaths and dystopian console games at everyone’s expense.
+https://foreignpolicy.com/2016/08/18/the-nsa-has-a-new-disclosure-policy-getting-hacked/
+It is odd how many of these breaches would be prevented if we all went back to single-sign-on access fobs or devices instead of permitting non-standalone apps like a decade or two ago. Not that it would prevent all of it, but it would sure cut back on the ridiculous low-tech ‘hacking’ that leads to a lot of the ruder ‘groups’ garnering payouts.
+It is interesting to watch how the trust aspects play out though. Not sure what makes a company believe a ransomtaker (either about the extent of a compromise or the ultimate fate of the data involved). Some ‘groups’ seem to be predictable but others sure seem to be veering more between chaotic neutral and quite chaotic evil.
+Some timing, though.
+Glad I am long since grown up (and never going back to grad school or whatever else), and my parents are long dead, so neither they nor I will ever have to deal with modern schooling threats.
+Dipann, What are your thoughts on Instructure having paid the “ransom”? Putting aside Instructure’s and KKR’s public relations issues which might have dictated it was a safer ‘short term’ solution (to get ahead of angry parents and students), I mean, do you think it was a good idea from a technical perspective to pay them (and quickly)? Clearly they wanted their clientele’s data not posted publicly.
+(I use “ransom”, and not ransom, here because it isn’t truly a “ransom” since there is nothing, I assume, that could have been uniquely returned (and it isn’t even a locker, as far as I know?). To me, ransoms are things paid for for physical things (or people) which are taken and generally returned if the ransom is paid. This needs a new word.)
+I think it’s time to look at other platforms like blackboard instead of Canvas that might be more secure.
+Blackboard had many functioning issues so our schools got rid of it a while ago.
+The question is, why are ANY of these considered necessary? Why exactly?
+The same reason medical records should not be kept centralized. Ever.
+Brian,
+thank you for picking up the cover-up angle — most outlets are still
+leading with the breach itself rather than the company’s response to it. A
+few things from our reporting that may be useful to your readers:
+The 21-minute gap between the “scheduled maintenance” cover (4:20 PM ET on
+May 7) and the status page acknowledgment (4:41 PM) wasn’t accidental
+architecture. status.instructure.com runs on Statuspage (Atlassian) —
+infrastructure independent from canvas.instructure.com. Updating one does
+not require updating the other. The maintenance message went up on the
+surface where students were being actively redirected from a ransom screen.
+The acknowledgment went up on a surface their IT teams would eventually
+check. Two separate decisions, two separate surfaces, timing arbitraged
+accordingly.
+As of this comment, status.instructure.com still shows “No incidents
+reported today” for May 7, and Canvas LMS is still flagged “Operational.”
+Multiple universities are still publicly reporting the platform is down.
+That delta is the story.
+For anyone working on follow-up reporting: the question that surfaces the
+next layer of accountability is what specific Instructure communications
+school IT teams received between May 1 and May 7 — and whether they were
+told the incident was “resolved” or “contained.” Several university
+communications offices have already reproduced Instructure’s May 6
+“resolved” language verbatim in messages to parents.
+Thanks again, Brian. The reporting matters.
+— Dipan Mann, Cloudskope
+are you able to do anything in your life without using the clanker? you deserve to be automated out of your job
+Are you one of those people that saves your own comments in a text document (not even bothering to fix your linefeeds when pasting them), thinking they are a gift to a future mankind, or like me and do not believe in saving your sent messages to people after weeks of no replies, Dipan?
+Company has made a statement: https://www.instructure.com/incident_update
+I work at a university, fortunately in the library and not on the education side. It was _not_ a good day for the students.
+They say they’ve fixed the problem. If there’s no leak, can we assume they paid the ransom?
+> “Penn was the named victim,” Mann wrote. “Instructure was the mechanism.
+that’s like blaming the car manufacturer because you left it unlocked and someone stole your laptop from inside.
+As a CISO myself, I do have to wonder why Salesforce is not a bit in the crosshairs with Canvas running on their platform!
+Don’t tell me, let me guess . . . Instructure will offer a year of free credit monitoring to the affected customers. Add that to the four other instances of free credit monitoring they already have courtesy of other irresponsible companies who lost their info.
+Hard to implement for sure, but it would be nice to see the big companies feel more pain for these incidents. Big financial punishment is all they will understand.
+So, the eight year old kids can claim it in nine years or so?
+I’m curious. I have been out of work since 2015/2016, and aside from collecting some bug bounties several years ago, and doing a lot of self-directed research for no pay whatsoever over the past decades, I have seen a lot of employment fads come and go. What are the requirements for being a ‘ransomware negotiator’? Do you need to be bonded? How is it handled by the IRS? Asking since my IP was stolen by a few companies that got funded, and it seems like a nifty thing I could learn.
+Brian?
+LATEST UPDATE:
+Canvas paid up.
+See? cybercrime DOES pay.
+This ShinyGrunters group needs to be busted up ASAP.
+Heard this Deepak Cloudskope guy is making Ukrainian female drones running around Manhattan with cardboard cutouts of clouds, proclaiming they are paychex. Elite AI, man.
+Canvas and ShinyHunters are every bit as despicable as one another. Great joke making all the kids in those databases essentially little Last of Us firefly hunters too.
+Time to run, kid. Ain’t enough room in Fallout for us all.
+Unfortunately there are several things at play now. First, I am not 100% certain, but I am fairly certain that IT was outsourced. Maybe someone knows for certain. Second, Instructure just failed the loyalty test. It wasn’t even close, they bombed. Third, executives need to be fired. These types of breaches cannot be blamed on one person and one department. This goes up the chain – the CISO very likely had ideas and went to his boss asking for the money, people, tools, or processes to fix these kinds of issues. When they are not able to implement some of their ideas, this happens.
+Now, as they just paid, they just made everyone’s job in Security harder. Now ShinyHunters got a massive payday, and so they will do it until they have no money to be made in it.
+While I don’t disagree that ransomware is bad, I still think that, just like in 1997 and 2001, and 2009, the information security field is rife with greedy bastards every bit as bad as these people, but publicly lauded. Tired of your human trafficking. Clearly ransomware is a misnomer.
+You’re really all just the infinity train from that Bong Ho movie now, regardless of the propagandized side your company or looseknit group of people portends to take.
+The Instructure Canvas cyberattack caused major disruptions across schools and colleges nationwide after the ShinyHunters hacker group defaced login pages with ransom demands.
+Not a very accurate AI summary.
+If I were Instructure I would require every student to get a new unique identifier number.
+Must have sucked to take your AP tests those two weeks.
+A funny side note. I heard that there were students reaching out to the hackers. They wanted to pay the hackers to change their scores 🙂 I heard through reliable source but could have been a fabrication. I wouldnt be surprised at all though and i believe it.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
