@@ -59,12 +59,168 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-06-26</h1>
+        <h1>Security Briefing // 2026-06-27</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Photo ZIP campaign targeting hospitality industry delivers Node.js implant for persistent access</button></li><li><button onclick="show('art-1')">New macOS malware embeds fake errors to confuse AI analysis tools</button></li><li><button onclick="show('art-2')">ThreatsDay Bulletin: Smart TV Proxyware, 24-Year curl Bug, AI Crime Forums + 13 More Stories</button></li><li><button onclick="show('art-3')">Cisco Catalyst SD-WAN Zero-Day CVE-2026-20245 Exploited to Gain Root Access</button></li><li><button onclick="show('art-4')">Large Workflows with Local LLMs</button></li><li><button onclick="show('art-5')">Mandiant reveals how Cisco SD-WAN zero-day attacks gained root access</button></li><li><button onclick="show('art-6')">Disposable Tooling: Building LLM-Generated Mythic Agents from Prompt to Deployment</button></li><li><button onclick="show('art-7')">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager</button></li><li><button onclick="show('art-8')">Scattered Spider Hackers Plead Guilty on Day 1 of Trial</button></li><li><button onclick="show('art-9')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li></ul>
+            <ul><li><button onclick="show('art-0')">FBI: Russian hackers now target Signal backup recovery keys</button></li><li><button onclick="show('art-1')">Time Travel Debugging with Codex</button></li><li><button onclick="show('art-2')">CISA sets urgent deadline to fix Cisco flaw exploited in attacks</button></li><li><button onclick="show('art-3')">CISA Adds Exploited PTC Windchill RCE Flaw to KEV as Web Shell Attacks Continue</button></li><li><button onclick="show('art-4')">Miasma Malware Targets npm Packages and GitHub Actions in Supply Chain Attack</button></li><li><button onclick="show('art-5')">Photo ZIP campaign targeting hospitality industry delivers Node.js implant for persistent access</button></li><li><button onclick="show('art-6')">Large Workflows with Local LLMs</button></li><li><button onclick="show('art-7')">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager</button></li><li><button onclick="show('art-8')">Scattered Spider Hackers Plead Guilty on Day 1 of Trial</button></li><li><button onclick="show('art-9')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
+            <h2 class="article-title">FBI: Russian hackers now target Signal backup recovery keys</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/fbi-russian-hackers-now-target-signal-backup-recovery-keys/" target="_blank">Original Link</a></p>
+            <div class="content-text">The FBI and CISA are warning that a phishing campaign targeting Signal users tied to Russian intelligence services has evolved to steal Signal Backup Recovery Keys, allowing attackers to access victims' historical messages.
+The updated public service announcement is an update to a [March 2026 advisory](https://www.bleepingcomputer.com/news/security/fbi-links-signal-phishing-attacks-to-russian-intelligence-services/) that warned the threat actors were targeting users of commercial messaging applications, particularly Signal, through phishing campaigns designed to hijack accounts rather than break end-to-end encryption.
+"RIS cyber threat actors continue to masquerade as automated CMA support accounts in updated phishing messages but have evolved their tactics to attempt to elicit victims' Backup Recovery Keys," warns an [FBI PSA ](https://www.ic3.gov/PSA/2026/PSA260626)published today.
+According to the FBI, the campaign continues to target individuals of high intelligence value, including current and former US and international government officials, military personnel, political figures, journalists, and key officials located in Ukraine.
+The agencies attribute the activity to Russian Intelligence Services (RIS), including officers embedded with Russia's Federal Security Service (FSB) Border Guards and other actors working on behalf of the Russian military. The campaign is publicly tracked as UNC5792 and UNC4221.
+New phishing tactic targets Signal backups
+While the original advisory focused on phishing messages that attempted to steal verification codes or account PINs, or to trick users into [linking attacker-controlled devices to their Signal accounts](https://www.bleepingcomputer.com/news/security/russian-phishing-campaigns-exploit-signals-device-linking-feature/), the updated alert says the attackers have evolved their tactics.
+The FBI says the threat actors continue to impersonate Signal support teams, sending phishing messages that falsely claim Signal is introducing mandatory two-factor verification following an alleged wave of attacks by hackers from Iran and post-Soviet countries.
+"Recently, attempts to hack users of our messenger with the connection of third-party devices to the account have become more frequent," reads the initial phishing message.
+"An investigation conducted jointly with the US government and European partners revealed that the attacks on accounts were carried out by hackers from Iran and post-Soviet countries. In this regard, Signal updates Terms of Service & Privacy Policy, and introduces Mandatory Two-factor Verification for users."
+"Not to lose your messages and media, set up your Signal Backup (Settings -> Backups -> Enable backups -> View recovery key -> Copy to clipboard -> Next -> Enter the recovery key -> Next -> Continue -> Choose your backup plan). Click the "Accept" button in the pop-up and stay tuned for security updates on our messenger."
+When a target follows these instructions, their Signal messages are backed up using [Signal's Secure Backups feature](http://signal.org/blog/introducing-secure-backups/), which stores encrypted copies of conversations on Signal's cloud servers.
+The data is end-to-end encrypted using the recovery key created in the steps above and should never be given to anyone else, as anyone with the key can use it to recover the backed-up data on their own devices.
+The threat actors later send a second phishing message, still posing as Signal support, warning that your data is at risk of loss due to a synchronization issue.
+"Your Signal Account data (messages and media) is at risk of permanent loss due to a sync issue," reads the second Signal message.
+The threat actors then prompt you to go into the Backup settings, copy your recovery key to the clipboard, and paste it into the message to prevent the loss of your stored data.
+However, once you provide your recovery key, they can restore the backup to their own devices and gain access to the victim's historical messages, including private and group conversations.
+The updated advisory also warns of a recovery scenario that users may miss after their account was compromised.
+The FBI warns that if an attacker obtains a user's Backup Recovery Key, creating a new Signal account using the same phone number does not invalidate the old stolen key.
+Instead, users must generate a new Backup Recovery Key through Signal's backup settings, which invalidates the previous key for future backup downloads.
+However, the agencies warn that generating a new recovery key will not prevent attackers from accessing backups they already downloaded using the compromised key.
+The updated advisory reminds users that legitimate messaging application support teams only communicate through official company email addresses, never request verification codes within the application, and do not send links asking users to verify or restore their accounts.
+Anyone who believes they have fallen victim to the campaign is encouraged to report the incident to the FBI's [Internet Crime Complaint Center](https://www.ic3.gov/) (IC3), a [local FBI field office](https://www.fbi.gov/contact-us/field-offices), or [CISA](https://myservices.cisa.gov/irf).
+[Test every layer before attackers do](https://hubs.li/Q04jQ9z40)
+Security teams log 54% of successful attacks and alert on just 14%. The rest move through your environment unseen.
+The Picus whitepaper shows how breach and attack simulation tests your SIEM and EDR rules so threats stop slipping by detection.
+[Get the whitepaper](https://hubs.li/Q04jQ9z40)
+Post a Comment Community Rules
+You need to login in order to post a comment
+Not a member yet? Register Now</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">Time Travel Debugging with Codex</h2>
+            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/06/26/time-travel-debugging-with-codex/" target="_blank">Original Link</a></p>
+            <div class="content-text"><p>Spoiler warning: this post discusses the FLARE-ON 12 `FlareAuthenticator` challenge and includes the recovered flag. Introduction Before getting into the technical details, this work was made possible through SpecterOps&#8217; partnership with OpenAI&#8217;s through the Trusted Access for Cyber program. I also want to thank SpecterOps, my employer, for supporting this research and giving me time [&#8230;]</p>
+<p>The post <a href="https://specterops.io/blog/2026/06/26/time-travel-debugging-with-codex/">Time Travel Debugging with Codex</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">CISA sets urgent deadline to fix Cisco flaw exploited in attacks</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/cisa-sets-urgent-deadline-to-fix-cisco-flaw-exploited-in-attacks/" target="_blank">Original Link</a></p>
+            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) is giving federal agencies until Sunday to patch a vulnerability in Cisco Unified Communications Manager Server that is being actively exploited.
+Identified as CVE-2026-20230, the security issue is server-side request forgery (SSRF) and has been added to the agency's catalog of Known Exploited Vulnerabilities (KEV).
+Per Binding Operational Directive [(BOD) 26-04](https://www.bleepingcomputer.com/news/security/cisa-tells-govt-agencies-to-patch-critical-exploited-flaws-in-3-days/), the remediation is deemed urgent and must addressed by Sunday, June 28.
+Cisco marked CVE-2026-20230 with critical severity and released a patch on June 3, warning that it could be exploited remotely and without authentication via specially crafted HTTP requests.
+At the time, [the company noted](https://www.bleepingcomputer.com/news/security/cisco-warns-of-critical-unified-cm-flaw-with-poc-exploit-code/) that a proof-of-concept exploit existed, but had found no evidence of active exploitation.
+Last weekend, threat detection startup [Defused observed](https://www.bleepingcomputer.com/news/security/cisco-unified-cm-sme-flaw-cve-2026-20230-now-exploited-in-attacks/) the vulnerability being exploited in attacks to write arbitrary text files to affected endpoints.
+It is currently unknown what type of threat actor is leveraging CVE-2026-20230 in attacks.
+Critical flaw in PLM products
+CISA has also added CVE-2026-12569 to the KEV catalog, an improper input validation flaw impacting the PTC Windchill and FlexPLM software products.
+Both are product lifecycle management (PLM) systems developed by PTC specifically for the manufacturing, engineering, retail, footwear, apparel, and consumer products industries.
+CVE-2026-12569 is a [critical-severity](https://www.cve.org/CVERecord?id=CVE-2026-12569) remote code execution (RCE) vulnerability that can be exploited through the deserialization of untrusted data.
+PTC disclosed the issue on June 18 and published a [security advisory](https://www.ptc.com/en/about/trust-center/advisory-center/active-advisories/windchill-flexplm-rce-vulnerability), pointing customers to the complete list of vulnerable Windchill and FlexPLM versions and urging them to immediately take remediation steps.
+According to the vendor, the flaw affects all versions up to 11.0 and multiple versions of the 11.1, 11.2, 12.0, 12.1, and 13.0 release branches.
+CISA set the same June 28 deadline for federal agencies to patch CVE-2026-12569.
+Agencies and organizations bound by BOD 26-04 should take immediate action to secure their systems by applying available security updates and vendor-recommended mitigations, or stop using the products mentioned by the set deadline.
+[Test every layer before attackers do](https://hubs.li/Q04jQ9z40)
+Security teams log 54% of successful attacks and alert on just 14%. The rest move through your environment unseen.
+The Picus whitepaper shows how breach and attack simulation tests your SIEM and EDR rules so threats stop slipping by detection.
+[Get the whitepaper](https://hubs.li/Q04jQ9z40)
+Post a Comment Community Rules
+You need to login in order to post a comment
+Not a member yet? Register Now</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
+            <h2 class="article-title">CISA Adds Exploited PTC Windchill RCE Flaw to KEV as Web Shell Attacks Continue</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/cisa-adds-exploited-ptc-windchill-rce.html" target="_blank">Original Link</a></p>
+            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Thursday [added](https://www.cisa.gov/news-events/alerts/2026/06/25/cisa-adds-two-known-exploited-vulnerabilities-catalog) a critical remote code execution vulnerability impacting PTC Windchill PDMlink and PTC FlexPLM enterprise Product Data Management (PDM) and Product Lifecycle Management (PLM) software to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, citing evidence of active exploitation.
+The vulnerability in question is [CVE-2026-12569](https://www.cve.org/CVERecord?id=CVE-2026-12569) (CVSS score: 9.3), a case of improper input validation that could allow an attacker to execute arbitrary code by sending a malicious request to the network.
+"The vulnerability is a remote code execution (RCE) issue that may be exploited through deserialization of untrusted data," according to an advisory released by PTC.
+Although patches for the flaw were released last week, PTC has since confirmed, as of June 25, that "we've received continued reports of heightened threat activity," with the company disclosing that unknown attackers are exploiting the vulnerability to deploy JSP web shells against susceptible systems.
+PTC has also [released](https://www.ptc.com/en/about/trust-center/advisory-center/active-advisories/windchill-flexplm-rce-vulnerability) the following indicators of compromise (IoCs) associated with the activity -
+- 172.111.38.31
+- 216.152.148.54
+- 104.243.35.131
+- 74.50.76.146
+- 5.180.41.35
+- 216.152.148.54
+- 5.180.41.35 (Attacker command-and-control address)
+- Web shell files following the naming pattern /Windchill/login/[0-9a-f]{16}.jsp
+As mitigations, users are advised to perform the following actions -
+- Block 5.180.41.35 at the perimeter firewall immediately
+- Search HTTP access logs for any POST requests to /Windchill/login/*.jsp
+- Scan the filesystem for JSP files matching the 16-hex-char pattern /Windchill/login/[0-9a-f]{16}.jsp
+- Hash-check any suspicious JSP files against 55a1eb4c2d3da04376df39d7ba832569c6af1a37a0cf2b95f754ac898023a30c
+- Check for flst.txt in /tmp or the Windchill working directory, the presence of which confirms attacker file-listing activity
+- Add WAF / IDS rule blocking any request containing the header X-windchill-req:
+- Restrict internet exposure of the Windchill login endpoint where operationally possible
+The development makes it the first-ever PTC product vulnerability added to CISA's KEV catalog, not to mention highlighting how threat actors are rapidly weaponizing newly disclosed vulnerabilities to their advantage.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-4" class="article-body">
+            <h2 class="article-title">Miasma Malware Targets npm Packages and GitHub Actions in Supply Chain Attack</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/miasma-malware-targets-npm-packages-and.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Cybersecurity researchers have flagged yet another evolution of the supply chain attack linked to the [Mini Shai-Hulud, Miasma, and Hades malware family](https://thehackernews.com/2026/06/hades-pypi-attack-19-packages-poisoned.html) that has compromised a new set of npm packages, even as it has propagated to the Go ecosystem.
+"The latest activity includes malicious npm releases affecting LeoPlatform and RStreams packages, GitHub Actions workflow abuse, and a related Go module compromise involving the Verana Blockchain project," Socket [said](https://socket.dev/blog/miasma-mini-shai-hulud-hits-leoplatform-npm-packages-go-ecosystem).
+The end goal of the campaign, as before, is to harvest developer or maintainer credentials and weaponize the stolen data to spread across package registries, repositories, and trusted developer workflows.
+The list of affected packages is below -
+- hexo-deployer-wrangler@1.0.4
+- hexo-shoka-swiper@0.1.10
+- leo-auth@4.0.6
+- leo-aws@2.0.4
+- leo-cache@1.0.2
+- leo-cdk-lib@0.0.2
+- leo-cli@3.0.3
+- leo-config@1.1.1
+- leo-connector-elasticsearch@2.0.6
+- leo-connector-mongo@3.0.8
+- leo-connector-mysql@3.0.3
+- leo-connector-oracle@2.0.1
+- leo-connector-redshift@3.0.6
+- leo-cron@2.0.2
+- leo-logger@1.0.8
+- leo-sdk@6.0.19
+- leo-streams@2.0.1
+- prism-silq@1.0.1
+- rstreams-metrics@2.0.2
+- rstreams-shard-util@1.0.1
+- serverless-convention@2.0.4
+- serverless-leo@3.0.14
+- solo-nav@1.0.1
+- github.com/verana-labs/verana-blockchain@v0.10.1-dev.20 (Go)
+It's suspected that an npm developer account associated with the LeoPlatform ("[czirker](https://www.npmjs.com/~czirker)") was breached, likely via leaked credentials, to enable the attack, allowing the threat actors to [leverage](https://www.stepsecurity.io/blog/mass-npm-supply-chain-attack-20-leo-platform-packages-compromised) an [npm token](https://safedep.io/miasma-worm-hits-leoplatform-20-npm-packages/) belonging to the maintainer to push trojanized versions within a six-second window.
+The new wave leverages many of the tactics observed in prior campaigns, including npm registry poisoning, binding.gyp install-time execution, Bun-staged JavaScript malware, GitHub dead-drop infrastructure, GitHub Actions secret theft, IDE and AI coding assistant persistence, and encrypted credential exfiltration.
+The malicious npm packages, while lacking a lifecycle hook typically added to the package.json file, incorporates a binding.gyp file to execute arbitrary code during installation, resulting in the launch of a JavaScript loader that downloads and installs the Bun runtime if not present, and then initiate the stealer payload responsible for harvesting secrets, credentials, and tokens.
+The [malware](https://thehackernews.com/2026/06/miasma-supply-chain-attack-compromises.html), besides featuring a Russian locale killswitch and checking for the presence of endpoint security software, drops a workflow named "Run Copilot" to capture CI/CD environment secrets from the runner memory. The information is then uploaded to a public GitHub repository with description "Alright Lets See If This Works." As of writing, there are [559 repositories](https://github.com/search?q=%22Alright+Lets+See+If+This+Works%22&type=repositories&s=updated&o=desc) matching the description.
+The token relay marker has also [witnessed](https://research.jfrog.com/post/shai-hulud-miasma-alright-lets-see-if-this-works/) a change in the latest iteration. While earlier waves used strings like "IfYouInvalidateThisTokenItWillNukeTheComputerOfTheOwner," the current artifact uses "RevokeAndItGoesKaboom," a string that has been used as GitHub dead drop resolver in connection with the recent compromise of the "codfish/semantic-release-action" GitHub Action.
+"On June 24, 2026 at 15:39:06 UTC, an attacker force-pushed a malicious commit to codfish/semantic-release-action and redirected several version tags to point at the malicious commit," StepSecurity [said](https://www.stepsecurity.io/blog/supply-chain-compromise-codfish-semantic-release-action).
+"Any workflow that ran against one of these tags after that timestamp executed the attacker's payload directly inside the GitHub Actions runner. The payload steals GitHub OIDC tokens, harvests Personal Access Tokens matching known GitHub token patterns, encrypts the collected material with AES-128-GCM, and attempts to propagate a backdoor into other repositories accessible with the stolen credentials."
+This indicates that all these events are linked to the same operational cluster or tooling lineage. According to [Endor Labs](https://www.endorlabs.com/learn/shai-hulud-strikes-leo-platform-npm) and [OX Security](https://www.ox.security/blog/alright-lets-see-if-this-works-shai-hulud-miasma-hades-variant-spreads-on-npm/), the malware also polls GitHub every hour for commits matching the string "[firedalazer](https://thehackernews.com/2026/06/ironworm-and-new-miasma-worm-variant.html)" to retrieve and execute the Hades variant of the malware.
+"The Leo/RStreams package set is tied to cloud-native and serverless workloads," JFrog said. "A compromise here can expose developer workstations, CI/CD systems, AWS-backed applications, GitHub repositories, package publishing credentials, and downstream package consumers."
+"The notable story is not that the payload is radically new. It is that Shai-Hulud continues to move across legitimate package ecosystems while changing just enough indicators to make stale detections less effective."
+What's more, the poisoning of the Verana GitHub expands the scope of the campaign beyond npm. That having said, the attack employs the same Miasma execution pattern observed in malicious npm packages without relying on native Go module resolution or build logic.
+"Unlike the npm packages, this sample does not rely on binding.gyp," Socket explained. "The risk is source-repository execution: a developer who clones or opens the repository in a trusted IDE or AI coding assistant environment may trigger the payload through project configuration."
+"This reinforces the larger campaign theme: Miasma is moving across package ecosystems by targeting developer workflows, not just package-manager install hooks."
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-5" class="article-body">
             <h2 class="article-title">Photo ZIP campaign targeting hospitality industry delivers Node.js implant for persistent access</h2>
             <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/06/25/photo-zip-campaign-targeting-hospitality-industry-delivers-node-js-implant-persistent-access/" target="_blank">Original Link</a></p>
             <div class="content-text">Microsoft Threat Intelligence has identified an active multi-stage intrusion campaign targeting organizations in the hospitality and hotel industry since April 2026. We’ve observed this activity through aggregated threat intelligence and security signals across multiple organizations in Europe and Asia. Microsoft has not attributed this campaign to a known threat actor.
@@ -507,85 +663,7 @@ Review our documentation to learn more about our real-time protection capabiliti
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-1" class="article-body">
-            <h2 class="article-title">New macOS malware embeds fake errors to confuse AI analysis tools</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/new-macos-malware-embeds-fake-errors-to-confuse-ai-analysis-tools/" target="_blank">Original Link</a></p>
-            <div class="content-text">A newly discovered macOS malware dubbed "Gaslight" is designed to confuse AI-assisted malware analysis tools by hiding prompt injection strings and fake debugging data within the executable. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-2" class="article-body">
-            <h2 class="article-title">ThreatsDay Bulletin: Smart TV Proxyware, 24-Year curl Bug, AI Crime Forums + 13 More Stories</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html" target="_blank">Original Link</a></p>
-            <div class="content-text">It’s dumb out there again.
-This week has the usual smell of prod on fire and nobody wanting to admit who left the door open — old creds still working, trusted apps doing sketchy crap, browser tricks jumping the fence, and “normal” workflows turning into phishing pipes because apparently email was not enough hell already.
-The worst part is how cheap some of it feels. Not elite. Not cinematic. Just stale secrets, fake updates, lazy trust, and random boxes quietly becoming someone else’s infrastructure. Same internet, fresh headache. Let’s get into it.
--
-[Privacy-first bot defense](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#privacy-first-bot-defense)Cloudflare has teamed up with Google Chrome, Microsoft Edge, and Mozilla Firefox to create a privacy-preserving protocol that websites can use to separate desirable web traffic from undesirable network requests. This involves the use of Private Access Control Tokens (PACT), which allow websites to issue anonymous tokens that assert a given browsing session is being run by a human. "A user's browser can then provide these tokens to other sites to prove that a human is in the loop, reducing the need for annoying and clunky captchas or invasive tracking," Cloudflare
-[said](https://cloudflare.net/news/news-details/2026/Cloudflare-Collaborates-With-Leading-Browsers-to-Develop-a-Privacy-First-Protocol-For-the-Global-Internet/default.aspx). "PACT is designed so that sites cannot leverage it to track or identify users or their browsing history." -
-[Six curl CVEs](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#six-curl-cves)AISLE said it
-[discovered](https://aisle.com/blog/aisle-discovers-6-new-cves-in-curl-including-the-oldest-issue-ever-reported)six vulnerabilities in curl, which range from "classic memory-lifetime issues to logic bugs in how libcurl decides whether a connection, credential, or host identity is still valid." One of the notable vulnerabilities is[CVE-2026-8932](https://curl.se/docs/CVE-2026-8932.html), which allows the library to "reuse a previously created connection even when some mTLS config-related option had been changed that should have prohibited reuse." AISLE described it as the oldest curl vulnerability reported so far, adding that it has been shipped in releases since curl[version 7.7](https://curl.se/ch/7.7.html), which was released on March 22, 2001. The identified flaws have been addressed in[version 8.21.0](https://curl.se/mail/lib-2026-06/0026.html). -
-[Unauthenticated takeover](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#unauthenticated-takeover)A critical security flaw has been disclosed in self-hosted versions of Hoppscotch(CVE-2026-50160, CVSS score: 10.0), an open source API platform, that can result in complete compromise. Offgrid Security's autonomous AI security agent, Kiro, has been
-[credited](https://www.offgridsec.com/blog-hoppscotch-cve-2026-50160.html)with discovering the bug. "The POST /v1/onboarding/config endpoint allows an unauthenticated attacker to inject arbitrary InfraConfig keys -- including JWT_SECRET and SESSION_SECRET -- into the database via mass assignment," the project maintainers[said](https://github.com/hoppscotch/hoppscotch/security/advisories/GHSA-j542-4rch-8hwf). "These keys are not declared in the SaveOnboardingConfigRequest DTO, but because the NestJS ValidationPipe does not strip extra properties, they pass through to the service layer, where Object.entries(dto) iterates all keys without restriction." A successful exploitation leads to full server compromise and persistent access that survives password resets. OffGrid Security told The Hacker News that four independent weaknesses are combined to allow an unauthenticated attacker to overwrite the JWT signing key in a single HTTP request, and the exploit requires no credentials. The issue has been fixed in hoppscotch-backend version 2026.5.0. -
-[Proxyware in smart TVs](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#proxyware-in-smart-tvs)A new report from Spur Intelligence has
-[revealed](https://spur.us/blog/smart-tv-apps-residential-proxy-sdks)that more than one-third of LG and Samsung smart TV apps it reviewed[contain proxyware](https://thehackernews.com/2026/06/weekly-recap-browser-bugs-edr-killers.html#:~:text=Israeli%20Company%20Linked%20to%20Popa%20Android%20TV%20Box%20Botnet)that can relay third-party traffic through the TV owner's internet connection with users' consent. The company said it scanned 6,038 apps across LG webOS and Samsung Tizen and found 2,058 that contain residential proxy software. This includes clocks, screensavers, games, fish tanks, and other low-utility apps. On LG webOS, 42.5% of apps carried such code. On Samsung Tizen, the rate was 26.9%. Across both platforms, it reached 34.1%. Bright Data, Massive, and Oxylabs take up the top three SDK providers for webOS and Tizen. "Smart TVs are almost ideal proxy hosts. They sit on the same home network as everything else, but they do not feel like computers, so people rarely audit them like computers," Spur said. "There is no battery drain to notice, no cellular bill to spike, no app switcher full of suspicious background activity. A TV can stay plugged in, signed in, and online for years while the user thinks of it as furniture." The threat intelligence firm said this dynamic also changes the consent equation, as users may not realize what it actually means to sell access to their residential IP address. "Technically, these applications are compliant with gaining consent based on how they inform the user," Spur CTO Alastair Parr told The Hacker News. "However, there is often no verification that the user is either of age or authorized to provide consent on the device. The reality is that there are likely many smart TVs scattered across office spaces and residential homes, quietly part of these networks, without the responsible owners' awareness or consent." Amazon's[Device and System Abuse Policy](https://developer.amazon.com/docs/policy-center/device-and-system-abuse.html)explicitly bars apps that facilitate proxy services for third parties. Similar protections have been[enabled](https://www.theverge.com/column/885244/smart-tv-web-crawler-ai)by Roku as well. However, LG and Samsung are yet to enforce an equivalent policy. -
-[Edgecution via Teams](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#edgecution-via-teams)An initial access broker (IAB) affiliated with Payouts King ransomware has been observed masquerading as IT personnel in social engineering attacks conducted via Microsoft Teams to deliver a malicious Microsoft Edge browser extension dubbed Edgecution. "The technique utilizes a malicious Microsoft Edge browser extension that exploits the Chrome native messaging protocol to interact with host-native applications beyond the confines of the browser sandbox," Zscaler ThreatLabz
-[said](https://www.zscaler.com/blogs/security-research/payouts-king-ransomware-initial-access-broker-deploys-new-edgecution). "By abusing this interface, the attackers gain direct host access, enabling them to manipulate the local filesystem, launch processes, and execute arbitrary code on the compromised host." The malware has two components: a Microsoft Edge browser extension named "Edge Monitoring Agent" that beacons to a command-and-control (C2) server and relays host-based commands to a Python-based backdoor, which can collect system information, enumerate running processes, provide filesystem access, and execute arbitrary Python code and shell commands. The extension will be invisible to a user as it's loaded in a headless Microsoft Edge browser. A similar attack chain involving a Chromium-based extension codenamed[SNOWBELT](https://thehackernews.com/2026/04/unc6692-impersonates-it-helpdesk-via.html)was detailed by Google-owned Mandiant in April 2026. -
-[Legacy credential breach](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#legacy-credential-breach)Competitive intelligence company Klue has revealed that a credential dating back to 2022, which was used as part of a limited pilot, was exploited by the
-[Icarus extortionists](https://thehackernews.com/2026/06/salesforce-disables-klue-app.html)to steal Salesforce data from its corporate customers, including several cybersecurity companies. In a statement shared with TechCrunch, the company[said](https://techcrunch.com/2026/06/23/klue-says-hackers-stole-credential-from-2022-that-led-to-customer-data-breaches/)the credential was "originally provided to a third-party in 2022, for a limited pilot." Klue did not share specifics about the purpose of the pilot, the duration for which it ran, or the identity of the third-party to whom the company gave the credentials. It's also unclear why the credential wasn't revoked immediately, assuming the pilot had concluded. Questions remain about how the attackers managed to acquire this legacy credential in the first place. A number of companies have come forward to confirm they have had limited Salesforce information stolen during the attack, including 8x8, BeyondTrust, Gong, Jamf, HackerOne, Insurity, LastPass, OneTrust, Pendo, Recorded Future, Snyk, Sprout Social, and Tanium. -
-[State-crime convergence](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#state-crime-convergence)NCC Group said it has found growing evidence of nation-state actors
-[increasingly leveraging](https://thehackernews.com/2026/05/muddywater-uses-microsoft-teams-to.html)tools and tactics traditionally associated with financially motivated cybercrime to disguise their espionage and intelligence-gathering operations, blurring the line between the two sets of activities. "Historically, organisations could draw a relatively clear distinction between ransomware attacks driven by financial gain and nation-state operations designed to support strategic objectives. That distinction is becoming increasingly difficult to make," Matt Hull, VP of Cyber Intelligence and Response at NCC Group,[said](https://www.nccgroup.com/newsroom/ncc-group-monthly-threat-pulse-review-of-may-2026/). "What we're seeing is a convergence of criminal and state-backed activity. Threat actors are sharing infrastructure, adopting common tooling and, in some cases, deliberately operating behind established ransomware brands to obscure attribution and delay response efforts." -
-[Admin reset alerts](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#admin-reset-alerts)Google said it's expanding the existing "Super Admin password reset" alert into a broader Admin password reset alert in
-[Alert Center](https://support.google.com/a/answer/9105393). "Previously, this rule only triggered alerts when a super admin's password was changed," the company[said](https://workspaceupdates.googleblog.com/2026/06/enhanced-security-monitoring-with-expanded-Admin-password-reset-alerts.html). "With this update, the alert will now cover password resets for all administrator roles within your organization. This update provides admins with better visibility and control over the security of their organization's privileged accounts. Monitoring password changes for all admin roles provides a higher level of oversight to respond more quickly to potential account compromises or unauthorized changes." The change is applicable to all Google Workspace customers. -
-[ClickFix targets macOS](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#clickfix-targets-macos)A new ClickFix campaign has been
-[observed](https://github.com/PaloAltoNetworks/Unit42-timely-threat-intel/blob/main/2026-06-20-ClickFix-campaign-delivers-macOS-infostealer-via-DMG.txt)tricking users into copying malicious commands and pasting them to the Terminal app that silently downloads and mounts a malicious DMG file. The disk image file contains a self-signed information stealer that can harvest a user's system password, data from web browsers, wallets, messaging apps, and Keychain, exfiltrate the data, set up LaunchAgent persistence, and tamper with Ledger Live and Trezor Suite installations by replacing legitimate components to hijack cryptocurrency wallet information. The stealer is assessed to belong to the Atomic macOS Stealer (AMOS) lineage, particularly a variant called Odyssey, per Palo Alto Networks Unit 42. The development comes as the cybersecurity company[detailed](https://github.com/PaloAltoNetworks/Unit42-timely-threat-intel/blob/main/2026-06-05-%20Evasive-ClickFix-Injection-Delivers-RAT.txt)another multi-step ClickFix attack that employs techniques like brandsquatting to deliver a cross-platform trojan with browser-credential stealing, remote shell, live screen streaming, keylogger, file manager, and SSH tunneling capabilities. -
-[TfL hackers convicted](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#tfl-hackers-convicted)Thalha Jubair, 20, from East London, and Owen Flowers, 18, from Walsall, have been
-[convicted](https://www.nationalcrimeagency.gov.uk/news/cyber-criminals-who-hacked-into-transport-for-londons-computer-network-are-convicted)in the U.K. for orchestrating a cyber attack on Transport for London (TfL) in 2024, costing $38.2 million in losses. The two defendants, who were members of the online criminal collective known as Scattered Spider, were[arrested](https://thehackernews.com/2025/09/uk-arrest-two-teen-scattered-spider.html)last September but[pleaded not guilty](https://thehackernews.com/2025/11/threatsday-bulletin-ai-malware-voice.html#teen-suspects-deny-charges-in-transport-for-london-hack)to their crimes during a court appearance in November 2025. They are now scheduled for sentencing on July 16, 2026. "Scattered Spider is a prolific criminal group that engages in data extortion and other criminal activities, utilizing social engineering techniques and SIM swap attacks, to obtain credentials, install remote access tools, and/or bypass multi-factor authentication," the U.S. Federal Bureau of Investigation (FBI)[said](https://x.com/FBICyberDiv/status/2069511171745480748). -
-[Marketplace admin extradited](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#marketplace-admin-extradited)Abdellah Belmili (aka Dila Belmili or SPOX), a 26-year-old Algerian national, has been arrested, charged, and extradited from Spain to the U.S. on charges of conspiracy to commit bank fraud. SPOX is alleged to have acted as an administrator for a cybercrime marketplace ("www.market0day[.]com") as well as created phishing kits that have been used to compromise major U.S. financial institutions. "Between September and November 2020, Belmili advertised the marketplace and facilitated some of the customer support for the marketplace on his personal Telegram channel @SpoxCoder," the U.S. Justice Department
-[said](https://www.justice.gov/usao-wdny/pr/algerian-man-arrested-extradited-united-states-his-role-black-market-fraud-conspiracy). "In late December 2020, after several customers complained that they had not received their purchases from www.market0day[.]com, Belmili replied that he was no longer the administrator, and instead had opened up a new marketplace – www.spoxy[.]us, advertising the new marketplace – www.spoxy.us, advertising the new marketplace as a 'new store for bulk SMS.' 'Bulk SMS' typically refers to sending phishing or other fraudulent messages via text message." Approximately 5,600 U.S. and international victims have been identified. -
-[Collaboration phishing](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#collaboration-phishing)A new phishing campaign is abusing Outlook Groups and Microsoft 365 collaboration features to "make malicious activity appear routine," Fortra said. The attack involves adding targets to an attacker-controlled Microsoft 365 group and then using the group mailbox, shared files, or fake calendar invites (aka CalPhishing) to facilitate credential theft, token capture, or malware delivery. "The technique shifts malicious intent away from a single phishing email into a trusted productivity workflow," the company
-[said](https://www.fortra.com/blog/phishing-through-collaboration). "A user may see what looks like a normal group addition, internal update, shared resource, or calendar item before being pushed toward an action." -
-[AI in cybercrime](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#ai-in-cybercrime)A new analysis from Sophos has
-[revealed](https://www.sophos.com/en-us/blog/ai-in-the-underground-curiosity-claims-and-concerns)that AI has emerged as a hot button topic in[underground communities](https://www.trendmicro.com/vinfo/gb/security/news/cybercrime-and-digital-threats/hype-vs-reality-ai-in-the-cybercriminal-underground), as threat actors debate its potential for malware and tool development, while some express concerns about the technology reducing work opportunities. This includes posts selling API keys for generative AI tools, advertising solutions that can enhance social engineering, AI-enabled malware (e.g., ApexAI, Metatron, and PolyEngine), discussing jailbreaks for public AI models to bypass censorship and other safeguards using techniques like role-play framing, multi-stage prompting, and contextual manipulation, and offers to hire or partner with prompt engineers. Threat actors have also discussed the use of public AI assistants for intrusion activity, as well as marketed a tool called Leak Bazaar that claims to use AI to triage and sift through mountains of stolen data before it can be packaged and exchanged with other threat actors. Not all have embraced AI with open arms, however, with some outlining skepticism and worries about how the rise of AI could "reshape roles, pricing, and competitive advantage within the cybercrime economy." -
-[8,500 REDCap instances](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#8-500-redcap-instances)Censys has
-[uncovered](https://censys.com/blog/redcap-exposure-analysis/)just over 8,500 REDCap instances globally as of June 16, 2026, with most of them located in the U.S., the U.K., Germany, and Australia. REDCap, short for Research Electronic Data Capture, is a web application used by research institutions globally to hold clinical trial data, participant records, and other sensitive research information. Last week, Google Threat Intelligence Group (GTIG) attributed a year-plus espionage campaign against North American academic, medical, and military research institutions to[UNC6508](https://thehackernews.com/2026/06/chinese-hackers-abused-google-workspace.html), a China-nexus actor. The intrusion set leveraged internet-facing REDCap servers as an initial access vector to deploy a backdoor called INFINITERED to exfiltrate sensitive data. Exactly how these servers are hacked is unconfirmed. The earliest known compromise dates to September 2023. -
-[Surveillance export gaps](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#surveillance-export-gaps)A report from Human Rights Watch has
-[revealed](https://www.hrw.org/news/2026/06/18/bulgaria-licensed-surveillance-exports-to-rights-violators)that a Bulgaria-based surveillance technology firm named Circles sold its tools to countries that were likely to use them for repression or to commit serious human rights violations. Documents describe licenses for exports of Circles' technology to Azerbaijan, Bahrain, Brazil, Dominican Republic, El Salvador, Ghana, Guatemala, Israel, Jordan, Malaysia, Mexico, Morocco, Panama, Serbia, and the U.A.E. Clients included intelligence services, military and police bodies, regional governments, and private companies, Human Rights Watch said. That said, it's currently not known whether the technology was actually exported. "Nonetheless, issuing the licenses demonstrates a major flaw in how individual governments implement E.U. export controls for surveillance technology," the non-profit said. "The controls are intended to limit exports of surveillance technology to destinations where there is a likelihood it could be used to violate rights, and to provide transparency about what exports take place." -
-[BitB malware lures](https://thehackernews.com/2026/06/threatsday-bulletin-smart-tv-proxyware.html#bitb-malware-lures)A campaign that impersonates popular software brand names has
-[leveraged](https://github.com/PaloAltoNetworks/Unit42-timely-threat-intel/blob/main/2026-06-22-malware-distribution-via-browser-in-the-browser-kit.txt)the Browser-in-the-Browser ([BitB](https://thehackernews.com/2025/11/sneaky-2fa-phishing-kit-adds-bitb-pop.html)) technique to distribute malicious payloads by means of a reusable phishing kit. It makes use of a draggable pop-up with a spoofed URL to serve a fake software update warning. "The campaign uses social engineering to trick victims into downloading and manually executing a malicious installer (e.g., an .exe payload)," Unit 42 said. "The pages simulate a stalled document load and present an 'out of date' software error." Earlier this month, Unit 42[disclosed](https://github.com/PaloAltoNetworks/Unit42-timely-threat-intel/blob/main/2026-06-08-Browser-In-The-Browser-Pishing-Campaign.txt)details of a second BitB campaign involving at least 10 unique domains that was used to steal Microsoft 365 credentials using a draggable, OS/browser-fingerprinted pop-up with a spoofed OAuth URL. In this attack, victims who click a Microsoft sign-in button are presented with what appears to be a standard login page designed to harvest credentials.
-If there’s a theme here, it’s that attackers do not need magic when the boring crap still works — forgotten creds, lazy trust, fake updates, loose admin paths, and users getting nudged into doing the dangerous part themselves. The future is here, somehow, and it still smells like a misconfigured staging box.
-Patch what you can. Revoke what you forgot. Maybe glance at the devices you’ve been treating like furniture. See you next ThreatsDay, assuming the internet hasn’t found an even dumber way to catch fire by then.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-3" class="article-body">
-            <h2 class="article-title">Cisco Catalyst SD-WAN Zero-Day CVE-2026-20245 Exploited to Gain Root Access</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/cisco-catalyst-sd-wan-zero-day-cve-2026.html" target="_blank">Original Link</a></p>
-            <div class="content-text">An unknown threat actor exploited a recently disclosed high-severity security flaw impacting Cisco Catalyst SD-WAN as a zero-day at least two months before it was publicly disclosed, according to new findings from Google-owned Mandiant.
-The vulnerability, tracked as [CVE-2026-20245](https://thehackernews.com/2026/06/cisco-catalyst-sd-wan-manager-cve-2026.html) (CVSS score: 7.8), allows an authenticated, local attacker to [execute arbitrary commands with elevated privileges](https://thehackernews.com/2026/06/cisa-adds-cisco-chrome-and-arista-flaws.html) by supplying a crafted file to the affected system by taking advantage of the device's insufficient validation of user-supplied input.
-Earlier this month, Cisco acknowledged that it became aware of exploitation of this vulnerability, adding that a malicious actor must have netadmin privileges on an affected system to pull off a successful attack.
-"Throughout the intrusion, to maintain operational security and avoid detection, the threat actor consistently employed anti-forensic techniques, selectively deleting and restoring system configuration files that were modified during their activities," Mandiant researchers Chester Sng, Pete Boonyakarn, and Logeswaran Nadarajan [said](https://cloud.google.com/blog/topics/threat-intelligence/zero-day-exploitation-cisco-catalyst-sd-wan-manager).
-The incident, the tech giant's incident response and threat intelligence arm added, targeted an unspecified communications service provider to elevate a compromised admin account to full root-level access.
-Two distinct periods of unauthorized activity have been detected, one taking place between late 2025 and January 2026 and the other in March 2026. At this stage, it's unclear if these two events are connected and the work of the same threat actor.
-During the first wave, the victim is said to have experienced unauthorized peering connections that likely exploited one of two authentication bypass flaws in Cisco Catalyst SD-WAN controllers ([CVE-2026-20127](https://thehackernews.com/2026/02/cisco-sd-wan-zero-day-cve-2026-20127.html) or [CVE-2026-20182](https://thehackernews.com/2026/05/cisa-adds-cisco-sd-wan-cve-2026-20182.html)). It's worth noting that both the security vulnerabilities were undisclosed zero-days at that point.
-Then in March 2026, a second wave of rogue peering connections targeted a device running a newer software version that was patched against CVE-2026-20127. Cisco has since confirmed that these connections did not leverage CVE-2026-20182, raising the possibility that the attacker, who may or may not have been behind the previous unauthorized peering connections, relied on stolen certificates from a prior breach of the same device to obtain initial access.
-"The attacker then changed default admin credentials before exploiting CVE-2026-20245 as a zero-day via a malicious CSV file upload (evil_tenant.csv)," Mandiant said. "This exploit allowed them to escalate privileges and create a rogue user account (named 'troot') with full root-level shell control."
-The attackers have also been found to consistently cover their tracks by deleting files created by them, reversing configuration changes, and running scripts to ensure that no evidence was left behind and limit defenders' ability to assess the full extent of the compromise.
-"After changing the default admin password and exfiltrating the SD-WAN fabric configuration, the actor changed the password back to its original value so an administrator logging in would not notice anything was off," Austin Larsen, principal threat analyst at Google Threat Intelligence Group (GTIG), [said](https://www.linkedin.com/posts/austin-larsen_mandiant-part-of-google-cloud-just-published-activity-7475581120282001408-esUQ/).
-"They escalated to root through a malicious CSV upload, created a hidden "troot" account in /etc/passwd and /etc/shadow, then deleted every file they touched and ran a validation script to confirm their indicators were gone."
-Google pointed out that the activity once again highlights the "continuing trend" of bad actors weaponizing zero-days in edge devices like SD-WAN, as they lack the telemetry needed for deep forensic analysis, and a foothold in those systems can facilitate persistent visibility into internal traffic across the fabric.
-"Advanced adversaries continue to primarily target and exploit network devices and other systems that don't natively support EDR solutions," Charles Carmakal, chief technology officer of Mandiant Consulting, [said](https://www.linkedin.com/posts/charlescarmakal_0-day-exploitation-exploitation-of-at-activity-7475567485971496963-0SvI/) in a post on LinkedIn.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-4" class="article-body">
+        <div id="art-6" class="article-body">
             <h2 class="article-title">Large Workflows with Local LLMs</h2>
             <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/large-workflows-with-local-llms" target="_blank">Original Link</a></p>
             <div class="content-text">Large Workflows with Local LLMs
@@ -668,33 +746,12 @@ Future Work
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-5" class="article-body">
-            <h2 class="article-title">Mandiant reveals how Cisco SD-WAN zero-day attacks gained root access</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/mandiant-reveals-how-cisco-sd-wan-zero-day-attacks-gained-root-access/" target="_blank">Original Link</a></p>
-            <div class="content-text">New details have been revealed on how hackers exploited a Cisco Catalyst SD-WAN vulnerability tracked as CVE-2026-20245 in zero-day attacks to create rogue root accounts on targeted devices. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-6" class="article-body">
-            <h2 class="article-title">Disposable Tooling: Building LLM-Generated Mythic Agents from Prompt to Deployment</h2>
-            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/06/24/disposable-tooling-building-llm-generated-mythic-agents-from-prompt-to-deployment/" target="_blank">Original Link</a></p>
-            <div class="content-text"><p>An area I’ve been very interested in exploring over the past several months is the generation of what I have been calling “disposable tooling”. With the development space now discussing the reduced cost of writing code, the idea is to also explore how offensive tooling can be brought closer to the paradigm that appeared when [&#8230;]</p>
-<p>The post <a href="https://specterops.io/blog/2026/06/24/disposable-tooling-building-llm-generated-mythic-agents-from-prompt-to-deployment/">Disposable Tooling: Building LLM-Generated Mythic Agents from Prompt to Deployment</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
         <div id="art-7" class="article-body">
             <h2 class="article-title">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager</h2>
             <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/zero-day-exploitation-cisco-catalyst-sd-wan-manager/" target="_blank">Original Link</a></p>
             <div class="content-text">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager
 Mandiant
-Written by: Chester Sng, Pete Boonyakarn, Logeswaran Nadarajan
+Written by: Chester Sng, Pete Boonyakarn, Logeswaran Nadarajan, Lukasz Lamparski
 Introduction
 In early 2026, Mandiant identified a threat actor targeting SD-WAN infrastructure at a service provider. After gaining initial access, the threat actor exploited a zero-day vulnerability ([CVE-2026-20245](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-privesc-4uxFrdzx)) in Cisco Catalyst SD-WAN to escalate privileges from a compromised administrative account to root-level access.
 The vulnerability stems from the device’s file upload feature lacking the ability to properly filter malicious data.
@@ -739,7 +796,7 @@ The vmanage-admin
 and admin
 accounts are default accounts on Cisco Catalyst SD-WAN controllers that have different privileges, but [neither possesses root shell access](https://www.cisco.com/c/en/us/td/docs/routers/sdwan/17-x/systems-interfaces/systems-interfaces-guide-17-x/users-and-access.html).
 Exploitation of CVE-2026-20245 to Escalate Privileges
-After establishing an SSH session with the admin
+Mandiant observed that in April 2026, after establishing an SSH session with the admin
 account, the threat actor exploited CVE-2026-20245 by executing the following command to upload a file named evil_tenant.csv
 :
 request tenant-upload tenant-list /home/admin/evil_tenant.csv vpn 0
@@ -939,7 +996,10 @@ Check, garçon!
 The TFL hack started on 31st August, and Flowers was arrested for it on 6th September. So clearly no opsec skills. They had to plead guilty as the evidence included videos and screenshots that these idiots had saved to their own personal devices.
 I always wonder what role the parents play in having teenagers who engage in this criminal activity. These kids reap huge financial rewards – don’t the parents see that? Are they really that clueless? Perhaps they should share some of the responsibility for all the harm their child causes others.
 Juvenile computer crime and hacking recidivism rates aren’t generally tracked so I also wonder how many commit post-incarceration crimes.
-WELCOME TO BACOB JUTLER CAFE!</div>
+WELCOME TO BACOB JUTLER CAFE!
+FREE MY NIGGA DORT HE AINT DONE NOTHNIN
+These two upstanding citizens have a bright future in the Trump organization, Big-Balls better watch out for these two. And I don’t see them being on many dates with girls either, but getting beat up by girls yes 😉
+Shouldn’t this sort of post be on something like t4r4ñt3lla.onion or something, not this site?</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
