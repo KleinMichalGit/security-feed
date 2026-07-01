@@ -59,15 +59,15 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-06-30</h1>
+        <h1>Security Briefing // 2026-07-01</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Blackfield ransomware asks Nidec Corporation for $2 million ransom</button></li><li><button onclick="show('art-1')">Progress Kemp LoadMaster Flaw Could Let Attackers Run Root Commands Pre-Auth</button></li><li><button onclick="show('art-2')">Oracle E-Business Suite Flaw CVE-2026-46817 Actively Exploited in the Wild</button></li><li><button onclick="show('art-3')">Accelerating EDR Evasion with LLM-Driven Analysis</button></li><li><button onclick="show('art-4')">Chromium extension uses AI‑related branding to redirect browser search</button></li><li><button onclick="show('art-5')">The Bear Necessities: A Look at the Drivers, Dynamics, and Applications of the Pro-Russia Influence Ecosystem</button></li><li><button onclick="show('art-6')">Hackers now exploit critical Oracle E-Business flaw in attacks</button></li><li><button onclick="show('art-7')">Scattered Spider Hackers Plead Guilty on Day 1 of Trial</button></li><li><button onclick="show('art-8')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li><li><button onclick="show('art-9')">How to Train Your (Dragons) Analysts - A TrustedSec Guide to Picking the Perfect Purple Team</button></li></ul>
+            <ul><li><button onclick="show('art-0')">New BioShocking attack manipulates AI browser into data theft</button></li><li><button onclick="show('art-1')">Accelerating the quantum-safe timeline</button></li><li><button onclick="show('art-2')">Langflow RCE Exploited to Deploy Monero Miner on Exposed AI App Endpoints</button></li><li><button onclick="show('art-3')">Fake Perplexity extension on Chrome Web Store tracked searches</button></li><li><button onclick="show('art-4')">New BioShocking Attack Tricks AI Browsers Into Leaking User Credentials</button></li><li><button onclick="show('art-5')">Accelerating EDR Evasion with LLM-Driven Analysis</button></li><li><button onclick="show('art-6')">The Bear Necessities: A Look at the Drivers, Dynamics, and Applications of the Pro-Russia Influence Ecosystem</button></li><li><button onclick="show('art-7')">Scattered Spider Hackers Plead Guilty on Day 1 of Trial</button></li><li><button onclick="show('art-8')">JS-Tap v3: Endpoint Post-Exploitation With JavaScript Implants</button></li><li><button onclick="show('art-9')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">Blackfield ransomware asks Nidec Corporation for $2 million ransom</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/blackfield-ransomware-asks-nidec-corporation-for-2-million-ransom/" target="_blank">Original Link</a></p>
-            <div class="content-text">The Blackfield ransomware gang is asking for a $2 million ransom from Nidec Corporation, a large Japanese manufacturer of electronic components for automotive and computing applications. [...]
+            <h2 class="article-title">New BioShocking attack manipulates AI browser into data theft</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/new-bioshocking-attack-manipulates-ai-browser-into-data-theft/" target="_blank">Original Link</a></p>
+            <div class="content-text">A new prompt injection attack dubbed "BioShocking" could trick AI-powered browsers into treating real-world risky actions as part of a fictional scenario, causing them to ignore any safety guardrails. [...]
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
@@ -75,52 +75,121 @@
             <hr class="separator">
         </div>
         <div id="art-1" class="article-body">
-            <h2 class="article-title">Progress Kemp LoadMaster Flaw Could Let Attackers Run Root Commands Pre-Auth</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/progress-kemp-loadmaster-flaw-could-let.html" target="_blank">Original Link</a></p>
-            <div class="content-text">A critical vulnerability in Progress Kemp LoadMaster can let an unauthenticated attacker execute arbitrary commands as root on the appliance by sending a crafted request to its API.
-The flaw, tracked as CVE-2026-8037, carries a CVSS score of [9.8 according to ZDI](https://www.zerodayinitiative.com/advisories/ZDI-26-342/). A patch is available. If you run LoadMaster with the API enabled, update now.
-Progress [published its advisory on June 4](https://community.progress.com/s/article/LoadMaster-Critical-Security-Bulletin-June-2026-CVE-2026-8037-CVE-2026-33691) and says it has not received any reports of exploitation. On June 29, researchers at watchTowr Labs published a [detailed](https://labs.watchtowr.com/enterprise-tech-in-shell-out-progress-kemp-loadmaster-uninitialized-heap-to-pre-auth-rce-cve-2026-8037/) technical write-up that walks through the full exploit chain.
-What the Flaw Does
-LoadMaster is an application delivery controller and load balancer used by enterprises to manage traffic across servers. It sits at the network edge, which makes any pre-auth flaw in it especially dangerous.
-The vulnerability lives in a function called escape_quotes(), which is supposed to sanitize user input before it gets passed into a shell command. The function's job is to escape single quotes so that an attacker cannot break out of a quoted string and inject commands. The problem: it allocated a memory buffer without clearing it first and never wrote a null terminator at the end of the sanitized string.
-That missing terminator is the whole exploit. Without it, the system keeps reading past the end of the sanitized input into whatever data happens to sit next to it in memory. An attacker can control what sits there by stuffing extra JSON keys into the same API request, each carrying a command injection payload. The system reads the sanitized input, keeps going, hits the attacker's payload, and executes it.
-The attack targets the /accessv2 endpoint, which handles API credential validation. The attacker sends a JSON body with a specially crafted apiuser value and dozens of extra key-value pairs sprayed with the command they want to run. No valid credentials are needed. The command runs as root.
-Affected Versions and Fix
-The flaw affects LoadMaster GA v7.2.63.1 and older, and LTSF v7.2.54.17 and older, when the API is enabled. Progress has released fixed versions: GA v7.2.63.2 and LTSF v7.2.54.18.
-The patch itself is minimal. Two changes: the memory allocation function was swapped from one that leaves the buffer uninitialized to one that zero-fills it, and an explicit null terminator was added after the escaped output. Two lines of code that close a path to the root.
-The vulnerability was discovered by Syed Ibrahim Ahmed of TrendAI Research and reported to Progress through the Zero Day Initiative on April 15, 2026. ZDI coordinated the public advisory release on June 9. watchTowr Labs independently analyzed the patch diff and published their own full technical breakdown with a working proof of concept on June 29.
-Progress also patched a second, high-severity flaw in the same advisory: CVE-2026-33691, a WAF bypass where whitespace padding in filenames could circumvent file upload extension checks.
-A Pattern Worth Watching
-This is not LoadMaster's first critical flaw. In November 2024, CISA [added a previous LoadMaster command injection flaw](https://thehackernews.com/2024/11/cisa-alert-active-exploitation-of.html) (CVE-2024-1212, CVSS 10.0) to its Known Exploited Vulnerabilities catalog after confirmed exploitation in the wild.
-In April 2026, Progress patched five more high-severity LoadMaster flaws, four of them command injection issues. Progress is also the maker of MOVEit, whose 2023 vulnerabilities fueled a mass exploitation campaign by the Cl0p ransomware group.
-The [Canadian Centre for Cyber Security](https://www.cyber.gc.ca/en/alerts-advisories/progress-security-advisory-av26-552) has also issued an advisory urging administrators to apply the updates.
-No attacks on CVE-2026-8037 have been reported yet. A working proof of concept is now public. Patch, and then ask whether the API needs to be reachable at all.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <h2 class="article-title">Accelerating the quantum-safe timeline</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/06/30/microsoft-advances-quantum-safe-security-as-the-risk-timeline-shifts/" target="_blank">Original Link</a></p>
+            <div class="content-text">The quantum-safe timeline has changed
+For years, planning for post-quantum cryptography (PQC) was framed as a future problem: important, inevitable, but distant. That perspective is evolving as technology advances and organizations prepare for the scale and complexity of the transition ahead. At Microsoft, we are acting on this shift by bringing our quantum-safe timeline forward so organizations can begin the transition earlier and with greater confidence.
+Advances in quantum research and development have shifted the risk horizon. We believe cryptographically relevant quantum computers could arrive sooner than previously expected—and the work required to prepare is significant so organizations need to start now.
+Recent government actions, including United States1 and French2 guidance to adopt quantum-safe cryptography as early as 2030 in certain high-risk systems, reflect the same conclusion: preparing for this transition is already underway.
+This is a recognition that the transition to quantum-safe cryptography is a multi-year engineering effort that benefits from early planning and action, and delaying that work increases both cost and risk. This reinforces our decision to bring the work forward.
+The quantum capabilities are accelerating. The time to respond is now.
+Accelerating our timeline
+In response to these shifts, we are accelerating the [Microsoft Quantum Safe Program](https://aka.ms/QSP/Inventory) (QSP) timeline with the goal of transitioning critical products and services to PQC by 2029.
+We are also incorporating PQC requirements into our [Secure Future Initiative](https://www.microsoft.com/en-us/trust-center/security/secure-future-initiative) (SFI). This brings quantum-safe readiness into the same disciplined engineering framework we use for other critical security outcomes: clear ownership, measurable milestones, and transparent progress. Embedding these capabilities into our platforms empowers customers to move sooner and more confidently.
+What “accelerating” means in practice
+Accelerating our timeline means pulling forward key engineering work so new standards can be adopted earlier and modernization can begin well ahead of broad quantum impact.
+Our priorities fall into three areas:
+1. Upgrade network cryptography (data in transit)
+Modernizing network cryptography is a prerequisite for post-quantum adoption. As an example, adopting TLS 1.3 establishes a baseline that enables hybrid and post-quantum key exchange as standards mature.
+What this looks like: Critical endpoints negotiate TLS 1.3 by default, with legacy protocol use reduced or eliminated wherever possible.
+2. Build crypto-agility for stored data (data at rest)
+Crypto-agility—the ability to change cryptography without redesigning systems—enables the safe, timely adoption of new cryptographic standards. This requires making cryptographic settings configurable outside of the application, standardizing key management and rotation, and eliminating hard-coded algorithms.
+What this looks like: Cryptographic algorithms can be updated with minimal application changes and limited service disruption. You can learn more about crypto-agility [here](https://aka.ms/QSP/Crypto-Agility).
+3. Modernize cryptographic trust chains (identity, signing, certificates)
+The most complex work is securing the chains of trust that underpin software, devices, and services at scale. That includes code signing, certificate issuance, key protection, and update pipelines.
+What this looks like: This includes hardware-backed key protection, updated certificate lifetimes and policies, and auditable signing and issuance processes for critical trust anchors, with a transition to PQC algorithms as they become available.
+What this means for our customers
+Accelerating the timeline doesn’t change the core challenge: for most organizations, the hardest part isn’t selecting post-quantum algorithms. It’s understanding and updating where cryptography already exists across apps, services, networks, identities, certificates, and hardware.
+Bringing this work forward means Microsoft can help organizations begin that process sooner, starting with an [inventory-first](https://aka.ms/QSP/Inventory) approach to identify, prioritize, and modernize cryptographic dependencies with greater confidence.
+We will continue to share technical guidance and operational best practices to help organizations adopt quantum-safe cryptography with confidence as they move from planning into execution.
+Microsoft moving earlier allows organizations to align to that same timeline, one that reduces risk while maintaining operational continuity.
+What we are hearing from customers and partners
+Across industries and regions, organizations are already taking steps, with several consistent themes emerging:
+- The future of security is agile and the transition is iterative.
+Organizations are designing for change. Building crypto‑agility into systems delivers long-term resilience so new cryptography standards can be adopted over time without redesigning systems.
+- Long-lived, sensitive data requires earlier protection.
+Organizations are prioritizing data with long confidentiality lifetimes, recognizing that encrypted data captured today could be exposed in the future (“harvest now, decrypt later”) as cryptographic capabilities evolve.
+- Preparation delivers immediate value.
+Organizations that begin with cryptographic discovery and lifecycle management consistently uncover existing gaps that require attention today, independent of quantum risk.
+- The hardest problem isn’t quantum—it’s complexity.
+Most organizations lack clear visibility into where cryptography exists across applications, infrastructure, and legacy systems, making discovery and prioritization the primary challenge.
+These signals shape how we are approaching quantum safety at Microsoft and how we support and empower all organizations in their readiness.
+What to do now
+Organizations do not need to wait; there are steps you can take today to begin the transition:
+- Align on strategy: Define ownership, scope, and milestones for a multi-year cryptography transition.
+- Design for change: Build crypto-agility into new systems so future standards shifts are updates, not fire drills.
+- Begin with inventory: Create and maintain a living cryptographic inventory to identify, prioritize, and modernize dependencies.
+- Modernize protocols: Adopt modern standards such as TLS 1.3 as a baseline across client and server systems.
+Looking ahead
+The Microsoft Quantum Safe Program (QSP) goes beyond future cryptography. It is part of a broader effort to strengthen long-term resilience across identity, infrastructure, data, and supply-chain security—bringing this work into the systems and platforms organizations rely on daily.
+Our goal is straightforward: ensure that Microsoft platforms and services can adopt new cryptographic standards quickly and safely as they mature, so organizations can move at the same pace without disrupting their operations.
+Microsoft will continue to share progress and practical guidance to help organizations plan, prepare, and move into execution as standards and cyberthreats evolve. By starting now, organizations can reduce risk today and be better prepared for what comes next.
+To learn more about Microsoft Security solutions, visit our [website.](https://www.microsoft.com/en-us/security/business) Bookmark the [Security blog](https://www.microsoft.com/security/blog/) to keep up with our expert coverage on security matters. Also, follow us on LinkedIn ([Microsoft Security](https://www.linkedin.com/showcase/microsoft-security/)) and X ([@MSFTSecurity](https://twitter.com/@MSFTSecurity)) for the latest news and updates on cybersecurity.
+1[Securing the nation against advanced cryptographic attacks](https://www.whitehouse.gov/presidential-actions/2026/06/securing-the-nation-against-advanced-cryptographic-attacks/), whitehouse.gov. June 22, 2026.
+2[France to stop certifying products without quantum-safe encryption](https://www.reuters.com/legal/litigation/france-stop-certifying-products-without-quantum-safe-encryption-2026-06-16/), Reuters. June 16, 2026.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-2" class="article-body">
-            <h2 class="article-title">Oracle E-Business Suite Flaw CVE-2026-46817 Actively Exploited in the Wild</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/oracle-e-business-suite-flaw-cve-2026.html" target="_blank">Original Link</a></p>
-            <div class="content-text">A critical security flaw impacting Oracle E-Business Suite has come under active exploitation in the wild, according to Defused Cyber.
-The vulnerability, tracked as [CVE-2026-46817](https://nvd.nist.gov/vuln/detail/CVE-2026-46817) (CVSS score: 9.8), refers to an improper privilege management and authentication flaw in Oracle Payments that could be abused to take over susceptible instances.
-"Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle Payments," according to a description of the flaw in the NIST National Vulnerability Database (NVD). "Successful attacks of this vulnerability can result in the takeover of Oracle Payments."
-The shortcoming impacts versions from 12.2.3 through 12.2.15. Patches for the flaw were [shipped](https://www.oracle.com/security-alerts/cspumay2026verbose.html) by Oracle as part of its Critical Security Patch Update last month.
-CVE-2026-46817 has since come under active exploitation, with Defused Cyber [noting](https://x.com/DefusedCyber/status/2071555353733394618) on Monday that "over the weekend, we observed an actor exploiting the vulnerability on our Oracle E-Business honeypots," adding "this vulnerability has no known previous exploitation and no public PoC [proof-of-concept] code exists."
-That said, there are currently no details available on how the security flaw is being exploited, who is behind them, and if it's part of a broader opportunistic or targeted campaign aimed at unpatched systems.
-Late last year, another critical flaw in the same product ([CVE-2025-61882](https://thehackernews.com/2025/10/oracle-ebs-under-fire-as-cl0p-exploits.html), CVSS score: 9.8) was weaponized by threat actors linked to the Cl0p ransomware operation, with early attacks launched as far back as August 2025.
-Earlier this month, the company addressed a critical missing authentication zero-day vulnerability in PeopleSoft Suite ([CVE-2026-35273](https://thehackernews.com/2026/06/shinyhunters-exploits-oracle-peoplesoft.html), CVSS score: 9.8) that was actively exploited in ShinyHunters data theft and extortion attacks.
-Automaker Nissan has since [acknowledged](https://oag.ca.gov/ecrime/databreach/reports/sb24-625558) that it was among those impacted, stating it was the victim of a break-in that involved the exploitation of the PeopleSoft flaw, potentially exposing payroll records, bank details, Social Security numbers, and other personal and financial data belong to its employees in the U.S., Canada, Mexico, and Brazil.
-"What stood out was that CVE-2026-35273 isn't just another trivial, easy-to-exploit single-request vulnerability," Jake Knott, principal security researcher at watchTowr, said in a statement. "The attack chain is considerably more involved, combining multiple vulnerabilities to plant a malicious file that doesn’t execute immediately but waits until the server restarts."
-"Where we would normally see simple bugs, this is a chain of multiple vulnerabilities, suggestive of a threat actor with genuine knowledge of and familiarity with the underlying codebase, and the ability to develop targeted capabilities against it."
-Knott also pointed out that threat actors are exploiting vulnerabilities faster than ever before, urging organizations to assume compromise and activate incident response processes to determine whether access was obtained before patches were applied, what was accessed, and whether persistence was established.
+            <h2 class="article-title">Langflow RCE Exploited to Deploy Monero Miner on Exposed AI App Endpoints</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/langflow-rce-exploited-to-deploy-monero.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Threat actors are continuing to exploit a critical Langflow vulnerability as part of fresh attacks designed to deliver a Monero cryptocurrency miner.
+The activity has been found to weaponize [CVE-2026-33017](https://thehackernews.com/2026/03/critical-langflow-flaw-cve-2026-33017.html) (CVSS score: 9.3), an unauthenticated remote code execution (RCE) vulnerability in Langflow, indicating threat actors are scanning and targeting exposed artificial intelligence (AI) application endpoints for obtaining initial access to enterprise networks. The attack was observed over a 19-day window between March 27 and April 15, 2026.
+"In this campaign, a single line of Python code evaluated inside an unauthenticated Langflow API endpoint pulls down a shell script, fetches a miner binary, and launches it detached," Trend Micro researchers Simon Dulude and John Zhang [said](https://www.trendmicro.com/en_us/research/26/f/from-langflow-to-monero-inside-cve-2026-33017-cryptominer.html) in a technical report published last week.
+At a high level, the malware is designed to terminate competing cryptocurrency miner processes associated with [Kinsing](https://thehackernews.com/2024/05/kinsing-hacker-group-exploits-more.html), [WatchDog](https://thehackernews.com/2023/03/new-cryptojacking-campaign-leverages.html), [Rocke](https://thehackernews.com/2021/02/new-cryptojacking-malware-targeting.html), and [Outlaw](https://thehackernews.com/2025/04/outlaw-group-uses-ssh-brute-force-to.html), delete rival wallet and key material, disable host-level security controls, establish cron-based persistence, beacon to an external server ("83.142.209[.]214:80), and deploy a custom miner. It can also propagate to other systems through reused SSH keys, effectively turning an exposed Langflow instance into a pathway for broader compromise.
+This involves exploiting the Langflow flaw to run an attacker-supplied Python script, which, in turn, is configured to launch a remotely hosted shell script that acts as a dropper whose primary responsibility is to check if a binary called "lambsys" is already running on the host.
+Subsequently, it downloads the binary on the machine using curl or wget, launches it as a detached process, and spreads itself to every SSH-reachable host the victim can authenticate to. The binary, an ELF executable written in Go, is also engineered to disable AppArmor, Ubuntu's Uncomplicated Firewall, iptables, SELinux, the kernel NMI watchdog, and Alibaba Cloud's Aliyun agent.
+In addition, the malware removes system logs to cover up the tracks, and removes the [immutable attribute](https://thehackernews.com/2026/04/over-1000-exposed-comfyui-instances.html) from files like "~/.ssh/," "~/.ssh/authorized_keys," "/etc/crontab," and "/etc/ld.so.preload," "/tmp/," "/var/tmp/," and "/var/spool/cron" in order to make its modifications, and then reapplies the immutable attribute to "/tmp/" and "/var/tmp/."
+Illicit cryptocurrency mining operations are known to set the "chattr +i" attribute on these files to ensure that they cannot be modified, renamed, or deleted by any user, including the superuser. The binary's behavior reflects that the threat actor behind the operation is aware of persistence methods adopted by rival cryptojacking groups.
+In the final stage, the binary contacts the same server to fetch a TAR archive and extracts from it a bespoke XMRig miner. Once the miner begins execution, the archive file is wiped from the file system. It further sends a request to ipinfo[.]io to obtain the host's public IP address and location, allowing the threat actors to make operational decisions on the fly.
+The first is pool selection. Given that mining pools tend to be geographically distributed, connecting the miner to a pool near the victim can minimize latency and maximize hash rate. The second reason behind obtaining this information is geo-fencing, as it gives the threat actors a way to exclude victims in certain regions.
+"Lambsys does not run its attack logic as Go functions," the researchers explained. "Instead, it forks a cascade of short-lived sh -c subprocesses, each executing one shell command (one pkill, one chattr, one sysctl). The design trades stealth for reliability. If one of 51 pkill commands fails, the failure is contained to that subprocess, and the other 50 carry on."
+Trend Micro said an artifact belonging to the previous iteration of the same binary was compiled in May 2024, indicating that the threat actors behind the campaign have likely been iterating on the family for over two years, while taking steps to evade detection by antivirus tools.
+Over the past year, a [number of security flaws](https://thehackernews.com/2026/06/unpatched-langflow-flaw-cve-2026-5027.html) in Langflow have come under active exploitation. In June 2025, another critical vulnerability (CVE-2025-3248, CVSS score: 9.8) was [abused](https://thehackernews.com/2025/06/new-flodrix-botnet-variant-exploits.html) to distribute the Flodrix botnet malware.
+"This cryptocurrency-mining campaign shows how exposed AI application endpoints are becoming another route into enterprise environments," Trend Micro said. "The payload might be familiar, but the delivery vector is not. A Langflow vulnerability gives commodity cryptominer operators a new front door into systems running AI application infrastructure."
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-3" class="article-body">
+            <h2 class="article-title">Fake Perplexity extension on Chrome Web Store tracked searches</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/fake-perplexity-extension-on-chrome-web-store-tracked-searches/" target="_blank">Original Link</a></p>
+            <div class="content-text">A malicious extension in the Chrome Web Store is masquerading as the Perplexity AI answer engine, intercepting search traffic and collecting browsing information. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-4" class="article-body">
+            <h2 class="article-title">New BioShocking Attack Tricks AI Browsers Into Leaking User Credentials</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/06/new-bioshocking-attack-tricks-ai.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Convince an AI browser that it is playing a game, and it can hand over your login details. That is the finding behind BioShocking, a technique from security firm LayerX that tricked six AI browsers and assistants into copying a user's credentials and sending them to an attacker.
+The targets included OpenAI's ChatGPT Atlas, Perplexity's Comet, and Anthropic's Claude browser extension.
+An AI browser is one that can act for you, not just read pages. Switch it to agent mode, and it can click, type, and reach into the sites you are already signed into. That access is the whole point, and it is also the problem.
+The trick works because of how these agents read. The web page and your own instructions arrive as a single stream of text. That lets a malicious page slip in commands dressed up as ordinary content or game rules, and the agent cannot reliably tell the difference. Researchers call this [indirect prompt injection](https://thehackernews.com/expert-insights/2026/02/when-your-browser-becomes-attacker-ai.html).
+How the trick works
+The attack starts with a web page built as a puzzle. To fit its dystopian theme, the puzzle rewards wrong answers, like insisting that 2 + 2 = 5. Once the agent accepts that "wrong" is the winning move, it follows game logic instead of safety logic. The final step of the puzzle asks it to grab the user's credentials, and not one of the six agents flagged that as something it should refuse.
+The dangerous part is where the agent looks. In the test, a link was sent to the victim's work GitHub repository, where it pulled SSH login credentials and passed them to the attacker.
+[LayerX](https://layerxsecurity.com/blog/bioshocking-ai-gaming-the-ai-browser-and-escaping-its-guardrails/) used a harmless plaintext file, but the same trick could point the agent at other resources it can reach in that session: open tabs, signed-in accounts, and internal tools. The agent did not hesitate. Afterward, it cheerfully reported the theft as a win.
+The name nods to BioShock, where a brainwashed character obeys the trigger phrase "Would you kindly?" The agent is no different. It trusts the context it is handed. Change the context, and you change what it will do.
+LayerX has shown this pattern before, demonstrating that a single click could [hijack Perplexity's Comet](https://thehackernews.com/2025/10/cometjacking-one-click-can-turn.html) and quietly steal data.
+What the vendors did, and what to do
+By LayerX's account, the responses were uneven. It reported the issue to vendors between October 2025 and January 2026. OpenAI fixed it in ChatGPT Atlas. Perplexity closed the report without acting on it.
+Fellou, Genspark, and Sigma did not respond. Anthropic tried to patch its Claude extension, but LayerX says the fix did not hold.
+To shut the attack down, LayerX wants AI browsers to ask before reading from logged-in accounts. One prompt, "I'm about to copy data from your GitHub repository. Continue?", would break the chain.
+It also wants agents to notice when a page tells them the normal rules no longer apply, and to let users set hard limits on what an agent can touch. Winning a game is no reason to open a private repository.
+For users, the advice is shorter. Treat agent mode with care: whatever you are signed in to is fair game, so decide what the browser should see and cut that access when you are done. For security teams, the same logic scales up.
+An AI browser in agent mode is effectively another account with reach into company systems, and it should get the narrowest access a task needs rather than a standing pass to everything the user can touch.
+The common thread across these findings is that handing an AI agent the keys to your signed-in accounts turns a jailbreak from a party trick into real access.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-5" class="article-body">
             <h2 class="article-title">Accelerating EDR Evasion with LLM-Driven Analysis</h2>
             <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/06/29/llm-powered-edr-analysis/" target="_blank">Original Link</a></p>
             <div class="content-text"><p>Over the years I have enjoyed disassembling and debugging endpoint detection and response (EDR) and antivirus (AV) engines. For as long as I can remember I’d have evenings where I’d throw on some music, boot a virtual machine with kernel debugging enabled, and spend time searching for different evasion methods. While a fun way to [&#8230;]</p>
@@ -131,143 +200,7 @@ Knott also pointed out that threat actors are exploiting vulnerabilities faster 
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">Chromium extension uses AI‑related branding to redirect browser search</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/06/29/chromium-extension-uses-airelated-branding-redirect-browser-search/" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft Threat Intelligence has identified a malicious Chromium-based extension that spoofs the AI-powered answer engine Perplexity AI to trick unsuspecting users into installing it. Based on our observation of the extension’s behavior, we assess its primary objective to be search traffic interception and data collection, which might enable downstream use cases such as profiling, targeted advertising, or other forms of misuse depending on operator intent. Through responsible disclosure, we reported this extension to Google, and it has been taken down as of this writing. We’d like to thank Google for responding to and addressing this issue.
-Browser extensions continue to represent a significant attack surface within enterprise and consumer ecosystems due to their privileged access to browser APIs, user traffic, and browsing behavior. However, unlike traditional search hijackers that rely primarily on aggressive monetization or visible redirection, this extension combines Manifest Version 3 (MV3) capabilities with intermediary infrastructure and declarativeNetRequest (DNR) rules to transparently intercept Omnibox queries while preserving the appearance of legitimate search results. In addition, while browser search hijacking is not a new threat category, this research highlights how [threat actors continue to operationalize AI](https://www.microsoft.com/en-us/security/blog/2026/03/06/ai-as-tradecraft-how-threat-actors-operationalize-ai/) to accelerate attacks—specifically the [use of AI brands as a social engineering vector](https://www.microsoft.com/en-us/security/blog/2026/06/08/ai-brands-as-bait-how-threat-actors-are-using-the-ai-hype-in-social-engineering/).
-The extension routes both full search queries and real-time search suggestions (typed characters) through attacker-controlled infrastructure hosted on a domain not associated with the legitimate vendor, before redirecting users to expected search providers. While the observed activity demonstrates the capability to capture user input and browsing signals, no evidence in our analysis definitively confirms additional objectives such as credential theft. However, the level of access and permissions requested introduces elevated privacy and security risk.
-As threat actors continue to capitalize on emerging industry trends such as AI and leverage trusted branding to improve the success rates of their campaigns, organizations should strengthen user awareness training and similar programs to educate end users about the latest social engineering tactics. They should also implement a layered security strategy that correlates available indicators with behavioral signals and other threat intelligence.
-In this blog post, we provide our analysis of the browser extension—including key indicators of malicious behavior and findings from our dynamic analysis. We also provide mitigation and protection guidance, as well as advanced hunting queries, to help organizations detect and defend against this threat.
-Extension overview
-The extension we analyzed has the following attributes:
-| Attribute | Value |
-| Extension name | Search for perplexity ai |
-| Extension ID | flkebkiofojicogddingbdmcmkpbplcd |
-| Manifest version | MV3 |
-| Version | 2.2 |
-| Observed purpose | Browser search override and redirect logic |
-| Referenced brand | Perplexity AI |
-| Suspicious domain | perplexity-ai[.]online |
-It appears to spoof the publicly available Perplexity service by using similar branding elements and a typosquatted domain. The said domain mismatch might increase the likelihood of user confusion regarding the extension’s source or affiliation.
-Based on our analysis, the extension has been classified as malicious due to observed search redirection behavior. The analyzed extension’s manifest declares itself as the following:
-"search_provider": { "name": "Perplexity Search" } |
-It uses the following infrastructure:
-"search_url": https://perplexity-ai[.]online/search/{searchTerms} |
-The extension also forces itself as the browser default search provider:
-"is_default": true |
-At first glance, the extension appears to provide AI-enhanced search functionality. However, analysis of the manifest reveals multiple suspicious behaviors and permissions inconsistent with legitimate AI search assistants.
-Key indicators of malicious behavior
-Typosquatted infrastructure
-The extension uses the domain perplexity-ai[.]online, which is similar to the legitimate Perplexity AI service’s domain (perplexity[.]ai). This pattern is consistent with domain naming approaches often frequently observed in phishing campaigns, search hijackers, fake AI applications, and extension malware.
-[Previous research](https://www.zscaler.com/blogs/security-research/phishing-typosquatting-and-brand-impersonation-trends-and-tactics) has discussed how browser extensions might use branding similar to trusted services because:
-- Users associate AI tools with productivity and legitimacy
-- AI-related extensions currently experience high install rates
-- Users are less suspicious of browser-integrated AI assistants
-Browser search hijacking
-The extension overrides browser search settings through chrome_settings_overrides to replace the browser default search provider as well as intercept and redirect all queries in a Chromium browser’s Omnibox to an intermediary infrastructure not associated with the official vendor domain:
-"chrome_settings_overrides": { "search_provider": { "name": "Perplexity Search", "keyword": "perplexity", "is_default": true, "search_url": "hxxps://perplexity-ai[.]online/search/{searchTerms}", "favicon_url": "hxxps://perplexity-ai[.]online/favicon.ico", "suggest_url": "hxxps://perplexity-ai[.]online/search?output=firefox&q={searchTerms}" } } |
-Critically, the suggest_url field also routes through perplexity-ai[.]online. This means real-time search suggestions—every character typed in the address bar—are transmitted to an attacker-controlled infrastructure before any redirect occurs. This constitutes active user surveillance (keystroke-level capture) beyond simple search redirection.
-Although Chromium-based browsers permit search provider overrides for legitimate use cases, [Google ][explicitly states](https://developer.chrome.com/docs/extensions/reference/manifest/chrome-settings-override) that extensions requesting settings overrides along with additional powerful capabilities might violate the browser’s single-purpose policy.
-Abuse of declarativeNetRequest
-The extension requests powerful DNR permissions that enable traffic redirection, URL rewriting, and selective request filtering, which aren’t consistent with expected AI assistant behavior:
-"permissions": [ "declarativeNetRequest", "declarativeNetRequestFeedback", "declarativeNetRequestWithHostAccess" ] |
-These permissions provide specific capabilities exploited by this extension:
-- declarativeNetRequest: Redirects all main_frame requests matching perplexity-ai[.]online/search/(.*) to legitimate search engines, creating a two-hop chain where the attacker server processes the query before the browser is redirected.
-- declarativeNetRequestFeedback: Allows the extension to programmatically monitor which redirect rules fire, effectively confirming exfiltration success for each intercepted query.
-- declarativeNetRequestWithHostAccess: Combined with host_permissions for ://perplexity-ai.online/, enables full request interception capabilities on the attacker-controlled domain. This behavior might enable traffic redirection and related activity depending on implementation.
-The use of these permissions in an AI-themed search extension is particularly concerning because a legitimate search UI generally doesn’t require advanced network-manipulation APIs.
-Search rewrite infrastructure
-Multiple rule sets indicate modular traffic hijacking capability across providers such as Perplexity, Google, and Bing:
-"rule_resources": [ { "id": "perplexity", "enabled": true, "path": "perplexity-rules.json" }, { "id": "bing", "enabled": false, "path": "bing-rules.json" }, { "id": "google", "enabled": false, "path": "google-rules.json" } ] |
-This architecture enables modular traffic redirection controlled by the background service worker. The two-hop redirect design is critical to understanding the threat model:
-- Browser sends query to perplexity-ai[.]online (attacker server logs query, HTTP headers, IP, user-agent)
-- DNR rule immediately redirects browser to legitimate engine (perplexity[.]ai, google[.]com, or bing[.]com)
-- User sees normal search results, completely unaware of interception
-The data theft occurs on hop 1, not on the redirect (hop 2). The server-side code (server.js) shipped with the extension explicitly logs all incoming requests including full headers, confirming the data collection intent. This activity aligns with behaviors observed in modern browser hijackers and ad-fraud ecosystems.
-Host permissions
-The extension requests host access to intermediary infrastructure not associated with the official vendor domain, enabling data interception and telemetry exposure:
-"host_permissions": [ "*://perplexity-ai[.]online/*" ] |
-Content security policy
-The extension declares the following:
-"content_security_policy": {"extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"} |
-The inclusion of wasm-unsafe-eval is unusual for a search-redirect extension because it permits WebAssembly (Wasm) execution within extension pages. Although no Wasm modules were observed in version 2.2, the presence of this directive enables future Wasm-based functionality without requiring modifications to the extension’s content security policy configuration.
-Dynamic analysis findings
-Upon installation, the extension opens hxxps://extension.tilda[.]ws/perplexityai, presenting target users with an onboarding page designed to resemble a legitimate product setup flow. Similar onboarding techniques have been observed in extension-based adware and search-redirection campaigns, where they’re used to increase user trust and reduce scrutiny of subsequent browser modifications.
-The runtime workflow we’ve observed demonstrates browser search redirection behavior:
-- User enters search query into the Omnibox.
-- Browser request routed to perplexity-ai[.]online.
-- Server logs full request: query string, HTTP headers, user-agent, and source IP address.
-- suggest_url captures real-time keystrokes during typing (before Enter is pressed)
-- Ruleset executes redirect.
-- User is delivered to selected search provider.
-Unusually, this extension ships with its own server-side infrastructure code, revealing the complete attack architecture:
-- server.js (Node.js proxy)
-- Logs all incoming requests including method, URL, and full HTTP headers.
-- Proxies’ suggestion queries to suggestqueries.google[.]com.
-- Adds permissive CORS headers (Access-Control-Allow-Origin: *) to enable cross-origin responses.
-- nginx.conf
-- Configures perplexity-ai[.]online with Let’s Encrypt SSL.
-- Proxies /search endpoint to Google suggestions API.
-- Filters CORS origins exclusively to *.oda[.]digital (operator infrastructure).
-- Forces HTTP-to-HTTPS redirect.
-This server-side code is definitive evidence that query interception and logging is architecturally intentional, not an incidental by-product of the redirect mechanism.
-Mitigation and protection guidance
-Microsoft recommends the following mitigations to reduce the impact of this threat.
-- Restrict the installation of untrusted browser extensions by enforcing allow‑listing and enterprise policy controls within managed environments.
-- Encourage users to verify extension publishers, domains, and branding—particularly for AI-themed tools commonly leveraged in social engineering scenarios.
-- Monitor unauthorized changes to browser search settings, unusual extension permissions, and outbound traffic to intermediary or non-standard domains associated with search activity. Controls that identify or flag extensions requesting search override capabilities or network-related APIs can help reduce potential risk exposure. Continuous inspection of extension behavior, alongside reputation-based methods, might also provide improved visibility into anomalous or potentially unwanted activity.
-- Leverage platform-level protections to further reduce risk:
-- Microsoft Edge includes built-in capabilities designed to identify and respond to potentially malicious or unwanted extensions that attempt to manipulate browser behavior, including search redirection. Depending on configuration and risk signals, Edge might restrict or block extension execution.
-The Microsoft Edge Add-ons store also uses automated and manual review processes to assess extensions before and after publication, while ongoing monitoring enables identification and removal of extensions that violate policies—helping reduce user exposure to emerging threats.
-[Microsoft Defender SmartScreen](https://learn.microsoft.com/windows/security/operating-system-security/virus-and-threat-protection/microsoft-defender-smartscreen/)provides reputation-based protection for URLs and web content, helping detect and block access to domains associated with malicious or deceptive activity.
-- Microsoft Edge includes built-in capabilities designed to identify and respond to potentially malicious or unwanted extensions that attempt to manipulate browser behavior, including search redirection. Depending on configuration and risk signals, Edge might restrict or block extension execution.
-Microsoft Defender detections
-Microsoft Defender coordinates detection, prevention, investigation, and response across endpoints, identities, email, and apps to provide integrated protection against attacks like the threat discussed in this blog.
-Customers with provisioned access can also use [Microsoft Security Copilot in Microsoft Defender](https://learn.microsoft.com/en-us/defender-xdr/security-copilot-in-microsoft-365-defender) to investigate and respond to incidents, hunt for threats, and protect their organization with relevant threat intelligence.
-| Tactic | Observed activity | Microsoft Defender coverage |
-| Discovery | Presence of suspicious or unverified browser extension identifiers | – Detection of unknown or low-reputation extension artifacts – Monitoring extension-related files through endpoint telemetry |
-| Command and Control (C2) | Outbound communication to suspicious or lookalike domains associated with redirection infrastructure | – Detection of connections to suspicious or low-reputation domains – Network telemetry correlation identifying intermediary infrastructure |
-Microsoft Security Copilot
-Security Copilot customers can use the standalone experience to [create their own prompts](https://learn.microsoft.com/copilot/security/prompting-security-copilot) or run the following [prebuilt promptbooks](https://learn.microsoft.com/copilot/security/using-promptbooks) to automate incident response or investigation tasks related to this threat:
-- Incident investigation: Assist analysts in investigating alerts, correlating signals, and supporting analysis of extension-related activity to intermediary domains such as perplexity-ai[.]online.
-- Microsoft User analysis: Support analysis of potentially impacted users whose browser search activity has been intercepted or redirected by malicious extensions.
-Advanced hunting queries
-NOTE: The following sample queries lets you search for a week’s worth of events. To explore up to 30 days’ worth of raw data to inspect events in your network and locate potential related indicators for more than a week, go to the Advanced Hunting page > Query tab, select the calendar dropdown menu to update your query to hunt for the Last 30 days.
-Look for the presence of the malicious extension through file artifacts:
-DeviceFileEvents | where FileName has "flkebkiofojicogddingbdmcmkpbplcd" or FolderPath has "flkebkiofojicogddingbdmcmkpbplcd" | summarize Count = count() by DeviceName, DeviceId, FolderPath |
-Look for outbound network communication to intermediary infrastructure not associated with the official vendor domain:
-DeviceNetworkEvents | where RemoteUrl has "perplexity-ai.online" | summarize Count = count() by DeviceName, DeviceId, InitiatingProcessAccountName, RemoteUrl |
-MITRE ATT&CK techniques observed
-| Tactic | Observed activity |
-| Initial Access | User installs malicious Chromium extension using branding and naming similar to the Perplexity AI service from browser ecosystem |
-| Execution | Extension executes MV3 logic and DNR rules to intercept and control traffic |
-| Persistence | Extension forces itself as default search provider using chrome_settings_overrides (is_default=true) |
-| Defense Evasion | Uses legitimate MV3 APIs (DNR rules) to hide malicious behavior inside browser-native logic |
-| Input Capture | Real-time search suggestions (keystrokes) are captured through suggest_url and routed to attacker domain |
-| Command and Control | Browser queries are routed to an intermediary infrastructure not associated with the official vendor domain acting as intermediary |
-Indicators of compromise
-| Indicator | Type | Description |
-| perplexity-ai[.]online | Domain | Typosquatted domain used for search redirection |
-| flkebkiofojicogddingbdmcmkpbplcd | Extension ID | Malicious Chromium extension |
-| extension.tilda[.]ws/perplexityai | URL | Installation onboarding page |
-References
-[Phishing Via Typosquatting and Brand Impersonation: Trends and Tactics](https://www.zscaler.com/blogs/security-research/phishing-typosquatting-and-brand-impersonation-trends-and-tactics)– Zscaler[Overriding Chrome Settings](https://developer.chrome.com/docs/extensions/reference/manifest/chrome-settings-override)
-This research is provided by Microsoft Defender Security Research, Asutosha Panigrahi, Ashwani Kumar, Mohd Sadique, and with contributions from members of Microsoft Threat Intelligence.
-Learn more
-For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
-To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
-To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
-Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
-[Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)- Learn more about
-[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection) - Evaluate your AI readiness with our latest
-[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). - Learn more about
-[Protect your agents in real-time during runtime (Preview)](https://learn.microsoft.com/en-us/defender-cloud-apps/real-time-agent-protection-during-runtime)</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-5" class="article-body">
+        <div id="art-6" class="article-body">
             <h2 class="article-title">The Bear Necessities: A Look at the Drivers, Dynamics, and Applications of the Pro-Russia Influence Ecosystem</h2>
             <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/pro-russia-influence-ecosystem/" target="_blank">Original Link</a></p>
             <div class="content-text">The Bear Necessities: A Look at the Drivers, Dynamics, and Applications of the Pro-Russia Influence Ecosystem
@@ -382,16 +315,6 @@ Google offers a suite of free of cost tools to help protect high-risk users from
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-6" class="article-body">
-            <h2 class="article-title">Hackers now exploit critical Oracle E-Business flaw in attacks</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/new-oracle-e-business-suite-flaw-now-exploited-in-attacks/" target="_blank">Original Link</a></p>
-            <div class="content-text">Attackers have begun exploiting a critical vulnerability (CVE-2026-46817) in the Oracle E-Business Suite (EBS) financial application, according to threat intelligence company Defused. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
         <div id="art-7" class="article-body">
             <h2 class="article-title">Scattered Spider Hackers Plead Guilty on Day 1 of Trial</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/06/scattered-spider-hackers-plead-guilty-on-day-1-of-trial/" target="_blank">Original Link</a></p>
@@ -411,6 +334,8 @@ They will serve some time and get a great job working at a GCHQ cut out org via 
 Why is it that pretty much every time cyber crooks are punished, someone will chime in and claim they will get a cushy job some letter agency or security consultancy?
 To be hired you need the right skill set. And much more importantly: you need to be deemed trustworthy. That rules out pretty much any job that requires clearance, because for some crazy reason, most gov’t agencies do not consider ex-cons trustworthy.
 Nobody’s going to bust out a couple of shameless, reckless social engineering guys. It’s really not like these guys are misunderstood geniuses who were too curious for their own good.
+Have you heard of Kevin Mitnick? Marcus Hutchins?
+Those examples are seemingly the exceptions that prove the rule valid, re “Nobody’s going to bust out a couple of shameless, reckless social engineering guys.”
 Smart young adults potentially throwing their future away. Sigh…
 A friend of my nephew is a 23 year old guy with obvious talent who seems to be uninterested in a job.
 I think he wants me to retire and has the idea that he can take my job. However, he has neither the knowledge nor the temperament to do the job. He’s too much of a hothead and thinks that he knows absolutely everything about everything, especially computers and electronics.
@@ -436,17 +361,75 @@ Nah, the world doesn’t work like that usually anymore, and there are plenty of
 Check, garçon!
 The TFL hack started on 31st August, and Flowers was arrested for it on 6th September. So clearly no opsec skills. They had to plead guilty as the evidence included videos and screenshots that these idiots had saved to their own personal devices.
 Man, it’ll be interesting to see what kind of time these two Meduza reporters are gonna get (and if the Puzata Hata will accept their non-activated American gift cards with zero balances for their spring salad and pelmini back when everyone was playing soccer in Kiev).
+Did they do any preparatory work for the TFH hack or was it unplanned? Surely this would affect their downward departure calculation.
+I meant TFL hack. Autocorrect error.
 I always wonder what role the parents play in having teenagers who engage in this criminal activity. These kids reap huge financial rewards – don’t the parents see that? Are they really that clueless? Perhaps they should share some of the responsibility for all the harm their child causes others.
 Juvenile computer crime and hacking recidivism rates aren’t generally tracked so I also wonder how many commit post-incarceration crimes.
 WELCOME TO BACOB JUTLER CAFE!
 FREE MY NIGGA DORT HE AINT DONE NOTHNIN
+Unfortunate name.
 These two upstanding citizens have a bright future in the Trump organization, Big-Balls better watch out for these two. And I don’t see them being on many dates with girls either, but getting beat up by girls yes 😉
-Shouldn’t this sort of post be on something like t4r4ñt3lla.onion or something, not this site?</div>
+Shouldn’t this sort of post be on something like t4r4ñt3lla.onion or something, not this site?
+So these young fellas are part & parcel of stealing north of 100 million dollars, but they can’t afford to hire a hotshot legal team? Where did the money go?
+Or was their opsec so horrendous that their lawyers told them throwing themselves on the mercy of the court is the only viable path?
+As some stranger I do not know but whose words I probably read online somewhere at some point most likely said, try as you might to steal as much as you might like, without a certain amount of dough you’ll have an almost impossible time laundering it or accessing it.
+Which is probably why the majority of crime thriller novels, snazzy crime-oriented tv shows and stylish heist movies do not seem to be representative of real life crime.
+All the really really bad crime is committed by transnational corporations, and people with long-standing crooked relationships with international sketchy folks like the Biden family, hoping to tie up the resources of federal investigators with cases like this as much as they can.
+Once you see a few cases like those (and they rarely come into the light, no less see prosecution as much as you would think), cases like these sort of make you feel bad for kids like this, regardless of the chaos they seem to cause. Turtles in both directions.
+Pair of mongs. Look like they’d have trouble making friends in real life.
+Feel it is important to mention this “talented hacker” owner flowers also went by Bo764 and was a little freakzoid who extorted little girls</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-8" class="article-body">
+            <h2 class="article-title">JS-Tap v3: Endpoint Post-Exploitation With JavaScript Implants</h2>
+            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/js-tap-v3-endpoint-post-exploitation-with-javascript-implants" target="_blank">Original Link</a></p>
+            <div class="content-text">JS-Tap v3: Endpoint Post-Exploitation With JavaScript Implants
+When I first wrote JS-Tap, the goal was to provide red teamers with a generic JavaScript payload that works without prior knowledge of a web application and without an authenticated user running it. Instrument the client side, collect loot, attack the application with stolen creds.
+That original payload, what I now call the DOM beacon, still works just fine, but in the past year, I wanted to expand the reach of JS-Tap. JavaScript, sadly, has escaped the web application DOM and is now used extensively in desktop applications and software. Browser extensions are JavaScript. Electron desktop apps (Slack, Signal, VS Code, Discord, lots of the corporate tooling you'll find on a workstation) are JavaScript. The new wave of CLI tools built on Node and Bun, including the AI coding assistants everyone is suddenly running, are JavaScript.
+Here’s the part that makes all of this worse—all of these application environments run JavaScript with less sandboxing than the browser DOM where the original JS-Tap payload lives. The same monkeypatching tricks JS-Tap has always used to intercept network calls and scrape data work in these environments, too—except now, there's no Same-Origin Policy in the way, and in many cases, there's full access to the underlying operating system.
+So, JS-Tap v3 grows beyond the browser to post-exploitation of the endpoint. It introduces three (3) new beacon types, all reporting back to the same JS-Tap C2, integrated for your engagement data collection needs.
+The New Beacons
+BEX Beacon (Browser Extension)
+The BEX beacon is JS-Tap as a browser extension, for Chrome, Chromium, Edge, and Firefox across Windows, Linux, and Mac. The DOM beacon lives inside a single page, and the BEX beacon sits at the browser level and sees all.
+Because it runs with extension privileges rather than page privileges, it sidesteps a lot of what limits the DOM beacon. It captures cookies across all domains, including httpOnly cookies, which the DOM beacon simply can't touch. It grabs localStorage, sessionStorage, and request headers and tracks browsing across every tab. Note that there are very important scoping settings about what domains the BEX beacon is allowed to work on, compiled in and critical for use in an engagement. Make sure you have that scoping conversation with your client before you use this in an assessment.
+The BEX beacon also works as a dropper. From the JS-Tap portal, you can task it to inject a full DOM beacon into a specific domain being used in that browser. A DOM beacon spawned this way gets pixel-perfect screenshots through the extension's captureVisibleTab API instead of relying on the html2canvas library baked into the DOM beacon.
+The BEX beacon also allows proxying of network traffic through the beacon.
+Pair the BEX beacon with the optional new Sidecar, a small Go binary installed alongside the extension and used via the browser's native messaging feature, and you get OS-level file browsing and command execution from a browser extension. There is an OPSEC tradeoff here. Native messaging is the least stealthy of the OS-access options in JS-Tap v3 beacons, since it requires a registered native host and a separate binary on disk, and the Atom and V8 beacons get host access in cleaner ways. For situations where the browser extension is your foothold, it is very powerful if you’re in a position to install Sidecar alongside the BEX extension.
+Atom Beacon (Electron App Implant)
+The Atom beacon is an implant for Electron desktop applications. You patch it into the target app's ASAR archive with the included atomize.py
+, and on next launch, it connects back to the JS-Tap C2.
+The main process agent runs in Electron's Node.js runtime, so it gets native OS access (file system, command execution) with no separate Sidecar binary needed. If the Electron app has set security fuses that block node functionality or sandboxing, the patcher resets the fuses. Note that you have to have write access to the app.asar file to be able to modify the Electron app.
+The usual JS-Tap functionality follows: screenshots, keylogs, and network intercepts. The proxy feature is also supported.
+While the Atom beacon is generic, there are commonly used Electron apps that we can implement custom JS-Tap functionality for, and these are implemented in runtime-delivered plugins specific to the application. JS-Tap v3 ships with the following Electron app plugins:
+- VS Code Infiltrator - Targets the VS Code Electron app and reaches into the editor environment to copy and edit files and “borrow” GitHub tokens for accessing private repos
+- 1Password Vault Raider - Targets the 1Password desktop app and goes after vault contents through the running unlocked application, capturing the unencrypted copy of the password vault
+- Signal Interceptor - Targets Signal Desktop; Signal's whole value proposition is end-to-end encryption, but an implant living inside the desktop client can access all messages, send messages from the user to others, or spoof messages to them
+- Mattermost Masher - Targets the Mattermost desktop client; same functionality as the Signal plugin, just ported to Mattermost
+- Slack Wrecker - The Slack equivalent; same functionality as Signal and Mattermost plugins
+Adding new plugins is not terribly time-consuming. I accept pull requests. 🙂
+V8 Beacon (Node.js/Bun CLI Implant)
+The V8 beacon targets Node.js and Bun command-line applications, and unlike the Atom beacon, there's no app patching at all.
+You drop the beacon's .js
+file on disk and set an environment variable—NODE_OPTIONS
+for Node or BUN_OPTIONS
+for Bun. The runtime pulls in the malicious JavaScript before the target app's own code runs, and from there, it's what you would expect from a JS-Tap beacon. It keylogs, intercepts network traffic, and allows code execution and file system access and proxies network traffic through the beacon.
+The obvious targets here are the AI CLI tools everyone has suddenly installed, like Gemini CLI and Claude Code, which make a lot of interesting authenticated API calls.
+Also New in v3
+JS-Tap Proxy - All three (3) new beacons can act as a network relay. Route your own browser through the victim's browser, Electron app, or Node process over a WebSocket relay, and reach internal application servers from the victim's network context, using their IP address and TLS fingerprint.
+JS-Tap Conductor - This is a standalone Firefox extension that takes session data and proxy configurations generated by the JS-Tap C2 portal (session and proxy “tickets” you paste into Conductor) and reconfigures Firefox to clone the session or route traffic through a JS-Tap beacon. Session cloning captures cookies, headers, and local/session storage and spoofs the user-agent.
+General Usability Improvements - As I’ve scaled out my use of JS-Tap, I’ve added features for searching and filtering clients and loot. This really helps in finding needles in haystacks.
+Wrapping Up
+The original DOM beacon hasn't gone anywhere, and for attacking web applications via XSS or web server-side implant, it's still exactly what it always was. The latest features are intended to target JavaScript where it has shifted to—sadly, into endpoint application environments that hand you more access than the browser ever did.
+As always, this is tooling meant for authorized engagements and education. If you run into issues or have ideas on how to make it better, my DMs are open [@hoodoer](https://x.com/hoodoer), or you can reach me at [hoodoer@bitwisemunitions.dev](mailto:hoodoer@bitwisemunitions.dev).
+Please let me know if you run into bugs. There will be bugs. This is a very large change in the code base.
+[https://github.com/hoodoer/JS-Tap](https://github.com/hoodoer/JS-Tap)(JS-Tap Repository)</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-9" class="article-body">
             <h2 class="article-title">Who Runs the Ransomware Group ‘The Gentlemen?’</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/06/who-runs-the-ransomware-group-the-gentlemen/" target="_blank">Original Link</a></p>
             <div class="content-text">A cybercrime group known as The Gentlemen has emerged as the second most active ransomware gang by victim count, rapidly attracting a talented pool of hackers through an aggressive recruitment strategy that promises affiliates 90 percent of any ransom paid by victims. This post examines clues pointing to a real life identity for the administrator of The Gentlemen ransomware group.
@@ -538,65 +521,6 @@ Krebs isn’t run by any one group of anything any more than you are.
 Lots of AI slop puppeting every meatpuppet now (no offense, Brian).
 Great breakdown on threat actor attribution. Security research like this is essential for organizations evaluating third-party risk. I run a site covering crypto and financial analysis and send your investigative work to clients regularly as a reference.
 Very interesting article, I always say there’s only one internet and there’s residue from everyone on it. And now with AI able to aggregate so much it truly shows that the internet is us and we are the internet. We’ve been building our digital persona for years, our essence is in the very fabric.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-9" class="article-body">
-            <h2 class="article-title">How to Train Your (Dragons) Analysts - A TrustedSec Guide to Picking the Perfect Purple Team</h2>
-            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/how-to-train-your-dragons-analysts" target="_blank">Original Link</a></p>
-            <div class="content-text">How to Train Your (Dragons) Analysts - A TrustedSec Guide to Picking the Perfect Purple Team
-Whether it be the advent of AI technologies, new Red-Team techniques and exploits, or new patches and emergent defensive technologies, it’s pretty clear to all of us operating within technology fields that the landscape of computing and cyber-security is ever evolving.
-In order to stay up to date with all that’s going on, the TrustedSec Purple Team has been hard at work renovating and improving our assessments to better service the needs of our clients and the broader security community.
-This blog post will walk you through the types of Purple Team assessments that we offer, how to choose the assessment that will meet your security team where they are, and offer the best path forward to improvement.
-TrustedSec Engagement Overview
-Live Fire Exercise (LFX)
-The Live Fire Exercise is an active testing engagement in which TrustedSec consultants execute a pre-designed playbook of attack scenarios within your environment, and then, in tandem with the client’s Blue Team, leverage the generated telemetry to test, validate, and evaluate logging within the clients defensive tooling (EDR, SIEM, IDPS).
-The LFX comes in two models: live bootcamp style assessments, and ad-hoc assessments which allow TrustedSec consultants to perform the same work, but with more scheduling flexibility.
-Detection Validation and Review Assessment (DVR)
-The Detection Validation and Review Assessment is another active testing style assessment that targets a specific and defined list of client-built detections.
-In this ad-hoc style engagement, TrustedSec will test and validate that existing detections can fire and will provide tangible recommendations to improve logic or recommend additional detections if a gap in coverage is identified.
-Defense Validation and SIEM Ingestion Review (DVSIR)
-TrustedSec's Defense Validation is a structured assessment designed to quantify the effectiveness of an organization's defensive controls. The engagement begins with a Detection and Alerting Interview, where consultants collaborate with the organization to identify its primary security goals, high-priority systems, and business-critical data. A SIEM Configuration Review is then performed to assess whether the organization’s SIEM has sufficient visibility into environmental logging, aiming to reduce unnecessary event logging to maximize the usability of the SIEM.
-Adversarial Detection and Countermeasures Engagement (AD&C) and General Variants
-The AD&C assessment features live attack scenario execution and custom, high-fidelity detections written directly within your SIEM or EDR platform. We also evaluate the security posture surrounding those scenarios and provide tangible guidance for how to improve.
-This exercise comes in two models: live bootcamp style assessments, or an ad-hoc assessment.
-To tailor your experience, we also offer multiple AD&C Assessment variants, such as:
-- Phases: Our standard playbooks. A great place to start if you’re new to working with us.
-- MITRE Focused: Know your environment? If there are specific gaps pertaining to a specific phase of the MITRE framework (e.g. Lateral Movement, Discovery), this is a great assessment for having a more targeted evaluation of the problem area.
-- Cloud: Looking for detection engineering for AWS, GCP, Azure- or other cloud platforms? This is the right assessment for you!
-- Blue Team Guidance: Looking to review and cover gaps from an existing pentest or Red Team? This assessment focuses on walking through key techniques and issues from the report, leveraging the work that has already been done to close existing gaps in detection or prevention.
-- ADS: Want an AD&C but don’t have the time or budget for a large-scale assessment? This variant is limited in scope but is an excellent choice for clients who may wish to test out and see if this type of assessment will meet their needs, or for those who need an accelerated timeline.
-- Ransomware Resilience: A shorter, ransomware focused assessment that seeks to identify and cover detection gaps for common ransomware techniques.
-Threat Emulation Assessment (TEA)
-A threat emulation is a more advanced assessment wherein TrustedSec will design a custom threat emulation based on a specific Threat Group, execute the scenario, and ensure that proper detection capabilities exist for each step in the attack sequence.
-Deception Engineering and Implementation Engagement (DEIE)
-The DEIE engagement is another advanced assessment for clients looking to design and implement deception technologies and accompanying detections within their environments.
-In this assessment, clients can choose from pre-built deception technologies per technology stack, or work with TrustedSec consultants to design custom deceptions for a platform of their choosing.
-SOC Response Training
-The SOC-RT assessment is a hybrid, interactive tabletop training exercise that provides practical hands-on exercises for your defensive team. In this assessment, a series of attack sequences will be executed in your environment and guided exercises will walk your SOC through investigative logic and solutions, with an attack scenario live demonstration and subsequent investigative discussion after each exercise.
-How to Pick your Perfect Match
-Now that you have a solid idea on each of our offerings, let’s talk about how to choose the Purple Team assessment that will get you and your security team the best value.
-Where to Start
-For clients who may not know where to start their journey, or would like help better understanding their environment, logging, and existing detection capabilities, we highly recommend starting with a Defense Validation and SIEM Ingestion Review (DVSIR) or a Live Fire Exercise (LFX).
-A DVSIR will help you identify critical assets and existing technologies through inquiry style testing and then evaluate your current SIEM to provide recommendations on existing logging structure and how to get the most out of your SIEM.
-A Live Fire Exercise will then test logging directly with real world attack scenarios to ensure that you have the needed telemetry in place to be able to detect them.
-Where to Go Next
-For those clients who have a strong idea of their defensive tooling and logging infrastructure, we highly recommend one (or more!) of the next three assessment types.
-If you’re looking for a detection building engagement, look no further than our AD&C assessments. This will provide attack demonstrations, knowledge transfer from consultant to security teams, and will feature custom detection engineering that will be implementation ready by the end of the assessment.
-Alternately, if you’re looking to improve existing detections, try our Detection Validation and Review Assessment. In this assessment, we will test your existing detections, recommend improvements in logic, and identify any gaps that may be present.
-Or, if you’re looking to help augment and test your Defensive teams’ skills, try a SOC Response Training exercise.
-For the Advanced Security Teams Among Us
-If you’re looking for something new to enhance your security program, why not try a Threat Emulation Assessment, or our Deception Engineering assessment? Both of these assessments look to improve your defenses in ways that go beyond basic or intermediate level testing.
-Your Adventure at a Glance:
-It’s also possible to view our assessments through the following lenses:
-- Detection Engineering Assessments
-- Active Testing Assessment, and;
-- Level-Up Assessments
-The graphic below gives a quick overview of the assessment, and which categories they fall into.
-In addition to all the engagement styles we offer above, we are always more than happy to sit down and chat about the security posture of your organization. If something above doesn’t match what you’re looking for, let us know! We also offer customized approaches that may better suit your team’s needs.
-Conclusion
-Picking the right Purple Team assessment for your organization can be a challenging endeavor, whether it be identifying a starting point, or putting together a roadmap for next-steps. TrustedSec’s account managers and consulting team have the skills and expertise to provide actionable guidance to assist your organization at all stages of its journey. If you have questions or are interested in these services, please [get in touch with us](https://trustedsec.com/contact)!</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
