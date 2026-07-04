@@ -59,12 +59,59 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-07-03</h1>
+        <h1>Security Briefing // 2026-07-04</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Claude Fable 5 isn’t permanently leaving subscriptions, Anthropic says</button></li><li><button onclick="show('art-1')">FBI Seizes NetNut Proxy Platform, Popa Botnet</button></li><li><button onclick="show('art-2')">Google’s Continued Disruption of Malicious Residential Proxy Networks</button></li><li><button onclick="show('art-3')">AI Agent Exploits Langflow RCE to Automate Database Ransomware Attack</button></li><li><button onclick="show('art-4')">FortiBleed Credential Theft Linked to INC and Lynx Ransomware Operations</button></li><li><button onclick="show('art-5')">Inheriting the Receipts: Securing the AI Your Company Already Adopted</button></li><li><button onclick="show('art-6')">FortiBleed credential-theft campaign linked to Lynx ransomware</button></li><li><button onclick="show('art-7')">Microsoft named a leader in the Frost Radar for cloud and application runtime security</button></li><li><button onclick="show('art-8')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
+            <ul><li><button onclick="show('art-0')">New Avalon Malware Framework Packs CrownX Ransomware Capabilities</button></li><li><button onclick="show('art-1')">NetNut proxy network disrupted, 2 million infected devices cut off</button></li><li><button onclick="show('art-2')">Claude Fable 5 isn’t permanently leaving subscriptions, Anthropic says</button></li><li><button onclick="show('art-3')">FBI Seizes NetNut Proxy Platform, Popa Botnet</button></li><li><button onclick="show('art-4')">Google’s Continued Disruption of Malicious Residential Proxy Networks</button></li><li><button onclick="show('art-5')">AI Agent Exploits Langflow RCE to Automate Database Ransomware Attack</button></li><li><button onclick="show('art-6')">Inheriting the Receipts: Securing the AI Your Company Already Adopted</button></li><li><button onclick="show('art-7')">Microsoft named a leader in the Frost Radar for cloud and application runtime security</button></li><li><button onclick="show('art-8')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
+            <h2 class="article-title">New Avalon Malware Framework Packs CrownX Ransomware Capabilities</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/new-avalon-malware-framework-packs.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Cybersecurity researchers have discovered a previously undocumented modular malware framework codenamed Avalon that's distributed by means of a multi-stage phishing chain capable of bypassing traditional security controls.
+Avalon combines credential collection, lateral movement, remote access, recovery disruption, and ransomware execution, bringing together diverse functions under one umbrella. The ransomware component has been internally named CrownX.
+"The attack began with a spoofed legal document email directing recipients to a password protected archive on Proton Drive," Blackpoint Cyber researchers Nevan Beal and Sam Decker [said](https://blackpointcyber.com/blog/avalons-path-from-legal-lure-to-crownx-ransom-capabilities/). "Malicious content was embedded inside an ISO image rather than attached directly, reducing the likelihood of detection at the email layer."
+Should the email recipient interact with a document-themed Windows Shortcut ("Secure Document CA-283505.pdf.lnk") inside the mounted image, it triggers a staged malware sequence that culminates in the deployment of Avalon. Specifically, the shortcut runs a command to launch an MSBuild project located in the ISO image.
+The MSBuild project, for its part, loads an embedded .NET assembly, which then interferes with the regular functioning of Event Tracing for Windows (ETW) to reduce forensic visibility and download a next-stage payload over HTTPS responsible for launching Avalon.
+The malware framework boasts of an extensive defense evasion subsystem that aims to evade detection, while incorporating specific methods to conceal execution from security tools associated with Microsoft Defender, SentinelOne, CrowdStrike, Sophos, Elastic Endpoint, FortiEDR, ESET, McAfee, and Bitdefender.
+"These capabilities give the framework a multitude of ways to reduce telemetry, bypass user mode monitoring, and adjust its execution depending on the defensive controls present on the host," the researchers said.
+The complete set of features built into Avalon is as follows -
+- Harvest credentials, cookies, history, and bookmarks from Chromium-based browsers and Mozilla Firefox.
+- Gather data from cryptocurrency wallet apps like MetaMask, Phantom, Coinbase Wallet, Exodus, Electrum, Atomic Wallet, Ledger Live, and Bitcoin Core, along with Discord, Slack, Teams, OpenVPN, WireGuard, and Windows Credential Manager.
+- Collect details about SSH known hosts, saved RDP connections, Wi-Fi profiles, and Group Policy Preferences cpassword artifacts.
+- Exfiltrate data to a remote server ("helloxcherry[.]com") and poll the server for receiving tasking commands.
+- Perform reconnaissance and prioritize systems that can expand the scope of the compromise.
+- Encrypt files associated with business operations, software development, engineering, data storage, and virtual infrastructure using Windows
+[Cryptography API](https://learn.microsoft.com/en-us/windows/win32/seccng/cng-portal)and deliver a ransom note containing payment instructions and deadline timers that show how much time is left before the ransom amount is increased. - Inhibit system recovery by terminating the Volume Shadow Copy Service and deleting shadow copies.
+- Remove traces of artifacts using an anti-forensic cleanup subsystem to complicate incident response efforts.
+- Directly interact with disk structures likely in an effort to damage partition information, boot records, or other critical areas of the drive, effectively rendering the system unusable.
+"CrownX represented the final extortion stage, but the damage extended well beyond the encryption itself," the company said. "By the time the ransom note appeared, the broader framework had already collected credentials, established C2 communications, prepared multiple paths for lateral movement, and weakened local recovery options."
+Another important detail is that Avalon shows signs of artificial intelligence (AI)-assisted development, one that has assembled multiple components with scant regard for sophisticated tradecraft or operational security, something that requires significant expertise to build.
+The findings are yet another sign of how AI can lower the barrier to entry, making malware development more accessible with little time and effort, and even allowing actors with little technical expertise and resources to come up with tools that may require extensive development effort. In other words, the presence of a certain capability is no longer a reliable indicator of a threat actor's sophistication or operational maturity.
+"The kill chain illustrates how a familiar business lure can progress into a reusable, multi-capability framework designed to harvest credentials, retrieve subsequent payloads entirely in memory, and stage multiple follow-on actions from a single compromised endpoint," Blackpoint Cyber said.
+LLM Behind an Agentic Ransomware Attack
+The disclosure comes as Sysdig detailed what it said was the first publicly documented agentic ransomware infection driven by a large language model from start to finish, while retrying and tweaking its actions in real-time to complete tasks. The agentic threat actor (ATA) behind the operation has been codenamed JADEPUFFER.
+The operator "gained initial access to an internet-facing Langflow instance through CVE-2025-3248 and ran an adaptive and fully automated campaign, ultimately pivoting to the intended target and running a destructive database-extortion playbook against the victim's production database server," Sysdig's Michael Clark said.
+"The skill floor for running ransomware has dropped to whatever it costs to run an agent, and if that agent is running on stolen credentials through [LLMjacking](https://thehackernews.com/2026/01/researchers-find-175000-publicly.html), the cost to an attacker is close to zero."
+AI Malware That Uses LLM in a Codeless Attack
+The findings also follow the discovery of an AI malware that brings together a Telegram bot with a public LLM API to devise a codeless attack. Once launched, the implant transmits basic details about the compromised system to the attacker's Telegram bot and enters into a command-and-control (C2) loop that polls the bot API every 5 seconds for new messages. The results of the command execution are exfiltrated back using the same channel.
+The speciality of this malware is that each operator message is forwarded to a public LLM API endpoint ("api.groq[.]com/openai/v1/chat/completions"), which then translates the natural language instructions provided by the attacker into its equivalent shell command. The artifact was [uploaded](https://www.virustotal.com/gui/file/d85a5c2cf466d01e17110ee39ca456b1be0b6514e669d0095d1f77c84a8d98c1) to the VirusTotal platform on March 11, 2026, and has zero detections across all engines to date.
+"This work introduces an LLM translation layer that replaces shell syntax with plain text. The attacker types plaintext instructions in Telegram," Palo Alto Networks Unit 42 [said](https://github.com/PaloAltoNetworks/Unit42-timely-threat-intel/blob/main/2026-06-17-Codeless-attack-in-LLM-driven-operations-via-Telegram.txt). "The LLM translates the instructions into shell commands. And the victim executes the shell commands. No command-line knowledge is required."
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">NetNut proxy network disrupted, 2 million infected devices cut off</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/netnut-proxy-network-disrupted-2-million-infected-devices-cut-off/" target="_blank">Original Link</a></p>
+            <div class="content-text">A joint operation involving Google has disrupted NetNut, a residential proxy network that gave access to millions of compromised Android devices, including smart TVs and streaming boxes. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
             <h2 class="article-title">Claude Fable 5 isn’t permanently leaving subscriptions, Anthropic says</h2>
             <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/artificial-intelligence/claude-fable-5-isnt-permanently-leaving-subscriptions-anthropic-says/" target="_blank">Original Link</a></p>
             <div class="content-text">Anthropic says Claude Fable 5 won't be accessible via Claude subscriptions after July 7, but it's not a permanent change, and the company expects the model to return outside the usage-based plan soon. [...]
@@ -74,7 +121,7 @@
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-1" class="article-body">
+        <div id="art-3" class="article-body">
             <h2 class="article-title">FBI Seizes NetNut Proxy Platform, Popa Botnet</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/07/fbi-seizes-netnut-proxy-platform-popa-botnet/" target="_blank">Original Link</a></p>
             <div class="content-text">The Federal Bureau of Investigation (FBI) said today it worked with industry partners to seize hundreds of domains associated with NetNut, a sprawling residential proxy service operated by the publicly-traded Israeli company Alarum Technologies [NASDAQ: ALAR]. The action comes roughly two weeks after KrebsOnSecurity published findings from multiple security firms connecting NetNut to the Popa botnet, a collection of at least two million devices that have been compromised by malicious software with little or no consent from victims.
@@ -108,13 +155,80 @@ It’s not like they missed it. It’s jurisdiction problem. First domain was re
 Considering the .io and other details seen in the whois they used they are not going to take this domain anytime soon, maybe in few months. The whole operation seems to be not well prepared, otherwise they’d have it synced and both domains would be taken at the same time like in other FBI ops. Seems there was need to show something off urgently
 They started taking down proxies some users use for bad things?
 Shoutout Wealth God Bless!!!
-I heard Brundage’s company and Lumen were actually in the process of being sued/investigated themselves in the states of Nevada, Colorado, New York and New Mexico. Apparently it goes back to November and December 2024 and the unlawful targeting and seizure of a few victims’ devices and accounts (and earlier the case of Human Security).
-Yes</div>
+Yes
+The same question as someone had asked above. Brian, can you please give instructions in this or in another post on how to detect if your devices are used as residential proxies?
+Answers here.
+https://www.fbi.gov/investigate/cyber/alerts/2026/evading-residential-proxy-networks-protecting-your-devices-from-becoming-a-tool-for-criminals
+It’s not a simple answer. Here was my advice from January
+One frustrating aspect of threats like Kimwolf is that in most cases it is not easy for the average user to determine if there are any devices on their internal network which may be vulnerable to threats like Kimwolf and/or already infected with residential proxy malware.
+Let’s assume that through years of security training or some dark magic you can successfully identify that residential proxy activity on your internal network was linked to a specific mobile device inside your house: From there, you’d still need to isolate and remove the app or unwanted component that is turning the device into a residential proxy.
+Also, the tooling and knowledge needed to achieve this kind of visibility just isn’t there from an average consumer standpoint. The work that it takes to configure your network so you can see and interpret logs of all traffic coming in and out is largely beyond the skillset of most Internet users (and, I’d wager, many security experts). But it’s a topic worth exploring in an upcoming story.
+Happily, Synthient has erected a page on its website that will state whether a visitor’s public Internet address was seen among those of Kimwolf-infected systems: https://synthient.com/check
+Brundage also has compiled a list of the unofficial Android TV boxes that are most highly represented in the Kimwolf botnet: https://github.com/synthient/public-research/blob/main/2026/01/kimwolf/product_devices.csv
+If you own a TV box that matches one of these model names and/or numbers, please just rip it out of your network. If you encounter one of these devices on the network of a family member or friend, send them a link to this story and explain that it’s not worth the potential hassle and harm created by keeping them plugged in.
+“If people are asking what they can do to avoid being victimized by proxies, it’s safest to stick with name brands,” Kaye said. “Anything promising something for free or low-cost, or giving you something for nothing just isn’t worth it. And be careful about what apps you allow on your phone.”
+Many wireless routers these days make it relatively easy to deploy a “Guest” wireless network on-the-fly. Doing so allows your guests to browse the Internet just fine but it blocks their device from being able to talk to other devices on the local network — such as shared folders, printers and drives. If someone — a friend, family member, or contractor — requests access to your network, give them the guest Wi-Fi network credentials if you have that option.
+That list of devices seems useful, thanks.
+Did they miss netnut.ru netnut.cn netnut.com netnut.sbs along with a list of others like spiderbox.cn and spiderapi.cn but more importantly the login sites like mulogin.com not to mention armada-grup.ru and the rest ? Inquiring minds wanna know …
+If you do a WHOIS lookup at DomainTools on netnut.io, you can see the domain has been moved to the FBI’s DNS server for seized domains. See bottom, ns1.fbi.seized.gov.
+Domain Name: netnut.io
+Registry Domain ID: REDACTED
+Registrar WHOIS Server: whois.namecheap.com
+Registrar URL: https://www.namecheap.com/
+Updated Date: 2026-07-03T05:04:20Z
+Creation Date: 2017-01-10T15:30:53Z
+Registry Expiry Date: 2030-01-10T15:30:53Z
+Registrar: NameCheap, Inc.
+Registrar IANA ID: 1068
+Registrar Abuse Contact Email: abuse@namecheap.com
+Registrar Abuse Contact Phone: +1.9854014545
+Domain Status: clientTransferProhibited https://icann.org/epp#clientTransferProhibited
+Registry Registrant ID: REDACTED
+Registrant Name: REDACTED
+Registrant Organization: Privacy service provided by Withheld for Privacy ehf
+Registrant Street: REDACTED
+Registrant City: REDACTED
+Registrant State/Province: Capital Region
+Registrant Postal Code: REDACTED
+Registrant Country: IS
+Registrant Phone: REDACTED
+Registrant Phone Ext: REDACTED
+Registrant Fax: REDACTED
+Registrant Fax Ext: REDACTED
+Registrant Email: REDACTED
+Registry Admin ID: REDACTED
+Admin Name: REDACTED
+Admin Organization: REDACTED
+Admin Street: REDACTED
+Admin City: REDACTED
+Admin State/Province: REDACTED
+Admin Postal Code: REDACTED
+Admin Country: REDACTED
+Admin Phone: REDACTED
+Admin Phone Ext: REDACTED
+Admin Fax: REDACTED
+Admin Fax Ext: REDACTED
+Admin Email: REDACTED
+Registry Tech ID: REDACTED
+Tech Name: REDACTED
+Tech Organization: REDACTED
+Tech Street: REDACTED
+Tech City: REDACTED
+Tech State/Province: REDACTED
+Tech Postal Code: REDACTED
+Tech Country: REDACTED
+Tech Phone: REDACTED
+Tech Phone Ext: REDACTED
+Tech Fax: REDACTED
+Tech Fax Ext: REDACTED
+Tech Email: REDACTED
+Name Server: ns1.fbi.seized.gov
+Name Server: ns2.fbi.seized.gov</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-2" class="article-body">
+        <div id="art-4" class="article-body">
             <h2 class="article-title">Google’s Continued Disruption of Malicious Residential Proxy Networks</h2>
             <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/google-continued-disruption-residential-proxy-networks/" target="_blank">Original Link</a></p>
             <div class="content-text">Google’s Continued Disruption of Malicious Residential Proxy Networks
@@ -147,75 +261,21 @@ As we noted earlier this year, the residential proxy industry appears to be rapi
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-3" class="article-body">
+        <div id="art-5" class="article-body">
             <h2 class="article-title">AI Agent Exploits Langflow RCE to Automate Database Ransomware Attack</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/ai-agent-exploits-langflow-rce-to.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Security firm Sysdig says it has found what it believes is the first ransomware attack run from start to finish by an AI agent.
+            <div class="content-text">Security firm&nbsp;Sysdig&nbsp;says it has found what it believes is the first ransomware attack run from start to finish by an AI agent.
+
 Its Threat Research Team calls the operator JADEPUFFER and says a large language model handled the whole job: breaking in, stealing credentials, moving deeper into the network, then encrypting and wiping a company's production database.
-Ransomware has always needed a skilled person somewhere in the loop, either at the keyboard or writing the script the malware follows. If a model can chain those steps on its own, the skill needed to run an attack drops to whatever it costs to rent an AI agent.
-The way in was an old, already-patched bug. JADEPUFFER exploited [CVE-2025-3248](https://thehackernews.com/2025/05/critical-langflow-flaw-added-to-cisa.html), a missing-authentication flaw in [Langflow](https://github.com/langflow-ai/langflow), an open-source tool for building AI apps and agent workflows. The flaw lets anyone who can reach the server run their own Python code on it, no login needed.
-Langflow boxes are a tempting target because they often sit exposed on the internet and hold API keys and cloud credentials for the services they connect to.
-The flaw was fixed in Langflow 1.3.0 and added to CISA's Known Exploited Vulnerabilities list in May 2025, but plenty of servers were never updated. It is not even the only Langflow bug being [hit this way](https://thehackernews.com/2026/06/langflow-rce-exploited-to-deploy-monero.html).
-Once inside, the agent worked fast and cleaned up after itself. It mapped the machine, then swept it for secrets: API keys for AI services (OpenAI, Anthropic, DeepSeek, Gemini), cloud credentials (Chinese providers like Alibaba and Tencent alongside AWS, Google, and Azure), crypto wallet keys, and database logins.
-It raided a MinIO storage server using its factory-default login (minioadmin:minioadmin), which had never been changed. It also set up a way back in, adding a scheduled task that pinged the attacker's server every 30 minutes.
-Then it pivoted to its real target: a separate, internet-facing server running a MySQL database and Alibaba's Nacos, a settings and service directory common in microservice setups. The agent logged into the database as root.
-Sysdig [says](https://www.sysdig.com/blog/jadepuffer-agentic-ransomware-for-automated-database-extortion) it never saw where those root credentials came from, so their origin is unknown. From there, it took over Nacos using a 2021 authentication bypass ([CVE-2021-29441](https://thehackernews.com/2021/08/top-15-vulnerabilities-attackers.html)) and a default signing key that Nacos has shipped unchanged since 2020, then planted its own admin account.
-The Ransom Note With No Key
-The agent encrypted all 1,342 Nacos settings, dropped the original tables, and left a ransom note demanding Bitcoin with a Proton Mail contact. It generated a random encryption key, printed it to the screen once, and never saved or sent it anywhere.
-There is no key to hand over. The victim cannot get the data back even if they pay. (The note claims AES-256; Sysdig notes the tool it used defaults to weaker AES-128, though the result is the same.)
-It then went further, deleting whole databases and leaving a comment in its own code claiming it had already copied the data somewhere else.
-Sysdig says that is the agent talking, not something the team could confirm, and found no evidence that any data was actually left.
-How Experts Know an AI Was Driving
-The clearest sign was the code itself. The attack payloads were full of plain-English notes explaining why each step was being taken, the running commentary a human hacker never bothers to write, but a model produces by default. The agent also fixed its own mistakes at machine speed.
-In one case, it went from a failed login to a correct, multi-step fix in 31 seconds, diagnosing the exact cause instead of blindly retrying. Sysdig counted more than 600 separate, purposeful payloads across the operation.
-One detail is still a puzzle. The Bitcoin address in the ransom note is the exact sample address that appears throughout Bitcoin's own developer documentation, which means it shows up all over the text these models are trained on. It is also a real, active wallet with a long history of payments.
-Sysdig cannot tell whether the model simply pasted a familiar-looking address from memory, or whether the operator deliberately used a real wallet that happens to match the famous example.
-Part of a Bigger Shift
-JADEPUFFER is the latest step in a fast-moving year for AI-driven attacks. In August 2025, researchers at ESET flagged [PromptLock](https://www.welivesecurity.com/en/ransomware/first-known-ai-powered-ransomware-uncovered-eset-research/), billed as the first AI-powered ransomware; it later turned out to be a lab [prototype from NYU](https://engineering.nyu.edu/news/large-language-models-can-execute-complete-ransomware-attacks-autonomously-nyu-tandon-research) called Ransomware 3.0, not a real attack.
-Around the same time, Anthropic reported a real [extortion campaign](https://www.anthropic.com/news/detecting-countering-misuse-aug-2025) that used its Claude Code tool to hit [at least 17 organizations](https://thehackernews.com/2025/08/anthropic-disrupts-ai-powered.html), with demands topping $500,000, though a human still steered that one.
-In November 2025, Anthropic disclosed what it called the [first largely autonomous cyberattack](https://www.anthropic.com/news/disrupting-AI-espionage), a Chinese state-linked spying effort that had Claude write exploits and steal data with little human help. That operation also had the AI inventing credentials that did not exist, possibly the same kind of hallucination behind JADEPUFFER's odd Bitcoin address.
-The pieces of a serious attack are getting automated, and old, unpatched software is the easy first target. Agents make spraying the entire back catalogue of known bugs nearly free, so neglected servers get more exposed, not less.
-What Defenders Should Do
-The fixes are familiar. Patch Langflow and never expose its code-running endpoints to the internet. Do not run AI tools with cloud keys and provider credentials sitting in their environment; keep secrets in a proper manager, away from anything the web can reach.
-Harden Nacos: change the default signing key, keep it off the public internet, and never let it connect to its database as root. Never expose a database's admin account to the internet, and lock down outbound traffic so a hacked server cannot phone home.
-Because attackers can now weaponize a fresh advisory in hours, Sysdig argues that watching for bad behavior at runtime matters more than racing to patch.
-Sysdig's published indicators for this operation include:
-- Entry point: CVE-2025-3248 (Langflow unauthenticated remote code execution)
-- Command-and-control: 45.131.66[.]106, with a beacon to hxxp://45.131.66[.]106:4444/beacon every 30 minutes
-- Claimed staging server: 64.20.53[.]230
-- Ransom Bitcoin address: 3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy; contact e78393397[@]proton[.]me; ransom table named README_RANSOM
-Sysdig calls JADEPUFFER a warning sign rather than a crisis. None of the individual moves was clever or new. What is new is that a model stitched them into a complete attack against a neglected server, on its own.
-Expect more of the same as agent tools mature, and treat any exposed server, config store, or database admin login as something a machine will probe, not just a person.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+
+Ransomware has always
+
+[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">FortiBleed Credential Theft Linked to INC and Lynx Ransomware Operations</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/fortibleed-credential-theft-linked-to.html" target="_blank">Original Link</a></p>
-            <div class="content-text">The recently discovered financially-motivated [FortiBleed](https://thehackernews.com/2026/06/fortibleed-targeted-fortigate-firewalls.html) campaign has been attributed to INC and Lynx ransomware operations, indicating that the verified, stolen credentials were intended for follow-on intrusions.
-"An operator tied to FortiBleed's infrastructure was found actively working negotiation panels for both groups, tying mass FortiGate credential theft directly to ransomware deployment for the first time," SOCRadar [said](https://socradar.io/blog/fortibleed-inc-lynx-ransomware-link/) in a new report published Wednesday.
-The company said it tracked scanning activity against approximately 11,250 FortiGate portals in more than 150 countries, followed by confirmed admin-level access on 409 targets and successful completion of the full attack chain on 354 of them. In all, at least 12 ransomware deployments have resulted from this access, causing hundreds of endpoints to be encrypted across affected organizations.
-The large-scale credential-harvesting operation, which came to light last month, involved the threat actors systematically scanning the internet for exposed Fortinet devices, attempting to break into them using known credential combinations, and then deploying custom packet sniffers to passively gather credentials and other authentication data from network traffic.
-The campaign is assessed to have targeted 430,000 FortiGate firewalls globally, gathering over 110 million credentials in the process. The activity was exposed after an operational security error on the part of the attackers left a server containing credentials stolen from thousands of Fortinet appliances exposed on the internet.
-The Golang sniffer is estimated to have been installed on about 12,000 Fortinet devices, making it a subset of the total number of networking gear targeted.
-The latest findings from SOCRadar show that an operator with access to FortiBleed infrastructure was found logged in to both INC Ransom and Lynx negotiation panels, with victims listed by INC Ransom overlapping with data from the campaign. The links are based on one of the 200 newly discovered servers associated with the FortiBleed infrastructure that granted visibility into internal files, logs, and operational documentation.
-Ensar Seker, chief information security officer at SOCRadar, told The Hacker News via email that the exposed server functioned as a staging staging and operational coordination server, and was not used for phishing or active credential collection.
-"It contained target inventories, harvested data, automation scripts, configuration files, and operational artifacts that indicate it was used to coordinate large-scale credential harvesting against internet-facing network appliances," Seker said. "In other words, it served as part of the attackers’ backend infrastructure rather than the infrastructure victims directly interacted with."
-Tooling, logs, and working hours indicate that the activity is the work of a Russian-speaking threat actor who likely operates as an initial access broker. Much of the targeting has singled out manufacturing, technology, and logistics sectors in Latin America and the Asia Pacific regions.
-SOCRadar also said it discovered an internal document that indicates it's an organized operation comprising about 20 people with a clear division of labor. "A small core of lead operators drives most high-impact intrusions, backed by specialists and support staff," it added.
-In addition, the threat actors are believed to be in possession of at least one zero-day vulnerability in Nextcloud. The threat intelligence firm said it's actively coordinating with the affected vendor.
-The Delaware-based company said it also identified Citrix-related artifacts that indicate the activity is likely targeting beyond Fortinet devices. The identified infrastructure included a dedicated target list containing about 29,000 IP addresses and 37 domains associated with Citrix environments. This suggests the automated workflow may be repurposed for other remote access technologies.
-"At this stage, the presence of these target lists does not conclusively prove that credential harvesting against Citrix devices has already occurred at scale," Seker explained. "Rather, it demonstrates clear reconnaissance and targeting preparations."
-"However, given the sophistication of the infrastructure and the operators proven ability to automate credential collection against Fortinet devices, organizations using internet-facing Citrix infrastructure should treat this as an early warning and verify authentication logs, rotate exposed credentials where appropriate, enforce MFA, and monitor for anomalous login activity."
-The disclosure comes as eSentire [said](https://www.esentire.com/blog/fortinet-vulnerability-cve-2026-35616-and-ekz-stealer-attacking-obfuscating-compilers-with-binary-ninja-workflows) it observed threat actors exploiting a flaw in Fortinet FortiClient EMS ([CVE-2026-35616](https://thehackernews.com/2026/04/fortinet-patches-actively-exploited-cve.html), CVSS score: 9.1) to deploy an information stealer called [EKZ Stealer](https://thehackernews.com/2026/05/threat-actors-exploit-critical.html) against a customer in the energy, utilities, and waste sector with the end goal of harvesting credentials from Chromium-based browsers and Firefox and exfiltrating them via PowerShell.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-5" class="article-body">
+        <div id="art-6" class="article-body">
             <h2 class="article-title">Inheriting the Receipts: Securing the AI Your Company Already Adopted</h2>
             <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/inheriting-the-receipts-securing-the-ai-your-company-already-adopted" target="_blank">Original Link</a></p>
             <div class="content-text">Inheriting the Receipts: Securing the AI Your Company Already Adopted
@@ -270,16 +330,6 @@ Close
 The teams that built the models were incentivized to quickly get them to market, which they did. Safety, ethics, and bias reviews were purposely never on their critical release paths. The debt those decisions deferred did not stay with the builders. It was redistributed quietly, unevenly, and likely without consent to the tens of thousands of organizations that adopted the models. Those models have been adopted as quickly as they were released, and that genie can't realistically be put back inside the bottle.
 Pausing adoption is not on the table. The productivity gains in many cases are massive, many workflows are already rewired, and walking any of it back would likely cost more than most organizations can absorb. But there really isn't a need to pause adoption, which is why this blog was written.
 Organizations have the ability to put the necessary guardrails around AI that the people who built it were never incentivized to originally build in. Analyze your attack surface. Govern it with the pillars you already operate. Constrain it at runtime, where the agents actually act. This should not require a new doctrine, a new team, or a new budget line. The work is not new. The speed is.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-6" class="article-body">
-            <h2 class="article-title">FortiBleed credential-theft campaign linked to Lynx ransomware</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/fortibleed-credential-theft-campaign-linked-to-lynx-ransomware/" target="_blank">Original Link</a></p>
-            <div class="content-text">The massive FortiBleed credential theft campaign has been linked to the INC and Lynx ransomware operations, suggesting the stolen Fortinet credentials were intended to fuel future network intrusions. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
