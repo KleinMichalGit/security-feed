@@ -59,49 +59,269 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-07-07</h1>
+        <h1>Security Briefing // 2026-07-08</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Microsoft to enable Windows settings backup by default for orgs</button></li><li><button onclick="show('art-1')">Suspected China-Aligned Hackers Exploit Roundcube Flaws Against Universities</button></li><li><button onclick="show('art-2')">BeyondTrust warns of critical flaws in remote access software</button></li><li><button onclick="show('art-3')">BeyondTrust Patches Critical Auth Bypass Flaws in Remote Support and PRA</button></li><li><button onclick="show('art-4')">5 insights from Frost & Sullivan’s 2025 Frost Radar™ for Cloud Security Posture Management</button></li><li><button onclick="show('art-5')">FBI Seizes NetNut Proxy Platform, Popa Botnet</button></li><li><button onclick="show('art-6')">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager</button></li><li><button onclick="show('art-7')">JS-Tap v3: Endpoint Post-Exploitation With JavaScript Implants</button></li><li><button onclick="show('art-8')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
+            <ul><li><button onclick="show('art-0')">15-Year-Old GhostLock Flaw Enables Root and Container Escape on Most Linux Distros</button></li><li><button onclick="show('art-1')">How to Set Red Team Objectives that Produce Value</button></li><li><button onclick="show('art-2')">The ‘Ghost’ in the Database: Recovering Active ADFS Signing Keys via Machine DPAPI</button></li><li><button onclick="show('art-3')">New Januscape Linux flaw allows VM escape on Intel, AMD devices</button></li><li><button onclick="show('art-4')">BeyondTrust warns of critical flaws in remote access software</button></li><li><button onclick="show('art-5')">BeyondTrust Patches Critical Auth Bypass Flaws in Remote Support and PRA</button></li><li><button onclick="show('art-6')">Welcoming ObfusGit</button></li><li><button onclick="show('art-7')">5 insights from Frost & Sullivan’s 2025 Frost Radar™ for Cloud Security Posture Management</button></li><li><button onclick="show('art-8')">FBI Seizes NetNut Proxy Platform, Popa Botnet</button></li><li><button onclick="show('art-9')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">Microsoft to enable Windows settings backup by default for orgs</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-to-enable-windows-backup-for-organizations-by-default/" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft says the Windows settings backup and restore tool will be enabled by default on Microsoft Entra-joined or Microsoft Entra hybrid-joined enterprise systems after upgrading to Windows 11 26H2. [...]
+            <h2 class="article-title">15-Year-Old GhostLock Flaw Enables Root and Container Escape on Most Linux Distros</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/15-year-old-ghostlock-flaw-enables-root.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Researchers at [Nebula Security](https://nebusec.ai/research/ionstack-part-2/) have disclosed GhostLock ([CVE-2026-43499](https://nvd.nist.gov/vuln/detail/CVE-2026-43499)), a 15-year-old Linux kernel flaw that lets any logged-in user take full root control of a machine that has not been patched.
+The vulnerable code has shipped by default in essentially every mainstream distribution since 2011. The flaw needs no special permission, no unusual settings, and no network access; ordinary threading calls from any local program are enough.
+Nebula turned it into a working root exploit that is 97% reliable in its testing and also escapes containers, and says Google awarded the team $92,337 through its [kernelCTF](https://google.github.io/security-research/kernelctf/rules.html) bug-bounty program.
+No one is known to be exploiting it in the wild, but Nebula has published [working exploit code](https://github.com/NebuSec/CyberMeowfia/tree/main/IonStack/CVE-2026-43499), so anyone can now run it. Patching is the priority.
+How the bug works
+The kernel has a system for keeping an urgent task from getting stuck behind a trivial one. Part of it is a cleanup step that tidies up after a task once it stops waiting.
+Normally, that works fine. But in one rare case, where a lock operation hits a dead end and has to back out, the cleanup runs at the wrong moment and wipes the wrong task's record.
+That mistake leaves the kernel holding a "note" that points at a scrap of memory it has already thrown away and reused. Trusting that stale pointer is the whole bug, the kind of slip known as a use-after-free. From there, Nebula's team chained a few clever steps to turn that small mistake into full control, ending by tricking the kernel into running their own code as the all-powerful "root" user. On their test machine, it took about five seconds.
+The flaw has been in Linux since 2011 and was fixed in April, with distributions now rolling out the patch ([3bfdc63936dd](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=3bfdc63936dd4773109b7b8c280c0f3b5ae7d349)). It affects nearly every Linux build and scores 7.8 out of 10 (high, not critical) because an attacker needs to already be logged in to the machine. Nebula found it with VEGA, its AI-driven bug-hunting tool.
+What to do
+Install your distribution's current kernel, not just the first patched build. The original fix introduced a separate crash bug (CVE-2026-53166), and the cleanup for that was still settling upstream in early July, so early builds may lack the final version.
+There is no complete workaround, since the operations that trigger it are routine for any local process.
+Availability is uneven so far. Ubuntu, for example, had patched its newest release and some cloud kernels, but as of early July still listed 24.04, 22.04, and 20.04 LTS as vulnerable or in progress. Check your distribution's advisory and confirm the fixed package version rather than assuming one is waiting.
+Two build options, RANDOMIZE_KSTACK_OFFSET and STATIC_USERMODE_HELPER, make this exploit harder, but they are mitigations, not fixes. Patch shared and multi-tenant machines first, cloud servers, containers, and CI runners, where an attacker is most likely to find the local foothold this bug needs.
+Not the only kernel-to-root bug this year
+GhostLock joins a run of 2026 Linux privilege-escalation bugs, several of which share a detail: an automated tool found them.
+VEGA found GhostLock; days earlier, researchers disclosed [Bad Epoll](https://thehackernews.com/2026/07/new-bad-epoll-linux-kernel-flaw-lets.html) (CVE-2026-46242), a close cousin that also turns an unprivileged user into root. It was proven through kernelCTF and, unusually for this class of bug, works on Android.
+Bad Epoll sits in the same stretch of code where Anthropic's Mythos model was credited with a related flaw. What they share is old, heavily used kernel machinery that few had reread in years, until automated tools started combing it. Futex priority inheritance dates to 2011. The class is not theoretical: another 2026 bug, [Copy Fail](https://thehackernews.com/2026/04/new-linux-copy-fail-vulnerability.html) (CVE-2026-31431), is already on CISA's list of vulnerabilities seen in real-world attacks.
+GhostLock is also the second half of a chain Nebula calls IonStack. The first half, CVE-2026-10702, is a Firefox flaw that runs code inside the browser and escapes its sandbox; GhostLock carries it the rest of the way to root.
+Nebula has already demonstrated the full chain, from a single tap on a malicious link to full control, against Firefox on Android. That is why a "local only" kernel bug still matters: on its own, it needs a foothold, but bolted onto a browser exploit, it becomes a remote compromise. Nebula says a full write-up of the Android exploit is coming next.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">How to Set Red Team Objectives that Produce Value</h2>
+            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/07/07/how-to-set-red-team-objectives-that-produce-value/" target="_blank">Original Link</a></p>
+            <div class="content-text"><p>TL;DR: A red team engagement is only as useful as the questions it is designed to answer. Strong objectives help teams produce valuable root-cause findings leadership can act on.  The value of a red&#160;team&#160;engagement is&#160;largely determined&#160;before execution begins.&#160; Red team engagements are more useful when&#160;objectives&#160;are defined around decisions the organization needs to make. Vague goals produce findings that are technically valid [&#8230;]</p>
+<p>The post <a href="https://specterops.io/blog/2026/07/07/how-to-set-red-team-objectives-that-produce-value/">How to Set Red Team Objectives that Produce Value </a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-1" class="article-body">
-            <h2 class="article-title">Suspected China-Aligned Hackers Exploit Roundcube Flaws Against Universities</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/suspected-china-aligned-hackers-exploit.html" target="_blank">Original Link</a></p>
-            <div class="content-text">A suspected China-aligned threat activity cluster has been observed exploiting Roundcube webmail software belonging to physics and engineering departments of U.S. and Canadian universities as part of a new campaign.
-The activity involves the exploitation of now-patched, critical security flaws in the open-source email solution, such as [CVE-2024-42009](https://thehackernews.com/2024/08/roundcube-webmail-flaws-allow-hackers.html) (CVSS score: 9.3), to siphon credentials, followed by either the deployment of a web shell for persistent access or a known post-exploitation tool called [VShell](https://censys.com/blog/vshell/).
-The emerging threat cluster is being tracked by Proofpoint under the moniker UNK_MassTraction. It was first detected in May 2026, specifically focusing on administrators and professors in departments with either national security ties or entities studying astrophysics and particle physics.
-"The emails targeting university departments used both compromised senders, as well as abused domains vulnerable to spoofing due to lax DMARC policy to send the emails," the enterprise security company wrote in a technical report shared with The Hacker News, adding the use of generic lures indicates a "larger targeting swath" beyond its visibility.
-While the nature of the cross-site scripting (XSS) exploit is such that it only requires the recipient to open the email in the Roundcube client in order to obtain access to the mail server, it's assessed that the targeted departments were singled out because they were all running versions of Roundcube susceptible to N-day security flaws.
-This indicates that the threat actor likely carried out preparatory reconnaissance into these targets to gather information about their environments prior to sending phishing emails that trigger an exploit for CVE-2024-42009 and execute arbitrary JavaScript code in the context of the victim's web browser.
-"The actor is likely abusing Roundcube servers as a pivot point to enter target networks, and the operators have deliberately crafted their infection chain to avoid detection," Proofpoint researchers Greg Lesnewich and Mark Kelly said.
-The payload delivered following the exploitation of the XSS flaw, codenamed IceCube, is designed to siphon credential information stored in the browser along with two-factor authentication (2FA) and cookies. It also carries out reconnaissance of its own to collect information about the browser language, screen size, and form field values. screen size, and form field values.
-The harvested information is sent to an external system by means of an HTTP POST request. In the next step, IceCube leverages the session's CSRF token to weaponize a second post-authenticated remote code execution flaw in Roundcube - [CVE-2025-49113](https://thehackernews.com/2025/06/critical-10-year-old-roundcube-webmail.html) (CVSS score: 9.9) - with the goal of obtaining a foothold in the mail server and dropping VShell or a web shell dubbed SquareShell in memory.
-The web shell, deployed by means of a PHP gadget shell command, is remotely reachable at the endpoint "plugins/newmail_notifier/mail_preview.php" and enables arbitrary code execution. However, if the web shell installation fails for some reason, the attack chain falls back to an alternate mechanism in which a shell script is executed via the Roundcube vulnerability to ultimately deliver [VShell](https://www.nviso.eu/blog/nviso-analyzes-vshell-post-exploitation-tool).
-The secondary method is said to have been introduced in June 2026, when previously the attack chain would simply exit upon failing to deploy SquareShell. The shell script acts as a conduit for an ELF loader referred to as [SNOWLIGHT](https://thehackernews.com/2025/04/chinese-hackers-target-linux-systems.html) and has been put to use in other intrusions orchestrated by Chinese adversaries. The use of both SNOWLIGHT and VShell has been linked to a China-linked cluster tracked as UNC5174 in the past.
-This suggests that the shell script is possibly shared by multiple China-nexus clusters in a private capacity, similar to ShadowPad and other tools. The script's main responsibility is to fetch a version of SNOWLIGHT that's compatible with the host's system architecture and then execute it.
-"IceCube also sets up what it calls 'deferred triggers' to ensure continuance of the infection chain," Proofpoint said. "The deferred triggers monitor if the user closes the page or changes tabs, checks if the mouse leaves the browser window, and hijacks the logout button."
-"If any of those actions are taken, IceCube hooks those events, and re-attempts exploitation of CVE-2025-49113, and beacons to the C&C [command-and-control] that the user left the Roundcube session."
-Upon completing these actions or running into a timeout, the JavaScript malware destroys user and malware-initiated sessions on the server, causing the user to log out and erase forensic evidence associated with the compromise from the Roundcube server.
-Written in Go, VShell is a [remote administration tool](https://thehackernews.com/2025/08/linux-malware-delivered-via-malicious.html) that provides post-compromise capabilities similar to Cobalt Strike. It has been utilized by various China-aligned adversaries in recent years.
-The development marks the first time a Chinese hacking group has been tied to the exploitation of Roundcube flaws, which have been [traditionally](https://thehackernews.com/2024/02/russian-linked-hackers-breach-80.html) [abused](https://thehackernews.com/2024/10/hackers-exploit-roundcube-webmail-xss.html) by [state-sponsored threat actors](https://thehackernews.com/2025/05/russia-linked-apt28-exploited-mdaemon.html) from Russia.
-"While the targeting of this campaign is captivating to the imagination, it is unlikely that UNK_MassTraction will be solving deep theoretical physics questions or the Fermi Paradox in the near future," Proofpoint researchers concluded.
-"UNK_MassTraction displayed a mature toolkit and unique usage of n-day vulnerabilities. The campaign is a reminder that email delivery can facilitate compromise of the mail server, and that Chinese operators will continue to treat them like any other edge device, so defenders should prioritize defending the mail servers of their networks as thoroughly as they do their VPN concentrators and other remote access nodes on their networks."
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">The ‘Ghost’ in the Database: Recovering Active ADFS Signing Keys via Machine DPAPI</h2>
+            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/recovering-active-adfs-signing-keys-machine-dpapi/" target="_blank">Original Link</a></p>
+            <div class="content-text"><div class="block-paragraph_advanced"><p>Written by: Shebin Mathew</p>
+<hr /></div>
+<div class="block-paragraph_advanced"><h3><span style="vertical-align: baseline;">Introduction</span><strong style="vertical-align: baseline;"> </strong></h3>
+<p><span style="vertical-align: baseline;">The "Golden SAML" technique, first described by </span><a href="https://www.cyberark.com/resources/threat-research-blog/golden-saml-newly-discovered-attack-technique-forges-authentication-to-cloud-apps" rel="noopener" target="_blank"><span style="text-decoration: underline; vertical-align: baseline;">CyberArk researchers</span></a><span style="vertical-align: baseline;"> in 2017, and further detailed by </span><a href="https://cloud.google.com/blog/topics/threat-intelligence/abusing-replication-stealing-adfs-secrets-over-the-network"><span style="text-decoration: underline; vertical-align: baseline;">Mandiant researchers in 2021</span></a><span style="vertical-align: baseline;">, remains one of the most effective methods for threat actors to forge identity assertions in the Microsoft ecosystem. By obtaining the private key of an ADFS token-signing certificate, an attacker can authenticate as any user to any SAML-federated application, bypassing multifactor authentication (MFA), conditional access, and all identity-based controls.</span></p>
+<p><span style="vertical-align: baseline;">However, during a recent red team engagement, Mandiant discovered that when ADFS certificates are manually rotated, configuration drift can silently leave active signing keys exposed in Machine DPAPI. Specifically, Mandiant discovered </span><span style="vertical-align: baseline;">that in environments where AutoCertificateRollover is disabled and certificates are manually rotated, the database often becomes a 'ghost'—a record that still exists, still decrypts successfully, but references a certificate no longer used for token signing by the ADFS service. This attack vector warrants attention because the underlying configuration is commonly deployed in enterprise environments. The technique avoids direct interaction with components such as LSASS and the live ADFS service process, which are often subject to enhanced monitoring in enterprise environments, and may therefore result in lower visibility depending on the organization’s telemetry coverage. This post details how adversaries may exploit this TTP to forge high-privilege SAML tokens and provides the blueprint to defend against it.</span></p>
+<h3><span style="vertical-align: baseline;">Technical Insight: Encountering the ‘Ghost Certificate’</span></h3>
+<p><span style="vertical-align: baseline;">Analysts followed the standard DKM extraction path, retrieving the encrypted blob from the WID database and decrypting it using the DKM material stored in Active Directory. The extraction succeeded, but the recovered certificate was no longer valid for token signing, and Entra ID rejected the resulting tokens with</span> <code style="vertical-align: baseline;">AADSTS500172</code><span style="vertical-align: baseline;"> due to invalid signing material. Although structurally correct, the artifact is not usable for authentication, as the active signing key resides in the system’s machine-scoped cryptographic store, protected by Windows Machine DPAPI and managed through the operating system’s cryptographic subsystem. Successfully obtaining this active key allows an attacker to forge valid SAML assertions for any user, bypassing the need for user credentials and multi-factor authentication, and granting unauthorized access to any SAML-federated application including Microsoft 365 and Entra ID within the organization's environment.</span></p>
+<p><span style="vertical-align: baseline;">Analysis revealed that</span><span style="vertical-align: baseline;"> </span><code style="vertical-align: baseline;">AutoCertificateRollover</code><span style="vertical-align: baseline;"> </span><span style="vertical-align: baseline;">had been disabled and a manual rotation had been performed. Confirmation was obtained directly via</span><span style="vertical-align: baseline;"> </span><code style="vertical-align: baseline;">Get-AdfsProperties</code><span style="vertical-align: baseline;">, which returned</span><span style="vertical-align: baseline;"> </span><code style="vertical-align: baseline;">AutoCertificateRollover: False</code><span style="vertical-align: baseline;">, </span><span style="vertical-align: baseline;">indicating that certificate lifecycle management had been delegated to manual administrative processes. While the ADFS service used a new valid key for signing, the WID configuration database was never updated to reflect the new certificate—leaving an expired "ghost" entry as the only record. This drift condition surfaces via Microsoft Event ID 385, which indicates certificate validity warnings in the ADFS service. Notably, this event self-resolves when</span><span style="vertical-align: baseline;"> </span><code style="vertical-align: baseline;">AutoCertificateRollover</code><span style="vertical-align: baseline;"> </span><span style="vertical-align: baseline;">is re-enabled and a subsequent certificate rollover is performed; in environments where it is disabled and manual rotation is performed without a corresponding database update, it is the observable symptom of this drift condition.</span></p></div>
+<div class="block-image_full_width">
+
+
+
+
+
+
+  
+    <div class="article-module h-c-page">
+      <div class="h-c-grid">
+  
+
+    <figure class="article-image--large
+      
+      
+        h-c-grid__col
+        h-c-grid__col--6 h-c-grid__col--offset-3
+        
+        
+      ">
+
+      
+      
+        
+        <img alt="ADFS certificate enumeration output showing configuration drift between the WID database and the active host certificate" src="https://storage.googleapis.com/gweb-cloudblog-publish/images/ghost-database-fig1.max-1000x1000.png" />
+        
+        </a>
+      
+        <figcaption class="article-image__caption "><p>Figure 1: ADFS certificate enumeration output showing configuration drift between the WID database and the active host certificate</p></figcaption>
+      
+    </figure>
+
+  
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+<div class="block-paragraph_advanced"><p><span style="vertical-align: baseline;">ADFS maintains private keys in two protection contexts. In </span><strong style="vertical-align: baseline;">Location 1 (User DPAPI)</strong><span style="vertical-align: baseline;">, encrypted key blobs may exist on disk, but the DPAPI protection is tied to the service account's SID and associated DPAPI masterkey material. In the assessed environment, the domain DPAPI backup key approach successfully decrypted masterkey material for interactive user profiles, but returned no decryptable material associated with the ADFS service account profile. All subsequent offline decryption attempts similarly failed, consistent with the masterkey not being recoverable through the evaluated on-disk recovery approach in this environment—though this observation is bounded to the assessed environment and does not represent a universal architectural property of all ADFS deployments.</span></p>
+<p><strong style="vertical-align: baseline;">Location 2 (Machine RSA)</strong><span style="vertical-align: baseline;"> does not rely on a user-specific logon session. Instead, the key material is protected using Machine DPAPI, leveraging the</span><span style="vertical-align: baseline;"> </span><code style="vertical-align: baseline;">DPAPI_SYSTEM</code><span style="vertical-align: baseline;"> </span><span style="vertical-align: baseline;">LSA secret together with machine masterkeys available to sufficiently privileged SYSTEM-level contexts.</span></p>
+<h4><span style="vertical-align: baseline;">Why the WID Path Misses This Key</span></h4>
+<p><span style="vertical-align: baseline;">In ADFS environments experiencing configuration drift—commonly arising during manual certificate rotations where</span><span style="vertical-align: baseline;"> </span><code style="vertical-align: baseline;">AutoCertificateRollover</code><span style="vertical-align: baseline;"> </span><span style="vertical-align: baseline;">is disabled—the ADFS service host can successfully bind to a newly provisioned signing certificate at the operating-system level, ensuring continued service operation. However, the WID configuration database may not reflect the current signing certificate, resulting in stale certificate metadata.</span></p>
+<p><span style="vertical-align: baseline;">This divergence between configuration and runtime state is the condition that ADFS Event ID 385 is designed to flag. As a consequence, extraction techniques that rely solely on the WID database and DKM material may return certificates that are no longer used for active signing, leading to rejected assertions in downstream federation scenarios.</span></p>
+<h3><span style="vertical-align: baseline;">Understanding How the Machine DPAPI Store Becomes Populated</span></h3>
+<p><span style="vertical-align: baseline;">Understanding how the Machine DPAPI store becomes populated requires examining how ADFS persists its token-signing key material. During initial deployment, automatic certificate rollover, or manual certificate rotation, ADFS persists its RSA private key material in the machine-scoped CAPI key store at </span><code style="vertical-align: baseline;">C:\ProgramData\Microsoft\Crypto\RSA\MachineKeys\</code><span style="vertical-align: baseline;">, protected using machine DPAPI context rather than a user-bound DPAPI context. SharpDPAPI</span><span style="vertical-align: baseline;"> </span><code style="vertical-align: baseline;">/machine</code><span style="vertical-align: baseline;"> </span><span style="vertical-align: baseline;">enumeration in the assessed environment confirmed that the active machine key material resided under this path, while the CNG</span><span style="vertical-align: baseline;"> </span><code style="vertical-align: baseline;">Crypto\Keys</code><span style="vertical-align: baseline;"> </span><span style="vertical-align: baseline;">store was not observed in use in the assessed environment.</span></p>
+<p><span style="vertical-align: baseline;">The protection chain relies on the</span><span style="vertical-align: baseline;"> </span><code style="vertical-align: baseline;">DPAPI_SYSTEM</code><span style="vertical-align: baseline;"> </span><span style="vertical-align: baseline;">LSA secret together with machine masterkeys associated with the S-1-5-18 security context, stored in</span><span style="vertical-align: baseline;"> </span><code style="vertical-align: baseline;">C:\Windows\System32\Microsoft\Protect\S-1-5-18\</code><span style="vertical-align: baseline;"> </span><span style="vertical-align: baseline;">as DPAPI-protected key material—both components ultimately resolvable only within highly privileged SYSTEM-level contexts on the host. The corresponding certificate is enrolled into the </span><code style="vertical-align: baseline;">LocalMachine\My</code><span style="vertical-align: baseline;"> </span><span style="vertical-align: baseline;">certificate store, from which ADFS retrieves the associated private key during token-signing operations.</span></p>
+<p><span style="vertical-align: baseline;">The architectural rationale for machine-scoped key storage is operational resilience. A machine-scoped key remains usable across service account password changes, gMSA rotations, system reboots, and service restarts without requiring key reprovisioning or dependency on a specific interactive logon session. This design ensures that the ADFS service can consistently access the signing key regardless of changes to the underlying service account credentials.</span></p>
+<p><span style="vertical-align: baseline;">However, this same design choice has important security implications. Because the private key is protected using Machine DPAPI rather than a user-bound DPAPI context, a sufficiently privileged local process capable of accessing the machine key store and associated DPAPI artifacts may be able to recover the key material independently of the original service logon session. As a result, under certain conditions, recovery of the active ADFS token-signing private key may be achievable without direct interaction with LSASS memory or the live ADFS service process itself, potentially reducing visibility to defenses primarily focused on credential dumping or process-memory access behaviors.</span></p></div>
+<div class="block-paragraph_advanced"><div style="color: #5f6368; width: 100%;">
+<div style="color: #5f6368; width: 100%;">
+<div style="color: #5f6368; width: 100%;">
+<div style="color: #5f6368; width: 100%;">
+<div style="color: #5f6368; width: 100%;">
+<div style="color: #5f6368; width: 100%;">
+<div style="color: #5f6368; width: 100%;"><table border="1" style="border-collapse: collapse; width: 99.9641%;">
+<tbody>
+<tr>
+<td style="width: 98.1839%;">
+<p><strong style="vertical-align: baseline;">KEY DESIGN IMPLICATION</strong></p>
+<p><span style="vertical-align: baseline;">ADFS persists its token-signing private key material in the machine-scoped key store, protected using Machine DPAPI semantics. This is a documented behavior enabling machine-scoped key persistence that survives service account changes, credential rotations, and service restarts.</span></p>
+<p><span style="vertical-align: baseline;">However, this design introduces an operational security implication that is not commonly emphasized in standard ADFS hardening guidance: private keys stored within the machine key store are protected using this protection model and may be recoverable by a sufficiently privileged SYSTEM-level context through access to the </span><span style="vertical-align: baseline;">DPAPI_SYSTEM</span><span style="vertical-align: baseline;"> LSA secret and machine masterkeys available locally on the host.</span></p>
+<p><span style="vertical-align: baseline;">As a result, recovery of the active ADFS token-signing private key may be achievable without direct interaction with LSASS memory or the live ADFS service process itself, potentially reducing visibility to security controls primarily focused on credential dumping or process-memory access behaviors.</span></p>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></div>
+<div class="block-paragraph_advanced"><h3><span style="vertical-align: baseline;">Attack Flow: Machine DPAPI Key Recovery to SAML Forgery</span></h3></div>
+<div class="block-image_full_width">
+
+
+
+
+
+
+  
+    <div class="article-module h-c-page">
+      <div class="h-c-grid">
+  
+
+    <figure class="article-image--large
+      
+      
+        h-c-grid__col
+        h-c-grid__col--6 h-c-grid__col--offset-3
+        
+        
+      ">
+
+      
+      
+        
+        <img alt="Machine DPAPI extraction flow—five-step process from SYSTEM execution to SAML assertion" src="https://storage.googleapis.com/gweb-cloudblog-publish/images/ghost-database-fig2.max-1000x1000.png" />
+        
+        </a>
+      
+        <figcaption class="article-image__caption "><p>Figure 2: Machine DPAPI extraction flow—five-step process from SYSTEM execution to SAML assertion</p></figcaption>
+      
+    </figure>
+
+  
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+<div class="block-image_full_width">
+
+
+
+
+
+
+  
+    <div class="article-module h-c-page">
+      <div class="h-c-grid">
+  
+
+    <figure class="article-image--large
+      
+      
+        h-c-grid__col
+        h-c-grid__col--6 h-c-grid__col--offset-3
+        
+        
+      ">
+
+      
+      
+        
+        <img alt="‘SharpDPAPI /machine’ output confirming successful recovery of the active ADFS token-signing private key from the machine DPAPI store" src="https://storage.googleapis.com/gweb-cloudblog-publish/images/ghost-database-fig3.max-1000x1000.png" />
+        
+        </a>
+      
+        <figcaption class="article-image__caption "><p>Figure 3: ‘SharpDPAPI /machine’ output confirming successful recovery of the active ADFS token-signing private key from the machine DPAPI store</p></figcaption>
+      
+    </figure>
+
+  
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+<div class="block-paragraph_advanced"><p><span style="vertical-align: baseline;">The recovered key was used to forge a SAML assertion impersonating a Global Administrator identity, which Entra ID accepted as a valid authentication assertion, resulting in authenticated access at </span><strong style="vertical-align: baseline;">Global Administrator</strong><span style="vertical-align: baseline;"> privilege level within the federated Microsoft 365 tenant.</span></p>
+<h3><span style="vertical-align: baseline;">Detection and Hunting</span></h3>
+<p><span style="vertical-align: baseline;">Defenders should prioritize visibility into operating system-level cryptographic operations and identity issuance behavior, rather than relying solely on application-layer configuration stores.</span></p>
+<ul>
+<li style="vertical-align: baseline;">
+<p><strong style="vertical-align: baseline;">SACL-Based Object Access Monitoring:</strong><span style="vertical-align: baseline;"> Configure object access auditing via SACLs on</span><span style="vertical-align: baseline;"> </span><code style="vertical-align: baseline;">C:\ProgramData\Microsoft\Crypto\RSA\MachineKeys\</code><span style="vertical-align: baseline;"> </span><span style="vertical-align: baseline;">and</span><span style="vertical-align: baseline;"> </span><code style="vertical-align: baseline;">C:\Windows\System32\Microsoft\Protect\S-1-5-18\</code><span style="vertical-align: baseline;">. </span><span style="vertical-align: baseline;">When configured correctly, this generates </span><strong style="vertical-align: baseline;">Security Event ID 4663</strong><span style="vertical-align: baseline;"> for file access attempts. Coverage depends on SACL configuration and access paths; treat this as supporting evidence in correlation-based detection rather than a stand-alone signal.</span></p>
+</li>
+<li style="vertical-align: baseline;">
+<p><strong style="vertical-align: baseline;">ADFS Token Issuance Consistency:</strong><span style="vertical-align: baseline;"> Monitor for inconsistencies between primary authentication events and token issuance events in ADFS audit logs. Relevant events include token issuance and claims processing records (Event IDs 299, 1200-series, depending on ADFS version and audit configuration). The objective is to identify token issuance that cannot be clearly correlated to a preceding authentication context. This is most effective when normal authentication patterns per relying party trust are baselined.</span></p>
+</li>
+<li style="vertical-align: baseline;">
+<p><strong style="vertical-align: baseline;">Federated Identity Monitoring in Entra ID:</strong><span style="vertical-align: baseline;"> Entra ID sign-in logs will record an accepted forged assertion as a standard federated sign-in event. Detection requires cross-correlating Entra ID sign-in records against ADFS-side issuance logs—neither source in isolation is sufficient. For privileged accounts, focus on unexpected Internet Protocol (IP) ranges, claim set deviations,and user-agent inconsistencies.</span></p>
+</li>
+</ul>
+<h3><span style="vertical-align: baseline;">Mitigation and Remediation</span></h3>
+<p><span style="vertical-align: baseline;">ADFS infrastructure should be treated as Tier 0 identity infrastructure, </span><a href="https://cloud.google.com/blog/topics/threat-intelligence/remediation-and-hardening-strategies-for-microsoft-365-to-defend-against-unc2452"><span style="text-decoration: underline; vertical-align: baseline;">equivalent in criticality to Domain Controllers</span></a><span style="vertical-align: baseline;">. If SYSTEM access is achieved on an ADFS host, the signing key must be considered compromised.</span></p>
+<ul>
+<li style="vertical-align: baseline;">
+<p><strong style="vertical-align: baseline;">Hardware-Backed Key Protection:</strong><span style="vertical-align: baseline;"> Migrate token-signing certificates to a Hardware Security Module (HSM). HSM-backed keys ensure private key material does not exist in software-accessible storage on the host, eliminating the Machine DPAPI extraction path entirely.</span></p>
+</li>
+<li style="vertical-align: baseline;">
+<p><strong style="vertical-align: baseline;">gMSA Service Identity:</strong><span style="vertical-align: baseline;"> </span><span style="vertical-align: baseline;">Run ADFS services using Group Managed Service Accounts to automate credential rotation and reduce operational drift in service identity management. While this does not directly address machine-scoped key protection, it eliminates manual credential management as a contributing factor to configuration drift.</span></p>
+</li>
+<li style="vertical-align: baseline;">
+<p><strong style="vertical-align: baseline;">Tier 0 Administrative Controls:</strong><span style="vertical-align: baseline;"> Govern ADFS servers with strict Tier 0 controls: restricted administrative access pathways, dedicated Privileged Access Workstations (PAWs), separation from general server administration domains, and enhanced privileged access monitoring.</span></p>
+</li>
+<li style="vertical-align: baseline;">
+<p><strong style="vertical-align: baseline;">Certificate Rotation and Configuration Validation:</strong><span style="vertical-align: baseline;"> If compromise is suspected, rotate the token-signing certificate and validate consistency across ADFS configuration, the </span><span style="vertical-align: baseline;"> </span><code style="vertical-align: baseline;">LocalMachine\My</code><span style="vertical-align: baseline;"> </span><span style="vertical-align: baseline;">store, and federation metadata. Do not rely on a single source of truth. For environments with AutoCertificateRollover disabled, manual rotation must include updating ADFS via </span><code style="vertical-align: baseline;">Set-AdfsCertificate</code><span style="vertical-align: baseline;">—installing the certificate alone is insufficient. Validate using</span><code style="vertical-align: baseline;"> Get-AdfsCertificate</code><span style="vertical-align: baseline;"> after rotation. If Event ID 385 appears afterward, investigate for configuration inconsistency. </span></p>
+</li>
+<li style="vertical-align: baseline;">
+<p><strong style="vertical-align: baseline;">Multicloud Scope Awareness:</strong><span style="vertical-align: baseline;"> A compromised ADFS token-signing key affects all SAML relying party trusts, not just Microsoft services. Organizations using ADFS for identity federation across other software-as-a-service (SaaS) platforms should treat ADFS as Tier 0 infrastructure and audit all relying party trusts. Migrating away from ADFS-based federation (e.g., to native OIDC federation) removes this specific attack path.</span></p>
+</li>
+</ul></div>
+
+[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-2" class="article-body">
+        <div id="art-3" class="article-body">
+            <h2 class="article-title">New Januscape Linux flaw allows VM escape on Intel, AMD devices</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/linux/new-januscape-linux-kernel-flaw-allows-vm-escape-on-intel-amd-devices/" target="_blank">Original Link</a></p>
+            <div class="content-text">A 16-year-old Linux kernel vulnerability, dubbed Januscape, allows attackers to escape a virtual machine and execute arbitrary code on the host. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-4" class="article-body">
             <h2 class="article-title">BeyondTrust warns of critical flaws in remote access software</h2>
             <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/beyondtrust-warns-of-critical-flaws-in-remote-access-software/" target="_blank">Original Link</a></p>
             <div class="content-text">BeyondTrust warned customers to patch two critical security flaws in its Remote Support (RS) and Privileged Remote Access (PRA) software that could allow attackers to bypass authentication. [...]
@@ -111,7 +331,7 @@ The development marks the first time a Chinese hacking group has been tied to th
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-3" class="article-body">
+        <div id="art-5" class="article-body">
             <h2 class="article-title">BeyondTrust Patches Critical Auth Bypass Flaws in Remote Support and PRA</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/beyondtrust-patches-critical-auth.html" target="_blank">Original Link</a></p>
             <div class="content-text">BeyondTrust has released updates to address two critical security flaws affecting Remote Support (RS) and Privileged Remote Access (PRA) products that, if successfully exploited, could allow unauthenticated attackers to take control of susceptible devices.
@@ -132,7 +352,31 @@ BeyondTrust makes no mention of the vulnerabilities being exploited in the wild.
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-4" class="article-body">
+        <div id="art-6" class="article-body">
+            <h2 class="article-title">Welcoming ObfusGit</h2>
+            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/welcoming-obfusgit" target="_blank">Original Link</a></p>
+            <div class="content-text">Welcoming ObfusGit
+Ever want to share your code online but wanted to keep AI companies and other mass consumers of online source code from being able to easily scrape your code to train their models or know what the code really has in it?
+Well, if you answered yes to either of those, I got the project for you!
+ObfusGit is a basic python script that allows you to set up a local repo and commit to it as usual, then you can run “obfusgit sync” and you have a fully encrypted/encoded copy of your repo you can just push up to a public location.
+Why Does This Exist?
+A coworker and I were joking one day about how to obfuscate public repos to make it more difficult for scrapers from knowing what’s in the codebase. I thought that this would be pretty easy. So easy, in fact, a local LLM could do it. So, I decided that I would give it the requirements with basic specs and see what happens. An hour later, we have a basic python script that achieves most of the goals. Basically, you use your Git repo as is, then once you decide you want to push it out to the public, you can just run obfusgit setup-repos --privateRepo /path/to/repo/ --encryptionKey YourSharedKey
+. This will then set up the repo with a copy of obfusgit in the root directory and the public repo folder,`.obfusgit-public`, that you can add remote origin and push from, and the config file with your encryption key. Once uploaded, someone can just clone the repo and run obfusgit reverse-repos --publicRepo /path/to/clonedRepo/ --privateRepoName clonedRepo_Plaintext --encryptionKey YourSharedKey
+and boom! That folder will be created and you will be able to see the actual project code.
+How to Use
+There are three steps you first need to setup the repo, you do this by running setup-repo pointing at a Git repo. This sets up the Git hooks and copies obfusgit.py to the base directory. You also need to have python3 installed, because the Git hook calls the obfusgit script with python3 every commit.
+Once that’s done, you can set the remote origin for the public repo in .obfusgit-public/
+and push up. Then, you can clone it down like simulated here. One thing to note is that if you setup-repos in an in-use repository, you need to run “sync” once after setup to get the public repo setup.
+Once cloned, you obviously can’t see the actual contents. to reverse it back to plaintext, you just run “reverse-repos” like below.
+The final piece of this is to figure out how to distribute the encryption key that you setup. This will have to be an accompanying blog post, Tweet, or something accessible, but not directly from the Git repo.
+Conclusion
+Please keep in mind that ObfusGit was built quickly using a local AI model and has only been quickly tested so don’t be surprised if there are issues. Additionally, this is not meant for projects where you are expecting to be tracking actual changes. Any file that is modified and committed will end up being re-encrypted and encoded constantly. The private history isn’t preserved in the public repo, so this is meant mostly for static projects.
+ObfusGit is extremely minimal and I don’t have any plans to expand on it for now. One of the biggest limitations is that the entire commit history is lost across cloning and decoding process. Another one is that the private commits aren’t being maintained in the public repo. If anyone wants to expand this feel free! Merge requests are always welcome.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-7" class="article-body">
             <h2 class="article-title">5 insights from Frost & Sullivan’s 2025 Frost Radar™ for Cloud Security Posture Management</h2>
             <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/07/06/5-insights-from-frost-sullivans-2025-frost-radar-for-cloud-security-posture-management/" target="_blank">Original Link</a></p>
             <div class="content-text">Cloud security posture management (CSPM) is being redefined as two forces collide: Cloud environments are becoming more interconnected—spanning workloads, identities, data, APIs, and development pipelines—while security teams must reduce risk faster with fewer tools and less time.
@@ -207,7 +451,7 @@ To learn more about Microsoft Security solutions, visit our [website.](https://w
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-5" class="article-body">
+        <div id="art-8" class="article-body">
             <h2 class="article-title">FBI Seizes NetNut Proxy Platform, Popa Botnet</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/07/fbi-seizes-netnut-proxy-platform-popa-botnet/" target="_blank">Original Link</a></p>
             <div class="content-text">The Federal Bureau of Investigation (FBI) said today it worked with industry partners to seize hundreds of domains associated with NetNut, a sprawling residential proxy service operated by the publicly-traded Israeli company Alarum Technologies [NASDAQ: ALAR]. The action comes roughly two weeks after KrebsOnSecurity published findings from multiple security firms connecting NetNut to the Popa botnet, a collection of at least two million devices that have been compromised by malicious software with little or no consent from victims.
@@ -240,6 +484,7 @@ I’m told they are working on getting the .io domain as well, but it’s taking
 It’s not like they missed it. It’s jurisdiction problem. First domain was registered using namecheap.
 Considering the .io and other details seen in the whois they used they are not going to take this domain anytime soon, maybe in few months. The whole operation seems to be not well prepared, otherwise they’d have it synced and both domains would be taken at the same time like in other FBI ops. Seems there was need to show something off urgently
 Interesting. http://whois.nic.io/ shows ns{1,2}.fbi.seized.gov as Name Servers for netnut.io, but in the DNS I still see {betty,cleo}.ns.cloudflare.com. The whois/registry DB entry was updated 2026-07-03T05:04:20Z, and it’s unclear to me why this discrepancy has been persisting for three days.
+it can sometimes take a while for nameserver changes to take effect. ISPs tend to cache that stuff…
 They started taking down proxies some users use for bad things?
 Now they’ve taken away the main domain as well: https://netnut.io/
 Shoutout Wealth God Bless!!!
@@ -321,263 +566,7 @@ Do they really not check in any depth AT ALL? Am I wrong or should heads be roll
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-6" class="article-body">
-            <h2 class="article-title">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager</h2>
-            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/zero-day-exploitation-cisco-catalyst-sd-wan-manager/" target="_blank">Original Link</a></p>
-            <div class="content-text">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager
-Mandiant
-Written by: Chester Sng, Pete Boonyakarn, Logeswaran Nadarajan, Lukasz Lamparski
-Introduction
-In early 2026, Mandiant identified a threat actor targeting SD-WAN infrastructure at a service provider. After gaining initial access, the threat actor exploited a zero-day vulnerability ([CVE-2026-20245](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-privesc-4uxFrdzx)) in Cisco Catalyst SD-WAN to escalate privileges from a compromised administrative account to root-level access.
-The vulnerability stems from the device’s file upload feature lacking the ability to properly filter malicious data.
-Throughout the intrusion, to maintain operational security and avoid detection, the threat actor consistently employed anti-forensic techniques, selectively deleting and restoring system configuration files that were modified during their activities.
-Key Observations
--
-Rogue Peering and Credential Manipulation: In March 2026, a threat actor established initial access via unauthorized peering connections to facilitate Secure Shell (SSH) access. The threat actor used that access to manipulate default account passwords to evade detection.
--
-Exploitation of CVE-2026-20245: Subsequently, the attacker leveraged a zero-day privilege escalation vulnerability (now tracked as CVE-2026-20245) in Cisco Catalyst SD-WAN Manager to gain root-level access via a malicious CSV upload.
--
-Extensive Anti-Forensic Cleanup: The threat actor deleted malicious files, reverted configuration changes, and executed a validation script to ensure indicators are purged.
-What is SD-WAN?
-Traditional Wide Area Networks (WANs) rely heavily on physical, proprietary hardware routers to direct traffic. This model is often rigid, complex to scale, and struggles to handle the demands of modern cloud computing.
-Software-Defined Wide Area Network (SD-WAN) solves this by decoupling the network’s management and control logic from the underlying physical hardware. Instead of configuring individual routers one by one, a centralized software controller is used to orchestrate the entire network from a single dashboard. SD-WANs are typically used by highly distributed organizations, such as banks, retail corporations, technology services, and healthcare providers, to securely connect multiple remote branch locations directly to central cloud services.
-What is Peering?
-Within an SD-WAN fabric, peering is the logical process of establishing a trusted, authenticated relationship between distinct network components, such as edge routers, regional hubs, and central controllers.
-Before any data can be securely transmitted across the network fabric, these devices must perform a digital handshake. During the peering phase, devices mutually authenticate each other using cryptographic certificates. Once identity and trust are verified, they exchange underlying routing tables and automatically build secure tunnels to facilitate safe data transport.
-Additional Vulnerabilities in Cisco Catalyst SD-WAN Controllers
-[CVE-2026-20127](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-rpa-EHchtZk) and [CVE-2026-20182](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-rpa2-v69WY2SW) are critical vulnerabilities recently disclosed by Cisco that affect the peering authentication mechanism for Cisco Catalyst SD-WAN controllers. Both vulnerabilities could allow an unauthenticated, remote attacker to bypass authentication and obtain administrative privileges.
-Intrusion Campaign Overview
-Initial Access Via Rogue Peering Connections
-From late 2025 to January 2026, Mandiant observed multiple unauthorized peering connections to the victim’s SD-WAN Manager devices. It is possible that these connections occurred due to the exploitation of CVE-2026-20127 or CVE-2026-20182 as the vulnerabilities were not disclosed, and patches were not available during this period.
-Beginning in March 2026, further unauthorized peering connections were seen on a device running a software version unaffected by CVE-2026-20127. However, Cisco confirmed that these connections did not leverage CVE-2026-20182 either, and could instead be using stolen certificate material from a previous compromise of the same device.
-It is unclear if the same threat actor was responsible for the late 2025 to January 2026 and March 2026 rogue peering activity.
-Successful Authentications By Altering The Admin Account Password
-In March 2026, the threat actor established new rogue peer connections and successfully authenticated to the SD-WAN Manager device via SSH using the vmanage-admin
-account on the same victim devices.
-Once authenticated via SSH, the threat actor executed commands to change the password of the default admin
-account. The threat actor authenticated directly to the SD-WAN Manager web application interface using the admin
-account and exfiltrated configurations of the SD-WAN fabric.
-[2026-03-07T01:31:48.464Z]"POST /j_security_check HTTP/1.1" 200 - 31 0 1288 - "<Threat Actor Control Plane IP>" "Mozilla/5.0" "<Log ID>" "<SD-WAN Manager IP>:8443" "127.0.0.1:8080"
-[2026-03-07T01:31:49.017Z] "GET /dataservice/system/device/vedges HTTP/1.1" 200 - 0 10114 127 - "<Threat Actor Control Plane IP>" "Mozilla/5.0" "<Log ID>" "<SD-WAN Manager IP>:8443" "127.0.0.1:8080"
-[2026-03-07T01:31:50.017Z] "GET /dataservice/system/device/controllers HTTP/1.1" 200 - 0 15815 100 - "<Threat Actor Control Plane IP>" "Mozilla/5.0" "<Log ID>" "<SD-WAN Manager IP>:8443" "127.0.0.1:8080"
-[2026-03-07T01:31:51.925Z] "GET /dataservice/template/config/attached/<Device ID> HTTP/1.1" 200 - 0 3732 18 - "<Threat Actor Control Plane IP>" "Mozilla/5.0" "<Log ID>" "<SD-WAN Manager IP>:8443" "127.0.0.1:8080"
-[2026-03-07T01:31:52.493Z] "GET /dataservice/template/config/running/<Device ID> HTTP/1.1" 400 - 0 134 19 - "<Threat Actor Control Plane IP>" "Mozilla/5.0" "<Log ID>" "<SD-WAN Manager IP>:8443" "127.0.0.1:8080"
-<...>
-Figure 1: Threat actor authentication and configuration extraction
-The threat actor subsequently used their active vmanage-admin
-session to change the password of the admin
-account back to its original state before terminating their active session. This activity was likely performed to reduce the probability of detection by an administrator trying to log into the device during day-to-day operations.
-The vmanage-admin
-and admin
-accounts are default accounts on Cisco Catalyst SD-WAN controllers that have different privileges, but [neither possesses root shell access](https://www.cisco.com/c/en/us/td/docs/routers/sdwan/17-x/systems-interfaces/systems-interfaces-guide-17-x/users-and-access.html).
-Exploitation of CVE-2026-20245 to Escalate Privileges
-Mandiant observed that in April 2026, after establishing an SSH session with the admin
-account, the threat actor exploited CVE-2026-20245 by executing the following command to upload a file named evil_tenant.csv
-:
-request tenant-upload tenant-list /home/admin/evil_tenant.csv vpn 0
-Figure 2: Malicious file upload
-[CVE-2026-20245](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-privesc-4uxFrdzx), a vulnerability reported to Cisco by Mandiant, exists in the command-line interface (CLI) of Cisco Catalyst SD-WAN Controllers that could allow an authenticated, local attacker to execute arbitrary commands as root by supplying a crafted file to the affected system.
-The evil_tenant.csv
-file contains the exploit payload. The following code block (Figure 3) shows a snippet of the exploit which attempts to append malicious entries to the system's /etc/passwd
-and /etc/shadow
-files.
-if [ -e /usr/share/viptela/vbond_vsmart_tenant_list ] && grep -q '<redacted>' /usr/share/viptela/vbond_vsmart_tenant_list 2>/dev/null; then
-echo absent > /home/admin/.orig_vbond_vsmart_tenant_list.state;
-elif [ -e /usr/share/viptela/vbond_vsmart_tenant_list ]; then
-echo present > /home/admin/.orig_vbond_vsmart_tenant_list.state;
-cp -a /usr/share/viptela/vbond_vsmart_tenant_list /home/admin/.orig_vbond_vsmart_tenant_list;
-else
-echo absent > /home/admin/.orig_vbond_vsmart_tenant_list.state;
-fi;
-cp -a /etc/passwd /home/admin/.orig_passwd;
-cp -a /etc/shadow /home/admin/.orig_shadow;
-grep -q '^troot:' /etc/passwd || echo 'troot:x:0:0:root:/root:/bin/bash' >> /etc/passwd;
-grep -q '^troot:' /etc/shadow || echo 'troot:<redacted>:19000:0:99999:7:::' >> /etc/shadow
-Figure 3: Appending malicious entries
-Through this command, the threat actor achieved the following:
--
-Backed up the original
-vbond_vsmart_tenant_list
-configuration file, which would have been overwritten by the contents ofevil_tenant.csv
-during the exploit. This backup was likely created to allow the actor to restore the file later, ensuring the SD-WAN Manager device did not load an invalid configuration that might alert administrators. -
-Created backups of the original
-/etc/passwd
-and/etc/shadow
-files. -
-Created a user account named
-troot
-with full root privileges.
-Mandiant subsequently observed the threat actor accessing this new troot
-account from the admin
-account via the su
-(substitute user) command.
-Anti-Forensic Techniques
-Mandiant identified that the threat actor deleted all files they created, including evil_tenant.csv
-, and restored any system configurations they modified. These deletion and modifications were done to minimize their forensic footprint.
-In addition to this, Mandiant also observed execution of a validation script, which checks if indicators of the threat actor's activities are removed.
-for f in /home/admin/evil_tenant.csv /home/admin/.orig_vbond_vsmart_tenant_list /home/admin/.orig_vbond_vsmart_tenant_list.state /home/admin/.orig_passwd /home/admin/.orig_shadow;
-do if [ -e "$f" ];
-then echo PRESENT:$f; ls -ld "$f";
-else echo ABSENT:$f;
-fi;
-done;
-if grep -q '^troot:' /etc/passwd;
-then echo PRESENT:/etc/passwd:troot;
-else echo ABSENT:/etc/passwd:troot;
-fi;
-if [ -e /usr/share/viptela/vbond_vsmart_tenant_list ];
-then echo PRESENT:/usr/share/viptela/vbond_vsmart_tenant_list; ls -ld /usr/share/viptela/vbond_vsmart_tenant_list;
-else echo ABSENT:/usr/share/viptela/vbond_vsmart_tenant_list;
-fi
-Figure 4: Validation script
-This script checks for the presence of the following:
--
-Threat actor-created files in
-/home/admin.
--
-troot
-account in thepasswd
-andshadow
-files. -
-vbond_vsmart_tenant_list
-, and if it exists, inspect information about the file. This is likely to check if the original file was restored.
-Outlook and Implications
-This campaign underscores the living off the edge paradigm, where threat actors prioritize the compromise of network appliances to bypass traditional security perimeters. As organizations increasingly adopt software-defined networking, the orchestrators managing these environments become primary targets. These devices offer a black box environment for threat actors: they often lack the telemetry required for deep forensic analysis, and their role as a central control plane provides a stealthy platform for persistent, wide-scale access to internal enterprise traffic. For state-sponsored actors, the ability to exploit zero-day vulnerabilities in these platforms remains a premier vector for long-term strategic intelligence collection. Google Threat Intelligence Group (GTIG) has [closely](https://cloud.google.com/blog/topics/threat-intelligence/zero-days-exploited-2022) [tracked](https://cloud.google.com/blog/topics/threat-intelligence/2023-zero-day-trends) [and](https://cloud.google.com/blog/topics/threat-intelligence/2024-zero-day-trends) [reported](https://cloud.google.com/blog/topics/threat-intelligence/2025-zero-day-review) on increased zero-day exploitation of edge devices over the past several years.
-Remediation and Hardening
--
-Perform IOC Sweep / Threat Hunting: Collect logs and diagnostic data from SD-WAN devices by executing
-request admin-tech
-command on all control-plane components. Scan these collections for known IOCs and execute threat hunts focused on the TTPs identified in the Detections and Hunting section of this blog post. If true positive hits are observed, perform a full investigation. -
-Manual Remediation Support: As per Cisco’s guidance, any confirmed indicators of compromise or suspicious activity should be forwarded to
-[Cisco Technical Assistance Center (TAC)](https://www.cisco.com/c/en/us/support/web/tsd-cisco-worldwide-contacts.html)for comprehensive review and remediation assistance. -
-Prioritize Immediate Patching and Upgrades: Organizations must prioritize upgrading Cisco Catalyst SD-WAN Manager to fixed software releases, specifically versions 20.9.9.2, 20.12.7.2, 20.15.4.5, 20.15.5.3, 20.18.3.1, 26.1.1.2, or later, to remediate
-[CVE-2026-20245](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-privesc-4uxFrdzx). -
-Implement Cisco Catalyst SD-WAN Hardening and Logging Guidelines: Organizations should follow the comprehensive security best practices and configuration standards detailed in the
-[Cisco Catalyst SD-WAN Hardening Guide](https://sec.cloudapps.cisco.com/security/center/resources/Cisco-Catalyst-SD-WAN-HardeningGuide). This guide provides a robust defense-in-depth framework for securing all SD-WAN components including the management, control, and data planes against unauthorized access.
-Indicators of Compromise (IOCs)
-To assist the wider community in hunting and identifying activity outlined in this blog post, we have included indicators of compromise (IOCs) in a free [GTI Collection](https://www.virustotal.com/gui/collection/d966161b93100fb8905b9b81bd03e57bbc93f21534acee88999e77798e913d5b/summary) for registered users.
-Network Indicators
-File Indicators
-Due to the threat actor's extensive anti-forensic cleanup, several files associated with this intrusion were overwritten or deleted. However, forensic remnants of the malicious CSV payload were recovered.
-Detections and Hunting
-Mandiant encourages organizations to conduct proactive threat hunts focused on the tactics, techniques, and procedures (TTPs) outlined in this report to identify activity that may otherwise blend into routine operations. Because certain indicators of compromises may mirror legitimate administrative actions, it is critical to assess these observations against the established network posture to minimize false positives.
-As per Cisco’s guidance, any suspicious activity or confirmed IOCs should be forwarded to the Cisco TAC for comprehensive review and assistance.
-Unauthorized SSH Connections as vmanage-admin
-Monitor authentication logs (/var/log/auth.log
-) for logins originating from unexpected external IP addresses using the vmanage-admin user account.
-Jan 01 07:58:00 vManage sshd[20766]: Accepted publickey for vmanage-admin from <Threat Actor IP> port 48373 ssh2: RSA SHA256:<redacted>
-Jan 01 08:01:00 vManage sshd[25178]: Accepted keyboard-interactive/pam for admin from <Threat Actor IP> port 60552 ssh2
-Figure 5: SSH from unexpected origins
-Suspicious Password Change Events
-Audit password changes in /var/log/auth.log
-targeting the admin account in quick succession, particularly where credentials are set and subsequently reverted.
-Jan 01 08:00:00 vManage usermod[12345]: change user 'admin' password
-Jan 01 08:15:00 vManage usermod[12345]: change user 'admin' password
-Figure 6: Password changes
-Defenders should also inspect rollback files present within /var/confd/rollback/
-for configuration delta commits targeting user passwords:
-# Created by: vmanage-admin
-# Date: 2026-01-01 08:00:00
-# Via: netconf
-# Type: delta
-# Label:
-# Comment:
-# No: 10000
-# TransactionId: 12345678
-# Hostname: vManage
-system {
-aaa {
-user admin {
-password <redacted>;
-}
-}
-}
-Figure 7: Rollback files
-Suspicious Execution of the su
-Command
-Audit terminal command history and system logs (/var/log/auth.log
-) for successful switch user (su
-) executions from the admin account to unauthorized accounts (e.g., troot
-).
-Jan 01 08:03:00 vManage su[24289]: Successful su for troot by admin
-Figure 8: su
-logins
-Exploitation of CVE-2026-20245
-Monitor script logs (/var/log/scripts.log
-) for execution anomalies involving unauthorized execution of vconfd_script_upload_tenant_list.sh
-.
-Jan 01 08:01:05 vManage vScript: Tenant list upload per vsmart serial number: /usr/bin/vconfd_script_upload_tenant_list.sh -cli path /home/admin/evil_tenant.csv vpn 0
-Jan 01 08:01:05 vManage vScript: uploading tenant list via VPN 0 true
-Jan 01 08:01:05 vManage vScript: Copying ... /home/admin/evil_tenant.csv via VPN 0
-Jan 01 08:01:05 vManage vScript: Successfully loaded the tenant placement file
-Figure 9: Execution anomalies
-Defenders can also query active command execution history using show history within the Viptela CLI for the specific administrative upload commands:
-01-01 08:01:05 -- request tenant-upload tenant-list /home/admin/evil_tenant.csv vpn 0
-Figure 10: Command execution
-Google Security Operations (SecOps)
-Google SecOps customers have access to these broad category rules and more under the Mandiant Intel Emerging Threats rule pack. The activity discussed in the blog post is detected in Google SecOps under the rule names:
--
-Privileged Account Append to Passwd Database
--
-Grep Privileged User Account Discovery in Passwd or Shadow
--
-Hidden Backup of Sensitive System Files
--
-Suspicious Copy from Usr Share to User Hidden Directory
-Acknowledgements
-Mandiant would like to thank the Cisco Product Security Incident Response Team (PSIRT) for their collaboration and partnership throughout the coordinated disclosure process.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-7" class="article-body">
-            <h2 class="article-title">JS-Tap v3: Endpoint Post-Exploitation With JavaScript Implants</h2>
-            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/js-tap-v3-endpoint-post-exploitation-with-javascript-implants" target="_blank">Original Link</a></p>
-            <div class="content-text">JS-Tap v3: Endpoint Post-Exploitation With JavaScript Implants
-When I first wrote JS-Tap, the goal was to provide red teamers with a generic JavaScript payload that works without prior knowledge of a web application and without an authenticated user running it. Instrument the client side, collect loot, attack the application with stolen creds.
-That original payload, what I now call the DOM beacon, still works just fine, but in the past year, I wanted to expand the reach of JS-Tap. JavaScript, sadly, has escaped the web application DOM and is now used extensively in desktop applications and software. Browser extensions are JavaScript. Electron desktop apps (Slack, Signal, VS Code, Discord, lots of the corporate tooling you'll find on a workstation) are JavaScript. The new wave of CLI tools built on Node and Bun, including the AI coding assistants everyone is suddenly running, are JavaScript.
-Here’s the part that makes all of this worse—all of these application environments run JavaScript with less sandboxing than the browser DOM where the original JS-Tap payload lives. The same monkeypatching tricks JS-Tap has always used to intercept network calls and scrape data work in these environments, too—except now, there's no Same-Origin Policy in the way, and in many cases, there's full access to the underlying operating system.
-So, JS-Tap v3 grows beyond the browser to post-exploitation of the endpoint. It introduces three (3) new beacon types, all reporting back to the same JS-Tap C2, integrated for your engagement data collection needs.
-The New Beacons
-BEX Beacon (Browser Extension)
-The BEX beacon is JS-Tap as a browser extension, for Chrome, Chromium, Edge, and Firefox across Windows, Linux, and Mac. The DOM beacon lives inside a single page, and the BEX beacon sits at the browser level and sees all.
-Because it runs with extension privileges rather than page privileges, it sidesteps a lot of what limits the DOM beacon. It captures cookies across all domains, including httpOnly cookies, which the DOM beacon simply can't touch. It grabs localStorage, sessionStorage, and request headers and tracks browsing across every tab. Note that there are very important scoping settings about what domains the BEX beacon is allowed to work on, compiled in and critical for use in an engagement. Make sure you have that scoping conversation with your client before you use this in an assessment.
-The BEX beacon also works as a dropper. From the JS-Tap portal, you can task it to inject a full DOM beacon into a specific domain being used in that browser. A DOM beacon spawned this way gets pixel-perfect screenshots through the extension's captureVisibleTab API instead of relying on the html2canvas library baked into the DOM beacon.
-The BEX beacon also allows proxying of network traffic through the beacon.
-Pair the BEX beacon with the optional new Sidecar, a small Go binary installed alongside the extension and used via the browser's native messaging feature, and you get OS-level file browsing and command execution from a browser extension. There is an OPSEC tradeoff here. Native messaging is the least stealthy of the OS-access options in JS-Tap v3 beacons, since it requires a registered native host and a separate binary on disk, and the Atom and V8 beacons get host access in cleaner ways. For situations where the browser extension is your foothold, it is very powerful if you’re in a position to install Sidecar alongside the BEX extension.
-Atom Beacon (Electron App Implant)
-The Atom beacon is an implant for Electron desktop applications. You patch it into the target app's ASAR archive with the included atomize.py
-, and on next launch, it connects back to the JS-Tap C2.
-The main process agent runs in Electron's Node.js runtime, so it gets native OS access (file system, command execution) with no separate Sidecar binary needed. If the Electron app has set security fuses that block node functionality or sandboxing, the patcher resets the fuses. Note that you have to have write access to the app.asar file to be able to modify the Electron app.
-The usual JS-Tap functionality follows: screenshots, keylogs, and network intercepts. The proxy feature is also supported.
-While the Atom beacon is generic, there are commonly used Electron apps that we can implement custom JS-Tap functionality for, and these are implemented in runtime-delivered plugins specific to the application. JS-Tap v3 ships with the following Electron app plugins:
-- VS Code Infiltrator - Targets the VS Code Electron app and reaches into the editor environment to copy and edit files and “borrow” GitHub tokens for accessing private repos
-- 1Password Vault Raider - Targets the 1Password desktop app and goes after vault contents through the running unlocked application, capturing the unencrypted copy of the password vault
-- Signal Interceptor - Targets Signal Desktop; Signal's whole value proposition is end-to-end encryption, but an implant living inside the desktop client can access all messages, send messages from the user to others, or spoof messages to them
-- Mattermost Masher - Targets the Mattermost desktop client; same functionality as the Signal plugin, just ported to Mattermost
-- Slack Wrecker - The Slack equivalent; same functionality as Signal and Mattermost plugins
-Adding new plugins is not terribly time-consuming. I accept pull requests. 🙂
-V8 Beacon (Node.js/Bun CLI Implant)
-The V8 beacon targets Node.js and Bun command-line applications, and unlike the Atom beacon, there's no app patching at all.
-You drop the beacon's .js
-file on disk and set an environment variable—NODE_OPTIONS
-for Node or BUN_OPTIONS
-for Bun. The runtime pulls in the malicious JavaScript before the target app's own code runs, and from there, it's what you would expect from a JS-Tap beacon. It keylogs, intercepts network traffic, and allows code execution and file system access and proxies network traffic through the beacon.
-The obvious targets here are the AI CLI tools everyone has suddenly installed, like Gemini CLI and Claude Code, which make a lot of interesting authenticated API calls.
-Also New in v3
-JS-Tap Proxy - All three (3) new beacons can act as a network relay. Route your own browser through the victim's browser, Electron app, or Node process over a WebSocket relay, and reach internal application servers from the victim's network context, using their IP address and TLS fingerprint.
-JS-Tap Conductor - This is a standalone Firefox extension that takes session data and proxy configurations generated by the JS-Tap C2 portal (session and proxy “tickets” you paste into Conductor) and reconfigures Firefox to clone the session or route traffic through a JS-Tap beacon. Session cloning captures cookies, headers, and local/session storage and spoofs the user-agent.
-General Usability Improvements - As I’ve scaled out my use of JS-Tap, I’ve added features for searching and filtering clients and loot. This really helps in finding needles in haystacks.
-Wrapping Up
-The original DOM beacon hasn't gone anywhere, and for attacking web applications via XSS or web server-side implant, it's still exactly what it always was. The latest features are intended to target JavaScript where it has shifted to—sadly, into endpoint application environments that hand you more access than the browser ever did.
-As always, this is tooling meant for authorized engagements and education. If you run into issues or have ideas on how to make it better, my DMs are open [@hoodoer](https://x.com/hoodoer), or you can reach me at [hoodoer@bitwisemunitions.dev](mailto:hoodoer@bitwisemunitions.dev).
-Please let me know if you run into bugs. There will be bugs. This is a very large change in the code base.
-[https://github.com/hoodoer/JS-Tap](https://github.com/hoodoer/JS-Tap)(JS-Tap Repository)</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-8" class="article-body">
+        <div id="art-9" class="article-body">
             <h2 class="article-title">Who Runs the Ransomware Group ‘The Gentlemen?’</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/06/who-runs-the-ransomware-group-the-gentlemen/" target="_blank">Original Link</a></p>
             <div class="content-text">A cybercrime group known as The Gentlemen has emerged as the second most active ransomware gang by victim count, rapidly attracting a talented pool of hackers through an aggressive recruitment strategy that promises affiliates 90 percent of any ransom paid by victims. This post examines clues pointing to a real life identity for the administrator of The Gentlemen ransomware group.
@@ -668,18 +657,10 @@ What is Martin’s metier, anyway?
 Krebs isn’t run by any one group of anything any more than you are.
 Lots of AI slop puppeting every meatpuppet now (no offense, Brian).
 Great breakdown on threat actor attribution. Security research like this is essential for organizations evaluating third-party risk. I run a site covering crypto and financial analysis and send your investigative work to clients regularly as a reference.
-Very interesting article, I always say there’s only one internet and there’s residue from everyone on it. And now with AI able to aggregate so much it truly shows that the internet is us and we are the internet. We’ve been building our digital persona for years, our essence is in the very fabric.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-9" class="article-body">
-            <h2 class="article-title">Updates to the MSSQLHound OpenGraph Collector for BloodHound</h2>
-            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/01/20/updates-to-the-mssqlhound-opengraph-collector-for-bloodhound/" target="_blank">Original Link</a></p>
-            <div class="content-text"><p>tl;dr: MSSQLHound, a PowerShell script that collects security information from remote MSSQL Server instances, now scans them to determine whether or not NTLM relay attacks are possible, accounts for a recent privilege escalation vulnerability, and includes queries you can import into the BloodHound attack path graph to visualize, navigate, and remediate misconfigurations in MSSQL. Updates [&#8230;]</p>
-<p>The post <a href="https://specterops.io/blog/2026/01/20/updates-to-the-mssqlhound-opengraph-collector-for-bloodhound/">Updates to the MSSQLHound OpenGraph Collector for BloodHound</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
-
-[Full content could not be extracted. Visit source for details.]</div>
+Very interesting article, I always say there’s only one internet and there’s residue from everyone on it. And now with AI able to aggregate so much it truly shows that the internet is us and we are the internet. We’ve been building our digital persona for years, our essence is in the very fabric.
+Dropping a quick note of appreciation. Superb post.
+Hey all, caught me at the right moment — The examples really drove the point home. Can’t wait for the next one.
+This is exactly the kind of content I subscribe for. Most posts on this topic feel recycled — yours doesn’t. Much appreciated.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
