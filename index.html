@@ -59,12 +59,72 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-07-12</h1>
+        <h1>Security Briefing // 2026-07-13</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Critical Zimbra Flaw Could Let Crafted Emails Run Malicious Code in User Sessions</button></li><li><button onclick="show('art-1')">Securing our future: July 2026 progress report on Microsoft’s Secure Future Initiative</button></li><li><button onclick="show('art-2')">Six New U-Boot Flaws Could Let Malicious Images Crash Devices or Run Code at Boot</button></li><li><button onclick="show('art-3')">Hackers exploit critical auth bypass in Gitea Docker image</button></li><li><button onclick="show('art-4')">Former ransomware negotiator gets 4 years for BlackCat attacks</button></li><li><button onclick="show('art-5')">Finding SOCKS with Proxywatch</button></li><li><button onclick="show('art-6')">Vulnify: Giving Your Agents a CVE Brain</button></li><li><button onclick="show('art-7')">Felons, Fraudsters Flog Offensive Cybersecurity Startup</button></li><li><button onclick="show('art-8')">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager</button></li><li><button onclick="show('art-9')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li></ul>
+            <ul><li><button onclick="show('art-0')">US and allies warn of Russian critical infrastructure attacks</button></li><li><button onclick="show('art-1')">iCagenda and Balbooa Forms Joomla Flaws Reportedly Exploited as Zero-Days</button></li><li><button onclick="show('art-2')">OpenAI temporarily relaxes GPT-5.6 Sol usage limits</button></li><li><button onclick="show('art-3')">Critical Zimbra Flaw Could Let Crafted Emails Run Malicious Code in User Sessions</button></li><li><button onclick="show('art-4')">Felons, Fraudsters Flog Offensive Cybersecurity Startup</button></li><li><button onclick="show('art-5')">Microsoft named a leader in the Frost Radar for cloud and application runtime security</button></li><li><button onclick="show('art-6')">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager</button></li><li><button onclick="show('art-7')">JS-Tap v3: Endpoint Post-Exploitation With JavaScript Implants</button></li><li><button onclick="show('art-8')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
+            <h2 class="article-title">US and allies warn of Russian critical infrastructure attacks</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/us-and-allies-share-defense-tips-against-russian-hackers-targeting-critical-infrastructure/" target="_blank">Original Link</a></p>
+            <div class="content-text">Cybersecurity agencies from the United States and eight other countries have issued a joint warning that Russian state hackers are targeting vulnerable and poorly configured routers to infiltrate critical infrastructure networks. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">iCagenda and Balbooa Forms Joomla Flaws Reportedly Exploited as Zero-Days</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/icagenda-and-balbooa-forms-joomla-flaws.html" target="_blank">Original Link</a></p>
+            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) has [added](https://www.cisa.gov/news-events/alerts/2026/07/10/cisa-adds-two-known-exploited-vulnerabilities-catalog) two maximum-severity security flaws impacting iCagenda and Balbooa extensions for Joomla to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, following reports of zero-day exploitation in the wild.
+The vulnerabilities, both rated 10.0 on the CVSS scoring system, are below -
+[CVE-2026-48939](https://www.cve.org/CVERecord?id=CVE-2026-48939)- A vulnerability in the iCagenda extension for Joomla that allows the upload of arbitrary files via the file attachment feature, leading to PHP code upload and execution.[CVE-2026-56291](https://www.cve.org/CVERecord?id=CVE-2026-56291)- A vulnerability in the Balbooa Forms extension for Joomla that allows the upload of arbitrary files, leading to remote code execution.
+According to mySites.guru, a cloud-based dashboard service for managing WordPress and Joomla websites, CVE-2026-48939 is said to have been exploited as a zero-day since June 15, 2026, in automated attacks aimed at Joomla sites on which iCagenda is installed. It resides in the "Submit an Event" form functionality, which lets users propose events for the calendar.
+"We first saw it in a client's access log: an automated scanner identifying itself as 'icagenda-batch/1.0' grabbed a token, posted a malicious upload to the submit endpoint, then fetched the planted shell at the exact path the component writes attachments to," mySites.guru [said](https://mysites.guru/blog/icagenda-zero-day-file-upload-rce/).
+The flaw impacts the following versions -
+- 4.x versions up to and including 4.0.7
+- Legacy 3.x versions from 3.2.1 up to and including 3.9.14
+JoomliC has since [released updates](https://www.joomlic.com/news/icagenda-security-update) to address the issue in iCagenda versions 4.0.8 and 3.9.15. Site owners are advised to check for suspicious PHP files in the "images/icagenda/frontend/attachments/" folder and remove them.
+MySites.guru said it also observed zero-day exploitation of CVE-2026-56291, which affects Balbooa Forms versions up to and including 2.4.0. It has been [patched](https://www.balbooa.com/help/joomla-forms-documentation/basics/changelog) in version 2.4.1.
+"Up to and including version 2.4.0, its frontend attachment upload had a serious flaw: it accepted a file from any anonymous visitor, with no login, no CSRF token, and no check on the file type," it [said](https://mysites.guru/blog/balbooa-forms-unauthenticated-file-upload-flaw/#cve-record-and-disclosure-timeline). "An attacker could upload a PHP file into a public folder and then run it, which is unauthenticated remote code execution, the worst outcome a web flaw can have."
+The vulnerability was discovered by mySites.guru on July 8, 2026, following a live attack on one of its customers. It has shared the following indicators of compromise -
+- Look in the Balbooa Forms upload folder (by default "images/baforms/uploads") for any file that is not an image or document, especially anything ending in PHP
+- Check the Joomla user list for suspicious administrator accounts
+- Audit the set for recently modified or unfamiliar PHP files across the site
+In light of active exploitation, Federal Civilian Executive Branch (FCEB) agencies have until July 13, 2026, to implement the fixes in their networks.
+Australia Warns of Global Campaign Targeting Vulnerable CMS Systems
+The disclosure comes as the Australian Cyber Security Centre (ACSC) issued an alert warning of a global exploitation campaign targeting various vulnerabilities in content management systems (CMS) and plugins.
+"As part of this campaign, malicious cyber actors are actively scanning websites for opportunities to deploy web shells, leveraging various vulnerabilities affecting CMS software and plugins," the agency [said](https://www.cyber.gov.au/about-us/view-all-content/alerts-and-advisories/large-scale-exploitation-campaign-targeting-website-content-management-systems-cms). "These vulnerabilities primarily allow unauthenticated file upload, remote code execution, server side request forgery or deserialization."
+Once deployed, the web shells serve as conduits for remote access and control of the targeted web servers. Some of the identified security vulnerabilities are listed below -
+- Sneeit Framework (
+[CVE-2025-6389](https://nvd.nist.gov/vuln/detail/CVE-2025-6389)) - WPBookit (WordPress) (
+[CVE-2025-7852](https://nvd.nist.gov/vuln/detail/CVE-2025-7852)) - Gravity Forms (WordPress) (
+[CVE-2025-12352](https://nvd.nist.gov/vuln/detail/CVE-2025-12352)) - Craft CMS (
+[CVE-2025-32432](https://nvd.nist.gov/vuln/detail/CVE-2025-32432)) - Ninja Forms (WordPress) (
+[CVE-2026-0740](https://nvd.nist.gov/vuln/detail/CVE-2026-0740)) - MaxSite CMS (
+[CVE-2026-3395](https://nvd.nist.gov/vuln/detail/CVE-2026-3395)) - Breeze Cache (WordPress) (
+[CVE-2026-3844](https://nvd.nist.gov/vuln/detail/CVE-2026-3844)) - WavePlayer (WordPress) (
+[CVE-2025-12057](https://nvd.nist.gov/vuln/detail/CVE-2025-12057)) - MetInfo CMS (
+[CVE-2026-29014](https://nvd.nist.gov/vuln/detail/CVE-2026-29014)) - Joomla JCE (
+[CVE-2026-48907](https://nvd.nist.gov/vuln/detail/CVE-2026-48907))
+"This highly scaled global exploitation campaign demonstrates the rapidly evolving cyber risk facing organisations," ACSC said, adding "advances in AI are accelerating the speed and scale of cyber operations, reducing the time between vulnerability disclosure and exploitation."
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">OpenAI temporarily relaxes GPT-5.6 Sol usage limits</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/artificial-intelligence/openai-temporarily-relaxes-gpt-56-sol-usage-limits/" target="_blank">Original Link</a></p>
+            <div class="content-text">OpenAI is temporarily relaxing GPT-5.6 Sol usage after demand for the company's most powerful model surged over the past 48 hours. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
             <h2 class="article-title">Critical Zimbra Flaw Could Let Crafted Emails Run Malicious Code in User Sessions</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/critical-zimbra-flaw-could-let-crafted_0483473395.html" target="_blank">Original Link</a></p>
             <div class="content-text">Zimbra is urging customers to apply updates to address a critical security vulnerability impacting the Classic Web Client that could result in arbitrary code execution.
@@ -80,271 +140,7 @@ Other XSS flaws that have been exploited by threat actors include [CVE-2023-3758
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-1" class="article-body">
-            <h2 class="article-title">Securing our future: July 2026 progress report on Microsoft’s Secure Future Initiative</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/07/10/securing-our-future-july-2026-progress-report-on-microsofts-secure-future-initiative/" target="_blank">Original Link</a></p>
-            <div class="content-text">Security is never finished. That conviction is where the [Secure Future Initiative (SFI)](https://www.microsoft.com/en-us/trust-center/security/secure-future-initiative) started two years ago and continues to guide us today. AI is reshaping cybersecurity. Cyberattackers can discover vulnerabilities, chain attack paths, and scale exploitation faster than manual approaches allow. Defenders can use the same advances to identify risk, strengthen protections, and accelerate response. As the threat landscape evolves, security must evolve with it.
-This latest [SFI progress report](https://www.microsoft.com/en-us/trust-center/security/secure-future-initiative/sfi-progress-report-july-2026) shows how Microsoft is adapting to that reality: strengthening security foundations for an AI-accelerated cyberthreat landscape, applying AI to improve security outcomes at scale, and preparing for future challenges such as scalable quantum computing.
-This report organizes our progress into three outcome-driven themes—secure foundations, proactive defense, and future-ready security—and shares lessons learned, practical guidance, and deeper insights across the culture, governance, principles, and engineering pillars that underpin security at Microsoft.
-Secure foundations
-The most consequential security failures rarely come from a single missing control. They come from environments where identity gaps, unmanaged assets, and inconsistent configurations sit side by side, creating composite attack paths that determined threat actors can chain together. SFI addresses this systemically, strengthening security across our environment. The results show the progress:
-- Phishing-resistant
-[multifactor authentication](https://www.microsoft.com/en-us/security/business/identity-access/microsoft-entra-mfa-multi-factor-authentication)now protects 99.97% of user/device pairs at Microsoft. - More than 732,000 resources have had public access revoked, with network isolation scaling across 1 million resources.
-- 1.4 million unused apps were decommissioned and cross-boundary credential isolation reached 98.7%.
-- Engineering defaults now prevent 83% of pipelines from accessing unapproved package endpoints.
-These controls form reinforcing layers: identity feeds access governance, access governance feeds segmentation, segmentation contains blast radius, and engineering defaults reduce what enters production in the first place. One of the lessons we have learned is that foundations are durable only when they’re continuously validated, not periodically audited.
-Proactive defense
-Secure foundations reduce the attack surface. Proactive defense builds on that foundation to find and fix weaknesses quickly. Traditional practices like code review and penetration testing remain essential. The difference now is that frontier AI can discover vulnerabilities and chain exploit paths faster than manual review can keep up. That’s a threat and, when used well, an advantage. We’ve leaned into that advantage to find real risk earlier and close it before a cyberattacker can act.
-- We built a multi-agent AI system that delivers proactive assessment of a cloud service’s source code, identity configurations, network topology, and runtime state to surface composite vulnerabilities that a single-layer review could not catch. More than 90% of findings confirmed by our security engineers, enabling proactive actions to improve security posture.
-- This system builds on other tools in our security portfolio—such as the Microsoft Security multi-model agentic scanning system (codename MDASH), which scans source code to identify, validate, and prioritize vulnerabilities at scale—and adds configuration, identity, network, and runtime context to comprehensively assess the service.
-- More than 100 new detections were added this year (more than 350 total), shifting from signature-based to behavior- and baseline-driven detection.
-- More than 550,000 critical and high-risk open-source vulnerabilities were remediated, with about 3 million container vulnerabilities patched per month through automation.
-Future-ready security
-Some risks have not fully arrived yet, but waiting for them is not an option. The most urgent example is the transition to post-quantum cryptography. The threat is already here in the form of “harvest now, decrypt later”: data encrypted today could be captured and decrypted once quantum capability matures.
-- We are accelerating the Microsoft Quantum Safe Program (QSP) timeline, with the goal of transitioning to post-quantum cryptography (PQC) in critical products and services by 2029.
-- PQC is now an SFI-measured engineering requirement, with workstreams advancing across network traffic, data-at-rest protection, and trust chain modernization.
-- Quantum-safe algorithms (ML-KEM, ML-DSA) are available today across major platforms.
-- Read more in the recent blog:
-[Accelerating quantum-safe readiness](https://aka.ms/QSP/accelerate).
-Governance, culture, and principles
-Foundational progress like this is only possible because of the people committed to making it possible. Security is a core responsibility for every employee at Microsoft: mandatory Trust Code training was completed by more than 99% of full-time employees. Governance is what makes it scale, with accountability driven through our Deputy Chief Information Security Officer (CISO) structure and a centralized risk register. And our principles—secure by design, secure by default, secure in operations—are what turn intent into product, like Microsoft 365 Baseline Security Mode. Tools alone don’t create durable security; culture, accountability, and secure defaults do.
-What you can do today
-Throughout the report, we share actionable guidance for organizations at any stage of their security journey. A few starting points:
-- Enforce phishing-resistant multifactor authentication and eliminate legacy authentication protocols.
-- Inventory every tenant and classify it. Apply secure-by-default provisioning with drift detection.
-- Evaluate how identity, code, configuration, and network relationships interact in production. Prioritize composite attack paths over isolated findings.
-- Inventory your cryptographic dependencies now and establish transition plans for post-quantum readiness.
-- Enable Baseline Security Mode in Microsoft 365 for secure-by-default configuration at no additional cost.
-[Read the full SFI report](https://www.microsoft.com/en-us/trust-center/security/secure-future-initiative/sfi-progress-report-july-2026), including detailed pillar-level progress and additional customer guidance.
-Each hardening action changes the cyberattacker’s approach. The compounding effect of SFI is that attackers face a shrinking set of viable paths, while defenders gain better telemetry, stronger defaults, and sharper prioritization for the paths that remain.
-Security is a team sport. We are grateful for the partnership of our customers, security researchers, and the broader industry as we work together to make the world a safer place for all.
-Learn more
-To learn more about Microsoft Security solutions, visit our [website.](https://www.microsoft.com/en-us/security/business) Bookmark the [Security blog](https://www.microsoft.com/security/blog/) to keep up with our expert coverage on security matters. Also, follow us on LinkedIn ([Microsoft Security](https://www.linkedin.com/showcase/microsoft-security/)) and X ([@MSFTSecurity](https://twitter.com/@MSFTSecurity)) for the latest news and updates on cybersecurity.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-2" class="article-body">
-            <h2 class="article-title">Six New U-Boot Flaws Could Let Malicious Images Crash Devices or Run Code at Boot</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/six-new-u-boot-flaws-could-let.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Researchers at firmware security firm Binarly have found six new flaws in U-Boot, the small program that starts up hardware as varied as home routers, smart cameras, and the management chips inside data-center servers.
-Four of the bugs can crash a device. The other two could let an attacker who slips a malicious image in front of the bootloader run their own code, before the device has confirmed that the software is genuine.
-That last part is the point. A bootloader runs before the operating system, so a flaw here can undermine everything that loads after it. All six bugs are reached while U-Boot is still reading an untrusted image, before it has checked the signature.
-What Binarly found
-U-Boot can bundle a kernel, device tree, ramdisk, and other boot components into one package, a FIT (Flattened Image Tree), and it checks that package's digital signature before handing over control.
-Binarly went looking for weak spots in that check and found six. Most of the vulnerable code has been in U-Boot since v2013.07, [Binarly says](https://www.binarly.io/blog/unfit-to-boot-breaking-u-boots-fit-signature-verification), across more than 50 stable releases, and it also lives in the many vendor firmwares built on top of U-Boot.
-The bugs are tracked as Binarly advisories [BRLY-2026-037 through BRLY-2026-042](https://www.binarly.io/advisories). No CVE identifiers have been assigned yet. They fall into two groups: two that could run code, and four that only crash.
-The two are BRLY-2026-037 and BRLY-2026-038, and both trace to one unchecked value. U-Boot calls fdt_get_name, a lookup in the device-tree parsing library it borrows, and on a malformed image, that lookup returns a null pointer and a negative length. U-Boot uses both without checking either.
-One bug follows the null pointer into a memory copy that, on devices where address zero is mapped, becomes a stack buffer overflow. The other feeds the negative length into pointer arithmetic that walks backward until it overwrites a saved return address. In the right memory layout, either one can hand control to code the attacker-supplied.
-The other four only crash the bootloader. BRLY-2026-039 and BRLY-2026-041 read past the end of the image by trusting a size or offset that the attacker controls. BRLY-2026-040 dereferences a null pointer that an older image format hands back unchecked. BRLY-2026-042 exhausts the stack, set off by a deeply nested image that drives an early validation step to call itself until it runs out.
-Binarly published a proof-of-concept image and reproduction steps for each flaw and demonstrated them against standard U-Boot builds. No exploitation in real attacks has been reported.
-Of the six, the two memory-corruption bugs are the ones to prioritize: a crash can knock a device offline, but code execution at boot could subvert its entire chain of trust.
-How bad it gets
-In the worst case, recovering a device that will not boot means physical access and reflashing its memory chip with a clean image. Code execution is worse. Code that runs this early sits below the operating system, where ordinary security tools may not see it.
-The catch for an attacker is delivery: these bugs only bite once a malicious image reaches the boot path, which usually takes physical access or a privileged foothold. That foothold is not always local.
-In [earlier work](https://thehackernews.com/2025/09/two-new-supermicro-bmc-bugs-allow.html) on Supermicro's server management controllers, the same Binarly researcher showed that an attacker with remote access to the management interface could abuse the device's own update process to flash a malicious image, without touching the hardware.
-What to do
-There is no stable release with the fix yet, so vendors and maintainers of U-Boot-based products should not wait: pull the upstream fixes now, following the commit links in each Binarly advisory, and track them by advisory ID, since no CVEs exist.
-U-Boot merged the six patches in June, but the July release (v2026.07) had already frozen in April, so it shipped without them; the next release, v2026.10, is not due until October.
-Everyone else runs a device someone else built on U-Boot. For them, the fix has to arrive as a firmware update from the product vendor. That is what to watch for.
-This exact check has failed before. The same signature logic was hit months earlier by [CVE-2026-33243](https://github.com/u-boot/u-boot/commit/2092322b31cc8b1f8c9e2e238d1043ae0637b241), which U-Boot patched in April; the related barebox bootloader, which uses the same image tooling, was hit too.
-In that bug, a property meant only to list what the signature covers was not itself signed, so a tampered image could swap in parts that were never verified. The helper behind the two worst bugs here, fdt_get_name, comes from libfdt, the flattened-device-tree library U-Boot shares with the Linux kernel, barebox, and others. The same unchecked-return mistake can surface anywhere that code is used.
-[LogoFAIL](https://thehackernews.com/2023/12/logofail-uefi-vulnerabilities-expose.html), which THN covered in 2023, was a set of image-parsing bugs in PC firmware that let attacker code run during boot, before Secure Boot could check anything, across nearly every major PC brand. The signature gets all the attention; the bugs keep landing in the plumbing that runs before it.
-And as [BootHole](https://thehackernews.com/2020/07/grub2-bootloader-vulnerability.html) showed in 2020, when one bootloader flaw broke Secure Boot across the ecosystem, writing the patch is the easy part. The slow part is getting it onto the millions of devices running someone else's copy of U-Boot.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-3" class="article-body">
-            <h2 class="article-title">Hackers exploit critical auth bypass in Gitea Docker image</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-critical-auth-bypass-in-gitea-docker-image/" target="_blank">Original Link</a></p>
-            <div class="content-text">Hackers are actively exploiting a critical vulnerability in the official Docker image for the Gitea self-hosted Git service that allows attackers to impersonate any user, including administrators. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
         <div id="art-4" class="article-body">
-            <h2 class="article-title">Former ransomware negotiator gets 4 years for BlackCat attacks</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/us-ransomware-negotiator-gets-4-years-in-prison-for-blackcat-attacks/" target="_blank">Original Link</a></p>
-            <div class="content-text">A former employee of cybersecurity incident response company DigitalMint was sentenced to 70 months in prison for targeting U.S. companies in BlackCat (ALPHV) ransomware attacks. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-5" class="article-body">
-            <h2 class="article-title">Finding SOCKS with Proxywatch</h2>
-            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/07/09/finding-socks-with-proxywatch/" target="_blank">Original Link</a></p>
-            <div class="content-text"><p>TL;DR: Adversaries use SOCKS proxy tunnels to pivot within environments and to execute code against compromised systems without bringing tools to the system. Defenders often lack reliable guidance to detect proxying behavior, falling back to preset rules based on static indicators or process-port baselines. This blog post highlights Proxywatch, a proof-of-concept release by SpecterOps, to [&#8230;]</p>
-<p>The post <a href="https://specterops.io/blog/2026/07/09/finding-socks-with-proxywatch/">Finding SOCKS with Proxywatch</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-6" class="article-body">
-            <h2 class="article-title">Vulnify: Giving Your Agents a CVE Brain</h2>
-            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/vulnify-giving-your-agents-a-cve-brain" target="_blank">Original Link</a></p>
-            <div class="content-text">Vulnify: Giving Your Agents a CVE Brain
-Table of contents
-When building agentic components for pentesting, CVEs are inevitably going to come up. I never found anything that matched what I needed; I did not want "search the web and hope," but actual answers bound to a technology, and the ability to answer questions like “Does this version of this package have this CVE?”, “Is there a public exploit?”, “and “Where is it?” By packaging all that up, agents can get a head start on the scope of the product they’re looking at.
-Prior to this work, there are a few ways it can be fudged. The first is by letting the agent search the web with [Tavily](https://tavily.com). It sort of works, but it is slow and non-deterministic, and the agent ends up reading vendor marketing and blogspam to find a CVSS score that lives in a database somewhere. Or, even worse, the 1,000 free credits a month don’t scale - I don’t fancy Yet-Another-Subscription.
-The second is by bolting on a scanner like [Nuclei](https://github.com/projectdiscovery/nuclei). Nuclei is great at templated detection against a live host. But we may not always want to point heavy tools at a product right away. Following the approach of recon and light poking first, Nuclei doesn’t fit.
-The third is by hitting [NVD](https://nvd.nist.gov/) and vendor APIs live. This is the closest-to-right solution, but painful to do deterministically and a waste of tokens to let agents figure it out. NVD also throttles you to about five (5) requests every 30 seconds without a key. Furthermore, every source has its own schema, and nothing joins together well.
-None of these solve the problem, they work around it and are probably fine for smaller projects, but they do not satisfy my stability and reproducibility requirements, let alone save tokens.
-This is where [Vulnify](https://github.com/mez-0/vulnify/) comes in. It is an MCP-capable server set on top of one (1) normalized SQLite database that stitches the authoritative sources together and hands the agent a clean, joined answer.
-One (1) caveat up front, Vulnify is point-in-time. It needs to pull data every so often to stay relevant; I am working on something CICD-able for this in the future.
-How It Got Built
-Before I discuss the internals, I want to make a foreword on writing bigger projects with agentic workflows. I find that LLMs are great at extending a codebase that already has a strong opinion baked in. If you let an agent loose on a new project with no guardrails or guidelines, you will see all sorts of weird and wonderful coding styles.
-My personal approach, and the approach used to build Vulnify, is to manually build v0.1. I know, writing code in 2026—wow. But, by doing so, I get to lay the groundwork for coding paradigms: how docstrings are laid out, how functions are named, data models, and generally writing the code how I like to. Then, I pass an agent (Claude, in my case) over top of it to learn it, write docs, and update CLAUDE.md and memory; whatever it needs to ensure it matches my style. Then, over time, I introduce subagents to reinforce that pre-commit. If this first pre-pass is done in a strong model like Opus 4.8, then all subsequent work can be done with something like Sonnet, or even local models in some cases.
-From there, it is [spec-driven](https://github.github.com/spec-kit/concepts/sdd.html), one (1) feature at a time: plan, grill, and build. Plan is a written spec with scope and acceptance criteria. Grill is where I stress-test that plan against the real codebase before a line is written and the load-bearing constraints and awkward edge cases turn up on paper, where they are cheap to fix. Build is implementing in slices to contain scope and context.
-Doing all this keeps the codebase coherent because a human set the taste, and the tooling enforces it. It does not get re-argued by every agent that shows up.
-What's Actually In It?
-Vulnify is one (1) normalized SQLite database with 20 tables, foreign keys on, and everything joined on the CVE ID to create a relational graph.
-The mental model is a spine plus enrichment. The spine is [CVEProject/cvelistV5](https://github.com/CVEProject/cvelistV5) because it is the authoritative CNA-submitted record set. It defines which CVEs exist and carries the core fields:
-- Summary
-- Technical details
-- Affected products
-- CWEs
-- References
-- CVSS
-Everything else is enrichment layered onto CVEs that already exist. The following table lists the enrichment sources and why each one earns its place.
-Source | Description |
-|---|---|
-This gives the analysis layer NVD-scored CVSS, CPE applicability, and vuln status. CNAs do not always score a CVE, and NVD gives you a consistent CVSS and machine-readable CPE. It is also the slow part of a build, thanks to that rate limit. | |
-CISA KEV is the ground truth. CVSS and EPSS are predictions; KEV is confirmed exploitation in the wild, with regulatory due dates and a ransomware flag. It is the highest signal input you have for prioritization. | |
-This is the probability that a CVE gets exploited in the next 30 days. CVSS tells you how bad it would be if it happened. EPSS tells you how likely it is to happen. These are two (2) different questions, both worth asking. | |
-OSV maps a CVE to affected packages across ecosystems like PyPI, npm, and Go. It is the bridge from a CVE to a concrete package and the way in for dependency and SBOM questions. |
-This is the exploit corpora, which is where Vulnify gets useful for offense:
-Source | Description |
-|---|---|
-A CVE-tagged template means there is a real, runnable detection. The CVE ID comes from the template's structured classification field, so Vulnify records the link as exact. | |
-This uses the files_exploits.csv from Exploit-DB. From here, the CVE IDs are scraped out of a free-text column, so those links are tagged parsed, which is a lower-trust grade. | |
-This is Metasploit module metadata. If it has an MSF module, then it means this is a weaponized, operator-ready exploit, which is about the highest operational signal there is. The CVE IDs come from the module's References, so those are exact as well. |
-Those three (3) feed a table of concrete exploit artefacts (source, stable ID, URL, and confidence) and drive the summary signals on each CVE. A few of the data-model decisions are worth pulling out, because they are the "taste" I mentioned earlier.
-The most important thing is that the exploit signals are tri-state; public_poc and Metasploit are not booleans. They are NULL, false, or true: NULL if no source has looked yet, false if a source looked and found nothing, or true if it found something. This matters because a confident "no public exploit exists" in a report, when there is one, is a liability. "Not assessed" and "assessed, found nothing" are different answers, and Vulnify never quietly turns one into the other. When the data does degrade, say, mid-rebuild, it degrades toward NULL, which is the honest direction.
-“Exact” means the CVE ID came from a structured field, while “parsed” means it was extracted from free text. It tells an operator how far to trust the link. Vulnify only emits those two (2), because a link guessed from a title is worse than no link at all, so those get dropped.
-Version ranges are stored as first-class structured data rather than free text, because "does version X of this thing hit this CVE?" is a real question, and string comparison is a trap. "1.10" sorts before "1.9" lexically, which is the wrong answer. Keeping the ranges structured is what will let that comparison be done properly in Python, three (3) state, instead of as lexicographic SQL. (The comparator and the version-matching tools that sit on top of it are the next thing on the roadmap; they have not shipped yet.)
-There is also an FTS5 full-text index over the titles, summaries, and technical detail, so an agent can search for "container escape" as easily as it can filter by vendor.
-Every source is its own idempotent, watermarked phase, so the whole pipeline is built to be re-run and pick up where it left off, which brings us back to the caveat: it is a snapshot, designed to be rebuilt.
-The Sources, Raw
-If you want a feel for why the stitching is worth doing once, here is each source on its own. There are eight (8) feeds, and three (3) of them are not even queryable APIs.
-The spine, cvelistV5, is a bulk zip. There is no per-CVE endpoint, so you take the lot and parse a quarter of a million JSON files:
-NVD 2.0 has a proper API and the rate-limit tax to go with it:
-Without a key, you are throttled to roughly five (5) requests every 30 seconds, which is why a cold build takes hours.
-EPSS is clean and keyless and comes back as { epss: "0.99999", percentile: "1.0" }:
-OSV maps a CVE to affected packages, and only open source packages get a mapping, which becomes relevant shortly:
-CISA KEV is one (1) big JSON catalog. At the time of writing, that is catalog version 2026.07.01 with 1,631 entries:
-Nuclei is a git repo, so you take the tarball and use the commit SHA as a version stamp:
-Exploit-DB is a CSV:
-And Metasploit is one (1) large module-metadata JSON, keyed by module path:
-There are eight (8) feeds and eight (8) different shapes where three (3) need a parser rather than an HTTP call. There is also a rate limit on the big one, and nothing shared between them but the CVE ID. Vulnify does that stitching once, offline, so the agent asks a single question instead of orchestrating eight (8).
-One CVE
-The cleanest way to show what "enriched" means is through one (1) fully populated record. [CVE-2025-53770](https://nvd.nist.gov/vuln/detail/CVE-2025-53770) is a good pick. It is the July 2025 SharePoint RCE that got named "ToolShell" and mass-exploited, and it has a value in every component, with exactly one (1) exploit artefact from each of the three (3) corpora.
-The cvelistV5 record forms the backbone of the entry, providing the authoritative CNA-supplied metadata.
-Field | Value |
-|---|---|
-Title | Microsoft SharePoint Remote Code Execution Vulnerability |
-CNA | Microsoft |
-Summary | Deserialization of untrusted data, including Microsoft's note that exploitation has been observed in the wild |
-CWE | CWE-502 |
-Affected Products | SharePoint 2016, SharePoint 2019, and SharePoint Subscription Edition, including version ranges |
-References | 13 references spanning the Microsoft advisory, CISA alerts, eye.security research, and industry reporting |
-NVD enriches the record with standardized scoring and platform metadata.
-Field | Value |
-|---|---|
-CVSS Base Score | 9.8 |
-CNA Vector | Includes temporal metrics (E:F/RL:W/RC:C) |
-NVD Vector | Complete base scoring vector |
-CPE Matches | Three (3) CPE match strings |
-Analysis Status | Analysed |
-CISA's Known Exploited Vulnerabilities catalogue provides operational prioritization.
-Field | Value |
-|---|---|
-Listed | Yes |
-Date Added | July 20, 2025 |
-Due Date | July 21, 2025 |
-Observation | One (1) day remediation deadline, indicating exceptional urgency |
-EPSS contributes an estimate of exploitation likelihood.
-Field | Value |
-|---|---|
-EPSS Score | 0.885 |
-Percentile | 99.5th percentile |
-Interpretation | Among the highest predicted exploitation probabilities |
-And from the exploit corpora, all three (3) signals are true (public PoC, Metasploit, and in the wild) and backed by the artefact triad:
-Source | Artefact | Confidence |
-|---|---|---|
-Metasploit | exploit/windows/http/sharepoint_toolpane_rce | Exact |
-Nuclei | CVE-2025-53770 template | Exact |
-Exploit-DB | EDB-52405 | Parsed |
-The one (1) thing that is empty is the OSV package mapping, and that is correct. SharePoint is obviously proprietary, so OSV has nothing to say about it. That is the tri-state mindset applied to coverage: "assessed, nothing applies" is not the same as "did not look." For an open source CVE, the mapping is populated. CVE-2004-2462, for example, comes back with Debian:10:cplay.
-One (1) simple query yields a plethora of data for your agents.
-The Explorer
-Before the agent side, it is worth showing that the database is just explorable. There is a [Streamlit](https://streamlit.io/) dashboard bundled in the repo, around 70 views across 14 tabs, reading the exact same database the agents query.
-Talking to It: The MCP Server
-The MCP server is a [FastMCP](https://github.com/PrefectHQ/fastmcp) server over [stdio](https://gofastmcp.com/integrations/pydantic-ai#stdio).
-There are seven (7) tools, and the easiest way to think about them is by the questions they answer:
-Function | Description |
-|---|---|
-get_cve(cve_id) | This is the "tell me everything about this CVE" function. The fully hydrated record is: CVSS, KEV, EPSS, exploit signals, references, CWEs, affected products, CPEs, and the artefact evidence list. |
-search_cves(...) | This is the "find CVEs matching these criteria" by vendor, product, CWE, KEV status, minimum CVSS, minimum EPSS, or year function. |
-search_cves_text(query) | This is the "search the text" function, using FTS5 with the usual AND, OR, NOT phrases and prefixes. |
-exploits_for(cve_id) | This is the "is there a real exploit, and where?" function, returning the artefacts with source, confidence, and URL. |
-references_for(cve_id, tag) | This translates to "give me the patch or advisory links." |
-list_kev(since, limit) | This translates to "what has CISA added recently?" |
-database_overview() | This essentially summarizes the stats of the db. |
-Actually Using It
-The rest is easier to show than to describe. Everything below came off the live server.
-Starting with orientation, database_overview() reports 347,248 CVEs, 21,142 vendors, 70,266 products, 1,593 KEV-listed CVEs, and EPSS on all of them. The CVE data runs to April 30, 2026, and the enrichment phases last ran on June 10, 2026. The tool reports its own staleness, which is the point.
-Ask it about Log4Shell with get_cve("CVE-2021-44228"), and you get the whole triage picture in one (1) call:
-Signal | Value |
-|---|---|
-KEV | Listed, added December 10, 2021, due December 24, 2021 |
-EPSS | 0.944 (99.96th percentile) |
-Exploit | Public PoC, Metasploit, and in-the-wild, all true |
-Artefacts | 52 |
-Pull the evidence with exploits_for("CVE-2021-44228"), and those 52 artefacts break down by source, each carrying its confidence:
-Source | Count | Confidence |
-|---|---|---|
-Nuclei | 44 | Exact |
-Metasploit | 5 | Exact |
-Exploit-DB | 3 | Parsed |
-The Metasploit module paths are the "there is a weaponized path" signal, and the exact and parsed tags tell the agent how far to trust each link.
-For triage across the whole corpus, search_cves(kev_only=True, min_epss=0.9) gives you everything CISA has confirmed exploited that EPSS also puts above 90 percent:
-CVE | CVSS | EPSS | What It Is |
-|---|---|---|---|
-CVE-2025-47812 | 10.0 | 0.929 | Wing FTP Server RCE (root/SYSTEM) |
-CVE-2025-64446 | 9.8 | 0.931 | FortiWeb path traversal to admin command exec |
-CVE-2026-24061 | 9.8 | 0.911 | GNU Inetutils telnetd auth bypass |
-CVE-2026-41940 | 9.8 | 0.908 | cPanel and WHM auth bypass |
-And the full-text index handles the questions you cannot express as filters. search_cves_text("container escape") comes back with youki, Versa Concerto, iSula, and LXC escapes, ranked by relevance. It also surfaces one (1) loose match on "escape sequences," which is stemmed full-text search being honest about what it is.
-Where it gets interesting is chaining tools together. Take a question an operator would actually ask: What is the most exploit-likely Fortinet bug CISA has flagged, and can I pop it with Metasploit? Two (2) calls.
-First, search_cves(vendor="fortinet", kev_only=True) returns 25 KEV-listed Fortinet CVEs. Ranked by EPSS, the top of the list is CVE-2018-13379, the FortiOS SSL-VPN path traversal and credential-leak bug, at 0.945.
-Then exploits_for("CVE-2018-13379") answers the second half:
-Source | Artefact | Confidence |
-|---|---|---|
-Metasploit | auxiliary/gather/fortios_vpnssl_traversal_creds_leak | Exact |
-Nuclei | CVE-2018-13379 | Exact |
-Exploit-DB | EDB-47287, EDB-47288 | Parsed |
-Yes. There is a Metasploit module, plus a Nuclei template and two (2) Exploit-DB entries. Two (2) calls, and the agent has a prioritized target and a runnable module path, without a single web search or a guessed CVE.
-You Don't Have to Use MCP
-One (1) last thing, because it is easy to assume MCP is the whole story; it is not. MCP gets it up and running super easy. But it’s not the only way to use it—after all, it’s just a database.
-In a larger system I run, I skip the MCP transport entirely and import the query layer directly, the same store and query functions that the MCP tools wrap, and call them as plain Python. There are a few reasons to do that.
-The first is visibility. The more I work with agentic systems, the more important this has become to me. Owning the call site means I can wrap every lookup in my own logging and see what the agent asked, what came back, how long it took, and which CVEs it touched. The stdio transport is a black box by comparison. If you want an audit trail of what your agents are doing with the data, you write the wrapper yourself. However, this can probably be resolved directly in Vulnify by allowing it to be a library.
-The second is that it is just an in-process function call, with none of the subprocess or stdio overhead. The third is control: caching, my own ranking, policy, and wiring the results into the rest of the pipeline.
-So the way to think about Vulnify is as a database and a query library first, and as an MCP server second. MCP is the easy way in. Direct embedding is what you reach for when you want control and visibility over how the data is used. It is one (1) example of usage, not the whole of it.
-Wrapping Up
-The problem was that agents doing security work have no real CVE knowledge to draw on, only workarounds. [Vulnify](https://github.com/mez-0/vulnify/) is my attempt to give agents access to proper and enriched data regarding CVEs and to cut out a lot of the token wastage while doing so. I spent a lot of time talking about how Vulnify can be used for agents, but it’s also great deterministically. Say you have C2 automation and can extract OS information; well, now you can use that to query the installed applications or OS version too. It’s only Python, after all.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-7" class="article-body">
             <h2 class="article-title">Felons, Fraudsters Flog Offensive Cybersecurity Startup</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/07/felons-fraudsters-flog-offensive-cybersecurity-startup/" target="_blank">Original Link</a></p>
             <div class="content-text">A cybersecurity startup dangling millions of dollars to acquire zero-day security vulnerabilities in popular software is run by a pair of far-right conspiracy theorists and convicted felons whose most recent ventures included fake intelligence companies and a now-defunct AI-based lobbying platform they operated under assumed names.
@@ -401,6 +197,8 @@ my therapist says the truth is i like to throw around a lot of copy and pasted i
 Excellent work! Thank you for exposing these charlatans.
 These men are anti-democratic actors and don’t represent ‘honest’ exploit brokers nor ethical security professionals.
 Wondering if the regional conference is OffensiveCon in Berlin. He was there as well, not fitting in, approaching people randomly with annoying questions that showed he has no clue. Begging for cyber capabilities.
+Annoying he´s been.
+Approached me and others. …..
 “I know more about tech than anyone,” Wohl bragged. “My background has always been extremely technical, and I’ve always been deeply into tech. People know me as someone who is able to create spectacularly exquisite capabilities that would make your head spin.”
 So we have another Trump but this one can make a complete sentance. Both should be in jail.
 Brian, that headline – you’re not going to work for the NYPost, are you?
@@ -409,7 +207,68 @@ Fascinating long form article about these sorts of miscreants, thanks!</div>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-8" class="article-body">
+        <div id="art-5" class="article-body">
+            <h2 class="article-title">Microsoft named a leader in the Frost Radar for cloud and application runtime security</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/07/01/microsoft-named-a-leader-in-the-frost-radar-for-cloud-and-application-runtime-security/" target="_blank">Original Link</a></p>
+            <div class="content-text">[Cloud security](https://www.microsoft.com/en-us/security/business/solutions/cloud-security) is shifting from visibility to contextual risk reduction, extending into the applications, APIs, and workloads where attacks actually occur. Because modern workloads are built and run in the cloud, security teams must understand which exposures matter most, prioritize what can truly be exploited, and reduce risk across the full stack from infrastructure to application runtime.
+As organizations expand across multicloud and hybrid environments, they adopt modern architectures built on containers, Kubernetes, microservices, APIs, and AI-powered workloads. This increases both the volume and interconnectedness of security signals. The challenge is no longer identifying individual risks, but determining how vulnerabilities, identities, and data exposures combine across infrastructure and the applications running on it to create real attack paths, and which of these are most critical to fix at the source. Effective risk reduction depends on understanding which of these paths are actually reachable and exploitable in a live environment.
+Frost & Sullivan’s [2026 Frost Radar™ for Cloud/Application Runtime Security](https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/en-us/security/Frost-Radar-Cloud-Application-Runtime-Security-2026-Microsoft.pdf) (CARS) reflects this shift. The report highlights how cloud security is evolving from a collection of posture and workload capabilities into a unified runtime risk operations model, correlating signals across code, cloud, runtime, applications, and security operations center (SOC) workflows to prioritize and reduce risk continuously.
+Within this evolving market, Microsoft is positioned as a visionary leader because of the scale of its hyperscale ecosystem, operational breadth of [Microsoft Defender for Cloud](https://www.microsoft.com/en-us/security/business/cloud-security/microsoft-defender-cloud) when integrated with [Microsoft Defender XDR](https://www.microsoft.com/en-us/security/business/solutions/extended-detection-response-xdr), and large customer base. That recognition reflects where the category is heading: toward platforms that connect cloud and application security into one operational view of risk.
+Why cloud security is being redefined
+The Frost Radar makes a clear point: cloud security is no longer about visibility or compliance alone. It is becoming an operational discipline for reducing risk across the full runtime—from cloud infrastructure to the application code executing on top of it.
+Modern environments introduce complexity across:
+- Multicloud and hybrid infrastructure.
+- Rapid development and continuous deployment.
+- Containers, serverless, microservices, and APIs.
+- AI-powered workloads, agents, and machine identities.
+This complexity exposes the limits of traditional, siloed tools—where cloud posture, workload protection, and application security each live in their own console. Organizations now need platforms that can:
+- Correlate posture, runtime, identity, data, and application signals.
+- Prioritize risk based on exploitability—not severity alone.
+- Integrate security across development, cloud operations, and the SOC.
+- Validate whether a vulnerability is actually reachable inside a running application.
+This is the shift the report describes: from detecting issues to operationalizing risk reduction across the lifecycle—and across both cloud and application layers.
+What distinguishes leading platforms
+Frost & Sullivan evaluates providers on growth and innovation—but, more importantly, on how effectively they help organizations manage real risk. Five themes define the next generation of platforms:
+- Platform unification over point solutions.
+- Code-to-cloud-to-SOC integration.
+- Risk prioritization based on exploitability.
+- Correlation across identity, data, cloud, and application context.
+- Expansion into AI-powered workloads.
+Taken together, these capabilities represent a move from fragmented visibility to connected, contextual risk management that spans cloud detection and response (CDR) and application detection and response (ADR)—the two halves the market is converging into a single runtime fabric.
+How Microsoft help organizations manage real risk
+1. Connect signals to prioritize real attack paths
+Most security tools surface large volumes of findings across cloud infrastructure and applications, but isolated findings do not reflect how cyberattacks actually happen. Threat actors exploit how misconfigurations, excessive permissions, and data exposure combine to create a path to critical assets.
+Microsoft Defender for Cloud correlates posture, identity, data, and runtime signals to identify which risks are truly exploitable. A misconfigured storage resource on its own may appear low priority. However, when it is exposed to the internet, combined with excessive access permissions, and connected to sensitive data, it becomes part of a clear attack path that can be used to compromise the environment.
+What this means: Security teams can prioritize real attack paths instead of individual findings, helping to reduce alert fatigue and improve remediation speed and precision.
+2. Continuously validate and act on risk across the lifecycle
+Security needs to operate continuously across development, runtime, and operations, spanning both the application and the cloud environment it runs in. Defender for Cloud connects insights across code and infrastructure definitions, cloud configuration and runtime context, application and API layers, and security operations workflows through Defender XDR.
+A vulnerability identified before deployment can be tracked through to runtime, where it is evaluated in the context of the running environment and surfaced in security operations if it is determined to be exploitable.
+What this means: Organizations can continuously validate risk and respond more effectively by connecting development, cloud environments, and security operations.
+3. Reducing complexity across fragmented cloud and application security workflows
+As environments scale, fragmented tools and workflows make it difficult to understand how risks connect and where to focus first. When cloud infrastructure and application security are managed separately, investigation becomes slower and more manual.
+Defender for Cloud helps bring these signals together in a single investigative flow, where risks can be analyzed across configuration, runtime context, application behavior, and identity exposure.
+Instead of switching between separate tools, security teams can investigate a single incident across its initial misconfiguration, runtime impact, application behavior, and identity exposure, a more connected experience.
+What this means: Security teams can investigate faster, prioritize risk more efficiently, focus on what matters most, and respond more quickly across fragmented cloud and application environments.
+What this signals for security leaders
+The Frost Radar offers a signal for where cloud security is headed: toward platforms that connect context across cloud and application environments so teams can prioritize the risks most likely to be exploited and reduce exposure faster. Security leaders should now ask:
+- Can the platform correlate signals across identity, endpoints, data, cloud, runtime, and applications?
+- Does it span the full code-to-cloud lifecycle—and reach into the SOC?
+- Can it prioritize risk based on exploitability—not just severity?
+- Does it bring cloud detection and response together with application detection and response?
+- Can it scale across multicloud and AI environments?
+These are the capabilities that define the next generation of cloud and application runtime security.
+Bottom line
+Frost & Sullivan’s 2026 CARS analysis reinforces a clear shift: cloud security is moving from fragmented visibility to unified, contextual risk management across the entire lifecycle—and across both the cloud and the application layer.
+Microsoft’s position as a visionary leader in the Frost Radar reflects this shift—bringing together posture, runtime, identity, endpoints, data, and application signals into a connected platform that helps organizations prioritize and reduce risk continuously.
+Learn more
+[Read Frost & Sullivan’s 2026 Frost Radar™ for Cloud/Application Runtime Security](https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/en-us/security/Frost-Radar-Cloud-Application-Runtime-Security-2026-Microsoft.pdf)to see how leading vendors are evaluated—and how the category is shifting toward unified cloud and application runtime risk operations.- Explore
+[Microsoft cloud security solutions](https://www.microsoft.com/en-us/security/business/solutions/cloud-security)to see how unified posture management, risk prioritization, and protection across the application lifecycle can help reduce cloud risk.
+To learn more about Microsoft Security solutions, visit our [website](https://www.microsoft.com/en-us/security/business). Bookmark the [Security blog](https://www.microsoft.com/security/blog/) to keep up with our expert coverage on security matters. Also, follow us on LinkedIn ([Microsoft Security](https://www.linkedin.com/showcase/microsoft-security/)) and X ([@MSFTSecurity](https://twitter.com/@MSFTSecurity)) for the latest news and updates on cybersecurity.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-6" class="article-body">
             <h2 class="article-title">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager</h2>
             <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/zero-day-exploitation-cisco-catalyst-sd-wan-manager/" target="_blank">Original Link</a></p>
             <div class="content-text">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager
@@ -618,7 +477,54 @@ Mandiant would like to thank the Cisco Product Security Incident Response Team (
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-9" class="article-body">
+        <div id="art-7" class="article-body">
+            <h2 class="article-title">JS-Tap v3: Endpoint Post-Exploitation With JavaScript Implants</h2>
+            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/js-tap-v3-endpoint-post-exploitation-with-javascript-implants" target="_blank">Original Link</a></p>
+            <div class="content-text">JS-Tap v3: Endpoint Post-Exploitation With JavaScript Implants
+When I first wrote JS-Tap, the goal was to provide red teamers with a generic JavaScript payload that works without prior knowledge of a web application and without an authenticated user running it. Instrument the client side, collect loot, attack the application with stolen creds.
+That original payload, what I now call the DOM beacon, still works just fine, but in the past year, I wanted to expand the reach of JS-Tap. JavaScript, sadly, has escaped the web application DOM and is now used extensively in desktop applications and software. Browser extensions are JavaScript. Electron desktop apps (Slack, Signal, VS Code, Discord, lots of the corporate tooling you'll find on a workstation) are JavaScript. The new wave of CLI tools built on Node and Bun, including the AI coding assistants everyone is suddenly running, are JavaScript.
+Here’s the part that makes all of this worse—all of these application environments run JavaScript with less sandboxing than the browser DOM where the original JS-Tap payload lives. The same monkeypatching tricks JS-Tap has always used to intercept network calls and scrape data work in these environments, too—except now, there's no Same-Origin Policy in the way, and in many cases, there's full access to the underlying operating system.
+So, JS-Tap v3 grows beyond the browser to post-exploitation of the endpoint. It introduces three (3) new beacon types, all reporting back to the same JS-Tap C2, integrated for your engagement data collection needs.
+The New Beacons
+BEX Beacon (Browser Extension)
+The BEX beacon is JS-Tap as a browser extension, for Chrome, Chromium, Edge, and Firefox across Windows, Linux, and Mac. The DOM beacon lives inside a single page, and the BEX beacon sits at the browser level and sees all.
+Because it runs with extension privileges rather than page privileges, it sidesteps a lot of what limits the DOM beacon. It captures cookies across all domains, including httpOnly cookies, which the DOM beacon simply can't touch. It grabs localStorage, sessionStorage, and request headers and tracks browsing across every tab. Note that there are very important scoping settings about what domains the BEX beacon is allowed to work on, compiled in and critical for use in an engagement. Make sure you have that scoping conversation with your client before you use this in an assessment.
+The BEX beacon also works as a dropper. From the JS-Tap portal, you can task it to inject a full DOM beacon into a specific domain being used in that browser. A DOM beacon spawned this way gets pixel-perfect screenshots through the extension's captureVisibleTab API instead of relying on the html2canvas library baked into the DOM beacon.
+The BEX beacon also allows proxying of network traffic through the beacon.
+Pair the BEX beacon with the optional new Sidecar, a small Go binary installed alongside the extension and used via the browser's native messaging feature, and you get OS-level file browsing and command execution from a browser extension. There is an OPSEC tradeoff here. Native messaging is the least stealthy of the OS-access options in JS-Tap v3 beacons, since it requires a registered native host and a separate binary on disk, and the Atom and V8 beacons get host access in cleaner ways. For situations where the browser extension is your foothold, it is very powerful if you’re in a position to install Sidecar alongside the BEX extension.
+Atom Beacon (Electron App Implant)
+The Atom beacon is an implant for Electron desktop applications. You patch it into the target app's ASAR archive with the included atomize.py
+, and on next launch, it connects back to the JS-Tap C2.
+The main process agent runs in Electron's Node.js runtime, so it gets native OS access (file system, command execution) with no separate Sidecar binary needed. If the Electron app has set security fuses that block node functionality or sandboxing, the patcher resets the fuses. Note that you have to have write access to the app.asar file to be able to modify the Electron app.
+The usual JS-Tap functionality follows: screenshots, keylogs, and network intercepts. The proxy feature is also supported.
+While the Atom beacon is generic, there are commonly used Electron apps that we can implement custom JS-Tap functionality for, and these are implemented in runtime-delivered plugins specific to the application. JS-Tap v3 ships with the following Electron app plugins:
+- VS Code Infiltrator - Targets the VS Code Electron app and reaches into the editor environment to copy and edit files and “borrow” GitHub tokens for accessing private repos
+- 1Password Vault Raider - Targets the 1Password desktop app and goes after vault contents through the running unlocked application, capturing the unencrypted copy of the password vault
+- Signal Interceptor - Targets Signal Desktop; Signal's whole value proposition is end-to-end encryption, but an implant living inside the desktop client can access all messages, send messages from the user to others, or spoof messages to them
+- Mattermost Masher - Targets the Mattermost desktop client; same functionality as the Signal plugin, just ported to Mattermost
+- Slack Wrecker - The Slack equivalent; same functionality as Signal and Mattermost plugins
+Adding new plugins is not terribly time-consuming. I accept pull requests. 🙂
+V8 Beacon (Node.js/Bun CLI Implant)
+The V8 beacon targets Node.js and Bun command-line applications, and unlike the Atom beacon, there's no app patching at all.
+You drop the beacon's .js
+file on disk and set an environment variable—NODE_OPTIONS
+for Node or BUN_OPTIONS
+for Bun. The runtime pulls in the malicious JavaScript before the target app's own code runs, and from there, it's what you would expect from a JS-Tap beacon. It keylogs, intercepts network traffic, and allows code execution and file system access and proxies network traffic through the beacon.
+The obvious targets here are the AI CLI tools everyone has suddenly installed, like Gemini CLI and Claude Code, which make a lot of interesting authenticated API calls.
+Also New in v3
+JS-Tap Proxy - All three (3) new beacons can act as a network relay. Route your own browser through the victim's browser, Electron app, or Node process over a WebSocket relay, and reach internal application servers from the victim's network context, using their IP address and TLS fingerprint.
+JS-Tap Conductor - This is a standalone Firefox extension that takes session data and proxy configurations generated by the JS-Tap C2 portal (session and proxy “tickets” you paste into Conductor) and reconfigures Firefox to clone the session or route traffic through a JS-Tap beacon. Session cloning captures cookies, headers, and local/session storage and spoofs the user-agent.
+General Usability Improvements - As I’ve scaled out my use of JS-Tap, I’ve added features for searching and filtering clients and loot. This really helps in finding needles in haystacks.
+Wrapping Up
+The original DOM beacon hasn't gone anywhere, and for attacking web applications via XSS or web server-side implant, it's still exactly what it always was. The latest features are intended to target JavaScript where it has shifted to—sadly, into endpoint application environments that hand you more access than the browser ever did.
+As always, this is tooling meant for authorized engagements and education. If you run into issues or have ideas on how to make it better, my DMs are open [@hoodoer](https://x.com/hoodoer), or you can reach me at [hoodoer@bitwisemunitions.dev](mailto:hoodoer@bitwisemunitions.dev).
+Please let me know if you run into bugs. There will be bugs. This is a very large change in the code base.
+[https://github.com/hoodoer/JS-Tap](https://github.com/hoodoer/JS-Tap)(JS-Tap Repository)</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-8" class="article-body">
             <h2 class="article-title">Who Runs the Ransomware Group ‘The Gentlemen?’</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/06/who-runs-the-ransomware-group-the-gentlemen/" target="_blank">Original Link</a></p>
             <div class="content-text">A cybercrime group known as The Gentlemen has emerged as the second most active ransomware gang by victim count, rapidly attracting a talented pool of hackers through an aggressive recruitment strategy that promises affiliates 90 percent of any ransom paid by victims. This post examines clues pointing to a real life identity for the administrator of The Gentlemen ransomware group.
@@ -713,6 +619,17 @@ Very interesting article, I always say there’s only one internet and there’s
 Dropping a quick note of appreciation. Superb post.
 Rare to see such a balanced take. Appreciate you putting the time into this. Take care.
 You turned what’s usually a dry topic into something readable. Saved me hours of digging around.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-9" class="article-body">
+            <h2 class="article-title">Updates to the MSSQLHound OpenGraph Collector for BloodHound</h2>
+            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/01/20/updates-to-the-mssqlhound-opengraph-collector-for-bloodhound/" target="_blank">Original Link</a></p>
+            <div class="content-text"><p>tl;dr: MSSQLHound, a PowerShell script that collects security information from remote MSSQL Server instances, now scans them to determine whether or not NTLM relay attacks are possible, accounts for a recent privilege escalation vulnerability, and includes queries you can import into the BloodHound attack path graph to visualize, navigate, and remediate misconfigurations in MSSQL. Updates [&#8230;]</p>
+<p>The post <a href="https://specterops.io/blog/2026/01/20/updates-to-the-mssqlhound-opengraph-collector-for-bloodhound/">Updates to the MSSQLHound OpenGraph Collector for BloodHound</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
+
+[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
