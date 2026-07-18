@@ -59,150 +59,159 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-07-17</h1>
+        <h1>Security Briefing // 2026-07-18</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">US charges two over laundering $43 million from investment fraud</button></li><li><button onclick="show('art-1')">ACR Stealer: Two observed intrusion chains amid increased threat activity</button></li><li><button onclick="show('art-2')">Claude Chrome extension flaw lets malicious extensions trigger AI actions</button></li><li><button onclick="show('art-3')">Demystifying AI Exploits: A Blueprint for AI-Assisted Vulnerability Management</button></li><li><button onclick="show('art-4')">n8n Token Exchange Flaw Could Let Attackers Log In as Users From Another Issuer</button></li><li><button onclick="show('art-5')">Zoom Patches Critical Windows Flaw That Could Enable Account Takeover</button></li><li><button onclick="show('art-6')">CMMC is (Not) Cancelled</button></li><li><button onclick="show('art-7')">There and Back Again: An Operators Guide on NTLM Relaying Egress</button></li><li><button onclick="show('art-8')">Microsoft Patches a Record 570 Security Flaws</button></li><li><button onclick="show('art-9')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li></ul>
+            <ul><li><button onclick="show('art-0')">OpenSSL HollowByte Flaw Could Freeze Server Memory with 11-Byte TLS Requests</button></li><li><button onclick="show('art-1')">HollowByte DDoS flaw bloats OpenSSL server memory with 11-byte payload</button></li><li><button onclick="show('art-2')">Microsoft at Black Hat USA 2026: Defending trust in the age of AI and supply chain attacks</button></li><li><button onclick="show('art-3')">Claude Chrome extension flaw lets malicious extensions trigger AI actions</button></li><li><button onclick="show('art-4')">Demystifying AI Exploits: A Blueprint for AI-Assisted Vulnerability Management</button></li><li><button onclick="show('art-5')">New TELEPUZ Malware Spreads via ClickFix to Steal Data and Run Commands</button></li><li><button onclick="show('art-6')">CMMC is (Not) Cancelled</button></li><li><button onclick="show('art-7')">There and Back Again: An Operators Guide on NTLM Relaying Egress</button></li><li><button onclick="show('art-8')">Microsoft Patches a Record 570 Security Flaws</button></li><li><button onclick="show('art-9')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">US charges two over laundering $43 million from investment fraud</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/us-charges-two-over-laundering-43-million-from-investment-fraud/" target="_blank">Original Link</a></p>
-            <div class="content-text">U.S. prosecutors on Thursday charged a New York man and woman for their roles in a large-scale crime ring that laundered money stolen in cyber investment fraud scams. [...]
+            <h2 class="article-title">OpenSSL HollowByte Flaw Could Freeze Server Memory with 11-Byte TLS Requests</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/openssl-hollowbyte-flaw-could-freeze.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Eleven bytes will make an unpatched OpenSSL server set aside up to 131 KB of memory for a message that never arrives. On the glibc systems Okta tested, that memory is gone until the process restarts.
+OpenSSL shipped the HollowByte fix in June with no CVE, no advisory, and no changelog entry pointing at it. Okta's Red Team, which reported the denial-of-service bug and named it, published the details on Thursday.
+The fixed releases are OpenSSL [4.0.1, 3.6.3, 3.5.7, 3.4.6, and 3.0.21](https://github.com/openssl/openssl/releases), all dated June 9. Every release on those branches before the fixed ones has it. Nothing in a normal patch pipeline will point you at them: there is no identifier for a scanner to match and no advisory to read.
+The flaw is that OpenSSL took the attacker's word for it. Every TLS handshake message carries a 4-byte header, three bytes of which declare how long the body will be. Older versions grew the receive buffer to that declared size the moment the header landed, before a single byte of the body showed up, and before the handshake's own checks ran.
+For an inbound ClientHello the ceiling is 131 KB. Then the worker thread blocks, waiting on a body that never comes. No authentication, no session, no key exchange.
+The memory does not come back
+On its own, that is a connection-exhaustion attack, and those are as old as [Slowloris](https://thehackernews.com/2026/06/new-http2-bomb-vulnerability-allows.html). What makes HollowByte stick is glibc. When the attacker drops the connection, OpenSSL frees the buffer, but glibc holds small and medium chunks for reuse rather than returning them to the kernel.
+The attack varies the claimed size on every connection, and in Okta's tests, that was enough to stop the allocator from reusing what it freed. The heap fragments, resident set size climbs, and it stays climbed long after the attacker has gone.
+In Okta's NGINX testing, a 1 GB server was OOM-killed with 547 MB of memory frozen in fragments. On a 16 GB server, HollowByte locked up 25% of system memory without ever crossing the connection ceiling, which is why the Red Team says ["standard connection-limiting defenses won't stop it"](https://sec.okta.com/articles/2026/06/openssl-hollowbtye-a-dos-hiding-in-11-bytes/).
+Those figures are Okta's own, and it published no exploit code alongside them. The Hacker News found no public proof-of-concept repository on GitHub as of July 18.
+OpenSSL decided this wasn't a vulnerability
+The [pull request](https://github.com/openssl/openssl/pull/30792) from Matt Caswell, who wrote the patch, puts it plainly: the security team chose to "handle this as a 'bug or hardening' only fix". OpenSSL's own [security policy](https://openssl-library.org/policies/general/security-policy/) defines four severity tiers, Critical down to Low, and "bug or hardening" is not among them.
+Even a Low issue earns a CVE, a changelog note, and an entry on the vulnerabilities page. HollowByte has none of the three. The Hacker News found no mention of the fix in the [release notes](https://github.com/openssl/openssl/releases/tag/openssl-4.0.1) or in all 23 entries of OpenSSL's [4.0.1 changelog](https://github.com/openssl/openssl/blob/openssl-4.0.1/CHANGES.md).
+OpenSSL has not said why. Here is the case for them: 131 KB per connection is small, every TLS server allocates memory per connection, and a bounded allocation is not a vulnerability. Okta's answer is that the memory never comes back.
+The Hacker News has asked OpenSSL why HollowByte was triaged below Low, and whether the fix reached the extended-support 1.1.1 and 1.0.2 branches. It has also asked Okta whether the fragmentation survives allocators other than glibc. This story will be updated with any response.
+The project's line is finer than it looks. In January, OpenSSL assigned [CVE-2025-66199](https://openssl-library.org/news/vulnerabilities-3.6/#CVE-2025-66199), rated Low, to a TLS 1.3 certificate-compression bug in which a peer-supplied length grew a heap buffer before validation, worth around 22 MiB per connection.
+That one needed four things to line up: certificate compression compiled in, a compression algorithm available, the extension negotiated, and, on servers, client certificates requested. HollowByte needs none of them.
+The same June 9 release assigned [CVE-2026-34183](https://openssl-library.org/news/vulnerabilities-3.6/#CVE-2026-34183), rated Moderate, to unbounded memory growth in the QUIC PATH_CHALLENGE handler. Both are memory-exhaustion DoS. Both got numbers.
+The release also closed 18 CVEs, including a High-severity use-after-free in PKCS7_verify(), so anyone running one of those upstream builds has the fix without being told.
+Downstream is worse. Red Hat's [documented default](https://access.redhat.com/security/updates/backporting) is to backport rather than move the version, so a patched package still reports the version it was built from. What normally resolves that is the advisory and the OVAL feed, both keyed to CVE names. There is no CVE here to key on.
+That leaves the package changelog or the maintainer: ask whether they rebased on the June 9 release or took the patch, which is pull request [30792](https://github.com/openssl/openssl/pull/30792) for master and 4.0, [30793](https://github.com/openssl/openssl/pull/30793) for 3.6, 3.5, and 3.4, and [30794](https://github.com/openssl/openssl/pull/30794) for 3.0.
+If you build OpenSSL yourself, upgrade to the listed release and restart whatever loaded the old one.
+The fix covers TLS only. Caswell wrote on the pull request that DTLS was left alone because doing it properly would have been far more invasive, and that the project decided not to bother with it for now. The Hacker News compared OpenSSL's source at the 3.6.2 and 3.6.3 tags and found the DTLS handshake file byte-identical across the fix. In 4.0.1, the newest release, that path still sizes its buffer from the length the peer declares.
+OpenSSL has not classified that path or committed to fixing it. The release notes, the changelog, and the vulnerabilities page say nothing about it. The pull request does.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">HollowByte DDoS flaw bloats OpenSSL server memory with 11-byte payload</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/hollowbyte-ddos-flaw-bloats-openssl-server-memory-with-11-byte-payload/" target="_blank">Original Link</a></p>
+            <div class="content-text">A vulnerability dubbed HollowByte allows unauthenticated attackers to trigger a denial-of-service (DoS) condition on OpenSSL servers with a malicious payload of just 11 bytes. [...]
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-1" class="article-body">
-            <h2 class="article-title">ACR Stealer: Two observed intrusion chains amid increased threat activity</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/07/16/acr-stealer-two-observed-intrusion-chains-amid-increased-threat-activity/" target="_blank">Original Link</a></p>
-            <div class="content-text">From late April 2026 to mid-June 2026, Microsoft Defender Experts observed increased ACR Stealer activity across customer environments. These campaigns are successfully using ClickFix lures to steal browser credentials, authentication tokens, and sensitive documents from enterprise environments. Successful compromise can expose browser credentials, session tokens, authentication artifacts, and sensitive enterprise data, potentially enabling account compromise, unauthorized access to cloud resources, and follow-on intrusion activity. Security teams should prioritize monitoring for ClickFix lures, suspicious WebDAV activity, obfuscated PowerShell execution, and attempts to access browser credential stores.
-ACR Stealer is an information-stealing malware family reportedly offered through a malware-as-a-service (MaaS) model and associated with the rebranding of Amatera Stealer. During this period, two campaigns stand out, together appearing frequently in reviewed recent intrusions. Both begin the same way, with a ClickFix social engineering technique that tricks targets into running the threat actor’s command, but the intrusion chains that follow diverge in how they deliver payloads, establish execution, and evade detection.
-The first campaign relies on WebDAV-delivered payloads, staged PowerShell, Python-based loaders and persistence, and, in some intrusions, blockchain-backed dead-drop command-and-control (C2) resolution. The second campaign takes a more fileless route, using MSHTA, obfuscated PowerShell, and steganography-assisted in-memory execution. Despite these differences, both campaigns ultimately pursue the same goal: stealing browser-stored credentials and other sensitive data for exfiltration.
-These two campaigns represent some of the most prevalent ACR Stealer delivery campaigns observed by Defender Experts; however, they do not represent the full range of delivery methods used by this malware family. Attribution to ACR Stealer is based on the observed behavior and post-exploitation tradecraft, corroborated by open-source intelligence on the infrastructure associated with this malware family. Additional campaigns, infrastructure patterns, and execution chains are likely active, and organizations should treat the indicators and techniques described here as representative.
-Microsoft Defender for Endpoint can help surface both campaigns through behavioral coverage for living-off-the-land execution, suspicious WebDAV and MSHTA activity, obfuscated PowerShell, scheduled-task persistence, in-memory payload execution, and browser credential theft. In this blog, we analyze both campaigns in detail, including their delivery mechanisms, post-exploitation tradecraft, indicators of compromise, hunting opportunities, and guidance to help defenders detect and disrupt related activity in their environments.
-Campaign 1: WebDAV-based ClickFix with Python loaders and blockchain C2
-Initial access
-In this campaign, a ClickFix prompt, likely delivered through malvertising or SEO-manipulated search results, instructs the target user to run a command that launches cmd.exe. The command subsequently invokes rundll32.exe to load a DLL from a remote WebDAV share accessed over HTTPS. The WebDAV path commonly uses a GUID-based directory structure and filenames designed to resemble legitimate resources (for example, google.ct), enabling the activity to blend with expected network traffic and evade casual inspection.
-We observed three variants of the initial execution command:
-Variant 1: Direct rundll32 invocation
-Variant 2: pushd-Mounted WebDAV Share
-Variant 3: Headless and obfuscated pushd execution
-Variants 2 and 3 are notable for their use of pushd, which transparently maps the remote WebDAV share to a temporary local drive prior to execution. This technique allows threat actors to execute remotely hosted content through what appears to be a local path, simplifying payload execution while reducing user awareness. In the more advanced variant, threat actors further enhance stealth by launching commands through conhost.exe –headless, suppressing visible console windows, and employing environment variable obfuscation with delayed variable expansion to conceal critical execution components such as pushd, rundll32, and the remote host name. Combined with minimized or headless execution, these techniques reduce user visibility, complicate static analysis and detection, and enable the infection chain to execute with minimal indication to the victim.
-Execution, persistence, and evasion through process masquerading
-Once rundll32.exe loads the DLL retrieved from the remote server, the malware establishes communication with threat actor-controlled infrastructure and executes a heavily obfuscated PowerShell script. The script employs excessive arithmetic no-ops, dead loops, fake control flow, and randomized variable names to hinder static analysis and evade signature-based detection.
-The PowerShell script subsequently deploys another stage that functions as both a malware installer and a persistence mechanism. It:
-- Downloads a ZIP-packaged payload from a remote server and extracts it into a deceptive directory under %LocalAppData%\Temp (for example, LogiOptionsPlus).
-- Launches a Python script using a bundled pythonw.exe instance to avoid displaying a console window.
-- Removes previous deployments and terminates running instances before installation, effectively operating as an updater.
-- Establishes persistence through a hidden scheduled task disguised as a legitimate software update, ensuring execution at user sign-in.
-- Copies timestamps from a trusted Windows binary (notepad.exe) to the deployed files and clears PowerShell command history to reduce forensic visibility.
-Python loader launching the stealer
-The Python component serves as a heavily obfuscated loader designed to conceal its true functionality until runtime. It employs multiple layers of defense against static analysis, including dynamic API resolution, encoded string reconstruction, junk-data removal, character shifting, string reversal, Base64 decoding, and zlib decompression. These techniques ensure that the embedded payload remains unreadable in its static form and is reconstructed only during execution, significantly hindering signature-based detection and automated analysis.
-Once decoded, the final-stage payload functions as an in-memory shellcode loader. It extracts an archive file masquerading as a legitimate application installer, reads a file from the archive, and injects the payload into a system process. The loader allocates executable memory using VirtualAlloc, copies the payload into the allocated memory region, and transfers execution through the Windows Fiber API (ConvertThreadToFiber, CreateFiber, and SwitchToFiber). This technique facilitates stealthy in-memory execution while minimizing artifacts written to disk.
-Credential theft and data staging for exfiltration
-The malware (injected code) aggressively harvests information from browser credential stores. It invokes Windows Data Protection API (DPAPI) routines to decrypt locally stored browser passwords, cookies, and authentication tokens. It also enumerates files across the system, targeting PDFs, Microsoft 365 documents, and data stored in enterprise-synchronized directories such as OneDrive and SharePoint. The collected data is subsequently archived, indicating preparation for exfiltration.
-Blockchain dead-drop C2 resolution
-A notable variation in this campaign is the use of blockchain services for C2 resolution, utilizing a technique known as EtherHiding. While most intrusions rely on more conventional C2 mechanisms, a subset deploys an additional secondary Python loader that leverages blockchain services as dead-drop resolvers. When this loader executes, it has been observed communicating with public blockchain RPC endpoints and third-party Web3 node infrastructure, likely querying data stored on a decentralized public ledger to retrieve follow-up payloads or a C2 address.
-By externalizing C2 information to the blockchain, operators could dynamically update infrastructure without modifying or redeploying the malware, significantly complicating detection and takedown efforts. This behavior was observed across both variants of the campaign.
-Campaign 2: MSHTA-initiated PowerShell chain with steganographic payload delivery
-The second campaign takes a distinctly different approach to both delivery and execution. Where Campaign 1 relies on disk-based artifacts (Python runtime, scheduled tasks, and masquerading binaries), this campaign achieves its objectives almost entirely through fileless, in-memory execution, making it harder to detect through file-based scanning and forensic analysis.
-Initial access through MSHTA and ClickFix
-The execution chain begins when the victim, directed through malvertising or SEO-manipulated search results, encounters a ClickFix prompt that triggers a command spawning MSHTA to fetch and execute remote HTA content from an threat actor-controlled domain. The embedded VBScript loader abuses COM objects to decode and execute encoded PowerShell content.
-PowerShell downloader and obfuscation
-The decoded PowerShell stage employs obfuscation techniques similar to those seen in Campaign 1: randomized variable names, arithmetic no-op operations, dead loops, misleading control flow, and custom encryption routines. Prior to contacting its next-stage infrastructure, the malware generates a victim-specific identifier and disables certificate validation. The retrieved content is executed directly in memory.
-Steganography-based payload delivery
-A notable technique in this campaign is the use of steganography to conceal malicious content inside a publicly hosted image. Instead of downloading a secondary script (as in Campaign 1), the malware retrieves a JPEG image from an image-hosting service.
-Analysis of the script revealed custom routines that extract an embedded payload from image pixels, decrypt and decompress it, and execute it entirely in memory. The payload dynamically resolves APIs such as LoadLibrary, GetProcAddress, VirtualAlloc, CreateThread, and WaitForSingleObject at runtime to perform reflective shellcode execution. By combining steganography with in-memory execution, the malware minimizes on-disk artifacts and complicates both detection and analysis.
-Credential theft, data collection, and exfiltration
-Following execution, the malware accesses credential stores belonging to Chromium-based browsers, including Google Chrome and Microsoft Edge, specifically the Login Data and Web Data databases, alongside Windows DPAPI decryption activity. This behavior indicates attempts to recover stored browser credentials, session cookies, authentication tokens, and other sensitive user information.
-The malware also enumerates and accesses multiple high-value PDF documents across Desktop and Downloads locations, suggesting targeted collection of potentially sensitive files. The combination of browser credential harvesting and systematic document access points to an information-stealing objective focused on staging credentials and valuable user data for exfiltration.
-Mitigation and protection guidance
-Microsoft recommends the following mitigations to reduce the impact of ClickFix lures, script-based payload delivery, credential theft, and post-compromise activity.
-- Educate users to recognize ClickFix-style prompts, fake verification checks, and paste-and-run instructions as malicious, especially when they invoke command interpreters or script hosts such as cmd.exe, PowerShell, rundll32.exe, or mshta.exe.
-- Reduce exposure to malvertising, SEO poisoning, and other web-based delivery chains by enforcing web filtering, blocking low-reputation or newly observed domains, and limiting access to remote content sources that are not required for business operations.
-- Use application control and attack surface reduction rules to restrict PowerShell, Python, mshta.exe, rundll32.exe, and similar tools from launching untrusted or internet-delivered content, particularly from user-writable directories such as Downloads, Temp, and %LocalAppData%.
-- Monitor for suspicious persistence and defense-evasion behavior, including scheduled tasks masquerading as software updates, timestomping, PowerShell history clearing, and execution chains that progress from remote content retrieval into PowerShell, Python, or shellcode-loading behavior.
-- Investigate abnormal access to Chromium-based browser databases, DPAPI-related decryption activity, staged collection of Microsoft 365 documents or PDFs, and compression activity that may indicate credential theft or data staging for exfiltration.
-- If compromise is suspected, isolate affected devices, rotate exposed credentials, revoke potentially compromised tokens, review persistence mechanisms, and investigate outbound connections to remote shares, image-hosting services, or other infrastructure used to resolve or retrieve follow-on payloads.
-- Harden endpoints against credential theft by reducing reliance on browser-stored credentials, enforcing multifactor authentication and conditional access, and reviewing how privileged accounts access sensitive applications and synchronized enterprise data.
-- Turn on
-[cloud-delivered protection](https://learn.microsoft.com/defender-endpoint/enable-cloud-protection-microsoft-defender-antivirus)and behavior-based detections to help identify rapidly evolving threats, suspicious script execution, in-memory payload delivery, abuse of browser credential stores, and unusual child-process activity. - Run
-[endpoint detection and response (EDR) in block mode](https://learn.microsoft.com/defender-endpoint/edr-in-block-mode)and enable[automated investigation and remediation](https://learn.microsoft.com/defender-endpoint/automated-investigations)so post-breach detections are contained, and malicious artifacts can be removed with minimal delay. - Harden PowerShell by enforcing appropriate execution policies, turning on
-[script block logging](https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about/about_logging?view=powershell-5.1), module logging, and transcription, and monitoring this telemetry for signs of malicious script activity. - Turn on
-[tamper protection](https://learn.microsoft.com/microsoft-365/security/defender-endpoint/prevent-changes-to-security-settings-with-tamper-protection)and prevent local administrators from weakening antivirus protection through local policy or exclusion changes.
-Microsoft Defender XDR detections
-Microsoft Defender XDR customers can refer to the list of applicable detections below. Microsoft Defender XDR coordinates detection, prevention, investigation, and response across endpoints, identities, email, and apps to provide integrated protection against attacks like the threat discussed in this blog.
-| Tactic | Observed Activity | Microsoft Defender Coverage |
-| Execution | – Suspicious MSHTA launch through ClickFix execution – Rundll32 loads remote WebDAV DLL – COM objects launch in-memory PowerShell | Microsoft Defender for Endpoint – Use of living-off-the-land binary to run malicious code – Obfuscated command line was launched – Suspicious process executed PowerShell command – Suspicious process launch by Rundll32.exe Microsoft Defender for Antivirus Behavior:Win32/Interhta.Int |
-| Persistence | PowerShell creates Scheduled task, masquerading as a software update | Microsoft Defender for Endpoint – Suspicious Scheduled Task Process Launched – Suspicious scheduled task |
-| Stealth/Defense Evasion | – Fiber-API in-memory shellcode execution – Reflective shellcode via CreateThread | Microsoft Defender for Endpoint Possible process hollowing |
-| Credential Access | Collects browser credentials, cookies, and tokens while enumerating files for exfiltration | Microsoft Defender for Endpoint – Information stealing malware activity – Suspicious DPAPI activity – Possible theft of passwords and other sensitive web browser information |
-Microsoft Security Copilot
-[Microsoft Security Copilot](https://www.microsoft.com/en-us/security/business/ai-machine-learning/microsoft-security-copilot) is [embedded in Microsoft Defender](https://learn.microsoft.com/defender-xdr/security-copilot-in-microsoft-365-defender) and provides security teams with AI-powered capabilities to summarize incidents, analyze files and scripts, summarize identities, use guided responses, and generate device summaries, hunting queries, and incident reports.
-Customers can also [deploy AI agents](https://learn.microsoft.com/defender-xdr/security-copilot-agents-defender), including the following [Microsoft Security Copilot agents](https://learn.microsoft.com/copilot/security/agents-overview), to perform security tasks efficiently:
-[Threat Intelligence Briefing agent](https://learn.microsoft.com/defender-xdr/threat-intel-briefing-agent-defender)[Phishing Triage agent](https://learn.microsoft.com/defender-xdr/phishing-triage-agent)[Threat Hunting agent](https://learn.microsoft.com/defender-xdr/advanced-hunting-security-copilot-threat-hunting-agent)[Dynamic Threat Detection agent](https://learn.microsoft.com/defender-xdr/dynamic-threat-detection-agent)
-Security Copilot is also available as a [standalone experience](https://learn.microsoft.com/en-us/copilot/security/experiences-security-copilot) where customers can perform specific security-related tasks, such as incident investigation, user analysis, and vulnerability impact assessment. In addition, Security Copilot offers [developer scenarios](https://learn.microsoft.com/copilot/security/developer/custom-agent-overview) that allow customers to build, test, publish, and integrate AI agents and plugins to meet unique security needs.
-Threat intelligence reports
-Microsoft Defender XDR customers can use the following threat analytics reports in the Defender portal (requires license for at least one Defender XDR product) to get current information available in the Defender portal about the threat actor, malicious activity, and techniques discussed in this blog. These reports provide the intelligence, protection information, and recommended actions to help prevent, mitigate, or respond to associated threats found in customer environments:
-[Amatera Stealer: Rebranded ACR Stealer With Improved Evasion, Sophistication](https://security.microsoft.com/intel-explorer/articles/a9f32b94)[Double Trouble: Latrodectus and ACR Stealer observed spreading via Google Authenticator Phishing Site](https://security.microsoft.com/intel-explorer/articles/a476ee2b)
-Microsoft Security Copilot customers can also use the [Microsoft Security Copilot integration](https://learn.microsoft.com/defender/threat-intelligence/security-copilot-and-defender-threat-intelligence?bc=%2Fsecurity-copilot%2Fbreadcrumb%2Ftoc.json&toc=%2Fsecurity-copilot%2Ftoc.json#turn-on-the-security-copilot-integration-in-defender-ti) in Microsoft Defender Threat Intelligence, either in the Security Copilot standalone portal or in the [embedded experience](https://learn.microsoft.com/defender/threat-intelligence/using-copilot-threat-intelligence-defender-xdr) in the Microsoft Defender portal to get more information about this threat actor.
-Advanced hunting queries
-Microsoft Defender XDR customers can run the following [advance hunting](https://learn.microsoft.com/defender-xdr/advanced-hunting-overview) queries to find related activity in their networks:
-Run the query below to identify suspicious commands executed through ClickFix-based activity observed while delivering this stealer
-DeviceRegistryEvents | where RegistryKey has "RunMRU" | where (RegistryValueData has_all ("rundll32", "@ssl", " /c ", " start ") and (RegistryValueData matches regex @"\\\\[^\\]+@ssl\\[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\\\w+\.\w+,#1" or RegistryValueData matches regex @"(?i)pushd \\\\[^\\]+@ssl\\[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12} ")) or RegistryValueData has_all ("@ssl", " /c ", "conhost --headless ") and RegistryValueData contains "rundll32" |
-Run the query below to identify scheduled task creation used for persistence by a malicious PowerShell script
-DeviceProcessEvents | where InitiatingProcessFileName =~ "powershell.exe" | where InitiatingProcessCommandLine has_all ("-Command", "powershell") | where ProcessCommandLine has_all ("schtasks", " /run /tn ", " Autoupdate ") and ProcessCommandLine matches regex "[0-9]{8}" |
-Run the query below to identify suspicious MSHTA launch through PowerShell
-DeviceProcessEvents | where InitiatingProcessParentFileName has "explorer.exe" | where InitiatingProcessFileName =~ "powershell.exe" and InitiatingProcessCommandLine in~ ('"PowerShell.exe" ', '"PowerShell.exe"') | where ProcessCommandLine has_all ('"mshta.exe" https://') and ProcessCommandLine matches regex "/[0-9]{7}" |
-MITRE ATT&CK techniques observed
-The following mapping summarizes the primary tactics and techniques observed across the two ACR Stealer intrusion chains. The mapping is intended to help defenders align observed behaviors with existing detection coverage, response playbooks, and hunting priorities.
-| Tactic | Technique | Observed behavior |
-| Initial Access | Drive-by Compromise; User Execution | ClickFix lure prompts command execution. |
-| Execution | Command and Scripting Interpreter: Windows Command Shell; PowerShell; Python | cmd.exe, PowerShell, and pythonw.exe launch staged payloads. |
-| Execution | System Binary Proxy Execution: Rundll32; Mshta | Rundll32 loads WebDAV DLLs; mshta.exe runs remote HTA content. |
-| Persistence | Scheduled Task/Job: Scheduled Task | Hidden scheduled task maintains user-logon execution. |
-| Defense Evasion | Obfuscated Files or Information; Masquerading; Indicator Removal: Clear Command History | Obfuscation, timestomping, history clearing, and masquerading. |
-| Defense Evasion | Obfuscated Files or Information: Steganography | JPEG pixel data hides the encrypted payload. |
-| Defense Evasion / Execution | Reflective Code Loading; Process Injection | In-memory shellcode execution via runtime API resolution. |
-| Credential Access | Credentials from Web Browsers | Browser stores and DPAPI activity used to recover credentials and tokens. |
-| Collection | Data from Local System; Data Staged | PDFs, Office files, and synced enterprise data are staged. |
-| Command and Control | Web Service; Dead Drop Resolver | Infrastructure and blockchain RPC endpoints resolve payload or C2 data. |
-Indicators of compromise (IOC)
-| Campaign 1 | |
-| Indicator | Description |
-| looksta[.]icu | C2 domain |
-| contrite.quirksturdy[.]icu | C2 domain |
-| ux.strainedeasily[.]icu | C2 domain |
-| cpppemwjewjoiwejow[.]sale | C2 domain |
-| breaksd.wifihot[.]icu | C2 domain |
-| walter.filloco[.]icu | C2 domain |
-| fast.raidher[.]icu | C2 domain |
-| apigrokcloud[.]icu | C2 domain |
-| Campaign 2 | |
-| enhanceblabber[.]cc | C2 domain |
-| deep-harborio[.]com | 1st Stage payload hosting site |
-| auramatrixa[.]com | 1st Stage payload hosting site |
-| zealpraxis[.]com | 1st Stage payload hosting site |
-| prism-vertex[.]com | 1st Stage payload hosting site |
-| prism-matrixs[.]com | 1st Stage payload hosting site |
-| proton-network[.]com | 1st Stage payload hosting site |
-| creativecommunityinfo[.]art | Payload hosting site |
-References
-Learn more
-For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
-To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
-To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
-Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
-- Evaluate your AI readiness with our latest
-[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). [Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)- Learn more about
-[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection)</div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">Microsoft at Black Hat USA 2026: Defending trust in the age of AI and supply chain attacks</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/07/17/microsoft-at-black-hat-usa-2026-defending-trust-in-the-age-of-ai-and-supply-chain-attacks/" target="_blank">Original Link</a></p>
+            <div class="content-text">Across the threat landscape, in this moment, one pattern sits at the center of the story: threat actors are following trust.
+They are not only looking for vulnerable systems, but rather targeting the software, services, identities, tools, developer workflows, and AI systems that organizations already depend on.
+A package can become a distribution path. A build pipeline can become an access path. A trusted tool can become or expand an attack surface. An AI agent with the wrong access can become a new way to reach code, data, or infrastructure.
+While the surfaces may change, the goal for the majority of threat actors remains the same: find what is trusted, abuse it, and scale the impact.
+At [Black Hat USA 2026](https://blackhat.com/us-26/), Microsoft Security will walk through how we are seeing this shift unfold, how security teams can look for it earlier, and how threat intelligence, expert-led response, and security operations need to work together when campaigns move across software, identity, cloud, data, and AI systems.
+On Wednesday, August 5, 2026, the day begins with David Weston’s keynote, [The End of Rare: Defending When Offense Is Cheap](https://blackhat.com/us-26/features/schedule/index.html?track%5b%5d=keynotes&track%5b%5d=main-stage), which looks at what defense requires when offensive capability becomes easier to access, automate, and scale. Later that afternoon, Aarti Borkar and Tanmay Ganacharya will resume the main stage for [Poisoned at the Source: Inside the Hunt for Supply Chain Attacks](https://blackhat.com/us-26/features/schedule/?day=wednesday#poisoned-at-the-source-inside-microsoft-threat-intelligences-hunt-for-supply-chain-attacks-56692), which offers a closer look at how Microsoft Threat Intelligence is hunting attacks across software ecosystems, developer workflows, and trusted services. This includes details into the ongoing attacks on npm (Node package manager).
+Together, these sessions frame the challenge security teams are facing now: when offensive capability becomes easier to scale, security teams need to understand the trust paths threat actors can abuse before those paths become open doors for attacks.
+At our booth, we’ll also showcase [Microsoft Defender Experts Threat Intelligence](https://www.microsoft.com/en-us/security/blog/2026/07/15/turning-threat-intelligence-into-decisive-action-with-defender-experts/), a new expert-led service delivering continuous, curated intelligence tailored to your organization, and Microsoft Defender Experts MDR, now extended with third-party and multicloud coverage.
+From August 4 to 6, 2026, at Mandalay Bay in Las Vegas, you’ll find Microsoft Security on the Business Hall floor at booth #2144, and on Wednesday evening, join us at the Microsoft Security reception at Swingers at Mandalay Bay.
+Weston on the future of defense
+At 9:15 AM PT on Wednesday, August 5, 2026, David Weston, CVP of Agentic Security, will examine what changes for security teams when offensive capability becomes easier to access, automate, and scale.
+The keynote sets up one of the central questions security leaders are facing now: how does the security operations center (SOC) and analysts adapt when threat actors can move faster, test more often, and reuse trusted paths across software, identity, cloud, and AI systems? [Join the keynote](https://blackhat.com/us-26/features/schedule/index.html?track%5b%5d=keynotes&track%5b%5d=main-stage) Wednesday, August 5, 2026, then continue the conversation with Microsoft Security at booth #2144.
+Our latest intelligence (and response) on npm supply chain attacks
+That same intelligence-to-action challenge is at the center of our main stage session at Black Hat.
+On Wednesday, August 5, 2026, from 2:30 PM PT to 3:00 PM PT, Aarti Borkar, Corporate Vice President (CVP), Microsoft Security, and Tanmay Ganacharya, Vice President of Microsoft Security Research and Threat Intelligence, will share intelligence and insights into the ongoing supply chain campaigns impacting all areas of the threat landscape. The talk, [Poisoned at the Source: Inside the Hunt for Supply Chain Attacks](https://blackhat.com/us-26/features/schedule/?day=wednesday#poisoned-at-the-source-inside-microsoft-threat-intelligences-hunt-for-supply-chain-attacks-56692), will walk through Microsoft Threat Intelligence’s investigations into the ongoing npm supply chain attacks targeting software ecosystems, developer workflows, trusted services, and how organizations are handling the challenges associated with npm packages.
+Follow the research in the Black Hat Briefings
+Microsoft Security researchers will also present peer-reviewed technical research in the Black Hat Briefings. These sessions go deep into cloud, mobile, and software supply chain defense.
+GitHub Can Tell You’re Being Hacked. You’re Just Not Listening: Building EDR for GitHub from Its Own Event Stream
+- Presented by Yossi Weizman, Principal Security Research Manager
+- Wednesday, August 5, 2026, from 10:15 AM PT to 10:45 AM PT
+One Click to System: Exploiting Bixby’s Trust Model for Full Device Compromise
+- Presented by Dimitrios Valsamaras, Senior Security Researcher
+- Wednesday, August 5, 2026, from 12:00 PM PT to 12:40 PM PT
+Handle With Care: Chaining Azure Automation Flaws for Cross-Tenant Identity Takeover
+- Presented by Shay Shavit, Senior Security Researcher
+- Wednesday, August 5, 2026, from 4:30 PM PT to 5:10 PM PT
+Check the official [Black Hat schedule](https://blackhat.com/us-26/briefings/schedule/) for final room assignments and any timing updates.
+Go deeper in Microsoft sessions
+Microsoft experts will also lead sessions that give you a closer look behind the scenes, including:
+[Mind the Gap: Turning Threat Intelligence into Decisive Action with Expert-Led Defense](https://blackhat.com/us-26/sponsored-sessions/schedule/index.html?format[]=20-minute-sponsored-session#mind-the-gap-turning-threat-intelligence-into-decisive-action-with-expert-led-defense-56120)
+- Presented by Wes Malaby, General Manager of Customer Success
+- Wednesday, August 5, 2026, from 5:00 PM PT to 5:20 PM PT
+- Presented by Fanta Kaba and special guest Jimmie Galaites
+- Wednesday, August 5, 2026, from 5:00 PM PT to 5:20 PM PT
+- Presented by Naadia Sayed, Principal Product Manager
+- Thursday, August 6, 2026, from 11:15 AM PT to 12:00 PM PT
+These sessions extend the main stage story into practitioner decisions: how teams move from intelligence to action, how defenders test their judgment under pressure, and how AI and agents are changing security workflows.
+Visit booth #2144 for research, community, and hands-on defense
+This year we are transforming the Microsoft Security booth into a community center. [Click here to jump to the full schedule](#microsoft-security-booth-2144-experiences-and-schedule).
+If the keynote and main stage sessions frame the largest challenges across the threat landscape, booth #2144 is where you can directly explore the workflows behind it: threat intelligence, incident response, AI security, security operations, partner solutions, and hands-on practice.
+You will find:
+Connection circles, ask-me-anythings (AMAs), meetups led by industry influencers, and lightning talks
+Short-form conversations with practitioners and experts on threat intelligence, incident response, AI security, identity, data protection, and security operations. If you swing by when the expo area opens, we’ll also fuel you up so you can skip the food court.
+Partner presence
+At Black Hat 2026, the Microsoft booth will feature 13 partners from the [Microsoft Intelligent Security Association (MISA)](https://www.microsoft.com/en-us/security/business/intelligent-security-association) who will showcase solutions built with Microsoft Security technology. Security Insider Conversations will feature MISA partners Critical Start (August 5, 2026, at 3:30 PM PT) and Huntress (August 6, 2026, at 2:00 PM PT) alongside Microsoft Security experts. Additionally, thank you to our Microsoft Security VIP Mixer sponsors: Ascent Solutions, Avertium, Devicie, Huntress, Illumio, Maureen Data Systems, and Security Risk Advisors.
+Demo our latest innovations
+Explore connected experiences across defending with AI, securing AI, strengthening posture for AI adoption, using security intelligence in investigations and response, working with trusted partners, and connecting with Microsoft Defender experts.
+Exclusive swag (featuring a surprise guest)
+Spend some time with us at the experience we built around the booth and you’ll earn tokens that can be exchanged for custom patches and hats (because security experts have to wear many hats). Your favorite paperclip may be among the patches. Maybe.
+Decompress with mini golf
+The biggest Microsoft Security community moment of the week is our reception at Swingers at Mandalay Bay, hosted by Aarti Borkar.
+Join us Wednesday, August 5, 2026, from 6:00 PM PT to 9:00 PM PT for food, drinks, mini golf, partner activations, and time with the Microsoft Security team away from the show floor.
+Come compare notes with peers, meet Microsoft researchers and responders, and connect with the broader Microsoft Security community.
+Space is limited, so reserve your spot early.
+Plan your week with Microsoft Security
+You can find Microsoft Security at booth #2144 during Business Hall hours:
+- Tuesday, August 4, 2026: 4:00 PM PT to 7:00 PM PT
+- Wednesday, August 5, 2026: 9:00 AM PT to 6:00 PM PT
+- Thursday, August 6, 2026: 9:00 AM PT to 4:00 PM PT
+Stop by early to see the booth schedule, find upcoming AMAs and connection circles, and plan which live sessions and hands-on experiences you want to attend.
+Skill up before and after Black Hat
+You do not need to be in Las Vegas to take part in the broader Microsoft Security Black Hat experience.
+The [Microsoft Black Hat Skilling Challenge](https://learn.microsoft.com/en-us/security/challenge/defender-challenge) begins July 20, 2026, and will help defenders build hands-on skills across [Microsoft Defender](https://www.microsoft.com/en-us/security/business/microsoft-defender), [Microsoft Sentinel](https://www.microsoft.com/en-us/security/business/siem-and-xdr/microsoft-sentinel), and [Microsoft Security Copilot](https://www.microsoft.com/en-us/security/business/ai-machine-learning/microsoft-security-copilot). Attendees can use the challenge to prepare before the event, then bring questions to on-site experts and community sessions. Remote participants can follow along through Microsoft Tech Community, AMAs, recaps, and post-event resources.
+See you at hacker summer camp
+Threat actors are adapting around the systems organizations already trust. Security teams need to understand those trust paths before they become attack paths.
+At Black Hat USA 2026, Microsoft Security will bring the research, expert perspective, and hands-on experiences to help practitioners see where attacker behavior is moving and how defense can adapt.
+Add Poisoned at the Source to your schedule. Visit us at booth #2144. Join the skilling challenge. And register for the Microsoft Security reception on Wednesday night.
+Microsoft Security booth #2144 experiences and schedule
+Tuesday, August 4, 2026
+| Time | Title |
+|---|---|
+| 5:00 PM PT to 6:00 PM PT | How Practitioners Build Effective Security Playbooks |
+| 6:00 PM PT to 7:00 PM PT | Agentic Security: What’s Next |
+Wednesday, August 5, 2026
+| Time | Title |
+|---|---|
+| 9:00 AM PT to 9:30 AM PT | Security Communities Meet Up |
+| 10:00 AM PT to 10:30 AM PT | Using Offensive Security Research to Advance AI Security |
+| 10:30 AM PT to 11:00 AM PT | The Confused Deputy Strikes Back: How AI Agents Turn Into RCE Proxies |
+| 12:00 PM PT to 12:30 PM PT | Hunting in the Gray: When Nation-States and Cybercrime Collide |
+| 12:30 PM PT to 1:00 PM PT | AI in Security Operations: What Actually Works and What Doesn’t |
+| 1:00 PM PT to 2:00 PM PT | AI in the SOC: Lessons Learned from the Front Lines |
+| 2:30 PM PT to 2:30 PM PT | Microsoft Defender Challenge |
+| 2:30 PM PT to 3:00 PM PT | From Alert Fatigue to Action: How Practitioners Prioritize What Matters |
+| 3:00 PM PT to 3:30 PM PT | Agents in the Flow of Work: From Signals to Action |
+| 3:30 PM PT to 4:00 PM PT | Will It Hold Up in Court? Forensic Defensibility of Microsoft 365 Evidence |
+| 5:00 PM PT to 6:00 PM PT | Zero Trust for the Agentic Era: An Interactive Discussion for Securing AI |
+Thursday, August 6, 2026
+| Time | Title |
+|---|---|
+| 9:00 AM PT to 9:30 AM PT | The Future of Microsoft Security and How Communities Can Support You |
+| 10:00 AM PT to 10:15 AM PT | Quantum Is Here: What Practitioners Must Do Now |
+| 11:00 AM PT to 12:00 PM PT | The Next Era of Cyber Defense: Clarity, Control, and Response at Scale |
+| 12:00 PM PT to 12:30 PM PT | Lessons from the Field: What to Do When You’re Under Attack |
+| 12:30 PM PT to 1:00 PM PT | When Browsers Become Agents: The Emerging Security Risks of AI‑Powered Browsers |
+| 2:30 PM PT to 3:00 PM PT | Social Engineering Always Matters |
+| 3:00 PM PT to 3:30 PM PT | AI Runs on Data: Securing the Foundation of AI Adoption |
+To learn more about Microsoft Security solutions, visit our [website.](https://www.microsoft.com/en-us/security/business) Bookmark the [Security blog](https://www.microsoft.com/security/blog/) to keep up with our expert coverage on security matters. Also, follow us on LinkedIn ([Microsoft Security](https://www.linkedin.com/showcase/microsoft-security/)) and X ([@MSFTSecurity](https://twitter.com/@MSFTSecurity)) for the latest news and updates on cybersecurity.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-2" class="article-body">
+        <div id="art-3" class="article-body">
             <h2 class="article-title">Claude Chrome extension flaw lets malicious extensions trigger AI actions</h2>
             <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/claude-chrome-extension-flaw-lets-malicious-extensions-trigger-ai-actions/" target="_blank">Original Link</a></p>
             <div class="content-text">A flaw in Anthropic's Claude for Chrome browser extension could allow a malicious extension to trigger predefined AI actions by simulating user clicks, potentially allowing it to abuse Claude's access to connected services such as Gmail, Google Docs, Google Calendar, and Salesforce. [...]
@@ -212,7 +221,7 @@ Review our documentation to learn more about our real-time protection capabiliti
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-3" class="article-body">
+        <div id="art-4" class="article-body">
             <h2 class="article-title">Demystifying AI Exploits: A Blueprint for AI-Assisted Vulnerability Management</h2>
             <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/ai-assisted-vulnerability-management/" target="_blank">Original Link</a></p>
             <div class="content-text">Demystifying AI Exploits: A Blueprint for AI-Assisted Vulnerability Management
@@ -336,67 +345,31 @@ This analysis would not have been possible without the assistance of Google Thre
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">n8n Token Exchange Flaw Could Let Attackers Log In as Users From Another Issuer</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/n8n-token-exchange-flaw-could-let.html" target="_blank">Original Link</a></p>
-            <div class="content-text">[n8n](https://thehackernews.com/2026/03/critical-n8n-flaws-allow-remote-code.html), the workflow automation platform, handed out the wrong accounts at login. On Enterprise instances configured to trust more than one external token issuer, it matched an incoming JWT to a local user on the sub
-claim alone and ignored iss
-.
-A valid token from issuer A carrying a sub
-that belongs to someone under issuer B logged you in as them. Their password never came into it. n8n shipped the fix on June 24.
-The flaw is tracked as [ CVE-2026-59208](https://nvd.nist.gov/vuln/detail/CVE-2026-59208). The CVE record did not go public until July 9. n8n
-[credits the report](https://github.com/n8n-io/n8n/security/advisories/GHSA-mq3m-f8x3-579w)to the GitHub account
-[bearsyankees](https://github.com/bearsyankees), whose profile lists Strix, which makes an AI penetration testing agent.
-Strix [says](https://www.strix.ai/blog/n8n-cross-issuer-account-takeover) it pointed out that the agent at the token-exchange flow and found the identity-binding bug there.
-Two issuers, one account
-Token exchange is n8n's Enterprise route for [OEM partners who embed the product](https://docs.n8n.io/deploy/host-n8n/deploy-as-an-oem-integration), an [RFC 8693 implementation](https://docs.n8n.io/release-notes) that spares their users a second login screen.
-The partner signs a short-lived JWT with its own key, n8n verifies it against a configured public key, matches the claims to a local account, and the user is in. Trusted keys go in N8N_TOKEN_EXCHANGE_TRUSTED_KEYS
-, and the [deployment docs](https://docs.n8n.io/deploy/host-n8n/configure-n8n/basic-configuration/use-environment-variables/deployment) still tag the feature as preview.
-The token itself checks out. The matching is the bug. A sub
-value is only guaranteed to be unique inside the issuer that minted it. [RFC 7519](https://www.rfc-editor.org/rfc/rfc7519.html) asks that it be "scoped to be locally unique in the context of the issuer" or else globally unique. The identifier for a user is therefore [the pair, iss plus sub](https://thehackernews.com/2025/06/noauth-vulnerability-still-affects-9-of.html).
-n8n keyed on half of it. Nothing stops two issuers from emitting the same subject string, and when they do, both land on one n8n account.
-How big a deal is this
-The flaw reaches an instance only if token exchange is switched on and the config trusts at least two external issuers. [n8n says](https://github.com/n8n-io/n8n/security/advisories/GHSA-mq3m-f8x3-579w) nothing else is affected. Token exchange is Enterprise-only and still flagged as a preview, so the exposed set is small and specific: OEM deployments, where trusting a second issuer is a supported configuration.
-What the advisory does not pin down is how an attacker gets the token. It says only that they can obtain one. The practical question is whether an ordinary user at a trusted issuer can influence the sub
-they receive. The public record does not answer it. GitHub's CVSS 4.0 vector marks attack requirements as present and stops there.
-GitHub assigned that vector. As the CNA here, it puts CVE-2026-59208
-at 7.6 on CVSS 4.0, high. NVD puts the same bug at 6.8 on CVSS 3.1, medium, and has not issued a 4.0 assessment at all; its record carries CWE-287
-and CWE-346
-. CISA's July 13 SSVC assessment records exploitation as none, and The Hacker News found no public proof-of-concept in searches on July 16.
-Two weeks before the June 24 fix, the maintainers patched [ CVE-2026-54305](https://github.com/n8n-io/n8n/security/advisories/GHSA-2j5h-858j-5mpf), another Enterprise-only flaw. It lets any authenticated user overwrite or revoke another user's stored OAuth tokens through the Dynamic Credentials endpoints. That one was a missing ownership check, not an identity binding. Different bug, same surface.
-The Hacker News has reached out to n8n for confirmation on the scope and impact of CVE-2026-59208
-and will update this story with any response.
-Patch or cut the issuer list
-CVE-2026-59208
-affects every n8n release below 2.27.4 and version 2.28.0. The fix first landed in 2.27.4 and 2.28.1. Those are the floor. On July 16, n8n's npm package carried 2.30.6 on both its latest
-and stable
-tags. It ships a new minor most weeks by its own account, so check the tag and take the newest stable build your deployment supports.
-If patching has to wait, work out what you are running: N8N_TOKEN_EXCHANGE_TRUSTED_KEYS
-holds the trusted signing keys, and a separate preview flag controls whether token exchange is on at all. Cut back to a single trusted issuer, or turn the feature off.
-The advisory calls both short-term measures and says neither fully remediates the risk. That is boilerplate, identical in at least three other n8n advisories, including the June 10 one. By n8n's own scope statement, an instance with token exchange off is not affected.
-Neither release note mentions the fix. The Hacker News checked both: between them, the [2.27.4](https://github.com/n8n-io/n8n/releases/tag/n8n%402.27.4) and [2.28.1](https://github.com/n8n-io/n8n/releases/tag/n8n%402.28.1) changelogs cover a Python import fix, a Google Ads node upgrade, an AI workflow check, and a node-building change, and nothing about identity.
-The advisory is where this one lives. If your upgrade decisions run on changelogs, this is the kind of fix that slips past.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
         <div id="art-5" class="article-body">
-            <h2 class="article-title">Zoom Patches Critical Windows Flaw That Could Enable Account Takeover</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/zoom-patches-critical-windows-flaw-that.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Zoom has released security updates for a critical security flaw impacting Zoom Workplace for Windows that could facilitate account takeover.
-The vulnerability, tracked as CVE-2026-53412 (CVSS score: 9.8), affects Zoom Workplace for Windows before version 7.0.0 and Zoom Workplace VDI Client for Windows before version 7.0.10, 6.6.15, and 6.5.18 in their respective branches.
-"Improper Input Validation in Zoom Desktop Client for Windows and Zoom VDI Client for Windows may allow an unauthenticated user to conduct an account takeover via network access," Zoom [said](https://www.zoom.com/en/trust/security-bulletin/zsb-26014/) in an advisory released this week.
-The latest security fixes also address three high-severity flaws -
-[CVE-2026-53411](https://www.zoom.com/en/trust/security-bulletin/zsb-26013/)(CVSS score: 7.8) - An improper input validation vulnerability in the Zoom Workplace VDI Plugin for Windows before version 6.6.14 that may allow an authenticated user to conduct an escalation of privilege via local access.[CVE-2026-53410](https://www.zoom.com/en/trust/security-bulletin/zsb-26012/)(CVSS score: 7.0) - A time-of-check to time-of-use (TOCTOU) race condition vulnerability in the installation and uninstallation process of certain Zoom Clients for Windows that could allow an authenticated local user to escalate privileges.[CVE-2026-53409](https://www.zoom.com/en/trust/security-bulletin/zsb-26011/)(CVSS score: 7.8) - An improper privilege management vulnerability in Zoom Rooms for Windows before version 7.1.0 that may allow an authenticated user to conduct an escalation of privilege via local access.
-It's worth noting that CVE-2026-53410 affects the following products -
-- Zoom Workplace for Windows before version 7.0.5
-- Zoom Workplace VDI Client for Windows before 6.5.17 and 6.6.14 in their respective branch
-- Zoom Workplace VDI plugin for Windows before 6.5.17 and 6.6.14 in their respective branch
-- Zoom Rooms for Windows before 7.0.5
-- Remote Control for Zoom Contact Center for Windows before version 7.0.0
-As of writing, there are no indications that any of the flaws are being exploited in real-world attacks. Users can stay protected by applying the latest updates.
-(The story was updated after publication to reflect Zoom's removal of Meeting SDK for Windows as an affected product.)
+            <h2 class="article-title">New TELEPUZ Malware Spreads via ClickFix to Steal Data and Run Commands</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/new-telepuz-malware-spreads-via.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Cybersecurity researchers have called attention to a new modular malware called TELEPUZ that's been spreading via websites infected with [ClickFix lures](https://thehackernews.com/2026/07/scmbanker-malware-uses-clickfix-lures.html) since late April 2026.
+"The malware is full-featured, lightweight, and modular," Elastic Security Labs researcher Cyril François [said](https://www.elastic.co/security-labs/telepuz-maas-malware-clickfix) in a technical report. "While the number of C2 [command-and-control] domains is currently small, the daily volume of builds uploaded to VirusTotal and the rapid pace of updates indicate active development and likely further growth."
+The disclosure makes it the second new threat cluster after [SCMBANKER](https://thehackernews.com/2026/07/scmbanker-malware-uses-clickfix-lures.html) to be propagated via [ClickFix](https://www.group-ib.com/blog/clickfix-the-social-engineering-technique-hackers-use-to-manipulate-victims/), a [pervasive social engineering attack](https://unit42.paloaltonetworks.com/preventing-clickfix-attack-vector/) that tricks users into manually running malicious commands by disguising them as innocent fixes for fake browser errors, software updates, or CAPTCHA verifications.
+Underpinning the technique is an approach called clipboard hijacking. Because web pages using ClickFix inject malicious script or commands into a potential victim's clipboard and provide instructions to paste and run them, it's also referred to as pastejacking.
+The ClickFix attack chain linked to TELEPUZ results in the execution of PowerShell, which downloads a second-stage payload from a remote URL and executes it. The payload is a Go variant of the Vidar Stealer, which is known to harvest sensitive data from infected hosts and deploy secondary malware, in this case a stager binary that's responsible for launching TELEPUZ ("telepuz.dll") using "rundll32.exe." Both the stager and main DLL binary are retrieved from "hurgadatour[.]shop" domain.
+Written in C, TELEPUZ is lightweight and modular, and exhibits signs that it was developed by a solo developer or a very small team with expertise in coding. A steady volume of daily VirusTotal submissions associated with the threat suggests that it's likely offered under a malware-as-a-service (MaaS) model.
+TELEPUZ also incorporates a number of obfuscation techniques, such as garbage instructions that serve no functional purpose, [import name hashing](https://cloud.google.com/blog/topics/threat-intelligence/tracking-malware-import-hashing/) to resolve imports, string encryption, and indirect system calls, to thwart analysis efforts.
+It then proceeds to perform anti-VM and geolocation checks by verifying hardware constraints, such as whether the machine has fewer than two CPUs, less than 2GB of memory, or insufficient disk space, and ensuring the system's locale identifier (LCID) is not among a hard-coded list of Commonwealth of Independent States (CIS) countries.
+On top of that, the malware compares the current username and computer name against a hard-coded list of common sandbox and malware research identifiers. The aim of these checks is to terminate execution immediately if a sandboxed or virtualized environment, or an unauthorized geographic location, is detected.
+Once all the checks pass, TELEPUZ takes steps to disable security monitoring by [unhooking](https://binarydefense.com/resources/blog/slivering-through-the-cracks) [NTDLL](https://www.trellix.com/blogs/research/in-ntdll-i-trust-process-reimaging-and-endpoint-security-solution-bypass/), turning off Antimalware Scan Interface ([AMSI](https://learn.microsoft.com/en-us/windows/win32/amsi/antimalware-scan-interface-portal)) and Event Tracing for Windows ([ETW](https://learn.microsoft.com/en-us/windows-hardware/test/wpt/event-tracing-for-windows)), and removing third-party [DllNotification](https://github.com/m417z/LdrDllNotificationHook) [callbacks](https://shorsec.io/blog/dll-notification-injection/), which allow an application to receive alerts when a DLL is loaded or unloaded.
+The defense evasion routine is followed by checks to detect the presence of debuggers and crash them. It then fetches the parent process ID and validates the parent process name against a list of known runners, such as "rundll32.exe" and "svchost.exe." In the final stage, it generates a unique victim identifier that's derived by concatenating the hardware serial number, the computer name, and the operating system's installation date.
+"Following successful session identification, the malware spawns two concurrent threads: one dedicated to elevating itself and installing the malware as a service, and the other to initiate the C2 communication loop," François said. "The installation thread starts by elevating itself as Admin using the COM elevation moniker technique."
+"Upon achieving elevation and depending on the configuration, TELEPUZ next tries to get SYSTEM privilege by stealing the token of the first found process with one of the following names: spoolsv.exe, msdtc.exe, WmiPrvSE.exe, svchost.exe. Next, it registers itself as a service by creating the necessary registry keys to instruct Windows to load the malware within a new svchost.exe instance."
+In tandem, the malware attempts to establish contact with its C2 server up to 10 times. If these tries end up in failure, TELEPUZ attempts to fetch the fallback C2 address using four different methods -
+- By extracting an encrypted URL from a Telegram profile's ("t[.]me/chanadarkpart") description. The channel was created on April 28, 2026.
+- By extracting an encrypted URL from a
+[Steam Community profile](https://steamcommunity.com/profiles/76561199705801219). The URL points to the same C2 address found in the Telegram channel. - By running a DNS query for the domain codebasecode[.]com, it extracts and decrypts the fallback C2 address.
+- By extracting an encrypted URL from a
+[Polygon blockchain smart contract](https://polygonscan.com/address/0xf55Bea1FdCf1c3ABb39ab92567C09aC1BFf6753E).
+TELEPUZ uses the C2 server to establish communication using WebSockets with optional TLS, and awaits instructions from the operator, allowing it to perform a wide range of malicious actions, including file enumeration, file operations, keystroke logging, command execution, process management, screenshot capture, web injection, and cookie extraction for Chromium-based browsers. It can also download and run executables and DLL modules.
+The web injector component can also directly talk to the C2 server to receive and execute commands aimed at Chromium-based browsers and Mozilla Firefox. The commands make it possible to siphon cookies and run arbitrary JavaScript on the browsers by taking advantage of the Chrome DevTools Protocol (CDP) and WebDriver BiDi protocol.
+"Their limited number suggests that what we think is a MaaS is still in its early stages, despite the high volume of builds generated," Elastic said. "While the staging domains are protected by Cloudflare, concealing their true hosting locations, the C2 servers have been identified as compromised websites located in Brazil and India, respectively."
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
@@ -552,7 +525,10 @@ Do we imagine that number's decreased?
 Microsoft advisory said, some Dell PC maybe cause loop reboots after July updates
 I got my 570 updates installed! Went smoothly. Took 4 reboots. Everything has been running smoothly for the last day now.
 Ready for you now hackers!
-So AI did the discovery work here. But who triaged the bugs and scored their severity? Also an AI?</div>
+So AI did the discovery work here. But who triaged the bugs and scored their severity? Also an AI?
+With 570 patches released at once, I’m wondering how many organizations actually have a maintenance plan to test and deploy them without breaking production systems?
+Individually?!
+Thanks for putting this together. The scale of this month’s Patch Tuesday is remarkable, but what I found most useful was the focus on the vulnerabilities that are actually being exploited and deserve immediate attention. It’s a good reminder that keeping systems updated isn’t just routine maintenance anymore, it’s one of the most effective defenses against active threats.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
