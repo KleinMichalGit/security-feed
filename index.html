@@ -59,34 +59,36 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-07-21</h1>
+        <h1>Security Briefing // 2026-07-22</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Critical ServiceNow AI Platform Flaw Exploited for Unauthenticated Code Execution</button></li><li><button onclick="show('art-1')">SonicWall SMA1000 flaws exploited as zero-days to push custom malware</button></li><li><button onclick="show('art-2')">HollowGraph Malware Hides C2 and Stolen Files in Microsoft 365 Events Dated 2050</button></li><li><button onclick="show('art-3')">Critical ServiceNow code execution flaw now exploited in attacks</button></li><li><button onclick="show('art-4')">Microsoft at Black Hat USA 2026: Defending trust in the age of AI and supply chain attacks</button></li><li><button onclick="show('art-5')">Microsoft Patches a Record 570 Security Flaws</button></li><li><button onclick="show('art-6')">The Bear Necessities: A Look at the Drivers, Dynamics, and Applications of the Pro-Russia Influence Ecosystem</button></li><li><button onclick="show('art-7')">JS-Tap v3: Endpoint Post-Exploitation With JavaScript Implants</button></li><li><button onclick="show('art-8')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Police Dismantle Kratos Phishing Kit Built to Steal Microsoft 365 Sessions and Bypass MFA</button></li><li><button onclick="show('art-1')">OpenAI says its AI models hacked Hugging Face during testing</button></li><li><button onclick="show('art-2')">OpenAI Says Its AI Models Escaped Sandbox, Targeted Hugging Face to Cheat Benchmark</button></li><li><button onclick="show('art-3')">LG to Ban Residential Proxies from Smart TV Apps</button></li><li><button onclick="show('art-4')">Critical SharePoint RCE flaw exploited to steal machine keys</button></li><li><button onclick="show('art-5')">The New Hotness in Phishing: Device Code Attacks in M365</button></li><li><button onclick="show('art-6')">Microsoft at Black Hat USA 2026: Defending trust in the age of AI and supply chain attacks</button></li><li><button onclick="show('art-7')">The Bear Necessities: A Look at the Drivers, Dynamics, and Applications of the Pro-Russia Influence Ecosystem</button></li><li><button onclick="show('art-8')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">Critical ServiceNow AI Platform Flaw Exploited for Unauthenticated Code Execution</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/critical-servicenow-ai-platform-flaw.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Threat actors are now exploiting a recently disclosed critical security flaw impacting ServiceNow AI Platform, according to [Defused Cyber](https://x.com/defusedcyber/status/2078418391321219448).
-In a post shared on X, the threat intelligence firm said it's observing in-the-wild exploitation of [CVE-2026-6875](https://nvd.nist.gov/vuln/detail/CVE-2026-6875) (CVSS score: 9.5), a sandbox escape vulnerability that could allow an unauthenticated user to run arbitrary code.
-Patches for the flaw were [released](https://support.servicenow.com/kb?id=kb_article_view&sysparm_article=KB3137947) by ServiceNow throughout June in the following versions -
-- Brazil EA and Brazil GA
-- Australia Patch 2
-- Zurich Patch 7b and Zurich Patch 9
-- Yokohama Patch 12 Hot Fix 1b and Yokohama Patch 13
-Searchlight Cyber, which disclosed additional technical specifics, said it reported the issue on April 1, 2026, adding it allows a complete compromise of the ServiceNow instance as well as all connected proxy servers.
-Besides rolling out a fix, ServiceNow is "enhancing instance security by severely restricting the type of code that can run in sandbox contexts," security researcher Adam Kues [noted](https://slcyber.io/research-center/smashing-the-servicenow-sandbox-pre-authentication-rce/).
-According to Defused, the exploitation efforts target the same pre-authentication endpoint ("/assessment_thanks.do") using HTTP POST requests, although the sandbox-escape gadget leads to the same code execution primitive by a different route documented in the proof-of-concept (PoC) exploit.
-In light of active exploitation, customers of self-hosted versions are advised to apply the fixes, if not already, to counter the threat.
+            <h2 class="article-title">Police Dismantle Kratos Phishing Kit Built to Steal Microsoft 365 Sessions and Bypass MFA</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/police-dismantle-kratos-phishing-kit.html" target="_blank">Original Link</a></p>
+            <div class="content-text">German and US law enforcement have taken down the core infrastructure of Kratos, described by German investigators as one of the world's most widely used criminal phishing kits, and Indonesian authorities arrested the man they say developed and ran it.
+In a joint [announcement](https://www.bka.de/SharedDocs/Kurzmeldungen/DE/Kurzmeldungen/260720_Schlag_gegen_Phishing_Gruppierung_Kratos.html) on Monday, the Frankfurt public prosecutor's cybercrime unit (ZIT) and Germany's Federal Criminal Police Office (BKA) said they pulled more than 200 servers offline. Investigators estimate roughly 1,800 paying customers used Kratos to run about 15,000 phishing campaigns a month.
+Kratos harvested more than passwords. The kit was designed to steal the session cookie along with the login, and that cookie is enough to walk past two-factor authentication into the account as the user, the BKA said.
+ANY.RUN, which [reverse-engineered the kit](https://any.run/cybersecurity-blog/kratos-phaas-account-takeover/), found operators could pick one of two modes: a plain PHP page that only harvests credentials, or a Node.js reverse proxy designed to relay the login to Microsoft in real time and capture the resulting session. That second mode is the adversary-in-the-middle technique that has made ordinary MFA a much weaker backstop than it looks.
+The operation ran like a franchise, with customers the BKA called franchisees. They paid in cryptocurrency and signed up through a dedicated website and a Telegram shop to manage their accounts and organize campaigns, so even low-skill actors could point a working AiTM kit at a target.
+The authorities put the number of victims since late 2024 in the hundreds of thousands, spread across more than 30 countries and concentrated in Europe and the United States. They estimate the operators earned more than 300,000 euros since 2024, and that each campaign could hit several thousand recipients.
+Kratos was already being tracked. [Microsoft Threat Intelligence](https://www.microsoft.com/en-us/security/blog/2026/03/19/when-tax-season-becomes-cyberattack-season-phishing-and-malware-campaigns-using-tax-related-lures/) identifies the same kit as SneakyLog, a phishing-as-a-service platform it says has run credential-and-2FA theft against Microsoft 365 since at least early 2025, and it caught one campaign in the act.
+On February 10, operators sent tax-themed emails to about 100 organizations, mostly in the US, across manufacturing, retail, and healthcare, each carrying a W-2 document with a QR code personalized to the recipient that led to a fake Microsoft 365 login.
+Stolen Microsoft logins are rarely the end of the line. The BKA said the stolen credentials could be used for further phishing, sold to other criminals, or turned into a foothold inside companies by spreading through their Microsoft 365 environments, the familiar path from one phished inbox to business email compromise.
+Carsten Meywirth, who heads the BKA's cybercrime division, said the operation shows "that even highly professional phishing infrastructures can be effectively combated." The ZIT's Benjamin Krause framed it as proof of the office's "disruptive" approach of dismantling a criminal service outright rather than only charging the people behind it.
+Microsoft is notifying users caught in the campaigns. For anyone Microsoft is notifying, the fix depends on how they were hit. Where the kit only harvested credentials, a password reset and an MFA check cover it. Where its reverse-proxy mode lifted a live session, that session survives the reset, so it has to be revoked, with high-value accounts moved to phishing-resistant sign-in.
+Defenders hunting for exposure can look for the kit's tell: ANY.RUN found its login pages almost always load the paired assets barr.svg and lg.svg, then POST stolen credentials to endpoints like next.php or save.php. It rates that pairing at 90% recall with near-zero false positives.
+For now, the servers are offline and, the BKA says, Kratos-powered campaigns cannot continue. What the takedown did not touch is the roughly 1,800 customers or the kit code they already hold. ANY.RUN found Kratos running on disposable domains, compromised WordPress sites, and hosting shared with other adversary-in-the-middle kits, the kind of setup that reappears under a new name once the servers go down.
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-1" class="article-body">
-            <h2 class="article-title">SonicWall SMA1000 flaws exploited as zero-days to push custom malware</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/sonicwall-sma1000-flaws-exploited-as-zero-days-to-push-custom-malware/" target="_blank">Original Link</a></p>
-            <div class="content-text">Two recently disclosed SonicWall SMA1000 vulnerabilities were exploited in zero-day attacks for weeks, allowing threat actors to install custom malware on vulnerable VPN appliances. [...]
+            <h2 class="article-title">OpenAI says its AI models hacked Hugging Face during testing</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/openai-says-its-ai-models-hacked-hugging-face-during-testing/" target="_blank">Original Link</a></p>
+            <div class="content-text">OpenAI says its AI models, including GPT‑5.6 Sol and a pre-release model, hacked into the Hugging Face artificial intelligence repository while being tested in a sandboxed testing environment. [...]
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
@@ -94,54 +96,363 @@ In light of active exploitation, customers of self-hosted versions are advised t
             <hr class="separator">
         </div>
         <div id="art-2" class="article-body">
-            <h2 class="article-title">HollowGraph Malware Hides C2 and Stolen Files in Microsoft 365 Events Dated 2050</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/hollowgraph-malware-hides-c2-and-stolen.html" target="_blank">Original Link</a></p>
-            <div class="content-text">A newly discovered espionage implant has been using a hijacked Microsoft 365 calendar as its command channel, planting operator instructions and smuggling out stolen files as attachments on calendar events dated to the year 2050.
-[Group-IB](https://www.group-ib.com/blog/hollowgraph-microsoft-365/), which named the malware HollowGraph, says the approach moves tasking and stolen data through legitimate Microsoft Graph API traffic, so the activity looks like ordinary Microsoft 365 chatter and network controls keyed to attacker-owned destinations have nothing to flag.
-The implant is a .NET DLL that supports just two commands, get
-and send
-, and it never reaches out to an attacker-owned server for payloads. Instead, it treats the compromised mailbox's calendar as a two-way dead drop.
-To pull tasking, it queries the calendar for an event the operator has planted, buried at 2050-05-13
-, so the mailbox owner is unlikely to ever scroll to it, and reads its instructions from an attached file. To exfiltrate, it does the reverse: encrypts the stolen file, creates its own far-future event, and uploads the data as one or more attachments.
-Everything moving through the calendar is wrapped in hybrid RSA and AES-256 encryption, with separate key pairs for incoming tasking and outgoing data.
-A second, cruder channel keeps that Graph access alive. Over DNS, HollowGraph refreshes the app's Entra ID (Azure AD) login details: its tenant ID, client ID, client secret and target mailbox. It decodes those values from IPv6 AAAA records sent back by an attacker domain, cloudlanecdn[.]com
-, then writes them to logAzure.txt
-, a file dressed up as a routine log. Those are stored client-credentials, not access tokens, and unlike the calendar traffic this channel runs in the clear.
-Group-IB ties HollowGraph to Cavern with high confidence, on shared command syntax and matching internal tasking. Cavern is a modular backdoor framework that Check Point [documented earlier this month](https://research.checkpoint.com/2026/cavern-manticore-exposing-iran-linked-modular-c2-framework/) and attributed to an Iranian Ministry of Intelligence and Security-linked actor it calls Cavern Manticore, a cluster it says overlaps with the known Iranian groups MuddyWater and Lyceum.
-But the firm link is to the code, not the crew. Group-IB will not name the operator behind this campaign: "Based on the evidence currently available, we cannot confidently attribute this activity to any previously identified threat actor," it wrote, noting only a low-confidence overlap with Lyceum, a subgroup of the Iranian actor OilRig. The compromised exfiltration mailbox belongs to an Israeli organization, but Group-IB treats that as victim geography, not attribution.
-Group-IB found the implant on at least 12 machines, only about three of them actively talking to the attacker during the analysis window, with victim traffic running from 3 June to 9 July 2026. It reads that small, selective footprint as targeted espionage rather than opportunistic crime, even though the technique behind it could be reused far more widely than this one campaign.
-There is no Microsoft software vulnerability here and no patch to deploy. HollowGraph rides a compromised account and the Graph API's normal functionality, which is exactly why it is hard to spot. The work is on identity and application permissions plus monitoring, not a patch.
-What to watch for
-Group-IB's detection advice leans on the malware's own habits, and the sharpest signals live in the calendar itself. Hunt for events that carry:
-- a far-future date, specifically
-2050-05-13
-; - a subject that is a bare GUID, or that matches the operator's
-Event ID:
-orBoss{..}ID{..}
-naming; - attachments named
-File{n}.txt
-.
-On the identity side, the firm recommends restricting and auditing the client-credential OAuth apps that can reach Graph and alerting on newly created client secrets, plus the usual Entra ID hygiene of Conditional Access, credential rotation, and anomalous-token detection.
-For detection, audit Microsoft Graph and mailbox activity for application-driven calendar changes: events created, attachments uploaded, or subjects renamed by an app rather than a person. Watch DNS too, for unusually frequent AAAA queries and long, high-entropy subdomains aimed at a single domain. Hunting for cloudlanecdn[.]com
-and the logAzure.txt
-config file is the fast first pass, and the full indicator set, including file hashes, is in Group-IB's report.
-Hiding command-and-control in trusted Microsoft services is [not new](https://www.security.com/threat-intelligence/graph-api-threats); attackers have already run it through Outlook inboxes, draft folders and OneDrive. Events parked in 2050, out where no one looks, are simply the latest spot defenders had no reason to inspect. The operator still has no name, and victim traffic was flowing as recently as 9 July, which makes those far-future calendar entries worth a look now.
+            <h2 class="article-title">OpenAI Says Its AI Models Escaped Sandbox, Targeted Hugging Face to Cheat Benchmark</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/openai-says-its-own-ai-models-escaped.html" target="_blank">Original Link</a></p>
+            <div class="content-text">OpenAI on Tuesday said a combination of its artificial intelligence (AI) models, including [GPT-5.6 Sol](https://thehackernews.com/2026/06/openai-limits-gpt-56-rollout-as-sol.html) and an "even more capable pre-release model," was behind the [security incident](https://thehackernews.com/2026/07/worlds-largest-ai-model-repository.html) that targeted Hugging Face's production infrastructure last week.
+The AI company [said](https://openai.com/index/hugging-face-model-evaluation-security-incident/) the models were operating with "reduced cyber refusals for evaluation purposes" that might otherwise limit their ability to conduct cyber attacks, adding it expects such incidents to "become more commonplace with the proliferation of increasingly cyber-capable models."
+Describing it as an "unprecedented cyber incident" and one involving state-of-the-art cyber capabilities, OpenAI said it intends to conduct a thorough investigation in partnership with Hugging Face to get to the bottom of the matter.
+As part of an internal evaluation, the models are said to have identified and chained vulnerabilities across OpenAI's research environment and Hugging Face's production infrastructure to find solutions for the [ExploitGym](https://www.cybergym.io/exploitgym/) benchmark.
+Evidence unearthed by OpenAI suggests the models' hyperfocus caused them to go to "extreme lengths" to achieve the goal at any cost, even managing to break out of its highly isolated sandboxed environment and obtain open internet access by discovering and exploiting a zero-day vulnerability in an unspecified vendor's software, which acts as a proxy and cache for package registries. This required spending a "substantial amount of inference compute."
+"With this access, our models performed a series of privilege escalation and lateral movement actions in our research testing environment until the models reached a node with internet access," the company explained.
+Surmounting the internet access blockade, the models subsequently inferred Hugging Face as the repository that hosted models, datasets, and solutions for ExploitGym, which, in turn, caused them to look for ways to gain access to secret information that it could use to cheat the benchmark.
+At one point, the models strung together several attack vectors, including using stolen credentials and zero-day vulnerabilities, to find a remote code execution path on the Hugging Face servers.
+As part of incident response efforts, OpenAI said it's implementing strict controls in infrastructure configuration, responsibly disclosed the zero-day flaw in the third-party software, adding Hugging Face to its trusted access program to improve their defenses, and incorporating stronger guardrails around future training and evaluations.
+"This incident points to the need to further strengthen our model's alignment, cyber protections during evaluation time, and monitoring during internal testing," OpenAI said.
+The development comes as the company also [revealed](https://openai.com/index/safety-alignment-long-horizon-models/) that long-running models, while taking on complex, open-ended problems, can open the door to taking unwanted actions, such as finding weaknesses in the operational environment, in pursuit of their objective through repeated attempts over extended periods of time.
+"It also shows how a model that operates effectively over long time horizons can learn the blind spots of an approval system and work around it to achieve its goals," OpenAI said. "Long-horizon safety requires not only asking 'is this action allowed?' but also 'what outcome is this sequence of actions working toward?.'"
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-3" class="article-body">
-            <h2 class="article-title">Critical ServiceNow code execution flaw now exploited in attacks</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/critical-servicenow-code-execution-flaw-now-exploited-in-attacks/" target="_blank">Original Link</a></p>
-            <div class="content-text">Attackers have begun exploiting a critical vulnerability (CVE-2026-6875) in the ServiceNow AI Platform, according to threat intelligence company Defused. [...]
+            <h2 class="article-title">LG to Ban Residential Proxies from Smart TV Apps</h2>
+            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/07/lg-to-ban-residential-proxies-from-smart-tv-apps/" target="_blank">Original Link</a></p>
+            <div class="content-text">The home appliance giant LG Electronics USA said this week it plans to suspend any apps built for its smart TVs that turn one’s television into an always-on residential proxy node. The move comes less than a month after researchers found that more than 42 percent of games and other apps available for download on LG’s webOS store allow unknown third-parties to route their Internet traffic through a user’s TV.
+On July 2, we [featured research](https://krebsonsecurity.com/2026/07/fbi-seizes-netnut-proxy-platform-popa-botnet/) by the security firm Spur that examined the prevalence of residential proxy software development kits (SDKs) in smart TV apps. Spur [found](https://spur.us/blog/smart-tv-apps-residential-proxy-sdks) more than 42 percent of apps available for download on LG smart TVs include SDKs that turn one’s television in a proxy node indefinitely, and that more than a quarter of the apps made for Samsung’s Tizen operating system had similar residential proxy components.
+Responding to questions about Spur’s research, LG Senior Vice President John Taylor told KrebsOnSecurity the company was working with app developers to remove the residential proxy option from their apps on the webOS platform. Developers that fail to comply, he said, will find their apps suspended.
+“A residential proxy network is not an intended use for LG smart TVs, and LG Electronics is working with developers to remove the residential proxy option from their apps on the webOS platform,” Taylor said. “If this option is not removed, these apps will be suspended.”
+Taylor said LG is committed to keeping residential proxy networks out of its smart TV apps going forward, and that the company’s review of those apps is “well underway now.”
+“As part of our ongoing efforts to enhance platform quality and the user experience, LG will continue to strengthen our evaluation process for developer-submitted apps, including those that incorporate residential proxy SDKs,” Taylor wrote in an emailed statement.
+App makers looking for ways to monetize their creations can turn to residential proxy providers, which pay developers to include SDKs that turn the user’s device into a residential proxy node that is rented to paying customers. In the case of LG and Samsung smart TVs, Spur found residential proxy SDKs bundled with everything from simple games like Pac-Man to screensavers and file utilities.
+Spur’s report found the residential proxy network Bright Data accounted for a majority of proxy SDKs across both Samsung and LG smart TVs. Bright Data did not respond to requests for comment.
+Bright Data and other proxy providers named in Spur’s report all say they follow rigorous know-your-customer processes to validate legitimate uses of their services, which is often heavily tied to content-scraping activities by said customers. The proxy companies also say they incorporate technological countermeasures to prevent proxy service customers from being able to [interact with and control other devices on the proxy user’s local network](https://krebsonsecurity.com/2026/01/the-kimwolf-botnet-is-stalking-your-local-network/).
+Spur argues the problem is not that residential proxy networks exist, but rather that they are being embedded at scale in devices that most consumers do not think of as computers and are not equipped to audit.
+“A one-time consent prompt buried in a TV app is not a substitute for meaningful transparency, ongoing control, and platform oversight,” Spur’s Trevor Sutter wrote. “The risk is amplified when consent comes from individuals within the household who use the device but shouldn’t give consent, such as minors.”
+LG’s announcement that it is culling residential proxy SDKs from its app store is welcome news, but the company recently came under fire for another questionable partnership: Pimping McAfee security products via software drivers included in its high-end LCD monitors.
+Earlier this week, the Youtube channel [Gamers Nexus](https://www.youtube.com/watch?v=Q9uefFYe6bM) showed that certain LG LCD monitors will automatically install [an app](https://apps.microsoft.com/detail/9pm9n6f47jb8?hl=en-US&gl=US) that promotes paid McAfee antivirus subscriptions, and that the app arrives through Windows Update without an approval prompt.
+Good – residential proxy providers are scum.
+Now if only they’d also stock forcing McAfee on PC users of their monitors via stealth windows updates and kill off the spyware on their smart TV’s that records everything you say and watch etc.
+HOW did anyone at LG think ANY of this was ok? Who is being summarily fired RTFN? LG burned all trust and is a month late in merely promising they’ll BEGIN removing the 42% MALWARE TROJANS from their ‘curated’ app store, and they somehow think that’s going to be good enough? This brand is dead to me forever. This wasn’t just an oversight.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-4" class="article-body">
+            <h2 class="article-title">Critical SharePoint RCE flaw exploited to steal machine keys</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/critical-sharepoint-rce-flaw-exploited-to-steal-machine-keys/" target="_blank">Original Link</a></p>
+            <div class="content-text">Hackers are actively exploiting the critical CVE-2026-50522 vulnerability in Microsoft SharePoint to steal machine keys and maintain access even after affected servers are patched. [...]
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-4" class="article-body">
+        <div id="art-5" class="article-body">
+            <h2 class="article-title">The New Hotness in Phishing: Device Code Attacks in M365</h2>
+            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/the-new-hotness-in-phishing-device-code-attacks-in-m365" target="_blank">Original Link</a></p>
+            <div class="content-text">The New Hotness in Phishing: Device Code Attacks in M365
+Table of contents
+Device code phishing has a quality that makes it unusually effective: it does not follow the pattern of traditional phishing attacks. The victim ends up granting access to the attacker by completing a genuine sign-in on a Microsoft URL, Microsoft[.]com/devicelogin
+. The MFA prompts the user approves are legitimate. This method also frequently bypasses Conditional Access policies, because as far as the sign-in pipeline is concerned, the authentication originates from a legitimate Microsoft endpoint. From the user’s perspective, nothing is wrong. From the responder’s perspective, the only artifact left behind is an OAuth token issued to a session the attacker controls.
+Across the business email compromise (BEC) and Microsoft 365 (M365) incident response engagements TrustedSec responds to, device code flow abuse continues to surface as an initial access technique that sidesteps both user suspicion and several of the Conditional Access patterns organizations rely on. This post unpacks how the attack works, what it looks like in the logs, and what actually stops it.
+How the Device Code Flow is Supposed to Work
+Modern authentication is designed around the assumption that the device you are logging in to is also the device you are logging in from. You open a browser, navigate to a login page, enter your credentials, complete your MFA prompt, and access is granted. Simple.
+However, what happens when the device you are trying to authenticate to does not have a browser? The OAuth 2.0 device authorization grant, defined in RFC 8628 and commonly known as the device code flow, exists for this reason. Some devices cannot reasonably host a browser-based login. Examples of such devices include smart TVs, command-line tools, IoT hardware, and printers that all need a way to authenticate a user without a keyboard or full web view. Microsoft implements the grant in Entra ID for exactly these scenarios, and it is used by tooling such as the Azure CLI, the kubectl Entra plugin, and various device enrollment flows.
+The flow runs in six (6) steps:
+- The client (the “device”) asks Entra ID for a device code, naming the resource and scopes it wants.
+- Entra returns a
+device_code
+, a short human-readableuser_code
+, a verification URL (Microsoft[.]com/devicelogin
+), and a time-to-live of approximately 15 minutes. - The client displays the
+user_code
+and the URL to the user. - The user opens the URL on a second device, enters the code, signs in, and consents.
+- The client polls the token endpoint, presenting the
+device_code
+. - Once the user finishes, Entra returns an
+access_token
+and arefresh_token
+to the polling client.
+The flow assumes that whoever displays the code and whoever enters it are the same person, but nothing in the protocol binds the two together. If an attacker initiates the flow and persuades a victim to enter the attacker’s code on the real Microsoft page, Entra issues tokens to the attacker’s polling client. The victim signs in legitimately and sees nothing out of place.
+1. The Attack, Step by Step
+The walkthrough below was reproduced in a lab tenant. All identifiers, tokens, and the lure are synthetic and redacted, and nothing here is drawn from a specific engagement. The point is to show the mechanism, not to provide a campaign kit.
+1.1 The Lure
+This is the social-engineering layer, and it is what makes the technique resilient. The threat actor builds a convincing website to mimic a legitimate login request. Then, they craft an email requesting the user to enter a code using another website link. The critical detail is that the link points to the real microsoft.com/devicelogin
+.
+CONSTRUCTED EXAMPLE (not a captured artifact) |
+1.2 Initiating the Flow
+The threat actor uses traffic to the fake website to automatically perform a request to retrieve a device code, targeting a high-value first-party client_id that carries broad scopes and is inherently trusted by the tenant, such as the Microsoft Office client. The request is a simple POST:
+Device code request
+POST /common/oauth2/v2.0/devicecode HTTP/1.1
+Host: login.microsoftonline.com
+Content-Type: application/x-www-form-urlencoded
+client_id=d3590ed6-52b3-4102-aeff-aad2292ab01c
+&scope=https://graph.microsoft.com/.default offline_access
+Entra responds with the user code and the verification URL the victim will be steered toward:
+Device code response
+{
+"user_code": "B6MSNYDVZ",
+"device_code": "<redacted>",
+"verification_uri": "https://microsoft.com/devicelogin",
+"expires_in": 900,
+"interval": 5,
+"message": "To sign in, use a web browser to open the page
+https://microsoft.com/devicelogin and enter the code G7QXR9PLM"
+}
+1.3 Token Capture
+While waiting for the victim to enter the displayed code, the attacker’s client polls the token endpoint. While polling, Entra returns a pending status:
+Polling the token endpoint
+POST /common/oauth2/v2.0/token HTTP/1.1
+Host: login.microsoftonline.com
+grant_type=urn:ietf:params:oauth:grant-type:device_code
+&client_id=d3590ed6-52b3-4102-aeff-aad2292ab01c
+&device_code=<redacted>
+-> { "error": "authorization_pending" }
+The moment the victim enters the code and completes sign-in, MFA included, the next poll returns access and refresh tokens:
+Successful token response
+{
+"token_type": "Bearer",
+"scope": "https://graph.microsoft.com/.default",
+"expires_in": 3599,
+"access_token": "eyJ0eXAiOiJKV1Qi...<redacted>",
+"refresh_token": "0.AVgA...<redacted>",
+"id_token": "eyJ0eXAiOiJKV1Qi...<redacted>"
+}
+The tokens can then be used to access the victim’s mailbox through Graph API requests:
+{
+"@odata.etag": "W/\"CQAAABYAAAB3PoO5cXNGQovzqtr+biNiAAAAAAZc\"",
+"id": "AQMkADcyYjE3NjE2LTU2OTQtNGZlYy1hNjYAZi01NjRjOWM5YzI4NTgARgAAAxd38nIZyRFHj2iHDyZChXwHAHc_g7lxc0ZCi-Oq2v5uI2IAAAIBDwAAAHc_g7lxc0ZCi-Oq2v5uI2IAAAJVlgAAAA==",
+"receivedDateTime": "2026-04-04T21:17:00Z",
+"subject": "Action Required: MFA Registration Deadline",
+"from": {
+"emailAddress": {
+"name": "IT Helpdesk",
+"address": "helpdesk@contoso.com"
+}
+}
+},
+{
+"@odata.etag": "W/\"CQAAABYAAAB3PoO5cXNGQovzqtr+biNiAAAAAAZa\"",
+"id": "AQMkADcyYjE3NjE2LTU2OTQtNGZlYy1hNjYAZi01NjRjOWM5YzI4NTgARgAAAxd38nIZyRFHj2iHDyZChXwHAHc_g7lxc0ZCi-Oq2v5uI2IAAAIBDwAAAHc_g7lxc0ZCi-Oq2v5uI2IAAAJVlQAAAA==",
+"receivedDateTime": "2026-04-04T21:16:59Z",
+"subject": " Action required: A document has been shared with you",
+"from": {
+"emailAddress": {
+"name": "DocuSign",
+"address": ""
+}
+}
+…
+1.4 Tooling
+The mechanism above is automated by publicly documented offensive tooling. TokenTacticsV2 and roadtx both implement the device code request and token capture in a couple of commands. The exact syntax changes between releases, so treat the following as illustrative rather than copy-and-run:
+Illustrative tooling commands
+# TokenTacticsV2 (PowerShell) - request a device code and capture tokens
+Import-Module .\TokenTactics.psd1
+Get-AzureToken -Client MSGraph
+# roadtx - device code grant against a chosen client and resource
+roadtx gettokens --device-code -c msgraph -r msgraph
+2. What the Tokens Unlock
+The access token is short-lived, lasting approximately one hour, so on its own it would present a limited problem. The refresh token is the prize. By default, it persists for up to 90 days on a sliding window and can be redeemed for fresh access tokens without any further user interaction.
+The situation is worse than a single stolen session. Many Microsoft first-party clients belong to a family of client IDs (FOCI). A refresh token issued to one FOCI client can be exchanged for access tokens scoped to other Microsoft resources. As a result, a single refresh token captured through one client can yield access to Microsoft Graph, Exchange Online, and SharePoint in turn. A single foothold becomes access across the tenant’s core services.
+In the BEC and M365 cases TrustedSec responds to, the follow-on activity tends to look like this:
+- Graph and Exchange enumeration: reading mail, contacts, and organizational structure to map the environment.
+- Mailbox access and inbox rule creation, the classic BEC move that quietly redirects or hides messages to support fraud or further phishing.
+- OneDrive and SharePoint access: locating and exfiltrating documents.
+- Persistence through token refresh: renewing access without re-triggering MFA, because the original token already satisfied the MFA claim.
+THE PART RESPONDERS MISS |
+3. What It Looks Like in Your Logs
+The good news for defenders is that the device code flow leaves a distinctive signal, and legitimate use of the flow is rare in most organizations, which makes it a clean thing to hunt for.
+3.1 The Primary Signal: Entra Sign-In Logs
+In the Entra ID sign-in logs, the authentication protocol for these events is Device Code. In the Azure portal, filtering sign-ins for Authentication Protocol = “Device Code” will surface all device code sign-ins in the environment. Because device code activity is usually rare and for specific business workflows, simply listing every device code sign-in is a high-value baseline hunt:
+Entra ID Device Code Authentication Flow
+title: Entra ID Device Code Authentication Flow
+description: Detects sign-in events using the device code authentication
+protocol, which is commonly abused in phishing attacks (e.g.,
+device code phishing / illicit consent grant) to hijack tokens.
+references:
+- https://aadinternals.com/post/phishing-with-device-code/
+- https://learn.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-device-code
+author: TrustedSec
+date: 2026-06-05
+tags:
+- attack.initial_access
+- attack.t1078.004
+- attack.credential_access
+- attack.t1528
+logsource:
+product: azure
+service: signinlogs
+detection:
+selection:
+AuthenticationProtocol: 'deviceCode'
+condition: selection
+fields:
+- TimeGenerated
+- UserPrincipalName
+- AppDisplayName
+- ResourceDisplayName
+- IPAddress
+- Location
+falsepositives:
+- Legitimate use of device code flow on devices without a browser
+(e.g., smart TVs, IoT devices, CLI tools like Azure CLI)
+level: medium
+The tell-tale anomaly is a geography split: the user completes the device code sign-in from one location or IP address, but the resulting token is used almost immediately from a different IP address or autonomous system belonging to the attacker. Pairing the sign-in against where the token is subsequently exercised is what separates an abuse case from the rare legitimate one. It also helps to narrow to the first-party clients an attacker is likely to target, which should seldom drive device code sign-ins in a normal environment:
+Device Code Auth via High-Value Microsoft First-Party Apps
+title: Device Code Authentication to First-Party App From Multiple IPs
+name: device_code_first_party_apps
+description: Detects device code authentication to high-value Microsoft
+first-party apps (Office, Azure CLI, Azure PowerShell). These app IDs
+are frequently abused in device code phishing to obtain persistent
+tokens with broad permissions.
+references:
+- https://aadinternals.com/post/phishing-with-device-code/
+- https://github.com/rvrsh3ll/TokenTactics
+author: TrustedSec
+date: 2026-06-05
+tags:
+- attack.initial_access
+- attack.t1078.004
+- attack.credential_access
+- attack.t1528
+logsource:
+product: azure
+service: signinlogs
+detection:
+selection:
+AuthenticationProtocol: 'deviceCode'
+AppId:
+- 'd3590ed6-52b3-4102-aeff-aad2292ab01c' # Microsoft Office
+- '04b07795-8ddb-461a-bbee-02f9e1bf7b46' # Azure CLI
+- '1950a258-227b-4e31-a9cf-717495945fc2' # Azure PowerShell
+condition: selection
+falsepositives:
+- Developers or admins legitimately using Azure CLI or PowerShell across networks
+- A single user moving between office, home, and VPN egress IPs
+level: high
+---
+title: One user authenticating to a first-party app via device code from multiple IPs
+status: experimental
+description: Correlates device code authentication events for the same
+user and app originating from several distinct source IPs in a short
+window, which is consistent with attacker token use from infrastructure
+separate from the victim.
+correlation:
+type: value_count
+rules:
+- device_code_first_party_apps
+group-by:
+- UserPrincipalName
+- AppDisplayName
+timespan: 15m
+condition:
+gte: 3
+field: IPAddress
+level: high
+Because the inbox rule is such a reliable BEC follow-on, correlating device code sign-ins with mailbox rule changes shortly afterward is one of the highest-fidelity detections available:
+Device Code Sign-In
+title: Device Code Sign-In
+name: device_code_signin
+description: Detects an interactive sign-in that used the device code
+authentication protocol.
+references:
+- https://aadinternals.com/post/phishing-with-device-code/
+author: TrustedSec
+date: 2026-06-05
+tags:
+- attack.initial_access
+- attack.t1078.004
+- attack.credential_access
+- attack.t1528
+logsource:
+product: azure
+service: signinlogs
+detection:
+selection:
+AuthenticationProtocol: 'deviceCode'
+condition: selection
+falsepositives:
+- Legitimate device code flow on browserless devices (smart TVs, IoT, CLI tools)
+level: medium
+---
+title: Inbox Rule Created or Modified
+name: inbox_rule_change
+description: Detects creation or modification of a mailbox inbox rule.
+author: TrustedSec
+date: 2026-06-05
+tags:
+- attack.persistence
+- attack.t1098
+- attack.collection
+- attack.t1114.003
+logsource:
+product: m365
+service: exchange
+detection:
+selection:
+Operation:
+- 'New-InboxRule'
+- 'Set-InboxRule'
+condition: selection
+falsepositives:
+- Users or helpdesk legitimately creating inbox rules
+level: low
+---
+title: Inbox Rule Change Shortly After a Device Code Sign-In
+status: experimental
+description: Correlates a device code sign-in followed within one hour by
+an inbox rule change for the same user. This two-stage pattern of a
+device code phish followed by inbox rule creation is a hallmark of BEC
+and post-compromise persistence.
+references:
+- https://aadinternals.com/post/phishing-with-device-code/
+- https://attack.mitre.org/techniques/T1114/003/
+author: TrustedSec
+date: 2026-06-05
+tags:
+- attack.initial_access
+- attack.t1528
+- attack.persistence
+- attack.t1114.003
+correlation:
+type: temporal_ordered
+rules:
+- device_code_signin
+- inbox_rule_change
+aliases:
+user:
+device_code_signin: UserPrincipalName
+inbox_rule_change: UserId
+group-by:
+- user
+timespan: 1h
+level: high
+3.2 Complementary Signals: MDE and MDO
+Beyond Entra and the Unified Audit Log, Microsoft Defender can add corroboration. Defender for Cloud Apps may raise anomaly or risky-OAuth alerts on the token usage, Defender for Office 365 may carry post-delivery signals on the lure message, and Entra ID Protection may surface a related risk detection on the sign-in. Treat this as supporting evidence; the Entra sign-in logs and Unified Audit Log remain the authoritative trail.
+MIND THE LOGGING GAPS |
+4. Stopping It: Prevention and Containment
+The defining strength of this attack is its legitimacy, which means the durable fix is structural rather than behavioral. An organization does not primarily train its way out of device code phishing; it removes the flow where the flow is not needed.
+4.1 Prevention
+Block the device code flow with Conditional Access. This is the single most effective control. Entra ID Conditional Access now includes an authentication-flows condition that blocks device code grants outright, with a narrowly scoped allowlist for the users, locations, or devices that genuinely need it, such as specific kiosk or enrollment scenarios. Block broadly and permit by exception.
+- Restrict the blast radius. Where a full block is not yet possible, limit which users and groups can use the flow and confine exceptions to known device enrollment use cases.
+- Send users the right message. Because the link is legitimate, the useful instruction is not “do not click links.” It is this: never enter a code that Microsoft requests unless you personally started the action on the device in front of you.
+- Do not rely on MFA strength alone. Device code phishing satisfies an MFA claim during the legitimate sign-in, so stronger MFA does not by itself stop it. Blocking the flow via Conditional Access is the real fix, and phishing-resistant MFA is complementary rather than a substitute.
+4.2 Containment
+When responding to a confirmed case, the order of operations matters:
+- Revoke the refresh tokens. Use
+Revoke-MgUserSignInSession
+or revoke the user sessions in the portal to invalidate active refresh tokens. A password reset alone does not do this. - Scope the access. Review sign-in and token activity to determine what the attacker reached while the tokens were valid.
+- Sweep the mailbox. Hunt for and remove malicious inbox rules and any forwarding the attacker configured, the standard BEC cleanup.
+- Close the door. Put the Conditional Access device code block in place if it was not already, so the same technique cannot be reused.
+5. The Bottom Line
+Device code phishing is dangerous precisely because every individual step looks legitimate: the URL, the sign-in, and the MFA prompt. That is also why behavioral defenses underperform against it and structural ones win. Block the flow that is not needed, hunt for the device code protocol in the sign-in logs, and remember that containment means revoking tokens, not just resetting passwords.
+TrustedSec helps organizations respond to BEC and M365 intrusions and harden their Entra ID and Conditional Access posture against techniques like this one. If you're in need of assistance on this subject, [get in touch with us](https://trustedsec.com/contact).</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-6" class="article-body">
             <h2 class="article-title">Microsoft at Black Hat USA 2026: Defending trust in the age of AI and supply chain attacks</h2>
             <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/07/17/microsoft-at-black-hat-usa-2026-defending-trust-in-the-age-of-ai-and-supply-chain-attacks/" target="_blank">Original Link</a></p>
             <div class="content-text">Across the threat landscape, in this moment, one pattern sits at the center of the story: threat actors are following trust.
@@ -246,75 +557,7 @@ To learn more about Microsoft Security solutions, visit our [website.](https://w
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-5" class="article-body">
-            <h2 class="article-title">Microsoft Patches a Record 570 Security Flaws</h2>
-            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/07/microsoft-patches-a-record-570-security-flaws/" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft Corp. today released software updates to plug at least 570 security holes in its Windows operating systems and other software, almost triple the number of vulnerabilities the software giant fixed in its record-smashing Patch Tuesday release last month. Microsoft attributed the burgeoning patch counts to vulnerability discoveries aided by artificial intelligence.
-Nearly 60 of the bugs quashed in July’s Patch Tuesday earned a “critical” severity rating, meaning miscreants or malware could use them to seize remote control over a Windows device with little or no help from the user. Microsoft also addressed three zero-day flaws, including two that are already being exploited in the wild.
-Two of the zero-day weaknesses allow an attacker to elevate their user rights on a Windows system, as do approximately 250 other elevation of privilege flaws fixed this month; they include [CVE-2026-56155](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-56155) — an Active Directory Federation Services bug — and [CVE-2026-56164](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-56164), a Microsoft Sharepoint vulnerability.
-[CVE-2026-50661](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-50661) is a security feature bypass in Windows BitLocker that could allow attackers to gain access to encrypted data if they have physical access to the device. Microsoft said this bug has been detailed publicly, but that it is not aware of any active exploitation.
-In a blog post on July 9, Microsoft Executive Vice President Pavan Davuluri wrote that Windows users will notice “a higher volume of security updates included in each security release” as a result of AI aiding in the discovery of vulnerabilities.
-“The pace of vulnerability discovery is changing with advances in AI making it possible to find more issues, faster, across more code, with new mechanisms that can accelerate both discovery and analysis,” Davuluri [wrote](https://blogs.windows.com/windowsexperience/2026/07/09/evolving-windows-vulnerability-management-to-meet-the-speed-of-ai-powered-discovery/).
-Jack Bicer, director of vulnerability research at Action1, called attention to [CVE-2026-48561](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-48561), a remote code execution flaw in Microsoft Copilot (with a 9.6 CVSS threat score) that allows an unauthorized attacker to execute code over the network. Microsoft says an attacker could exploit this bug by hosting a malicious website that causes Microsoft Edge for Android to automatically send crafted prompts to Copilot when a user visits the site.
-As AI advances the state of vulnerability discovery and remediation, it is also making it easier for attackers to quickly devise working exploits for known software flaws. Microsoft has long labeled security bugs using its “exploitability index,” which is Redmond’s best guess as to how likely it is that attackers will be able to figure out a reliable way to exploit a given vulnerability.
-But Satnam Narang, senior staff research engineer at Tenable, argues that Microsoft’s exploitability index needs to do a better job of shifting with the machine speed of discovery. For example, Microsoft originally gave this month’s SharePoint zero-day an exploitability rating of “less likely,” although the flaw was [added](https://www.cisa.gov/news-events/alerts/2026/07/01/cisa-adds-one-known-exploited-vulnerability-catalog) to CISA’s Known Exploited Vulnerabilities list on July 1.
-“Anthropic’s Red Team’s own findings for known vulnerabilities (n-days) revealed how fragile this system has become, with its Mythos Preview model being able to produce proof-of-concept exploits for 13 of 14 vulnerabilities that were rated ‘Exploitation Less Likely’ or ‘Exploitation Unlikely,'” Narang said. “What this means is that our way of looking at Patch Tuesday has changed, because the exploitability index is centered around humans, not AI tools, and as these tools continue to improve, defense needs to improve alongside it.”
-Chris Goettl at Ivanti observed that the record patch numbers from Microsoft come as a number of other major software makers are increasing their patch cadence, including Adobe which announced today it is moving to twice-monthly security bulletins published on the 2nd and 4th Tuesday of each month (Adobe also cited AI for accelerating their patch cycles). Cisco, Mozilla and Oracle also are shipping updates more frequently, while Google’s patch batches in June 2026 totaled more than 900 security fixes, Goettl noted.
-Backing up your Windows system and/or data is always a good idea before applying operating system updates. Given the volume of patches addressed this month it may be wise for end users to wait a few days before applying these fixes. It’s not uncommon for security patches to introduce system stability issues, and those chances probably increase quite a bit with the gigantic patch count released today.
-Further reading:
-Still as confused as before … how could there be 570 flaws if Microsoft engineers are the ones doing the programming ? Is it carelessness or intentional ?
-programming without bugs is between hard and impossible
-security is an adversarial task, so bugs will be fund
-Because much of this has existed for years, subtle mistakes made in various different ways that are not so obvious when created as they are when researched. Consider that this spans different languages, generations of people, billions of lines of code.
-NO one person on earth can simply open and view it all. Ai is digging it out by brute force analytics that did not exist when most of it was written.
-Try to butter some bread without crumbs coming off and then get back to me.
-Humans are flawed creatures!
-Those aren’t the only options, extraordinarily confused person.
-An old joke about programming seems appropriate: “Every program has at least one bug and can be shortened by at least one instruction – from which, by induction, one can deduce that every program can be reduced to one instruction which doesn’t work.”
-Appreciate the coverage man! This month was a monster!
-How many of these AI discovered bugs are not really bugs/holes etc., but the fixes will create new, unforeseen problems?
-None.
-Many of the vulnerabilities are from chaining from one weakness to another. It takes humans time to do this, but AI does this much faster.
-Given literally decades of work fixing stability bugs in the Microsoft codebase, it is not surprising these security bugs get now found. It will likely take many of these cycles. And as noted, new defects will be introduced.
-Scrub scrub scrub!
-Nothing interesting to me this Patch Tuesday. Still the same old crap. Good write-up, as per usual. Tired of these sorts of small AI-located bugs still being counted as some sort to pump up numbers, I assume, when they are basically just bugs not flaws. My only MS system showed no improvement. So, your usual Patch Tuesday.
-It has improved security.
-Yawn.
-“Microsoft also addressed three zero-day flaws that are already being exploited in the wild.”
-CVE-2026-50661, according to Microsoft is:
-Publicly disclosed: Yes
-Exploited: No
-Exploitability assessment: Exploitation Less Likely
-https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-50661
-If Microsoft used AI to write a complete Windows replacement OS fresh from the ground up, it would have almost zero security holes, require a lot less maintenance and would do away with tens of thousands of human coding and QA jobs inside Microsoft, meaning more profits for the investors!
-I have done it myself on a local LLM. It is running great (only 100MB in memory) and I think it is very secure. And because it is so great, it doesn’t require maintenance at all!
-Finally built out that qemu win 3.11/wfw instance with stripped out UI?
-They should probably go back to their origins and build from win 98 and windows 2000, perhaps windows XP, and drop any lineage post win 7. Let AI slug it out instead of plopping it down with win 10/win 11.
-Sincerely, that is a better option. I feel like we are not grasping the differences between how we code vs how AI code vs how Ai code vs how Dimon might code. I don’t wanna think about Dimon vibe coding. Thinking about Gates vibe coding suddenly sounds kind of fascinating, though. I do wonder how rich ex developers would vibe code now. I worry about how AI might be interested in how we all vibe code differently. Not so scary locally, damn creepy as a communistic concept. Hoping MS never patches any of my personal bugs/flaws. I am guessing those models are taking notes on the catwalk. :/
-Nonsense. It would be just another one of their expensive fiascos. LLM code generators don’t know secure from insecure, just what they’re trained on. That’s why what drew my eye in Brian’s article was the mention of the “remote code execution flaw in Microsoft Copilot”. Mindless AI shovelware creates more problems than it’ll ever solve. An OS based on it would be a nightmare.
-I think the complete opposite, AI struggles to write working code, let alone code without vulnerabilities.
-AI… Are you AI or not?
-Great article and important reminder about the need for regular security updates. With the increasing number of vulnerabilities being discovered, staying informed and using reliable tools has become more important than ever. Resources like https://vanced.com.co/revanced-sync-for-lemmy/ also show how open-source communities continue to create useful solutions for users who value privacy and better digital experiences.
-Impressive. Now let’s compaire: PC Mag, in 1995, reported that M$ was releasing Win95, ->in spite of over 64,000 known bugs and issues<-.
-Do we imagine that number's decreased?
-if you are doing any major SW or HW development (also IC HW is developed with SW tools), and are compiling and then running any verification tool on it, you will always get massive numbers of items flagged as errors / issues / bugs, whatever the tool calls it. Most of these are syntax items that the verification tool may not like or understand.
-A bit like how your car’s “stay-in-the-lane” monitor behaves while you are driving through a construction site and the white stripes are replaced with seemingly contradicting yellow stripes for a lane shift.
-This is a fundamental thing, probably no way around it. The world is very complex, and there are so many corner cases that it is plain impossible (not mathematically impossible, but impossible with limited effort) to develop “fully clean” code.
-Obviously these 622 bugs and flaws have nothing to do with day to day de-bugging and syntax crap.
-Brian’s got some problems with his arithmetic chip also.
-Microsoft advisory said, some Dell PC maybe cause loop reboots after July updates
-I got my 570 updates installed! Went smoothly. Took 4 reboots. Everything has been running smoothly for the last day now.
-Ready for you now hackers!
-So AI did the discovery work here. But who triaged the bugs and scored their severity? Also an AI?
-With 570 patches released at once, I’m wondering how many organizations actually have a maintenance plan to test and deploy them without breaking production systems?
-Individually?!
-Thanks for putting this together. The scale of this month’s Patch Tuesday is remarkable, but what I found most useful was the focus on the vulnerabilities that are actually being exploited and deserve immediate attention. It’s a good reminder that keeping systems updated isn’t just routine maintenance anymore, it’s one of the most effective defenses against active threats.
-I found it especially interesting that AI is now accelerating both vulnerability discovery and patch development, but it also seems to be shrinking the window defenders have before attackers can weaponize newly disclosed flaws. Do you think we’re reaching a point where organizations should prioritize patching based on AI-driven exploit predictions instead of traditional severity ratings alone?</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-6" class="article-body">
+        <div id="art-7" class="article-body">
             <h2 class="article-title">The Bear Necessities: A Look at the Drivers, Dynamics, and Applications of the Pro-Russia Influence Ecosystem</h2>
             <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/pro-russia-influence-ecosystem/" target="_blank">Original Link</a></p>
             <div class="content-text">The Bear Necessities: A Look at the Drivers, Dynamics, and Applications of the Pro-Russia Influence Ecosystem
@@ -425,53 +668,6 @@ For mitigation and hardening recommendations, please review the following:
 [Linux Endpoint Hardening to Protect Against Malware and Destructive Attacks](https://services.google.com/fh/files/misc/linux-endpoint-hardening-wp-en.pdf) -
 [Distributed Denial of Service (DDoS) Protection Recommendations](https://services.google.com/fh/files/misc/ddos-protection-recommendations-wp-en.pdf)
 Google offers a suite of free of cost tools to help protect high-risk users from the most pervasive digital attacks, to which politicians, journalists, and campaigns are often most vulnerable. Examples include protecting accounts from targeted attacks with [Advanced Protection Program](https://landing.google.com/advancedprotection/) and safeguarding campaign websites from DDoS attacks with [Project Shield](https://projectshield.withgoogle.com/landing).</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-7" class="article-body">
-            <h2 class="article-title">JS-Tap v3: Endpoint Post-Exploitation With JavaScript Implants</h2>
-            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/js-tap-v3-endpoint-post-exploitation-with-javascript-implants" target="_blank">Original Link</a></p>
-            <div class="content-text">JS-Tap v3: Endpoint Post-Exploitation With JavaScript Implants
-When I first wrote JS-Tap, the goal was to provide red teamers with a generic JavaScript payload that works without prior knowledge of a web application and without an authenticated user running it. Instrument the client side, collect loot, attack the application with stolen creds.
-That original payload, what I now call the DOM beacon, still works just fine, but in the past year, I wanted to expand the reach of JS-Tap. JavaScript, sadly, has escaped the web application DOM and is now used extensively in desktop applications and software. Browser extensions are JavaScript. Electron desktop apps (Slack, Signal, VS Code, Discord, lots of the corporate tooling you'll find on a workstation) are JavaScript. The new wave of CLI tools built on Node and Bun, including the AI coding assistants everyone is suddenly running, are JavaScript.
-Here’s the part that makes all of this worse—all of these application environments run JavaScript with less sandboxing than the browser DOM where the original JS-Tap payload lives. The same monkeypatching tricks JS-Tap has always used to intercept network calls and scrape data work in these environments, too—except now, there's no Same-Origin Policy in the way, and in many cases, there's full access to the underlying operating system.
-So, JS-Tap v3 grows beyond the browser to post-exploitation of the endpoint. It introduces three (3) new beacon types, all reporting back to the same JS-Tap C2, integrated for your engagement data collection needs.
-The New Beacons
-BEX Beacon (Browser Extension)
-The BEX beacon is JS-Tap as a browser extension, for Chrome, Chromium, Edge, and Firefox across Windows, Linux, and Mac. The DOM beacon lives inside a single page, and the BEX beacon sits at the browser level and sees all.
-Because it runs with extension privileges rather than page privileges, it sidesteps a lot of what limits the DOM beacon. It captures cookies across all domains, including httpOnly cookies, which the DOM beacon simply can't touch. It grabs localStorage, sessionStorage, and request headers and tracks browsing across every tab. Note that there are very important scoping settings about what domains the BEX beacon is allowed to work on, compiled in and critical for use in an engagement. Make sure you have that scoping conversation with your client before you use this in an assessment.
-The BEX beacon also works as a dropper. From the JS-Tap portal, you can task it to inject a full DOM beacon into a specific domain being used in that browser. A DOM beacon spawned this way gets pixel-perfect screenshots through the extension's captureVisibleTab API instead of relying on the html2canvas library baked into the DOM beacon.
-The BEX beacon also allows proxying of network traffic through the beacon.
-Pair the BEX beacon with the optional new Sidecar, a small Go binary installed alongside the extension and used via the browser's native messaging feature, and you get OS-level file browsing and command execution from a browser extension. There is an OPSEC tradeoff here. Native messaging is the least stealthy of the OS-access options in JS-Tap v3 beacons, since it requires a registered native host and a separate binary on disk, and the Atom and V8 beacons get host access in cleaner ways. For situations where the browser extension is your foothold, it is very powerful if you’re in a position to install Sidecar alongside the BEX extension.
-Atom Beacon (Electron App Implant)
-The Atom beacon is an implant for Electron desktop applications. You patch it into the target app's ASAR archive with the included atomize.py
-, and on next launch, it connects back to the JS-Tap C2.
-The main process agent runs in Electron's Node.js runtime, so it gets native OS access (file system, command execution) with no separate Sidecar binary needed. If the Electron app has set security fuses that block node functionality or sandboxing, the patcher resets the fuses. Note that you have to have write access to the app.asar file to be able to modify the Electron app.
-The usual JS-Tap functionality follows: screenshots, keylogs, and network intercepts. The proxy feature is also supported.
-While the Atom beacon is generic, there are commonly used Electron apps that we can implement custom JS-Tap functionality for, and these are implemented in runtime-delivered plugins specific to the application. JS-Tap v3 ships with the following Electron app plugins:
-- VS Code Infiltrator - Targets the VS Code Electron app and reaches into the editor environment to copy and edit files and “borrow” GitHub tokens for accessing private repos
-- 1Password Vault Raider - Targets the 1Password desktop app and goes after vault contents through the running unlocked application, capturing the unencrypted copy of the password vault
-- Signal Interceptor - Targets Signal Desktop; Signal's whole value proposition is end-to-end encryption, but an implant living inside the desktop client can access all messages, send messages from the user to others, or spoof messages to them
-- Mattermost Masher - Targets the Mattermost desktop client; same functionality as the Signal plugin, just ported to Mattermost
-- Slack Wrecker - The Slack equivalent; same functionality as Signal and Mattermost plugins
-Adding new plugins is not terribly time-consuming. I accept pull requests. 🙂
-V8 Beacon (Node.js/Bun CLI Implant)
-The V8 beacon targets Node.js and Bun command-line applications, and unlike the Atom beacon, there's no app patching at all.
-You drop the beacon's .js
-file on disk and set an environment variable—NODE_OPTIONS
-for Node or BUN_OPTIONS
-for Bun. The runtime pulls in the malicious JavaScript before the target app's own code runs, and from there, it's what you would expect from a JS-Tap beacon. It keylogs, intercepts network traffic, and allows code execution and file system access and proxies network traffic through the beacon.
-The obvious targets here are the AI CLI tools everyone has suddenly installed, like Gemini CLI and Claude Code, which make a lot of interesting authenticated API calls.
-Also New in v3
-JS-Tap Proxy - All three (3) new beacons can act as a network relay. Route your own browser through the victim's browser, Electron app, or Node process over a WebSocket relay, and reach internal application servers from the victim's network context, using their IP address and TLS fingerprint.
-JS-Tap Conductor - This is a standalone Firefox extension that takes session data and proxy configurations generated by the JS-Tap C2 portal (session and proxy “tickets” you paste into Conductor) and reconfigures Firefox to clone the session or route traffic through a JS-Tap beacon. Session cloning captures cookies, headers, and local/session storage and spoofs the user-agent.
-General Usability Improvements - As I’ve scaled out my use of JS-Tap, I’ve added features for searching and filtering clients and loot. This really helps in finding needles in haystacks.
-Wrapping Up
-The original DOM beacon hasn't gone anywhere, and for attacking web applications via XSS or web server-side implant, it's still exactly what it always was. The latest features are intended to target JavaScript where it has shifted to—sadly, into endpoint application environments that hand you more access than the browser ever did.
-As always, this is tooling meant for authorized engagements and education. If you run into issues or have ideas on how to make it better, my DMs are open [@hoodoer](https://x.com/hoodoer), or you can reach me at [hoodoer@bitwisemunitions.dev](mailto:hoodoer@bitwisemunitions.dev).
-Please let me know if you run into bugs. There will be bugs. This is a very large change in the code base.
-[https://github.com/hoodoer/JS-Tap](https://github.com/hoodoer/JS-Tap)(JS-Tap Repository)</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
