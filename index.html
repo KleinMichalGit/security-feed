@@ -59,12 +59,95 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-07-22</h1>
+        <h1>Security Briefing // 2026-07-23</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Police Dismantle Kratos Phishing Kit Built to Steal Microsoft 365 Sessions and Bypass MFA</button></li><li><button onclick="show('art-1')">OpenAI says its AI models hacked Hugging Face during testing</button></li><li><button onclick="show('art-2')">OpenAI Says Its AI Models Escaped Sandbox, Targeted Hugging Face to Cheat Benchmark</button></li><li><button onclick="show('art-3')">LG to Ban Residential Proxies from Smart TV Apps</button></li><li><button onclick="show('art-4')">Critical SharePoint RCE flaw exploited to steal machine keys</button></li><li><button onclick="show('art-5')">The New Hotness in Phishing: Device Code Attacks in M365</button></li><li><button onclick="show('art-6')">Microsoft at Black Hat USA 2026: Defending trust in the age of AI and supply chain attacks</button></li><li><button onclick="show('art-7')">The Bear Necessities: A Look at the Drivers, Dynamics, and Applications of the Pro-Russia Influence Ecosystem</button></li><li><button onclick="show('art-8')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Check Point warns of SmartConsole zero-day exploited in attacks</button></li><li><button onclick="show('art-1')">Check Point Patches Exploited SmartConsole Flaw Allowing Full Admin Access</button></li><li><button onclick="show('art-2')">Real world incident response: Microsoft and AXA XL strengthen cyber resilience</button></li><li><button onclick="show('art-3')">How enterprise GenAI can amplify ransomware risk — and how to contain it</button></li><li><button onclick="show('art-4')">Police Dismantle Kratos Phishing Kit Built to Steal Microsoft 365 Sessions and Bypass MFA</button></li><li><button onclick="show('art-5')">LG to Ban Residential Proxies from Smart TV Apps</button></li><li><button onclick="show('art-6')">The New Hotness in Phishing: Device Code Attacks in M365</button></li><li><button onclick="show('art-7')">The Risk of Exposed Cloud Functions and How to Harden</button></li><li><button onclick="show('art-8')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
+            <h2 class="article-title">Check Point warns of SmartConsole zero-day exploited in attacks</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/check-point-patches-smartconsole-zero-day-exploited-in-attacks/" target="_blank">Original Link</a></p>
+            <div class="content-text">Israeli cybersecurity firm Check Point Software has addressed an actively exploited zero-day flaw in the company's SmartConsole graphical user interface (GUI) admin panel. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">Check Point Patches Exploited SmartConsole Flaw Allowing Full Admin Access</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/check-point-patches-exploited.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Check Point has [released](https://blog.checkpoint.com/security/security-advisory-action-required-active-exploitation-of-check-point-smartconsole-authentication-bypass-cve-2026-16232/) security updates to address multiple vulnerabilities impacting Security Management and Multi-Domain Management (MDSM) products, including a critical flaw that has come under active exploitation in the wild.
+The security flaw, tracked as [CVE-2026-16232](https://support.checkpoint.com/results/sk/sk185169/) (CVSS score: 9.3), is an authentication bypass affecting the Check Point SmartConsole login process that allows an unauthenticated remote attacker to obtain an application login token and use it to authenticate with full administrative privileges.
+"Successful exploitation allows the attacker to modify security policies and security configurations," according to a description of the flaw in CVE.org. "Remote exploitation requires internet access to the Management Server IP address and a configuration that does not restrict Trusted Clients."
+Lotem Finkelstein, vice president of research at Check Point, said the company is aware of a small number of customers being targeted by this flaw, and that it has already notified them. It did not disclose the nature of the attacks or when they were discovered.
+"This only affects a very specific configuration - when Management is exposed directly to the internet without IP restrictions," Finkelstein added.
+The cybersecurity vendor has shared the below indicators of compromise (IoCs) associated with the activity -
+- 151.241.99[.]207
+- 151.241.99[.]233
+- 158.62.198[.]182
+- 192.142.10[.]99
+- 139.28.37[.]250
+- 194.213.18[.]137
+Patches have also been released for two other flaws -
+[CVE-2026-62144](https://support.checkpoint.com/results/sk/sk185152/)(CVSS score: 9.3) - An authentication bypass vulnerability in Check Point Security Management and Multi-Domain Security Management that allows an unauthenticated remote attacker to execute administrative commands on the Management Server, including run-script and exec-command on Security Gateway.[CVE-2026-62145](https://support.checkpoint.com/results/sk/sk185153/)(CVSS score: 7.5) - An improper privilege management vulnerability in Check Point Gaia Portal that allows an authenticated attacker with read-only Gaia Portal privileges to execute commands with root privileges.
+Like in the case of CVE-2026-16232, successful exploitation of CVE-2026-62144 requires management access without Firewall protection or no restrictions on Trusted Clients (GUI clients). All three issues impact the following versions -
+- R77.30
+- R80
+- R80.10
+- R80.20
+- R80.30
+- R81
+- R81.10
+- R81.20
+- R82
+- R82.10
+Customers are recommended to apply the July 22 Jumbo hotfix, limit Trusted Clients (GUI clients) to trusted IP addresses/subnets, secure Management access with Firewall, and restrict access to trusted IP addresses.
+The development has prompted the U.S. Cybersecurity and Infrastructure Security Agency (CISA) to [add](https://www.cisa.gov/news-events/alerts/2026/07/22/cisa-adds-two-known-exploited-vulnerabilities-catalog) the flaw to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/news-events/alerts/2026/07/22/cisa-adds-two-known-exploited-vulnerabilities-catalog)) catalog, requiring Federal Civilian Executive Branch (FCEB) agencies to apply the necessary fixes by July 25, 2026.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">Real world incident response: Microsoft and AXA XL strengthen cyber resilience</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/07/22/real-world-incident-response-microsoft-and-axa-xl-strengthen-cyber-resilience/" target="_blank">Original Link</a></p>
+            <div class="content-text">Cyber incidents don’t wait—and effective response can’t either. In the age of AI where cyber incidents unfold at machine speed, having the right partnerships in place becomes paramount. While AI is expanding what’s possible, navigating this transformation can be challenging to do alone. That’s why our collaboration with AXA XL is so important—bringing [Microsoft Defender Experts Cybersecurity Incident Response](https://www.microsoft.com/security/business/microsoft-incident-response) services directly to cyber insurance policyholders at the moment it matters most, helping organizations coordinate technical, business, and insurance decisions in parallel rather than in sequence.
+This collaboration reflects Microsoft’s continued investment in building an incident response model designed for real-world conditions, where speed, trust, and alignment matter as much as technology.
+In a live incident, security, executive, legal, and insurance teams are all acting at once. Without pre-established coordination, those parallel efforts can slow containment and increase risk. Our approach to incident response—and our work with [AXA XL](https://axaxl.com/press-releases/axa-xl-welcomes-microsoft-to-incident-response-panel-to-strengthen-cyber-resilience-for-policyholders-in-north-america)—starts by aligning those paths before a crisis begins.
+For example, during a ransomware incident, security teams may be actively containing lateral movement while leadership evaluates operational impact, legal teams assess disclosure requirements, and insurers determine coverage pathways—all within the same window of time. When those decisions aren’t aligned, response slows and risk compounds.
+Decades of supporting customers through high-stakes cyber incidents have reinforced a clear truth: effective [incident response](https://www.microsoft.com/en-us/security/business/security-101/what-is-incident-response) extends beyond technical execution. It requires coordination across teams and partners before the crisis hits. That experience continues to shape how we design Defender Experts Cybersecurity Incident Response—and how we work with partners like AXA XL.
+Incident response must extend beyond technology
+As a global insurance provider, AXA XL plays a critical role in helping organizations navigate cyber risk and response. Through this collaboration, AXA XL policyholders gain coordinated access to Microsoft’s dedicated incident response teams—combining threat containment, restoration, and recovery with insurance, legal, and regulatory workflows. By aligning AXA XL’s cyber insurance capabilities with Defender Experts Cybersecurity Incident Response, organizations benefit from a more integrated response model while gaining access to incident response teams informed by Microsoft Threat Intelligence and two decades of experience responding to some of the world’s most complex and consequential cyber incidents.
+Previously, organizations often brought incident responders and insurers together in the middle of a crisis. With this collaboration, that relationship is already in place, reducing friction, delays, and uncertainty when time is most critical. AXA XL policyholders and Microsoft customers can now bring Defender Experts Cybersecurity Incident Response to the table the moment it matters—creating a clearer, more predictable path from detection to recovery. The outcome is not simply faster response, but confidence: knowing who to call, how response engages, and how recovery is operationalized before the next decision becomes urgent.
+The threat of a cybersecurity incident has long been ‘not if, but when,’ and in the wake of AI, the ‘when’ may quickly become ‘how often.’ The risks organizations are tasked with preventing and overcoming relative to cybersecurity and data privacy are growing exponentially. Partnering with experts can make all the difference where resilience in the face of adversity may be your only saving grace. AXA XL’s strategic partnerships with cyber incident response providers underscore our commitment to expertise, preparedness, and resilience. By drawing on a deep knowledge of internal expertise and external cyber specialists, we empower our insureds to respond swiftly and effectively to prevail when your number is up.”
+—Gwenn Cujdik, Incident Response and Cyber Services Lead for North America, AXA XL
+This collaboration reflects Microsoft’s continued investment in building an incident response model designed for real-world conditions, where speed, trust, and coordination matter as much as technology.
+Incident response engineered for high-stakes moments—and the readiness behind them
+What differentiates Microsoft Defender Experts Cybersecurity Incident Response is not only its deep technical expertise, but its direct connection to Microsoft engineering teams and Microsoft Threat Intelligence. Responders bring first-party insight into identity-based attacks, cloud intrusions, and enterprise compromise—insight informed directly by Microsoft’s global telemetry and security engineering teams. This connection enables responders to move quickly—from identifying the root cause of an attack to deploying mitigations informed by global threat signals. When combined with pre-aligned partners like AXA XL, that technical strength becomes even more impactful, allowing organizations to act decisively without navigating uncertainty during a crisis.
+That same expertise extends beyond the moment of crisis. Delivered by the same frontline experts, Microsoft Defender Experts Cybersecurity Incident Response [proactive services](https://www.microsoft.com/en-us/security/blog/2026/01/07/explore-the-latest-microsoft-incident-response-proactive-services-for-enhanced-resilience/)—incident response planning, assessments, simulations, and advisory engagements—help organizations build resilience, strengthening their ability to prevent, withstand, and recover from an incident.
+These proactive engagements also help align internal teams and external partners before an incident occurs—clarifying roles, escalation paths, and decision-making processes. This preparation ensures that when an incident does occur, organizations are not starting from zero but executing against a coordinated plan. Resilience can mean the difference between containing an incident with minimal disruption and becoming the next headline.
+Raising the bar for trusted incident response
+The collaboration reinforces Microsoft’s long-standing commitment to delivering trusted cyber incident response services. It also underscores Microsoft’s intent to integrate directly into the cyber risk insurance ecosystem—working alongside insurers rather than operating adjacent to them during critical response moments. It reflects a shared belief that organizations deserve response capabilities that are proven, accessible, and designed to work together when it matters most.
+As cyberthreats continue to evolve, Microsoft remains focused on strengthening this ecosystem—working with global insurance leaders like AXA XL to help organizations prepare for disruption, respond with confidence, and recover with resilience.
+Learn more
+To learn more about how our teams are working together, and how our collaboration with cyber insurance providers like AXA XL can help you strengthen your cyber resilience, visit the [Microsoft Defender Experts Cybersecurity Incident Response webpage](https://www.microsoft.com/security/business/microsoft-incident-response).
+To learn more about Microsoft Security solutions, visit our [website.](https://www.microsoft.com/en-us/security/business) Bookmark the [Security blog](https://www.microsoft.com/security/blog/) to keep up with our expert coverage on security matters. Also, follow us on LinkedIn ([Microsoft Security](https://www.linkedin.com/showcase/microsoft-security/)) and X ([@MSFTSecurity](https://twitter.com/@MSFTSecurity)) for the latest news and updates on cybersecurity.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
+            <h2 class="article-title">How enterprise GenAI can amplify ransomware risk — and how to contain it</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/how-enterprise-genai-can-amplify-ransomware-risk-and-how-to-contain-it/" target="_blank">Original Link</a></p>
+            <div class="content-text">Enterprise AI can accelerate ransomware attacks when AI assistants and agents inherit excessive permissions or compromised identities. Acronis explains how identity controls, governance, and least-privilege access help reduce AI-enabled ransomware risk while supporting secure AI adoption. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-4" class="article-body">
             <h2 class="article-title">Police Dismantle Kratos Phishing Kit Built to Steal Microsoft 365 Sessions and Bypass MFA</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/police-dismantle-kratos-phishing-kit.html" target="_blank">Original Link</a></p>
             <div class="content-text">German and US law enforcement have taken down the core infrastructure of Kratos, described by German investigators as one of the world's most widely used criminal phishing kits, and Indonesian authorities arrested the man they say developed and ran it.
@@ -85,37 +168,7 @@ For now, the servers are offline and, the BKA says, Kratos-powered campaigns can
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-1" class="article-body">
-            <h2 class="article-title">OpenAI says its AI models hacked Hugging Face during testing</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/openai-says-its-ai-models-hacked-hugging-face-during-testing/" target="_blank">Original Link</a></p>
-            <div class="content-text">OpenAI says its AI models, including GPT‑5.6 Sol and a pre-release model, hacked into the Hugging Face artificial intelligence repository while being tested in a sandboxed testing environment. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-2" class="article-body">
-            <h2 class="article-title">OpenAI Says Its AI Models Escaped Sandbox, Targeted Hugging Face to Cheat Benchmark</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/openai-says-its-own-ai-models-escaped.html" target="_blank">Original Link</a></p>
-            <div class="content-text">OpenAI on Tuesday said a combination of its artificial intelligence (AI) models, including [GPT-5.6 Sol](https://thehackernews.com/2026/06/openai-limits-gpt-56-rollout-as-sol.html) and an "even more capable pre-release model," was behind the [security incident](https://thehackernews.com/2026/07/worlds-largest-ai-model-repository.html) that targeted Hugging Face's production infrastructure last week.
-The AI company [said](https://openai.com/index/hugging-face-model-evaluation-security-incident/) the models were operating with "reduced cyber refusals for evaluation purposes" that might otherwise limit their ability to conduct cyber attacks, adding it expects such incidents to "become more commonplace with the proliferation of increasingly cyber-capable models."
-Describing it as an "unprecedented cyber incident" and one involving state-of-the-art cyber capabilities, OpenAI said it intends to conduct a thorough investigation in partnership with Hugging Face to get to the bottom of the matter.
-As part of an internal evaluation, the models are said to have identified and chained vulnerabilities across OpenAI's research environment and Hugging Face's production infrastructure to find solutions for the [ExploitGym](https://www.cybergym.io/exploitgym/) benchmark.
-Evidence unearthed by OpenAI suggests the models' hyperfocus caused them to go to "extreme lengths" to achieve the goal at any cost, even managing to break out of its highly isolated sandboxed environment and obtain open internet access by discovering and exploiting a zero-day vulnerability in an unspecified vendor's software, which acts as a proxy and cache for package registries. This required spending a "substantial amount of inference compute."
-"With this access, our models performed a series of privilege escalation and lateral movement actions in our research testing environment until the models reached a node with internet access," the company explained.
-Surmounting the internet access blockade, the models subsequently inferred Hugging Face as the repository that hosted models, datasets, and solutions for ExploitGym, which, in turn, caused them to look for ways to gain access to secret information that it could use to cheat the benchmark.
-At one point, the models strung together several attack vectors, including using stolen credentials and zero-day vulnerabilities, to find a remote code execution path on the Hugging Face servers.
-As part of incident response efforts, OpenAI said it's implementing strict controls in infrastructure configuration, responsibly disclosed the zero-day flaw in the third-party software, adding Hugging Face to its trusted access program to improve their defenses, and incorporating stronger guardrails around future training and evaluations.
-"This incident points to the need to further strengthen our model's alignment, cyber protections during evaluation time, and monitoring during internal testing," OpenAI said.
-The development comes as the company also [revealed](https://openai.com/index/safety-alignment-long-horizon-models/) that long-running models, while taking on complex, open-ended problems, can open the door to taking unwanted actions, such as finding weaknesses in the operational environment, in pursuit of their objective through repeated attempts over extended periods of time.
-"It also shows how a model that operates effectively over long time horizons can learn the blind spots of an approval system and work around it to achieve its goals," OpenAI said. "Long-horizon safety requires not only asking 'is this action allowed?' but also 'what outcome is this sequence of actions working toward?.'"
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-3" class="article-body">
+        <div id="art-5" class="article-body">
             <h2 class="article-title">LG to Ban Residential Proxies from Smart TV Apps</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/07/lg-to-ban-residential-proxies-from-smart-tv-apps/" target="_blank">Original Link</a></p>
             <div class="content-text">The home appliance giant LG Electronics USA said this week it plans to suspend any apps built for its smart TVs that turn one’s television into an always-on residential proxy node. The move comes less than a month after researchers found that more than 42 percent of games and other apps available for download on LG’s webOS store allow unknown third-parties to route their Internet traffic through a user’s TV.
@@ -125,30 +178,61 @@ Responding to questions about Spur’s research, LG Senior Vice President John T
 Taylor said LG is committed to keeping residential proxy networks out of its smart TV apps going forward, and that the company’s review of those apps is “well underway now.”
 “As part of our ongoing efforts to enhance platform quality and the user experience, LG will continue to strengthen our evaluation process for developer-submitted apps, including those that incorporate residential proxy SDKs,” Taylor wrote in an emailed statement.
 App makers looking for ways to monetize their creations can turn to residential proxy providers, which pay developers to include SDKs that turn the user’s device into a residential proxy node that is rented to paying customers. In the case of LG and Samsung smart TVs, Spur found residential proxy SDKs bundled with everything from simple games like Pac-Man to screensavers and file utilities.
-Spur’s report found the residential proxy network Bright Data accounted for a majority of proxy SDKs across both Samsung and LG smart TVs. Bright Data did not respond to requests for comment.
+Spur’s report found the residential proxy network Bright Data accounted for a majority of proxy SDKs across both Samsung and LG smart TVs. In a statement shared with KrebsOnSecurity, Bright Data said its network is built on consent and responsibility and operates by LG and Samsung terms.
+“Every peer opts in through a dedicated screen and receives value in return; every customer is vetted, and our practices have now undergone a second independent audit by PwC,” the statement reads. “We remain committed to an open, transparent internet where legitimate businesses, researchers, and institutions can responsibly access data that lives in the public domain.”
 Bright Data and other proxy providers named in Spur’s report all say they follow rigorous know-your-customer processes to validate legitimate uses of their services, which is often heavily tied to content-scraping activities by said customers. The proxy companies also say they incorporate technological countermeasures to prevent proxy service customers from being able to [interact with and control other devices on the proxy user’s local network](https://krebsonsecurity.com/2026/01/the-kimwolf-botnet-is-stalking-your-local-network/).
 Spur argues the problem is not that residential proxy networks exist, but rather that they are being embedded at scale in devices that most consumers do not think of as computers and are not equipped to audit.
 “A one-time consent prompt buried in a TV app is not a substitute for meaningful transparency, ongoing control, and platform oversight,” Spur’s Trevor Sutter wrote. “The risk is amplified when consent comes from individuals within the household who use the device but shouldn’t give consent, such as minors.”
 LG’s announcement that it is culling residential proxy SDKs from its app store is welcome news, but the company recently came under fire for another questionable partnership: Pimping McAfee security products via software drivers included in its high-end LCD monitors.
 Earlier this week, the Youtube channel [Gamers Nexus](https://www.youtube.com/watch?v=Q9uefFYe6bM) showed that certain LG LCD monitors will automatically install [an app](https://apps.microsoft.com/detail/9pm9n6f47jb8?hl=en-US&gl=US) that promotes paid McAfee antivirus subscriptions, and that the app arrives through Windows Update without an approval prompt.
+Update, July 22, 1:06 p.m. ET: Added statement from Bright Data.
 Good – residential proxy providers are scum.
 Now if only they’d also stock forcing McAfee on PC users of their monitors via stealth windows updates and kill off the spyware on their smart TV’s that records everything you say and watch etc.
-HOW did anyone at LG think ANY of this was ok? Who is being summarily fired RTFN? LG burned all trust and is a month late in merely promising they’ll BEGIN removing the 42% MALWARE TROJANS from their ‘curated’ app store, and they somehow think that’s going to be good enough? This brand is dead to me forever. This wasn’t just an oversight.</div>
+HOW did anyone at LG think ANY of this was ok? Who is being summarily fired RTFN? LG burned all trust and is a month late in merely promising they’ll BEGIN removing the 42% MALWARE TROJANS from their ‘curated’ app store, and they somehow think that’s going to be good enough? This brand is dead to me forever. This wasn’t just an oversight.
+why do you think the price is so good?
+Back when I was burnt out, I used to, just for fun, do SEO and product reviews of cheap items for a place that bought and sold things in small lots, and one of the things I often got sent to me was devices that acted this way.
+While there are some incredibly awful device offenders I came across in my actual career in security, most of them didn’t act nearly as egregiously in-your-face as the newest batches of devices on the market now. I wouldn’t want my WiFi repeaters near anything running code based on that SDK, no less that Pac-Man TV app ad.
+A simple solution to scummy data harvesting by TV vendors and their app ecosystems is to not connect the TV to the internet. Connect it to a TV-PC box (home theater PC) instead, where you control the OS and apps that run on it, so you can make it as secure as you want it to be. (Of course that’s moot if you allow family members to install whatever games and other apps they want on it without oversight.)
+A perfectly elegant and workable solution and exactly what I’ve done with every “smart” TV we have in the home. They do not get to connect to my network and their device addresses are specifically blocked from ever connecting to the internet at the firewall level, juuuuust in case someone in my family gets suckered into trying to add to the network.
+LG UltraGear monitors have a related problem as well. As soon as you plug one into a Windows PC, it silently installs adware. It’s clear this kind of stuff at LG isn’t an accident.
+https://www.theregister.com/personal-tech/2026/07/21/lg-monitors-are-using-windows-11-feature-to-serve-adware/5275486
+Wait, without the user’s clickthru consent to at least upgrade (ie, it isn’t just part of the plugin setup upgrade software shpiel?)
+Zero user interaction, facilitated by M$ 11. You can avoid it but by default, it will bomb you with McAfee.
+Burke is right, if they sold even one of these in Europe, they are cooked.
+and thanks be to BK of course!
+Exactly. How was it allowed in the first place? It’s like allowing Trojans in your App Store.
+Why i can´t use my device which i fully payed in the way i wish? How come LG feels entitled to limit what i can do with MY device
+Much like Amazon does with it’s devices.
+Is there a good resource to check if one’s Internet connection is being used as a residential proxy? I just checked with https://whatismylocation.org/proxy-check which says I’m okay, but who really knows?
+I have an LG TV, and use a pihole blocklist to at least do some blocking, but LG has a lot more resources than the person maintaining the blocklist.
+This is really a horrible development, what is the next peripheral that is going to be installing malware?
+you can try https://spur.us/context/me
+https://check.labs.greynoise.io/ just learned it. Might just tell you something in your house is problematic.
+https://synthient.com/check
+Thanks for the help. Great news, I’m boring!
+And so is my computer. 🙂
+What about VIzio and the other big TV vendors?
+Very good question, innocent until caught, then they say “welp maybe we’ll start cracking down…” on the 42%!
+I’m a long-time Apple user but a few years ago, I bought a new PC with the Windows 11 OS for a particular reason. It seemed like within minutes of getting it set up and running, a seriously annoying pop-up for McAfee sprang forth, continually bugging me to buy its software. I couldn’t get rid of it, and ultimately I gave the PC to a family member.
+It seems to me that ever more these days, we’re being subjected to an onslaught of advertising that is coming at us from all sides. I understand that advertising supports a business and am not against it when used judiciously, but that’s not what we’re experiencing now. It’s being rammed down our throats at every turn, even on the screens in our cars! If I’m paying for a streaming service, I do not want ads either. Stealth adware being installed through monitors or other equipment? Who thinks this is a great idea? Maybe if these companies could understand that people might not object to their ads so much if they weren’t so prevalent, some of us might actually watch them and (gasp) even engage with the advertiser. Currently, I refuse to do any of this.
+LOL, the hypocracy. LG wants only THEIR spyware on your TV and whatever you plug that TV into. LG already is violating concent laws for minors with their PC monitors. This is just a story pretending they are the victim and are on our side against horrible things such as internet privacy. How can you possibly say you don’t want our Orange Big Bother watching everything your little girl is doing?
+> LG Senior Vice President John Taylor told KrebsOnSecurity the company was working with
+You don’t “work with” criminal organizations unless you’re a criminal organization yourself. By not shutting them all down *immediately*, either LG is a bad actor or John Taylor is abusing his role with the company to expose them to considerable liability risk.
+> Taylor said LG is committed to keeping residential proxy networks out of its smart TV apps going forward, and that the company’s review of those apps is “well underway now.”
+The solution is not app “review”. Bake into the OS security restrictions on what apps can and cannot do. A list of *requested* domains should come with the app (and ideally be subject to user approval), and *no* other connections should be granted. If they haven’t yet figured that out, they should not be in the IoT market.
+> Spur argues the problem is not that residential proxy networks exist
+No, that absolutely *is* the problem! As I noted for a previous article here on the topic, ISPs prohibit them outright (user “consent” or not), so any device abusing networks this way creates a real risk of people getting their Internet connections completely shut off. And some of us create firewall entries (for an ISP’s *entire* network) when we’re on the receiving end of *any* of their residential proxy abuse, because we’re not going to wait for the botnet DDoS from them that’s inevitably just around the corner. LG and John Taylor are responsible for their part in creating an Internet this hostile.
+I wonder if Apple, Google, Amazon, etc. check apps for their TV boxes for proxy functionality. And block any from their stores (and blacklist their developers)?
+If so, is a reasonable privacy, security, and ad-annoyance strategy to:
+1) use one or more of them for all your apps,
+2) put the TV on its own VLAN (to protect other devices from any malware that makes its way onto the TV),
+3) Get all your streaming from trusted set-top boxes (to hopefully avoid spyware, adware, proxies, etc. that you haven’t signed up for)
+4) Disable internet access on the TV, except when you discover you must do a software upgrade? At the TV and/or the VLAN?</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">Critical SharePoint RCE flaw exploited to steal machine keys</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/critical-sharepoint-rce-flaw-exploited-to-steal-machine-keys/" target="_blank">Original Link</a></p>
-            <div class="content-text">Hackers are actively exploiting the critical CVE-2026-50522 vulnerability in Microsoft SharePoint to steal machine keys and maintain access even after affected servers are patched. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-5" class="article-body">
+        <div id="art-6" class="article-body">
             <h2 class="article-title">The New Hotness in Phishing: Device Code Attacks in M365</h2>
             <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/the-new-hotness-in-phishing-device-code-attacks-in-m365" target="_blank">Original Link</a></p>
             <div class="content-text">The New Hotness in Phishing: Device Code Attacks in M365
@@ -452,222 +536,182 @@ TrustedSec helps organizations respond to BEC and M365 intrusions and harden the
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-6" class="article-body">
-            <h2 class="article-title">Microsoft at Black Hat USA 2026: Defending trust in the age of AI and supply chain attacks</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/07/17/microsoft-at-black-hat-usa-2026-defending-trust-in-the-age-of-ai-and-supply-chain-attacks/" target="_blank">Original Link</a></p>
-            <div class="content-text">Across the threat landscape, in this moment, one pattern sits at the center of the story: threat actors are following trust.
-They are not only looking for vulnerable systems, but rather targeting the software, services, identities, tools, developer workflows, and AI systems that organizations already depend on.
-A package can become a distribution path. A build pipeline can become an access path. A trusted tool can become or expand an attack surface. An AI agent with the wrong access can become a new way to reach code, data, or infrastructure.
-While the surfaces may change, the goal for the majority of threat actors remains the same: find what is trusted, abuse it, and scale the impact.
-At [Black Hat USA 2026](https://blackhat.com/us-26/), Microsoft Security will walk through how we are seeing this shift unfold, how security teams can look for it earlier, and how threat intelligence, expert-led response, and security operations need to work together when campaigns move across software, identity, cloud, data, and AI systems.
-On Wednesday, August 5, 2026, the day begins with David Weston’s keynote, [The End of Rare: Defending When Offense Is Cheap](https://blackhat.com/us-26/features/schedule/index.html?track%5b%5d=keynotes&track%5b%5d=main-stage), which looks at what defense requires when offensive capability becomes easier to access, automate, and scale. Later that afternoon, Aarti Borkar and Tanmay Ganacharya will resume the main stage for [Poisoned at the Source: Inside the Hunt for Supply Chain Attacks](https://blackhat.com/us-26/features/schedule/?day=wednesday#poisoned-at-the-source-inside-microsoft-threat-intelligences-hunt-for-supply-chain-attacks-56692), which offers a closer look at how Microsoft Threat Intelligence is hunting attacks across software ecosystems, developer workflows, and trusted services. This includes details into the ongoing attacks on npm (Node package manager).
-Together, these sessions frame the challenge security teams are facing now: when offensive capability becomes easier to scale, security teams need to understand the trust paths threat actors can abuse before those paths become open doors for attacks.
-At our booth, we’ll also showcase [Microsoft Defender Experts Threat Intelligence](https://www.microsoft.com/en-us/security/blog/2026/07/15/turning-threat-intelligence-into-decisive-action-with-defender-experts/), a new expert-led service delivering continuous, curated intelligence tailored to your organization, and Microsoft Defender Experts MDR, now extended with third-party and multicloud coverage.
-From August 4 to 6, 2026, at Mandalay Bay in Las Vegas, you’ll find Microsoft Security on the Business Hall floor at booth #2144, and on Wednesday evening, join us at the Microsoft Security reception at Swingers at Mandalay Bay.
-Weston on the future of defense
-At 9:15 AM PT on Wednesday, August 5, 2026, David Weston, CVP of Agentic Security, will examine what changes for security teams when offensive capability becomes easier to access, automate, and scale.
-The keynote sets up one of the central questions security leaders are facing now: how does the security operations center (SOC) and analysts adapt when threat actors can move faster, test more often, and reuse trusted paths across software, identity, cloud, and AI systems? [Join the keynote](https://blackhat.com/us-26/features/schedule/index.html?track%5b%5d=keynotes&track%5b%5d=main-stage) Wednesday, August 5, 2026, then continue the conversation with Microsoft Security at booth #2144.
-Our latest intelligence (and response) on npm supply chain attacks
-That same intelligence-to-action challenge is at the center of our main stage session at Black Hat.
-On Wednesday, August 5, 2026, from 2:30 PM PT to 3:00 PM PT, Aarti Borkar, Corporate Vice President (CVP), Microsoft Security, and Tanmay Ganacharya, Vice President of Microsoft Security Research and Threat Intelligence, will share intelligence and insights into the ongoing supply chain campaigns impacting all areas of the threat landscape. The talk, [Poisoned at the Source: Inside the Hunt for Supply Chain Attacks](https://blackhat.com/us-26/features/schedule/?day=wednesday#poisoned-at-the-source-inside-microsoft-threat-intelligences-hunt-for-supply-chain-attacks-56692), will walk through Microsoft Threat Intelligence’s investigations into the ongoing npm supply chain attacks targeting software ecosystems, developer workflows, trusted services, and how organizations are handling the challenges associated with npm packages.
-Follow the research in the Black Hat Briefings
-Microsoft Security researchers will also present peer-reviewed technical research in the Black Hat Briefings. These sessions go deep into cloud, mobile, and software supply chain defense.
-GitHub Can Tell You’re Being Hacked. You’re Just Not Listening: Building EDR for GitHub from Its Own Event Stream
-- Presented by Yossi Weizman, Principal Security Research Manager
-- Wednesday, August 5, 2026, from 10:15 AM PT to 10:45 AM PT
-One Click to System: Exploiting Bixby’s Trust Model for Full Device Compromise
-- Presented by Dimitrios Valsamaras, Senior Security Researcher
-- Wednesday, August 5, 2026, from 12:00 PM PT to 12:40 PM PT
-Handle With Care: Chaining Azure Automation Flaws for Cross-Tenant Identity Takeover
-- Presented by Shay Shavit, Senior Security Researcher
-- Wednesday, August 5, 2026, from 4:30 PM PT to 5:10 PM PT
-Check the official [Black Hat schedule](https://blackhat.com/us-26/briefings/schedule/) for final room assignments and any timing updates.
-Go deeper in Microsoft sessions
-Microsoft experts will also lead sessions that give you a closer look behind the scenes, including:
-[Mind the Gap: Turning Threat Intelligence into Decisive Action with Expert-Led Defense](https://blackhat.com/us-26/sponsored-sessions/schedule/index.html?format[]=20-minute-sponsored-session#mind-the-gap-turning-threat-intelligence-into-decisive-action-with-expert-led-defense-56120)
-- Presented by Wes Malaby, General Manager of Customer Success
-- Wednesday, August 5, 2026, from 5:00 PM PT to 5:20 PM PT
-- Presented by Fanta Kaba and special guest Jimmie Galaites
-- Wednesday, August 5, 2026, from 5:00 PM PT to 5:20 PM PT
-- Presented by Naadia Sayed, Principal Product Manager
-- Thursday, August 6, 2026, from 11:15 AM PT to 12:00 PM PT
-These sessions extend the main stage story into practitioner decisions: how teams move from intelligence to action, how defenders test their judgment under pressure, and how AI and agents are changing security workflows.
-Visit booth #2144 for research, community, and hands-on defense
-This year we are transforming the Microsoft Security booth into a community center. [Click here to jump to the full schedule](#microsoft-security-booth-2144-experiences-and-schedule).
-If the keynote and main stage sessions frame the largest challenges across the threat landscape, booth #2144 is where you can directly explore the workflows behind it: threat intelligence, incident response, AI security, security operations, partner solutions, and hands-on practice.
-You will find:
-Connection circles, ask-me-anythings (AMAs), meetups led by industry influencers, and lightning talks
-Short-form conversations with practitioners and experts on threat intelligence, incident response, AI security, identity, data protection, and security operations. If you swing by when the expo area opens, we’ll also fuel you up so you can skip the food court.
-Partner presence
-At Black Hat 2026, the Microsoft booth will feature 13 partners from the [Microsoft Intelligent Security Association (MISA)](https://www.microsoft.com/en-us/security/business/intelligent-security-association) who will showcase solutions built with Microsoft Security technology. Security Insider Conversations will feature MISA partners Critical Start (August 5, 2026, at 3:30 PM PT) and Huntress (August 6, 2026, at 2:00 PM PT) alongside Microsoft Security experts. Additionally, thank you to our Microsoft Security VIP Mixer sponsors: Ascent Solutions, Avertium, Devicie, Huntress, Illumio, Maureen Data Systems, and Security Risk Advisors.
-Demo our latest innovations
-Explore connected experiences across defending with AI, securing AI, strengthening posture for AI adoption, using security intelligence in investigations and response, working with trusted partners, and connecting with Microsoft Defender experts.
-Exclusive swag (featuring a surprise guest)
-Spend some time with us at the experience we built around the booth and you’ll earn tokens that can be exchanged for custom patches and hats (because security experts have to wear many hats). Your favorite paperclip may be among the patches. Maybe.
-Decompress with mini golf
-The biggest Microsoft Security community moment of the week is our reception at Swingers at Mandalay Bay, hosted by Aarti Borkar.
-Join us Wednesday, August 5, 2026, from 6:00 PM PT to 9:00 PM PT for food, drinks, mini golf, partner activations, and time with the Microsoft Security team away from the show floor.
-Come compare notes with peers, meet Microsoft researchers and responders, and connect with the broader Microsoft Security community.
-Space is limited, so reserve your spot early.
-Plan your week with Microsoft Security
-You can find Microsoft Security at booth #2144 during Business Hall hours:
-- Tuesday, August 4, 2026: 4:00 PM PT to 7:00 PM PT
-- Wednesday, August 5, 2026: 9:00 AM PT to 6:00 PM PT
-- Thursday, August 6, 2026: 9:00 AM PT to 4:00 PM PT
-Stop by early to see the booth schedule, find upcoming AMAs and connection circles, and plan which live sessions and hands-on experiences you want to attend.
-Skill up before and after Black Hat
-You do not need to be in Las Vegas to take part in the broader Microsoft Security Black Hat experience.
-The [Microsoft Black Hat Skilling Challenge](https://learn.microsoft.com/en-us/security/challenge/defender-challenge) begins July 20, 2026, and will help defenders build hands-on skills across [Microsoft Defender](https://www.microsoft.com/en-us/security/business/microsoft-defender), [Microsoft Sentinel](https://www.microsoft.com/en-us/security/business/siem-and-xdr/microsoft-sentinel), and [Microsoft Security Copilot](https://www.microsoft.com/en-us/security/business/ai-machine-learning/microsoft-security-copilot). Attendees can use the challenge to prepare before the event, then bring questions to on-site experts and community sessions. Remote participants can follow along through Microsoft Tech Community, AMAs, recaps, and post-event resources.
-See you at hacker summer camp
-Threat actors are adapting around the systems organizations already trust. Security teams need to understand those trust paths before they become attack paths.
-At Black Hat USA 2026, Microsoft Security will bring the research, expert perspective, and hands-on experiences to help practitioners see where attacker behavior is moving and how defense can adapt.
-Add Poisoned at the Source to your schedule. Visit us at booth #2144. Join the skilling challenge. And register for the Microsoft Security reception on Wednesday night.
-Microsoft Security booth #2144 experiences and schedule
-Tuesday, August 4, 2026
-| Time | Title |
-|---|---|
-| 5:00 PM PT to 6:00 PM PT | How Practitioners Build Effective Security Playbooks |
-| 6:00 PM PT to 7:00 PM PT | Agentic Security: What’s Next |
-Wednesday, August 5, 2026
-| Time | Title |
-|---|---|
-| 9:00 AM PT to 9:30 AM PT | Security Communities Meet Up |
-| 10:00 AM PT to 10:30 AM PT | Using Offensive Security Research to Advance AI Security |
-| 10:30 AM PT to 11:00 AM PT | The Confused Deputy Strikes Back: How AI Agents Turn Into RCE Proxies |
-| 12:00 PM PT to 12:30 PM PT | Hunting in the Gray: When Nation-States and Cybercrime Collide |
-| 12:30 PM PT to 1:00 PM PT | AI in Security Operations: What Actually Works and What Doesn’t |
-| 1:00 PM PT to 2:00 PM PT | AI in the SOC: Lessons Learned from the Front Lines |
-| 2:30 PM PT to 2:30 PM PT | Microsoft Defender Challenge |
-| 2:30 PM PT to 3:00 PM PT | From Alert Fatigue to Action: How Practitioners Prioritize What Matters |
-| 3:00 PM PT to 3:30 PM PT | Agents in the Flow of Work: From Signals to Action |
-| 3:30 PM PT to 4:00 PM PT | Will It Hold Up in Court? Forensic Defensibility of Microsoft 365 Evidence |
-| 5:00 PM PT to 6:00 PM PT | Zero Trust for the Agentic Era: An Interactive Discussion for Securing AI |
-Thursday, August 6, 2026
-| Time | Title |
-|---|---|
-| 9:00 AM PT to 9:30 AM PT | The Future of Microsoft Security and How Communities Can Support You |
-| 10:00 AM PT to 10:15 AM PT | Quantum Is Here: What Practitioners Must Do Now |
-| 11:00 AM PT to 12:00 PM PT | The Next Era of Cyber Defense: Clarity, Control, and Response at Scale |
-| 12:00 PM PT to 12:30 PM PT | Lessons from the Field: What to Do When You’re Under Attack |
-| 12:30 PM PT to 1:00 PM PT | When Browsers Become Agents: The Emerging Security Risks of AI‑Powered Browsers |
-| 2:30 PM PT to 3:00 PM PT | Social Engineering Always Matters |
-| 3:00 PM PT to 3:30 PM PT | AI Runs on Data: Securing the Foundation of AI Adoption |
-To learn more about Microsoft Security solutions, visit our [website.](https://www.microsoft.com/en-us/security/business) Bookmark the [Security blog](https://www.microsoft.com/security/blog/) to keep up with our expert coverage on security matters. Also, follow us on LinkedIn ([Microsoft Security](https://www.linkedin.com/showcase/microsoft-security/)) and X ([@MSFTSecurity](https://twitter.com/@MSFTSecurity)) for the latest news and updates on cybersecurity.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
         <div id="art-7" class="article-body">
-            <h2 class="article-title">The Bear Necessities: A Look at the Drivers, Dynamics, and Applications of the Pro-Russia Influence Ecosystem</h2>
-            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/pro-russia-influence-ecosystem/" target="_blank">Original Link</a></p>
-            <div class="content-text">The Bear Necessities: A Look at the Drivers, Dynamics, and Applications of the Pro-Russia Influence Ecosystem
-Google Threat Intelligence Group
-Google Threat Intelligence
-Visibility and context on the threats that matter most.
-[Contact Us & Get a Demo](https://cloud.google.com/security/resources/google-threat-intelligence-demo?utm_source=cgc-blog&utm_medium=blog&utm_campaign=FY25-Q2-global-GCP30649-website-su-dgcsm-GTI-interest)
-Written by: James Sadowski, Alden Wahlstrom
+            <h2 class="article-title">The Risk of Exposed Cloud Functions and How to Harden</h2>
+            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/exposed-cloud-functions-harden/" target="_blank">Original Link</a></p>
+            <div class="content-text">The Risk of Exposed Cloud Functions and How to Harden
+Mandiant
+Written by: Corné de Jong
 Introduction
-Four years into Russia’s full-scale invasion of Ukraine, the pro-Russia influence ecosystem has evolved from a tool of war back into a global strategic asset. Since the mobilization of this ecosystem to support frontline objectives, we have witnessed the expedited development of new influence assets linked to multiple, expansive, covert information operations (IO) campaigns and a [revitalization](https://cloud.google.com/blog/topics/threat-intelligence/global-revival-of-hacktivism) of pro-Russia hacktivism at an unprecedented scale. While this threat activity initially adapted to encompass Ukraine-related priorities, it is gradually pivoting back to established Russian influence objectives for which the ecosystem was originally honed. This shift is significant because it likely signals increased focus outside of Ukraine, warning that pro-Russia influence activity targeting the European Union (EU), North Atlantic Treaty Organization (NATO), and other top targeting priorities may intensify.
-Ultimately, the war in Ukraine has provided a critical feedback loop for Russia to refine its influence activity, lessons that we anticipate will be applied as the ecosystem continues to reorient toward global strategic objectives while maintaining focus on Ukraine. Further, recent pro-Russia IO indicates the continued expansion of already diverse tactics, and the increasing use of [generative AI tooling](https://cloud.google.com/blog/topics/threat-intelligence/adversarial-misuse-generative-ai) for planning, research, and content creation marks a forward trend in pro-Russia IO. Meanwhile, new and different actors have adopted IO tactics to meet an increasingly diverse set of challenges, signaling growing Russian reliance on influence tactics. Together, these trends likely demonstrate the Kremlin's perception of these tactics as cost effective and successful. The interconnected nature of the ecosystem's disparate components makes it resilient to limited scope disruptions, which defenders must consider to effectively mitigate pro-Russia influence threats.
-The Ecosystem at a Glance: Objectives, Targeting, and Tactics
-Russia's modern approach to information operations is built on the conceptual foundation of Soviet-era "[active measures](https://www.marshallcenter.org/en/publications/security-insights/active-measures-russias-covert-geopolitical-operations-0)" adapted for the digital age. Alongside disruptive cyberattacks dating back to the early 2000s, the Kremlin has increasingly harnessed internet-based platforms for espionage and information operations. Russia's approach has evolved from rudimentary, singular operations into a complex, self-sustaining environment intentionally curated by the Russian Government that blends overt, covert, and independent elements to advance Kremlin interests both at home and abroad.
-Core Influence Objectives
-GTIG’s observations suggest the primary strategic motivations driving the pro-Russia influence ecosystem fall into five categories, each aiming to achieve military and/or political objectives through psychological manipulation of the target audience (Figure 1). Collectively, these objectives informally depict a global influence strategy: through the furthest reach of its influence, the Kremlin seeks to diminish Western primacy and advance Russia's global position; within its surrounding region, it strives to retain and return Moscow's dominance; and at home, it works to ensure the stability of the political regime.
-Figure 1: Core objectives of the pro-Russia influence ecosystem
-Targeting
-Pro-Russia influence operations are pivoting from the [near singular focus on Ukraine](https://cloud.google.com/blog/topics/threat-intelligence/information-operations-surrounding-ukraine) that dominated the ecosystem since 2022. We expect influence operations advancing Russia's war-specific interests to continue. However, as Russia seeks to reemerge from international isolation, we have increasingly observed a concurrent focus on pre-war pro-Russia influence objectives.
-The current and historical targeting scope of each ecosystem component exposes both the Kremlin's global ambitions and the realistic limitations of its power projection. State-owned media organizations produce content intended to serve populations across six continents, but in recent years, sanctions and other factors have limited its production and distribution. Meanwhile, covert operations have appeared more limited in scope, primarily targeting the West and countries surrounding Russia, with intermittent operations targeting the Middle East and Africa, indicating that finite resources necessarily limit these operations (Figure 2).
-Top Regional Targets
+Mandiant security assessments frequently identify publicly exposed serverless applications that lack authentication, often as a result of specific business requirements. Serverless deployments typically run custom-developed code that incorporates third-party packages, making them targets for a wide range of application-level attacks, including:
 -
-The United States and Europe: The Kremlin has long viewed the West as a top adversary of Russia. Accordingly, the US and Europe are top targets of covert pro-Russia information operations, especially aimed at undermining political stability within these countries and the unity between them. NATO and the EU embody the collective "West" and are Russia's perceived top adversaries, second only to the US independently.
+Local and Remote File Inclusion (LFI/RFI)
 -
-Russia's "Near Abroad": Since the dissolution of the Soviet Union, Moscow has asserted that the countries that formerly comprised part of the USSR now reside in Russia's so-called "sphere of influence." Covert influence targeting this region directly reflects Moscow's assertion that Russia is a world power entitled to special privileges within its neighborhood.
+Command Injection
+Successful exploitation of these vulnerabilities can grant an attacker full control over the underlying container instance. Such access can serve as a foothold that may ultimately lead to a full compromise of the victim’s cloud environment.
+Based on lessons learned in customer engagements, in this blog post we describe attack scenarios and provide actionable guidance on how to secure serverless environments. While this analysis focuses on hardening strategies for Google Cloud Run services and functions that must remain publicly accessible, these principles apply universally to any public serverless deployment.
+What are Serverless Applications?
+Serverless applications, also described as Function-as-a-Service (FaaS), allow the deployment of individual blocks of code as microservices within a flexible, decoupled, and event-driven cloud architecture without the need to manage underlying infrastructure. These services enable applications and automations to scale automatically and deploy instantly, removing operational overhead. Serverless services underpin major e-commerce, media, payment processing applications, and AI usage.
+The rapid expansion of generative AI adoption is a significant driver of increased serverless architecture use. AI workflows, including chatbot interactions, image generation, “vibe-coding”, and multi-step AI agents rely on serverless functions to complete tasks for users. This growth has made securing serverless environments a more pressing challenge for enterprise security teams.
+Risks of Serverless Application Attacks
+Publicly exposed serverless workloads can serve as an initial access point for threat actors. As noted, these services may contain vulnerabilities within the code, imported packages, or the underlying runtime environment.
+Once an entry point is exploited, attackers typically attempt to escalate privileges or move laterally. Common techniques observed include:
 -
-The Middle East and Africa: Over the past decade, Russian efforts to reassert itself as a global power have included high-profile investments in cultivating Russia's standing in the Middle East and
-[Africa](https://cloud.google.com/blog/topics/threat-intelligence/io-campaigns-russian-prigozhin-persist). Covert pro-Russia influence activity is likely deployed in tandem as intended support for other Russian initiatives in these regions. -
-Russia Domestic: Internally targeted covert IO is a well-established component of pro-Russia influence activity, deployed by regime-aligned actors to promote Kremlin policies and repress opposition voices.
-Targeted Entities and Global Events
+Extracting secrets stored directly within the application code.
 -
-The Olympics: Russia has long viewed Olympic participation as a point of national prestige, and GTIG has observed notable Russian influence activity targeting the
-[Olympics](https://cloud.google.com/blog/topics/threat-intelligence/cyber-threats-2024-paris-olympics)in the face of Russian participation bans. -
-War in Ukraine: The
-[war in Ukraine](https://cloud.google.com/blog/topics/threat-intelligence/information-operations-surrounding-ukraine)has been a key driver of Russia's influence activity, including attempts to influence events on the ground as well as influence activity intended to advance Moscow's interests elsewhere vis-a-vis the war. GTIG expects that Ukraine will remain a priority in Russia's targeting calculus during the post-conflict phase following any future peace agreements. -
-Elections: Election targeting aligns with multiple Russian influence objectives, including attempting to undermine confidence in democratic institutions as well as internally weakening perceived Western adversaries. These operations regularly target elections in countries that are already prioritized by ongoing pro-Russia influence activity.
+Reviewing application logic and sensitive data to identify further attack vectors within the environment.
 -
-Ad Hoc Geopolitical Flashpoints and Global Events: Russian influence actors have a history of pivoting activity to engage with emerging geopolitical developments and events, such as the
-[COVID-19](https://cloud.google.com/blog/topics/threat-intelligence/limited-shifts-cyber-threat-landscape-driven-covid-19?e=48754805)pandemic or the[2026 Middle East](https://apnews.com/article/iran-war-images-misinformation-russia-israel-9e495017dc5c4bf24a0b6152863dbfb1)conflict. This flexible target selection often overlaps or is aligned with other Russian priorities, making previously observed Russian influence activity helpful in anticipating which events may be appropriated.
-Figure 2: Priority targets of the ecosystem
-Tactics
-Converging geopolitical and technological developments make the evolution of pro-Russia influence tactics a particularly important space to monitor right now. The pro-Russia influence ecosystem expanded to support the war effort, bringing change across the spectrum of activity and providing operators the opportunity to hone their tactics, techniques, and procedures (TTPs) in the rapid feedback loop of war. Meanwhile, the emergence and increased democratization of [generative AI](https://cloud.google.com/blog/topics/threat-intelligence/distillation-experimentation-integration-ai-adversarial-use) tooling has brought both promised and already realized opportunities to support all phases of the IO lifecycle. The following are a sample of key tactics that illustrate how pro-Russia actors currently blend well-tested methods with new technological developments to reach audiences through diverse means:
+Exfiltrating service account bearer tokens from the metadata server following successful Remote Code Execution (RCE).
+Leveraging these compromised secrets or service accounts allows threat actors to pivot to adjacent systems and workloads, potentially resulting in a total environment takeover if proper hardening strategies are not in place.
+Example Attack Scenarios
+The following simplified scenarios illustrate how serverless functions can be compromised and how attackers pivot after achieving initial code execution.
+Local File Inclusion (LFI)
+In the following Cloud Run example, a Python/Flask function accepts user-controlled input to open a file without performing proper validation. This pattern is an example of a Local File Inclusion (LFI) vulnerability.
+import functions_framework
+@functions_framework.http
+def hello_http(request):
+request_json = request.get_json(silent=True)
+request_args = request.args
+if request_json and 'file' in request_json:
+file = request_json['file']
+elif request_args and 'file' in request_args:
+file = request_args['file']
+# VULNERABILITY: The 'file' parameter is used directly in open()
+# without validation, allowing arbitrary file access
+with open(file, 'r') as resp:
+filedata = resp.read()
+return 'local file data {}!'.format(filedata)
+Figure 1: Vulnerable Python/Flask function accepting unvalidated user input to open files
+This vulnerability allows an attacker to request sensitive files from the Cloud Run instance by using curl
+to send a POST request via the file
+parameter:
+curl -X POST https://cloudrun01-abc.europe-west3.run.app/ -H "Content-Type: application/json" -d '{"file": "main.py"}'
+Figure 2: curl POST request targeting the file parameter
+The response provides the complete main.py
+source code. An attacker can analyze the code for:
 -
-Generative AI: GTIG
-[has observed](https://cloud.google.com/blog/topics/threat-intelligence/adversarial-misuse-generative-ai)pro-Russia influence actors increasingly leverage AI tooling to support different stages of their operations, including support for planning and general research as well as content creation. -
-Google Threat Intelligence Group (GTIG) is closely tracking the transition from nascent AI-enabled operations to the maturing, industrial-scale application of generative models within adversarial workflows across threats ranging from espionage and crime to IO. Please see our latest
-[AI threat tracker](https://cloud.google.com/blog/topics/threat-intelligence/ai-vulnerability-exploitation-initial-access)for more information on how this threat is developing based on our insights, and what Google is doing to protect our customers. -
-Narrative Resonance: Hijacking existing ideological and emotional fissures within a society provides pro-Russia influence actors tailored narratives to target audiences and potentially increases potential engagement and impact.
+Hardcoded secrets such as API keys, database credentials, or authentication tokens
 -
-Cyber-Enabled IO: Influence campaigns frequently coincide with destructive cyberattacks, such as the deployment of
-[wiper malware](https://cloud.google.com/blog/topics/threat-intelligence/gru-disruptive-playbook?e=48754805)alongside website defacements containing false surrender messages, or the historic use of "hack and leak" campaigns in which exfiltrated data, sometimes manipulated, is then publicized through an actor-controlled false persona. In some instances, Russian actors may even leverage direct cyber espionage targeting as a way to achieve psychological effects, intending to influence victims' behavior through intimidation. -
-Media Mimicry: Pro-Russia actors have attempted to mimic legitimate media at scale and through a variety of means, including via the wholesale appropriation of legitimate media brands or developing inauthentic media brands that generally masquerade as independent news sources. These tactics are intended to add a veneer of legitimacy to the promoted narratives.
+Business logic flaws and additional injection points
 -
-Direct Dissemination: Pro-Russia influence actors have used closed communication channels, such as emails, SMS text messages, and messenger apps, to disseminate various types of pro-Russia narratives as an adjunct to or outside typical social media-focused operations.
-Core Ecosystem Components
-The current pro-Russia influence ecosystem operates across a spectrum from official government communications to deniable covert actions conducted by intelligence services and "patriotic" proxies. GTIG identified six core components that represent key activity types (Figure 3). While many elements are state-directed or state-affiliated, the ecosystem is also a cultivated, self-sustaining system: various actors, often without explicit direction, amplify Kremlin-friendly narratives and pursue actions that advance Russia's strategic interests. This fluidity provides resilience and complicates attribution, mirroring the longstanding Kremlin strategy to co-opt non-state actors, including criminal networks for [finance](https://www.rusi.org/explore-our-research/publications/commentary/operation-destabilise-russia-organised-crime-and-illicit-finance) or [illicit logistics](https://www.bbc.com/news/articles/cz91dk0l50no), to achieve state objectives without direct attribution. Although each of the core ecosystem components serves as a unique lever the Russian Government can employ to achieve desired objectives, they are regularly used together. For instance, while the entire pro-Russia hacktivist landscape is not state-sponsored, the Russian intelligence services have used both genuine and fabricated hacktivist personas to launder stolen data as part of blended cyber espionage and IO hybrid operations.
-Figure 3: Core components of the pro-Russia influence ecosystem
-An Interconnected Ecosystem Enhances Influence Utility
-Figure 4 illustrates the complex, interconnected nature of the pro-Russia influence ecosystem by mapping relationships between a selection of key actors and organizations across five of the core components. The ecosystem functions as a cohesive unit, not only through shared objectives, but also through direct cross-component interactions. The Russian Government functions as the sixth core ecosystem component, setting the policy and talking points that inform the ecosystem’s promoted narratives and sponsoring overt and covert assets throughout the other five components diagrammed in Figure 4. Through these levers, the Kremlin fosters the cross-component links that underpin the ecosystem, enhancing its overall utility as a versatile tool of state influence.
-Figure 4: Subset of actors that illustrate how different components of the ecosystem interact with each other
-10 Key Dynamics for Understanding the Pro-Russia Influence Ecosystem
-The scope and diversity of activity in the pro-Russia influence ecosystem challenges defenders tasked with enumerating, tracking, and countering its threats. GTIG has distilled 10 key ecosystem dynamics based on our current understanding of its components and how they each enable covert influence activity. These dynamics frame critical aspects of how activity manifests within the ecosystem, providing a high-level guide to understand and track these threats.
-Large-scale IO campaigns are an integral element of the pro-Russia influence ecosystem. Major pro-Russia IO campaigns have been an enduring feature of the pro-Russia ecosystem, with new campaigns emerging as previous ones fall into inactivity. Maintaining extensive IO campaigns and their associated established influence infrastructure enables proactive [messaging](https://home.treasury.gov/news/press-releases/jy0628) on strategic issues and underpins a capability that can be rapidly adapted for emerging domestic and global priorities.
+Internal service endpoints and architecture details
 -
-Long-established IO campaigns, like Secondary Infektion,
-[pivoted to meet](https://cloud.google.com/blog/topics/threat-intelligence/information-operations-surrounding-ukraine)new strategic needs as Russia’s 2022 invasion of Ukraine began. New IO campaigns, such as “Operation Overload,” subsequently emerged to support the war effort; while Secondary Infektion has become dormant, these “successor” campaigns have since been leveraged to advance other global Russian influence objectives beyond the war itself.
-Pro-Russia actors often prioritize persistence and the range of tactics they leverage reflects this. In the face of public exposure and disruption, pro-Russia actors and their infrastructure have often remained persistent, sometimes making tactical adjustments to mitigate the effects of detection and disruption and other times continuing operations unabated.
+Import statements revealing the technology stack and potential CVE exposure
+Additionally, attackers can leverage standard ../
+directory traversal sequences to retrieve sensitive system files:
+curl -X POST https://cloudrun01-abc.europe-west3.run.app/ -H "Content-Type: application/json" -d '{"file": "../../../etc/passwd"}'
+Figure 3: curl POST request leveraging directory traversal sequences
+An LFI vulnerability allows an attacker to retrieve and fuzz various files directly from the container. Key examples include:
 -
-These persistence tactics include the Doppelganger campaign and overt
-[Russian media](https://www.bloomberg.com/news/articles/2023-11-23/ukraine-war-how-kremlin-propaganda-websites-dodge-disinformation-sanctions#xj4y7vzkg)’s respective cycling of domain infrastructure and/or use of mirror domains to overcome exposure, platform bans and sanctions. Influence operators also frequently continue using compromised assets, sometimes mocking their exposure, as seen with the legacy US-targeted NAEBC campaign and the APT44-affiliated hacktivist persona XakNet Team.
-Figure 5: NAEBC-linked persona account mocking public exposure of influence assets (left), and GRU-sponsored XakNet Team persona mocking then-Mandiant (now part of Google Threat Intelligence Group) attribution of the group’s activities to the GRU (right)
-Pro-Russia and Russian cyber espionage groups leverage IO tactics to support their operations and weaponize stolen data and/or illicit access. While less frequent, this [hybrid activity](https://cloud.google.com/blog/topics/threat-intelligence/russian-espionage-influence-ukrainian-military-recruits-anti-mobilization-narratives) is a critical dynamic within the pro-Russia influence ecosystem. GTIG has previously observed operations used to shape narratives around [cyberattacks](https://cloud.google.com/blog/topics/threat-intelligence/gru-disruptive-playbook) and influence events on the ground and to conduct foreign political interference, including the repeated targeting of [foreign elections](https://cloud.google.com/blog/topics/threat-intelligence/cyber-threats-global-elections), reported in Spring 2024. We have attributed some observed instances of this to Russian government-sponsored threat actors.
+requirements.txt, package.json, go.mod
+: Used to identify installed packages and versions with known vulnerabilities. -
+.
+env
+files: Frequently contain sensitive environment variables or hard coded secrets. -
+Application configuration files: May contain database credentials, API keys, or service endpoints if not securely managed.
 -
-Russian state sponsored or pro-Russia hacktivist groups have long relied on public advertisement of real or claimed data exfiltration to highlight their operations, intimidate targets, or sway public opinion. In 2022, UNC4057 (COLDRIVER) used data stolen from espionage targets in a high profile hack-and-leak operation seeking to exacerbate divisions in UK politics. More recently, the self-proclaimed hacktivist group
-[PalachPro](https://cert.gov.ua/article/6287707)claimed in February 2026 to have gained unauthorized access to a Ukrainian government online portal and publicly posted[screenshots](https://caspianpost.com/regions/russian-hackers-target-ukraine-s-starlink-authorisation-service)of the claimed compromise. The Ukrainian government has previously noted that the portal does not store the type of data the threat actor claimed to compromise, suggesting the public posting was likely intended as influence activity, attempting to create the illusion of a more serious threat.
-Figure 6: UNC4057 leak website attempting to inflame public debate
-Pro-Russia hacktivists serve a direct influence function. Modern pro-Russia hacktivism has evolved into an important component of the influence [ecosystem](https://cloud.google.com/blog/topics/threat-intelligence/global-revival-of-hacktivism) that blends [state-backed actors](https://cloud.google.com/blog/topics/threat-intelligence/apt44-unearthing-sandworm) leveraging [hacktivist tactics](https://www.justice.gov/opa/pr/justice-department-announces-actions-combat-two-russian-state-sponsored-cyber-criminal) with an evolving cohort of likely third-party hacktivist actors that support Russia's geopolitical interests. Pro-Russia hacktivist groups gain domestic and foreign attention for strategic messaging via their [claimed threat activity](https://cloud.google.com/blog/topics/threat-intelligence/killnet-new-capabilities-older-tactics), amplify narratives directly seeded in overt ecosystem segments, and at times also support traditional IO activity or create a means of plausible deniability for state-sponsored espionage actors.
+/etc/passwd, /proc/self/environ
+: Contains user information, environment variables. -
+Application logs: may contain auth tokens or PII data.
+Best Practice: Never store secrets or credentials within the source code or local container files. Utilize a dedicated secrets management solution, such as Secret Manager.
+Code Execution/Command Injection
+In the following scenario, a Python function uses shell execution methods with unsanitized user input, allowing an attacker to execute arbitrary commands.
+import functions_framework
+import subprocess
+@functions_framework.http
+def hello_http(request):
+request_json = request.get_json(silent=True)
+request_args = request.args
+if request_json and 'input' in request_json:
+input = request_json['input']
+elif request_args and 'input' in request_args:
+input = request_args['input']
+result = subprocess.run(input, shell=True,capture_output=True, text=True)
+return format(result)
+Figure 4: Python function utilizing shell execution with unsanitized user input
+This allows an attacker to execute a subsequent curl request targeting the GCP metadata service to retrieve the service account’s bearer token.
+The following request extracts the service account's OAuth 2.0 bearer token, which remains valid for 1 hour:
+curl -X POST https://cloudrun02-abc.europe-west3.run.app/ -H "Content-Type: application/json" -d "{\"input\": \"curl 'http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token' -H 'Metadata-Flavor: Google'\"}"
+Figure 5: Extraction of a GCP service account bearer token via a curl request
+Once obtained, an attacker can use it on an attacker-controlled system to execute Google Cloud CLI commands. For example the CLOUDSDK_AUTH_ACCESS_TOKEN
+environment variable can be set using the stolen bearer token.
+export CLOUDSDK_AUTH_ACCESS_TOKEN=”obtain bearer token”
+Figure 6: Defining CLOUDSDK_AUTH_ACCESS_TOKEN environment variable
+Attackers can then leverage Google Cloud Cloud CLI within the security context of the Cloud Run Compute service account. If deployed without best practices and thoughtful configuration controls, for example, if the Cloud Run service runs as the default compute service account with Editor permissions, this would be equivalent to a full GCP project takeover, and allow the attacker to:
 -
-The self-proclaimed hacktivist group NoName057(16) emerged following the Russian invasion of Ukraine in 2022, primarily targeting Ukraine and its partners and allies with DDoS attacks and various network intrusions. It has targeted high profile events, such as the Milano Cortina Winter Olympics, institutions like the French National Assembly, and critical infrastructure and transportation targets in Germany. Often their messaging cites grievances with overt acts of Western support for Kyiv, suggesting the group advances Russian interests not only through the targeting of perceived Russian adversaries but also in gaining attention for its pro-Russia messaging.
-Established ecosystem components facilitate the cultivation of new assets and activity. Inter-ecosystem cross-promotion helps overcome challenges of audience building by directing traffic toward [new assets](https://cloud.google.com/blog/topics/threat-intelligence/information-operations-2022-midterm-elections/), operations, and narratives, enabling rapid deployment of new and existing IO capabilities. This directly supports a self-sustaining cycle that maintains and expands the ecosystem.
+Read/write/delete most GCP resources
 -
-The hacktivist persona JokerDNR played a significant role in amplifying the APT44-linked persona Solntsepek when its doxxing-focused Telegram channel first launched and then again as it began claiming cyber espionage activity.
-Domestic Russian audiences are a longstanding target of the pro-Russia influence ecosystem. Internally directed [influence activity](https://blog.google/threat-analysis-group/prigozhin-interests-and-russian-information-operations/) has often involved the promotion of Kremlin policies and talking points and the denigration of opposition voices and ideas, conducted by both overt and covert segments of the ecosystem.
+Deploy new services and modify existing configurations
 -
-Ahead of Russia’s March 2024 presidential election, GTIG identified the hybrid espionage and influence actor UNC5101 register domains and conduct associated influence operations attempting to deceive Russian opposition voters about the timing of an anti-Putin protest.
-Ecosystem actors respond to the same set of internal shifting circumstances and external geopolitical developments, often leading to seemingly similar, but ultimately distinct, activity. These shared drivers and general motivational alignments encourage actors to "spontaneously" coalesce around a particular topic or narrative. While this can appear superficially similar, this phenomenon is distinct from instances of actor coordination and campaign linkages, which is less common.
-Systemic flexibility is a central feature, with influence assets able to mobilize both incrementally and at scale to advance Russian interests. The Russian Government is able to [mobilize assets](https://cloud.google.com/blog/topics/threat-intelligence/information-operations-surrounding-ukraine) across the ecosystem to respond to strategic events. Meanwhile, individual or aligned actors can separately mobilize to address [tactical needs](https://cloud.google.com/blog/topics/threat-intelligence/pro-russia-information-operations-drone-incursions), allowing the ecosystem to concurrently message on multiple issues across different geographies (Figure 7).
+Access secrets and encryption keys
 -
-Russia demonstrated its ability to focus the ecosystem on a single strategic issue like the Russian invasion of Ukraine. Simultaneously, discrete assets have addressed tactical events, such as when Portal Kombat briefly
-[promoted](https://cloud.google.com/blog/topics/threat-intelligence/pro-russia-information-operations-drone-incursions)narratives about a Russian drone incursion into Poland concurrently with other covert pro-Russia influence activity.
-Figure 7: Tactical responses are executed by individual or coordinated/aligned clusters of actors to address emerging developments
-Overt Russian media contributes to, and is connected with, multiple covert influence components. The overt components of Russia's influence infrastructure play a critical role within the broader Russian influence ecosystem beyond the commonly understood function of providing a public platform for government-aligned narratives and official talking points; overt media helps to drive (inform targeting) and amplify covert pro-Russia influence activity, seeding desirable narratives within the ecosystem and providing an indirect conduit between the Kremlin and a disparate array of influence actors. Overt media outlets have directly [coordinated](https://home.treasury.gov/news/press-releases/jy2559) their activity with covert actors and have increasingly employed IO tactics to disseminate their own content in the face of sanctions and platform bans (Figure 8).
+Exfiltrate data across all accessible storage systems
 -
-US Government
-[sanctions](https://home.treasury.gov/news/press-releases/jy2559)in late 2024 indicated that Russian state media company Russia Today (RT) directly conducted covert influence operations, including on behalf of the Russian intelligence services. Further, RT employees reportedly interacted with members of the self-proclaimed hacktivist group RaHDit, which has claimed to collaborate with multiple other pro-Russia hacktivist groups, illustrating the layered connections between overt media, Russian intelligence services, and hacktivist groups.
-Figure 8: Overt Russian media maintains multiple links with the covert segments of the ecosystem
-Outsourcing IO capability development and campaign execution to third-party organizations and proxies enables scaling and obfuscation. Outsourcing is used for developing [custom tooling](https://cloud.google.com/blog/topics/threat-intelligence/cyber-operations-russian-vulkan) and bolstering both human and [organizational](https://home.treasury.gov/news/press-releases/jy2559) [capacity](https://home.treasury.gov/news/press-releases/jy2195). While [custom tool](https://www.justice.gov/opa/pr/justice-department-announces-actions-combat-two-russian-state-sponsored-cyber-criminal) development facilitates operators in all phases of the IO lifecycle, Russian government actors can flexibly leverage different models for outsourcing campaign execution based on their specific needs. Proxy actors can also generate plausible deniability (Figure 9).
+Establish persistent backdoors through new service accounts or SSH keys.
+Hardening Recommendations
+Mandiant recommends that organizations implement parallel approaches for effective serverless security:
 -
-GTIG
-[reported](https://cloud.google.com/blog/topics/threat-intelligence/cyber-operations-russian-vulkan)how Russian IT contractor NTC Vulkan (Russian: НТЦ Вулкан) worked with the Russian intelligence services, including providing tooling and support for the GRU unit that sponsors APT44 activity. Separately, US government[sanctions](https://home.treasury.gov/news/press-releases/jy2195)detailed how the Doppelganger campaign is supported by multiple Russian contractors under the sponsorship of the Russian Presidential Administration.
-Figure 9: Outsourcing and proxies support capability development and campaign execution for covert influence activity
+Secure Software Development Lifecycle (S-SDLC): integrate security scanning, code review, least-privilege IAM into CI/CD pipelines before deployment and integrate continuous security testing;
+-
+Vibe Coding: Mandiant recommends multi-layered security enforcement for AI-generated code or "vibe coding." Organizations should isolate AI experimentation within dedicated sandbox environments and enforce strict data egress controls to protect production systems and internal data. Furthermore, development environments should be restricted to approved IDEs with human-in-the-loop capabilities, utilizing only verified plugins operating under least privilege to mitigate supply chain vulnerabilities. Finally, organizations must ensure this AI-generated software follows Secure Software Development Lifecycle (S-SDLC) controls while establishing clear internal guidelines regarding permitted use cases. Comprehensive security fundamentals for vibe coding are documented in detail within the
+[Wiz Vibe Coding Security Fundamentals blog](https://www.wiz.io/academy/ai-security/vibe-coding-security). -
+Compensating Runtime Controls: Implement the following defense-in-depth measures to limit and contain compromise even when application vulnerabilities exist;
+Segregate Public Services
+Host public-facing Cloud Run services consumed by untrusted external entities in a dedicated, isolated Google Cloud project. This ensures a compromise does not provide an immediate path to critical internal resources. The implementation of this 'Service Project' model is beyond the scope of this post; however, it is documented in detail within the [secured serverless architecture blueprint](https://docs.cloud.google.com/architecture/blueprints/serverless-blueprint).
+Identity and Access Management (IAM)
+Mandiant recommends using a custom service account for service authentication rather than the default Compute Engine service account, following the principle of least privilege. Grant only the specific permissions necessary for the Cloud Run function to operate, for example:
+-
+Cloud Storage Bucket Access: If the service only requires read access to objects from a Cloud Storage bucket, grant the
+Storage Object Viewer
+(roles/storage.objectViewer
+) role restricted to that specific bucket. -
+Secret Manager Access: If the service requires access to secrets, grant the
+Secret Manager Secret Accessor
+(roles/secretmanager.secretAccessor
+) role only to the individual secrets required. For further details on secret access from Cloud Run, refer to the[GCP documentation on configuring secrets](https://docs.cloud.google.com/run/docs/configuring/services/secrets#required_roles).
+Layer 7 Application Load Balancer (ALB) Architecture
+Restrict ingress traffic for serverless functions to internal only and use an external Layer 7 ALB to manage internet exposure. This provides:
+-
+Centralized Traffic Management: Granular control over headers and SSL policies.
+-
+Cloud Armor Integration: Web Application Firewall (WAF) support to harden applications against vulnerabilities such as Local/Remote File Inclusion (LFI/RFI) and Server-Side Request Forgery (SSRF).
+-
+Traffic Shaping: Implementation of rate limits and request limitations to prevent abuse.
+-
+Enhanced Visibility: Robust logging and log-forwarding capabilities for security monitoring.
+-
+Identity-Aware Proxy (IAP): integration support for scenarios requiring specific identity-based authentication for internal users.
+Web Application Firewall (WAF) — Cloud Armor
+[Cloud Armor](https://cloud.google.com/security/products/armor) provides WAF protections that can be integrated with the Load Balancer to filter malicious traffic. The following examples demonstrate how to configure Cloud Armor security policies to block the specific local file inclusions, remote code execution and traversal attacks previously outlined.
+Local File Inclusion
+The lfi-v33-stable
+preconfigured WAF rules can block common local file inclusion attacks ([local file inclusion reference](https://docs.cloud.google.com/armor/docs/waf-rules#local_file_inclusion_lfi)).
+evaluatePreconfiguredWaf('lfi-v33-stable', {'sensitivity': 3})
+Figure 7: Cloud Armor lfi-v33-stable WAF rule configuration
+Blocking a path traversal request ../../../etc/passwd
+resulting in a 403 forbidden:
+curl -X POST https://exampleabc01.com -H "Content-Type: application/json" -d '{"file": "../../../etc/passwd}'
+<!doctype html><meta charset="utf-8"><meta name=viewport content="width=device-width, initial-scale=1"><title>403</title>403 Forbidden
+Figure 8: Verification of Cloud Armor blocking path traversal request, resulting in a 403 forbidden
+Remote Code Execution
+The rce-v33-stable
+preconfigured WAF rules can block remote code execution attempts ([remote code execution reference](https://docs.cloud.google.com/armor/docs/waf-rules#remote_code_execution_rce)).
+evaluatePreconfiguredWaf('rce-v33-stable', {'sensitivity': 3})
+Figure 9: Cloud Armor rce-v33-stable WAF rule configuration
+Blocking the remote code execution request from the previous example results in a 403 forbidden:
+curl -X POST https://exampleabc01.com -H "Contencurl -X POST https://exampleabc01.com -H "Content-Type: application/json" -d "{\"input\": \"curl 'http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token' -H 'Metadata-Flavor: Google'\"}"
+<!doctype html><meta charset="utf-8"><meta name=viewport content="width=device-width, initial-scale=1"><title>403</title>403 Forbidden
+Figure 10: Verification of Cloud Armor blocking Remote Code execution, resulting in a 403 forbidden
+Serverless Architecture Controls
+Hardening Cloud Run services is only one part of a secure architecture. Because these services often connect to other Google Cloud resources, a single compromise can expose additional services. Implementing defense-in-depth is critical. Specifically, when using direct VPC egress or VPC Access connectors, use VPC Service Controls to restrict lateral movement and exfiltration through granular access policies.
+Secure Software Development Lifecycle (S-SDLC)
+While the previously outlined hardening strategies are critical, the ideal standard remains the proactive identification of vulnerabilities during the initial development stages. A deep dive into "Shift-Left" security is beyond the scope of this analysis, which focuses on mitigating risks within existing code. However, a Secure Software Development Lifecycle (S-SDLC) remains a fundamental principle. Robust code validation and continuous security testing are essential to neutralize threats before serverless functions are published externally.
+Cloud Run Threat Detection
+Beyond the hardening recommendations outlined in this post, [Google Cloud Security Command Center (SCC)](https://cloud.google.com/security/products/security-command-center) provides built-in services to detect control plane attacks against Cloud Run resources. These include detectors for credential access, reconnaissance, and the execution of scripts or reverse shells. The [Cloud Run Threat Detection](https://docs.cloud.google.com/security-command-center/docs/cloud-run-threat-detection-overview) service is available for Premium and Enterprise tiers.
 Conclusion
-Multiple factors are propelling the evolution of the pro-Russia influence ecosystem we have observed since Moscow’s full scale invasion of Ukraine four years ago. The Kremlin mobilized the entire ecosystem to support the ongoing conflict, which has provided rapid feedback and driven significant investment in new and established overt and covert influence assets. At the same time, pro-Russia actors are increasingly experimenting with generative AI to enhance their workflows. This condensed period of adaptation, alongside signals suggesting Russia's growing reliance on IO tactics to navigate new challenges, raises concerns regarding how a potentially diversifying pool of actors will leverage advancements in tradecraft and scalability. As Russia seeks to emerge from international isolation and reorients its influence ecosystem back toward global objectives, it is critical for defenders to understand how this ecosystem provides the Kremlin with a durable influence capability in order to better anticipate future Russian influence threats.
-Additional Tools and Resources
-For mitigation and hardening recommendations, please review the following:
--
-[How to Understand and Action Mandiant's Intelligence on Information Operations](https://cloud.google.com/blog/topics/threat-intelligence/understand-action-intelligence-information-operations) -
-[Proactive Preparation and Hardening to Protect Against Destructive Attacks](https://cloud.google.com/blog/topics/threat-intelligence/preparation-hardening-destructive-attacks) -
-[Linux Endpoint Hardening to Protect Against Malware and Destructive Attacks](https://services.google.com/fh/files/misc/linux-endpoint-hardening-wp-en.pdf) -
-[Distributed Denial of Service (DDoS) Protection Recommendations](https://services.google.com/fh/files/misc/ddos-protection-recommendations-wp-en.pdf)
-Google offers a suite of free of cost tools to help protect high-risk users from the most pervasive digital attacks, to which politicians, journalists, and campaigns are often most vulnerable. Examples include protecting accounts from targeted attacks with [Advanced Protection Program](https://landing.google.com/advancedprotection/) and safeguarding campaign websites from DDoS attacks with [Project Shield](https://projectshield.withgoogle.com/landing).</div>
+Serverless applications drive agility and rapid business value. While "vibe-coding" has made it easier than ever to deploy code, this breakneck speed demands that teams integrate security early in the development lifecycle, move beyond default configurations, and prioritize a defense-in-depth strategy centered on identity and architecture.
+Acknowledgements
+This analysis would not have been possible without the assistance of Ischa Rijff, Phil Pearce, and Juraj Sucik.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
