@@ -59,15 +59,15 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-07-25</h1>
+        <h1>Security Briefing // 2026-07-26</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Hermes AI agent used to automate attack on Thai Finance Ministry</button></li><li><button onclick="show('art-1')">Hackers hijack hotel Wi-Fi DNS to steal Microsoft 365 accounts</button></li><li><button onclick="show('art-2')">Certighost Exploit Lets Low-Privileged Active Directory Users Impersonate a Domain Controller</button></li><li><button onclick="show('art-3')">Updated Cyber Threat Actor Naming System</button></li><li><button onclick="show('art-4')">Hacker Runs Hermes AI Agent Unattended for Post-Exploitation at Thai Finance Ministry</button></li><li><button onclick="show('art-5')">CCPA Update: Cybersecurity Requirements (Part 2)</button></li><li><button onclick="show('art-6')">Email threat landscape: Q2 2026 trends and insights</button></li><li><button onclick="show('art-7')">LG to Ban Residential Proxies from Smart TV Apps</button></li><li><button onclick="show('art-8')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Steam forum ClickFix attacks infect gamers with XMRig cryptominers</button></li><li><button onclick="show('art-1')">Malvertising Sends Malware in Pieces, Then Makes the Browser Build the Executable</button></li><li><button onclick="show('art-2')">Malicious sites use JavaScript to build malware in browser memory</button></li><li><button onclick="show('art-3')">Fastjson 1.x RCE Vulnerability Targeted in Attacks With No Patched Available</button></li><li><button onclick="show('art-4')">Updated Cyber Threat Actor Naming System</button></li><li><button onclick="show('art-5')">CCPA Update: Cybersecurity Requirements (Part 2)</button></li><li><button onclick="show('art-6')">LG to Ban Residential Proxies from Smart TV Apps</button></li><li><button onclick="show('art-7')">Microsoft at Black Hat USA 2026: Defending trust in the age of AI and supply chain attacks</button></li><li><button onclick="show('art-8')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">Hermes AI agent used to automate attack on Thai Finance Ministry</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/hermes-ai-agent-used-to-automate-attack-on-thai-finance-ministry/" target="_blank">Original Link</a></p>
-            <div class="content-text">A threat actor used the open-source Hermes AI agent in unattended "YOLO" mode to automate post-exploitation activity during an alleged breach of Thailand's Ministry of Finance. [...]
+            <h2 class="article-title">Steam forum ClickFix attacks infect gamers with XMRig cryptominers</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/steam-forum-clickfix-attacks-infect-gamers-with-xmrig-cryptominers/" target="_blank">Original Link</a></p>
+            <div class="content-text">Steam discussion forums are being abused in ClickFix attacks that pretend to be fixes for game and computer problems but actually infect devices with cryptominers. [...]
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
@@ -75,68 +75,89 @@
             <hr class="separator">
         </div>
         <div id="art-1" class="article-body">
-            <h2 class="article-title">Hackers hijack hotel Wi-Fi DNS to steal Microsoft 365 accounts</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/hackers-hijack-hotel-wi-fi-dns-to-steal-microsoft-365-accounts/" target="_blank">Original Link</a></p>
-            <div class="content-text">Hackers are changing the DNS settings on Wi-Fi devices at hotels and conference centers to redirect users to fake Microsoft 365 login pages. [...]
+            <h2 class="article-title">Malvertising Sends Malware in Pieces, Then Makes the Browser Build the Executable</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/malvertising-sends-malware-in-pieces.html" target="_blank">Original Link</a></p>
+            <div class="content-text">A malvertising operation dubbed SourTrade is making victims' browsers build the final Windows executable themselves, using a legitimate Bun runtime as its base instead of serving one complete malicious file from a fixed URL.
+Confiant, which [detailed the campaign](https://blog.confiant.com/p/sourtrade-browser-assembled-malware) on July 23, 2026, said it has operated since late 2024 and impersonated TradingView, Solana, and Luno to target retail traders and cryptocurrency investors across 12 countries in 25 languages.
+Its landing pages fingerprint visitors, showing suspected researchers and bots an empty page while selected targets receive a convincing copy of the impersonated service. The defense against that is the ordinary one: install trading and wallet software from the vendor's own site, not from an ad.
+The documented chain does not rely on a browser vulnerability or remove Mark of the Web (MotW). Confiant's analysis documents the delivery, not execution of the file inside the browser, and does not establish whether the final download starts automatically or requires a click.
+The landing page begins preparing the delivery path without waiting for a download click. It registers a page-scoped ServiceWorker at /sw.js
+, then builds a SharedWorker from JavaScript already embedded in the page, so the worker source never appears as a separate fetch.
+The SharedWorker requests /config
+, which returns a template, a secondary runtime URL, and session-specific random values. The browser retrieves and decompresses a clean Bun runtime from that second domain, purelogicbox[.]org in the published sample response.
+Base64 blobs in the configuration supply the Portable Executable (PE) header, section table, and a .bun
+section containing malicious JavaScriptCore bytecode for app.js
+. Bun runs on Apple's JavaScriptCore engine and legitimately supports [compiling applications and bytecode](https://bun.com/docs/bundler/executables) into standalone Windows executables.
+The worker then generates a large pseudorandom byte stream using AES in counter mode (AES-CTR). It then follows the supplied template as a byte-copy recipe, combining selected ranges from the Bun runtime, the generated stream, and the attacker-controlled executable material.
+Each victim can receive a different assembled file: rotating the seed and size in each /config
+response changes the hash while retaining the executable payload code. "No finished malware ever exists on the network," wrote Michael Steele of Confiant's threat intelligence team. No complete binary does, though the PE structures and the bytecode arrive as Base64 in /config
+.
+Once assembled, the page passes the executable to the ServiceWorker as a readable stream. A hidden iframe navigates to a same-origin URL, and the worker returns the generated bytes with a Content-Disposition
+attachment header. The resulting MotW record identifies the landing page as the download source, not the separate domain that supplied the Bun runtime. MotW itself remains present.
+The method evolved from activity Confiant tracked through April 30, 2026, when the pages loaded [StreamSaver.js](https://github.com/jimmywarting/StreamSaver.js), an open-source streamed-download library, from its author's GitHub Pages address. That left the recorded download path pointing at the library's GitHub URL. The current pages keep its streaming architecture, including the streamsaver:
+message names, but no longer fetch it from GitHub.
+Bitdefender [documented](https://www.bitdefender.com/en-us/blog/labs/the-scam-that-wont-quit-malicious-tradingview-premium-ads-jump-from-meta-to-google-and-youtube) [the related TradingView malvertising cluster](https://thehackernews.com/2025/07/hackers-use-facebook-ads-to-spread.html) in September 2025, identifying its final payload as the stealer Check Point tracks as [JSCEAL](https://research.checkpoint.com/2025/jsceal-targets-crypto-apps/) and WithSecure as [WeevilProxy](https://www.withsecure.com/en/resources-hub/w-labs/weevilproxy/).
+Confiant identifies shared campaign and executable characteristics but does not demonstrate that the three published samples carry that payload. The report also says Bitdefender found a modified Bun executable in this cluster.
+The Hacker News found no mention of Bun in the September 2025 post Confiant links to, which names its loader detection Variant.DenoSnoop.Marte.1. Credential theft, keylogging, traffic interception, wallet theft, and remote-access capabilities documented in the earlier campaign therefore cannot yet be assigned to the current files.
+The Hacker News has reached out to Confiant for clarification on its reference to Bitdefender's earlier findings and will update this story with any response.
+There is no software patch to apply. The evasion is narrower than it first looks. Confiant's own practical-implications section puts it more modestly: unique per-session builds limit the value of simple hash-based detections. The attacker-controlled PE material and bytecode still cross the network.
+Defenders should examine the whole chain, from the ad referral and cloaked landing page through the /config
+request, the secondary-domain runtime fetch, and the ServiceWorker download, rather than treating any single network or file artifact as decisive.
+Confiant published three SHA-256 hashes and a list of malicious domains, 96 by The Hacker News' count. The firm named no actor and stopped its analysis at the moment the file lands on disk.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">Malicious sites use JavaScript to build malware in browser memory</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/malicious-sites-use-javascript-to-build-malware-in-browser-memory/" target="_blank">Original Link</a></p>
+            <div class="content-text">A massive malvertising campaign is using fake Solana, Luno, and TradingView webpages with malicious JavaScript that instructs browsers to assemble malware directly in memory. [...]
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-2" class="article-body">
-            <h2 class="article-title">Certighost Exploit Lets Low-Privileged Active Directory Users Impersonate a Domain Controller</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/certighost-exploit-lets-low-privileged.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Researchers H0j3n and Aniq Fakhrul published a working exploit on July 24 that lets a low-privileged Active Directory user obtain a certificate for a Domain Controller and authenticate as that machine.
-They codenamed the flaw Certighost. Because Domain Controller accounts carry directory replication rights, the resulting Kerberos credential can retrieve the krbtgt
-secret through DCSync
+        <div id="art-3" class="article-body">
+            <h2 class="article-title">Fastjson 1.x RCE Vulnerability Targeted in Attacks With No Patched Available</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/fastjson-1x-rce-vulnerability-targeted.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Security firms ThreatBook and Imperva say attackers are targeting a critical flaw in Fastjson, Alibaba's JSON library for Java. In affected Spring Boot applications, a malicious JSON request can execute code without authentication, with the privileges of the Java process.
+Tracked as CVE-2026-16723
+, the vulnerability carries an Alibaba-assigned CVSS score of 9.0. The confirmed chain requires Fastjson 1.2.68 through 1.2.83, a Spring Boot executable fat-JAR, a network-reachable path that sends attacker-controlled JSON to an affected parser, and SafeMode left at its disabled default. AutoType can remain disabled, and no classpath gadget is required.
+As of July 25, Alibaba had not released a fixed Fastjson 1.x version. Organizations that cannot migrate immediately should enable SafeMode with -Dfastjson.parser.safeMode=true
+or use com.alibaba:fastjson:1.2.83_noneautotype
+. Alibaba lists migration to Fastjson2 as the long-term fix.
+Alibaba [published its advisory](https://github.com/alibaba/fastjson2/wiki/Security-Advisory:-Remote-Code-Execution-in-fastjson-1.2.68%E2%80%931.2.83) on July 21 following responsible disclosure by [Kirill Firsov](https://x.com/k_firsov/status/2078872293745570032) of FearsOff Cybersecurity. The maintainers described the vulnerability as requiring "no AutoType enablement" and "no classpath gadget." They verified the chain on Spring Boot 2.x, 3.x, and 4.x with JDK 8, 11, 17, and 21.
+Firsov traced the issue to Fastjson's type-resolution path. An attacker-controlled @type
+value can be turned into a class-resource lookup. In a compatible Spring Boot fat-JAR, a crafted nested JAR path can fetch attacker-controlled bytecode. An @JSONType
+annotation in that resource can then be treated as a trust signal, allowing the class to pass Fastjson's type checks and load.
+His [technical analysis](https://fearsoff.org/research/fastjson-1-2-83-rce) also describes a newer-JDK path that downloads a remote JAR and references it through /proc/self/fd
 .
-Microsoft patched the Active Directory Certificate Services (AD CS) issue ten days earlier as CVE-2026-54121
-. Microsoft classed the flaw as improper authorization and assigned it a CVSS score of 8.8.
-Exploitation requires network access and a domain account, but no administrator rights or user interaction. In the researchers' test, a normal Domain Users
-account could create a computer account under the default ms-DS-MachineAccountQuota
-value of 10
-or reuse one it already controlled.
-The chain also required an Enterprise CA that followed the vulnerable chain path, enrollment through the default Machine template, and network reachability from the CA to the attacker's SMB and LDAP listeners.
-Organizations running an Enterprise CA should install Microsoft's July 14 updates on AD CS hosts. As of July 24, no primary source reviewed by The Hacker News reported exploitation in the wild, but the full proof-of-concept was public. That absence of reporting does not prove that exploitation has not occurred.
-The researchers also documented a lab-tested way to disable the chase fallback when immediate patching is not possible, although it can break legitimate enrollment flows.
-The bug sits in an [AD CS enrollment fallback](https://thehackernews.com/2024/08/breaking-down-ad-cs-vulnerabilities.html) known as a chase. When a certification authority (CA) cannot obtain an end entity's information, the [Windows enrollment protocol](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-wcce/f4eb50d5-62f6-470b-8846-9489af9dea62) lets a request provide cdc
-, the Active Directory server to contact, and rmd
-, the machine object to resolve.
-The researchers [found](https://gist.github.com/H0j3n/a5ef2609b5f2944ac2390a191a534c26) that the CA followed the requester-supplied cdc
-host over Server Message Block (SMB) and Lightweight Directory Access Protocol (LDAP) without first proving it was a real Domain Controller.
-An attacker could run rogue Local Security Authority (LSA) and LDAP services, relay the CA's authentication challenge to the real Domain Controller over Netlogon
-, and return the target Domain Controller's objectSid
-and dNSHostName
-. A controlled machine account supplied the valid domain identity needed for the CA to continue. The CA authenticated that account, then signed the target Domain Controller's identity into the certificate.
-The [public exploit](https://github.com/aniqfakhrul/CVE-2026-54121) automates the chain. It creates a computer account or reuses one specified with --computer-name
-. The tool starts listeners on ports 445
-and 389
-and relays the CA's challenge to the real Domain Controller over Netlogon
-. It then submits the cdc
-and rmd
-attributes and writes a PFX
-file and Kerberos credential cache.
-The exploit uses Public Key Cryptography for Initial Authentication in Kerberos (PKINIT) to authenticate as the target Domain Controller. The resulting credential can request account secrets through [ DCSync](https://thehackernews.com/2026/02/solarwinds-web-help-desk-exploited-for.html), including
-krbtgt
-.The researchers' binary analysis found that Microsoft's [July update](https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-54121) adds CRequestInstance::_ValidateChaseTargetIsDC
-to certpdef.dll
-before the CA follows a chase. The validation rejects IP literals, overlong names, and LDAP metacharacters. It also requires exactly one matching Active Directory computer object whose DNS name matches the target and whose userAccountControl
-includes SERVER_TRUST_ACCOUNT
-(8192
-). A later SID
-comparison blocks object substitution.
-The public exploit was tested in a Windows Server 2016-or-later forest with an Enterprise CA, the default Machine certificate template, and the default machine-account quota. The [NVD record](https://nvd.nist.gov/vuln/detail/CVE-2026-54121) separately lists Windows Server 2012 through Windows Server 2025, including listed Server Core editions, as affected. It also lists Windows 10 versions 1607 and 1809. The flaw was absent from [CISA's Known Exploited Vulnerabilities catalog](https://www.cisa.gov/known-exploited-vulnerabilities-catalog) on July 24.
-The researchers reported the flaw to Microsoft on May 14. Microsoft confirmed it on May 22 and patched it on July 14. The researchers publicly disclosed it on July 24. Administrators who cannot patch immediately can clear the chase flag and restart Certificate Services:
-certutil -setreg policy\EditFlags -EDITF_ENABLECHASECLIENTDC
-Restart-Service CertSvc -Force
-The researchers tested that mitigation only in a controlled lab. They recommend staging it first and treating the July update as the permanent fix.
+The exploit depends on the Spring Boot executable fat-JAR loader. Alibaba lists plain non-fat JARs, generic uber-JARs, and Tomcat or Jetty WAR deployments as unaffected. Reachable entry points include JSON.parse
+, JSON.parseObject(String)
+, and JSON.parseObject(String, Class)
+. Binding input to a fixed class is not sufficient when an object contains an Object
+or Map
+field where the payload can be nested.
+[ThreatBook said](https://threatbook.io/blog/fastjson-rce-1.2.83-active-exploitation-detected-detection-mitigation) on July 22 that its platform had captured in-the-wild exploitation after adding detection support two days earlier. Its laboratory results were narrower: it reproduced full code execution in a Spring Boot fat-JAR on JDK 8, while its embedded Tomcat test produced only a remote JAR fetch or server-side request forgery.
+Imperva [reported](https://www.imperva.com/blog/imperva-customers-protected-against-cve-2026-16723-critical-fastjson-1-x-zero-day-rce/) activity against financial services, healthcare, computing, retail, and other organizations, primarily in the United States, with smaller volumes in Singapore and Canada. It said browser impersonators generated most requests, while Ruby and Go tools represented about 30% collectively.
+Neither vendor published attack counts, raw requests, execution evidence, named victims, or confirmed compromises. Their reports establish observed exploit activity, not proof of successful code execution against a real-world target or a breach.
+A July 23 [CISA-ADP assessment](https://nvd.nist.gov/vuln/detail/CVE-2026-16723) nevertheless marked exploitation as none
+. The Hacker News confirmed on July 25 that the flaw was absent from CISA's current [Known Exploited Vulnerabilities catalog](https://www.cisa.gov/known-exploited-vulnerabilities-catalog). The available sources do not explain the mismatch.
+The Hacker News also found no patched Fastjson 1.x artifact in the project's [GitHub tags](https://github.com/alibaba/fastjson/tags) or [Maven Central repository](https://repo1.maven.org/maven2/com/alibaba/fastjson/) as of July 25. Version 1.2.83 remains the latest standard 1.x release, while 1.2.83_noneautotype
+remains the available restricted build.
+Organizations should inventory direct and transitive Fastjson dependencies and inspect affected systems for suspicious @type
+values, nested JAR URLs, unexpected outbound connections, child processes, file changes, and web shells. Fastjson2 is not affected because it does not use the same resource-probing or annotation-based trust path.
+The Hacker News has reached out to Alibaba for clarification on the affected versions and Fastjson 1.x patch plans, and to Imperva for details about the reported exploitation activity. We will update the story with any response.
+Fastjson 1.2.83 was Alibaba's recommended upgrade for a [separate AutoType bypass disclosed in 2022](https://thehackernews.com/2022/06/high-severity-rce-vulnerability.html). That final 1.x release now sits inside the affected range for CVE-2026-16723
+.
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-3" class="article-body">
+        <div id="art-4" class="article-body">
             <h2 class="article-title">Updated Cyber Threat Actor Naming System</h2>
             <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/updated-cyber-threat-actor-naming-system/" target="_blank">Original Link</a></p>
             <div class="content-text">Updated Cyber Threat Actor Naming System
@@ -161,49 +182,6 @@ A Work in Progress
 We have initially prioritized renaming several dozen of the most active groups, and will continue this process on a rolling basis. Previous names will remain indexed and searchable in the Google Threat Intelligence (GTI) platform, with MITRE ATT&CK mappings and other vendor aliases preserved, see Figure 1.
 Figure 1: Threat actor name appearance in GTI platform on initial rollout
 We will continue to use UNC, or “uncategorized” designations for threat clusters that are still in the early stages of investigation, as described [here](https://cloud.google.com/blog/topics/threat-intelligence/how-mandiant-tracks-uncategorized-threat-actors).</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">Hacker Runs Hermes AI Agent Unattended for Post-Exploitation at Thai Finance Ministry</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/hacker-runs-hermes-ai-agent-unattended.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Someone installed a popular AI assistant on a rented server, switched off the setting that makes it ask permission before running risky commands, and pointed it at Thailand's Ministry of Finance, which runs the country's treasury and tax collection.
-The agent then worked through the ministry's network on its own, checking hosts for ways to gain root access, hunting through file systems, and crawling a folder of staff personnel records going back to 2012.
-The operator left the agent's own logs sitting on a web server with directory listing switched on, where threat intelligence firm Hunt.io and researcher Bob Diachenko found them, along with 585 files and 470 MB of attack tooling.
-The tool is [Hermes](https://github.com/NousResearch/hermes-agent), an open-source assistant from Nous Research that people install to manage their mail, run chores, and take instructions over Telegram or Slack. It is not a hacking tool, and nothing here is a flaw in it.
-The mode the operator used, called YOLO, is a documented feature with its own command-line flag. That is what separates this case from the AI-assisted attacks reported so far.
-When [Anthropic disclosed](https://www.anthropic.com/news/disrupting-AI-espionage) a Chinese group using Claude Code for espionage last November, the attackers had to [trick the model into cooperating](https://thehackernews.com/2025/11/chinese-hackers-use-anthropics-ai-to.html), and Anthropic banned their accounts once it noticed. Hermes runs on the operator's own machine. No vendor was watching, and there was no account to ban.
-The operator was already inside before the agent started. Hunt.io recovered a hidden web shell planted on a ministry web server, scripts written against named internal Hadoop systems, and stolen mailbox passwords hardcoded into a mail-testing script.
-Nothing in the recovered files shows data leaving the network, and how the operator first got in is unknown. Thailand's national CERT and cybersecurity agency were notified on July 15; neither had published anything when The Hacker News checked on July 24.
-For everyone else, the useful detail is what the operator's scripts were built to exploit: a Hadoop database service that ships accepting any password by default.
-The human did the parts that require knowing the target. [Hunt.io's writeup](https://hunt.io/blog/thailand-ministry-finance-targeted-with-hermes-ai-agent) shows a password list built from the ministry's own department abbreviations rather than a dictionary, and shellcode carrying hardcoded paths into the ministry intranet.
-The agent did the repetitive part: run a scan, read the output, decide what to check next, run another. Nothing in the recovered material shows it finding a new vulnerability or choosing the target.
-None of the commands were exotic. [LinPEAS](https://github.com/peass-ng/PEASS-ng/tree/master/linPEAS), a standard script that hunts for privilege escalation paths on Linux. A search for files carrying elevated permissions. A directory crawl. A person would type the same things. What changed is that nobody had to approve each one.
-Hermes offers that setting three ways: a --yolo flag at launch, a /yolo command mid-session, or a HERMES_YOLO_MODE=1 environment variable. The project's [configuration guide](https://hermes-agent.nousresearch.com/docs/user-guide/configuration) says to "only use this in trusted, sandboxed environments."
-One layer survives it: a [hardline blocklist](https://hermes-agent.nousresearch.com/docs/user-guide/security) that still refuses commands which would wipe the machine the agent is running on. What the operator switched off was the human check, not every safeguard.
-What the agent did
-Five files named call_00_*.txt hold the agent's turns: kernel vulnerability scanning against a ministry host, a second LinPEAS run, a sweep for elevated-permission binaries, a filesystem listing, and a recursive crawl of the web root belonging to the Office of the Permanent Secretary.
-That folder held Office documents, performance evaluations, and personnel records dating to 2012. The logs show the agent reading the directory. None of them show the files leaving it.
-The scan script it was handed was not stock. A customized linpeas.sh checked for four 2026 Linux kernel flaws across three families: Copy Fail (CVE-2026-31431), [Dirty Frag](https://thehackernews.com/2026/05/linux-kernel-dirty-frag-lpe-exploit.html) (CVE-2026-43284 and CVE-2026-43500), and [DirtyClone](https://research.jfrog.com/post/dissecting-and-exploiting-linux-lpe-variant-dirtyclone-cve-2026-43503/) (CVE-2026-43503).
-Each hands a local user root where its prerequisites hold, which for Dirty Frag and DirtyClone means CAP_NET_ADMIN. All were weeks old when the operator staged them, and nothing recovered names a ministry kernel version or shows that any of the four ran.
-The operator's own SSH session into the staging server came from 103.97.0[.]57 in Hong Kong. The agent's web interface password contains the Chinese word Leishen, thunder god, and a key for FOFA, a Chinese asset-search service, sits alongside it.
-The same server previously hosted a [ShadowPad](https://thehackernews.com/2022/02/researchers-link-shadowpad-malware.html) controller and now runs a [VShell](https://thehackernews.com/2025/04/chinese-hackers-target-linux-systems.html) command-and-control listener. Hunt.io assesses with low-to-medium confidence that the operator is Chinese-speaking or fluent in the language, and names no group. The firm and Diachenko remain the only public source for the ministry-specific findings.
-The route into Hadoop
-Most of the custom code went on the ministry's Hadoop cluster, where it stores and queries large volumes of data. A script called hive_rce_py2.py connects to HiveServer2, the SQL front end to that cluster, on an internal machine at port 10000, and sends a password.
-[Apache's own documentation](https://hive.apache.org/docs/latest/admin/setting-up-hiveserver2/) says the default authentication mode is NONE, which accepts whatever password it is given without checking it.
-Once connected, the script installs a malicious Java add-on called HiveCmd.jar as a user-defined function, which lets it run operating-system commands through ordinary database queries and read the results back. [Cloudera warns](https://docs.cloudera.com/cdp-private-cloud-base/7.3.1/securing-hive/topics/hive-ranger-udf-security.html) that anyone able to install such a function can run arbitrary code as the Hive service account and reach sensitive data.
-Also staged on the server: a previously undocumented Go implant the operator calls Hades, built for both Windows and Linux in 62 copies. Hunt.io analyzed one of each and found the same codebase; the other 60 were not examined individually.
-Their hardcoded addresses tie the staging server to a second Hong Kong host, though no recovered artifact shows Hades reaching a ministry machine. Separate scripts tested default credentials against an internal GlassFish console, with neither deployment confirmed, alongside exploit code for three older flaws in [polkit](https://thehackernews.com/2022/01/12-year-old-polkit-flaw-lets.html), sudo, and IIS 6.0.
-What to do
-- Check whether HiveServer2 is running with authentication set to NONE, and restrict who can install user-defined functions. That default is what the operator's script was written to rely on.
-- Alert when a web server process opens a connection to internal Hadoop ports such as 10000 or 50070. A web server reaching a Hadoop node is worth a look on its own.
-- Search web roots recursively for PHP files with leading-dot names that imitate system caches. This one sat at /storage/Counter/nine/.journald-cache.php and does not appear in a normal directory listing.
-- Patch kernels against all four 2026 flaws above, plus sudo to 1.9.5p2 or later, polkit for CVE-2021-4034, and any remaining IIS 6.0 WebDAV.
-The agent leaves its own trail. Hermes's web panel returns a HermesWebUI server header, and a search on that string returned roughly 5,900 scan events over a month, as of Hunt.io's July 23 report, counting sightings rather than distinct machines.
-The better hook is where the agent writes its results: a consistent /hermes-results/ folder with predictable filenames, which turned up 575 hits in Hunt.io's index of exposed directories the same day, each one a host and filename pair. No safety control exposed this operator. A directory listing did.
-The endpoint sees the same shell commands and the same tools either way. Nothing in an ordinary command line announces that nobody is at the keyboard.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
@@ -349,150 +327,6 @@ Number | Requirement | Subrequirements |
             <hr class="separator">
         </div>
         <div id="art-6" class="article-body">
-            <h2 class="article-title">Email threat landscape: Q2 2026 trends and insights</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/07/23/email-threat-landscape-q2-2026-trends-and-insights/" target="_blank">Original Link</a></p>
-            <div class="content-text">The second quarter of 2026 (April–June) was largely defined by the continuing downstream effects following Microsoft’s Digital Crimes Unit-led disruption efforts against the [Tycoon2FA phishing-as-a-service (PhaaS) platform](https://www.microsoft.com/en-us/security/blog/2026/03/04/inside-tycoon2fa-how-a-leading-aitm-phishing-kit-operated-at-scale/) in March. Phishing volume linked to the platform fell 92% from pre-disruption averages, including QR code phishing and CAPTCHA-gated phishing both declining from their March highs. Despite ongoing efforts to rebuild operations, Tycoon2FA did not recover its previous scale or influence during Q2, and no single service emerged to replace the platform at comparable scale.
-Inside tycoon2fa
-These trends reflect both the measurable impact that disruption operations can have on phishing ecosystems and the adaptability of threat actors as they diversify delivery channels. At the same time, Microsoft Threat Intelligence observed continued growth in Teams-based social engineering, particularly voice phishing (vishing), with weekly malicious call attempts reaching nearly ten times the mid-2025 baseline by the end of the quarter. This activity illustrates how threat actors continue to expand beyond email into trusted workplace communication platforms where communications may appear more trustworthy to users.
-Microsoft detected approximately 7.6 billion email-based phishing threats throughout the quarter, with monthly volumes declining modestly from 2.7 billion in April to 2.4 billion in June. Credential phishing remained the dominant objective behind malicious payloads, while business email compromise (BEC) activity largely returned to historical norms after a brief, anomalous surge in April. [Notable campaigns](https://www.microsoft.com/en-us/security/blog/2026/05/04/breaking-the-code-multi-stage-code-of-conduct-phishing-campaign-leads-to-aitm-token-compromise/) observed during the quarter also demonstrated how threat actors combine automation, trusted services, and multi-stage delivery chains to scale operations. These campaigns ranged from an automated BEC campaign that reached more than 67,000 users across 42,000 organizations in under three hours, to a multi-stage phishing campaign that used nested EML files, calendar invitations, and a Microsoft authentication redirect to deliver malware.
-Q2 AiTM token compromise
-[
-April phishing campaign tactics, detections, and mitigations ›](https://www.microsoft.com/en-us/security/blog/2026/05/04/breaking-the-code-multi-stage-code-of-conduct-phishing-campaign-leads-to-aitm-token-compromise/)
-This blog provides a view of email threat activity across the second quarter of 2026, highlighting key trends in phishing techniques, payload delivery, and threat actor behavior observed by Microsoft Threat Intelligence. We examine shifts in QR code and CAPTCHA-gated phishing activity, malicious payload trends, BEC activity, the growth of Teams-based threats, and notable campaigns observed during the quarter. We also provide recommendations and Microsoft Defender detections to help organizations identify and mitigate evolving threats while prioritizing defensive measures.
-Tycoon2FA Q2 disruption impact
-The disruption operation that [Microsoft’s Digital Crimes Unit launched against Tycoon2FA](https://www.microsoft.com/en-us/security/blog/2026/03/04/inside-tycoon2fa-how-a-leading-aitm-phishing-kit-operated-at-scale/) infrastructure in early March [continued to produce measurable results](https://www.microsoft.com/en-us/security/blog/2026/04/30/email-threat-landscape-q1-2026-trends-and-insights/#tycoon2fa-disruption-impact) throughout Q2 2026. After falling 15% in March and another 22% in April, Tycoon2FA-linked phishing volume dropped 74% in May to just 1.5 million messages, then fell another 20% in June to 1.2 million, by far the lowest monthly volumes observed in at least a year. For reference, the average monthly volume of phishing messages linked to Tycoon2FA during the second half of 2025 was 15.1 million. By the end of Q2, volumes were running at roughly 8% of that baseline, representing a 92% total decline since the disruption operation began.
-email threat landscape
-Tycoon2FA’s influence across two primary phishing tactics, QR code lures and CAPTCHA-gated landing pages, also continued to decline throughout the quarter:
-- CAPTCHA-gated phishing: Tycoon2FA’s share of CAPTCHA-gated phishing sites fell from 41% in March to 16% in April and 12% by June, down from a peak of 76% in December 2025.
-- QR code phishing: The share of QR code campaigns redirecting to Tycoon2FA domains decreased from 20% in March to 17% in April and 14% by June, down from a peak of 33% in November 2025.
-These declines indicate that the platform’s customer base has not migrated to replacement infrastructure at anything close to the scale they previously operated.
-After being forced off Cloudflare, which had provided anti-analysis protection that made Tycoon2FA pages harder to scan and take down, the service continued to rely on infrastructure hosted on the .RU top-level domain (TLD), a shift that began in late March. More than 40% of newly observed Tycoon2FA domains used .RU registrations throughout Q2. While this reflects an ongoing effort to find replacement hosting, Tycoon2FA’s role in the phishing ecosystem has nonetheless been significantly diminished and the pace of recovery has been slow.
-QR code phishing attacks
-After peaking at 18.7 million attacks in March, the highest monthly volume in at least a year, QR code phishing declined for three consecutive months in Q2. Volume fell 7% in April to 17.4 million, then dropped more sharply in May (-38%) and June (-22%), closing the quarter at 8.3 million attacks. By June, QR code phishing had returned to levels last seen in mid-2025.
-The delivery methods used in QR code attacks shifted notably during Q2. PDF attachments remained the dominant vehicle throughout, but their dominance weakened after April:
-- PDF attachments peaked at 79% of QR code attacks in April before falling to 59% in May and 58% in June. By raw volume, malicious PDFs containing QR codes dropped more than 60% between April and June.
-- DOC/DOCX attachments moved in the opposite direction, increasing 30% in May to account for 38% of QR code payloads, the highest share since December 2025. By June, DOC/DOCX payloads reached 40% of QR code attacks. This swap between PDF and DOC/DOCX dominance is a pattern that has recurred throughout the past year, as operators appear to rotate between delivery formats.
-- Email-embedded QR codes, which had surged 336% in March and accounted for 5% of QR code attacks, effectively disappeared in Q2. This delivery method dropped to near-zero across all three months, leaving QR code phishing almost entirely an attachment-based tactic.
-CAPTCHA-gated phishing tactics
-After accumulating to nearly 12 million attacks in March, the highest monthly volume observed over the past year, CAPTCHA-gated phishing declined sharply throughout Q2. Volume fell 32% in April to 8.2 million, then dropped another 65% in May and 24% in June, closing the quarter at just 2.2 million attacks. Since the March peak, CAPTCHA-gated phishing has fallen more than 81%, reaching its lowest monthly volume in more than a year.
-The rapid rotation of delivery methods that characterized Q1 continued into Q2, with no single payload type maintaining the top position for more than one or two months:
-- PDF attachments surged to 63% of CAPTCHA-gated attacks in April, the highest single-payload share observed in the past year, after more than quadrupling in March. This dominance was short-lived, however. PDF volumes dropped 69% in May and another 70% in June, falling to just 22% of attacks by the end of the quarter.
-- HTML attachments, which had been a major delivery vector through January (37% of attacks), declined sharply during Q2. After declining to 8% in April, HTML payloads fell to just 3% in May before recovering slightly to 5% in June, their lowest sustained share in at least a year.
-- SVG files reached their lowest observed volume in April (5% of attacks) before rebounding to 12% in May and 26% in June. While still well below the levels seen when Tycoon2FA actively used SVG files, this gradual recovery bears monitoring.
-- Email-embedded URLs reclaimed the top position in June for the first time since December 2025, accounting for 30% of CAPTCHA-gated attacks. This was more a function of every other delivery method declining in raw volume than a resurgence in URL-based delivery. The actual volume of URL-delivered CAPTCHA-gated phish in June was still far lower than most months over the past year.
-- DOC/DOCX files declined from their March spike, falling steadily from 15% to 10% of attacks over the quarter.
-Tycoon2FA’s continued decline was a significant factor in the overall volume reduction. The platform’s share of CAPTCHA-gated phishing fell from 41% in March to 16% in April, 18% in May, and 12% by June, down from a peak of 76% in December 2025. No single service has emerged to fill the gap at comparable scale, contributing to the sustained decline in CAPTCHA-gated phishing activity overall.
-Malicious payloads
-Credential phishing continued to dominate the malicious payload landscape throughout Q2, accounting for 94–96% of all payload-based attacks each month. These credential phishing payloads either linked users to phishing pages or locally loaded spoofed sign-in screens on a user’s device. Traditional malware delivery represented just 4–6% of payloads, consistent with its long-term decline.
-HTML and PDF attachments remained the two most common malicious payload types across the quarter, together accounting for roughly 60–70% of all payload-based attacks each month:
-- HTML attachments held the top position across all three months at 35–41% of attacks. After peaking in April, HTML payload volume declined 33% in May and another 17% in June.
-- PDF attachments consistently ranked second at 24–31% of attacks. PDF volume was relatively stable in April before declining 41% in May and 4% in June.
-- SVG files continued the decline that has tracked closely with Tycoon2FA’s diminishing activity. After peaking at 23% of malicious payloads in July 2025, SVG’s share fell to around 7% by Q2, consistent with SVG’s historical role as a preferred Tycoon2FA payload format.
-- DOC/DOCX and ZIP/GZIP files oscillated without a clear directional trend. DOC/DOCX increased 26% in May before falling 17% in June, while ZIP/GZIP attachments declined 48% in April, rebounded 27% in May, then dropped 40% in June.
-- ICS files (calendar invitations), while still a small share of overall payload volume (roughly 4%), nearly quadrupled in June (+277%). These attacks take advantage of the fact that calendar invitations are processed differently than standard email attachments and can inject malicious links into a user’s calendar without requiring an explicit open-and-click interaction.
-- EXE files continued to decline, falling to their lowest monthly volume in June, reflecting the broader shift away from traditional malware delivery via email attachments.
-Business email compromise
-April 2026 produced the most anomalous BEC data point in more than a year: nearly 9 million attacks, a 121% increase from March and more than double any previous month. The spike was short-lived as volume fell 62% in May to 3.4 million and settled at 3.9 million in June, both figures consistent with the monthly baseline that had held throughout the prior year. The April surge appeared to be driven by a small number of high-volume campaigns rather than a fundamental escalation in BEC activity.
-The composition of BEC attacks remained consistent throughout Q2. Generic outreach messages (like “Are you at your desk?”) accounted for 87–92% of initial contact emails each month, while explicit requests for specific financial transactions or documents represented just 3–8%. This pattern underscores that BEC operators overwhelmingly favor establishing conversational rapport with targets before making fraudulent requests, rather than leading with direct financial asks.
-Within the smaller subset of explicit financial requests, the most notable trend was the near-disappearance of fake invoice payment requests:
-- Invoice payment requests fell 67% in May and another 77% in June, reaching their lowest volume in more than a year. By June, invoice-themed BEC accounted for less than 0.4% of all attacks, down from around 3.6% in March.
-- Payroll update requests declined moderately across the quarter, from roughly 4% of attacks in March to 2.3% by June.
-- Gift card requests remained at roughly 1–4% of attacks, with no clear directional trend.
-Microsoft Teams threats
-While email remains the dominant initial access vector, [threat actors increasingly abused Microsoft Teams](https://www.microsoft.com/en-us/security/blog/2025/10/07/disrupting-threats-targeting-microsoft-teams) during Q2 to deliver social engineering, phishing, and malware payloads. Unlike email, Teams traffic typically bypasses secure email gateways and benefits from the perceived legitimacy of a colleague-initiated chat, which can make lures particularly effective in this environment.
-Teams-based phishing volume climbed steadily throughout Q2, with the average number of detected attacks rising 19% from March to April, holding roughly flat into May (+1%), then increasing another 10% into June. Financial and executive impersonation has remained largely absent from Teams-based attacks over the past several months.
-The dominant lure theme remained technical support impersonation, with attackers posing as an employee’s information technology (IT) help desk, typically warning of an impending account lockout. However, the way attackers presented themselves continued to evolve:
-- Display names shifted away from IT- or help desk-branded identities. For the second consecutive month, more than half (52%) of Teams-based phishing attacks in June used generic display names rather than obvious IT support impersonation.
-- Attacker email addresses associated with these chats moved away from support-themed domains toward software-as-a-service (SaaS) terminology, scan/update language, and infrastructure keywords. This shift may align with the broader rise of
-[ClickFix-style attacks](https://www.microsoft.com/en-us/security/blog/2025/08/21/think-before-you-clickfix-analyzing-the-clickfix-social-engineering-technique/)adopting update-fix and similar themes.
-Vishing through Teams showed the steepest growth of any threat category tracked in this report during Q2. Average weekly malicious call attempts rose 31% from April to May and another 27% into June, with the final two weeks of June recording the two highest weekly volumes on record. Since the beginning of 2026, weekly vishing attempts have increased roughly 80% and now run at nearly ten times the mid-2025 baseline. Attackers time these calls deliberately when targets are most likely to be online and active, with the heaviest activity falling between 14:00 and 20:00 UTC, Monday through Friday, with near-zero weekend activity. Notably, a growing share of these calls go unanswered, end quickly, or are rejected outright, partly reflecting Microsoft’s ongoing efforts to harden the Teams attack surface and improve protections against social engineering abuse.
-Notable phishing campaigns
-The following campaigns were observed during the quarter and highlight notable credential phishing, BEC, and malware delivery activity. For analysis of a separate code of conduct-themed credential phishing campaign observed in April of Q2, see [Breaking the code: Multi-stage ‘code of conduct’ phishing campaign leads to AiTM token compromise](https://www.microsoft.com/en-us/security/blog/2026/05/04/breaking-the-code-multi-stage-code-of-conduct-phishing-campaign-leads-to-aitm-token-compromise/).
-Automated BEC campaign scales aging report and payroll diversion lures
-On June 1, 2026, Microsoft Defender Research observed a high-volume BEC campaign that used automation to operate at scale. Over a send window of under three hours (14:08–16:52 UTC), the actor reached more than 67,000 users across more than 42,000 organizations, almost exclusively in the United States. Targeting spanned a broad range of industries rather than a single vertical, most notably retail and consumer goods (17%), technology and software (15%), and financial services (14%). The campaign ran two lures in succession from shared infrastructure: arequest impersonating sales executives to obtain aging report data and customer contact details, and a payroll diversion pretext impersonating the CEO or President to redirect salary payments to attacker-controlled bank accounts.
-Delivery was fully scripted. The messages were generated programmatically using Python’s email.mime library, identifiable from its default MIME boundary format (===============[integer]==), and dispatched through the Amazon Simple Email Service (SES) API rather than a manual webmail interface, as indicated by the SES Feedback-ID and Message-ID formats. This allowed the actor to iterate through a recipient list and inject per-message variables (like spoofed executive display names, recipient addresses, and unique tracking identifiers) at volume. Messages were sent from a DomainKeys Identified Mail (DKIM)-configured Slovak domain (ecajovna[.]sk) through SES, so they passed Sender Policy Framework (SPF) and achieved DKIM alignment. Neither lure contained a malicious link or attachment; both relied on eliciting a reply to attacker-controlled mailboxes that mimicked legitimate providers (ilyff[.]com, j-gmails[.]com, x2mails[.]com).
-Automation also extended to targeting and follow-up. The actor addressed generic role-based mailboxes (like “ar”, “accountsreceivable”, “hr”, “payroll”) rather than named individuals, reducing per-target effort. Each message embedded a 1×1 open-tracking pixel served from an Amazon SES engagement subdomain, with per-message identifiers that let the actor confirm which recipients opened the email and prioritize follow-up against those targets. The combination of scripted message generation, API-based bulk delivery, role-based targeting, and automated engagement tracking allowed a single actor to run a personalized, financially motivated BEC operation at a scale not practical to execute manually.
-Staff update campaign with nested EML file and calendar invitation leads to BAT file dropper
-Between June 14–15, 2026, Microsoft Defender Research observed a phishing campaign targeting more than 107,000 users across nearly 19,000 organizations, almost exclusively in the United States. The campaign targeted a broad range of industries rather than a single vertical, most notably financial services (17%), technology and software (14%), and retail and consumer goods (14%). Emails impersonated an internal “Internal Affairs – Financials & Staff Updates” function at the recipient’s own organization, with the display name and subject line both opening with the recipient’s organization name and closing with constant trailing text. The messages were sent from a Postfix host on 9i6pokerdepot[.]com routed through Barracuda’s outbound mail service, and DKIM passed cleanly for the sending domain.
-The visible email body contained minimal content. One line told the reader to download the attached file for the meeting summary, followed by a confidentiality notice. Each message carried two attachments: a nested EML posing as a Teams archive recording, and an ICS calendar invite addressed to placeholder administrative accounts at the recipient’s domain. The nested EML’s file name retained an unfilled template token ( {{DATE2}} ), indicating a per-recipient templating tool.
-When opened, the EML displayed a voicemail notification with a single action button. That button pointed to Microsoft’s OAuth sign-in endpoint at login.microsoftonline[.]com, with parameters that asked for a silent sign-in attempt against an Entra application that the attacker had registered as multi-tenant.
-Because no active sign-in session could satisfy the silent request, Microsoft’s authentication service redirected the recipient to the destination the attacker had pre-registered on the application. That destination was a path on clickup-attachments[.]com, ClickUp’s public attachment host, and served a Windows batch file named Financial_report.bat. Because the link routed through Microsoft authentication infrastructure, both recipients and URL scanners saw a login.microsoftonline[.]com link.
-The batch file ran a hidden PowerShell command that pulled installer.exe from pixeldrain[.]com, saved it under the user’s Temp directory, ran it with a silent flag, and deleted the dropper on exit. Rather than stealing credentials, the campaign ultimately resulted in silent malware execution on the user’s Windows device.
-Mitigation and protection guidance
-Microsoft recommends the following mitigations to reduce the impact of this threat. Check the recommendations card for the deployment status of monitored mitigations.
-[Review the recommended settings](https://learn.microsoft.com/defender-office-365/recommended-settings-for-eop-and-office365)for Exchange Online Protection and Microsoft Defender for Office 365 to ensure your organization has established essential defenses and knows how to monitor and respond to threat activity.- Invest in user awareness training and phishing simulations.
-[Attack simulation training](https://learn.microsoft.com/defender-office-365/attack-simulation-training-get-started)in Microsoft Defender for Office 365, which also includes simulating phishing messages in Microsoft Teams, is one approach to running realistic attack scenarios in your organization. [Enable Zero-hour auto purge (ZAP)](https://learn.microsoft.com/defender-office-365/zero-hour-auto-purge)in Defender for Office 365 to quarantine sent mail in response to newly acquired threat intelligence and retroactively neutralize malicious phishing, spam, or malware messages that have already been delivered to mailboxes.- Responders could also manually check for and purge unwanted emails containing URLs and/or Subject fields that are similar, but not identical, to those of known bad messages.
-[Investigate malicious email that was delivered in Microsoft 365](https://learn.microsoft.com/defender-office-365/threat-explorer-investigate-delivered-malicious-email)and use[Threat Explorer](https://security.microsoft.com/threatexplorer)to find and delete phishing emails. - Turn on
-[Safe Links](https://learn.microsoft.com/defender-office-365/safe-links-about)and[Safe Attachments](https://learn.microsoft.com/defender-office-365/safe-attachments-about)in Microsoft Defender for Office 365. - Enable
-[network protection](https://learn.microsoft.com/defender-endpoint/enable-network-protection)in Microsoft Defender for Endpoint. - Encourage users to use Microsoft Edge and other web browsers that support
-[Microsoft Defender SmartScreen](https://learn.microsoft.com/deployedge/microsoft-edge-security-smartscreen), which identifies and blocks malicious websites, including phishing sites, scam sites, and sites that host malware. - Enable password-less authentication methods (for example, Windows Hello, FIDO keys, or Microsoft Authenticator) for accounts that support password-less. For accounts that still require passwords, use authenticator apps like Microsoft Authenticator for MFA.
-[Refer to this article](https://learn.microsoft.com/entra/identity/authentication/concept-authentication-methods)for the different authentication methods and features.- Conditional access policies can also be scoped to
-[strengthen privileged accounts with phishing resistant MFA](https://learn.microsoft.com/entra/identity/conditional-access/policy-admin-phish-resistant-mfa).
-- Conditional access policies can also be scoped to
-- Configure
-[automatic attack disruption](https://learn.microsoft.com/defender-xdr/automatic-attack-disruption)in Microsoft Defender XDR. Automatic attack disruption is designed to contain attacks in progress, limit the impact on an organization’s assets, and provide more time for security teams to remediate the attack fully.
-Microsoft Defender detections
-[Microsoft Defender](https://www.microsoft.com/security/business/microsoft-defender) customers can refer to the list of applicable detections below. Microsoft Defender coordinates detection, prevention, investigation, and response across endpoints, identities, email, apps to provide integrated protection against attacks like the threat discussed in this blog.
-Microsoft Defender for Endpoint
-The following alert might indicate threat activity associated with this threat. The alert, however, can be triggered by unrelated threat activity.
-- Suspicious activity likely indicative of a connection to an adversary-in-the-middle (AiTM) phishing site
-Microsoft Defender for Office 365
-The following alerts might indicate threat activity associated with this threat. These alerts, however, can be triggered by unrelated threat activity.
-- A potentially malicious URL click was detected
-- A user clicked through to a potentially malicious URL
-- Suspicious email sending patterns detected
-- Email messages containing malicious URL removed after delivery
-- Email messages removed after delivery
-- Email reported by user as malware or phish
-Microsoft Security Copilot
-[Microsoft Security Copilot](https://www.microsoft.com/en-us/security/business/ai-machine-learning/microsoft-security-copilot) is [embedded in Microsoft Defender](https://learn.microsoft.com/defender-xdr/security-copilot-in-microsoft-365-defender) and provides security teams with AI-powered capabilities to summarize incidents, analyze files and scripts, summarize identities, use guided responses, and generate device summaries, hunting queries, and incident reports.
-Customers can also [deploy AI agents](https://learn.microsoft.com/defender-xdr/security-copilot-agents-defender), including the following [Microsoft Security Copilot agents](https://learn.microsoft.com/copilot/security/agents-overview), to perform security tasks efficiently:
-[Threat Intelligence Briefing agent](https://learn.microsoft.com/defender-xdr/threat-intel-briefing-agent-defender)[Phishing Triage agent](https://learn.microsoft.com/defender-xdr/phishing-triage-agent)[Threat Hunting agent](https://learn.microsoft.com/defender-xdr/advanced-hunting-security-copilot-threat-hunting-agent)[Dynamic Threat Detection agent](https://learn.microsoft.com/defender-xdr/dynamic-threat-detection-agent)
-Security Copilot is also available as a [standalone experience](https://learn.microsoft.com/en-us/copilot/security/experiences-security-copilot) where customers can perform specific security-related tasks, such as incident investigation, user analysis, and vulnerability impact assessment. In addition, Security Copilot offers [developer scenarios](https://learn.microsoft.com/copilot/security/developer/custom-agent-overview) that allow customers to build, test, publish, and integrate AI agents and plugins to meet unique security needs.
-Threat intelligence reports
-Microsoft Defender XDR customers can use the following [Threat Analytics](https://learn.microsoft.com/defender-xdr/threat-analytics) reports in the Defender portal (requires license for at least one Defender XDR product) to get the most up-to-date information about the threat actor, malicious activity, and techniques discussed in this blog. These reports provide intelligence, protection information, and recommended actions to prevent, mitigate, or respond to associated threats found in customer environments.
-Microsoft Defender XDR threat analytics
-[Activity Profile: Email threat landscape, June 2026](https://security.microsoft.com/threatanalytics3/135cafb0-ee57-4e59-87ac-7c26332e3c2c)[Activity Profile: Email threat landscape, May 2026](https://security.microsoft.com/threatanalytics3/f186e4b0-28df-499a-901e-c64768b6d0dc)[Activity Profile: Email threat landscape, April 2026](https://security.microsoft.com/threatanalytics3/1aad7741-5963-44a6-b03e-ad120faf3d07)[Tool Profile: Tycoon2FA](https://security.microsoft.com/threatanalytics3/d5c0cc60-ff54-41f3-b174-45adc0216497/analystreport)[Technique Profile: QR code phishing](https://security.microsoft.com/threatanalytics3/2b78ac51-0fd1-48ff-a2c0-256a21019c48/analystreport)[Technique Profile: ClickFix technique leverages clipboard to run malicious commands](https://security.microsoft.com/threatanalytics3/bdf0d0c5-f5f3-435a-b4a1-6e3beb73b5b9/analystreport)[Threat Overview Profile: Business Email Compromise](https://security.microsoft.com/threatanalytics3/e01d0430-a92d-457e-909c-de9d2ad93b8d/analystreport)[Threat Overview Profile: Adversary-in-the-middle credential phishing](https://security.microsoft.com/threatanalytics3/edd01a8c-283d-42f6-bdd4-0b7b4dbd369b/analystreport)
-Microsoft Security Copilot customers can also use the [Microsoft Security Copilot integration](https://learn.microsoft.com/defender/threat-intelligence/security-copilot-and-defender-threat-intelligence?bc=%2Fsecurity-copilot%2Fbreadcrumb%2Ftoc.json&toc=%2Fsecurity-copilot%2Ftoc.json#turn-on-the-security-copilot-integration-in-defender-ti) in Microsoft Defender Threat Intelligence, either in the Security Copilot standalone portal or in the [embedded experience](https://learn.microsoft.com/defender/threat-intelligence/using-copilot-threat-intelligence-defender-xdr) in the Microsoft Defender portal to get more information about this threat actor.
-Indicators of compromise (IOCs)
-| Indicator | Type | Description | First seen | Last seen |
-| 9i6pokerdepot[.]com | Domain | Sending domain; DKIM-signed by the operator | 2026-06-15 | 2026-06-15 |
-| Customer.Service[@]9i6pokerdepot[.]com | Email address | Campaign sender address | 2026-06-15 | 2026-06-15 |
-| t90141296286.p.clickup-attachments[.]com | Domain | ClickUp attachment subdomain hosting the stage 2 BAT dropper | 2026-06-15 | 2026-06-15 |
-| hxxps://t90141296286.p.clickup-attachments[.]com/t90141296286/fb39c3a9-3161-40ad-847b-0683e0409d6f/Financial_report.bat | URL | Stage 2 BAT dropper download URL | 2026-06-15 | 2026-06-15 |
-| hxxps://pixeldrain[.]com/api/file/3v92oJiL | URL | Final installer payload download URL | 2026-06-15 | 2026-06-15 |
-| Re: Teams Archive Recording for {{DATE2}}.eml | File name | Nested EML attachment template name; the literal {{DATE2}} indicates an unfilled per-recipient template token | 2026-06-15 | 2026-06-15 |
-| Financial_report.bat | File name | Stage 2 dropper batch file delivered from the OAuth error redirect | 2026-06-15 | 2026-06-15 |
-| ecajovna[.]sk | Domain | Domain used to send campaign emails | 2026-06-01 | 2026-06-01 |
-| ilyff[.]com | Domain | Reply-to domain used to receive victim responses | 2026-06-01 | 2026-06-01 |
-| j-gmails[.]com | Domain | Reply-to domain used to receive victim responses | 2026-06-01 | 2026-06-01 |
-| x2mails[.]com | Domain | Reply-to domain used to receive victim responses | 2026-06-01 | 2026-06-01 |
-| contact[@]ecajovna[.]sk | Email address | Address used to send campaign emails | 2026-06-01 | 2026-06-01 |
-| mail[@]ilyff[.]com | Email address | Reply-to address | 2026-06-01 | 2026-06-01 |
-| me[@]j-gmails[.]com | Email address | Reply-to address | 2026-06-01 | 2026-06-01 |
-| me[@]x2mails[.]com | Email address | Reply-to address | 2026-06-01 | 2026-06-01 |
-| compliance-protectionoutlook[.]de | Domain | Domain hosting malicious campaign content | 2026-04-14 | 2026-04-16 |
-| acceptable-use-policy-calendly[.]de | Domain | Domain hosting malicious campaign content | 2026-04-14 | 2026-04-16 |
-| cocinternal[.]com | Domain | Domain hosting sender email address | 2026-04-14 | 2026-04-16 |
-| gadellinet[.]com | Domain | Domain hosting sender email address | 2026-04-14 | 2026-04-16 |
-| harteprn[.]com | Domain | Domain hosting sender email address | 2026-04-14 | 2026-04-16 |
-| cocpostmaster[@]cocinternal[.]cm | Email address | Email address used to send campaign emails | 2026-04-14 | 2026-04-16 |
-| nationaladmin[@]gadellinet[.]com | Email address | Email address used to send campaign emails | 2026-04-14 | 2026-04-16 |
-| nationalintegrity[@]harteprn[.]com | Email address | Email address used to send campaign emails | 2026-04-14 | 2026-04-16 |
-| m365premiumcommunications[@]cocinternal[.]com | Email address | Email address used to send campaign emails | 2026-04-14 | 2026-04-16 |
-| documentviewer[@]na[.]businesshellosign[.]de | Email address | Email address used to send campaign emails | 2026-04-14 | 2026-04-16 |
-| 5DB1ECBBB2C90C51D81BDA138D4300B90EA5EB2885CCE1BD921D692214AECBC6 | SHA-256 | File hash of campaign PDF attachment | 2026-04-14 | 2026-04-16 |
-| B5A3346082AC566B4494E6175F1CD9873B64ABE6C902DB49BD4E8088876C9EAD | SHA-256 | File hash of campaign PDF attachment | 2026-04-14 | 2026-04-16 |
-| 11420D6D693BF8B19195E6B98FEDD03B9BCBC770B6988BC64CB788BFABE1A49D | SHA-256 | File hash of campaign PDF attachment | 2026-04-14 | 2026-04-16 |
-Learn more
-For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
-To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
-To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-7" class="article-body">
             <h2 class="article-title">LG to Ban Residential Proxies from Smart TV Apps</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/07/lg-to-ban-residential-proxies-from-smart-tv-apps/" target="_blank">Original Link</a></p>
             <div class="content-text">The home appliance giant LG Electronics USA said this week it plans to suspend any apps built for its smart TVs that turn one’s television into an always-on residential proxy node. The move comes less than a month after researchers found that more than 42 percent of games and other apps available for download on LG’s webOS store allow unknown third-parties to route their Internet traffic through a user’s TV.
@@ -574,6 +408,7 @@ You can keep your ad ridden devices. IF I SEE MY MONITOR HAVE ADS ILL THROW IT O
 Smart TVs draw a lot of vampire power. I found a simple solution. I make my Smart TV dumb again. How? Look at the network settings. Most likely the IP address is 192.168.1.Something. Change the 192 number to 193, and now your Too smart for it’s own good TV, becomes a normal dumb TV. Also, the internal microphone, and TV camera looking at you will be disabled too. You will also note your power bill will be reduced a bit too. Nice!
 I just skip that by using pc monitors with an hdmi audio splitter
 I do wonder if that might be dangerous? 193 is public ip address space. Use a fake gateway ip and dns server instead.
+But that won’t work on your network that is probably 192.168.xxx.xxx. Just make the first number different from what your network is, and bingo, dumb TV. No picture, or video, or sound monitoring. Just a plain old dumb TV.
 The alternative to all these ‘smart tv’s’ I like is to use an hdmi PC monitor with an hdmi audio splitter, lots of really nice monitors out there without the bloatware I could do without
 This is why there is a market for devices such as the Apple TV.
 A newbie here….I recently bought an LG smart TV at Costco and then installed the Spectrum TV app (I have their cable because of my live news addiction..lol). Does this mean that I have somehow enabled internet access without realizing it?
@@ -589,7 +424,114 @@ LG already does this on their TVs (not just monitors):
 1) record your screen and upload it to their servers
 2) listen to your conversations
 3) share your data with third parties
-Bit of a two faced approach going on here..</div>
+Bit of a two faced approach going on here..
+What I do is just … not connect my tv to the internet. Until I want to check for updates once a year or so.
+All my disagreements with LG just float away at that point. It’s still a great TV.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-7" class="article-body">
+            <h2 class="article-title">Microsoft at Black Hat USA 2026: Defending trust in the age of AI and supply chain attacks</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/07/17/microsoft-at-black-hat-usa-2026-defending-trust-in-the-age-of-ai-and-supply-chain-attacks/" target="_blank">Original Link</a></p>
+            <div class="content-text">Across the threat landscape, in this moment, one pattern sits at the center of the story: threat actors are following trust.
+They are not only looking for vulnerable systems, but rather targeting the software, services, identities, tools, developer workflows, and AI systems that organizations already depend on.
+A package can become a distribution path. A build pipeline can become an access path. A trusted tool can become or expand an attack surface. An AI agent with the wrong access can become a new way to reach code, data, or infrastructure.
+While the surfaces may change, the goal for the majority of threat actors remains the same: find what is trusted, abuse it, and scale the impact.
+At [Black Hat USA 2026](https://blackhat.com/us-26/), Microsoft Security will walk through how we are seeing this shift unfold, how security teams can look for it earlier, and how threat intelligence, expert-led response, and security operations need to work together when campaigns move across software, identity, cloud, data, and AI systems.
+On Wednesday, August 5, 2026, the day begins with David Weston’s keynote, [The End of Rare: Defending When Offense Is Cheap](https://blackhat.com/us-26/features/schedule/index.html?track%5b%5d=keynotes&track%5b%5d=main-stage), which looks at what defense requires when offensive capability becomes easier to access, automate, and scale. Later that afternoon, Aarti Borkar and Tanmay Ganacharya will resume the main stage for [Poisoned at the Source: Inside the Hunt for Supply Chain Attacks](https://blackhat.com/us-26/features/schedule/?day=wednesday#poisoned-at-the-source-inside-microsoft-threat-intelligences-hunt-for-supply-chain-attacks-56692), which offers a closer look at how Microsoft Threat Intelligence is hunting attacks across software ecosystems, developer workflows, and trusted services. This includes details into the ongoing attacks on npm (Node package manager).
+Together, these sessions frame the challenge security teams are facing now: when offensive capability becomes easier to scale, security teams need to understand the trust paths threat actors can abuse before those paths become open doors for attacks.
+At our booth, we’ll also showcase [Microsoft Defender Experts Threat Intelligence](https://www.microsoft.com/en-us/security/blog/2026/07/15/turning-threat-intelligence-into-decisive-action-with-defender-experts/), a new expert-led service delivering continuous, curated intelligence tailored to your organization, and Microsoft Defender Experts MDR, now extended with third-party and multicloud coverage.
+From August 4 to 6, 2026, at Mandalay Bay in Las Vegas, you’ll find Microsoft Security on the Business Hall floor at booth #2144, and on Wednesday evening, join us at the Microsoft Security reception at Swingers at Mandalay Bay.
+Weston on the future of defense
+At 9:15 AM PT on Wednesday, August 5, 2026, David Weston, CVP of Agentic Security, will examine what changes for security teams when offensive capability becomes easier to access, automate, and scale.
+The keynote sets up one of the central questions security leaders are facing now: how does the security operations center (SOC) and analysts adapt when threat actors can move faster, test more often, and reuse trusted paths across software, identity, cloud, and AI systems? [Join the keynote](https://blackhat.com/us-26/features/schedule/index.html?track%5b%5d=keynotes&track%5b%5d=main-stage) Wednesday, August 5, 2026, then continue the conversation with Microsoft Security at booth #2144.
+Our latest intelligence (and response) on npm supply chain attacks
+That same intelligence-to-action challenge is at the center of our main stage session at Black Hat.
+On Wednesday, August 5, 2026, from 2:30 PM PT to 3:00 PM PT, Aarti Borkar, Corporate Vice President (CVP), Microsoft Security, and Tanmay Ganacharya, Vice President of Microsoft Security Research and Threat Intelligence, will share intelligence and insights into the ongoing supply chain campaigns impacting all areas of the threat landscape. The talk, [Poisoned at the Source: Inside the Hunt for Supply Chain Attacks](https://blackhat.com/us-26/features/schedule/?day=wednesday#poisoned-at-the-source-inside-microsoft-threat-intelligences-hunt-for-supply-chain-attacks-56692), will walk through Microsoft Threat Intelligence’s investigations into the ongoing npm supply chain attacks targeting software ecosystems, developer workflows, trusted services, and how organizations are handling the challenges associated with npm packages.
+Follow the research in the Black Hat Briefings
+Microsoft Security researchers will also present peer-reviewed technical research in the Black Hat Briefings. These sessions go deep into cloud, mobile, and software supply chain defense.
+GitHub Can Tell You’re Being Hacked. You’re Just Not Listening: Building EDR for GitHub from Its Own Event Stream
+- Presented by Yossi Weizman, Principal Security Research Manager
+- Wednesday, August 5, 2026, from 10:15 AM PT to 10:45 AM PT
+One Click to System: Exploiting Bixby’s Trust Model for Full Device Compromise
+- Presented by Dimitrios Valsamaras, Senior Security Researcher
+- Wednesday, August 5, 2026, from 12:00 PM PT to 12:40 PM PT
+Handle With Care: Chaining Azure Automation Flaws for Cross-Tenant Identity Takeover
+- Presented by Shay Shavit, Senior Security Researcher
+- Wednesday, August 5, 2026, from 4:30 PM PT to 5:10 PM PT
+Check the official [Black Hat schedule](https://blackhat.com/us-26/briefings/schedule/) for final room assignments and any timing updates.
+Go deeper in Microsoft sessions
+Microsoft experts will also lead sessions that give you a closer look behind the scenes, including:
+[Mind the Gap: Turning Threat Intelligence into Decisive Action with Expert-Led Defense](https://blackhat.com/us-26/sponsored-sessions/schedule/index.html?format[]=20-minute-sponsored-session#mind-the-gap-turning-threat-intelligence-into-decisive-action-with-expert-led-defense-56120)
+- Presented by Wes Malaby, General Manager of Customer Success
+- Wednesday, August 5, 2026, from 5:00 PM PT to 5:20 PM PT
+- Presented by Fanta Kaba and special guest Jimmie Galaites
+- Wednesday, August 5, 2026, from 5:00 PM PT to 5:20 PM PT
+- Presented by Naadia Sayed, Principal Product Manager
+- Thursday, August 6, 2026, from 11:15 AM PT to 12:00 PM PT
+These sessions extend the main stage story into practitioner decisions: how teams move from intelligence to action, how defenders test their judgment under pressure, and how AI and agents are changing security workflows.
+Visit booth #2144 for research, community, and hands-on defense
+This year we are transforming the Microsoft Security booth into a community center. [Click here to jump to the full schedule](#microsoft-security-booth-2144-experiences-and-schedule).
+If the keynote and main stage sessions frame the largest challenges across the threat landscape, booth #2144 is where you can directly explore the workflows behind it: threat intelligence, incident response, AI security, security operations, partner solutions, and hands-on practice.
+You will find:
+Connection circles, ask-me-anythings (AMAs), meetups led by industry influencers, and lightning talks
+Short-form conversations with practitioners and experts on threat intelligence, incident response, AI security, identity, data protection, and security operations. If you swing by when the expo area opens, we’ll also fuel you up so you can skip the food court.
+Partner presence
+At Black Hat 2026, the Microsoft booth will feature 13 partners from the [Microsoft Intelligent Security Association (MISA)](https://www.microsoft.com/en-us/security/business/intelligent-security-association) who will showcase solutions built with Microsoft Security technology. Security Insider Conversations will feature MISA partners Critical Start (August 5, 2026, at 3:30 PM PT) and Huntress (August 6, 2026, at 2:00 PM PT) alongside Microsoft Security experts. Additionally, thank you to our Microsoft Security VIP Mixer sponsors: Ascent Solutions, Avertium, Devicie, Huntress, Illumio, Maureen Data Systems, and Security Risk Advisors.
+Demo our latest innovations
+Explore connected experiences across defending with AI, securing AI, strengthening posture for AI adoption, using security intelligence in investigations and response, working with trusted partners, and connecting with Microsoft Defender experts.
+Exclusive swag (featuring a surprise guest)
+Spend some time with us at the experience we built around the booth and you’ll earn tokens that can be exchanged for custom patches and hats (because security experts have to wear many hats). Your favorite paperclip may be among the patches. Maybe.
+Decompress with mini golf
+The biggest Microsoft Security community moment of the week is our reception at Swingers at Mandalay Bay, hosted by Aarti Borkar.
+Join us Wednesday, August 5, 2026, from 6:00 PM PT to 9:00 PM PT for food, drinks, mini golf, partner activations, and time with the Microsoft Security team away from the show floor.
+Come compare notes with peers, meet Microsoft researchers and responders, and connect with the broader Microsoft Security community.
+Space is limited, so reserve your spot early.
+Plan your week with Microsoft Security
+You can find Microsoft Security at booth #2144 during Business Hall hours:
+- Tuesday, August 4, 2026: 4:00 PM PT to 7:00 PM PT
+- Wednesday, August 5, 2026: 9:00 AM PT to 6:00 PM PT
+- Thursday, August 6, 2026: 9:00 AM PT to 4:00 PM PT
+Stop by early to see the booth schedule, find upcoming AMAs and connection circles, and plan which live sessions and hands-on experiences you want to attend.
+Skill up before and after Black Hat
+You do not need to be in Las Vegas to take part in the broader Microsoft Security Black Hat experience.
+The [Microsoft Black Hat Skilling Challenge](https://learn.microsoft.com/en-us/security/challenge/defender-challenge) begins July 20, 2026, and will help defenders build hands-on skills across [Microsoft Defender](https://www.microsoft.com/en-us/security/business/microsoft-defender), [Microsoft Sentinel](https://www.microsoft.com/en-us/security/business/siem-and-xdr/microsoft-sentinel), and [Microsoft Security Copilot](https://www.microsoft.com/en-us/security/business/ai-machine-learning/microsoft-security-copilot). Attendees can use the challenge to prepare before the event, then bring questions to on-site experts and community sessions. Remote participants can follow along through Microsoft Tech Community, AMAs, recaps, and post-event resources.
+See you at hacker summer camp
+Threat actors are adapting around the systems organizations already trust. Security teams need to understand those trust paths before they become attack paths.
+At Black Hat USA 2026, Microsoft Security will bring the research, expert perspective, and hands-on experiences to help practitioners see where attacker behavior is moving and how defense can adapt.
+Add Poisoned at the Source to your schedule. Visit us at booth #2144. Join the skilling challenge. And register for the Microsoft Security reception on Wednesday night.
+Microsoft Security booth #2144 experiences and schedule
+Tuesday, August 4, 2026
+| Time | Title |
+|---|---|
+| 5:00 PM PT to 6:00 PM PT | How Practitioners Build Effective Security Playbooks |
+| 6:00 PM PT to 7:00 PM PT | Agentic Security: What’s Next |
+Wednesday, August 5, 2026
+| Time | Title |
+|---|---|
+| 9:00 AM PT to 9:30 AM PT | Security Communities Meet Up |
+| 10:00 AM PT to 10:30 AM PT | Using Offensive Security Research to Advance AI Security |
+| 10:30 AM PT to 11:00 AM PT | The Confused Deputy Strikes Back: How AI Agents Turn Into RCE Proxies |
+| 12:00 PM PT to 12:30 PM PT | Hunting in the Gray: When Nation-States and Cybercrime Collide |
+| 12:30 PM PT to 1:00 PM PT | AI in Security Operations: What Actually Works and What Doesn’t |
+| 1:00 PM PT to 2:00 PM PT | AI in the SOC: Lessons Learned from the Front Lines |
+| 2:30 PM PT to 2:30 PM PT | Microsoft Defender Challenge |
+| 2:30 PM PT to 3:00 PM PT | From Alert Fatigue to Action: How Practitioners Prioritize What Matters |
+| 3:00 PM PT to 3:30 PM PT | Agents in the Flow of Work: From Signals to Action |
+| 3:30 PM PT to 4:00 PM PT | Will It Hold Up in Court? Forensic Defensibility of Microsoft 365 Evidence |
+| 5:00 PM PT to 6:00 PM PT | Zero Trust for the Agentic Era: An Interactive Discussion for Securing AI |
+Thursday, August 6, 2026
+| Time | Title |
+|---|---|
+| 9:00 AM PT to 9:30 AM PT | The Future of Microsoft Security and How Communities Can Support You |
+| 10:00 AM PT to 10:15 AM PT | Quantum Is Here: What Practitioners Must Do Now |
+| 11:00 AM PT to 12:00 PM PT | The Next Era of Cyber Defense: Clarity, Control, and Response at Scale |
+| 12:00 PM PT to 12:30 PM PT | Lessons from the Field: What to Do When You’re Under Attack |
+| 12:30 PM PT to 1:00 PM PT | When Browsers Become Agents: The Emerging Security Risks of AI‑Powered Browsers |
+| 2:30 PM PT to 3:00 PM PT | Social Engineering Always Matters |
+| 3:00 PM PT to 3:30 PM PT | AI Runs on Data: Securing the Foundation of AI Adoption |
+To learn more about Microsoft Security solutions, visit our [website.](https://www.microsoft.com/en-us/security/business) Bookmark the [Security blog](https://www.microsoft.com/security/blog/) to keep up with our expert coverage on security matters. Also, follow us on LinkedIn ([Microsoft Security](https://www.linkedin.com/showcase/microsoft-security/)) and X ([@MSFTSecurity](https://twitter.com/@MSFTSecurity)) for the latest news and updates on cybersecurity.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
