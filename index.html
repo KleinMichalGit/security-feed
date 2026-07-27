@@ -59,60 +59,57 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-07-26</h1>
+        <h1>Security Briefing // 2026-07-27</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Steam forum ClickFix attacks infect gamers with XMRig cryptominers</button></li><li><button onclick="show('art-1')">Malvertising Sends Malware in Pieces, Then Makes the Browser Build the Executable</button></li><li><button onclick="show('art-2')">Malicious sites use JavaScript to build malware in browser memory</button></li><li><button onclick="show('art-3')">Fastjson 1.x RCE Vulnerability Targeted in Attacks With No Patched Available</button></li><li><button onclick="show('art-4')">Updated Cyber Threat Actor Naming System</button></li><li><button onclick="show('art-5')">CCPA Update: Cybersecurity Requirements (Part 2)</button></li><li><button onclick="show('art-6')">LG to Ban Residential Proxies from Smart TV Apps</button></li><li><button onclick="show('art-7')">Microsoft at Black Hat USA 2026: Defending trust in the age of AI and supply chain attacks</button></li><li><button onclick="show('art-8')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
+            <ul><li><button onclick="show('art-0')">TELESHIM Abuses Telegram for C2 in Attacks Against Middle East Governments</button></li><li><button onclick="show('art-1')">GitHub Adds 3-Day Dependabot Cooldown to Limit Poisoned Package Adoption</button></li><li><button onclick="show('art-2')">GitHub, PyPI add time-based defenses against supply chain attacks</button></li><li><button onclick="show('art-3')">Malicious sites use JavaScript to build malware in browser memory</button></li><li><button onclick="show('art-4')">Updated Cyber Threat Actor Naming System</button></li><li><button onclick="show('art-5')">CCPA Update: Cybersecurity Requirements (Part 2)</button></li><li><button onclick="show('art-6')">LG to Ban Residential Proxies from Smart TV Apps</button></li><li><button onclick="show('art-7')">Microsoft at Black Hat USA 2026: Defending trust in the age of AI and supply chain attacks</button></li><li><button onclick="show('art-8')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">Steam forum ClickFix attacks infect gamers with XMRig cryptominers</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/steam-forum-clickfix-attacks-infect-gamers-with-xmrig-cryptominers/" target="_blank">Original Link</a></p>
-            <div class="content-text">Steam discussion forums are being abused in ClickFix attacks that pretend to be fixes for game and computer problems but actually infect devices with cryptominers. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
+            <h2 class="article-title">TELESHIM Abuses Telegram for C2 in Attacks Against Middle East Governments</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/teleshim-abuses-telegram-for-c2-in.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Cybersecurity researchers have flagged fresh malicious cyber activity by a threat actor with ties to East Asia targeting government entities in the Middle East.
+The intrusions have resulted in the deployment of previously unreported malware families dubbed TELESHIM, MIXEDKEY, and BINDCLOAK, according to Zscaler ThreatLabz. The cybersecurity firm said it detected the campaign earlier this month.
+"The campaign used a multi-stage attack chain to establish and maintain access on infected systems, with TELESHIM abusing the Telegram API for command-and-control (C2) communication to blend in with legitimate internet traffic," Sudeep Singh, senior manager of APT research at Zscaler ThreatLabz, [said](https://www.zscaler.com/blogs/security-research/targeted-attack-government-entities-middle-east-part-1) in a technical write-up published last week.
+The attack chain starts with an ISO file containing a legitimate executable ("RegSchdTask.exe") that's used to sideload a rogue DLL ("AsTaskSched.dll"), a 32-bit Windows backdoor called TELESHIM that then leverages Telegram as C2 to retrieve next-stage components.
+Two of these payloads are used to trigger a second [DLL side-loading](https://techzone.bitdefender.com/en/tech-explainers/what-is-dll-sideloading.html) chain comprising "GoProAlertService.exe" and "pthreadVC2.dll," with the latter acting as a reflective loader codenamed MIXEDKEY to decrypt the contents of "C99F29AC08454855B3D538960BB2F34F.PCPKEY" and execute it.
+Both TELESHIM and MIXEDKEY have been found to rely on heavy code obfuscation techniques, including string encryption, control flow flattening (CFF), mixed boolean arithmetic (MBA), and opaque predicates to deter reverse engineering efforts. TELESHIM also employs an array of methods to detect the presence of virtualization-based analysis environments. Some of these are listed below -
+- Hypervisor detection using CPUID
+- RAM speed check using the Windows Management Instrumentation (WMI)
+TELESHIM C2 communications supports two types of messages -
+- Control messages, which are used to register the infected host by sending the host's MAC address and executing received commands and exfiltrating the results back to the server in chunks if the output is larger than 1,000 bytes
+- Download and execute messages, which are used to download and run secondary payloads as scheduled tasks
+What's notable about the final payload is that it's locked behind two layers of XOR encryption, the second layer using a technique called [environmental keying](https://attack.mitre.org/techniques/T1480/001/) by encrypting it by means of a decryption key derived from the infected machine's volume serial number. This is done so that the malware detonates only on intended targets.
+The attack sequence culminates with the deployment of BINDCLOAK, a 64-bit C2 implant written in C++ that contacts an external server ("cert.hypersnet[.]com").
+ThreatLabz noted that it identified post-compromise activity from the C2 operator, such as system, user, and network reconnaissance commands, as well as the delivery of next-stage payloads, most of which occurred between July 7, 2026 and July 9, 2026. The C2 commands have been executed only between 4 a.m. and 12 p.m. UTC, with a major chunk of the activity taking place between 7 a.m. and 11 a.m. UTC.
+Based on the threat actor's public IP address, the system locale configured on their Windows server, the geolocation of the IP address, and the active operational hours, it's assessed with moderate-to-high confidence that the campaign is the work of an adversary originating from East Asia. It has not been attributed to any known threat actor or group at this stage.
+"The activity also reflects broader trends such as EDR evasion, blending in with legitimate internet traffic through abuse of trusted platforms, and the use of code-obfuscation techniques such as MBA and CFF to hinder reverse engineering," Singh said.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-1" class="article-body">
-            <h2 class="article-title">Malvertising Sends Malware in Pieces, Then Makes the Browser Build the Executable</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/malvertising-sends-malware-in-pieces.html" target="_blank">Original Link</a></p>
-            <div class="content-text">A malvertising operation dubbed SourTrade is making victims' browsers build the final Windows executable themselves, using a legitimate Bun runtime as its base instead of serving one complete malicious file from a fixed URL.
-Confiant, which [detailed the campaign](https://blog.confiant.com/p/sourtrade-browser-assembled-malware) on July 23, 2026, said it has operated since late 2024 and impersonated TradingView, Solana, and Luno to target retail traders and cryptocurrency investors across 12 countries in 25 languages.
-Its landing pages fingerprint visitors, showing suspected researchers and bots an empty page while selected targets receive a convincing copy of the impersonated service. The defense against that is the ordinary one: install trading and wallet software from the vendor's own site, not from an ad.
-The documented chain does not rely on a browser vulnerability or remove Mark of the Web (MotW). Confiant's analysis documents the delivery, not execution of the file inside the browser, and does not establish whether the final download starts automatically or requires a click.
-The landing page begins preparing the delivery path without waiting for a download click. It registers a page-scoped ServiceWorker at /sw.js
-, then builds a SharedWorker from JavaScript already embedded in the page, so the worker source never appears as a separate fetch.
-The SharedWorker requests /config
-, which returns a template, a secondary runtime URL, and session-specific random values. The browser retrieves and decompresses a clean Bun runtime from that second domain, purelogicbox[.]org in the published sample response.
-Base64 blobs in the configuration supply the Portable Executable (PE) header, section table, and a .bun
-section containing malicious JavaScriptCore bytecode for app.js
-. Bun runs on Apple's JavaScriptCore engine and legitimately supports [compiling applications and bytecode](https://bun.com/docs/bundler/executables) into standalone Windows executables.
-The worker then generates a large pseudorandom byte stream using AES in counter mode (AES-CTR). It then follows the supplied template as a byte-copy recipe, combining selected ranges from the Bun runtime, the generated stream, and the attacker-controlled executable material.
-Each victim can receive a different assembled file: rotating the seed and size in each /config
-response changes the hash while retaining the executable payload code. "No finished malware ever exists on the network," wrote Michael Steele of Confiant's threat intelligence team. No complete binary does, though the PE structures and the bytecode arrive as Base64 in /config
-.
-Once assembled, the page passes the executable to the ServiceWorker as a readable stream. A hidden iframe navigates to a same-origin URL, and the worker returns the generated bytes with a Content-Disposition
-attachment header. The resulting MotW record identifies the landing page as the download source, not the separate domain that supplied the Bun runtime. MotW itself remains present.
-The method evolved from activity Confiant tracked through April 30, 2026, when the pages loaded [StreamSaver.js](https://github.com/jimmywarting/StreamSaver.js), an open-source streamed-download library, from its author's GitHub Pages address. That left the recorded download path pointing at the library's GitHub URL. The current pages keep its streaming architecture, including the streamsaver:
-message names, but no longer fetch it from GitHub.
-Bitdefender [documented](https://www.bitdefender.com/en-us/blog/labs/the-scam-that-wont-quit-malicious-tradingview-premium-ads-jump-from-meta-to-google-and-youtube) [the related TradingView malvertising cluster](https://thehackernews.com/2025/07/hackers-use-facebook-ads-to-spread.html) in September 2025, identifying its final payload as the stealer Check Point tracks as [JSCEAL](https://research.checkpoint.com/2025/jsceal-targets-crypto-apps/) and WithSecure as [WeevilProxy](https://www.withsecure.com/en/resources-hub/w-labs/weevilproxy/).
-Confiant identifies shared campaign and executable characteristics but does not demonstrate that the three published samples carry that payload. The report also says Bitdefender found a modified Bun executable in this cluster.
-The Hacker News found no mention of Bun in the September 2025 post Confiant links to, which names its loader detection Variant.DenoSnoop.Marte.1. Credential theft, keylogging, traffic interception, wallet theft, and remote-access capabilities documented in the earlier campaign therefore cannot yet be assigned to the current files.
-The Hacker News has reached out to Confiant for clarification on its reference to Bitdefender's earlier findings and will update this story with any response.
-There is no software patch to apply. The evasion is narrower than it first looks. Confiant's own practical-implications section puts it more modestly: unique per-session builds limit the value of simple hash-based detections. The attacker-controlled PE material and bytecode still cross the network.
-Defenders should examine the whole chain, from the ad referral and cloaked landing page through the /config
-request, the secondary-domain runtime fetch, and the ServiceWorker download, rather than treating any single network or file artifact as decisive.
-Confiant published three SHA-256 hashes and a list of malicious domains, 96 by The Hacker News' count. The firm named no actor and stopped its analysis at the moment the file lands on disk.
+            <h2 class="article-title">GitHub Adds 3-Day Dependabot Cooldown to Limit Poisoned Package Adoption</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/github-adds-3-day-dependabot-cooldown.html" target="_blank">Original Link</a></p>
+            <div class="content-text">GitHub has announced a new cooldown mechanism in Dependabot, allowing the tool to wait at least three days after a release is published before opening a pull request.
+"The cooldown configuration option in the dependabot.yml still controls the behavior, though, so you can choose a different cooldown parameter that fits your project," the Microsoft-owned subsidiary [said](https://github.blog/security/supply-chain-security/the-case-for-a-cooldown-why-dependabot-now-waits-before-issuing-version-updates/).
+According to GitHub, the three-day cooldown default only applies to version updates, which are designed to keep software dependencies up-to-date. Security updates will continue to be pushed right away, permitting Dependabot to issue an alert and open a pull request to move the project to the patched version.
+With this update, the idea is to handle scenarios where a threat actor manages to push a poisoned version of a popular package, which then gets quickly pulled by downstream projects before that version is yanked from the registry. Although such trojanized packages are short-lived, the time period for which they remain accessible is enough to expand the blast radius of a supply chain attack.
+GitHub said it arrived at three days as the default as it considers the duration to be in the goldilocks zone. "Three days as the default balances two goals: it pushes you past the window where most of these attacks live, and it doesn't hold your dependencies back longer than necessary," it added.
+At the same time, the software development platform emphasized that the control should be just one layer of defense among several others, including pinning dependencies with lockfiles, disabling install scripts in CI, scoping the tokens in build pipelines, and reviewing updates before they merge.
+"A cooldown is built for a specific pattern: a malicious version that ships, spreads, and gets caught quickly," GitHub said. "It does little against attacks that play a longer game, including backdoors planted in releases and left dormant, maintainer sabotage, or a compromised build system."
+It's worth noting [similar cooldown controls](https://thehackernews.com/2026/06/vs-code-adds-2-hour-extension-auto.html) have been announced across various package ecosystems over the past year, including Microsoft Visual Studio Code (VS Code), Ruby, Bun, npm, pnpm, and Yarn.
+GitHub's time-based defense comes as the maintainers of the Python Package Index (PyPI) [announced](https://thehackernews.com/2026/07/threatsday-android-spyware-plc-attacks.html#old-releases-locked-down) plans to block maintainers from adding new files to a package release after 14 days have passed since its publication.
+"The measure is intended to prevent attackers who compromise publishing tokens or workflows from poisoning old, trusted releases," PyPI noted.
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-2" class="article-body">
-            <h2 class="article-title">Malicious sites use JavaScript to build malware in browser memory</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/malicious-sites-use-javascript-to-build-malware-in-browser-memory/" target="_blank">Original Link</a></p>
-            <div class="content-text">A massive malvertising campaign is using fake Solana, Luno, and TradingView webpages with malicious JavaScript that instructs browsers to assemble malware directly in memory. [...]
+            <h2 class="article-title">GitHub, PyPI add time-based defenses against supply chain attacks</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/github-pypi-add-time-absed-defenses-against-supply-chain-attacks/" target="_blank">Original Link</a></p>
+            <div class="content-text">GitHub and PyPI (Python Package Index) have introduced a time-based mechanism in the Dependabot dependency management tool to protect against supply-chain attacks and to limit their impact. [...]
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
@@ -120,39 +117,11 @@ Confiant published three SHA-256 hashes and a list of malicious domains, 96 by T
             <hr class="separator">
         </div>
         <div id="art-3" class="article-body">
-            <h2 class="article-title">Fastjson 1.x RCE Vulnerability Targeted in Attacks With No Patched Available</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/fastjson-1x-rce-vulnerability-targeted.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Security firms ThreatBook and Imperva say attackers are targeting a critical flaw in Fastjson, Alibaba's JSON library for Java. In affected Spring Boot applications, a malicious JSON request can execute code without authentication, with the privileges of the Java process.
-Tracked as CVE-2026-16723
-, the vulnerability carries an Alibaba-assigned CVSS score of 9.0. The confirmed chain requires Fastjson 1.2.68 through 1.2.83, a Spring Boot executable fat-JAR, a network-reachable path that sends attacker-controlled JSON to an affected parser, and SafeMode left at its disabled default. AutoType can remain disabled, and no classpath gadget is required.
-As of July 25, Alibaba had not released a fixed Fastjson 1.x version. Organizations that cannot migrate immediately should enable SafeMode with -Dfastjson.parser.safeMode=true
-or use com.alibaba:fastjson:1.2.83_noneautotype
-. Alibaba lists migration to Fastjson2 as the long-term fix.
-Alibaba [published its advisory](https://github.com/alibaba/fastjson2/wiki/Security-Advisory:-Remote-Code-Execution-in-fastjson-1.2.68%E2%80%931.2.83) on July 21 following responsible disclosure by [Kirill Firsov](https://x.com/k_firsov/status/2078872293745570032) of FearsOff Cybersecurity. The maintainers described the vulnerability as requiring "no AutoType enablement" and "no classpath gadget." They verified the chain on Spring Boot 2.x, 3.x, and 4.x with JDK 8, 11, 17, and 21.
-Firsov traced the issue to Fastjson's type-resolution path. An attacker-controlled @type
-value can be turned into a class-resource lookup. In a compatible Spring Boot fat-JAR, a crafted nested JAR path can fetch attacker-controlled bytecode. An @JSONType
-annotation in that resource can then be treated as a trust signal, allowing the class to pass Fastjson's type checks and load.
-His [technical analysis](https://fearsoff.org/research/fastjson-1-2-83-rce) also describes a newer-JDK path that downloads a remote JAR and references it through /proc/self/fd
-.
-The exploit depends on the Spring Boot executable fat-JAR loader. Alibaba lists plain non-fat JARs, generic uber-JARs, and Tomcat or Jetty WAR deployments as unaffected. Reachable entry points include JSON.parse
-, JSON.parseObject(String)
-, and JSON.parseObject(String, Class)
-. Binding input to a fixed class is not sufficient when an object contains an Object
-or Map
-field where the payload can be nested.
-[ThreatBook said](https://threatbook.io/blog/fastjson-rce-1.2.83-active-exploitation-detected-detection-mitigation) on July 22 that its platform had captured in-the-wild exploitation after adding detection support two days earlier. Its laboratory results were narrower: it reproduced full code execution in a Spring Boot fat-JAR on JDK 8, while its embedded Tomcat test produced only a remote JAR fetch or server-side request forgery.
-Imperva [reported](https://www.imperva.com/blog/imperva-customers-protected-against-cve-2026-16723-critical-fastjson-1-x-zero-day-rce/) activity against financial services, healthcare, computing, retail, and other organizations, primarily in the United States, with smaller volumes in Singapore and Canada. It said browser impersonators generated most requests, while Ruby and Go tools represented about 30% collectively.
-Neither vendor published attack counts, raw requests, execution evidence, named victims, or confirmed compromises. Their reports establish observed exploit activity, not proof of successful code execution against a real-world target or a breach.
-A July 23 [CISA-ADP assessment](https://nvd.nist.gov/vuln/detail/CVE-2026-16723) nevertheless marked exploitation as none
-. The Hacker News confirmed on July 25 that the flaw was absent from CISA's current [Known Exploited Vulnerabilities catalog](https://www.cisa.gov/known-exploited-vulnerabilities-catalog). The available sources do not explain the mismatch.
-The Hacker News also found no patched Fastjson 1.x artifact in the project's [GitHub tags](https://github.com/alibaba/fastjson/tags) or [Maven Central repository](https://repo1.maven.org/maven2/com/alibaba/fastjson/) as of July 25. Version 1.2.83 remains the latest standard 1.x release, while 1.2.83_noneautotype
-remains the available restricted build.
-Organizations should inventory direct and transitive Fastjson dependencies and inspect affected systems for suspicious @type
-values, nested JAR URLs, unexpected outbound connections, child processes, file changes, and web shells. Fastjson2 is not affected because it does not use the same resource-probing or annotation-based trust path.
-The Hacker News has reached out to Alibaba for clarification on the affected versions and Fastjson 1.x patch plans, and to Imperva for details about the reported exploitation activity. We will update the story with any response.
-Fastjson 1.2.83 was Alibaba's recommended upgrade for a [separate AutoType bypass disclosed in 2022](https://thehackernews.com/2022/06/high-severity-rce-vulnerability.html). That final 1.x release now sits inside the affected range for CVE-2026-16723
-.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <h2 class="article-title">Malicious sites use JavaScript to build malware in browser memory</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/malicious-sites-use-javascript-to-build-malware-in-browser-memory/" target="_blank">Original Link</a></p>
+            <div class="content-text">A massive malvertising campaign is using fake Solana, Luno, and TradingView webpages with malicious JavaScript that instructs browsers to assemble malware directly in memory. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
@@ -346,6 +315,7 @@ Earlier this week, the Youtube channel [Gamers Nexus](https://www.youtube.com/wa
 Update, July 22, 1:06 p.m. ET: Added statement from Bright Data.
 Good – residential proxy providers are scum.
 No they aren’t, they’re the only reason we can use the internet anonymously. Without them, you wouldn’t be able to anonymously access a lot of sites.
+I agree, every one of the residential proxies I have seen talked about or talking deserves the same sort of ddos style life they cause.
 Now if only they’d also stock forcing McAfee on PC users of their monitors via stealth windows updates and kill off the spyware on their smart TV’s that records everything you say and watch etc.
 HOW did anyone at LG think ANY of this was ok? Who is being summarily fired RTFN? LG burned all trust and is a month late in merely promising they’ll BEGIN removing the 42% MALWARE TROJANS from their ‘curated’ app store, and they somehow think that’s going to be good enough? This brand is dead to me forever. This wasn’t just an oversight.
 why do you think the price is so good?
@@ -426,7 +396,9 @@ LG already does this on their TVs (not just monitors):
 3) share your data with third parties
 Bit of a two faced approach going on here..
 What I do is just … not connect my tv to the internet. Until I want to check for updates once a year or so.
-All my disagreements with LG just float away at that point. It’s still a great TV.</div>
+All my disagreements with LG just float away at that point. It’s still a great TV.
+IF MY HOME NETWORK HAS THESE ON IT IS THERE ANY WAY TO GET RID OF THAT PART WITHOUT GETTING RID OF THE DEVICES?
+I think they need to improve their approval process for apps… LG only want to be the ones to steal your data!</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
