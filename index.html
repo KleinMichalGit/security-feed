@@ -59,25 +59,45 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-08-03</h1>
+        <h1>Security Briefing // 2026-08-04</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">OpenAI teases Astra, its next major AI model, after it solves 10 long-standing math problems</button></li><li><button onclick="show('art-1')">COLDCARD wallet RNG flaw likely linked to $88 million Bitcoin theft</button></li><li><button onclick="show('art-2')">Read This Before You Buy That TV Streaming Stick</button></li><li><button onclick="show('art-3')">Critical OpenWrt DHCPv6 Flaw Could Let Unauthenticated Attackers Run Code as Root</button></li><li><button onclick="show('art-4')">Critical TeamCity Flaw Could Let Attackers Run OS Commands Without Logging In</button></li><li><button onclick="show('art-5')">CCPA Update: Cybersecurity Requirements (Part 2)</button></li><li><button onclick="show('art-6')">Microsoft at Black Hat USA 2026: Defending trust in the age of AI and supply chain attacks</button></li><li><button onclick="show('art-7')">The Bear Necessities: A Look at the Drivers, Dynamics, and Applications of the Pro-Russia Influence Ecosystem</button></li><li><button onclick="show('art-8')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
+            <ul><li><button onclick="show('art-0')">CISA Adds Exploited N-able N-central Flaw to KEV After Customer Compromises</button></li><li><button onclick="show('art-1')">Hotel Wi-Fi attacks use custom malware to breach Microsoft 365 accounts</button></li><li><button onclick="show('art-2')">N-able warns of N-central auth bypass flaw exploited in attacks</button></li><li><button onclick="show('art-3')">Google Password Manager Attacks Could Let Malware Hijack Passkey-Protected Accounts</button></li><li><button onclick="show('art-4')">Read This Before You Buy That TV Streaming Stick</button></li><li><button onclick="show('art-5')">Rethinking security for the age of AI</button></li><li><button onclick="show('art-6')">CCPA Update: Cybersecurity Requirements (Part 2)</button></li><li><button onclick="show('art-7')">The Bear Necessities: A Look at the Drivers, Dynamics, and Applications of the Pro-Russia Influence Ecosystem</button></li><li><button onclick="show('art-8')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li><li><button onclick="show('art-9')">Updates to the MSSQLHound OpenGraph Collector for BloodHound</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">OpenAI teases Astra, its next major AI model, after it solves 10 long-standing math problems</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/artificial-intelligence/openai-teases-astra-its-next-major-ai-model-after-it-solves-10-long-standing-math-problems/" target="_blank">Original Link</a></p>
-            <div class="content-text">OpenAI has revealed Astra, an unreleased model designed to tackle complex, long-running tasks, after an internal version produced ten significant advances in mathematics and theoretical computer science. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
+            <h2 class="article-title">CISA Adds Exploited N-able N-central Flaw to KEV After Customer Compromises</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/08/cisa-adds-exploited-n-able-n-central.html" target="_blank">Original Link</a></p>
+            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Monday [added](https://www.cisa.gov/news-events/alerts/2026/08/03/cisa-adds-one-known-exploited-vulnerability-catalog) a high-severity security flaw impacting N-able N-central to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog following reports of active exploitation in the wild.
+The vulnerability, tracked as [CVE-2026-18577](https://thehackernews.com/2026/08/n-able-says-attackers-take-over-n.html) (CVSS score: 8.2), is a case of incomplete patching for CVE-2026-18556 (CVSS score: 8.2) that allows authentication bypass and account takeover in susceptible versions of the software. The issue has been addressed in version 2026.3 HF1.
+"N-able N-central contains an authentication bypass using an alternate path or channel [that] allows for authentication bypass and account takeover in N-central," CISA said.
+Successful exploitation of the vulnerability can permit remote attackers to gain administrative access to vulnerable N-central servers and then abuse the built-in Take Control feature to pivot into managed endpoints and deploy persistence mechanisms.
+N-able has shared the following indicators of compromise -
+- Review device users' documents folder for a file called "svchost.exe," as well as look for a registered service name called "Cloudflared," a legitimate tunneling utility from Cloudflare that's
+[frequently abused](https://thehackernews.com/2023/08/hackers-abusing-cloudflare-tunnels-for.html)by[bad actors](https://cofense.com/blog/how-cloudflare-services-are-abused-for-credential-theft-and-malware-distribution)to set up covert, outbound connections and disguise malicious operations as legitimate traffic. -
+Scan for inbound connections from any of the below IP addresses -
+- 173.249.252[.]200
+- 87.249.138[.]34
+- 37.19.210[.]32
+- 68.235.46[.]214
+The malicious activity has not been publicly attributed to any known threat actor or group. However, Huntress said it observed threat actors targeting the flaw across multiple organizations. There is no indication that it has turned into a broad, indiscriminate campaign at this stage.
+Some of the patterns observed post successful exploitation include -
+- Conducting high-level reconnaissance to target key servers, such as domain controllers
+- Enumerating running processes on a compromised host before disconnecting
+- Moving laterally to other hosts in impacted organizations' environments after gaining initial access
+In at least one case, the threat actor has been found making a malicious connection via "MSP Support," a default username tied to legitimate N-Central Take Control sessions, from the IP address "173.249.252[.]200." All the aforementioned four IP addresses are Mullvad or NordVPN VPN exit nodes.
+"Notably, among the original IPs, we have seen substantial traffic with 87.249.138[.]34 directly attributed to NordVPN, as well as substantial traffic with 37.19.210[.]32 directly attributed to Mullvad VPN," Huntress [said](https://www.huntress.com/blog/n-able-vulnerability-exploitation). "37.19.210[.]32 has been previously abused for bruteforcing, spam, and other nefarious activity prior to this incident."
+As of writing, N-able has not shared any details on the scale of the attacks, but [acknowledged](https://www.n-able.com/blog/n-central-security-update-august-2-2026) a "limited number of customers" were compromised through CVE-2026-18577. The development underscores continued exploitation of widely deployed remote monitoring and management (RMM) platforms to facilitate persistent access to target networks.
+In light of active exploitation, Federal Civilian Executive Branch (FCEB) agencies are being recommended to apply the fixes by August 6, 2026, and review N-central Take Control activity in their environment.
+The exploitation of CVE-2026-18577 comes almost exactly one year after two other flaws in the product ([CVE-2025-8875 and CVE-2025-8876](https://thehackernews.com/2025/08/cisa-adds-two-n-able-n-central-flaws-to.html)) were weaponized in limited attacks targeting on-premises environments.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-1" class="article-body">
-            <h2 class="article-title">COLDCARD wallet RNG flaw likely linked to $88 million Bitcoin theft</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/coldcard-wallet-rng-flaw-likely-linked-to-88-million-bitcoin-theft/" target="_blank">Original Link</a></p>
-            <div class="content-text">A vulnerability in COLDCARD hardware wallet firmware allowed attackers to steal an estimated $88.6 million in Bitcoin from thousands of wallets whose seeds were generated using a flawed random number generator. [...]
+            <h2 class="article-title">Hotel Wi-Fi attacks use custom malware to breach Microsoft 365 accounts</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/hotel-wi-fi-attacks-use-custom-malware-to-breach-microsoft-365-accounts/" target="_blank">Original Link</a></p>
+            <div class="content-text">Microsoft has linked a global campaign targeting hospitality Wi-Fi networks to the Russian threat actor Midnight Blizzard, also known as APT29. [...]
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
@@ -85,6 +105,51 @@
             <hr class="separator">
         </div>
         <div id="art-2" class="article-body">
+            <h2 class="article-title">N-able warns of N-central auth bypass flaw exploited in attacks</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/n-able-warns-of-n-central-auth-bypass-flaw-exploited-in-attacks/" target="_blank">Original Link</a></p>
+            <div class="content-text">N-able is warning customers that hackers are exploiting an authentication bypass vulnerability (CVE-2026-18577) affecting both hosted and on-premises N-central servers. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
+            <h2 class="article-title">Google Password Manager Attacks Could Let Malware Hijack Passkey-Protected Accounts</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/08/google-password-manager-attacks-could.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Malware running as an ordinary user on a Windows machine can sign into a victim's passkey-protected accounts without a fingerprint, a PIN, or anything at all appearing on the victim's screen.
+Unit 42 detailed three attack paths against Chrome's Google Password Manager cloud authenticator, which it calls Pass-ta-key, Silver Pass-ta-key and Golden Pass-ta-key; the strongest targets the master key protecting the user's synced passkeys.
+None of this breaks the cryptography. The attacks go after the code around the passkey: how Chrome stores its device keys, how it re-enrolls a device after that state disappears, and whether the site you are signing into bothers to check that a human was verified at all.
+The attacks can silently obtain a valid authentication assertion, install an attacker-controlled user-verification key, or extract the 32-byte Security Domain Secret (SDS) used to decrypt synced passkey private keys.
+The researchers said the last two paths can provide reusable access from an attacker's own environment after the initial endpoint compromise. The report does not describe exploitation in the wild and gives no CVE identifiers, affected Chrome versions, or complete remediation status.
+A search of the National Vulnerability Database on August 3, 2026, found no CVE matching the three named techniques.
+The research is limited to [Google Password Manager](https://thehackernews.com/2025/10/how-attackers-bypass-synced-passkeys.html) in Chrome on Windows systems equipped with a Trusted Platform Module (TPM), and every path begins with malware already running on the victim's device.
+Chromium source as of August 3 corroborates parts of the architecture, not that the latest stable Chrome release remains exploitable. These are post-compromise techniques. They describe what an attacker reaches on a machine already lost, not how the machine was lost.
+The attack begins with local reconnaissance. Chrome stores synchronized credential records under %LocalAppData%\Google\Chrome\User Data\<Profile>\Sync Data\LevelDB. The [researchers said](https://unit42.paloaltonetworks.com/passwordless-authentication-security-risks/) an unprivileged process can read enough metadata to identify the relying parties and usernames tied to the victim's passkeys, along with credential identifiers and encrypted private-key material.
+First Attack Path
+The first technique, Pass-ta-key, extracts Chrome's wrapped device identity key and asks the same TPM to sign an attacker-controlled request through Windows Cryptography API: Next Generation (CNG) calls.
+[Current Chromium source](https://chromium.googlesource.com/chromium/src/crypto/%2B/refs/heads/main/unexportable_key_win.cc) shows why that blob is reusable: Chrome creates the TPM key without a key name, which a comment in the code says stops it being persisted to disk. Chrome then exports the key as an opaque blob and reloads it later under [a flag that suppresses any prompt](https://learn.microsoft.com/en-us/windows/win32/api/ncrypt/nf-ncrypt-ncryptsignhash). A TODO in the same file points to Chromium issue 398125799, proposing that those keys be labelled instead.
+[Google Cloud Authenticator](https://unit42.paloaltonetworks.com/passwordless-authentication/) returns a valid assertion, and the only thing separating it from one produced after a real user check is a single bit, the User Verified (UV) flag, left unset. The current [Web Authentication specification](https://www.w3.org/TR/webauthn-3/) says a relying party that sets userVerification to required must fail the ceremony when that bit is absent.
+The researchers said GitHub enforced the check, while eBay accepted its test assertion until the company fixed the validation gap following disclosure. Of the three paths, this is the one that turns on a check the relying party controls, so a site can fail it regardless of how the cloud service behaves, and of the two Unit 42 names, one did.
+Second Attack Path
+Silver Pass-ta-key targets the next layer. Malware forces Chrome to re-enroll the device. Chrome does not create its user-verification key immediately, and in that window an attacker can register one of their own instead.
+Unit 42 said the service does not check whether a newly registered key came from secure hardware. Assertions signed with that key carry the UV flag, which the researchers said enables later logins without the victim's device. [Current Chromium source](https://chromium.googlesource.com/chromium/src/%2B/HEAD/chrome/browser/webauthn/proto/enclave_local_state.proto) independently confirms that newly registered devices can retain a deferred_uv_key_creation state, but the public code alone does not verify the reported server-side key-substitution attack against the latest stable Chrome release.
+The disclosure does not say whether the production service now checks hardware attestation before accepting a replacement key, a check Unit 42 recommends to mitigate this path.
+Third Attack Path
+Golden Pass-ta-key goes after the SDS itself. Unit 42 said malware can trigger re-enrollment, read the secret out of Chrome's process memory while it briefly sits there in plaintext, and use it to recover synchronized passkey private keys.
+[Current Chromium source](https://chromium.googlesource.com/chromium/src/%2B/HEAD/chrome/browser/webauthn/enclave_manager.cc) corroborates the underlying exposure: Chrome creates or receives 32-byte security-domain secrets in client-process data structures. That confirms the secret enters Chrome memory, though reliable extraction, account takeover, and persistence across future secret epochs remain sourced to Unit 42 or unresolved.
+The researchers said Google removed an earlier SDS exposure from Chrome's FIDO logs and that eBay now validates the UV flag. It said the secret still reaches the client and stays in Chrome's memory, so the logging change does not close the path it describes.
+The disclosure does not establish whether all three attack paths have been closed. As of August 3, 2026, searches of Google's public Chrome materials and eBay's support and press pages found no notice documenting either reported change, and none of them describes a way for a user to check whether an SDS was exposed.
+[Google's public support documentation](https://support.google.com/chrome/answer/13168025) lets users change their Google Password Manager PIN or delete all Password Manager data, but it does not describe an SDS-specific rotation or revocation control.
+The Hacker News has reached out to Google for comment on whether a stolen security domain secret survives a Password Manager PIN change, and to Palo Alto Networks for further detail on the research, and will update this story with any response.
+Relying parties should set userVerification to required and verify the returned UV bit rather than trusting the request setting alone. Credential providers should attest newly enrolled keys, strengthen re-registration and recovery checks, restrict access to local passkey state, and keep master keys out of client logs and memory.
+The reviewed sources do not say whether [changing the Google Password Manager PIN](https://thehackernews.com/2024/09/chrome-users-can-now-sync-passkeys.html) or deleting Password Manager data invalidates a secret an attacker already holds, which is what a user who suspects compromise would need in order to act.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-4" class="article-body">
             <h2 class="article-title">Read This Before You Buy That TV Streaming Stick</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/07/read-this-before-you-buy-that-tv-streaming-stick/" target="_blank">Original Link</a></p>
             <div class="content-text">Security experts have been sounding the alarm for years about the risks of using generic TV boxes that promise unlimited content streaming for a one-time fee, warning that they secretly rent the user’s Internet connection out to strangers. But a groundbreaking new analysis finds these devices also routinely spoof themselves as mobile phones clicking ads on AI-generated websites as part of a sprawling operation that seeks to defraud online merchants and advertising networks.
@@ -120,7 +185,6 @@ Fake news
 *** Install me now to get free access to all channels ***
 ^ fake person
 I think **you** are the fake news
-What you need is one of those fat suit fights at a con to see which of you is the worse streaming stick.
 I suppose your primary reader base understands well enough, but a one-sentence explanation of ad fraud would strengthen this article!
 Please do explain ad fraud.
 Many ads are pay-per-click so you can make money by setting up crappy websites with ads and then having bots visit them and click on the ads.
@@ -190,75 +254,49 @@ Pelota Libre TV es una opción bastante usada por quienes quieren ver fútbol en
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-3" class="article-body">
-            <h2 class="article-title">Critical OpenWrt DHCPv6 Flaw Could Let Unauthenticated Attackers Run Code as Root</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/critical-openwrt-dhcpv6-flaw-could-let.html" target="_blank">Original Link</a></p>
-            <div class="content-text">OpenWrt has shipped version 24.10.8 to close a critical DHCPv6 stack overflow and a wider set of remotely triggerable flaws in network services enabled by default.
-The critical issue, tracked as CVE-2026-53921 and rated 9.8 on CVSS 3.1 in OpenWrt's GitHub advisory, lets an unauthenticated attacker able to reach the DHCPv6 server overwrite a stack buffer in odhcpd through a crafted DHCPv6 REQUEST.
-odhcpd runs as root, and the advisory notes that embedded hardware commonly lacks stack canaries and address space layout randomization (ASLR), making code execution a realistic outcome on typical devices.
-The advisory includes public Python proof-of-concept code for both documented overflow paths. Users on the 24.10 branch should install 24.10.8, while users on 25.12 should install 25.12.5; firmware images are available through the OpenWrt Firmware Selector.
-As of July 28, the reviewed OpenWrt materials did not report exploitation in the wild. The flaw was also absent from CISA's Known Exploited Vulnerabilities (KEV) catalog [version 2026.07.27](https://github.com/cisagov/kev-data/blob/develop/known_exploited_vulnerabilities.json), although absence from KEV does not establish that exploitation has not occurred.
-The release arrived alongside a separate AI-assisted audit by [Hacker House](https://hacker.house/blog/inference-fuzzing-with-recursive-prompting-a-practical-methodology-for-llm-driven-code-audits) that identified command-injection, path-traversal and cross-site scripting (XSS) weaknesses in optional LuCI components. OpenWrt found a separate stored-XSS issue and missing cross-site request forgery (CSRF) protection while preparing the fixes.
-These separate LuCI fixes were not part of OpenWrt 24.10.8 and remained under review on July 28.
-A Packet to the Default DHCP Server
-The [advisory associated with CVE-2026-53921](https://github.com/openwrt/odhcpd/security/advisories/GHSA-7fwx-hhrg-3496) documents two independent overflow sites in the DHCPv6 request-processing path. In both, crafted IA options leave insufficient space in a fixed 512-byte stack buffer before the code appends additional reply data without a sufficient bounds check.
-The final trigger is an unauthenticated DHCPv6 REQUEST sent to UDP port 547. The first path's proof of concept creates five IA_NA bindings with an earlier SOLICIT; the second is triggered by a single crafted REQUEST.
-The advisory lists odhcpd master at commit e432dd6 and all earlier versions containing dhcpv6_ia_handle_IAs() and build_ia() as affected. OpenWrt lists 24.10.8 and 25.12.5 as the supported releases carrying the relevant odhcpd security update.
-The advisory associates its two documented sites with CVE-2026-53921, but the 24.10.8 release notes list the RECONF_ACCEPT overflow separately as a high-severity issue without a CVE. OpenWrt fixed the underlying writes by checking the remaining response-buffer capacity before appending the affected data.
-OpenWrt's advisory groups both overflow sites under CVE-2026-53921, while the release notes list RECONF_ACCEPT separately without a CVE. The exact mapping remains unclear.
-OpenWrt's release notes describe the flaw as reachable by a network-adjacent, unauthenticated attacker. The advisory's CVSS 3.1 vector uses [AV:N](https://www.first.org/cvss/v3.1/specification-document) (Network), not AV:A (Adjacent), and neither source explains the difference. An attacker still needs network access to the DHCPv6 service. Successful exploitation could give the attacker control of the router rather than merely crash the service.
-The [24.10.8 release](https://github.com/openwrt/openwrt/releases/tag/v24.10.8) also addresses other pre-authentication weaknesses in odhcpd, including an out-of-bounds write, use-after-free, memory disclosure, denial of service, stack over-read and neighbour-discovery proxy spoofing. Other default-service fixes cover three HTTP request-smuggling bugs in uhttpd and a DHCPv6 hostname-injection flaw, tracked as CVE-2026-62948, that can produce stored XSS when an administrator opens the LuCI leases page.
-The same release includes [CVE-2026-62947](https://github.com/openwrt/openwrt/security/advisories/GHSA-jw5r-xhf5-2xcq) in cgi-io, which can expose arbitrary root-readable files through path traversal. That issue requires an authenticated session with the cgi-io download permission and an applicable wildcard file-read grant. It is not an anonymous file-read flaw.
-OpenWrt 24.10 is under security maintenance, with end of life projected for September 2026. The project recommends migrating to the [25.12 series](https://github.com/openwrt/openwrt/releases/tag/v25.12.5) before then. Packages installed separately from the firmware image may also require separate updates.
-The Patches Still in Review
-Matthew Hickey, also known as Hacker Fantastic and CTO and Co-Founder of Hacker House, [said publicly](https://x.com/hackerfantastic/status/2081726741408583980) that fixes had been released for remote-code-execution and path-traversal issues he reported to OpenWrt.
-OpenWrt maintainer Hauke Mehrtens published [LuCI pull request #8878](https://github.com/openwrt/luci/pull/8878) on July 26, explicitly crediting Hickey and Hacker House. A check by The Hacker News on July 28 found the pull request still open and unmerged.
-| Image Source: Hacker House |
-Hacker House said it audited the main branches of both LuCI and uhttpd, using LuCI commit 3b4f44d8e3d9d5de35127b42dd449babe2d19fe5 from May 27 and uhttpd commit 7b1bec45826bd78c8afc993435bdc0f1df2fe399 from June 13.
-It described three as pre-authentication paths to device compromise: directory traversal in luci-app-bmx7, stored XSS in luci-app-olsr, and command injection in luci-app-commands. The remaining four required LuCI credentials and could be used to execute commands on the device.
-The firm said five findings were initially treated as post-authentication command-execution paths, but OpenWrt's testing showed that one luci-app-commands case could work without a session when an administrator had configured a command as both public and parameterised. The OLSR payload can also be injected without LuCI credentials, although it executes only when an administrator opens the neighbours page.
-OpenWrt's pull request does not map one commit to each of Hacker House's seven submissions. Within pull request #8878, six commits correspond to Hacker House's report, two address additional security weaknesses OpenWrt found while preparing the fixes, and one corrects a nonsecurity filename issue. The pull request also identifies two findings from the same report set that had already been fixed in master, so the seven submissions do not map one-for-one to its nine commits.
-The Hacker News is still awaiting OpenWrt's response on the CVE mapping, affected versions, and patch status.
-The security changes in pull request #8878 include:
-- luci-app-commands: A bare pipe character passed the application's argument allow-list and allowed commands to run as root. OpenWrt found that the path also worked without a session cookie or CSRF token when an administrator had configured a command with both public '1' and param '1'.
-- luci-app-ddns: The ddns_dateformat setting could inject commands into a root-run operation, while service_name allowed path traversal. OpenWrt found a separate stored-XSS issue while preparing the fixes.
-- luci-proto-openvpn: Attacker-controlled configuration values could reach shell commands through keytype, while key-directory parameters exposed path-traversal conditions.
-- luci-app-olsr: A malicious mesh node could announce a crafted hostname that executes a script in the browser when an administrator views the OLSR neighbours page.
-The unauthenticated luci-app-commands path has material preconditions. The optional application must be installed, and an administrator must have deliberately exposed a parameterised command as public. The other command-execution paths require authenticated LuCI access and the relevant configuration permissions. Successful exploitation runs commands as root. They are not blanket pre-authentication flaws affecting every OpenWrt router.
-A separate [ddns-scripts pull request](https://github.com/openwrt/packages/pull/30102) addresses the same unsafe ddns_dateformat setting outside LuCI. A delegated DDNS operator could place shell syntax in the value, with execution occurring when the updater next starts, including after reconfiguration or reboot. The same July 28 check found that the pull request was open and unmerged.
-Two other findings from the same report set had already been fixed on LuCI's master branch: an [unauthenticated file-read path traversal in luci-app-bmx7](https://github.com/openwrt/luci/commit/5890760a454dad2cb00389dba2cdc5e779e0ffdd) and command injection through ttyd_start in luci-app-dockerman. OpenWrt said both still required backports to release branches.
-Hacker House said the BMX7 traversal was included in its July 8 disclosure and characterised it as a pre-authentication path to device compromise. OpenWrt's [public advisory](https://github.com/openwrt/luci/security/advisories/GHSA-8qcq-jgrj-gvmj) describes the impact more narrowly as unauthenticated access to files readable by the CGI process and credits nebusecurity as the reporter. Hacker House said it does not know whether the reports were duplicates or why the credit differs.
-AI in Discovery and Patch Review
-Hacker House described the OpenWrt audit as a four-stage inference-fuzzing process that begins with a threat model. The method repeatedly examines the code to generate a broad pool of possible vulnerabilities.
-Because that pool contains many false positives, the final stage uses a higher-precision model to filter the results. Researchers then manually confirm the remaining findings in the code and, where practical, on a running system before reporting them.
-Hacker House said Qwen 3.6 35B Heretic is used for the recall-focused inference-fuzzing stage. For stage-four triage on open-source projects, it uses a frontier model such as Anthropic's Claude Opus 4.6. Qwen 3.5 115B can be substituted when an audit must run fully offline, allowing private source code to remain inside the client's environment.
-After triage, researchers manually inspect the code and, where practical, confirm the issue at runtime using standard dynamic application security testing (DAST). Hacker House said it submits only findings it has confirmed as vulnerabilities, although exploit payloads may require adjustment during manual validation.
-The firm said it gives open-source projects seven to 10 business days to acknowledge a report and then works with maintainers on their preferred remediation timeline. If no acknowledgement arrives, it may publish limited details to encourage the project to respond or address the finding.
-OpenWrt used AI during parts of the remediation process as well. Several proposed commits carry an Assisted-by: Claude:claude-opus-5 trailer, and an automated review on the LuCI pull request says it was generated with Claude Code. Models therefore contributed to candidate discovery, triage, and patch review, while researchers and maintainers manually verified the findings and fixes.
-For shipped fixes, users should install OpenWrt 24.10.8 or 25.12.5 and update separately installed packages. Administrators should also review delegated LuCI permissions, remove optional applications they do not use, and check whether any commands in luci-app-commands are both public and parameterised.
-As of July 28, the two pull requests did not list CVEs, CVSS scores, complete affected release ranges, or fixed stable-package versions. Neither reported exploitation in the wild.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">Critical TeamCity Flaw Could Let Attackers Run OS Commands Without Logging In</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/07/critical-teamcity-flaw-could-let.html" target="_blank">Original Link</a></p>
-            <div class="content-text">JetBrains is [urging customers](https://blog.jetbrains.com/teamcity/2026/07/cve-2026-63077/) of on-premise versions of TeamCity to update to the latest version following the discovery of a critical security issue that could result in arbitrary code execution.
-The vulnerability, assigned CVE-2026-63077 (CVSS score: 9.8), affects all TeamCity On-Premises versions. It has been addressed in versions 2025.11.7 and 2026.1.3. TeamCity Cloud instances have already been updated. JetBrains has credited Antoni Tremblay with discovering and reporting the flaw on July 10, 2026.
-"If exploited, this flaw may enable an unauthenticated attacker with HTTP(S) access to a TeamCity server to bypass authentication checks and execute arbitrary operating system commands with the privileges of the TeamCity server process," JetBrains said.
-The flaw allows unauthenticated remote code execution via the agent polling protocol to sidestep authentication checks and achieve command execution. Depending on the privileges granted to the TeamCity server process, a successful compromise can lead to the exposure of TeamCity data, configurations, and stored credentials, or modification of server state.
-Besides releasing versions 2025.11.7 and 2026.1.3, JetBrains has released a [security patch plugin](https://download.jetbrains.com/teamcity/plugins/internal/fix_CVE_2026_63077.zip) for versions 2017.1+ so that customers who are unable to apply an update can still patch their environments. There is no evidence to indicate that the flaw has been exploited in the wild.
-"The security patch plugin will address only the vulnerability described above (CVE-2026-63077)," JetBrains cautioned. "We always recommend upgrading your server to the latest version to benefit from many other security updates."
-As best practices, customers are advised to consider requiring VPN connections or implementing an extra layer of security to prevent unauthorized access to internet-facing TeamCity servers.
-"Even exposing the TeamCity login screen or REST API can provide attackers with potential entry points to exploit newly disclosed vulnerabilities," it added.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
         <div id="art-5" class="article-body">
+            <h2 class="article-title">Rethinking security for the age of AI</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://blogs.microsoft.com/blog/2026/07/27/rethinking-security-for-the-age-of-ai/" target="_blank">Original Link</a></p>
+            <div class="content-text">Why security needs a new cyber stack — Introducing Project Perception
+The physics of cybersecurity are changing. Autonomous systems can now reason, adapt and operate continuously. At the same time, the cost of offense is falling, while the volume, velocity and complexity of what must be secured continues to grow. Attackers can generate exploits faster, scale campaigns further and operate with unprecedented efficiency. The approaches built for a world of human actors cannot keep pace with a world of AI, agents and machine-speed attacks.
+Security needs a new cyber stack. A new cyber stack must continuously perceive risk across the entire digital estate, reason across vast amounts of context and take action at machine speed. It must learn and adapt as environments evolve, helping organizations stay ahead of threats. And because security is ultimately a human mission, it must amplify defenders with better insights and more powerful ways to act. The defining characteristic of the next generation of security systems will not be their ability to generate more alerts. It will be their ability to continuously perceive, reason and act.
+That vision led us to build Project Perception. A new agentic security system designed for the realities of AI. It turns signals into real-time protections using AI to defend against AI.
+[Project Perception](https://aka.ms/agenticsystem) brings together signals, context, models and specialized agents into a continuously learning system of defense. It can reason, prioritize and act at machine speed while keeping humans firmly in control and empowering them with powerful new workflows.
+Project Perception is based on a simple idea: effective defense requires continuous understanding of how an attacker sees the world, how a defender evaluates risk and how protections are improved over time. To accomplish this, Perception coordinates three classes of specialized agents. Red team agents identify potential paths to compromise before an attacker can exploit them. Blue team agents investigate, reason over context and determine what represents meaningful risk. Green team agents take corrective actions and strengthen defenses across the environment. Working together, these agents form a closed-loop system that continuously discovers, evaluates and improves an organization’s security posture.
+A system like Project Perception is only as effective as the visibility it has, the actions it can take, the experience of the teams building it and the models it can use. Microsoft brings together all four.
+We see across identities, endpoints, applications, data, clouds and AI systems, providing broad visibility across the digital estate. Equally important, we can help customers take action across those environments. Combined with decades of security research, threat intelligence and real-world operational experience defending organizations, these capabilities shape how Project Perception reasons, prioritizes and responds.
+Security is a 24/7 mission. Organizations need protection that is highly effective, continuously available and affordable at scale. That requires more than access to the most capable model. It requires applying the right model to the right task. Project Perception adopts a multi-model architecture that combines frontier and specialized cyber models, optimizing for both quality and cost.
+As part of this multi-model strategy, we are committed to bringing customers the best models for each security task, including innovating with our own specialized models. The first scenario is software vulnerability management, bringing MAI-Cyber-1-Flash inside MDASH, our software vulnerability multi-model team of agents. [MDASH with MAI-Cyber-1-Flash](https://microsoft.ai/news/introducing-mai-cyber-1-flash-inside-mdash/) delivers 96% on CyberGym, an industry leading benchmark, +12 points above Mythos. And this same configuration delivers almost 50% of cost savings vs. the current MDASH configuration in market today. That’s the power of a well-tuned, multi-model system with access to uniquely rich historical training data. Next, Project Perception will take advantage of MAI-Cyber-1-Flash for many more security workflows, beyond the software vulnerability scenario.
+We are bringing this vision to customers around the world through Project Perception, which enters public preview on August 3.
+A cyber stack built for agentic security
+Delivering agentic security requires more than adding agents to existing workflows. It requires a new cyber stack, designed from the ground up.
+The stack begins with signals and sensors that provide awareness across the digital estate. Security context transforms those signals into token-efficient understanding that agents can use. Models provide intelligence and reasoning. A harness coordinates models and agents across security workflows. Agents apply that intelligence across security workflows and actuators translate decisions into protection. Together, these layers create a continuous learning system that can understand risk, adapt to changing conditions and improve security outcomes over time.
+While each layer provides important capabilities, the power of Project Perception comes from how they work together.
+Security context built for AI
+Effective reasoning requires more than raw signals. Agents need context.
+Microsoft transforms its breadth of visibility, threat intelligence and security expertise into a security context that connects security data, knowledge and semantics across the digital estate. The result is a continuously updated representation of an organization’s assets, identities, relationships, risks and activities that gives agents a shared, near real-time, understanding of the environment they are helping to defend.
+This shared understanding is foundational to how Project Perception operates. Rather than forcing agents to continuously gather, correlate and reconstruct context from raw signals, it provides them with immediate and token-efficient access to the information they need to reason over risk, prioritize actions and make decisions. By grounding every interaction in this rich security context, Project Perception improves the accuracy and consistency of reasoning while reducing the time, compute and cost required to operate at scale.
+A multi-model architecture built for security
+No single model will be optimal for every security task. Effective cyber defense requires applying the right model to the right problem at the right time.
+For Project Perception, the right model is determined by the combination of quality, reliability, latency and cost. Rather than relying on a single model, Project Perception adopts a multi-model architecture that continuously selects the capabilities best suited to the task, optimizing for both effectiveness and economics. Because security is an always-on mission, sustainable economics are essential to operating protection at scale.
+This approach is shaped by ongoing research, benchmarking and evaluation across frontier and specialized models. Our security researchers continuously assess models against real-world security workflows, enabling us to match each task with the model that delivers the best outcome. This allows customers to benefit from advances in AI without being tied to any single model.
+Actuators — insights to actions
+Security teams do not need more information. They need better outcomes.
+That is why actuators are a critical part of the cyber stack. Project Perception is deeply integrated across Microsoft Security products, enabling agents to connect insights to actions. Organizations can continuously reduce risk rather than simply identify it, helping defenders strengthen security while remaining in control.
+Built with safety first
+Underpinning every layer of the cyber stack is a foundation of trust. Project Perception is built in alignment with Microsoft’s Responsible AI principles and inherits the security, compliance, governance and operational controls our customers already rely on. This ensures these capabilities are delivered with the same rigor, accountability and enterprise readiness that customers expect.
+The future of security
+Security has always been a race between attackers and defenders. AI changes the speed, scale and economics of that race. Defenders need systems that can continuously perceive, reason and act alongside them.
+Project Perception is how we begin to build that future.
+To learn more about Microsoft Security solutions, visit our [website](https://www.microsoft.com/security). Bookmark the [Security blog](https://www.microsoft.com/security/blog) to keep up with our expert coverage on security matters. Also, follow us on LinkedIn ([Microsoft Security](https://www.linkedin.com/showcase/microsoft-security/posts/?feedView=all)) and X ([@MSFTSecurity](https://x.com/msftsecurity)) for the latest news and updates on cybersecurity.
+Other resources:
+[Enhancing AI Security Through Global AI Red Teaming](https://aka.ms/ExternalRedTeamAlliance)[From research to reality: An interview with Microsoft VP of Security Research Taesoo Kim](https://aka.ms/TaesooKim)
+Hayete Gallot leads Microsoft’s work to help organizations operate securely in an AI-driven world. Her scope includes identity, threat protection, compliance and data security at global scale.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-6" class="article-body">
             <h2 class="article-title">CCPA Update: Cybersecurity Requirements (Part 2)</h2>
             <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/ccpa-update-cybersecurity-requirements-part-2" target="_blank">Original Link</a></p>
             <div class="content-text">CCPA Update: Cybersecurity Requirements (Part 2)
@@ -394,111 +432,6 @@ Number | Requirement | Subrequirements |
 17 | How the business manages its responses to security incidents (i.e., its incident response management). | (A) For the purposes of subsection (17), “security incident” means an occurrence that actually or imminently jeopardizes the confidentiality, integrity, or availability of the business’s information system or the personal information the system processes, stores, or transmits, or that constitutes a violation or imminent threat of violation of the business’s cybersecurity program; unauthorized access, destruction, use, modification, or disclosure of personal information; or unauthorized activity resulting in the loss of availability of personal information is a security incident. (B) The business’s incident response management includes:
 |
 18 | Business-continuity and disaster-recovery plans, including data-recovery capabilities and backups. | None |</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-6" class="article-body">
-            <h2 class="article-title">Microsoft at Black Hat USA 2026: Defending trust in the age of AI and supply chain attacks</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/07/17/microsoft-at-black-hat-usa-2026-defending-trust-in-the-age-of-ai-and-supply-chain-attacks/" target="_blank">Original Link</a></p>
-            <div class="content-text">Across the threat landscape, in this moment, one pattern sits at the center of the story: threat actors are following trust.
-They are not only looking for vulnerable systems, but rather targeting the software, services, identities, tools, developer workflows, and AI systems that organizations already depend on.
-A package can become a distribution path. A build pipeline can become an access path. A trusted tool can become or expand an attack surface. An AI agent with the wrong access can become a new way to reach code, data, or infrastructure.
-While the surfaces may change, the goal for the majority of threat actors remains the same: find what is trusted, abuse it, and scale the impact.
-At [Black Hat USA 2026](https://blackhat.com/us-26/), Microsoft Security will walk through how we are seeing this shift unfold, how security teams can look for it earlier, and how threat intelligence, expert-led response, and security operations need to work together when campaigns move across software, identity, cloud, data, and AI systems.
-On Wednesday, August 5, 2026, the day begins with David Weston’s keynote, [The End of Rare: Defending When Offense Is Cheap](https://blackhat.com/us-26/features/schedule/index.html?track%5b%5d=keynotes&track%5b%5d=main-stage), which looks at what defense requires when offensive capability becomes easier to access, automate, and scale. Later that afternoon, Aarti Borkar and Tanmay Ganacharya will resume the main stage for [Poisoned at the Source: Inside the Hunt for Supply Chain Attacks](https://blackhat.com/us-26/features/schedule/?day=wednesday#poisoned-at-the-source-inside-microsoft-threat-intelligences-hunt-for-supply-chain-attacks-56692), which offers a closer look at how Microsoft Threat Intelligence is hunting attacks across software ecosystems, developer workflows, and trusted services. This includes details into the ongoing attacks on npm (Node package manager).
-Together, these sessions frame the challenge security teams are facing now: when offensive capability becomes easier to scale, security teams need to understand the trust paths threat actors can abuse before those paths become open doors for attacks.
-At our booth, we’ll also showcase [Microsoft Defender Experts Threat Intelligence](https://www.microsoft.com/en-us/security/blog/2026/07/15/turning-threat-intelligence-into-decisive-action-with-defender-experts/), a new expert-led service delivering continuous, curated intelligence tailored to your organization, and Microsoft Defender Experts MDR, now extended with third-party and multicloud coverage.
-From August 4 to 6, 2026, at Mandalay Bay in Las Vegas, you’ll find Microsoft Security on the Business Hall floor at booth #2144, and on Wednesday evening, join us at the Microsoft Security reception at Swingers at Mandalay Bay.
-Weston on the future of defense
-At 9:15 AM PT on Wednesday, August 5, 2026, David Weston, CVP of Agentic Security, will examine what changes for security teams when offensive capability becomes easier to access, automate, and scale.
-The keynote sets up one of the central questions security leaders are facing now: how does the security operations center (SOC) and analysts adapt when threat actors can move faster, test more often, and reuse trusted paths across software, identity, cloud, and AI systems? [Join the keynote](https://blackhat.com/us-26/features/schedule/index.html?track%5b%5d=keynotes&track%5b%5d=main-stage) Wednesday, August 5, 2026, then continue the conversation with Microsoft Security at booth #2144.
-Our latest intelligence (and response) on npm supply chain attacks
-That same intelligence-to-action challenge is at the center of our main stage session at Black Hat.
-On Wednesday, August 5, 2026, from 2:30 PM PT to 3:00 PM PT, Aarti Borkar, Corporate Vice President (CVP), Microsoft Security, and Tanmay Ganacharya, Vice President of Microsoft Security Research and Threat Intelligence, will share intelligence and insights into the ongoing supply chain campaigns impacting all areas of the threat landscape. The talk, [Poisoned at the Source: Inside the Hunt for Supply Chain Attacks](https://blackhat.com/us-26/features/schedule/?day=wednesday#poisoned-at-the-source-inside-microsoft-threat-intelligences-hunt-for-supply-chain-attacks-56692), will walk through Microsoft Threat Intelligence’s investigations into the ongoing npm supply chain attacks targeting software ecosystems, developer workflows, trusted services, and how organizations are handling the challenges associated with npm packages.
-Follow the research in the Black Hat Briefings
-Microsoft Security researchers will also present peer-reviewed technical research in the Black Hat Briefings. These sessions go deep into cloud, mobile, and software supply chain defense.
-GitHub Can Tell You’re Being Hacked. You’re Just Not Listening: Building EDR for GitHub from Its Own Event Stream
-- Presented by Yossi Weizman, Principal Security Research Manager
-- Wednesday, August 5, 2026, from 10:15 AM PT to 10:45 AM PT
-One Click to System: Exploiting Bixby’s Trust Model for Full Device Compromise
-- Presented by Dimitrios Valsamaras, Senior Security Researcher
-- Wednesday, August 5, 2026, from 12:00 PM PT to 12:40 PM PT
-Handle With Care: Chaining Azure Automation Flaws for Cross-Tenant Identity Takeover
-- Presented by Shay Shavit, Senior Security Researcher
-- Wednesday, August 5, 2026, from 4:30 PM PT to 5:10 PM PT
-Check the official [Black Hat schedule](https://blackhat.com/us-26/briefings/schedule/) for final room assignments and any timing updates.
-Go deeper in Microsoft sessions
-Microsoft experts will also lead sessions that give you a closer look behind the scenes, including:
-[Mind the Gap: Turning Threat Intelligence into Decisive Action with Expert-Led Defense](https://blackhat.com/us-26/sponsored-sessions/schedule/index.html?format[]=20-minute-sponsored-session#mind-the-gap-turning-threat-intelligence-into-decisive-action-with-expert-led-defense-56120)
-- Presented by Wes Malaby, General Manager of Customer Success
-- Wednesday, August 5, 2026, from 5:00 PM PT to 5:20 PM PT
-- Presented by Fanta Kaba and special guest Jimmie Galaites
-- Wednesday, August 5, 2026, from 5:00 PM PT to 5:20 PM PT
-- Presented by Naadia Sayed, Principal Product Manager
-- Thursday, August 6, 2026, from 11:15 AM PT to 12:00 PM PT
-These sessions extend the main stage story into practitioner decisions: how teams move from intelligence to action, how defenders test their judgment under pressure, and how AI and agents are changing security workflows.
-Visit booth #2144 for research, community, and hands-on defense
-This year we are transforming the Microsoft Security booth into a community center. [Click here to jump to the full schedule](#microsoft-security-booth-2144-experiences-and-schedule).
-If the keynote and main stage sessions frame the largest challenges across the threat landscape, booth #2144 is where you can directly explore the workflows behind it: threat intelligence, incident response, AI security, security operations, partner solutions, and hands-on practice.
-You will find:
-Connection circles, ask-me-anythings (AMAs), meetups led by industry influencers, and lightning talks
-Short-form conversations with practitioners and experts on threat intelligence, incident response, AI security, identity, data protection, and security operations. If you swing by when the expo area opens, we’ll also fuel you up so you can skip the food court.
-Partner presence
-At Black Hat 2026, the Microsoft booth will feature 13 partners from the [Microsoft Intelligent Security Association (MISA)](https://www.microsoft.com/en-us/security/business/intelligent-security-association) who will showcase solutions built with Microsoft Security technology. Security Insider Conversations will feature MISA partners Critical Start (August 5, 2026, at 3:30 PM PT) and Huntress (August 6, 2026, at 2:00 PM PT) alongside Microsoft Security experts. Additionally, thank you to our Microsoft Security VIP Mixer sponsors: Ascent Solutions, Avertium, Devicie, Huntress, Illumio, Maureen Data Systems, and Security Risk Advisors.
-Demo our latest innovations
-Explore connected experiences across defending with AI, securing AI, strengthening posture for AI adoption, using security intelligence in investigations and response, working with trusted partners, and connecting with Microsoft Defender experts.
-Exclusive swag (featuring a surprise guest)
-Spend some time with us at the experience we built around the booth and you’ll earn tokens that can be exchanged for custom patches and hats (because security experts have to wear many hats). Your favorite paperclip may be among the patches. Maybe.
-Decompress with mini golf
-The biggest Microsoft Security community moment of the week is our reception at Swingers at Mandalay Bay, hosted by Aarti Borkar.
-Join us Wednesday, August 5, 2026, from 6:00 PM PT to 9:00 PM PT for food, drinks, mini golf, partner activations, and time with the Microsoft Security team away from the show floor.
-Come compare notes with peers, meet Microsoft researchers and responders, and connect with the broader Microsoft Security community.
-Space is limited, so reserve your spot early.
-Plan your week with Microsoft Security
-You can find Microsoft Security at booth #2144 during Business Hall hours:
-- Tuesday, August 4, 2026: 4:00 PM PT to 7:00 PM PT
-- Wednesday, August 5, 2026: 9:00 AM PT to 6:00 PM PT
-- Thursday, August 6, 2026: 9:00 AM PT to 4:00 PM PT
-Stop by early to see the booth schedule, find upcoming AMAs and connection circles, and plan which live sessions and hands-on experiences you want to attend.
-Skill up before and after Black Hat
-You do not need to be in Las Vegas to take part in the broader Microsoft Security Black Hat experience.
-The [Microsoft Black Hat Skilling Challenge](https://learn.microsoft.com/en-us/security/challenge/defender-challenge) begins July 20, 2026, and will help defenders build hands-on skills across [Microsoft Defender](https://www.microsoft.com/en-us/security/business/microsoft-defender), [Microsoft Sentinel](https://www.microsoft.com/en-us/security/business/siem-and-xdr/microsoft-sentinel), and [Microsoft Security Copilot](https://www.microsoft.com/en-us/security/business/ai-machine-learning/microsoft-security-copilot). Attendees can use the challenge to prepare before the event, then bring questions to on-site experts and community sessions. Remote participants can follow along through Microsoft Tech Community, AMAs, recaps, and post-event resources.
-See you at hacker summer camp
-Threat actors are adapting around the systems organizations already trust. Security teams need to understand those trust paths before they become attack paths.
-At Black Hat USA 2026, Microsoft Security will bring the research, expert perspective, and hands-on experiences to help practitioners see where attacker behavior is moving and how defense can adapt.
-Add Poisoned at the Source to your schedule. Visit us at booth #2144. Join the skilling challenge. And register for the Microsoft Security reception on Wednesday night.
-Microsoft Security booth #2144 experiences and schedule
-Tuesday, August 4, 2026
-| Time | Title |
-|---|---|
-| 5:00 PM PT to 6:00 PM PT | How Practitioners Build Effective Security Playbooks |
-| 6:00 PM PT to 7:00 PM PT | Agentic Security: What’s Next |
-Wednesday, August 5, 2026
-| Time | Title |
-|---|---|
-| 9:00 AM PT to 9:30 AM PT | Security Communities Meet Up |
-| 10:00 AM PT to 10:30 AM PT | Using Offensive Security Research to Advance AI Security |
-| 10:30 AM PT to 11:00 AM PT | The Confused Deputy Strikes Back: How AI Agents Turn Into RCE Proxies |
-| 12:00 PM PT to 12:30 PM PT | Hunting in the Gray: When Nation-States and Cybercrime Collide |
-| 12:30 PM PT to 1:00 PM PT | AI in Security Operations: What Actually Works and What Doesn’t |
-| 1:00 PM PT to 2:00 PM PT | AI in the SOC: Lessons Learned from the Front Lines |
-| 2:30 PM PT to 2:30 PM PT | Microsoft Defender Challenge |
-| 2:30 PM PT to 3:00 PM PT | From Alert Fatigue to Action: How Practitioners Prioritize What Matters |
-| 3:00 PM PT to 3:30 PM PT | Agents in the Flow of Work: From Signals to Action |
-| 3:30 PM PT to 4:00 PM PT | Will It Hold Up in Court? Forensic Defensibility of Microsoft 365 Evidence |
-| 5:00 PM PT to 6:00 PM PT | Zero Trust for the Agentic Era: An Interactive Discussion for Securing AI |
-Thursday, August 6, 2026
-| Time | Title |
-|---|---|
-| 9:00 AM PT to 9:30 AM PT | The Future of Microsoft Security and How Communities Can Support You |
-| 10:00 AM PT to 10:15 AM PT | Quantum Is Here: What Practitioners Must Do Now |
-| 11:00 AM PT to 12:00 PM PT | The Next Era of Cyber Defense: Clarity, Control, and Response at Scale |
-| 12:00 PM PT to 12:30 PM PT | Lessons from the Field: What to Do When You’re Under Attack |
-| 12:30 PM PT to 1:00 PM PT | When Browsers Become Agents: The Emerging Security Risks of AI‑Powered Browsers |
-| 2:30 PM PT to 3:00 PM PT | Social Engineering Always Matters |
-| 3:00 PM PT to 3:30 PM PT | AI Runs on Data: Securing the Foundation of AI Adoption |
-To learn more about Microsoft Security solutions, visit our [website.](https://www.microsoft.com/en-us/security/business) Bookmark the [Security blog](https://www.microsoft.com/security/blog/) to keep up with our expert coverage on security matters. Also, follow us on LinkedIn ([Microsoft Security](https://www.linkedin.com/showcase/microsoft-security/)) and X ([@MSFTSecurity](https://twitter.com/@MSFTSecurity)) for the latest news and updates on cybersecurity.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
