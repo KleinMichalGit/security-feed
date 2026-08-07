@@ -59,12 +59,250 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-08-06</h1>
+        <h1>Security Briefing // 2026-08-07</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Ransom Cartel Creator Gets 16 Years in Prison for Operating Ransomware-as-a-Service</button></li><li><button onclick="show('art-1')">CISA Flags TeamCity CVE-2026-63077 RCE Flaw Under Active Exploitation in the Wild</button></li><li><button onclick="show('art-2')">Ransom Cartel ransomware creator sentenced to 16 years in prison</button></li><li><button onclick="show('art-3')">Turning Enterprise Update Servers Into Backdoor Factories (0_o) – Part 1</button></li><li><button onclick="show('art-4')">From open lures to cloaked gates: How a macOS ClickFix campaign learned to hide</button></li><li><button onclick="show('art-5')">TLS Encryption and Compliance</button></li><li><button onclick="show('art-6')">Hotel Wi-Fi attacks use custom malware to breach Microsoft 365 accounts</button></li><li><button onclick="show('art-7')">Read This Before You Buy That TV Streaming Stick</button></li><li><button onclick="show('art-8')">Demystifying AI Exploits: A Blueprint for AI-Assisted Vulnerability Management</button></li><li><button onclick="show('art-9')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li></ul>
+            <ul><li><button onclick="show('art-0')">New TONTOU CPU attack bypasses Spectre v2 fixes, leaks Linux password hashes</button></li><li><button onclick="show('art-1')">New Zapscape KVM Flaw Could Let Privileged L1 Guest Code Escape to Linux Hosts</button></li><li><button onclick="show('art-2')">Canadian Man Pleads Guilty in Snowflake Extortions</button></li><li><button onclick="show('art-3')">UNC6671 Rebrands: Multi-Brand Vishing Extortion Targets Financial Services and Enterprise Cloud Environments</button></li><li><button onclick="show('art-4')">Ransom Cartel Creator Gets 16 Years in Prison for Operating Ransomware-as-a-Service</button></li><li><button onclick="show('art-5')">The Art of Hunting Azure Cloud Secrets</button></li><li><button onclick="show('art-6')">Ransom Cartel ransomware creator sentenced to 16 years in prison</button></li><li><button onclick="show('art-7')">Turning Enterprise Update Servers Into Backdoor Factories (0_o) – Part 1</button></li><li><button onclick="show('art-8')">From open lures to cloaked gates: How a macOS ClickFix campaign learned to hide</button></li><li><button onclick="show('art-9')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
+            <h2 class="article-title">New TONTOU CPU attack bypasses Spectre v2 fixes, leaks Linux password hashes</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/new-tontou-cpu-attack-bypasses-spectre-v2-fixes-leaks-linux-password-hashes/" target="_blank">Original Link</a></p>
+            <div class="content-text">Researchers found a way to bypass recent mitigations for Spectre v2 speculative execution side-channel attacks and developed an exploit to leak secrets from Linux machines. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">New Zapscape KVM Flaw Could Let Privileged L1 Guest Code Escape to Linux Hosts</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/08/new-zapscape-kvm-flaw-could-let.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Zapscape, a new Linux kernel vulnerability, could allow an attacker with kernel privileges inside an L1 guest virtual machine (VM) to escape KVM isolation and execute code on the host. The risk applies when nested virtualization is exposed to untrusted guests.
+The flaw is tracked as CVE-2026-64561 and affects KVM/x86's shadow memory management unit (MMU), which manages shadow page tables used for nested guest memory translation.
+Security researcher Hyunwoo Kim, who disclosed the bug, said the demonstrated exploit path can run commands on the host with kernel, or root, privileges.
+The upstream fix has been merged, and administrators running KVM hosts that expose nested virtualization to untrusted guests should update to a fixed stable kernel or a vendor package that backports the patch.
+The required L1 kernel privilege usually means guest root. Intel systems also require both EPT page-walk length 4 and 5 to be exposed to the L1 guest. AMD has no equivalent condition.
+Zapscape is a stale-root check ordering flaw in KVM's shadow-MMU bookkeeping that can lead to a use-after-free. During guest-triggered page fault handling, KVM can reclaim MMU pages and invalidate the shadow MMU root page still being used by the fault-handling path. Because the path does not check the root again, KVM can continue under the invalidated root.
+In a [technical write-up](https://github.com/V4bel/Zapscape/blob/main/assets/write-up.md), Kim described the issue as a use-after-free in the recursive zap path used when KVM reclaims shadow pages. KVM checked whether the current root was stale before making more MMU pages available. Reclaim could then invalidate that same root, but KVM continued the fault path and created child shadow pages under it.
+Those child pages inherited the invalid state from the parent and were still placed on KVM's active MMU page list. Later cleanup could attach the same list link to two lists at once, then free the page while stale list references remain, creating a dangling link and post-free write.
+Kim's public proof-of-concept uses that primitive to build a full chain that creates a root-owned file named /Zapscape on the host running the vulnerable KVM.
+The proof-of-concept targets AMD nested SVM/NPT on Linux 7.1.3. Kim recommends running it under QEMU TCG for safe testing. QEMU is not the vulnerable component. Kim said the bug lives in in-kernel KVM and is triggered independently of QEMU's emulation.
+Kim's August 6 write-up includes a public proof-of-concept, but it does not claim the flaw has been exploited in the wild. Kim also described it as "not a weaponized exploit that runs immediately" in cloud environments, saying real-world use would require moving the L1 actions into a guest kernel module and adapting the exploit to the host kernel configuration and memory backend.
+The [National Vulnerability Database](https://nvd.nist.gov/vuln/detail/CVE-2026-64561) lists Linux 5.9 and later as affected until fixed stable releases, including 6.6.148, 6.12.101, 6.18.42, 7.1.6, and 7.2-rc5.
+[Red Hat](https://access.redhat.com/security/cve/cve-2026-64561) assigned a preliminary CVSS score of 7.0 in its advisory and classified the issue as CWE-825, or expired pointer dereference.
+Package status depends on each Linux vendor's tracker, not only upstream version strings. Red Hat cautions that its packages often carry backported fixes without rebasing to a new upstream version.
+As of August 6, 2026, Debian's tracker listed bullseye, bookworm, and trixie kernel packages, including their security repositories, as vulnerable. It also listed forky as vulnerable and sid as fixed at 7.1.6-1.
+According to the disclosure timeline, Kim reported the issue to security@kernel.org on July 11, 2026. A patch was posted and merged on July 21, the issue was submitted to the linux-distros list on August 1 under a five-day embargo, and CVE-2026-64561 was assigned on August 4. Public disclosure followed on August 6.
+The fix, merged as commit 2abd5287f083, moves the stale-root check after make_mmu_pages_available(). If reclaim invalidates the current root, KVM now restarts the fault with RET_PF_RETRY instead of continuing to map or fetch under the invalid root.
+The disclosure follows Kim's earlier KVM work, including [Januscape](https://thehackernews.com/2026/07/16-year-old-linux-kvm-flaw-lets-guest.html) (CVE-2026-53359), a separate KVM/x86 shadow-MMU issue covered by The Hacker News in July, and ITScape (CVE-2026-46316), a KVM/arm64 escape published in June.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">Canadian Man Pleads Guilty in Snowflake Extortions</h2>
+            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/08/canadian-man-pleads-guilty-in-snowflake-extortions/" target="_blank">Original Link</a></p>
+            <div class="content-text">A 26-year-old Canadian man once described as one of the most consequential cybercrime threat actors of 2024 has pleaded guilty to computer fraud and conspiracy to hack and extort more than 165 organizations that used the cloud provider Snowflake. Connor Riley Moucka, of Kitchener, Ontario, also admitted to stealing call and text history records of more than 100 million AT&T customers.
+The U.S. Justice Department said between February and October 2024, Moucka and co-conspirators used stolen login credentials to steal cloud-hosted data belonging to at least 165 customers of a U.S.-based software-as-a-service company.
+The hackers targeted stolen credentials for Snowflake customer accounts that did not enforce multi-factor authentication, and extorted or attempted to extort a host of well-known companies, including TicketMaster, Lending Tree, Advance Auto Parts and Neiman Marcus. Snowflake responded to the data thefts by increasing password complexity requirements and enforcing multi-factor authentication.
+Moucka adopted new nicknames frequently — sometimes operating multiple identities concurrently — but two of his best-known monikers were “Judische” and “Waifu.” Judische’s admitted role in the Snowflake data thefts was first documented by KrebsOnSecurity in [a September 2024 story](https://krebsonsecurity.com/2024/09/the-dark-nexus-between-harm-groups-and-the-com) about the overlap between Western, English-speaking cybercriminals and extremist groups that harass and extort minors into harming themselves or others.
+That September 2024 story identified Judische as a software engineer from Ontario who has been involved in numerous data breaches and voice phishing attacks against U.S. companies since at least 2020. A little more than a month later, Canadian authorities [arrested Moucka](https://krebsonsecurity.com/2024/11/canadian-man-arrested-in-snowflake-data-extortions/) on a provisional warrant from the United States.
+The government says Moucka and others used their unauthorized access to steal billions of sensitive customer records and download terabytes of information, “including individuals’ non-content call and text history records, banking and other financial information, payroll records, Drug Enforcement Administration (DEA) registration numbers, driver’s license numbers, passport numbers, social security numbers and other personally identifiable information. They then extorted victims by threatening to publish data online.”
+Moucka also threatened and harassed government officials and security researchers who were helping to track him down. The Justice Department said the conspirators made over $2.5 million in ransom payments, and that in at least one instance, Moucka re-extorted a victim with threats of further disclosure of the victim’s stolen data.
+“Moucka used the stolen data of a government officer and members of a then-former government officer’s immediate family in this re-extortion attempt,” reads [a statement](https://www.justice.gov/opa/pr/canadian-man-pleads-guilty-hacking-us-cloud-storage-provider-and-extorting-its-customers) from the Justice Department.
+One of Moucka’s admitted co-conspirators is Cameron “Kiberphant0m” Wagenius, a U.S. Army soldier who [pleaded guilty in July 2025](https://www.justice.gov/opa/pr/former-us-soldier-pleads-guilty-hacking-and-extortion-scheme-involving-telecommunications) to extorting AT&T and Verizon for their customer account data. Less than a month before Wagenius’s arrest, KrebsOnSecurity published [a deep dive](https://krebsonsecurity.com/2024/11/hacker-in-snowflake-extortions-may-be-a-u-s-soldier/) into Kiberphant0m’s various Telegram and Discord identities over the years, revealing how the owner of the accounts told others they were in the Army and stationed in South Korea.
+Kiberphant0m also re-extorted victims. Immediately following Moucka’s arrest, Kiberphant0m posted on hacker forums what he claimed were the AT&T call logs for then President-elect Donald Trump and for then Vice President Kamala Harris, as well schematics allegedly stolen from the U.S. National Security Agency (NSA).
+Wagenius is set to be sentenced on September 3, 2026. The government says he faces a maximum penalty of 20 years in prison for conspiracy to commit wire fraud, a maximum penalty of five years in prison for extortion in relation to computer fraud, and a mandatory two-year sentence consecutive to any other prison time for aggravated identity theft.
+The third alleged co-conspirator is John Erin Binns, 26, an elusive American man who fled the United States after being indicted for his admitted role in [a 2021 breach at T-Mobile](https://krebsonsecurity.com/2021/08/t-mobile-investigating-claims-of-massive-data-breach/) that exposed the personal information of at least 76 million customers.
+Sources close to the investigation said Binns, also known as “IRDev” and “IntelSecrets,” was until recently incarcerated in a Turkish prison, but that he has since been released and has resurfaced online. Those sources said Binns also recently obtained Turkish citizenship, and under Turkish law a citizen cannot be extradited to a foreign country.
+Moucka pleaded guilty to four criminal counts, including computer fraud, wire fraud, aggravated identity theft, and conspiracy. He is slated to be sentenced on Oct. 27 and faces a mandatory minimum penalty of two years in prison on the aggravated identity theft count, as well as a maximum penalty of 30 years in prison on the remaining counts. Ultimately, it will be up the federal judge how much time Moucka actually serves for his extensive cybercriminal rap sheet.
+For an interview with Moucka prior to his arrest and a deeper look at Binns, see [our original report on Moucka’s arrest](https://krebsonsecurity.com/2024/11/canadian-man-arrested-in-snowflake-data-extortions/).
+Interesting case. It shows that attackers don’t always need sophisticated techniques—weak or reused passwords can be enough. I think more people should focus on using unique passwords for every account and enabling MFA wherever possible. Prevention is much easier than dealing with the aftermath of an account takeover
+As is always the case – your investigative skills/reporting are second to none, thank you for your ongoing work!
+Re: Binns about the only plus in his so-called newfound ‘freedom’ in Turkey is he’s lucky to have been released. Hopefully he experienced some of what is described in the linked report on Human Rights violations in Turkish prisons. And as karma goes he’ll just maybe slip up and end up back there 😉
+“Human rights violations in Turkey’s prisons deeply shake the concepts of social justice and human dignity. The Turkish Prisons Report (2016 – 2024), prepared by Stichting Justice Square, reveals systematic rights violations ranging from negligence that threatens the right to life of sick detainees and convicts to the inhumane conditions imposed on pregnant women and mothers with children.”
+“The report particularly sheds light on the situation of sick detainees and convicts, deaths, suicides, and the conditions of ill, postpartum, and child-rearing women in prisons. The striking data and case studies presented in the report expose the dark reality of Turkey’s prisons: increasing deaths due to inadequate healthcare services, suicides under prison conditions, and worsening victimization through arbitrary and discriminatory treatment”
+“It is explicitly emphasized that the systematic, discriminatory, and hate-driven practices carried out by the Erdoğan regime may constitute crimes against humanity under international law.”
+https://justicesquare.org/turkish-prisons-report/
+He’s prob be better off just coming back to face the music – but hey he’s made his bed, hope he has sweet dreams – NOT
+” your investigative skills/reporting are second to none”.
+True, but not editing/proof reading!
+Email from you, I have been getting these for the last couple of months.
+KrebsOnSecurity Mailing List . bk_at_krebsonsecurity.com chris******@duck.com
+From
+Reply to
+bk@krebsonsecurity.com bk_at_krebsonsecurity.com chris******@duck.com
+bk@krebsonsecurity.com . bk_at_krebsonsecurity.com chris******@duck.com
+To
+6 Aug 2026, 20:04
+This may not deter others but I think all of these gentlemen should be forced to pay and MANUALLY complete all the necessary forms required for each victim to get an identity protection service in place. Once done, they can return to society and tell others.
+I understand that the Libertarian Murray Rothbard suggested that they should have to pay double the total damages.
+2024: “We expect that violent hackers from the [cybercrime community] will experience increasingly harsh sentences as the crackdown continues”
+remember this comment and tihs one I’m writing: he will get next to nothing and none of his involvement with actual harm/extortion groups will even be considered because this is just feds working on behalf of private companies once again, same deal with big piracy cases</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
+            <h2 class="article-title">UNC6671 Rebrands: Multi-Brand Vishing Extortion Targets Financial Services and Enterprise Cloud Environments</h2>
+            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/unc6671-targets-financial-services-and-enterprise-cloud-environments/" target="_blank">Original Link</a></p>
+            <div class="content-text">UNC6671 Rebrands: Multi-Brand Vishing Extortion Targets Financial Services and Enterprise Cloud Environments
+Google Threat Intelligence Group
+Mandiant
+Google Threat Intelligence
+Visibility and context on the threats that matter most.
+[Contact Us & Get a Demo](https://cloud.google.com/security/resources/google-threat-intelligence-demo?utm_source=cgc-blog&utm_medium=blog&utm_campaign=FY25-Q2-global-GCP30649-website-su-dgcsm-GTI-interest)
+Written by: Tyler McLellan, Austin Larsen
+Introduction
+Google Threat Intelligence Group (GTIG) continues to track UNC6671 actively conducting compromises leading to data theft extortion, despite the alleged announced retirement of the BlackFile extortion brand in May 2026. Telemetry and infrastructure analysis reveal that rather than disbanding, UNC6671 has diversified its operations across multiple extortion fronts including Redact, Pink, Helix, and Falcon.
+UNC6671 continues to rely on voice phishing (vishing) to target enterprise employees, posing as IT helpdesk staff facilitating mandatory, urgent security migrations. Significantly, the threat actor often contacts employees via their personal mobile devices. These calls lure victims to spoofed login portals where Adversary-in-the-Middle (AiTM) infrastructure intercepts credentials and multi-factor authentication (MFA) tokens. Once session persistence is established, the actors deploy automated scripts for data exfiltration from enterprise cloud environments, including Microsoft 365 and Okta.
+In this update to [our May 2026 blog](https://cloud.google.com/blog/topics/threat-intelligence/blackfile-vishing-extortion-operation/), we detail the infrastructure linkages connecting these extortion brands. We also examine the evolution of UNC6671's targeting including recent activity focused on financial services, private equity, and professional services, and provide hardening guidance to help organizations protect themselves from this threat.
+UNC6671 Associated Extortion Brands
+Across UNC6671 intrusions, the initial access and post-compromise tactics, techniques, and procedures (TTPs) have remained remarkably consistent. These operations uniformly leverage tailored IT helpdesk voice phishing (vishing), AiTM credential harvesting panels, and data theft from SaaS applications. Despite this unified technical baseline, extortion messages have used different branding and victim data stolen during these intrusions has been published across distinct data leak sites (DLS) (Figure 1). While public group communications cited an affiliate breakaway as the rationale for the initial rebranding to Redact, subsequent overlaps in phishing templates, victimology, and shared infrastructure conduits suggests that associated actors have subsequently leveraged the Pink, Helix, and Falcon extortion brands to monetize their operations.
+Figure 1: UNC6671 Associated DLS Listings by Site
+Figure 2: Helix and Pink DLS
+Figure 3: Falcon DLS
+Initial REDACT Rebranding
+On June 27, 2026, the Redact operators published a blog post on their newly established Data Leak Site (DLS) addressing their alleged rebrand away from BlackFile. In the publication, the group claimed that the original BlackFile brand had been compromised and hijacked by an exiled affiliate. According to Redact, this former associate purportedly operated an unauthorized, lookalike DLS and conducted unsanctioned extortion campaigns under their name using unlinked Tox identities. The operators asserted that this rogue affiliate intentionally orchestrated the "shutdown" of the BlackFile brand in May 2026 to sow confusion among threat intelligence analysts and cyber insurance negotiators, thereby damaging the brand's reputation. To distance themselves from BlackFile, the operators stated that they rebranded as Redact, introducing a single verified Tox ID and PGP key to authenticate all future correspondence. Additionally, the post explicitly denied that pressure from the rival groups influenced their rebranding decision.
+Figure 3: REDACT statement on alleged break from BlackFile
+Shared Infrastructure: Connecting the Phishing Ecosystem
+UNC6671 uses credential harvesting panels hosted on generic root domains masquerading as being related to passkeys, appending victim-specific subdomains to facilitate targeted voice phishing campaigns. Monitoring this consistent digital footprint revealed overlaps in specific victim targeting associated with multiple extortion brands. These overlaps support our assessment that a common group of threat actors are affiliated with the BlackFile, Redact, Pink, Helix, and Falcon extortion brands, although other scenarios such as splintered affiliates or shared Phishing-as-a-Service infrastructure may also be plausible.
+Rather than maintaining isolated infrastructure for each target, UNC6671 reuses generic root domains across multiple target organizations, creating a traceable chain between extortion brands:
+-
+Falcon: The root domain
+passkeyhelpdesk[.]com
+was used to target at least one organization extorted using the Falcon brand. This same domain was simultaneously used to target an organization extorted using the Helix brand, as well as numerous other companies that we did not observe later posted on a DLS. Additionally, root domains such asportalpasskey[.]com
+andaddssopasskey[.]com
+targeted organizations extorted by Falcon, while hosting intermediate targets that bridged directly into Helix infrastructure. -
+Pink: A subset of unlisted companies were concurrently targeted using additional root domains (such as
+passkeyms[.]com
+andmysecurepasskey[.]com
+), which acted as intermediate bridges to another infrastructure cluster focused onpasskeydeploy[.]com
+. This final domain was simultaneously used to target at least one organization extorted by Pink. -
+Helix: The root domain
+passkeyhelpdesk[.]com
+directly overlapped targeting between Falcon and Helix. Furthermore, intermediate target organizations bridged additional infrastructure into clusters of subdomains onoskeysync[.]com
+andkeysyncos[.]com
+. These clusters targeted multiple organizations later listed on the Helix DLS. -
+BlackFile: Root domains such as
+setupsso[.]com
+andidokta[.]com
+were used to target an organization extorted using the BlackFile brand. Intermediary target organizations onsetupsso[.]com
+acted as bridges topasskeydeploy[.]com
+(Pink). Concurrently,passkeyuser[.]com
+was used to target another BlackFile victim, where intermediate target organizations bridged intopasskeyportal[.]com
+(Helix) andmysecurepasskey[.]com
+.
+Figure 4: Shared infrastructure across multiple brands
+Phishing templates
+Analysis shows that the same phishing templates were used across all these domains, with identical code and design hosted simultaneously on different websites, including addssopasskey[.]com
+, createssopasskey[.]com
+, and passkeyhelpdesk[.]com
+. For instance, while addssopasskey[.]com
+was strictly used to target organizations later extorted by Falcon, the identically configured passkeyhelpdesk[.]com
+domain was simultaneously used to target two entirely separate victims—one of which was claimed by Falcon, and the other by Helix. The widespread deployment of these matching templates to harvest credentials for multiple DLS brands suggests they rely on shared underlying infrastructure.
+Evolution of Targeting
+UNC6671’s domain registration patterns demonstrate a regular shift in target selection, seemingly towards those that are more likely to hold sensitive information. UNC6671 leverages subdomains that incorporate prospective victim names to host tailored credential harvesting panels. Their root domains mimic enterprise authentication enrollment portals pairing terms as "passkey," "mfa," or "sso" paired with verbs.
+Between April and May 2026, we observed domains broadly designed to target mature, large-scale enterprises across multiple industries including the manufacturing, real estate, healthcare, and insurance sectors. During this wave of activity, the threat actors appeared to prioritize high-volume credential harvesting across these established enterprise verticals.
+The observed subdomains in the following months appeared to represent a progression in UNC6671’s extortion model. In June 2026, targeting transitioned toward large technology, transportation, and hospitality organizations, seemingly focusing on entities holding valuable intellectual property, software source code, or sensitive VIP client data. By July 2026, the target profile narrowed to focus on the financial and legal sectors, with observed infrastructure directed at private equity firms, law firms, and financial rating agencies. Concentrating on organizations involved in mergers, acquisitions, capital deployment, and litigation may reflect a strategy to target high-value corporate and confidential data to maximize leverage extortion demands.
+Comparing these two time periods also illustrates an increase in operational tempo. The volume of newly observed infrastructure was evenly distributed between June 1 and July 31, 2026, establishing an accelerated cadence of approximately one domain every 1.6 days, primarily across Cloudflare and DDOS-GUARD. A brief spike in provisioning also occurred between July 20 and July 22, during which seven domains were operationalized within a 72-hour window. This overall June and July tempo represents a measurable increase from earlier activity observed between April 1 and May 31, 2026, where a set of 28 root domains was provisioned at a less frequent rate of one every 2.2 days.
+On the date of publication of this blog, 7 of 8 still resolving phishing domains did not use wildcard DNS indicating that targets discovered through passive DNS data were likely specifically targeted by UNC6671.
+Figure 5: Root domain registrations
+New Techniques
+Since our last blog, the tactics across UNC6671 intrusions have been largely consistent; however, we have observed several new techniques.
+IT Helpdesk and Passkey Pretexts
+UNC6671 callers have continued to call targeted employees on their personal mobile numbers, circumventing corporate security controls. In at least some recent cases, the threat actor has spoofed the legitimate helpdesk phone number adding an air of legitimacy. During these phone calls, operating under the false pretext of an urgent helpdesk mandate to enable FIDO2 passkeys or update multi-factor authentication enrollment, the caller directs the employee to a lookalike credential-harvesting subdomain (e.g., [company].createssopasskey[.]com
+or [company].addssopasskey[.]com
+).
+EvasionTechniques
+UNC6671 increasingly relies on defense evasion to maintain account-level persistence and conceal its operations. In recent intrusions, the group used compromised email accounts to initiate unauthorized password resets for non-SSO enterprise applications. To prevent end-user detection or automated security alerts, operators systematically deleted password-reset confirmations, secondary security notifications, company-wide security alerts, and any alerts generated during modifications to account security or MFA configurations.
+Ransom Negotiations and Blockchain Analysis
+Between January 7, 2026, and May 12, 2026, GTIG reviewed 18 BlackFile Bitcoin wallet addresses receiving a total of 141.65 BTC, representing approximately $10.69 million USD at the time of the transactions. Notably, ransom payments to these wallets continued past the publicized Blackfile data leak site shutdown notice on May 11, 2026. Multiple significant cashout events observed in late April and early May confirm that financial operations proceeded without interruption during the rebranding phase.
+Initial ransom demands typically range from $1 million to upwards of $3 million USD. However, the extortion operators shifted demands during negotiations, often agreeing to reductions between 50% and 75% of the initial ransom demand. In over 53% of tracked cases in this timeframe, final payments averaged $750,000 USD (~10.2 BTC).
+Remediation and Hardening Guidance
+GTIG recommends that corporate defenders implement the following controls to mitigate identity-centric vishing, AiTM phishing, and programmatic SaaS exfiltration:
+-
+Enforce Phishing-Resistant Multi-factor Authentication: Mandate phishing-resistant authenticators such as FIDO2-compliant roaming security keys, passkeys, and platform authenticators (e.g., Windows Hello for Business, Okta Fastpass) across all SSO environments and enterprise identity providers (IdPs). These authenticators implement WebAuthn standard to enforce cryptographic origin binding between the authenticator and the specific domains it can authenticate to, rendering lookalike domains and AiTM proxies ineffective.
+-
+Integrate SaaS Applications and Cloud Platforms with SSO: Maintaining authentication standards across multiple platforms increases the propensity for configuration drift. Different SaaS applications require or support different security features. Integrating business-critical applications with a standard SSO platform such as Entra ID or Okta allows consistent application of security controls across disparate platforms.
+-
+Enforce Session Controls: Reduce session lengths to enforce re-authentication at least once per work day. Enforce idle session timeouts, especially for privileged access. These timeouts can be reduced further during active phishing campaigns. Enforce step-up authentication when accessing critical or sensitive resources. Utilize token theft mitigations within authentication platforms such as IP session binding, Device-Bound Session Credentials, or Continuous Access Evaluation.
+-
+Restrict Authentication to Trusted Network Sources: Utilize defined network zones coming from known sources such as corporate networks, VPN ranges, and Secure Access Service Edge (SASE) platforms. Define and enforce these ranges within SaaS apps or cloud platforms as well as within authentication policies in Entra ID or Okta.
+-
+Require Corporate-Managed Devices for Access: Enforcing that authentication comes from a corporate-managed endpoint with MDM and EDR reduces the attack surface and likelihood that an attacker can utilize an arbitrary device for access. Device checks can be configured as part of authentication policies in Entra ID or Okta.
+-
+Deploy Endpoint and Browser Credential Guarding: Enable Google Workspace Password Alert to trigger automated administrative alerts or resets if corporate password hashes are entered into unauthorized domains. For Microsoft 365 environments, configure Microsoft Defender SmartScreen and Credential Protection to block credential submissions on unverified sites.
+-
+Monitor IdP Logs for Abandoned Challenge Patterns: Query Okta and Microsoft Entra ID audit logs for MFA registration events (
+system.multifactor.factor.setup
+) that are immediately preceded by authentication failures (user.authentication.auth_via_mfa
+) or abandoned push challenges. -
+Audit UAL Telemetry for Direct Stream Exfiltration: Configure Security Operations Center (SOC) detection pipelines to treat
+FileAccessed
+events with the same criticality asFileDownloaded
+when theUserAgent
+string identifies a scripting library (python-requests
+,WindowsPowerShell
+,Go-http-client
+) or when the access volume exceeds normal human browsing thresholds. -
+Restrict and Alert on Residential Proxy Authentication: Create conditional access policies and anomaly alerts for SSO authentication attempts originating from commercial VPN providers (Mullvad, Private Layer) or unassociated residential broadband proxy pools (AT&T, Comcast, Charter) that diverge from established employee geographic baselines.
+Outlook and Implications
+The activity associated with UNC6671 highlights the fluidity of threat actor brands relative to persistent tactics, techniques, and procedures. While the extortion brands associated with this activity continue to multiply, the tradecraft across these operations remains anchored in helpdesk vishing, AiTM session interception, and SaaS exfiltration.
+We believe that this most likely reflects a coordinated group of threat actors operating multiple public extortion brands possibly in an effort to compartmentalize operations, hide overall breach volumes, and isolate any negotiation fallout. This assessment is supported by the tight infrastructure overlaps, shared vishing panel deployments, and overlaps in victim targeting observed across BlackFile, Redact, Pink, Helix, and Falcon. However, there are several other scenarios that could explain the broader dynamics across these brands:
+-
+Actor Splintering: Internal rifts, financial disputes, or operational security compromises routinely lead to group fragmentation. Former affiliates or splinter cells retaining access to shared initial access playbooks, panel code, and target lists can easily establish independent extortion fronts while continuing to execute identical TTPs.
+-
+Shared Ecosystem and Panel use: Separate threat groups may simply be leveraging the same commoditized phishing panels, voice-phishing callers, and shared infrastructure. As these AiTM panels and VaaS services become widely available, distinct threat actors can deploy matching infrastructure and pretexts without requiring direct organizational alignment.
+-
+Outsourced Extortion: The intrusion operators driving initial access and cloud data exfiltration could remain the same core group of actors, while the extortion and negotiation phases are outsourced to different actors.
+Regardless of whether this activity reflects a fractured threat group, outsourced extortion negotiators, or a broader affiliate network, the initial infection vector leveraged and goals of these campaigns is consistent. Organizations should prioritize phishing-resistant authenticators and behavioral SaaS auditing to disrupt these identity-centric attacks.
+Indicators of Compromise (IOCs)
+To assist the wider community in hunting and identifying activity outlined in this blog post, we have provided [indicators of compromise (IOCs) in a free GTI Collection for registered users](https://www.virustotal.com/gui/collection/68a3ad0b80290ff51410cc95d0b1e728d5ffaa933e2230b291bd48fbdc406756). At the time of publication, identified phishing domains have been added to Google Safe Browsing.
+While this collection provides a comprehensive list of IOCs, defenders should note that the majority of identified IP addresses are commercial VPN nodes, and actual source IPs tend to vary as the actor continuously cycles through new infrastructure. Furthermore, the domains are often stood up and used within minutes of registration; as such, they are provided primarily as examples of past naming conventions and usage patterns rather than as a primary mechanism for real-time blocking.
+Table 1: Indicators of compromise
+Network Infrastructure and Exfiltration Observables
+Table 2: Network infrastructure and exfiltration observables
+Scripting and SDK User-Agent Strings
+python-requests/2.28.1
+WindowsPowerShell/5.1
+Mozilla/5.0
+(X11;
+Ubuntu;
+Linux
+x86_64;
+rv:146.0)
+Gecko/20100101
+Firefox/146.0
+0811A9866E.com.okta.android.auth/8.18.0
+DeviceSDK/1.0.94
+Android/16
+Google/Pixel_9_Pro_XL
+Figure 6: Scripting and SDK user-agent strings
+Google Security Operations (SecOps) Detections
+Google SecOps customers have access to automated detection rules under the Okta and Microsoft 365 rule packs that identify the vishing, MFA modification, and programmatic streaming activity described in this report:
+-
+Okta Admin Console Access Failure
+-
+Okta Suspicious Actions from Anonymized IP
+-
+Okta MFA Factor Setup Following Abandoned Challenge
+-
+O365 SharePoint Bulk File Access or Download via PowerShell
+-
+O365 SharePoint High Volume File Access Events
+-
+O365 SharePoint Query for Proprietary or Privileged Information
+-
+Okta User Authentication with Suspicious Behavioral Flags
+Acknowledgements
+Special thanks to researcher ZachXBT for assisting with cryptocurrency analysis.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-4" class="article-body">
             <h2 class="article-title">Ransom Cartel Creator Gets 16 Years in Prison for Operating Ransomware-as-a-Service</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/08/ransom-cartel-creator-gets-16-years-in.html" target="_blank">Original Link</a></p>
             <div class="content-text">A federal judge in Alexandria, Virginia, sentenced [Maksim Silnikau](https://thehackernews.com/2024/08/belarusian-ukrainian-hacker-extradited.html) to 16 years in prison on August 5 for creating and running Ransom Cartel, the ransomware-as-a-service operation he stood up in 2021.
@@ -85,23 +323,53 @@ The Secret Service still lists [Tarasov as wanted](https://www.secretservice.gov
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-1" class="article-body">
-            <h2 class="article-title">CISA Flags TeamCity CVE-2026-63077 RCE Flaw Under Active Exploitation in the Wild</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/08/cisa-flags-teamcity-cve-2026-63077-rce.html" target="_blank">Original Link</a></p>
-            <div class="content-text">A newly patched security flaw impacting on-premise versions of JetBrains TeamCity has come under [active exploitation in the wild](https://www.cisa.gov/news-events/alerts/2026/08/05/cisa-adds-one-known-exploited-vulnerability-catalog), according to the U.S. Cybersecurity and Infrastructure Security Agency (CISA).
-The vulnerability in question is [CVE-2026-63077](https://thehackernews.com/2026/07/critical-teamcity-flaw-could-let.html) (CVSS score: 9.8), a case of deserialization of untrusted data that could allow an unauthenticated attacker with access to a TeamCity server to bypass authentication checks and execute arbitrary operating system commands with the privileges of the TeamCity server process.
-"JetBrains TeamCity contains a deserialization of untrusted data vulnerability that could allow unauthenticated remote code execution via the agent polling protocol," CISA [said](https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2026-63077).
-According to JetBrains, the vulnerability can be exploited by an unauthenticated attacker via the TeamCity agent polling protocol to sidestep authentication checks and execute arbitrary operating system commands.
-The exact impact varies depending on the privileges granted to the TeamCity server process. A successful attack can expose TeamCity data, configurations, and stored credentials, modify server state, and potentially compromise the integrity of build artifacts and downstream CI/CD pipelines, per JetBrains.
-It's currently not known how the vulnerability is being exploited in the wild, the identity of the threat actors behind the attacks, and the scale of such efforts. JetBrains has yet to update its advisory to confirm active exploitation.
-In light of the latest development, users running on-premise versions are recommended to apply the updates as soon as possible. Per Binding Operational Directive (BOD) 26-04, Federal Civilian Executive Branch (FCEB) agencies are required to prioritize patching high-risk vulnerabilities listed in the Known Exploited Vulnerabilities (KEV) catalog.
-The deadline by which federal agencies must apply software patches or mitigations for CVE-2026-63077 is August 8, 2026.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+        <div id="art-5" class="article-body">
+            <h2 class="article-title">The Art of Hunting Azure Cloud Secrets</h2>
+            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/the-art-of-hunting-azure-cloud-secrets" target="_blank">Original Link</a></p>
+            <div class="content-text">The Art of Hunting Azure Cloud Secrets
+Finding secrets in the cloud is what can turn a normal cloud test into a privilege escalation game changer. The approach to finding secrets is what may separate your next cloud penetration test from a finding expedition into a subscription or global administrative takeover.
+In this blog, I am going to introduce two tools that I am making public. The purpose of each tool is to minimize your time looking for secrets in Azure that probably should not be there.
+Microburst, a public tool made by NetSPI, allows you to enumerate Azure Assets using an authenticated account in Azure. To get the maximum benefit out of tools such as Microburst, subscription reader access is normally recommended prior to running. Microburst can be found at the following GitHub URL: [https://github.com/Netspi/Microburst](https://github.com/Netspi/Microburst)
+Once collection is finished, penetration testers will typically pivot to the data and pull secrets that may be stored in logic applications, VM extensions, automation accounts, and Azure resource deployment logs. The downside is that these actions require time and, in larger environments, you could inadvertently miss some secrets that could gain you privilege escalation in the cloud.
+I had AI assist me into building a fully functional toolset that would search for secrets collected by Microburst. You don’t need something powerful like Claude Mythos to come up with these actions. You just need to plan how you want to build it, ask the right questions, do code review, and ensure you are not introducing a tool that may produce several false positives. Microburst Secrets Hunter is meant to be a companion post exploitation tool to Microburst collection. It is done entirely offline using the data that was collected during Microburst enumeration. I have also included actional reporting with redactions that you can easily import into reporting tools with very little effort.
+Microburst Secrets Hunter can be downloaded at the following GitHub URL: [https://github.com/rootsecdev/MicroburstSecretsHunter](https://github.com/rootsecdev/MicroburstSecretsHunter)
+This blog would not be complete without a demonstration. To protect any guilty cloud environments, I have made a sample pack of tests that are comparable to output produced by Microburst. This will give basic command use syntax and how the sample output looks.
+I have added two separate options for usage depending on the environment you are operating in and how paranoid you are when importing modules versus running PowerShell directly.
+Sample usage:
+# Clone / copy this folder, then from a PowerShell prompt:
+.\Scan-MicroBurst.ps1 -Path .\MicroBurst-2026 -Verbose
+#Import Module and use cmdlet directly
+Import-Module .\MicroBurstSecretsHunter.psd1 -Force
+Invoke-MBSecretScan -Path .\MicroBurst-2026
+By default, all scans are redacted for reporting purposes. There is a switch you can use that will export full unredacted secrets data if you choose to do so.
+Sample Syntax to export redacted secrets:
+.\Scan-MicroBurst.ps1 -Path .\MicroBurst-2026 -ShowSecrets
+When running a scan, there will be an overview of findings by category.
+Two output formats are on by default. A CSV file will automatically generate. The CSV will help alleviate reporting when it comes to documenting where secrets are living and what they are providing access to. An .html file will also be in the output directory.
+The .html file is beneficial to use as a dashboard as you validate your secrets found in plaintext. You can filter by rule and severity. Severity should not be taken as gospel. I simply use it to prioritize secrets hunting based upon strategic value.
+To expand upon initial secrets hunting discovery, this blog will go into more depth around client secrets and how to determine if third-party applications living in Azure have some expanded cloud access.
+You've found a client secret. Does the application compromise get you into Azure or the Graph API?. To do this, the secret would have to be validated along with manual enumeration. Enumeration can get very noisy when you must run certain tooling such as AzureHound to see what type of access at scale the compromised application has. This can obviously be very time consuming. To aid in this process, I am releasing a second free public tool called, Secrets Stalker. Secrets Stalker is located at the following URL: [https://github.com/rootsecdev/SecretsStalker](https://github.com/rootsecdev/SecretsStalker)
+To get started, it is highly recommended that you install all requirements through a virtual environment and not break any system packages that may be installed on your machine.
+Example:
+virtualenv -p python3 venv
+source venv/bin/activate
+pip3 install .
+Once installation is completed, you can run secrets stalker a few different ways. I recommend passing credentials with environment variables, so as to keep it out of your shell history.
+export SS_TENANT=contoso.onmicrosoft.com
+export SS_CLIENT_ID=11111111-2222-3333-4444-555555555555
+export SS_SECRET='<client-secret>'
+python -m secret_stalker
+To begin, I have already exported my secrets into an environment variable and have issued the following command:
+python -m secret_stalker
+You can see that a valid secret has been returned along with the expiration date. There is also a token acquisition between Graph and Azure Resource Manager (ARM). At this time, these tokens are not exportable. This is simply meant to show that we have acquired a valid client secret to an application.
+Moving down further, this this application does have Graph permissions. I thought it was equally important to show in ARM if the applications have management groups or subscriptions that are visible to the application. It’s an important data point if the application would have expanded access into an Azure subscription. I have also included privilege escalation paths. The example below shows the application can write to directory objects such as users and groups. This is probably my favorite escalation path because you can generally take over subscriptions if there is an assigned group with ownership access. I consider subscription take over more of a high-value target than global administrator RBAC roles. This is because subscriptions can sometimes be less monitored and you can perform privilege escalation with a better chance of going undetected.
+I did stop short of fully weaponizing Secrets Stalker. The public release will simply give penetration testers and Red Teamers the ability to see how much access a client secret has. If you want to explore actual privilege escalation, I would visit the BloodHound Attack Research Toolkit located at the following URL: [https://github.com/BloodHoundAD/BARK](https://github.com/BloodHoundAD/BARK)
+Happy cloud secrets hunting and hacking!</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-2" class="article-body">
+        <div id="art-6" class="article-body">
             <h2 class="article-title">Ransom Cartel ransomware creator sentenced to 16 years in prison</h2>
             <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/ransom-cartel-ransomware-creator-sentenced-to-16-years-in-prison/" target="_blank">Original Link</a></p>
             <div class="content-text">Maksim Silnikau, the creator and administrator of the Ransom Cartel ransomware operation, was sentenced to 16 years in prison for his role in ransomware attacks against at least 18 companies worldwide. [...]
@@ -111,7 +379,7 @@ The deadline by which federal agencies must apply software patches or mitigation
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-3" class="article-body">
+        <div id="art-7" class="article-body">
             <h2 class="article-title">Turning Enterprise Update Servers Into Backdoor Factories (0_o) – Part 1</h2>
             <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/08/05/turning-enterprise-update-servers-into-backdoor-factories-part-1/" target="_blank">Original Link</a></p>
             <div class="content-text"><p>TL;DR: This is part 1 of a 2 part blog series sharing what I have discovered in my Windows Service Update Service (WSUS) research. If the WSUS database is configured on a separate server from the upstream WSUS server, we can coerce the WSUS computer account to the WSUS database and establish a SQL session. [&#8230;]</p>
@@ -122,7 +390,7 @@ The deadline by which federal agencies must apply software patches or mitigation
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-4" class="article-body">
+        <div id="art-8" class="article-body">
             <h2 class="article-title">From open lures to cloaked gates: How a macOS ClickFix campaign learned to hide</h2>
             <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/08/05/macos-clickfix-campaign-learned-hide/" target="_blank">Original Link</a></p>
             <div class="content-text">Microsoft Threat Intelligence observed a macOS ClickFix campaign distributing infostealers, [including MacSync and Atomic Stealer (AMOS)](https://www.microsoft.com/en-us/security/blog/2026/05/06/clickfix-campaign-uses-fake-macos-utilities-lures-deliver-infostealers/), through a large cluster of look-alike domains. The campaign evolved from broadly serving ClickFix lures to using a server-side browser-fingerprinting gate that shows the lure primarily to visitors whose environment appears consistent with a genuine macOS browser. This cloaking limits visibility for crawlers, sandboxes, and some automated analysis workflows. The blog details the domain pattern, fingerprinting checks, infection chain, detection coverage, and hunting pivots that defenders can use to identify related activity.
@@ -235,414 +503,6 @@ Review our documentation to learn more about our real-time protection capabiliti
 [Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)- Learn more about
 [securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection) - Evaluate your AI readiness with our latest
 [Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/).</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-5" class="article-body">
-            <h2 class="article-title">TLS Encryption and Compliance</h2>
-            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/tls-encryption-and-compliance" target="_blank">Original Link</a></p>
-            <div class="content-text">TLS Encryption and Compliance
-Many compliance frameworks require the use of encryption to protect sensitive data transmitted across the Internet, and Transport Layer Security (TLS) is often used to meet these encryption requirements. Unfortunately, I often encounter clients that do not understand how TLS works and, as a result, have deployed insecure TLS configurations that cause compliance failures.
-This post will provide a high-level overview of TLS and the steps that should be taken to implement it in a secure manner that will meet just about any compliance requirements. A deep dive will then be taken to help understand how TLS works and why these configuration steps are important.
-This post does not cover the specific requirements of any framework. Readers with PCI DSS requirements may want to review Steve Maxwell’s previous posts on Strength Training with Transport Cryptology [Part 1](https://trustedsec.com/blog/strength-training-with-transport-cryptology-part-1) and [Part 2](https://trustedsec.com/blog/strength-training-with-transport-cryptology-part-2).
-Overview
-At a high level, TLS can be thought of as a protocol for two (2) endpoints to:
-- Verify the identities of one (1) or both endpoints via the use of special files called certificates that contain cryptographic information
-- Conduct a secure negotiation for the purpose of identifying an appropriate collection of cryptographic algorithms, known as a cipher suite, that both endpoints support
-- Use the agreed-upon cipher suite to protect communications from unauthorized interception, impersonation, and alteration
-TLS problems that can weaken security and cause compliance issues include:
-- Flaws can be found in the TLS protocol itself that could allow an attacker to compromise the encryption, which requires some combination of:
-- Disabling older versions of the protocol
-- Installing vendor patches that address the flaws in later versions of the protocol
-- Implementing configuration settings to work around the flaws on a per-installation basis
-- Weaknesses can also be found in the cryptographic algorithms used by the TLS protocol, which requires disabling the cipher suites that use these weak algorithms, even in the latest versions of the TLS protocol.
-- Mismanagement of cryptographic certificates and keys can allow attackers to impersonate endpoints and/or decrypt sensitive data so they can read or alter it.
-- Programmers may incorrectly implement the TLS protocol and cryptographic algorithms or otherwise introduce exploitable bugs in the software that must be addressed by vendor patches.
-Common Problems and Solutions
-Common compliance problems related to TLS encryption and their solutions (which are each covered in more detail below) include:
-Problems | Solutions |
-|---|---|
-Leaving old, vulnerable TLS and/or SSL versions enabled |
-|
-Leaving old, weak TLS cipher suites enabled |
-|
-Using TLS certificates with weak keys or signatures |
-|
-Using self-signed TLS certificates inappropriately |
-|
-Using and/or accepting expired TLS certificates |
-|
-Using and/or accepting TLS certificates with an incorrectly defined or mismatched domain |
-|
-Failing to manage cryptographic keys |
-|
-Using TLS software that has not been FIPS 140 validated when required (usually when handling information on behalf of the U.S. government) |
-|
-Leaving non-FIPS cryptographic algorithms or features enabled when FIPS 140 validation is required |
-|
-The sections below help explain what each of these mean, why they are problems, and how they can be addressed.
-TLS Explained
-A TLS implementation consists of what can be considered five (5) discrete parts, each of which is covered below:
-- The protocol: A set of standardized procedures for negotiating which cryptographic algorithms to use
-- Cipher suites: A set of standardized cryptographic algorithms for rendering information unreadable and verifying that information hasn’t been altered
-- Certificates: A standardized file that can be used to cryptographically validate that a device is what it claims to be
-- Key management: The handling of the cryptographic keys used during the encryption and decryption processes
-- Software implementations: Software that implements the negotiation protocols, cipher suites, certificate generation, and key management processes
-Negotiation Protocol
-There is a common misunderstanding that TLS (short for Transport Layer Security) and its predecessor SSL (Secure Sockets Layer) are themselves a type of encryption. In reality, these are protocols for two (2) devices to securely negotiate how they will use encryption to secure their communications. A reference to the version of TLS or SSL—e.g., TLS 1.3 or SSL 3.0—refers to the version of the protocol that determines the procedures and rules for the negotiation process. Each version of the TLS and SSL protocol contains a standardized list of supported standard cryptographic algorithms that the devices can choose from.
-The SSL and TLS protocols have been updated occasionally since the first SSL release in 1995. For our purposes, the change from SSL to TLS can be considered a change in name only, and the SSL versions can be thought of as previous versions of TLS. Most services that support TLS, such as web servers, mail servers, VPNs, VoIP, etc., can support multiple versions of the TLS protocol simultaneously. This allows new versions of TLS to be rolled out without immediately disabling the previous versions and breaking connectivity with other devices that do not yet support the latest version.
-An update to TLS typically:
-- Addresses weaknesses in the protocol itself that could allow an attacker to affect the negotiation process
-- Adds new cipher suites to allow the use of newer and more secure cryptographic algorithms
-- Removes old cipher suites with cryptographic algorithms that are no longer considered secure
-The security of this negotiation protocol is important: If an attacker is able to intercept and alter the negotiation between the two (2) endpoints (a man-in-the-middle (MitM) attack) the attacker may be able to convince the endpoints to use weak encryption (or no encryption at all), thereby allowing the attacker to intercept, read, and potentially alter the communication itself. It’s important that organizations disable older, weak versions of TLS and SSL so that a MitM cannot trick the endpoints into falling back to an insecure version of the protocol that would allow this kind of attack.
-As of 2026:
-- TLS version 1.3, published in 2018, is the latest version and is widely supported.
-- TLS version 1.2, published in 2008, is still considered secure if properly configured and is widely supported.
-- All previous versions of TLS (1.0 and 1.1), as well as all versions of SSL, are considered insecure and deprecated and should no longer be used or enabled.
-At least one (1) matching TLS version must be enabled on both endpoints to establish a TLS connection, but the full list of enabled TLS versions does not need to match.
-Cipher Suites
-What is a Cipher Suite?
-Modern encryption is a complex process, as different types of cryptographic algorithms are useful for different purposes (e.g., protecting a message from eavesdropping vs. verifying a message hasn’t been altered). Combining these different types of algorithms into what is known as a cipher suite allows a much more effective and efficient encryption solution that can leverage the relative strengths of each algorithm while avoiding the weaknesses.
-Many cryptographic algorithms can be used with different key lengths, where a longer key is stronger but less efficient than a shorter key for the same algorithm. Similarly, some cryptographic algorithms may be used in different modes that each have pros and cons depending on how they are used.
-A TLS cipher suite will specify the algorithms with key lengths and modes where appropriate. A single algorithm may show up in many different cipher suites, each with a different combination of modes, key lengths, and other companion algorithms used for different purposes. More on cipher suite naming below.
-Cipher Suites in TLS
-Each version of the TLS protocol contains a standardized list of cipher suites. When a TLS session is initiated, the endpoints will communicate with each other to identify which cipher suites are supported by each endpoint and then agree on which of these supported cipher suites to use.
-Cipher suites can be individually disabled in endpoint configurations and thereby removed from the available options during the TLS negotiation process, regardless of which versions of the TLS protocol are enabled. At least one (1) matching cipher suite must be enabled on both endpoints to establish a TLS connection, but the full list of enabled cipher suites does not need to match.
-This functionality exists in case weaknesses are found in a specific cryptographic algorithm, in the way a cryptographic algorithm is used, or if cryptographic key length is determined to be too weak for continued use. It’s much easier to advise users to disable a single cipher suite in the TLS configuration than to roll out a whole new version of TLS each time a weakness is found in an algorithm.
-Organizations should routinely monitor for security alerts about encryption flaws and disable cipher suites that use insecure algorithms. The definitive source of information on recommended cipher suites is the [IANA TLS Parameters list](https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml). When reviewing the “Recommended” column in this list:
-- “Y” (for “Yes”) indicates cipher suites that should be used.
-- “D” (for “Deprecated”) indicates cipher suites that should not be used.
-- “N” (for “No”) indicates cipher suites that have not reached consensus, have limited applicability, or are intended only for specific use cases (these are usually not used).
-Cipher suites that are deprecated or not recommended usually have a link in the Reference column indicating why they have this status.
-The DTLS-OK column indicates whether the cipher suite can be used with TLS over datagram protocols (e.g., UDP), as opposed to more common TLS connections over TCP.
-Some compliance frameworks reference [NIST SP 800-52](https://csrc.nist.gov/pubs/sp/800/52/r2/final) for guidance on acceptable cipher suites (and TLS protocol versions), but this document is updated infrequently, so it is not of much practical use beyond defining the minimum requirements for U.S. government agencies.
-[Ciphersuite.info](https://Ciphersuite.info) is another resource often referenced by vulnerability scan tools to identify recommended, secure, weak, and insecure cipher suites. The site also has search capabilities that make it easy to list cipher suites in [TLS v1.2](https://ciphersuite.info/cs/?sort=sec-desc&singlepage=true&tls=tls12) and [TLS v1.3](https://ciphersuite.info/cs/?tls=tls13&sort=sec-desc&singlepage=true). However, this is an independent project that may fall behind the IANA recommendations. A quick check performed as this blog was being written shows some algorithms marked as “Secure” on Ciphersuite.info are marked as not recommended on the IANA list.
-Cipher Suite Names
-The name of a cipher suite identifies each of the cryptographic algorithms and key lengths it uses for each cryptographic purpose. These are presented here because it is important for system administrators to be able to interpret cipher suite names to recognize which cipher suites should be disabled if a particular algorithm or key length is found to be weak.
-A standardized cipher suite name format exists, but unfortunately, it is not universally adhered to (some software might use a dash instead of an underscore and/or omit the “TLS” and “WITH” text shown below). Cipher suite names in tools should be similar to the formats shown below, where the text in [brackets] is a stand-in for the algorithm names and key lengths.
-Each cipher suite is also assigned a unique code that may be displayed by some tools. These codes are a pair of 256-bit hexadecimal numbers and are typically displayed as shown in the examples below.
-| TLS 1.2 and Below | TLS 1.3 |
-|---|---|---|
-Algorithm Types |
-|
-|
-Name Standard | TLS_[Key_Exchange]_[Authentication]_WITH_[Encryption]_[Message Authentication] | TLS_[Authenticated_Encryption_with_Associated_Data]_[Hash] |
-Example Name | TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 | TLS_AES_256_GCM_SHA384 |
-Example Interpretation |
-|
-|
-Example Code |
-|
-|
-Certificates
-What is a Certificate?
-TLS certificates are used to verify the identity of one (1) or both ends of a TLS connection at the start of the negotiation process. Without the correct use of certificates, an attacker could impersonate the endpoints and perform a MitM attack whereby the attacker intercepts, decrypts, and reads or potentially alters traffic from endpoints before re-encrypting the traffic and retransmitting it to the intended recipient.
-A TLS certificate is a specially formatted file containing the public part of a two (2) part encryption key that can be shared to enable TLS communication. The other private part of the key is stored on one (1) or more devices that the certificate represents and must be kept secret. Additional data in the certificate can identify the certificate owner, the domains for which the public key is considered valid, an expiration date, and other details.
-A device uses TLS to verify the identity of a remote endpoint by requesting a certificate file from the remote endpoint, checking the trust status of the certificate signatures as described below, and exchanging messages to verify that the remote endpoint possesses the private key associated with the public key found in the certificate file.
-In some communications only the identity of one (1) endpoint will be verified, for example a web browser connecting to an online banking website will use a certificate to verify the bank’s web server isn’t being impersonated while the bank’s web server will verify the user’s identity via a password and multi-factor authentication rather than a certificate. In other communications the identity of both endpoints matter and will be verified, e.g., both endpoints of a site-to-site VPN will typically verify each other’s identities using certificates to ensure neither endpoint is being impersonated.
-Certificate Signing and Trust
-An attacker can generate their own keys and certificate that claim to be for any domain in an attempt to impersonate endpoints, thereby launching a MitM attack. To solve this problem, certificates must be cryptographically signed by an authority that attests the certificate is legitimate, and TLS implementations must verify these signatures to determine if the certificate can be trusted. There are three (3) ways this is accomplished, each of which has its own use cases:
-Certificate Signing Type | Description | Use Case |
-|---|---|---|
-Public CA | A well-known third-party authority verifies the identity of the organization before cryptographically signing certificates with the third party’s keys. | Certificates used in services that will be widely available to the public, such as public-facing websites and email exchanges. Any system on the Internet can verify that the certificate is valid using the widely distributed keys of the public certificate authorities (CAs) that are hard-coded into most operating systems, web browsers, and other relevant software. Can also be used anywhere a private CA could be used. |
-Private CA | An organization creates its own set of master keys that can be used to cryptographically sign other certificates they generate. | Certificates widely used within a single organization or a group of organizations that work closely together—e.g., for internal applications and VPNs. The private CA’s own certificate must be configured as trusted on any devices that will need to verify certificates issued by the private CA. This will require distributing the public key to any other organizations that will need to verify the certificates. Avoids the cost and time required for identity verification associated with a public CA but adds the overhead of key management |
-Self-Signed | A certificate is cryptographically signed using its own key. | Only in tightly controlled situations, such as a site-to-site VPN, or where security doesn’t matter (e.g., test environments). Self-signed certificates cannot be verified via a CA, so endpoints must be configured to only trust the specific known-valid self-signed certificates when they are used for anything that requires effective security (see Certificate Pinning below). |
-Using the wrong type of certificate signature often causes compliance issues.
-It is fairly common to encounter self-signed certificates in contexts where they are inappropriate. It is also somewhat common to encounter self-signed certificates in contexts where they could be appropriate, but the organization that issued the certificate did not properly configure the endpoints to exclusively trust specific authorized self-signed certificates, thereby rendering TLS ineffective. Organizations should use public or private CAs whenever possible and carefully configure systems to only trust authorized certificates when self-signed certificates are used.
-Using a private CA requires strong internal process and technology controls to protect the private CA and its keys. An attacker that compromises the CA, including an insider threat with access to the CA, can issue rogue certificates that can be used to impersonate other systems. Organizations that are not mature enough to manage a private CA should use a public CA instead.
-Certificate Pinning
-Most software that implements TLS will, by default, attempt to verify a certificate’s signature using a set of public CA certificates preloaded into the software by the vendor (and potentially additional certificates associated with a private CA configured by an individual organization) and then accept any certificate that passes the signature verification test.
-An alternative to this method of operation is to “pin” a certificate. This is where TLS software is configured to only accept a specific certificate for a specific host and reject all other certificates.
-Certificate pinning is strongly recommended when using a self-signed certificate in a production environment. This is because self-signed certificates will never pass the default signature verification test, as they are not signed by any public or private signing authorities. Configuring a TLS instance to allow certificates that fail signature verification so self-signed certificates can be used without pinning would allow an attacker to impersonate any system.
-Certificate pinning can also be useful with certificates signed by a public or private CA in high-security applications. Pinning a specific certificate prevents the TLS software from accepting rogue certificates for a specific host, even if an otherwise valid public or private CA is compromised.
-Certificate Generation
-Certificates both contain components of and are generated by cryptographic algorithms. Using insecure or weak cryptographic algorithms or key lengths when generating certificates may allow certificates to be forged and TLS connections to be compromised.
-Organizations should take care to use strong algorithms and key lengths when generating keys to be used in a certificate and, if using a private CA, sign the certificates using strong signature algorithms. As of publication, ECC keys are gaining favor over the long-used RSA keys due to equivalent security with much shorter key lengths. 256-bit ECC keys offer a moderate level of security roughly equivalent to 2,048-bit RSA keys; SHA-256 is typically used for the signature.
-Certificate Expiration
-Organizations often create compliance issues by using expired certificates. Certificates have expiration dates so that attackers cannot use an otherwise legitimate certificate forever if the corresponding private key is compromised. Allowing the acceptance of expired certificates renders TLS protection ineffective over the long term.
-Organizations should always renew certificates prior to expiration and configure systems to reject expired certificates.
-Certificate Domains
-Organizations also create compliance issues by failing to match the domain of an endpoint to the domain listed in the certificate. The domain information in the certificate is used to validate that the endpoint is within the expected domain. Allowing certificates with mismatched domains can also render TLS protection ineffective.
-A domain mismatch often occurs when connecting to an IP address rather than a domain name or when an endpoint has more than one (1) domain name assigned (e.g., a public-facing name for external users and a private-facing name for internal users). A single host can have certificates that cover multiple domain names and IP addresses to allow many types of connections without domain mismatches.
-Domains in certificates can be as broad or narrow as necessary, such as “*.trustedsec.com” or “www.trustedsec.com”. Best practice is to define the domain in a certificate as narrowly as possible to limit the potential damage if the private key associated with the certificate is compromised. A compromised private key can be used to impersonate any system with the domain of the associated certificate.
-Organizations should generate certificates with narrow domain settings for all appropriate domain names and IP addresses and configure systems to reject certificates with mismatched domain names.
-Key Management
-What is Key Management?
-The best encryption in the world can be rendered useless if the encryption and decryption keys are improperly generated or compromised due to poor handling. Key management is the process of securely generating, storing, and distributing cryptographic keys so that encryption remains effective.
-Specialized key management software or HSMs can be used to streamline the key management process by securely implementing and automating the core cryptographic functions that are referenced throughout this section.
-Management of cryptographic keys is a complex topic that could warrant its own blog post. A very deep dive into this topic can be found in [NIST SP 800-57](https://csrc.nist.gov/Projects/Key-Management/Key-Management-Guidelines).
-Key Generation
-In addition to choosing strong algorithms and key lengths, organizations need to consider the source of data used to generate keys. Randomness is required to generate strong keys that an attacker can’t predict. The importance of random number generators cannot be overstated. [Encryption backdoors](https://www.reuters.com/article/us-usa-security-rsa-idUSBRE9BJ1C220131220/) have been created via supposed random number generators that create predictable keys, and these [backdoors have been exploited](https://www.wired.com/2015/12/researchers-solve-the-juniper-mystery-and-they-say-its-partially-the-nsas-fault/) by unknown actors.
-Truly random data is extremely difficult to generate in software due to the deterministic nature of off-the-shelf computing hardware, so complex algorithms have been created to generate pseudorandom data that simulates randomness as close as possible.
-Keys that are used in high-security applications, especially private CA master keys, should be generated using cryptographically secure pseudorandom number generators (CPRNGs) or (preferably) hardware random number generators. Encryption software may contain CPRNG capabilities. Key management software and HSMs will almost certainly contain CPRNG capabilities and could also support hardware key generation.
-Key Storage
-The private keys associated with a TLS certificate must be protected, because an attacker that compromises a private key can decrypt communications using the corresponding certificate or impersonate the any system within the domain covered by the certificate.
-Private keys associated with private CAs are critical, as they can be used to generate fraudulent certificates that appear to be legitimately signed by the organization’s CA. This would allow an attacker to impersonate any system within the organization, and potentially other systems outside the organization. Private keys associated with public CAs are even more critical, as their compromise has Internet-wide impersonation consequences due to the ability to forge certificates for any domain, as occurred during the [2011 DigiNotar breach](https://slate.com/technology/2016/12/how-the-2011-hack-of-diginotar-changed-the-internets-infrastructure.html).
-Protecting private keys is difficult to accomplish, however, because both TLS endpoints and CAs require private key access in order to perform their functions. This is another area where HSMs may help for high-security applications, as it is much more difficult for an attacker to extract a key from an HSM than it is to copy a key from a file.
-Other methods to secure private keys include splitting the private key into parts that are stored separately and/or encrypting the private key itself with yet another key (which should be stored separately from and be at least as strong as the key being protected). These techniques are usually utilized with keys that are used infrequently, such as master keys for a private CA, and difficult to use on keys that are constantly active (e.g., the live keys on a service that uses TLS).
-Storing the private key in as few locations as possible and allowing access to the fewest number of people possible is also recommended, as it reduces the number of opportunities for a key to be compromised.
-Key Distribution
-As with key storage, key distribution is critical because it might lead to unintentional key storage. For example, emailing a private key results in the key being stored for an indeterminate amount of time on the email server as well as any devices that receive the email. Similarly, keys distributed via removable media may be retrieved from the media—even after deletion—unless the media is properly sanitized.
-Detailed procedures should be created to control how private keys are distributed to maintain the security of the keys during and after the process. This could include encrypting the private keys while they are being distributed.
-Key Inventory
-Organizations should maintain an inventory with the details of the various cryptographic keys and certificates they have generated. This allows organizations to retire keys and certificates when weaknesses are found in the algorithms used or if a key is compromised.
-Similarly, organizations should maintain an inventory of the TLS software, key management software, and HSMs in use so that relevant vulnerabilities can be quickly identified and patched.
-Software Packages
-The TLS protocol, and the cryptographic algorithms it uses, are all defined in open public standards that can be implemented by anyone. Using the TLS in the real world requires the protocol and algorithm standards to be implemented in software.
-As with all software, bugs are a possibility that could create vulnerabilities, either via incorrect implementation of the protocol or algorithms or through flaws that allow direct attacks on the software itself. Organizations must remain vigilant for vendor security updates and patches that affect their TLS encryption software and libraries.
-Effectively managing TLS vulnerabilities requires understanding what TLS implementation software is using. Common scenarios include:
-- TLS libraries embedded in operating systems such as the Security Support Provider Interface (SSPI) API in Windows and the Network Framework used across Apple’s various operating systems
-- Open source libraries, such as GnuTLS, LibreSSL, and OpenSSL, which are often used by Linux, BSD, and other open source, Unix-style software
-- Commercial TLS libraries
-- Software packages may contain their own implementation of TLS rather than relying on well-known libraries
-FIPS 140 Validation
-What is commonly referred to as “FIPS Encryption” is actually a reference to software or hardware validated using FIPS 140, one (1) of many other Federal Information Processing Standards that cover a variety of topics. FIPS 140 establishes security requirements for cryptographic software and hardware. Vendors that have created cryptographic software and/or hardware can submit their products to independent labs for verification that the products meet all of the FIPS 140 requirements.
-Note that it is the software/hardware implementation of the encryption algorithms that is validated, not the underlying cryptographic algorithms or the TLS protocol itself, as these are already standardized. FIPS 140 is essentially ensuring that the software/hardware has correctly implemented the standardized protocols and algorithms in a way that is resistant to attacks.
-U.S. Federal agencies are required to use cryptographic products that have been validated against FIPS 140, but private organizations are generally free to use non-validated products. Organizations handling information on behalf of the U.S. government may be contractually required to use FIPS 140 validated encryption to protect certain information handled on behalf of the government. Private organizations that voluntarily choose to use FIPS 140 validated products can be assured that the software has been independently reviewed.
-While an organization could be using software or hardware that is FIPS 140 validated, there may still be some configuration settings that must be applied to maintain compliance. This might be as simple as enabling a “FIPS 140 mode” or may require disabling specific features or algorithms that did not go through the FIPS 140 validation process. Organizations with FIPS 140 requirements should check vendor documentation for details.
-FIPS 140-2 is currently being replaced with FIPS 140-3. FIPS 140-2 validations will be retired on September 21, 2026, but organizations subject to federal requirements can continue to purchase them unless told otherwise. Organizations with FIPS 140 validation requirements should consider selecting FIPS 140-3 validated solutions for future purchases when feasible.
-A list of FIPS 140 validated encryption modules is [available from NIST](https://csrc.nist.gov/projects/cryptographic-module-validation-program/validated-modules/search).</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-6" class="article-body">
-            <h2 class="article-title">Hotel Wi-Fi attacks use custom malware to breach Microsoft 365 accounts</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/hotel-wi-fi-attacks-use-custom-malware-to-breach-microsoft-365-accounts/" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft has linked a global campaign targeting hospitality Wi-Fi networks to the Russian threat actor Midnight Blizzard, also known as APT29. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-7" class="article-body">
-            <h2 class="article-title">Read This Before You Buy That TV Streaming Stick</h2>
-            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/07/read-this-before-you-buy-that-tv-streaming-stick/" target="_blank">Original Link</a></p>
-            <div class="content-text">Security experts have been sounding the alarm for years about the risks of using generic TV boxes that promise unlimited content streaming for a one-time fee, warning that they secretly rent the user’s Internet connection out to strangers. But a groundbreaking new analysis finds these devices also routinely spoof themselves as mobile phones clicking ads on AI-generated websites as part of a sprawling operation that seeks to defraud online merchants and advertising networks.
-Pedro Falé is a threat researcher with the security firm Bitsight. Falé told KrebsOnSecurity he was able to peer inside a vast and complex ad fraud network by registering an expired domain name that was used to coordinate fake ad clicks across a particularly popular brand of these streaming devices known as H96.
-Falé said the domain he scooped up was previously used for telemetry, periodically collecting full hardware information and the entire list of installed apps from tens of thousands of H96 streaming sticks plugged into television sets around the globe. But upon inspecting the traffic being funneled to the domain, he discovered nearly all of the TV boxes transmitting data claimed to be mobile phone models from a variety of manufacturers, including Samsung, Vivo, Huawei, and Xiaomi.
-“We noticed something was wildly wrong,” Falé said. “Multiple devices reporting to this factory Android TV Box backdoor were ‘phones.'”
-The researcher found all of the devices reported having the same two apps installed, and that those apps were made by a company called Zhejiang Fengwo IoT Technology Ltd, an entity founded in 2019 in mainland China which operates an ad-publishing portfolio under the name Fengwo Group. Further investigation into the Fengwo Group revealed it has registered multiple patents that match the inner workings of these apps.
-“Bitsight TRACE identified several Hong Kong, Singapore, and single person ‘legal’ shell identities used to collect the monetization and traced the operation back to a mainland China company known as Zhejiang Fengwo IoT Technology Co., Ltd, which operates under the Fengwo Group,” Falé [wrote](https://www.bitsight.com/blog/fuyao-enterprise-building-ad-fraud-empire-ai-and-kids-coding-blocks) in a report released today about their findings.
-Falé said an analysis of the apps shows they help to coordinate an ad fraud network that uses these H96 devices as a captive traffic source to click on ads at AI-generated websites operated by the Fengwo Group.
-Bitsight discovered the websites contain machine-generated news articles and graphics across a range of categories, including finance, health, education, gaming, music and food blogs. But they also found none of those sites displayed ads unless the device visiting the page matched the spoofed mobile profile of these H96 devices.
-AI DIGITAL HUMANS
-The domain for the Fengwo Group — fwgcloud[.]com — claims the company is “redefining the boundaries of human-AI interaction,” and that it has created more than 120,000 “AI digital humans” available to rent for everything from emotional companionship to 24/7 customer service and creative design.
-Falé said the Fengwo Group’s domain shared its SSL certificate data with other domains associated with the apps found on H96 devices, specifically the phone spoofing mechanism. He noted the domain also has an internal wiki platform that directly ties the Fengwo Group to a proprietary implementation of a Google-built visual programming language called Blockly, which was originally designed to help kids learn how to write software.
-According to Bitsight, the Fengwo Group’s employees use Blockly to build the sham websites, allowing low-skilled operators to drag blocks of code together in their Blockly editor — without any need to understand what the underlying code blocks do or how they work.
-“An operator can drag blocks together in their Blockly editor, to define each fraud routine, given a task type,” reads Bitsight’s report. “Once the routine is saved, it gets exported as JavaScript and uploaded to the S3 buckets. An operator doesn’t need as much understanding of the underlying technicalities, as it is all set in place for ease of use.”
-Bitsight even found one of the Fengwo Group app developers mentioning exactly these advantages, noting the developer remarked that “only a small number of highly-skilled developers are needed to build the template execution-unit images,” and that “developers who create execution units from those templates have significantly lower technical requirements, greatly reducing the company’s operating costs.”
-Falé said if a user’s H96 streaming stick is selected for a specific fraud task, it will be pushed the appropriate Blockly module according to the task desired, which can include silently launching a web browser, visiting websites, browsing pages, managing tabs, and clicking on ads.
-To ensure the TV boxes masquerading as mobile phones can reliably click on ads displayed via the AI-generated websites, the Fengwo group “fuses three vision and reasoning systems into a single interface,” allowing the bots to correctly identify an ad on the webpage and navigate the site much like a human would, the Bitsight report observed.
-TV ON? PROXY. TV OFF? AD FRAUD
-Bitsight found the H96 devices were either relaying residential proxy traffic or participating in ad fraud, but never both at the same time. In fact, they concluded that when these TV boxes detect an HDMI signal from an attached television — indicating the user intends to stream video content — the box is usually functioning as a residential proxy. When the TV is off, it switches back to waiting for ad fraud jobs.
-Falé said he believes the TV boxes are set up this way because its ad fraud activities are far more resource intensive and could interfere with the device’s stated purpose — streaming video content over the Internet.
-Despite repeated [warnings from the FBI](https://www.fbi.gov/investigate/cyber/alerts/2025/home-internet-connected-devices-facilitate-criminal-activity) and security industry leaders about the security and privacy risks of using these streaming devices, major e-commerce providers like Amazon, Best Buy, Newegg and others continue to sell hundreds of different models and brands that bundle unofficial versions of Google’s Android operating system and are frequently marketed ([via online influencers](https://krebsonsecurity.com/2025/11/is-your-android-tv-streaming-box-part-of-a-botnet/)) as a way to access a broad array of streaming services and live broadcasts without a subscription.
-In addition to enlisting the user’s TV box in ad fraud networks, these off-brand streaming devices almost universally come with residential proxy software pre-installed. This software rents the user’s Internet address out to anonymous paying customers, who run the gamut from aggressive content scraping firms to ticket scalpers and outright cybercriminals.
-What’s more, because these generic (and generally dirt cheap) TV boxes are all horribly insecure by default and bereft of any kind of authentication, installing one on your home or office network only invites further mischief. In January, the proxy tracking service Synthient documented how multiple botnets had [rapidly enslaved millions of TV boxes](https://krebsonsecurity.com/2026/01/the-kimwolf-botnet-is-stalking-your-local-network/) using a complex interplay of security vulnerabilities in both the residential proxy software and the streaming devices themselves.
-SHOW ME THE MONEY
-Bitsight said it tracked approximately 38,000 TV boxes globally phoning home to the expired Fengwo Group domain, and based on that number the report estimates this ad fraud network brings in revenues of close to $50,000 a day (not counting substantial revenue from the residential proxy side of the business). However, Falé emphasized that these estimates are highly conservative and based on telemetry from just one of the Fengwo Group’s core (but older) domains.
-As for the Fengwo Group’s claim to have 120,000 “digital humans” at their disposal, Bitsight’s report concludes it could be just a clever marketing scheme and/or a way to avoid drawing suspicion to the company’s operations.
-“Historically, when dealing with proxy services or DDoS, we sometimes see these websites undertake inconspicuous facades, so as not to advertise their DDoS capability or botnet size,” Falé wrote in the report. “This could also be the case here.”
-If the Fengwo Group truly does have tens of thousands of “AI humans” at its beck and call, it does not appear to have dedicated any of them to fielding inquiries from its own website. KrebsOnSecurity sought comment from the Fengwo Group by emailing the contact address listed on the company’s homepage, but the request bounced back with the reply, “Your message couldn’t be delivered to postmaster@fwgcloud[.]com. Their inbox is full, or it’s getting too much mail right now.”
-As Bitsight’s analysis shows, when it comes to TV boxes and streaming sticks, it’s best to stick to name brands from reputable manufacturers, and then to be sparing and careful with any apps you choose to install on the device — as [many of those can bundle residential proxy software as well](https://krebsonsecurity.com/2026/07/lg-to-ban-residential-proxies-from-smart-tv-apps/). Google says consumers can confirm whether or not a device is built with the official Android TV OS and Play Protect certification by following [these instructions](https://support.google.com/googleplay/answer/7165974).
-Additionally, Synthient maintains [a running list of IoT devices](https://github.com/synthient/public-research/blob/main/2026/01/kimwolf/product_names.csv) that have been known to ship to consumers with residential proxy software and other malicious apps pre-installed. Careful readers will notice Synthient’s list includes other IoT devices apart from streaming sticks and boxes: As the FBI has warned, residential proxy software has also been found in other popular consumer IoT devices from random brands, particularly digital photo frames.
-Fake news
-*** Install me now to get free access to all channels ***
-^ fake person
-I think **you** are the fake news
-I suppose your primary reader base understands well enough, but a one-sentence explanation of ad fraud would strengthen this article!
-Please do explain ad fraud.
-Many ads are pay-per-click so you can make money by setting up crappy websites with ads and then having bots visit them and click on the ads.
-it isn’t 2013
-If you are browsing an online newspaper and you click an ad, the advertiser pays the publisher for that click. The publisher’s content brought you to the page, and once there, you clicked an ad that brought you to the advertiser’s site. These payments are the publisher’s revenue stream (aside from subscriptions, if they offer those), and the advertiser spent that money because they are buying your attention.
-This company Fengwo is using Blockly + cheap developers to build absolute trash “news” sites full of AI-slop “articles” that no human would read. They have no audience, no humans visit these websites. Fengwo uses the TV sticks to make it look like the sites have a lot of traffic from humans on mobile phones, which is why sticks are masquerading as Samsung and Xiaomi devices. And because the sites appear to have visitors, Fengwo can sign up with online ad networks (“we’re a sports news site and we have 10,000 unique visitors a month, look at our traffic stats!”) that will run ads on those fake news articles. When a TV stick clicks on an ad, it looks like a human clicked that ad, and so the advertiser pays the “publisher” (Fengwo in this case) and the ad network in the middle takes a cut. This is how advertising makes the internet free for users – you don’t pay for Facebook or pay to use Google search because the advertisers are paying Meta and Google for your ad clicks while you are using those services.
-The “fraud” here is that the advertiser doesn’t want to show ads to bots, bots don’t buy sneakers and shampoo. Fengwo is not a real publisher (they are not paying reporters and designers to create compelling content that brings real humans to their sites), they are using their TV stick bot network to make it seem like they are operating legit content sites to attract advertisers and then using fake clicks to steal money from advertisers.
-Thanks.
-But what happens when peopl euse ad blockers. Is there any way that those blocked ads somehow get clicked also? I always wondered about this.
-The ad blocker applies not to the ad (the source), but to the ad being displayed at your local instance (the sink). So, an ad blocker will remove you from the revenue stream mechanism that Meg G. described, but will not change it.
-If a website or service provider notices that their ads do not get delivered to you (they would need to make an effort to measure this) then they might decide to block you from using their service.
-However, this does not affect the bot networks, because these obviously will happily click away without the owner of the TV and stick ever noticing.
-vine ripened tomato and pedro up there provided two of em
-Just unplug the stick when you’re not using it.
-Unplug the stick when you’re not using it! Problem solved.
-Tell me you didn’t read the part where he said it does ad fraud while it’s connected without telling me …
-did they invent wireless electricity where you’re from?
-How can you use the TV stick without connecting it?
-Umm … it works while you’re using it. Unplugging it prevents its use for ad fraud but still allows it to function as a residential proxy while you’re watching tv. Read gooder?
-Did you not read the part where it said it does the ad clicking only when the stick isn’t being used to stream? If you unplug it after streaming, it no longer clicks the ads. People really can’t be this dense.
-But will you always remember to unplug the TV every time you finish using it? Sooner or later someone will forget.
-Did YOU not read the part where while it is being used to stream it is functioning as a proxy that is being used for other fraud/illegal activities? Having this thing plugged in EVER is bad.
-Have this exact model. Last night it halted on ATV boot.
-It did a android update, then disabled the existing Prime app. Also tasked me with updating Play Store Uninstalled Prime, downloaded a diff version from Playstore, and AMZ worked fine again.
-I was enthused that H96 was doing software updates. Not so much now.
-This unit is used on multi units, but not left plugged into the HDMI. So port blocking may help?
-throw it in the bin unless you’re cool with knowingly facilitating fraud.
-If you’re of the nerdy variety, I recommend installing something like LibreELEC on an SBC/mini PC instead.
-When I write The History of the Decline and Fall of Internet I’m going to need a lot more than 6 Volumes and 12 years.
-Yeah I have been trying to figure out how many pages it would take to write a proper popular science book on the history of cybercrime and it turns out I don’t think one could be written anymore. It would probably need one of those 10-16 volume sets where each book covers a 5-10 year period from the 1960s or 1970s on, and a book to cover the entire period before then. I would enjoy writing that but certainly not without being paid upfront and I am not seeing that. One nice thing about AI is it still cannot compose nonfiction without data and much of that is not documented.
-Hey, Brian, what percentage, do you think, of cybercrime goes in prosecuted now versus in the past? In the 1980s and 1990s it was sorta rare because it was hard to track and prosecute and kinda rare comparatively (heck, the ability to do data taps didn’t even exist until the early 1990s, and leaving backdoored binaries was pretty rare until the late 1990s/early 2000s), then I think it became a percentage game since there are just so many skids, thieves, state actors and crazies now that most victims never even manage to get a case opened. It often strikes me as weird which ones do that aren’t big money cases.
-An overview series of books would be neat. Not like grab all these different ones but something recent that doesn’t go TOO deeply into any specific case or require legal cases.
-Is Zapper Box vulnerable in any way shape or form?
-Europeans and Americans disagree on account of the colour of the zuppa
-Brian, but what if the device does NOT come pre-infected?
-In the world of auto-updates of software and firmware, even the hardware which is now completely legal and crap-free, could convert itself to a proxy or ad network later any time.
-True, see for example the recent case of Windows Update installing adware after an LG monitor is connected.
-The solution is to only use devices with Open Source OSes that you control, and look at what updates contain before applying them.
-I have a brother-in-law that uses one of these devices on his TV. I’m also pretty sure that if I brought this up to him and explained to him what was going on in the background he could care less. As long as he gets cheap TV and gets to screw the man by not paying paying for the streaming service, he he could care less. I’m sure he’s not alone.
-THIS! 98% of the people are the same.
-Perhaps it might help to convince him if you point out that he’s sporting the electric bill for the fraudster? The bill’s probably not very high, but it reframes it as him also being taken advantage of.
-too true.
-1. Does this mean that the ad revenue earned in previous years by the Fraud Provider (insert name here) is supect? YES.
-2. Does it mean that the payouts can be retrieved by those large ad companies like Google or Amazon? Maybe.
-3. Does it mean that the millions of small and medium businesses that paid these ad companies for thousands of “clicks” (which were not real human clicks!) can recover what they paid? NO WAY.
-What a sad state of affairs.
-what about brand name TV boxes such as Xiaomi? I don’t bother with them myself (I use a hardwired HDMI out connection from my phone for streaming) but I promised to set up a few of these boxes for tech phobic elder friends want the feel if a cable box and a remote.
-Brand name suggestions would be super appreciated, thank you!
-Is this in anyway related to Ningo Fengwo group? (A prominent group linked to well known families)
-Mentioned here:
-https://michael7924.substack.com/p/chinese-turbocharging-maker-terminates
-and
-https://min.news/en/economy/dd0c59854fc23ac7c8d9b4fad57e3360.html
-Can you clarify please.
-China. Soon hard drives will wifi your data back to ccp.
-Look from this “angle” – This fraudulent scheme financially benefits the CEO of Fengwo Holding Group while actively exploiting small, medium, large and home businesses across the world (US, Europe, and Asia). These companies invest their (sometimes limited) budgets to promote their brands, but their marketing efforts reach are diminishing. Ultimately, the invested funds are pocketed directly by the Fengwo Group.
-Hot take: fake-clicking on ads is a good thing. Make advertisements worthless, because they’ve infiltrated every part of our homes. Make it unprofitable to run ads and let’s bring the price of services to where it belongs. Instead of free gmail that steals all your data you pay $2/mo for a normal service with privacy.
-“fake-clicking on ads is a good thing” ehhhh… not when someone is unwittingly paying for the electricity and someone else is making a profit off it.
-Besides, we’ve seen over the past 85 years or so that when ads become unprofitable they throw more ads at us, tell us we can get rid of the ads by paying, and then throw ads at the people who pay too. This is not the way to get rid of ads. Block ads on your network and don’t patronize any service that forces them on you.
-@Jimothy
-Paid ad-free webmail exists. Posteo is one for €/$1 per month. I’ve been pretty happy with it for the most part.
-The problem with paid email is it links your financial information to your email. I don’t mind so much paying for something like email with actual money, but I don’t like app stores managing and tracking that, and I don’t like the feeling of my email and real name and address all being collected. It’s one of the things I am grateful are not all “paid for” services FOR privacy reasons. Hard enough to have even a single scintilla of privacy even without that (you might think there is, but let me teach you a think or two about PII and IPs.
-While I agree with your POV, the fundamental intent of these boxes and who they are marketed to simply isn’t the “I’ll pay more for _____” group. You & I are in the “I’ll pay more for better privacy & security group”…the people that buy these devices are in the “I only care about cheap / free TV group”. Where you & I should agree to disagree is around advertising / click fraud. Make these ads worthless and the universe’s real money machine – advertising – will figure out a way to advertise.
-Clearly you never spent decades of the best years of your life coding and backdooring internet enabled devices and routers, or you would have an inkling as to why it isn’t that easy unless you are the vendor or some third party contracted by them to provide the software.
-Website for incompetence lawyers is this</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-8" class="article-body">
-            <h2 class="article-title">Demystifying AI Exploits: A Blueprint for AI-Assisted Vulnerability Management</h2>
-            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/ai-assisted-vulnerability-management/" target="_blank">Original Link</a></p>
-            <div class="content-text">Demystifying AI Exploits: A Blueprint for AI-Assisted Vulnerability Management
-Mandiant
-Written by: Jules Czarniak
-Introduction
-As highlighted in the [Mandiant M-Trends 2026 report](https://cloud.google.com/security/resources/m-trends), the mean time-to-exploit (TTE) has dropped to -7 days, meaning vulnerabilities are often exploited a week before a patch even exists.
-To keep pace, many security teams are exploring how to integrate large language model (LLM) agents into their codebases, development environments and continuous integration and continuous delivery (CI/CD) pipelines for automated vulnerability discovery and remediation. However, deploying privileged artificial intelligence (AI) agents without mature integration processes introduces new architectural risks.
-In response to customer inquiries about how to safely integrate AI capabilities into vulnerability management workflows, this blog provides actionable guidance from Mandiant Consulting about how to establish operational guardrails for AI assisted vulnerability management, including several detailed scenarios. What each of these examples show is that security teams can accelerate workflows with AI while also upholding the structural integrity of their environments. We suggest that combining AI capabilities with deterministic controls and human intelligence in strategic ways maximizes benefits and reduces risk.
-Establish Operational Guardrails to Safely Deploy AI Agents
-To safely adopt advanced AI capabilities without introducing unpredictable failures into deployment pipelines, organizations should ground their approach in established industry standards. While guidelines like the [NIST AI Risk Management Framework (RMF)](https://www.nist.gov/itl/ai-risk-management-framework) and the [OWASP Top 10 for LLMs](https://owasp.org/www-project-top-10-for-large-language-model-applications/) provide comprehensive baselines for identifying risks, operationalizing these controls requires a structural blueprint.
-Frameworks like [Google’s Secure AI Framework (SAIF)](https://safety.google/intl/en_sg/safety/saif/) [and](https://safety.google/intl/en_sg/safety/saif/)[ Google’s approach to secure AI Agents](https://storage.googleapis.com/gweb-research2023-media/pubtools/1018686.pdf) provide a practical path forward, demanding that organizations extend existing deterministic controls directly into the AI execution environment. When deploying AI agents, security teams should navigate specific operational and structural risks:
--
-Pre-agent data security and Defense-in-Depth: Agents should not be able to access personally identifiable information (PII), protected health information (PHI), or other sensitive data. Organizations should enforce data security before the prompt reaches the model. This includes strictly using non-production environments populated with synthetic data for testing. For production, security teams should deploy a hybrid defense-in-depth model. This includes Layer 1 deterministic policy engines acting as chokepoints, alongside Layer 2 reasoning-based defenses like specialized guard models (such as
-[Model Armor](https://docs.cloud.google.com/model-armor/overview)or similar provider-agnostic guardrails) to filter out sensitive data and block malicious prompt injections before they reach the agent layer. Crucially for vulnerability discovery, security teams should treat the codebase itself as an untrusted input. Threat actors can embed indirect prompt injections within source code comments or third-party dependencies (e.g., hidden instructions telling the agent to ignore vulnerabilities or exfiltrate environment variables), making input sanitation a requirement even for internal scanning. -
-Cloud provider limitations and zero data retention (ZDR): Many cloud and LLM providers block or throttle automated offensive security probing by default to prevent abuse. Organizations should establish clear rules of engagement and authorized testing agreements to navigate acceptable use policies. Furthermore, organizations should enforce strict zero data retention (ZDR) agreements with their LLM providers to guarantee that proprietary code and discovered vulnerabilities are never used to train external models.
--
-Workload isolation: Agent workloads should execute in strictly isolated, unprivileged containers with dynamically limited privileges. By relying on robust sandboxing to prevent privilege escalation, if an agent hallucinates a destructive command or is hijacked via prompt injection, the blast radius remains contained.
--
-Red Teaming: Before deploying autonomous vulnerability scanners that can dynamically spin up sandboxes and execute code, organizations should subject the AI agents themselves to human-led red teaming as part of comprehensive assurance efforts. This validates the agent's resilience against jailbreaks, recursive logic loops, and complex prompt injections, ensuring the security tooling does not become the attack vector.
--
-Least-Privileged Machine Identities and Human Controllers: While workloads should be isolated, agents inherently require privileges to generate pull requests and commit code. Security teams should ensure these agents operate under distinct, strictly scoped machine identities that tie back to human controllers to ensure accountability and user consent. Organizations should use short-lived, just-in-time (JIT) tokens bound exclusively to the specific repository and branch under review. This enforces the principle of limited agent powers and ensures that even if an agent’s container is compromised via prompt injection, the threat actor cannot pivot to modify adjacent enterprise codebases.
--
-Supply chain resilience for skills: As developers augment AI with third-party skills and model context protocol (MCP) servers, security teams should treat these integrations as untrusted supply chain components. MCP plugins introduce the risk of supply chain poisoning, where a previously benign integration is silently updated with malicious dependencies. Additionally, security teams should evaluate the underlying agent orchestration frameworks themselves (e.g., LangChain, AutoGen) for inherent vulnerabilities, such as session memory poisoning or recursive loop hijacking.
--
-Toxic flow analysis (TFA) and Observable Actions: The objective of TFA is to monitor data paths at runtime, ensuring agents do not exfiltrate sensitive internal context to unvetted external endpoints. Agent actions, inputs, reasoning, and outputs must be fully observable and transparently logged. While implementing dynamic taint tracking for LLMs remains a complex architectural challenge, organizations should clearly separate this runtime observability from static supply chain controls. Integrating threat intelligence to hash and vet incoming agent tools provides a necessary baseline for verifying integrity before deployment. However, because static controls cannot address behavior post-deployment, mitigating data exfiltration ultimately requires active runtime monitoring and secure, centralized logging to trace and restrict the actual flow of data.
-Figure 1: Visual representation of an isolated AI agent environment using SAIF mechanisms
-By operationalizing these tools within frameworks that demand verifiable integrity and structural resilience, organizations can safely bridge the gap between AI velocity and enterprise defense.
-The need for human-led threat modeling
-While LLMs excel at identifying syntax patterns, source code itself rarely contains the full picture of unwritten business intent. Some organizations attempt to solve this by connecting LLM agents to internal wikis, design documents, and issue trackers using retrieval-augmented generation (RAG).
-While RAG gives the model access to external business context, it is not a perfect fix. Corporate documentation is frequently stale, contradictory, or incomplete. An AI agent might retrieve an outdated architecture diagram and confidently hallucinate a secure path that no longer exists in production. Because LLM agents struggle to resolve conflicting, undocumented human assumptions, human-led threat modeling remains a critical security control across both legacy applications and modern agent workflows.
-Security teams should apply threat modeling during both the pre-build system design phase to establish a secure foundation, and during post-build architecture reviews. While an AI agent might successfully identify a poorly configured internal endpoint locally, a human threat modeler asks the structural question: why does that microservice possess broad database read permissions in the first place?
-Identifying architectural vulnerabilities requires reasoning about business risk, data sensitivity, and operational constraints. To structure this process, organizations can use industry frameworks like PASTA (Process for Attack Simulation and Threat Analysis) or service offerings like the [Mandiant Threat Modeling Security Service](https://services.google.com/fh/files/misc/ds-threat-modeling-security-service-en.pdf) to map trust boundaries, uncover structural design flaws, and prioritize compensating controls. Securing fundamental architecture through human oversight is a necessary component when relying on automated agents to find bugs in a poorly designed system.
-Once these AI agents are safely sandboxed, as guided by SAIF, and the architecture is verified through threat modeling, organizations can typically apply them to two different problem spaces: Enterprise Vulnerability Management (to assist in managing the volume of known CVEs in commercial off-the-shelf (COTS) software and infrastructure) and Product Security (to identify vulnerabilities in 1st-party (1P) code).
-Track 1: Enterprise Vulnerability Management
-Foundational security and discovery
-While the second track of this post explores how AI agents can uncover complex zero-days in custom code, organizations should manage the scale of enterprise infrastructure in tandem with these AI deployments. Even as new AI capabilities dominate headlines, organizations should still address foundational security challenges, such as secrets sprawl, unmanaged service accounts, missing FIDO2 MFA, and legacy VPN concentrators. Although vulnerability exploitation was the primary initial infection vector in intrusions Mandiant investigated last year, threat actors consistently rely on missing foundational controls and unpatched edge devices to secure and escalate their foothold after exploiting a vulnerability.
-Furthermore, AI cannot replace foundational visibility. As security teams deploy AI agents, they should simultaneously close these tactical entry points by maximizing dynamic discovery capabilities like External Attack Surface Management (EASM), Cloud Security Posture Management (CSPM), and Continuous Threat Exposure Management (CTEM). In hybrid and cloud environments, tools like [Wiz](https://cloud.google.com/wiz?e=48754805) can be used to map this initial footprint.
-Risk-based vulnerability management
-Vulnerability management teams are already overwhelmed by the current volume of findings generated by traditional scanners. As organizations scale dynamic discovery tools, such as EASM, CSPM and CTEM, alongside automated AI agents, this influx of findings will compound the problem. To manage this influx, telemetry from these diverse discovery methods must first be normalized and deduplicated. This normalized data serves two purposes: it feeds directly into the risk engine, and it acts as a live overlay to correct stale records in the configuration management database (CMDB). By evaluating the deduplicated vulnerabilities alongside this newly updated asset context and frontline threat intelligence, the RBVM engine calculates a custom risk score that allows security teams to dynamically prioritize remediation.
-A mature RBVM methodology calculates a customized risk score on a 0 to 100 scale using a weighted average. A sample formula for calculating this risk-based score is:
-Final Score = (W_1 * S_vuln) + (W_2 * S_asset) + (W_3 * S_threat)
-The variables and weights (W) are customized to the organization's risk appetite (for example, 0.20 for vulnerability, 0.40 for asset, and 0.40 for threat, summing to 1.0), while the underlying variables (S) are scored on a 0 to 100 scale and defined as follows:
--
-Vulnerability severity (S_vuln): The inherent technical severity of the flaw. This is calculated by taking the CVSS Base Score (which natively accounts for confidentiality, integrity, and availability impact) and multiplying it by 10.
--
-Asset context (S_asset): A combined metric of exposure and data sensitivity. Scores range from 100 for internet-facing assets holding customer data, down to 25 for internal-only assets with no sensitive data. To translate this impact into monetary terms for non-technical stakeholders, organizations can incorporate Factor Analysis of Information Risk (FAIR) principles into this metric. However, this approach requires highly accurate, continuously updated financial data that many enterprises struggle to maintain at scale.
--
-Threat context (S_threat): The real-world urgency of the vulnerability. Scores range from 100 if actively exploited by threat actors relevant to the organization's profile, 75 if a proof-of-concept exists or if it is a vulnerability class easily exploited by autonomous AI agents, down to 25 if the exploit is theoretical and highly complex. Organizations should also map the Exploit Prediction Scoring System (EPSS) probability percentage directly into this variable. This allows the threat score to automatically scale up or down as real-world exploitation telemetry shifts, aligning static vulnerability data with active threat intelligence.
-An asset's customized risk score should directly influence internal remediation service-level agreements (SLAs), unless external compliance-driven mandates, such as CISA Binding Operational Directives (BODs), or relevant equivalents, override internal prioritization. A risk-driven and threat-intelligence-driven vulnerability prioritization methodology will help organizations focus resources on managing and mitigating the most critical security vulnerabilities first. This is an area where LLMs can support the vulnerability management process, particularly by helping teams synthesize unstructured threat intelligence to surface relevant risk contexts more efficiently. Enforcing strict SLOs for patching, while requiring formal risk acceptance documentation for any patching exceptions, will help reduce the number of vulnerabilities available to threat actors and increase the visibility of outstanding risks across the organization. Furthermore, organizations should integrate RBVM data directly into their security orchestration, automation, and response (SOAR) platforms for automated alert enrichment.
-Figure 2: Integration points of a risk-based vulnerability management (RBVM) program.
-Containment and Observability
-Modern architecture blueprints must prioritize attack surface reduction under the assumption that vulnerabilities will inevitably be exploited. Moving away from traditional perimeter defenses, organizations should align with zero trust principles, ensuring that security boundaries are established around every asset, workload, and identity.
-A component of this alignment is the implementation of strong authentication principles. Organizations should eliminate implicit trust by enforcing continuous, context-aware authentication and authorization. Utilizing Zero Trust Network Access (ZTNA) solutions, such as Identity-Aware Proxies (IAP), shields critical management interfaces (e.g., SSH, RDP) and internal systems from direct internet exposure, granting access only to verified identities and compliant devices.
-For public-facing applications and APIs, attack surface reduction involves deploying Layer 7 inspection at the load balancer or API gateway level. This hardening layer enforces strict schema validation, intercepting and neutralizing malformed inbound traffic and potential exploits before they can interact with internal application logic.
-Securing the software supply chain is equally vital in modern blueprints, and organizations should align with frameworks like [Supply-chain Levels for Software Artifacts (SLSA)](https://slsa.dev/spec/v0.1/levels) across both dependency and build tracks. Security policies should mandate that third-party dependencies are routed through a centralized artifact repository equipped with automated curation services, such as [Google Assured Open Source Software (OSS)](https://cloud.google.com/security/products/assured-open-source-software) or an equivalent solution, preventing untrusted code from entering the development lifecycle. Furthermore, maturing toward advanced SLSA build levels (e.g., SLSA level 3) through the implementation of isolation, ephemerality and reproducibility requirements via ephemeral compute infrastructure for CI/CD runners reduces the likelihood of attacker persistence by ensuring environments are short-lived and automatically cycled.
-To complement these pre-build controls, runtime observability should be established across all production workloads. This requires monitoring both infrastructure-level behavior and the specific runtime libraries actively executing in production, which surfaces true exploitable risk far beyond a static Software Bill of Materials. In tandem with monitoring workloads, organizations should secure how they authenticate by implementing workload identity federation. By removing static credentials and instead using short-lived tokens backed by strong cryptographic identity verification, organizations can reduce the risk of credential theft and unauthorized lateral movement.
-Within the internal environment, microsegmentation should be enforced to break down flat networks into granular security zones. Routing application traffic through a Secure Access Service Edge (SASE) architecture integrates network routing directly with robust identity controls, rendering internal services completely invisible to unauthenticated users and containing threats to their initial point of entry.
-Finally, automated containment and incident response within a zero trust framework must rely on deterministic, auditable tooling. Endpoint detection and response (EDR) platforms and SOAR playbooks should handle high-fidelity containment tasks through hardcoded execution logic. While AI tools accelerate triage and policy recommendation, actual execution capabilities must remain restricted to well-defined, pre-tested workflows to maintain total architectural predictability.
-Figure 3: Structural containment and observability architecture
-Track 2: Product Security & Development (1P Code)
-Deterministic and probabilistic tooling
-Integrating LLM agents into vulnerability management and security workflows requires recognizing the differences between deterministic and probabilistic tooling. Traditional SAST and DAST tools utilize fixed methodologies to evaluate vulnerabilities through structural code parsing or definitive runtime observations. LLMs, however, evaluate source code by processing tokens simultaneously to calculate statistical and semantic relationships, rather than tracing deterministic execution tracks.
-While techniques like Chain of Thought (CoT) prompting allow models to bridge this gap by decomposing complex code paths into intermediate reasoning steps, this process remains bounded by architectural limitations. Even when a model possesses a context window large enough to ingest entire repositories, it may experience attention degradation across long inputs, often failing to correctly weight intervening validation or sanitization logic within the prompt. For example, if a variable is tainted on line 10 but sanitized on line 500, attention degradation can cause the model to lose track of the sanitization logic. Furthermore, when enterprise codebases require chunking to fit within context limits, the resulting fragmentation may cause the model to lose track of end-to-end data flows.
-Consequently, probabilistic engines are effective at uncovering localized, static anomalies, such as hardcoded credentials or outdated dependencies, but frequently misjudge complex vulnerabilities split across fragmented chunks or extended context windows. Notable exceptions occur when these probabilistic models are coupled with deterministic feedback loops. For instance, when analyzing C++ memory corruption, an LLM can be equipped with a test harness to iteratively execute code and definitively prove a crash. While these dynamic validation applications are detailed in subsequent sections, the baseline limitation for static analysis across standard enterprise codebases remains: models struggle to consistently evaluate dispersed logic.
-Figure 4: Deterministic SAST scanners vs. probabilistic LLMs
-Binary and architectural oracles
-Many security programs are moving toward agent workflows where an agent autonomously spins up a test environment and uses tools to execute payloads and verify its findings. This is a promising approach, but it is important to understand where it is most effective.
-Agent workflows perform well against bug classes with binary and observable oracles, meaning the system provides an objective, 'crash or no crash' feedback loop. For example, if a model is hunting for memory corruption in a C++ kernel, a successful exploit is undeniable: the payload executes, and a resulting crash definitively proves the vulnerability. This explains why the industry is currently seeing a surge in AI-discovered vulnerabilities across memory-unsafe targets like web browsers and operating systems.
-However, enterprise software is heavily dominated by vulnerabilities that require architectural oracles for validation. Vulnerabilities like authorization bypasses, complex business logic flaws, and indirect server-side request forgeries require an understanding of business context and cross-service trust boundaries. If an agent's payload fails to produce a clear outcome, it can't reliably distinguish whether the vulnerability is a hallucination or if it simply constructed the payload incorrectly. An agent's malformed payload might even crash an unrelated background process and cause the model to hallucinate a success and report a false confirmation. Complex enterprise architecture contains unwritten business intent that a probabilistic engine can't inherently know.
-Figure 5: Evaluating vulnerabilities against binary vs. architectural oracles
-Targeted deployment and human impact
-Organizations adopting LLMs for vulnerability discovery face a massive staffing challenge. LLMs can generate findings significantly faster than human engineers can triage them. If every LLM-generated alert requires manual review, security teams will quickly face burnout and/or suffer alarm fatigue.
-Rather than indiscriminately pointing agents at all available codebases and risking an influx of unverified output, security teams need a selective deployment strategy. Mature programs should maintain SAST and DAST for baseline hygiene and deterministic rule enforcement, and reserve intensive agent audits for high-impact components with clear binary oracles.
-Organizations can prioritize agent audits on systems where the technology's strengths align with the broader risk profile:
--
-Memory-unsafe codebases: Legacy or high-performance components written in memory-unsafe languages such as C, C++, or Assembly are strong candidates for LLM audits. These languages are susceptible to memory corruption flaws, such as buffer overflows and use-after-free conditions. Because these vulnerabilities trigger definitive failure states like segmentation faults, they work well with automated sandboxes where agents can compile the code with memory sanitizers and write proof-of-concept inputs. This approach is also effective for auditing the native extensions where safe languages call unsafe internal libraries, such as Python C extensions or the Java Native Interface (JNI).
--
-Systems highly exposed to outside content: First-party data ingestion pipelines, custom API gateways, or proprietary edge proxies. A prerequisite here is direct access to the source code, this strategy is strictly for internally developed or fully open-source codebases where the organization can inspect the logic. Because these systems directly parse untrusted internet traffic, targeting their source code for LLM-driven audits yields the highest risk-reduction ROI.
--
-Shared internal libraries and utilities: Core serialization/deserialization packages, common utility functions, and custom middleware wrappers (such as internal message-queue parsers) maintained in-house. Because the enterprise owns the source code for these shared building blocks, agent tools can easily hook into them within automated test harnesses to fuzz inputs and catch low-level logic or parsing bugs with high fidelity.
--
-Foundational security boundaries: Internally developed centralized authentication services, custom OAuth providers, and internal credential brokers. While testing complex identity boundaries generates higher logic-based noise, having full access to the source code allows teams to pair agents with deterministic checks to safely triage findings, given that the blast radius of an authentication failure justifies the human effort.
-To filter the noise generated by LLMs, organizations should establish routing rules. Require the agent to generate a fully reproducible, deterministic test harness (such as a compiled binary or a Python test script) that attempts to prove the exploit. This harness must execute automatically in an isolated, monitored sandbox. If the sandbox execution fails (due to a syntax error or a failed exploit), the ticket is discarded, sparing human resources. However, organizations should enforce execution timeouts and iteration limits on these test harnesses. Without hard limits, an autonomous agent attempting to prove a vulnerability can fall into an infinite loop: writing a script, failing, rewriting, and failing again, exhausting API token budgets and compute resources against a single dead-end vulnerability, creating significant cost overruns without advancing the security review. To manage these expenses, organizations should incorporate FinOps principles to balance the compute and API costs of LLM audits against the traditional expenses of manual triage.
-However, a successful execution in the sandbox does not guarantee an actionable, high-priority risk. In practice, autonomous agents frequently produce working PoCs for genuine technical flaws that are ultimately irrelevant; or warrant a lower remediation priority within the context of the system's threat model. For example, the agent might successfully exploit an unreachable dead-code path, or trigger a bug that requires administrative access to execute and yields no further escalation of privilege. Therefore, a human engineer should be assigned to review and prioritize the ticket only if the sandbox registers a successful execution, validating environmental context, reachability, and true business impact as part of the review.
-This workflow reduces the volume of alerts, but it is important to understand that the security team's workload does not disappear. The engineer's primary job shifts from manually hunting for the initial vulnerability to auditing the LLM-generated proof to ensure it represents a meaningful risk rather than an unexploitable or contextually irrelevant finding. Leadership should properly staff and train teams for this new reality. Deploying LLM agents does not remove the need for skilled practitioners; it redirects their workload toward complex validation. Equally important is training teams to recognize the risk of false negatives. A hyper-focus on filtering AI-generated noise can create a false sense of security. If an exploit relies on a novel technique or a zero-day vulnerability that was not heavily weighted in the model's training data, the agent will likely scan right past it in silence. LLMs augment discovery, but they do not guarantee exhaustive coverage.
-When integrating LLMs into SAST triage pipelines, human engineers should also verify the broader architectural integrity. Prompting an LLM with specific SAST warnings can induce contextual narrowing, where the agent becomes hyper-fixated on resolving a localized syntax error and misses broader architectural flaws existing in the same file. Furthermore, if the agent's mandate extends beyond discovery to automated remediation (such as writing and proposing code fixes), this human-in-the-loop validation becomes critical to ensure the LLM does not inadvertently introduce new regressions or bypass intended business logic.
-Figure 6: Flowchart outlining the targeted LLM deployment and triage workflow.
-Remediation and hardening
-LLM-assisted code remediation
-A primary goal of integrating large language models (LLMs) into the software development lifecycle is automated remediation. To achieve this, organizations are deploying these capabilities through two primary execution methods: directly within the integrated development environment (IDE) or as a centralized pipeline runner. Examples include [CodeMender](https://deepmind.google/blog/introducing-codemender-an-ai-agent-for-code-security/), although as of time of writing, it is not publicly available.
-IDE-integrated method
-This method shifts remediation as far left as possible by operating as an active pair-programmer. Tools running continuous static analysis in the background of the IDE surface vulnerabilities directly to the developer via editor diagnostics like inline indicators or hover tooltips.
--
-Localized scope: The developer can trigger the LLM agent to analyze the localized data flow and generate a targeted patch (such as implementing parameterized SQL queries). By constraining the LLM to localized, syntax-level fixes, the scope of the change remains contained. This prevents the agent from attempting sprawling, multi-file refactors that frequently break complex architectural logic.
--
-Human-in-the-loop: The developer reviews the AI-generated patch before the code is committed.
--
-Managing false positives: Local IDE agents allow developers to manage false positives dynamically. Suppressing alerts anchored to specific line text reduces alert fatigue and preserves developer trust.
-CI/CD runner method
-The runner method executes asynchronously within the CI/CD pipeline to use an LLM to review committed code and automatically propose remediation.
--
-Restricted execution and deterministic validation: Asking a centralized runner to automatically rewrite a complex, multi-file authorization flaw directly in the main branch introduces a high risk of breaking logic errors. To mitigate this, agents must be restricted to generating pull requests (PRs). Once a PR is generated, it must automatically execute standard regression suites alongside the deterministic test harness. By rerunning the initial PoC against the patched code, the workflow repurposes the exploit script as a validation oracle to prove the vulnerability has been remediated. A human engineer then reviews the PR to validate the architectural logic before merging.
-In all cases security teams should define a clear boundary between the two methods rather than rely on a single approach. IDE agents provide immediate, syntax-level support. They catch and resolve low-complexity errors locally before developers commit code. Centralized CI/CD runners handle broader organizational baselines. They propose complex, repository-wide fixes for vulnerabilities that bypass local environments.
-Post-deployment controls
-Even with human review and deterministic test harnesses, AI-generated patches can still introduce logic regressions in production. Organizations should implement strict post-deployment controls:
--
-Automated rollbacks: Treating LLM-generated code with the same post-deployment scrutiny as any major architectural change ensures that if an unforeseen regression traverses the CI/CD pipeline, the environment can revert to a known good state.
--
-Mitigating model drift: Relying on managed AI services introduces the ongoing risk of model drift. To prevent silent weight updates from breaking test harnesses, organizations need to pin specific model API versions to frozen releases. When a pinned version reaches its end-of-life, organizations will face a forced migration. Mitigating this pipeline fragility requires combining model pinning with deterministic regression suites.
--
-Compliance and auditability: If an AI agent automatically closes a security ticket or generates a patch in the CI/CD pipeline, organizations should maintain immutable audit logs to satisfy frameworks like SOC 2 ,PCI-DSS, FedRAMP, and CMMC. National security deployments must also account for data sovereignty requirements. This logging should record the specific model version that proposed the fix, the deterministic test results that validated it, and the human engineer who approved the merge. Furthermore, because emerging legislation like the EU AI Act emphasizes human oversight for high-risk applications, security teams should carefully evaluate how autonomous remediation workflows align with these evolving global regulatory standards.
-Figure 7: Flowchart demonstrating the difference between local IDE AI remediation and centralized CI/CD pipeline remediation.
-Conclusion
-Leveraging LLMs in vulnerability management is a multi-layer solution: Integrating it requires separating workflows by layer. At the enterprise infrastructure level, Risk-Based Vulnerability Management (RBVM) and exposure management are necessary to process the volume of findings and configuration drift. At the product and code security level, LLM-enabled vulnerability assessment and remediation must operate alongside foundational deterministic controls, such as SAST and DAST, to audit custom, open-source, or third-party code.
-Although LLMs can help manage technical debt and accelerate vulnerability discovery, they do not replace secure-by-design principles. The fact that LLM agents are proving exceptionally capable at identifying and exploiting localized memory corruption in memory-unsafe codebases, alongside other primary vectors, should serve as a wake-up call.
-As a long-term strategy aligned with [NSA guidance on Software Memory Safety](https://media.defense.gov/2022/Nov/10/2003112742/-1/-1/0/CSI_SOFTWARE_MEMORY_SAFETY.PDF), organizations need to phase memory-safe languages into new internal development. LLMs are beginning to expand what is possible here by reducing the manual labor required for code migration. Converting existing C or C++ codebases to Rust has historically been unrealistic due to the large volume of engineering hours needed. While fully automated translation is not a turn-key solution, using LLMs to assist engineers with the bulk of the conversion can make these long-term migrations operationally viable. Beyond internal efforts, organizations should use procurement requirements to incentivize vendors to reduce their reliance on memory-unsafe languages and establish secure configuration defaults over time. Bridging the gap between AI velocity and enterprise defense means building an automated pipeline to manage the current backlog, while architecting systems where entire classes of vulnerabilities and misconfigurations are eliminated by design.
-Acknowledgements
-This analysis would not have been possible without the assistance of Google Threat Intelligence Group (GTIG) and other broader Google teams.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
