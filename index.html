@@ -59,15 +59,15 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-08-07</h1>
+        <h1>Security Briefing // 2026-08-08</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">New TONTOU CPU attack bypasses Spectre v2 fixes, leaks Linux password hashes</button></li><li><button onclick="show('art-1')">New Zapscape KVM Flaw Could Let Privileged L1 Guest Code Escape to Linux Hosts</button></li><li><button onclick="show('art-2')">Canadian Man Pleads Guilty in Snowflake Extortions</button></li><li><button onclick="show('art-3')">UNC6671 Rebrands: Multi-Brand Vishing Extortion Targets Financial Services and Enterprise Cloud Environments</button></li><li><button onclick="show('art-4')">Ransom Cartel Creator Gets 16 Years in Prison for Operating Ransomware-as-a-Service</button></li><li><button onclick="show('art-5')">The Art of Hunting Azure Cloud Secrets</button></li><li><button onclick="show('art-6')">Ransom Cartel ransomware creator sentenced to 16 years in prison</button></li><li><button onclick="show('art-7')">Turning Enterprise Update Servers Into Backdoor Factories (0_o) – Part 1</button></li><li><button onclick="show('art-8')">From open lures to cloaked gates: How a macOS ClickFix campaign learned to hide</button></li><li><button onclick="show('art-9')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Metabase SQLi zero-day exploited in customer data-theft attacks</button></li><li><button onclick="show('art-1')">Unlimited Technology Systems breach impacts 3.8 million people</button></li><li><button onclick="show('art-2')">18-Year-Old Linux SCTP Flaw Could Let Local Users Gain Root and Escape Containers</button></li><li><button onclick="show('art-3')">New Zapscape KVM Flaw Could Let Privileged L1 Guest Code Escape to Linux Hosts</button></li><li><button onclick="show('art-4')">Canadian Man Pleads Guilty in Snowflake Extortions</button></li><li><button onclick="show('art-5')">UNC6671 Rebrands: Multi-Brand Vishing Extortion Targets Financial Services and Enterprise Cloud Environments</button></li><li><button onclick="show('art-6')">The Art of Hunting Azure Cloud Secrets</button></li><li><button onclick="show('art-7')">Turning Enterprise Update Servers Into Backdoor Factories (0_o) – Part 1</button></li><li><button onclick="show('art-8')">From open lures to cloaked gates: How a macOS ClickFix campaign learned to hide</button></li><li><button onclick="show('art-9')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">New TONTOU CPU attack bypasses Spectre v2 fixes, leaks Linux password hashes</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/new-tontou-cpu-attack-bypasses-spectre-v2-fixes-leaks-linux-password-hashes/" target="_blank">Original Link</a></p>
-            <div class="content-text">Researchers found a way to bypass recent mitigations for Spectre v2 speculative execution side-channel attacks and developed an exploit to leak secrets from Linux machines. [...]
+            <h2 class="article-title">Metabase SQLi zero-day exploited in customer data-theft attacks</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/framework-tally-disclose-metabase-data-theft-attacks/" target="_blank">Original Link</a></p>
+            <div class="content-text">A critical Metabase SQL injection vulnerability was exploited in zero-day attacks to breach customer instances in data theft attacks, known to impact Framework and Tally. [...]
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
@@ -75,6 +75,39 @@
             <hr class="separator">
         </div>
         <div id="art-1" class="article-body">
+            <h2 class="article-title">Unlimited Technology Systems breach impacts 3.8 million people</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/unlimited-technology-systems-breach-impacts-38-million-people/" target="_blank">Original Link</a></p>
+            <div class="content-text">Healthcare software company Unlimited Technology Systems reported that more than 3.8 million people were impacted by a data breach incident that occurred in October 2025. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">18-Year-Old Linux SCTP Flaw Could Let Local Users Gain Root and Escape Containers</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/08/18-year-old-linux-sctp-flaw-could-let.html" target="_blank">Original Link</a></p>
+            <div class="content-text">A use-after-free bug in Linux's SCTP networking code can be turned into full root on a host, and Tencent researchers say they used it to escape a container and reach the machine underneath.
+The flaw has existed since 2008. The fix already shipped: stable kernels 7.1.6, 6.18.42, 6.12.101 and 6.6.148, released August 3, close it. Anyone running an older kernel with SCTP reachable should update.
+Tracked as CVE-2026-64564 and named SCTPhantom by its finders, the flaw was disclosed publicly on August 6, two days after the kernel CVE team assigned it. No public exploit code had surfaced at the time of writing, and The Hacker News found no entry for the flaw in CISA's Known Exploited Vulnerabilities catalog as of August 7.
+The flaw is local, not remote, and it needs SCTP reachable on the target, which limits exposure. Where those conditions held, Tencent Zhuque Lab reports it got root on the kernel builds it tested for Debian 13, Ubuntu 24.04, Rocky Linux 9 and RHEL 9, and OpenCloudOS.
+SCTP is a transport protocol that lets one connection run over several network paths at once. A companion feature, dynamic address reconfiguration, lets a peer add or drop those addresses mid-connection.
+The bug is a mix-up over identity: the kernel checks a delete request against the packet's source address, but acts on a path it picked using a different address inside the message. [Per the kernel's own advisory](https://nvd.nist.gov/vuln/detail/CVE-2026-64564), one message can carry an address, a delete for that same address, then a wildcard delete. That sequence frees the path, then reuses the dead pointer, leaving the connection pointing at memory the kernel has already released.
+The patch refuses a delete aimed at the path the message is being processed against. The bug traces to Linux 2.6.25 in 2008 and has been in every kernel released since.
+| Source:
+|
+Tencent's container escape claim is based on its own testing. In [its write-up](https://matrix.tencent.com/en/2026/08/06/sctphantom-CVE-2026-64564), the lab says an early version of its exploit needed the net.sctp.addip_enable and net.sctp.addip_noauth_enable sysctls switched on, which made CAP_NET_ADMIN look like a prerequisite. It later found a route that leaves both untouched by enabling the features per socket instead.
+The lab says its escape test kept the default seccomp profile and granted neither CAP_NET_ADMIN nor CAP_SYS_ADMIN. By its count, six of eight attempts reached root on the host.
+No one outside the lab has reproduced any of that, and the write-up does not name the container runtime it tested against. The lab itself notes that socket access, seccomp profiles, and user-namespace policy all shift exposure elsewhere. An [openKylin advisory](https://bbs.openkylin.top/t/topic/173441) covering the same bug goes no further than kernel panic and denial of service.
+The severity number is unsettled too. Tencent scored it 8.5 under CVSS v4.0. NVD had assigned neither a score nor a weakness classification as of August 7.
+Vendors often backport fixes without moving to a new upstream version, so a kernel version string alone will not tell you whether you are covered; check your distribution's tracker. [A second dangling-transport use-after-free in the same code](https://kernel.googlesource.com/pub/scm/linux/kernel/git/netdev/net-next/+/c9158ceaf27780ef64534ad72f44ffde3f8ccc49) was patched on August 6, after the August 3 stable releases shipped, so those kernels do not carry it. Where SCTP is not needed, blocking the module removes the attack surface outright.
+Tencent credits the find to Corvus AI, a multi-agent research pipeline it built for kernel work, making SCTPhantom the latest in a run of long-dormant kernel flaws [surfaced with machine assistance this year](https://thehackernews.com/2026/07/researcher-says-ai-helped-develop-linux.html), alongside [GhostLock](https://thehackernews.com/2026/07/15-year-old-ghostlock-flaw-enables-root.html) in July. It also lands the same day as [Zapscape](https://thehackernews.com/2026/08/new-zapscape-kvm-flaw-could-let.html), an unrelated KVM escape, and the same four stable releases carry both fixes.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
             <h2 class="article-title">New Zapscape KVM Flaw Could Let Privileged L1 Guest Code Escape to Linux Hosts</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/08/new-zapscape-kvm-flaw-could-let.html" target="_blank">Original Link</a></p>
             <div class="content-text">Zapscape, a new Linux kernel vulnerability, could allow an attacker with kernel privileges inside an L1 guest virtual machine (VM) to escape KVM isolation and execute code on the host. The risk applies when nested virtualization is exposed to untrusted guests.
@@ -100,7 +133,7 @@ The disclosure follows Kim's earlier KVM work, including [Januscape](https://the
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-2" class="article-body">
+        <div id="art-4" class="article-body">
             <h2 class="article-title">Canadian Man Pleads Guilty in Snowflake Extortions</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/08/canadian-man-pleads-guilty-in-snowflake-extortions/" target="_blank">Original Link</a></p>
             <div class="content-text">A 26-year-old Canadian man once described as one of the most consequential cybercrime threat actors of 2024 has pleaded guilty to computer fraud and conspiracy to hack and extort more than 165 organizations that used the cloud provider Snowflake. Connor Riley Moucka, of Kitchener, Ontario, also admitted to stealing call and text history records of more than 100 million AT&T customers.
@@ -139,12 +172,17 @@ To
 This may not deter others but I think all of these gentlemen should be forced to pay and MANUALLY complete all the necessary forms required for each victim to get an identity protection service in place. Once done, they can return to society and tell others.
 I understand that the Libertarian Murray Rothbard suggested that they should have to pay double the total damages.
 2024: “We expect that violent hackers from the [cybercrime community] will experience increasingly harsh sentences as the crackdown continues”
-remember this comment and tihs one I’m writing: he will get next to nothing and none of his involvement with actual harm/extortion groups will even be considered because this is just feds working on behalf of private companies once again, same deal with big piracy cases</div>
+remember this comment and tihs one I’m writing: he will get next to nothing and none of his involvement with actual harm/extortion groups will even be considered because this is just feds working on behalf of private companies once again, same deal with big piracy cases
+I am not a fan of crime or anything, but I am increasingly frustrated by the inaccurate language and sentencing guidelines. Extortion does not fit. Ransom is not accurate.
+The laws and vocabulary need to be completely overhauled.
+Pretty sure this is not the same as being locked in a basement (ransom) or getting beaten up behind a bar with brass knuckles (extortion). Crime? Yup. VIOLENT in its way? Alright. But experienced totally differently by the victim and little in common with the other sort of perpetrator. Sort of feel the ones that make you psychologically and physically fear every moment are not the same as the ones that simply download a file and dump hundreds of thousands of people whom were really not so singled out, and deserve different language and results in court.
+Every time you write ‘we’ with regards to your site, I get confused. Are you referring to you and your wife? Do you have a staff at all? What does it mean? I thought it was just your personal professional blog. Is there a we??
+Sun and fun for some.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-3" class="article-body">
+        <div id="art-5" class="article-body">
             <h2 class="article-title">UNC6671 Rebrands: Multi-Brand Vishing Extortion Targets Financial Services and Enterprise Cloud Environments</h2>
             <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/unc6671-targets-financial-services-and-enterprise-cloud-environments/" target="_blank">Original Link</a></p>
             <div class="content-text">UNC6671 Rebrands: Multi-Brand Vishing Extortion Targets Financial Services and Enterprise Cloud Environments
@@ -287,8 +325,6 @@ Okta Admin Console Access Failure
 -
 Okta Suspicious Actions from Anonymized IP
 -
-Okta MFA Factor Setup Following Abandoned Challenge
--
 O365 SharePoint Bulk File Access or Download via PowerShell
 -
 O365 SharePoint High Volume File Access Events
@@ -302,28 +338,7 @@ Special thanks to researcher ZachXBT for assisting with cryptocurrency analysis.
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">Ransom Cartel Creator Gets 16 Years in Prison for Operating Ransomware-as-a-Service</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/08/ransom-cartel-creator-gets-16-years-in.html" target="_blank">Original Link</a></p>
-            <div class="content-text">A federal judge in Alexandria, Virginia, sentenced [Maksim Silnikau](https://thehackernews.com/2024/08/belarusian-ukrainian-hacker-extradited.html) to 16 years in prison on August 5 for creating and running Ransom Cartel, the ransomware-as-a-service operation he stood up in 2021.
-Between 2021 and 2023, Ransom Cartel conspirators attacked at least 18 companies, including firms in California, New York and Nebraska, and others abroad, according to the Justice Department.
-Silnikau, a 40-year-old Belarusian national who worked under the handles "J.P. Morgan," "lansky" and "xxx," did not carry out most of those intrusions himself.
-He built the business around them: the locking software, the stolen credentials he bought from initial access brokers, and a hidden panel where affiliates monitored attacks, negotiated with victims and split proceeds. He ran a ratings system that rewarded the productive ones, and pushed ransom payments through cryptocurrency mixers.
-Sixteen years run past the 13 years and seven months handed to [Yaroslav Vasinskyi](https://thehackernews.com/2024/05/ukrainian-revil-hacker-sentenced-to-13.html) in 2024 for more than 2,500 REvil attacks and over $700 million in ransom demands. It also settles only half the case: a second federal prosecution in New Jersey is unresolved, and the two men charged alongside him there remain at large.
-Prosecutors charged seven counts in Virginia and announced convictions on three. The announcement carries no restitution or forfeiture figure and does not say whether he pleaded guilty or was convicted at trial.
-Accounts of when Ransom Cartel began have never lined up: prosecutors date the operation to May 2021, while Palo Alto Networks' Unit 42 did not observe it until mid-January 2022.
-The [indictment](https://www.justice.gov/opa/media/1363391/dl?inline), returned in June 2023 and unsealed in 2024, closes the gap. Silnikau ran the operation under another name from May 2021, renamed it "Ransom Cartel" in late 2021, then tried to publicize it on security news sites.
-The same document preserves the advertisement his conspiracy posted to a Russian-language cybercrime forum on May 4, 2021, seeking access to corporate networks anywhere outside the Commonwealth of Independent States. They screened by victim size and set a floor on what they would pay: "Revenue: from $10 million. Prices from $100 and up."
-The last charged act falls on April 25, 2023, when he negotiated terms for supplying computers to be locked, three months before the July 2023 arrest that [prosecutors say](https://www.justice.gov/usao-edva/pr/belarusian-leader-international-ransomware-scheme-known-ransom-cartel-sentenced-16) stalled Ransom Cartel's growth. Poland extradited him to the United States in August 2024.
-Unit 42 has never called Ransom Cartel a rebrand of REvil. Its [2022 analysis](https://unit42.paloaltonetworks.com/ransom-cartel-ransomware/) found the operators held the original REvil source code but apparently not the obfuscation engine that gang used. The researchers speculated only that the groups were linked at some point. Neither the indictment nor the sentencing release mentions REvil.
-Silnikau was [separately charged](https://www.justice.gov/archives/opa/pr/leader-international-malvertising-and-ransomware-schemes-extradited-poland-face-cybercrime) in New Jersey alongside Volodymyr Kadariya and Andrei Tarasov over the Angler Exploit Kit malvertising scheme, which ran from 2013 to 2022. The Virginia announcement says nothing about it.
-The Secret Service still lists [Tarasov as wanted](https://www.secretservice.gov/investigations/mostwanted/tarasov), and the State Department is offering up to [$2.5 million](https://www.state.gov/reward-for-information-volodymyr-kadariya) for information leading to Kadariya's arrest or conviction.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-5" class="article-body">
+        <div id="art-6" class="article-body">
             <h2 class="article-title">The Art of Hunting Azure Cloud Secrets</h2>
             <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/the-art-of-hunting-azure-cloud-secrets" target="_blank">Original Link</a></p>
             <div class="content-text">The Art of Hunting Azure Cloud Secrets
@@ -365,16 +380,6 @@ You can see that a valid secret has been returned along with the expiration date
 Moving down further, this this application does have Graph permissions. I thought it was equally important to show in ARM if the applications have management groups or subscriptions that are visible to the application. It’s an important data point if the application would have expanded access into an Azure subscription. I have also included privilege escalation paths. The example below shows the application can write to directory objects such as users and groups. This is probably my favorite escalation path because you can generally take over subscriptions if there is an assigned group with ownership access. I consider subscription take over more of a high-value target than global administrator RBAC roles. This is because subscriptions can sometimes be less monitored and you can perform privilege escalation with a better chance of going undetected.
 I did stop short of fully weaponizing Secrets Stalker. The public release will simply give penetration testers and Red Teamers the ability to see how much access a client secret has. If you want to explore actual privilege escalation, I would visit the BloodHound Attack Research Toolkit located at the following URL: [https://github.com/BloodHoundAD/BARK](https://github.com/BloodHoundAD/BARK)
 Happy cloud secrets hunting and hacking!</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-6" class="article-body">
-            <h2 class="article-title">Ransom Cartel ransomware creator sentenced to 16 years in prison</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/ransom-cartel-ransomware-creator-sentenced-to-16-years-in-prison/" target="_blank">Original Link</a></p>
-            <div class="content-text">Maksim Silnikau, the creator and administrator of the Ransom Cartel ransomware operation, was sentenced to 16 years in prison for his role in ransomware attacks against at least 18 companies worldwide. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
