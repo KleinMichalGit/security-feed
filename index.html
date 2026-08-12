@@ -59,47 +59,86 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-08-11</h1>
+        <h1>Security Briefing // 2026-08-12</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Hackers Breach Polish Power Plant Controls via Private Cellular Network and Shut Turbine</button></li><li><button onclick="show('art-1')">Hackers breached a small Polish energy plant via private APN last year</button></li><li><button onclick="show('art-2')">BdThemes plugins supply-chain hack creates rogue WordPress admins</button></li><li><button onclick="show('art-3')">Microsoft named a Leader in the 2026 IDC MarketScape for MDR/MXDR for the Enterprise</button></li><li><button onclick="show('art-4')">TrueConf Server Flaws Exploited to Replace Client Installers with PhantomCore</button></li><li><button onclick="show('art-5')">Canadian Man Pleads Guilty in Snowflake Extortions</button></li><li><button onclick="show('art-6')">The Art of Hunting Azure Cloud Secrets</button></li><li><button onclick="show('art-7')">Turning Enterprise Update Servers Into Backdoor Factories (0_o) – Part 1</button></li><li><button onclick="show('art-8')">Demystifying AI Exploits: A Blueprint for AI-Assisted Vulnerability Management</button></li><li><button onclick="show('art-9')">Who Runs the Ransomware Group ‘The Gentlemen?’</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Cisco ASA and FTD Flaw Exploited in the Wild Can Trigger Remote DoS</button></li><li><button onclick="show('art-1')">DeadLock ransomware uses blockchain to resist infrastructure takedown</button></li><li><button onclick="show('art-2')">Microsoft Plugs Nearly 400 Security Holes</button></li><li><button onclick="show('art-3')">Microsoft Patches 398 Flaws Including a Windows Driver Zero-Day Under Active Attack</button></li><li><button onclick="show('art-4')">Cisco warns of ASA and FTD VPN flaw exploited to crash devices</button></li><li><button onclick="show('art-5')">A Vault With No Treasure - CMMC Level 2 Compliance for Subcontractors With No CUI</button></li><li><button onclick="show('art-6')">Microsoft named a Leader in the 2026 IDC MarketScape for MDR/MXDR for the Enterprise</button></li><li><button onclick="show('art-7')">Turning Enterprise Update Servers Into Backdoor Factories (0_o) – Part 1</button></li><li><button onclick="show('art-8')">Demystifying AI Exploits: A Blueprint for AI-Assisted Vulnerability Management</button></li><li><button onclick="show('art-9')">Microsoft Patches a Record 570 Security Flaws</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">Hackers Breach Polish Power Plant Controls via Private Cellular Network and Shut Turbine</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/08/hackers-breach-polish-power-plant.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Attackers shut down a steam turbine and the process-water treatment system at a Polish combined heat and power plant by coming in over the private cellular network the local grid operator uses to reach remote equipment.
-The plant supplies heat to roughly 50,000 residents. Recovery began at about 7:30 a.m. while the intruders were still active inside the network, and customers lost neither heat nor electricity.
-[CERT Polska](https://cert.pl/en/posts/2026/08/incident-follow-up-report-energy-sector-2025/) disclosed the December 2025 incident on August 8 after an investigation lasting more than three months. Poland's prime minister had said in January that two CHP plants were hit. This is the second.
-The route ran through a private APN, or access point name: a dedicated cellular data network managed by the distribution system operator. A configuration that allowed arbitrary devices on that APN to communicate with one another let the attacker pivot from a compromised wind-farm network to a controller at the CHP plant.
-CERT says reaching an industrial control network through a private APN was, to the best of its knowledge, "the first instance of this attack vector being observed in a real-world cyberattack." The wind farm and the plant are separate facilities, and neither of them runs the network that linked them.
-The report does not establish a CVE as the cause of the intrusion, and investigators could not determine whether a vulnerability in the Teltonika router had been exploited, so there is no single software patch to apply.
-The WAGO controller reachable through the APN still had default admin credentials, while the private APN allowed client-to-client traffic. CERT's first recommendation is to audit the private APN configuration and switch on client isolation.
-It also advises treating the APN as untrusted from the operational technology (OT) side, segmenting and restricting traffic, removing unnecessary management services from APN-reachable interfaces, and changing default credentials.
-CERT says its surveys found that Polish organizations running private APNs commonly let any device on the network reach any other. It believes similar configurations are widely deployed in other countries. The router's SSH service, the controller's web interface and the permissive APN were all working as configured.
-The [attack path](https://cert.pl/uploads/docs/CERT_Polska_Energy_Sector_Incident_Follow_up_Report_2025.pdf) began at a wind farm, where a FortiGate device served as both firewall and VPN concentrator. Its VPN was exposed to the internet and allowed accounts without multi-factor authentication. The attacker had administrative privileges on the device and likely used them to obtain VPN credentials that could reach all network segments.
-The distribution operator required communications to the substation's remote terminal unit to run over the serial DNP3.0 protocol, and that requirement was met. But no equivalent requirements covered the cellular router's management interface, which sat on a second interface, an Ethernet port connected to a VLAN behind the compromised firewall.
-The wind farm met the DNP3.0 requirement it had been given and still supplied the route in. That requirement governed how data travelled, not how the device carrying it was administered.
-The router was a [Teltonika RUTX50](https://thehackernews.com/2023/05/industrial-cellular-routers-at-risk-11.html) whose default password had been changed during deployment. Investigators recovered repeated successful SSH logins but could not establish how the attacker obtained that password.
-As of August 11, The Hacker News reviewed the published vulnerabilities in the router's own firmware and found none that would hand an unauthenticated attacker its password. The two RUT-series flaws in [CISA's 2023 Teltonika advisory](https://www.cisa.gov/news-events/ics-advisories/icsa-23-131-08), CVE-2023-32349 and CVE-2023-32350, both require existing privileges on the device, and the RUTX50's modem flaws cause only denial of service. An unpublished flaw is not ruled out.
-Mobile-operator logs led CERT to assess that the attacker most likely used SSH tunneling through the router to reach the private APN. Starting December 18, the attacker scanned the APN and found a WAGO PFC200 controller exposing its web administration interface with default admin credentials. Subsequent SSH activity suggests the service was likely enabled through that interface, and timestamp correlation led CERT to assess that the attacker most likely tunneled through the WAGO into the plant's OT network.
-On December 25, the attacker successfully connected to three Siemens PLCs over the S7 protocol, activity CERT considers most likely to have been reconnaissance for the later destructive actions.
-On December 29, attacker activity inside the CHP network ran from about 5:30 a.m. until about 10:10 a.m., with plant recovery beginning at about 7:30 a.m. According to plant personnel, Siemens S7-300, S7-1200, and S7-1500 controllers were switched to STOP mode and password-protected, shutting down the turbine and the process-water treatment system and interrupting cogeneration.
-Seven Moxa serial device servers and three switches were also factory-reset, given changed passwords and assigned unreachable IP addresses such as 127.0.0.1. CERT says the timing indicates with a high degree of confidence that those actions were automated. None of it required malware, and the report describes none.
-Every destructive step used a supported device function, invoked over the protocols the plant runs on.
-The attacker then damaged the way in. The WAGO controller's partition table was corrupted, leaving it unable to boot and yielding no useful logs. About 30 minutes after the last observed activity at the CHP plant, the attacker factory-reset the Teltonika router, changed its administrator password and assigned it the unreachable address 127.0.0.1, then factory-reset the FortiGate, causing its logs to be lost.
-CERT says [RutOS versions earlier than 7.07](https://wiki.teltonika-networks.com/view/RUTX50_Product_Change_Notifications) retained their event database after a factory reset, which is why the SSH login records survived.
-The plant did not initially read it as an attack. Maintenance was underway, so the operator logged the interruption as probable contractor error and reported it for information only; CERT opened an incident because it already knew of similar events. Reconnaissance inside the plant's network had run from December 18 to 25, including a port scan that started at the SCADA system's address.
-No actor is named for this incident. The [wider December campaign](https://thehackernews.com/2026/01/poland-attributes-december-cyber.html) drew four separate assessments in January, from Poland's [government](https://www.gov.pl/web/primeminister/poland-stops-cyberattacks-on-energy-infrastructure), [CERT Polska](https://cert.pl/en/posts/2026/01/incident-report-energy-sector-2025/), [ESET](https://www.welivesecurity.com/en/eset-research/dynowiper-update-technical-analysis-attribution/), and [Dragos](https://www.dragos.com/blog/poland-power-grid-attack-electrum-targets-distributed-energy-2025). Each is scoped differently, to the campaign's preparation, its infrastructure, the wiper malware used against its other targets, and its broader shape. None of them addresses this intrusion.
-Private APNs still appear in federal guidance as an isolation option. A [July 30 FBI and EPA advisory](https://www.fbi.gov/investigate/cyber/alerts/2026/malicious-cyber-actors-targeting-water-and-wastewater-sector-internet--facing-programmable-logic-controllers-causing-operational-disruptions) on attacks against [internet-facing water-sector PLCs](https://thehackernews.com/2026/08/over-4400-rockwell-plcs-exposed-online.html) lists a private APN among the isolated architectures operators should consider for reaching OT equipment over cellular links.
+            <h2 class="article-title">Cisco ASA and FTD Flaw Exploited in the Wild Can Trigger Remote DoS</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/08/cisco-asa-and-ftd-flaw-exploited-in.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Cisco has warned that a new vulnerability impacting Secure Firewall Adaptive Security Appliance (ASA) Software and Secure Firewall Threat Defense (FTD) Software has been exploited in the wild.
+The high-severity flaw, tracked as CVE-2026-20349 (CVSS score: 8.6), is a case of insufficient error checking when processing HTTP requests that could allow an unauthenticated, remote attacker to trigger a denial-of-service (DoS) condition.
+"An attacker could exploit this vulnerability by sending a crafted HTTP request to the Remote Access SSL VPN service on an affected device," Cisco [said](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-asaftd-vpn-dos-dzv4mQFF) in a Tuesday advisory. "A successful exploit could allow the attacker to cause the affected device to reload, resulting in a DoS condition."
+The security defects impact devices running a vulnerable version of Secure Firewall ASA Software or Cisco Secure FTD Software and have one or more of the vulnerable configurations listed below -
+- IKEv2 Remote Access VPN (with client services) - crypto ikev2 enable <interface_name> client-services port <port_numbers>
+- SSL-VPN - webvpn enable <interface_name>
+- Zero Trust Network Access2 - zero-trust enable
+The following versions of ASA and FTD are affected -
+- ASA 9.161 - Fixed in 89.16.4.50)
+- ASA 9.181 - Fixed in 89.18.4.50)
+- ASA 9.20 - Fixed in 9.20.4.235)
+- ASA 9.22 - Fixed in 9.22.3.191)
+- ASA 9.23 - Fixed in 9.23.1.211)
+- ASA 9.24 - Fixed in 9.24.1.221)
+-
+FTD 7.0 - Fixed in
+- Cisco_FTD_Hotfix_GC-7.0.9.1-1.sh.REL.tar
+- Cisco_FTD_SSP_FP1K_Hotfix_GC-7.0.9.1-1.sh.REL.tar
+- Cisco_FTD_SSP_FP2K_Hotfix_GC-7.0.9.1-1.sh.REL.tar
+- Cisco_FTD_SSP_Hotfix_GC-7.0.9.1-1.sh.REL.tar
+-
+FTD 7.2 - Fixed in
+- Cisco_FTD_Hotfix_HM-7.2.11.1-2.sh.REL.tar
+- Cisco_FTD_SSP_FP1K_Hotfix_HM-7.2.11.1-2.sh.REL.tar
+- Cisco_FTD_SSP_FP2K_Hotfix_HM-7.2.11.1-2.sh.REL.tar
+- Cisco_FTD_SSP_FP3K_Hotfix_HM-7.2.11.1-2.sh.REL.tar
+- Cisco_FTD_SSP_Hotfix_HM-7.2.11.1-2.sh.REL.tar
+-
+FTD 7.4 - Fixed in
+- Cisco_FTD_Hotfix_HK-7.4.7.1-1.sh.REL.tar
+- Cisco_FTD_SSP_FP1K_Hotfix_HK-7.4.7.1-1.sh.REL.tar
+- Cisco_FTD_SSP_FP2K_Hotfix_HK-7.4.7.1-1.sh.REL.tar
+- Cisco_FTD_SSP_FP3K_Hotfix_HK-7.4.7.1-1.sh.REL.tar
+- Cisco_FTD_SSP_Hotfix_HK-7.4.7.1-1.sh.REL.tar
+- Cisco_Secure_FW_TD_4200_Hotfix_HK-7.4.7.1-1.sh.REL.tar
+-
+FTD 7.6 (Fixed in
+- Cisco_FTD_Hotfix_DD-7.6.4.1-2.sh.REL.tar
+- Cisco_FTD_SSP_FP1K_Hotfix_DD-7.6.4.1-2.sh.REL.tar
+- Cisco_FTD_SSP_FP3K_Hotfix_DD-7.6.4.1-2.sh.REL.tar
+- Cisco_FTD_SSP_Hotfix_DD-7.6.4.1-2.sh.REL.tar
+- Cisco_Secure_FW_TD_4200_Hotfix_DD-7.6.4.1-2.sh.REL.tar
+-
+FTD 7.7 - Fixed in
+- Cisco_FTD_Hotfix_AN-7.7.11.1-2.sh.REL.tar
+- Cisco_FTD_SSP_FP1K_Hotfix_AN-7.7.11.1-2.sh.REL.tar
+- Cisco_FTD_SSP_FP3K_Hotfix_AN-7.7.11.1-2.sh.REL.tar
+- Cisco_FTD_SSP_Hotfix_AN-7.7.11.1-2.sh.REL.tar
+- Cisco_Secure_FW_TD_1200_Hotfix_AN-7.7.11.1-2.sh.REL.tar
+- Cisco_Secure_FW_TD_4200_Hotfix_AN-7.7.11.1-2.sh.REL.tar
+-
+FTD 10.0 - Fixed in
+- Cisco_FTD_Hotfix_S-10.0.0.1-2.sh.REL.tar
+- Cisco_FTD_SSP_FP1K_Hotfix_S-10.0.0.1-2.sh.REL.tar
+- Cisco_FTD_SSP_FP3K_Hotfix_S-10.0.0.1-2.sh.REL.tar
+- Cisco_FTD_SSP_Hotfix_S-10.0.0.1-2.sh.REL.tar
+- Cisco_Secure_FW_TD_200_Hotfix_R-10.0.0.1-2.sh.REL.tar
+- Cisco_Secure_FW_TD_1200_Hotfix_S-10.0.0.1-2.sh.REL.tar
+- Cisco_Secure_FW_TD_4200_Hotfix_S-10.0.0.1-2.sh.REL.tar
+- Cisco_Secure_FW_TD_6100_Hotfix_S-10.0.0.1-2.sh.REL.tar
+Cisco said there are no workarounds that address the flaw, adding it became aware of active exploitation earlier this month. The network equipment maker said the issue was found during internal security testing. It also credited Valerio Brussani for separately discovering and reporting the vulnerability.
+There are currently no details about the nature of the attacks, the identity and origins of the threat actor exploiting the vulnerability, what organizations have been targeted, and if any of those efforts were successful.
+The development has prompted the U.S. Cybersecurity and Infrastructure Security Agency (CISA) to [add](https://www.cisa.gov/news-events/alerts/2026/08/11/cisa-adds-three-known-exploited-vulnerabilities-catalog) the flaw to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, requiring Federal Civilian Executive Branch (FCEB) agencies to apply the fixes by August 14, 2026.
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-1" class="article-body">
-            <h2 class="article-title">Hackers breached a small Polish energy plant via private APN last year</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/hackers-breached-a-small-polish-energy-plant-via-private-apn-last-year/" target="_blank">Original Link</a></p>
-            <div class="content-text">Hackers breached a heat-and-power plant facility in Poland, which supplies heat to about 50,000 residents, using a private APN (Access Point Name) to access an OT (Operational Technology) network. [...]
+            <h2 class="article-title">DeadLock ransomware uses blockchain to resist infrastructure takedown</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/deadlock-ransomware-uses-blockchain-to-resist-infrastructure-takedown/" target="_blank">Original Link</a></p>
+            <div class="content-text">The DeadLock ransomware operation is using a decentralized infrastructure that relies on blockchain-backed services to protect its communication with victims and data-leak activity. [...]
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
@@ -107,9 +146,9 @@ Private APNs still appear in federal guidance as an isolation option. A [July 30
             <hr class="separator">
         </div>
         <div id="art-2" class="article-body">
-            <h2 class="article-title">BdThemes plugins supply-chain hack creates rogue WordPress admins</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/bdthemes-plugins-supply-chain-hack-creates-rogue-wordpress-admins/" target="_blank">Original Link</a></p>
-            <div class="content-text">A threat actor compromised the upstream infrastructure of BdThemes, a developer of premium WordPress web-design tools, and modified a remote JSON feed delivered to administrators' browsers to create rogue admin accounts. [...]
+            <h2 class="article-title">Microsoft Plugs Nearly 400 Security Holes</h2>
+            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/08/microsoft-plugs-nearly-400-security-holes/" target="_blank">Original Link</a></p>
+            <div class="content-text">Microsoft today released updates to remedy at least 398 security vulnerabilities in its Windows operating systems and supported software, including one weakness that is already being actively exploited and two others that were publicly detailed prior to today.
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
@@ -117,6 +156,201 @@ Private APNs still appear in federal guidance as an isolation option. A [July 30
             <hr class="separator">
         </div>
         <div id="art-3" class="article-body">
+            <h2 class="article-title">Microsoft Patches 398 Flaws Including a Windows Driver Zero-Day Under Active Attack</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/08/microsoft-patches-398-flaws-including.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Microsoft released its monthly security updates on Tuesday, and one of the flaws it closed is already being used in attacks.
+The bug sits in a core Windows kernel driver that handles network socket operations. An attacker with code already running on a machine can use it to escalate to SYSTEM. That patch goes out first.
+The flaw is tracked as CVE-2026-68820 (CVSS score: 7.0) and is the only one in this month's release Microsoft flags as under active exploitation. Exploitation depends on triggering a race condition in the driver. Microsoft has not publicly attributed the exploitation. Check Point Research says Lazarus used the zero-day in its Operation Dream Job campaign.
+Four other flaws in the release need nothing at all from the victim: no account, no password, no click. They affect Windows DNS Server, Windows Deployment Services, Microsoft's implementation of the QUIC transport protocol, and High Performance Computing (HPC) Pack, and each carries a CVSS score of 9.8. None was flagged as exploited when the updates shipped.
+Counting independently, the Zero Day Initiative puts the release at 398 new CVEs, 62 of them rated Critical. The count shows the size of the release; exploit status and reach decide the patch order.
+The release also closes the RCE half of a SharePoint chain whose authentication bypass was fixed in July. On-premises SharePoint farms should have both updates installed.
+[Check Point Research](https://research.checkpoint.com/2026/shattering-the-dream-when-a-job-offer-becomes-a-zero-day-attack/) said CVE-2026-68820 is a use-after-free in afd.sys, the [Ancillary Function Driver for WinSock](https://thehackernews.com/2024/08/microsoft-patches-zero-day-flaw.html) and a kernel-side component of Windows networking.
+The bug is privilege escalation: an attacker needs code running on the machine first, then can use it to reach SYSTEM. Microsoft flags it as actively exploited, which puts it ahead of the four 9.8 server RCEs here despite the lower score.
+Nothing required from the victim
+The four unauthenticated remote code execution flaws are the ones to queue behind the exploited driver bug because they can give an attacker code on a server without first needing an account or a user action.
+- CVE-2026-62878, Windows DNS Server. A stack-based buffer overflow reachable remotely with no authentication and no user interaction. The Zero Day Initiative describes the condition as wormable despite Microsoft rating exploitation as less likely. ZDI's “wormable” label describes the technical condition; it does not establish that a worm exists.
+- CVE-2026-62893, Windows Deployment Services. A remote flaw reachable through the service's TFTP handling without authentication or user interaction.
+- CVE-2026-62815, Microsoft QUIC. A remote, unauthenticated code execution flaw requiring no user interaction.
+- CVE-2026-59124, HPC Pack. It carries the same 9.8 score but is rated Important rather than Critical because HPC Pack is not installed by default. Microsoft rates exploitation as more likely.
+HPC Pack is not installed by default, and the practical priority of the other three likewise depends on whether the vulnerable service is present and reachable in a given environment. So service inventory and reachability matter alongside exploit status when setting patch priority.
+A SharePoint chain closes
+August also completes a two-part SharePoint fix that started in July.
+Rapid7 Labs reported an exploit chain to Microsoft on May 18 that combined an authentication bypass with a separate code execution vulnerability to [reach unauthenticated RCE against on-premises SharePoint](https://thehackernews.com/2026/08/researchers-disclose-ai-assisted.html). Microsoft confirmed two days later that it planned to split the remediation across the July and August update cycles.
+July fixed the first half, CVE-2026-55040, a Critical authentication bypass scored at 9.1. Rapid7 found that the flaw lets a remote unauthenticated attacker assume the identity of a SharePoint site user or administrator if the attacker knows the identity to impersonate. August supplies the fix for the RCE component, identified as CVE-2026-63520.
+The distinction matters: CVE-2026-63520 is the code execution half of the chain, not by itself the unauthenticated condition. Chaining the RCE with CVE-2026-55040 is what produced Rapid7's unauthenticated RCE.
+Rapid7 says patching CVE-2026-55040 breaks the demonstrated chain, so once the July fix was applied, that route was already closed; the August update now closes the RCE component as well.
+Put CVE-2026-68820 at the top for Windows systems where an attacker already has code running and could use the flaw to reach SYSTEM. Prioritize exposed DNS, WDS, QUIC, and HPC services behind it, then confirm on-premises SharePoint farms have the July authentication-bypass fix and the August RCE fix.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-4" class="article-body">
+            <h2 class="article-title">Cisco warns of ASA and FTD VPN flaw exploited to crash devices</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/cisco-warns-of-asa-and-ftd-vpn-flaw-exploited-to-crash-devices/" target="_blank">Original Link</a></p>
+            <div class="content-text">Cisco is warning that a high-severity denial-of-service vulnerability in Secure Firewall ASA and Threat Defense (FTD) software is being actively exploited in attacks to remotely crash affected devices. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-5" class="article-body">
+            <h2 class="article-title">A Vault With No Treasure - CMMC Level 2 Compliance for Subcontractors With No CUI</h2>
+            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/a-vault-with-no-treasure-cmmc-level-2-compliance-for-subcontractors-with-no-cui" target="_blank">Original Link</a></p>
+            <div class="content-text">A Vault With No Treasure - CMMC Level 2 Compliance for Subcontractors With No CUI
+Table of contents
+This blog post should not exist, but it does due to an unfortunate reality: Many large prime defense contractors are attempting to impose CMMC Level 2 audit requirements on subcontractors that do not handle Controlled Unclassified Information (CUI). Defense subcontractors that do not handle CUI should only be subject to CMMC Level 1 self-assessment requirements. This leaves subcontractors with a difficult choice between pushing back on the unnecessary requirements from upstream contractors or wasting the resources to implement and audit compliance with CMMC Level 2 requirements that should not apply.
+Contractors that choose to “check the box” to win contracts, rather than pushing back on unnecessary requirements, will find themselves building a CMMC enclave (the vault) that will likely never actually handle the CUI it was designed to safeguard (the treasure). This post will help subcontractors understand the easiest path to gain a CMMC Level 2 C3PAO certification when they are not handling CUI and therefore have no treasure to safeguard.
+This post will cover:
+- How CMMC levels are supposed to apply to subcontractors
+- How subcontractors end up with unnecessary CMMC Level 2 requirements and what can be done about it
+- Basic principles for CMMC scope and how to design a CUI enclave
+- Recommendations for simple enclave designs that can be implemented by subcontractors that do not expect to handle CUI
+- How subcontractors should handle Federal Contract Information (FCI) regardless of their approach to CUI
+Overview
+According to the official government CMMC requirements, a contractor should only insert CMMC Level 2 requirements in a subcontract if the upstream contractor will flow CUI down to the subcontractor as part of that specific contract. Furthermore, CMMC Level 2 C3PAO audit requirements are supposed to be limited to subcontracts that involve handlingCUI under a prime contract with Level 2 C3PAO assessment or Level 3 requirements; subcontracts under prime contracts with Level 2 self-assessment requirements should only flow down Level 2 self-assessment requirements.
+Unfortunately, many contractors either do not understand the CMMC flow-down requirements or are not willing to keep track of which types of information are flowing down. This has resulted in subcontractors receiving supposed CMMC Level 2 C3PAO audit requirements from upstream contractors when it's not necessary.
+Limiting CMMC Level 2 scope is accomplished by designing an enclave within which all CUI will (theoretically) be handled. When done correctly, anything outside the enclave will be out of scope for CMMC Level 2, and only the assets within the enclave will be subject to CMMC Level 2 requirements and assessments. The goal for a subcontractor that is subject to unnecessary CMMC Level 2 requirements is to build the simplest possible enclave that could handle CUI in a compliant manner if the need ever arose and therefore pass a C3PAO assessment. This approach requires:
+- Defining a system that includes at least one (1) device intended to handle CUI should it ever become necessary
+- Using the virtual desktop scope exception to allow access to the enclave without bringing additional devices into scope
+- Limiting the security infrastructure devices that will be in scope by understanding the CMMC scoping rules
+- Only allowing the use of CMMC-compliant External Service Providers for IT and/or cybersecurity services within the enclave
+Some simple enclave designs that can effectively minimize CMMC Level 2 compliance effort for subcontractors now handling CUI include:
+- Implementing an on-premises enclave with limited capabilities
+- Implementing a cloud-based enclave with limited capabilities
+- Limiting the scope to a single workstation with no network connectivity
+Even though this post focuses on CMMC Level 2, defense subcontractors should remember that they will almost always have CMMC Level 1 obligations for any devices that process, store, or transmit FCI outside of their CMMC Level 2 enclave and separate from any real or imagined CMMC Level 2 obligations.
+How CMMC Should Apply to Subcontractors
+Three (3) standardized government contract clauses impose CMMC and related requirements on contractors, and they all contain paragraphs requiring contractors to flow the text of these clauses down in subcontracts under specific circumstances.
+These requirements are based on the handling of two (2) types of information:
+Federal Contract Information (FCI) | FCI is information that is provided by or generated for the government under a contract except for information that is intended for public release or simple transactional information. FCI does not carry any special markings to identify it as FCI. |
+Controlled Unclassified Information (CUI) | CUI is information that laws, regulations, or government-wide policies require the government itself to safeguard or control the dissemination of. All CUI must be marked by the government before it is transmitted to contractors. Contractors that create CUI will be instructed as to what information will be CUI and how it must be marked. There are currently 126 categories of CUI listed in the |
+Some contractors are confused about what information qualifies as CUI. Our post on [Dealing With Unmarked and Mismarked CUI](https://trustedsec.com/blog/dealing-with-unmarked-and-mismarked-cui) can help contractors understand what is (and is not) CUI.
+The contract clauses related to these types of information include:
+Clause | What It Is | Subcontractor Flow Down |
+|---|---|---|
+| Government-wide contract clause that requires contractors to safeguard (FCI) using 15 basic safeguard requirements | Paragraph (c) requires flow-down in subcontracts that will involve handling of FCI |
+| Department of Defense (DoD) contract clause that requires contractors to safeguard CUI using the requirements in NIST SP 800-171r2 and report cybersecurity incidents involving CUI | Paragraph (m)(1) requires flow-down in subcontracts that will involve handling of CUI |
+| DoD contract clause that requires to assess and report their compliance with FCI and/or CUI safeguarding requirements from FAR 52.204-21 and DFARS 252.204-7012 | Paragraph(f)(1) requires flow-down in subcontracts that will involve handling of FCI or CUI Paragraph(f)(2) requires contractors to flow down only the CMMC level and assessment requirements that are applicable to the information being flowed down in a subcontract (as per the criteria in
+|
+The flow-down requirements make it clear that a subcontract should only contain DFARS 252.204-7012 and CMMC Level 2 requirements related to the safeguarding of CUI if the subcontractor will be receiving CUI from an upstream contractor. Subcontracts that do not involve handling CUI should only contain FAR 52.204-21 and CMMC Level 1 requirements for safeguarding FCI regardless of what requirements were in the prime contract.
+Furthermore, subcontractors that handle CUI should be able to self-assess compliance with CMMC Level 2 unless the prime contract requires a Level 2 C3PAO audit or Level 3 DIBCAC audit.
+More details on what CMMC level should apply in each contract is in our previous blog post [CMMC Level and Assessment Requirements for Defense Contractors](https://trustedsec.com/blog/cmmc-level-and-assessment-requirements-for-defense-contractors).
+The Prime Contractor Problem
+The main problem that led to this post is that some large prime contractors have decided to not keep track of which subcontracts will involve handling CUI in accordance with the requirements of the prime contract. Instead, these contractors are unilaterally imposing CMMC Level 2 C3PAO audit requirements on all of their subcontractors regardless of whether the subcontractor will handle CUI. These unnecessary subcontract requirements then flow further down the supply chain, creating confusion and unnecessary extra cost.
+DoD estimates that 63% of defense contractors only require CMMC Level 1. This means there are potentially 139,201 contractors that should be able to self-assess compliance with Level 1 but will instead be implementing CMMC Level 2 unnecessarily and seeking unnecessary Level 2 C3PAO audits.
+Subcontractors can push back on these unnecessary requirements by asking upstream contractors what CUI will be handled under a subcontract. If CUI will not be handled, subcontractors should request that contract clauses be adjusted to reflect a CMMC Level 1 Self-Assessment.
+There are a few issues with this approach:
+- Some prime contracting personnel have demonstrated that they do not understand the CUI program.
+- As an example, TrustedSec clients have reported a very large prime DoD contractors informing them that all information sent under a subcontract is CUI, which simply cannot be true due to the narrow definition of and marking requirements for CUI.
+- Some prime contractors may flat out refuse to adjust the clauses, even if they know the clauses are incorrect.
+- This seems to be common with large prime contractors; they are simply being lazy by applying every possible contract clause to every potential subcontractor and seem to have no intent to follow the actual CMMC flow-down requirements.
+- Some subcontractors are concerned that pushing back in any way will result in subcontracts going to competitors that don’t complain about the unnecessary clauses.
+This leaves potential subcontractors that are not willing or able to alter contract clauses with the choice of either declining to bid on subcontracts with unnecessary requirements or incurring the cost of implementing CMMC Level 2 requirements and undergoing an audit despite the lack of CUI in their environment.
+This is not a decision to take lightly. DoD estimates the cost to attain CMMC Level 2 C3PAO certification every three (3) years at $104,000-$118,000. This cost estimate is for the certification process only and does not include the cost of implementing the CMMC Level 2 requirements necessary to pass the audit and maintaining compliance indefinitely.
+Designing Enclaves
+Subcontractors that decide to forge ahead with CMMC Level 2 certification, even though they are not expecting to handle CUI, will likely desire to do so with minimal cost and effort.
+While the “vault with no treasure” approach described in this post is intended to help subcontractors that do not handle CUI to meet this need, some of the approaches described in this post can be used by contractors to build the foundation of a CMMC compliant system that can be expanded to address actual CUI handling needs in the future.
+Defining Systems
+NIST SP 800-171 and CMMC compliance are based around the concept of systems, which are each made up of a number of assets (e.g., workstations, servers, printers, CNC machines, network switches, firewalls) and are documented in a System Security Plan (SSP). A subcontractor that signs a subcontract with a CMMC clause is effectively agreeing that FCI and/or CUI will only be processed, stored, and/or transmitted on devices that are part of one (1) or more systems that have passed the appropriate level and type of CMMC assessment.
+A contractor may have multiple defined systems, each of which may have different CMMC level and assessment requirements. Most contractors that handle CUI would have defined at least one (1) Level 2 system to handle CUI and another Level 1 system that handles FCI but not CUI. Contractors may also have one (1) or more Level 3 systems, or multiple Level 1 and/or Level 2 systems for handling FCI and/or CUI in different formats.
+This concept of a defined system is what allows a subcontractor to implement and assess CMMC Level 2 compliance within a very small scope while keeping the rest of their business operations and assets out of scope. CMMC Level 2 requirements and assessments only apply to the assets that are part of the defined systems that handle CUI. Any other devices the subcontractor operates are irrelevant to CMMC Level 2 assessments and do not need to be compliant as long as they are outside the scope of the defined systems that will be used to handle CUI.
+The word “enclave” is often used when discussing CMMC. This term simply refers to a system designed to handle CUI that is isolated from other devices that a contractor or subcontractor wants to keep out of their CMMC scope. The “vault with no treasure” approach described here is based on designing a very small and simple enclave that could handle CUI in a compliant manner should the need arise and therefore can pass a CMMC Level 2 assessment.
+There are limits to how small and simple a system can be. CMMC contains scope rules that tell us what devices must be included within a system based on the relationship between the devices and CUI.
+Basic CMMC Scoping
+Understanding how to implement a minimalist enclave requires understanding some basic CMMC Level 2 scope concepts. A more detailed description of CMMC scope is contained in our previous post [CMMC Scope - Understanding the Sprawl](https://trustedsec.com/blog/cmmc-scope-understanding-the-sprawl).
+Four (4) categories of devices are in scope for CMMC as defined in [32 CFR 170.19(c)](https://www.ecfr.gov/current/title-32/part-170#p-170.19(c)) and described in the [CMMC Level 2 Scoping Guide](https://dodcio.defense.gov/Portals/0/Documents/CMMC/AssessmentGuideL2v2.pdf):
+Scope Category | What They Are | Why They Matter |
+|---|---|---|
+CUI Assets | Devices that process, store, or transmit CUI | We must add at least one (1) CUI Asset to the enclave so the C3PAO has something to assess. As this post is focused on subcontractors that will not handle CUI, we should think of CUI Assets as the devices within the enclave that could theoretically process, store, or transmit CUI someday if the need arose. |
+Specialized Assets | IoT, IIoT, OT, Government Furnished Equipment, Restricted Information Systems, and Test Equipment that process, store, or transmit CUI but are unable to meet CMMC Level 2 requirements | Specialized Assets should be irrelevant in this context because there should be no reason to include any of these devices in the enclave if no CUI will be handled. |
+Contractor Risk Managed Assets | Oversimplifying a bit: devices that can establish a network connection to a CUI Asset | A primary goal of this approach is to ensure no devices fall into the Contractor Risk Managed category by completely isolating the enclave from the rest of the environment via network segmentation. |
+Security Protection Assets | Devices that provide security functions or capabilities to any of the above | Another goal of this approach is to minimize the number of devices that fall into the Security Protection Assets category by carefully designing how CMMC safeguarding requirements will be met. |
+To be considered out of scope for CMMC, a device must:
+- Not process, store, or transmit CUI
+- Not provide security protections for CUI Assets
+- Be physically or logically separated from CUI Assets
+- Not otherwise fall into any of the in-scope categories
+We want to ensure every device the subcontractor operates that doesn’t need to be part of the enclave meets these criteria to remain out of scope.
+The Virtual Desktop Exception
+The CMMC Level 2 scope rules contain an exception for virtual desktop clients that is very relevant to a minimalist enclave. The CMMC scope rules state:
+“An endpoint hosting a VDI [Virtual Desktop Infrastructure] client configured to not allow any processing, storage, or transmission of CUI beyond the Keyboard/Video/Mouse sent to the VDI client is considered an Out-of-Scope Asset.” |
+This allows subcontractors to access CUI within the enclave from their normal workstations without those workstations falling into the CUI Asset or Contractor Risk Managed Asset scope categories. This is a very powerful tool for building an enclave without bringing workstations that access it into the CMMC Level 2 scope.
+External Service Providers
+Any organization that is providing or managing IT and/or cybersecurity services for a CMMC Level 2 enclave may be considered in scope as an External Service Provider (ESP) if the service provider processes, stores, or transmits CUI or Security Protection Data (SPD) on their own systems. Subcontractors must carefully design their enclaves to avoid including ESPs that are not CMMC compliant. A system cannot pass a CMMC assessment unless all in-scope ESPs also meet the applicable CMMC requirements.
+We must treat CUI Assets as if they may handle CUI in the future in order to pass an assessment. This means any ESPs that would handle CUI if it were in the enclave will also be in scope for assessment purposes.
+SPD is perhaps a more significant problem than CUI as many managed and outsourced IT and cybersecurity services will be much more likely to handle SPD than CUI. SPD is defined as security-relevant information stored or processed by a subcontractor’s Security Protection Assets and explicitly includes:
+- Configuration data required to operate a Security Protection Asset
+- Log files generated by or ingested by a Security Protection Asset
+- Data related to the configuration or vulnerability status of in-scope assets
+- Passwords that grant access to the in-scope environment
+The specific requirements that apply to ESPs also vary depending on whether the ESP is a cloud service provider and whether the ESP is handling CUI or just SPD:
+ESP Type | Requirements |
+|---|---|
+Cloud service providers that process, store, or transmit CUI | FedRAMP Moderate Certification or Equivalent |
+Cloud service providers that process, store, or transmit SPD but not CUI | CMMC Level 2 |
+Non-cloud service providers that process, store, or transmit CUI and/or SPD | CMMC Level 2 |
+ESPs may voluntarily undergo their own CMMC assessments, in which case the assessment level and type must match or exceed the subcontractor’s obligations. Otherwise, the ESP must be included within the scope of the subcontractor’s assessment (i.e., the subcontractor must pay their C3PAO to assess the ESP, and the subcontractor cannot pass its assessment unless the ESP also passes its assessment).
+More information on CMMC compliance with ESPs is available in our previous post on [CMMC Subcontractors and Service Providers](https://trustedsec.com/blog/cmmc-subcontractors-and-service-providers).
+Simple Enclave Designs
+The following designs are starting points that subcontractors can use to design a minimal enclave. These fall into three (3) categories, each described in more detail below:
+- On-Premises Enclave
+- Cloud Enclave
+- Offline Workstation
+Subcontractors that may need to handle CUI in the future should consider a design that can be easily expanded to meet the need when the time comes. The details will depend on what format the subcontractor will receive CUI in (e.g., product specifications, design drawings) and what the subcontractor will need to do with this information once they have it. The on-premises enclave is the most flexible approach in this regard as it can more easily incorporate devices that require physical interaction (e.g., printers and CNC machines) than a cloud-based solution while the Offline Workstation is the least flexible approach as it is completely incapable of network communication.
+On-Premises Enclave
+A minimal network-connected enclave should include:
+- A file sharing portal used to receive CUI from and transmit CUI to other contractors
+- A virtual desktop host used to review and manipulate CUI within the enclave while keeping other workstations out of the CMMC Level 2 scope via the virtual desktop exception described above
+A subcontractor could easily add other applications and devices to this enclave in the future. For example, CAD software could be installed on the virtual desktop host if a subcontractor must manipulate part drawings that are marked as CUI and a dedicated printer could be connected within the enclave.
+Deciding how to implement the Security Protection Assets necessary to meet CMMC Level 2 requirements will likely be the most difficult challenge when designing an on-premises enclave. These may include SIEMs, authentication management, configuration and patch management systems, vulnerability scanners, etc.
+Two (2) approaches to implementing Security Protection Assets include:
+Approach | Pro | Con |
+|---|---|---|
+Enclave Native Services: Implement the necessary security functions via dedicated Security Protection Assets within the enclave | Existing security infrastructure does not need to meet CMMC Level 2 requirements | Incurs extra cost and overhead due to duplication of security functionality that exists outside the enclave |
+Shared Services: Existing security infrastructure provides service to the enclave as well as other devices that are not in the CMMC Level 2 scope | Avoids extra cost and overhead by using infrastructure that already exists | Existing security infrastructure is in scope for CMMC as Security Protection Assets and must implement all applicable CMMC Level 2 controls |
+This does not need to be an all-or-nothing approach. A subcontractor may choose to re-implement some security functions within the enclave while leveraging existing security infrastructure for other security functions. This is ultimately a business decision for each subcontractor to determine which approach will have the least impact for each Security Protection Asset necessary to meet Level 2 requirements.
+Subcontractors must also remember the impact of ESPs on their CMMC scope when determining how to implement Security Protection Assets. Any third-party that handles SPD from the enclave due to their management of a Security Protection Asset is considered an ESP and will be in scope. Subcontractors should strongly consider re-implementing existing security infrastructure that is managed by an organization that is not compliant or switching to a service provider that meets CMMC Level 2 requirements.
+Cloud Enclave
+The primary function of a basic cloud and an on-premises enclave is the same: host a file sharing portal suitable for exchanging CUI with other contractors and provide a way to interact with CUI if necessary. Many subcontractors see a 100% cloud-based enclave as an easy solution to CMMC compliance, but putting a CMMC Level 2 enclave in the cloud comes with many of the same challenges as an on-premises enclave.
+Requiring all access to the cloud-based enclave via a virtual desktop host will be necessary to keep local workstations out of scope. The CMMC scope rules do not change just because the enclave is in the cloud, so any workstation that directly connects to a cloud-based CUI Asset (without using a virtual desktop solution) would be in scope.
+A drawback of the cloud enclave is that it may be more difficult to add capabilities if the subcontractor needs to handle CUI in the future. Software licensing may be different for cloud applications, lag introduced by virtual desktop sessions may make some applications more difficult to use, and any need for CUI to enter the physical world (e.g., transmission to a printer or manufacturing equipment) will require connections to on-premises equipment that would be in scope for CMMC (necessitating an on-premises extension of the enclave).
+Scope rules and requirements related to ESPs must be at the forefront when implementing a cloud-based enclave. As the enclave could (theoretically) handle CUI, the cloud service itself must meet FedRAMP Moderate requirements. Subcontractors should strongly consider choosing a cloud service provider that has a FedRAMP Certification or be very familiar with the requirements related to [FedRAMP Equivalency](https://dodcio.defense.gov/Portals/0/Documents/Library/FEDRAMP-EquivalencyCloudServiceProviders.pdf) for cloud service providers that do not have a Certification.
+As per [32 CFR 170.19(c)(2)(ii)](https://www.ecfr.gov/current/title-32/part-170#p-170.19(c)(2)(ii)), a subcontractor is responsible for documenting how the cloud-based CMMC Level 2 system is implemented in its SSP. Subcontractors should receive a Customer Responsibility Matrix (CRM) from their cloud service provider that describes which requirements are handled by the ESP, which are the responsibility of the subcontractor, and which are shared. Subcontractors must implement all CMMC Level 2 requirements that the ESP indicates are subcontractor or shared responsibilities.
+Subcontractors must consider how the security functions required by CMMC Level 2 (but not listed as ESP responsibilities in the CRM) will be implemented. Subcontractors are faced with the same choice as described for an on-premises enclave:
+- Re-implement the security functions in the cloud enclave at extra cost
+OR
+- Leverage existing security infrastructure, dragging on-premises Security Protection Assets and potentially other ESPs into scope
+Offline Workstation
+Perhaps the simplest (but least useful) CMMC enclave is a single air gapped workstation. This workstation would be the sole device authorized to handle CUI and must not be connected to the Internet or any other network. This approach would have absolutely no impact on the subcontractor’s network or other systems.
+In order for this approach to be feasible, the subcontractor must require upstream contractors to transfer CUI via a removable drive that can be connected to the workstation.
+Most of the technical CMMC Level 2 requirements can be implemented on the workstation itself. Requirement MP.L2-3.8.6 - Portable Storage Encryption will be very relevant due to the potential use of removable media for transferring CUI to and from the workstation. Various other non-technical requirements related to physical protection, awareness and training, etc., will also apply as they would in any CMMC Level 2 scope.
+A struggle with this approach is that some CMMC Level 2 requirements would be difficult or impossible to implement on an offline workstation, for example:
+- AU.L2-3.3.7 - Authoritative Time Source requires systems to synchronize their clocks with an authoritative source, which is impossible for an offline workstation without special hardware to receive time signals via GPS or radio.
+- Requirements for Audit Failure Alerting (AU.L2-3.3.4), Audit Correlation (AU.L2-3.3.5), and Reduction & Reporting (AU.L2-3.3.6) are usually implemented via a SIEM, which would not be available to an offline workstation, although these functions could theoretically be implemented on the workstation itself.
+Another struggle is that many of the CMMC Level 2 requirements would be Not Applicable because they are irrelevant to an offline workstation, for example:
+- Requirements related to remote access in AC.L2-3.1.12 through AC.L2-3.1.15
+- Requirements related to wireless access in AC.L2-3.1.16 and AC.L2-3.1.17
+- SC.L2-3.13.6 - Network Communication
+- SC.L2-3.13.8 - Data in Transit
+- SC.L2-3.13.9 - Connection termination
+- SI.L2-3.14.6 - Monitor Communications for Attacks
+While the prospect of marking many requirements Not Applicable may seem like a good thing, it generates more paperwork that subcontractors may wish to avoid. DFARS 252.204-7012(b)(2)(ii)(B) requires contractors to submit requests in writing to the Contracting Officer if they wish to vary from the requirements of NIST SP 800-171 and await adjudication from an authorized representative of the DoD CIO.
+Any subcontractor that intends to take this hyper-minimalist approach to an enclave would be well advised to confer with their C3PAO to determine exactly how an offline workstation would be assessed and what solutions the C3PAO would consider acceptable for the Level 2 requirements that do not make sense in this context.
+CMMC Compliance for FCI
+While this post primarily focused on CUI, subcontractors should remember they still have CMMC Level 1 requirements separate from any real or unnecessary CMMC Level 2 requirements.
+TrustedSec recommends implementing the [15 Basic Safeguards for FCI](https://www.acquisition.gov/far/52.204-21) on all subcontractor systems that could potentially receive or create any non-public information under a federal contract so that subcontractors do not need to worry about controlling the flow of FCI within their environment. CMMC Level 1 only requires self-assessment, so the cost of assessing the entire subcontractor environment should also be minimal.
+This recommendation is made for three (3) reasons:
+- FCI is much more common than CUI due to the broadness of its definition.
+- FCI is not marked, so it is much harder to keep track of than CUI.
+- CMMC Level 1 requirements (the 15 Basic Safeguards for FCI) are much easier to implement than the 110 NIST SP 800-171r2 safeguards for CUI (which are identical to the CMMC Level 2 requirements).
+If you're in need of assistance on this, please [get in touch with us](https://trustedsec.com/contact).</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-6" class="article-body">
             <h2 class="article-title">Microsoft named a Leader in the 2026 IDC MarketScape for MDR/MXDR for the Enterprise</h2>
             <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/08/10/microsoft-named-a-leader-in-the-2026-idc-marketscape-for-mdr-mxdr-for-the-enterprise/" target="_blank">Original Link</a></p>
             <div class="content-text">Security teams are being asked to defend a growing attack surface with fewer people and around the clock, against threat actors who never take a night off. As cyberattackers increasingly use AI to launch and scale campaigns, the volume, speed, and sophistication of threats continue to rise. Closing that gap takes more than tooling. It takes a partner that pairs a leading security platform with scaled intelligence and human experts who can act on your behalf at any hour. That’s exactly what [Microsoft Defender Experts MDR](https://www.microsoft.com/en-us/security/business/services/microsoft-defender-experts-mdr?msockid=25cfdac4ec1e6114037bcd63ed2860f5) is built to do.
@@ -135,142 +369,6 @@ When a threat is found, Defender Expert notifications appear as incidents in the
 Get started
 Read the [IDC MarketScape: Worldwide MDR/MXDR for the Enterprise 2026 Vendor Assessment excerpt](https://idcdocserv.com/US54792426e_Microsoft), and visit the [Microsoft Defender Experts MDR](https://www.microsoft.com/en-us/security/business/services/microsoft-defender-experts-xdr?msockid=27bd8b1d324d6b4d28eb9e2e33dd6a4f) webpage to see how expert-led, round-the-clock managed detection and response can extend your team, drive SOC efficiency, and help you stay ahead of emerging cyberthreats.
 To learn more about Microsoft Security solutions, visit our [website](https://www.microsoft.com/en-us/security/business). Bookmark the [Security blog](https://www.microsoft.com/security/blog/) to keep up with our expert coverage on security matters, and follow us on LinkedIn ([Microsoft Security](https://www.linkedin.com/showcase/microsoft-security/)) and X ([@MSFTSecurity](https://twitter.com/@MSFTSecurity)) for the latest news and updates on cybersecurity.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">TrueConf Server Flaws Exploited to Replace Client Installers with PhantomCore</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/08/head-mare-exploits-trueconf-flaws-to.html" target="_blank">Original Link</a></p>
-            <div class="content-text">The threat actor known as [Head Mare](https://thehackernews.com/2026/04/phantomcore-exploits-trueconf.html) has been [observed](https://securelist.ru/tr/head-mare-targets-trueconf-server-with-phantomcore/116557/) weaponizing security flaws in unpatched TrueConf servers once again in attacks targeting Russian companies spanning instrumentation, electronics, transport, energy, IT, and software development sectors.
-Russian cybersecurity vendor Kaspersky said it detected the attacks in July 2026.
-The activity involves exploiting a vulnerability chain in the TrueConf videoconferencing server to replace the original TrueConf client installers with poisoned versions that deliver the [PhantomCore](https://thehackernews.com/2024/09/hacktivists-exploits-winrar.html) backdoor and remote access trojan (RAT) into susceptible systems.
-The vulnerabilities, tracked as KLCERT-26-057 and KLCERT-26-058, enable arbitrary code execution with elevated privileges. The attack impacts TrueConf server versions 5.3.x up to 5.3.9, 5.4.x up to 5.4.9, 5.5.x up to 5.5.5, and earlier.
-The attack chain is as follows -
-- Attackers connect to the TrueConf server on TCP port 4307, which is open by default.
-- Upon successful connection, the attackers exploit KLCERT-26-057 to run a malicious script on the server.
-- The script launches within an isolated environment on the server, limiting its access to operating system functions.
-- The attackers then exploit KLCERT-26-058 to break out of the isolated environment and run arbitrary commands on the underlying host.
-- The attackers run arbitrary code on the server with NT AUTHORITY\SYSTEM privileges.
-- The attackers replace the file "...\public\js\locale.php" with a web shell to facilitate persistent remote access to the compromised server.
-The web shell, per Kaspersky, has been leveraged to collect data on the IT infrastructure, gain privileged access to the TrueConf database, and ultimately substitute the original TrueConf Client distribution with an infected version containing PhantomCore.
-What's more, the web shell serves as a conduit for another backdoor codenamed PhantomGraph that shares some level of code overlap with PhantomCore and includes two DLL modules -
-"SysExcSvc.dll," for receiving commands and exfiltrating their results back to Microsoft OneDrive cloud storage that's used as command-and-control (C2)
-"SysReadSvc.dll," for parsing the commands received by the first module, executing it, and storing the results
-"To establish a persistent presence in the system, the attackers execute a Base64-encoded PowerShell command that installs SysExcSvc.dll and SysReadSvc.dll as Windows services," Kaspersky said. "We believe the attackers deliberately split this malware into two components to make it harder for EDR tools to detect."
-In addition, the threat actors have been found to launch an SSH reverse tunnel, take a memory dump of the "lsass.exe" process, and collect general system information using commands like hostname and whoami.
-The vulnerabilities have since been patched by the vendor in the latest TrueConf Server versions 5.3.9, 5.4.9, and 5.5.5 released on June 18, 2026. Organizations using TrueConf are advised to download the latest versions for optimal protection.
-This is not the first time Head Mare has targeted zero-day flaws in TrueConf to single out Russian entities. Earlier this April, Positive Technologies [disclosed](https://thehackernews.com/2026/04/phantomcore-exploits-trueconf.html) that three vulnerabilities in the software (BDU:2025-10114, BDU:2025-10115, and BDU-2025-10116) were abused by the group since September 2025 to deliver PHP web shells and malicious payloads for information theft and command execution.
-Around the same time, Check Point also [reported](https://thehackernews.com/2026/03/trueconf-zero-day-exploited-in-attacks.html) that another high-severity security flaw in the TrueConf client (CVE-2026-3502) was exploited in the wild as a zero-day as part of a campaign targeting government entities in Southeast Asia to deploy the Havoc C2 framework.
-ViPNet Update Mechanism Hijacked to Deploy HelloInjector and HelloProxy
-The development comes weeks after Kaspersky said it discovered a new advanced persistent threat (APT)-style attack that has been ongoing since at least May 2026 using previously unreported tooling, primarily by taking advantage of the update mechanism for the ViPNet product suite to target Russian government, energy, transport, education, and logistics sectors.
-The HelloNet attack involves the execution of a malicious DLL ("wtsapi32.dll") that masquerades as a legitimate file associated with the ViPNet suite update system. The loader DLL, dubbed HelloInjector, is sideloaded by the ViPNet update binary "itcsrvup64.exe," resulting in the execution of the malicious payload from within "svchost.exe."
-"After starting, the malware checks the process in the context of which it was launched," Kaspersky [said](https://securelist.com/tr/hellonet-vipnet/120700/). "If the name of the main process is not svchost.exe, the loader starts iterating through all processes running in the operating system. It looks for a process whose name contains the string svchost, and whose command line contains the string netsvcs."
-"If such a process is found, the loader injects itself into the target process using the NtWriteVirtualMemory and NtCreateThreadEx functions."
-Once restarted inside the new process, the loader checks the process name a second time for the presence of the string "svchost." If found, HelloInjector loads and executes the malicious payload that's stored in its body in plaintext. The payload is a hidden proxy and a loader for additional modules retrieved from a C2 server. It has been codenamed HelloProxy.
-Besides taking steps to interfere with the normal functioning of security solutions operating in user mode for filtering network connections, it serves as a loader for two components -
-- HelloExecutor, to execute commands on the infected system and launch an SSH tunnel to attacker infrastructure
-- HelloCleaner, to clean ViPNet software log files and erase forensic trail
-Also discovered in one of the infected systems is a Rust implant named HelloBackdoor that can enable file uploads and downloads to and from the C2 server. Commands that do not match a predefined format are interpreted as instructions to be executed via "cmd.exe."
-At this stage, it's clear how the threat actors are delivering the rogue "wtsapi32.dll" DLL to target machines. The activities have been tied to an unknown Chinese-speaking APT with low confidence, citing a reference to the Chinese website sina[.]com and an open-source software download mirror ("mirrors.ustc.edu[.]cn") hosted by the University of Science and Technology of China.
-With [fake updates for ViPNet](https://thehackernews.com/2025/04/android-spyware-disguised-as-alpine.html#russian-organizations-targeted-by-new-windows-backdoor) having been leveraged in prior attacks targeting Russia, the findings indicate how widely-used programs in the country are becoming lucrative vectors for advanced threat actors.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-5" class="article-body">
-            <h2 class="article-title">Canadian Man Pleads Guilty in Snowflake Extortions</h2>
-            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/08/canadian-man-pleads-guilty-in-snowflake-extortions/" target="_blank">Original Link</a></p>
-            <div class="content-text">A 26-year-old Canadian man once described as one of the most consequential cybercrime threat actors of 2024 has pleaded guilty to computer fraud and conspiracy to hack and extort more than 165 organizations that used the cloud provider Snowflake. Connor Riley Moucka, of Kitchener, Ontario, also admitted to stealing call and text history records of more than 100 million AT&T customers.
-The U.S. Justice Department said between February and October 2024, Moucka and co-conspirators used stolen login credentials to steal cloud-hosted data belonging to at least 165 customers of a U.S.-based software-as-a-service company.
-The hackers targeted stolen credentials for Snowflake customer accounts that did not enforce multi-factor authentication, and extorted or attempted to extort a host of well-known companies, including TicketMaster, Lending Tree, Advance Auto Parts and Neiman Marcus. Snowflake responded to the data thefts by increasing password complexity requirements and enforcing multi-factor authentication.
-Moucka adopted new nicknames frequently — sometimes operating multiple identities concurrently — but two of his best-known monikers were “Judische” and “Waifu.” Judische’s admitted role in the Snowflake data thefts was first documented by KrebsOnSecurity in [a September 2024 story](https://krebsonsecurity.com/2024/09/the-dark-nexus-between-harm-groups-and-the-com) about the overlap between Western, English-speaking cybercriminals and extremist groups that harass and extort minors into harming themselves or others.
-That September 2024 story identified Judische as a software engineer from Ontario who has been involved in numerous data breaches and voice phishing attacks against U.S. companies since at least 2020. A little more than a month later, Canadian authorities [arrested Moucka](https://krebsonsecurity.com/2024/11/canadian-man-arrested-in-snowflake-data-extortions/) on a provisional warrant from the United States.
-The government says Moucka and others used their unauthorized access to steal billions of sensitive customer records and download terabytes of information, “including individuals’ non-content call and text history records, banking and other financial information, payroll records, Drug Enforcement Administration (DEA) registration numbers, driver’s license numbers, passport numbers, social security numbers and other personally identifiable information. They then extorted victims by threatening to publish data online.”
-Moucka also threatened and harassed government officials and security researchers who were helping to track him down. The Justice Department said the conspirators made over $2.5 million in ransom payments, and that in at least one instance, Moucka re-extorted a victim with threats of further disclosure of the victim’s stolen data.
-“Moucka used the stolen data of a government officer and members of a then-former government officer’s immediate family in this re-extortion attempt,” reads [a statement](https://www.justice.gov/opa/pr/canadian-man-pleads-guilty-hacking-us-cloud-storage-provider-and-extorting-its-customers) from the Justice Department.
-One of Moucka’s admitted co-conspirators is Cameron “Kiberphant0m” Wagenius, a U.S. Army soldier who [pleaded guilty in July 2025](https://www.justice.gov/opa/pr/former-us-soldier-pleads-guilty-hacking-and-extortion-scheme-involving-telecommunications) to extorting AT&T and Verizon for their customer account data. Less than a month before Wagenius’s arrest, KrebsOnSecurity published [a deep dive](https://krebsonsecurity.com/2024/11/hacker-in-snowflake-extortions-may-be-a-u-s-soldier/) into Kiberphant0m’s various Telegram and Discord identities over the years, revealing how the owner of the accounts told others they were in the Army and stationed in South Korea.
-Kiberphant0m also re-extorted victims. Immediately following Moucka’s arrest, Kiberphant0m posted on hacker forums what he claimed were the AT&T call logs for then President-elect Donald Trump and for then Vice President Kamala Harris, as well schematics allegedly stolen from the U.S. National Security Agency (NSA).
-Wagenius is set to be sentenced on September 3, 2026. The government says he faces a maximum penalty of 20 years in prison for conspiracy to commit wire fraud, a maximum penalty of five years in prison for extortion in relation to computer fraud, and a mandatory two-year sentence consecutive to any other prison time for aggravated identity theft.
-The third alleged co-conspirator is John Erin Binns, 26, an elusive American man who fled the United States after being indicted for his admitted role in [a 2021 breach at T-Mobile](https://krebsonsecurity.com/2021/08/t-mobile-investigating-claims-of-massive-data-breach/) that exposed the personal information of at least 76 million customers.
-Sources close to the investigation said Binns, also known as “IRDev” and “IntelSecrets,” was until recently incarcerated in a Turkish prison, but that he has since been released and has resurfaced online. Those sources said Binns also recently obtained Turkish citizenship, and under Turkish law a citizen cannot be extradited to a foreign country.
-Moucka pleaded guilty to four criminal counts, including computer fraud, wire fraud, aggravated identity theft, and conspiracy. He is slated to be sentenced on Oct. 27 and faces a mandatory minimum penalty of two years in prison on the aggravated identity theft count, as well as a maximum penalty of 30 years in prison on the remaining counts. Ultimately, it will be up the federal judge how much time Moucka actually serves for his extensive cybercriminal rap sheet.
-For an interview with Moucka prior to his arrest and a deeper look at Binns, see [our original report on Moucka’s arrest](https://krebsonsecurity.com/2024/11/canadian-man-arrested-in-snowflake-data-extortions/).
-Interesting case. It shows that attackers don’t always need sophisticated techniques—weak or reused passwords can be enough. I think more people should focus on using unique passwords for every account and enabling MFA wherever possible. Prevention is much easier than dealing with the aftermath of an account takeover
-Good point. Reusing passwords is still one of the easiest ways for attackers to get in, so using a password manager and enabling MFA wherever possible makes a lot of sense.
-As is always the case – your investigative skills/reporting are second to none, thank you for your ongoing work!
-Re: Binns about the only plus in his so-called newfound ‘freedom’ in Turkey is he’s lucky to have been released. Hopefully he experienced some of what is described in the linked report on Human Rights violations in Turkish prisons. And as karma goes he’ll just maybe slip up and end up back there 😉
-“Human rights violations in Turkey’s prisons deeply shake the concepts of social justice and human dignity. The Turkish Prisons Report (2016 – 2024), prepared by Stichting Justice Square, reveals systematic rights violations ranging from negligence that threatens the right to life of sick detainees and convicts to the inhumane conditions imposed on pregnant women and mothers with children.”
-“The report particularly sheds light on the situation of sick detainees and convicts, deaths, suicides, and the conditions of ill, postpartum, and child-rearing women in prisons. The striking data and case studies presented in the report expose the dark reality of Turkey’s prisons: increasing deaths due to inadequate healthcare services, suicides under prison conditions, and worsening victimization through arbitrary and discriminatory treatment”
-“It is explicitly emphasized that the systematic, discriminatory, and hate-driven practices carried out by the Erdoğan regime may constitute crimes against humanity under international law.”
-https://justicesquare.org/turkish-prisons-report/
-He’s prob be better off just coming back to face the music – but hey he’s made his bed, hope he has sweet dreams – NOT
-” your investigative skills/reporting are second to none”.
-True, but not editing/proof reading!
-Email from you, I have been getting these for the last couple of months.
-KrebsOnSecurity Mailing List . bk_at_krebsonsecurity.com chris******@duck.com
-From
-Reply to
-bk@krebsonsecurity.com bk_at_krebsonsecurity.com chris******@duck.com
-bk@krebsonsecurity.com . bk_at_krebsonsecurity.com chris******@duck.com
-To
-6 Aug 2026, 20:04
-This may not deter others but I think all of these gentlemen should be forced to pay and MANUALLY complete all the necessary forms required for each victim to get an identity protection service in place. Once done, they can return to society and tell others.
-I understand that the Libertarian Murray Rothbard suggested that they should have to pay double the total damages.
-2024: “We expect that violent hackers from the [cybercrime community] will experience increasingly harsh sentences as the crackdown continues”
-remember this comment and tihs one I’m writing: he will get next to nothing and none of his involvement with actual harm/extortion groups will even be considered because this is just feds working on behalf of private companies once again, same deal with big piracy cases
-I am not a fan of crime or anything, but I am increasingly frustrated by the inaccurate language and sentencing guidelines. Extortion does not fit. Ransom is not accurate.
-The laws and vocabulary need to be completely overhauled.
-Pretty sure this is not the same as being locked in a basement (ransom) or getting beaten up behind a bar with brass knuckles (extortion). Crime? Yup. VIOLENT in its way? Alright. But experienced totally differently by the victim and little in common with the other sort of perpetrator. Sort of feel the ones that make you psychologically and physically fear every moment are not the same as the ones that simply download a file and dump hundreds of thousands of people whom were really not so singled out, and deserve different language and results in court.
-Every time you write ‘we’ with regards to your site, I get confused. Are you referring to you and your wife? Do you have a staff at all? What does it mean? I thought it was just your personal professional blog. Is there a we??
-Sun and fun for some.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-6" class="article-body">
-            <h2 class="article-title">The Art of Hunting Azure Cloud Secrets</h2>
-            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/the-art-of-hunting-azure-cloud-secrets" target="_blank">Original Link</a></p>
-            <div class="content-text">The Art of Hunting Azure Cloud Secrets
-Finding secrets in the cloud is what can turn a normal cloud test into a privilege escalation game changer. The approach to finding secrets is what may separate your next cloud penetration test from a finding expedition into a subscription or global administrative takeover.
-In this blog, I am going to introduce two tools that I am making public. The purpose of each tool is to minimize your time looking for secrets in Azure that probably should not be there.
-Microburst, a public tool made by NetSPI, allows you to enumerate Azure Assets using an authenticated account in Azure. To get the maximum benefit out of tools such as Microburst, subscription reader access is normally recommended prior to running. Microburst can be found at the following GitHub URL: [https://github.com/Netspi/Microburst](https://github.com/Netspi/Microburst)
-Once collection is finished, penetration testers will typically pivot to the data and pull secrets that may be stored in logic applications, VM extensions, automation accounts, and Azure resource deployment logs. The downside is that these actions require time and, in larger environments, you could inadvertently miss some secrets that could gain you privilege escalation in the cloud.
-I had AI assist me into building a fully functional toolset that would search for secrets collected by Microburst. You don’t need something powerful like Claude Mythos to come up with these actions. You just need to plan how you want to build it, ask the right questions, do code review, and ensure you are not introducing a tool that may produce several false positives. Microburst Secrets Hunter is meant to be a companion post exploitation tool to Microburst collection. It is done entirely offline using the data that was collected during Microburst enumeration. I have also included actional reporting with redactions that you can easily import into reporting tools with very little effort.
-Microburst Secrets Hunter can be downloaded at the following GitHub URL: [https://github.com/rootsecdev/MicroburstSecretsHunter](https://github.com/rootsecdev/MicroburstSecretsHunter)
-This blog would not be complete without a demonstration. To protect any guilty cloud environments, I have made a sample pack of tests that are comparable to output produced by Microburst. This will give basic command use syntax and how the sample output looks.
-I have added two separate options for usage depending on the environment you are operating in and how paranoid you are when importing modules versus running PowerShell directly.
-Sample usage:
-# Clone / copy this folder, then from a PowerShell prompt:
-.\Scan-MicroBurst.ps1 -Path .\MicroBurst-2026 -Verbose
-#Import Module and use cmdlet directly
-Import-Module .\MicroBurstSecretsHunter.psd1 -Force
-Invoke-MBSecretScan -Path .\MicroBurst-2026
-By default, all scans are redacted for reporting purposes. There is a switch you can use that will export full unredacted secrets data if you choose to do so.
-Sample Syntax to export redacted secrets:
-.\Scan-MicroBurst.ps1 -Path .\MicroBurst-2026 -ShowSecrets
-When running a scan, there will be an overview of findings by category.
-Two output formats are on by default. A CSV file will automatically generate. The CSV will help alleviate reporting when it comes to documenting where secrets are living and what they are providing access to. An .html file will also be in the output directory.
-The .html file is beneficial to use as a dashboard as you validate your secrets found in plaintext. You can filter by rule and severity. Severity should not be taken as gospel. I simply use it to prioritize secrets hunting based upon strategic value.
-To expand upon initial secrets hunting discovery, this blog will go into more depth around client secrets and how to determine if third-party applications living in Azure have some expanded cloud access.
-You've found a client secret. Does the application compromise get you into Azure or the Graph API?. To do this, the secret would have to be validated along with manual enumeration. Enumeration can get very noisy when you must run certain tooling such as AzureHound to see what type of access at scale the compromised application has. This can obviously be very time consuming. To aid in this process, I am releasing a second free public tool called, Secrets Stalker. Secrets Stalker is located at the following URL: [https://github.com/rootsecdev/SecretsStalker](https://github.com/rootsecdev/SecretsStalker)
-To get started, it is highly recommended that you install all requirements through a virtual environment and not break any system packages that may be installed on your machine.
-Example:
-virtualenv -p python3 venv
-source venv/bin/activate
-pip3 install .
-Once installation is completed, you can run secrets stalker a few different ways. I recommend passing credentials with environment variables, so as to keep it out of your shell history.
-export SS_TENANT=contoso.onmicrosoft.com
-export SS_CLIENT_ID=11111111-2222-3333-4444-555555555555
-export SS_SECRET='<client-secret>'
-python -m secret_stalker
-To begin, I have already exported my secrets into an environment variable and have issued the following command:
-python -m secret_stalker
-You can see that a valid secret has been returned along with the expiration date. There is also a token acquisition between Graph and Azure Resource Manager (ARM). At this time, these tokens are not exportable. This is simply meant to show that we have acquired a valid client secret to an application.
-Moving down further, this this application does have Graph permissions. I thought it was equally important to show in ARM if the applications have management groups or subscriptions that are visible to the application. It’s an important data point if the application would have expanded access into an Azure subscription. I have also included privilege escalation paths. The example below shows the application can write to directory objects such as users and groups. This is probably my favorite escalation path because you can generally take over subscriptions if there is an assigned group with ownership access. I consider subscription take over more of a high-value target than global administrator RBAC roles. This is because subscriptions can sometimes be less monitored and you can perform privilege escalation with a better chance of going undetected.
-I did stop short of fully weaponizing Secrets Stalker. The public release will simply give penetration testers and Red Teamers the ability to see how much access a client secret has. If you want to explore actual privilege escalation, I would visit the BloodHound Attack Research Toolkit located at the following URL: [https://github.com/BloodHoundAD/BARK](https://github.com/BloodHoundAD/BARK)
-Happy cloud secrets hunting and hacking!</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
@@ -411,100 +509,81 @@ This analysis would not have been possible without the assistance of Google Thre
             <hr class="separator">
         </div>
         <div id="art-9" class="article-body">
-            <h2 class="article-title">Who Runs the Ransomware Group ‘The Gentlemen?’</h2>
-            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/06/who-runs-the-ransomware-group-the-gentlemen/" target="_blank">Original Link</a></p>
-            <div class="content-text">A cybercrime group known as The Gentlemen has emerged as the second most active ransomware gang by victim count, rapidly attracting a talented pool of hackers through an aggressive recruitment strategy that promises affiliates 90 percent of any ransom paid by victims. This post examines clues pointing to a real life identity for the administrator of The Gentlemen ransomware group.
-Experts at the security firm Check Point Software have been closely covering exploits of The Gentlemen, a so-called “ransomware-as-a-service” (RaaS) offering that pays affiliates handsomely to help spread the group’s malware.
-“A 90/10 affiliate revenue split — compared to the industry standard 80/20 — is accelerating the group’s growth by attracting experienced operators from competing programs,” the researchers wrote in April.
-Check Point [found](https://research.checkpoint.com/2026/thus-spoke-the-gentlemen/) The Gentlemen are the second most active ransomware group by victim count so far this year, claiming at least 332 published victims since the group’s inception in mid-2025 and more than 240 in 2026 alone.
-According to Check Point, the group targets Internet-facing devices (VPNs, firewalls) as their entry point, and once inside moves quickly to encrypt entire networks within hours.
-Check Point says the administrator and primary operator of the ransomware group uses the nickname Zeta88 on the Russian-language cybercrime forums, and that this individual was previously known under the moniker Hastalamuerte. Check Point noted that [a breach](https://www.kelacyber.com/blog/the-gentlemen-ransomware-internal-chat-leak-analysis-2026/) of the group’s backend infrastructure made it clear that Hastalamuerte/Zeta88 is the person who assembles the locker and RaaS panel, manages payments, and is essentially the administrator of the entire program who receives 10 percent of all ransoms.
-WHO IS HASTALAMUERTE?
-The cyber intelligence firm Intel 471 shows that the user Hastalamuerte is a Russian and English speaking person who registered on almost a dozen cybercrime forums between 2019 and the present day, including Exploit, Breachforums, Ramp_V2, BHF, Raidforums, and Nulled.
-Intel 471 reveals that Hastalamuerte registered on Breachforums in January 2025 from an Internet address in Izhevsk, the capital city of Russia’s Udmurt Republic. Likewise, the user Zeta88 signed up at the English-language cybercrime forum Breached in August 2022 from a different Internet address in Izhevsk.
-Intel 471 finds Hastalamuerte registered on Raidforums in 2020 using the email address hastalamuerte1488@protonmail.com (1488 is a common combination of [two numeric symbols associated with white supremacy](https://en.wikipedia.org/wiki/Fourteen_Words)). A lookup on this address at the open source intelligence service Epieos shows it is connected to an account at Apple and to a phone number ending in 04.
-Epieos says that Protonmail address is also linked to a GitHub account under the username SantaMuerte. That account is marked private, but [a history of this user’s activity](https://connectionrequired.com/gitspective/#/timeline/SantaLaMuerte) shows they are watching and developing a number of malware tools and exploits.
-In April 2020, Hastalamuerte said on the crime forum Nulled that they could be contacted at the Telegram instant messenger name @hastalamuerte18, and the threat intelligence company Flashpoint finds this username is assigned the unique Telegram ID number 30907522 [full disclosure: Flashpoint is an advertiser on this blog].
-The breach tracking service Constella Intelligence reports that Hastalamuerte’s Telegram ID is connected to another username — “bu4vs” — and to the Russian phone number 79127650004. Pivoting on this phone number in Constella fetches multiple records from hacked Russian government databases showing it is assigned to one Alexander Andreevich Yapaev, a 36-year-old from Izhevsk.
-Constella reveals that phone number was used to create an account at the Russian social media platform Pikabu under the name “4apai18,” and shows Mr. Yapaev has signed up at a number of websites using the common surname [Ivanov](https://x.com/bu4vs/status/235798656769470465), or else “Chapaev” (the numeral 4 is often used as shorthand for a “ch” sound in Russian).
-A search in Intel 471 for cybercrime forum members with the nickname SantaMuerte unearths an account by the same name created in 2020 on the Russian hacking forum Codeby. Intel 471 shows this user originally registered on Codeby with the not-so-subtle nickname Alexandr 4apaev.
-Constella finds Mr. Yapaev regularly used the email address bu4vs@mail.ru. Meanwhile, Epieos shows this address is connected to a [LinkedIn account](https://www.linkedin.com/in/yapaev/) for Alexander Yapaev, who lists himself as the head of B2B marketing at the company Uralenergo Udmurtia, one of Russia’s largest suppliers of electrotechnical and lighting products.
-Mr. Yapaev did not respond to multiple requests for comment.
-Nearly every time we publish one of these [Breadcrumbs stories](https://krebsonsecurity.com/category/breadcrumbs/), readers are curious to know why it seems like so many cybercriminals from Russia apparently do little to hide their real life identities. The truth is that — Russian or not — most didn’t exactly set out to be arch criminals, but instead got drawn into the scene gradually over several years as their skills broadened and sharpened.
-Another important dynamic is that the Russian government generally either [co-opts or ignores](https://www.recordedfuture.com/research/dark-covenant-3-controlled-impunity-and-russias-cybercriminals) cybercriminal activity within its borders so long as the hackers do not steal from or attack Russian businesses and citizens. As a result, successful cybercriminals in Russia are usually insulated from prosecution and arrest by foreign law enforcement agencies provided they occasionally pay off the right people and do not travel abroad. And cybercriminals who intend to strictly adhere to those unwritten rules may (at least initially) be less concerned about covering their tracks online.
-But the simplest explanation is that cybercriminals of all nationalities tend to make a number of basic operational security mistakes early in their careers, when they are less savvy and have far less to lose by their carelessness. A review of Hastalamuerte’s early posts on the crime forums (circa 2019-2020) shows a relatively unsophisticated and low-skilled hacker still trying to learn the ropes and earn a positive reputation on these communities.
-For example, in June 2020 Hastalamuerte’s Telegram account joined a multi-month training program (@pntst) to learn how to use popular penetration testing tools, and their candid posts to this hacker training camp show Hastalamuerte struggling to use these tools effectively. A Google-translated record of Hastalmuerte’s posts to @pntst is [here](https://krebsonsecurity.com/wp-content/uploads/2026/06/pntst-chat.txt).
-Update, June 11, 10:23 a.m. ET: The threat research group PRODAFT has released [a detailed writeup](https://catalyst.prodaft.com/public/report/inside-the-phantom-mantis-operation/overview#paragraph-1077|172) on the history and current operations of The Gentlemen. PRODAFT said its findings match the same persona with “high confidence,” and found the administrator (Zeta88/Hastalamuerte) supplies affiliates with initial access directly, primarily Fortinet SSL-VPN credentials obtained through brute-force attacks or sourced from the group’s own leak database. They also discovered the administrator is using AI to develop and maintain the ransomware and associated tooling, as well as to assist with post-exploitation activity.
-True operational secrecy is a pain in the butt, hard to maintain, and easy to screw up. That’s why it’s better to be able to act in your real name and not have to worry about it…
-It’s amazing how these ransomware gangs are able to maintain military intelligence level opsec
-Almost as if…
-Um, almost as if their business model provides enough income to afford it? Enough with the conspiracy theories. Brian understands that most of these sorts of operations have a learning curve. They are most vulnerable at three or four times in each ransom cycle (three, if it is an established affiliate relationship for long enough to have ascertained they aren’t involved in a sting). Once they figure out how to proxy, manage their toolchain properly, and successfully get ahold of the money they asked for, the only thing left to worry about is how to make it look legitimate. Ransomware removes the long-term upkeep and gradual profit model of a botnet. Now that companies are willing to pay hundreds of thousands or millions per incident, you don’t need to be ‘Russian’ or ‘Ukrainian’, or have connections to any sort of corrupt officials, you just have to throw someone else under the bus faster than the other person, it looks like.
-‘able to maintain military intelligence level opsec’
-Some of them are run by military intelligence in various countries, some of those are very good at it.
-I don’t think that’s amazing, unbelievable or improbable, nor is it a conspiracy theory. It lines up fine.
-If you’re trying to imply a _particular_ gang or campaign is run by mil.ops, that requires specificity.
-Vague implications are like…
-Has anyone told Apple about “Hastalamuerte registered on Raidforums in 2020 using the email address hastalamuerte1488@protonmail.com (1488 is a common combination of two numeric symbols associated with white supremacy). A lookup on this address at the open source intelligence service Epieos shows it is connected to an account at Apple and to a phone number ending in 04.”
-Can they disable his account?
-I don’t see why. He’s not infringing on any of Apple’s terms with his account, nor has he attacked Apple. Simply *being* a criminal shouldn’t get you disbarred from using any services.
-“He’s not infringing on any of Apple’s terms with his account, nor has he attacked Apple.”
-That _you_ know of? It’s improbable that nobody connected to Apple whatsoever was targeted.
-I’ve not recently deep-read Apple’s EULA but I’d think *being a criminal* is in there somehow…
-lol
-Hats off, GENTLEMEN, to Brian Krebs!
-It’s funny. When I start reading it, I thought to myself, “Russian?” And sure enough. It is.
-I think the reason it’s so easy to track there people down (aside from the Russian government letting them do it as long as the victims are in the West and that’s why they don’t care about hiding) is because most of those “hackers” are just plain stupid low lives. Otherwise anyone that had two brain cells had already left that nasty country.
-@Dennis – I think if you have money, are careful and discreet, and stay out of politics… Russia can be a veery pleasant place to live.
-Hmmm. Never seemed to work for Arkady Renko.
-I live next to Russia. I have friends and ex-colleagues in Russia (we had a branch office in Moscow). I speak Russian, I read Russian literature, I liste n to Russian music.
-No it is not pleasant place to live. Perhaps if you are very rich so you can live in a secure enclave.
-There is
-– corruption, being a daily part of the society on all levels
-– crime, the same, being constantly present in all places
-– censorship and surveillance
-– cynicism that permeates everything
-The company ended up dismantling the Moscow office and relocating the staff, on company expenses, to Central Europe.
-A bank that I worked for tried to expand to Russia. It backed off after a few years – the corruption was unmanageable.
-Russia has great nature, great culture, and the people are friendly and welcoming. But as a place to live – no, it is not pleasant at all.
-I think it most definitely matters where in Russia (or let’s be honest, here, what country near Russia) you are taking about. I think it is dangerous to confuse “low corruption” with “a different sort of corruption”, also. It is shocking how many ignorant people think Ukraine is or was less corrupt, for instance, or really, most any country in Central or Eastern Europe. Might make more sense to judge corruption by whether you wind up getting what you paid for (be it in money, favour, or just looking the other way). Some “corrupt” places, you get treated more fairly than some places people deem ‘fair’. Better a mechanism to work around corruption and bias, to some people, than no recompense or recourse. It might cost, but better that than no alternative.
-“Nasty country” – pray tell where you’ve found so entirely free of nastiness to live, Mr. Menace?
-Might as well be living on the sun.
-He’s got an umbrella and time to kill. It’s a dry heat.
-I believe his identity is BIG BALLS! You know the guy that got beat up by a girl in DC and even of more surprise he was on a date with a GIRL.
-Seems like something the snowflake orange one would be involved with.
-There was some chatter on Telegram about ShinyHunters running The Gentlemen ransomware group, but oh well…
-Not the same people, of course. Sort of like suggesting Horohorin is, I dunno, the dude that runs the Krebs carding dump site.
-No Doubt!
-TIL that WayBackMachine archived Google Plus (RIP) posts..
-It’s cute that even Russian ransomware gangs think stuff like… GDPR violations? matter at all in the real world.
-From reading the Checkpoint article, it definitely seems like we’re finally getting into the era of “AI-powered ransomware”. Not completely “agentic” a la “claude, ransom this company, make no mistakes”, but like… AI-written panels, AI-written ransom notes, and seeing as how quick and badly they got pwned, I’d imagine some local Chinese AI was like “You’re absolutely right, exposing port 445 on your Synology NAS to the clearnet is the most secure way to securely access your files anywhere!” and now we’re here.
-This pretty much nulls most textual forensics, too, yeah.
-When I lived in Transnistria briefly, many many years ago, there were no ATMs at all. It was a surprisingly genteel place to stay for a week or two to get away from crazies, LGBTQ- obsessed Pussy Riot fans, and tourists, until they made that mean something else entirely. CLEARLY, there was access to legitimate ATMs an easy, cheap train-ride away, until the sheeeyit hit the Kendrick a few months (and many many years) later.
-welp! time for my teeth to marry the extension cord again!
-Arguably, they should not, merely by the existence of a name, known it was the same person, no less a ‘criminal’, right?
-soon the next prod release of Kill Your Celf will push!
-Quickly, quickly ai chatbot!
-The NSA.
-WHAT DID I WIN
-The same guys who run every ransomware group
-The same guys who run Krebs.
-Did you use a real russian time?Brian , or is it a synthetic russian?
-Cant arrest data. Even from the Moscow field office of the FBI
-The same guys who run every ransomware group
-The same guys who run Krebs.
-Did you use a real russian this time?Brian , or is it a synthetic russian?
-Cant arrest data. Even from the Moscow field office of the FBI
-If Yan can’t think then NOBODY IS ALLOWED TO. Off to the reeducation camps like a good lad.
-Martin,
-Go squat in a thorny tree.
-What is Martin’s metier, anyway?
-Krebs isn’t run by any one group of anything any more than you are.
-Lots of AI slop puppeting every meatpuppet now (no offense, Brian).
-Great breakdown on threat actor attribution. Security research like this is essential for organizations evaluating third-party risk. I run a site covering crypto and financial analysis and send your investigative work to clients regularly as a reference.
-Very interesting article, I always say there’s only one internet and there’s residue from everyone on it. And now with AI able to aggregate so much it truly shows that the internet is us and we are the internet. We’ve been building our digital persona for years, our essence is in the very fabric.
-Dropping a quick note of appreciation. Superb post.
-Rare to see such a balanced take. Appreciate you putting the time into this. Take care.
-You turned what’s usually a dry topic into something readable. Saved me hours of digging around.</div>
+            <h2 class="article-title">Microsoft Patches a Record 570 Security Flaws</h2>
+            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/07/microsoft-patches-a-record-570-security-flaws/" target="_blank">Original Link</a></p>
+            <div class="content-text">Microsoft Corp. today released software updates to plug at least 570 security holes in its Windows operating systems and other software, almost triple the number of vulnerabilities the software giant fixed in its record-smashing Patch Tuesday release last month. Microsoft attributed the burgeoning patch counts to vulnerability discoveries aided by artificial intelligence.
+Nearly 60 of the bugs quashed in July’s Patch Tuesday earned a “critical” severity rating, meaning miscreants or malware could use them to seize remote control over a Windows device with little or no help from the user. Microsoft also addressed three zero-day flaws, including two that are already being exploited in the wild.
+Two of the zero-day weaknesses allow an attacker to elevate their user rights on a Windows system, as do approximately 250 other elevation of privilege flaws fixed this month; they include [CVE-2026-56155](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-56155) — an Active Directory Federation Services bug — and [CVE-2026-56164](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-56164), a Microsoft Sharepoint vulnerability.
+[CVE-2026-50661](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-50661) is a security feature bypass in Windows BitLocker that could allow attackers to gain access to encrypted data if they have physical access to the device. Microsoft said this bug has been detailed publicly, but that it is not aware of any active exploitation.
+In a blog post on July 9, Microsoft Executive Vice President Pavan Davuluri wrote that Windows users will notice “a higher volume of security updates included in each security release” as a result of AI aiding in the discovery of vulnerabilities.
+“The pace of vulnerability discovery is changing with advances in AI making it possible to find more issues, faster, across more code, with new mechanisms that can accelerate both discovery and analysis,” Davuluri [wrote](https://blogs.windows.com/windowsexperience/2026/07/09/evolving-windows-vulnerability-management-to-meet-the-speed-of-ai-powered-discovery/).
+Jack Bicer, director of vulnerability research at Action1, called attention to [CVE-2026-48561](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-48561), a remote code execution flaw in Microsoft Copilot (with a 9.6 CVSS threat score) that allows an unauthorized attacker to execute code over the network. Microsoft says an attacker could exploit this bug by hosting a malicious website that causes Microsoft Edge for Android to automatically send crafted prompts to Copilot when a user visits the site.
+As AI advances the state of vulnerability discovery and remediation, it is also making it easier for attackers to quickly devise working exploits for known software flaws. Microsoft has long labeled security bugs using its “exploitability index,” which is Redmond’s best guess as to how likely it is that attackers will be able to figure out a reliable way to exploit a given vulnerability.
+But Satnam Narang, senior staff research engineer at Tenable, argues that Microsoft’s exploitability index needs to do a better job of shifting with the machine speed of discovery. For example, Microsoft originally gave this month’s SharePoint zero-day an exploitability rating of “less likely,” although the flaw was [added](https://www.cisa.gov/news-events/alerts/2026/07/01/cisa-adds-one-known-exploited-vulnerability-catalog) to CISA’s Known Exploited Vulnerabilities list on July 1.
+“Anthropic’s Red Team’s own findings for known vulnerabilities (n-days) revealed how fragile this system has become, with its Mythos Preview model being able to produce proof-of-concept exploits for 13 of 14 vulnerabilities that were rated ‘Exploitation Less Likely’ or ‘Exploitation Unlikely,'” Narang said. “What this means is that our way of looking at Patch Tuesday has changed, because the exploitability index is centered around humans, not AI tools, and as these tools continue to improve, defense needs to improve alongside it.”
+Chris Goettl at Ivanti observed that the record patch numbers from Microsoft come as a number of other major software makers are increasing their patch cadence, including Adobe which announced today it is moving to twice-monthly security bulletins published on the 2nd and 4th Tuesday of each month (Adobe also cited AI for accelerating their patch cycles). Cisco, Mozilla and Oracle also are shipping updates more frequently, while Google’s patch batches in June 2026 totaled more than 900 security fixes, Goettl noted.
+Backing up your Windows system and/or data is always a good idea before applying operating system updates. Given the volume of patches addressed this month it may be wise for end users to wait a few days before applying these fixes. It’s not uncommon for security patches to introduce system stability issues, and those chances probably increase quite a bit with the gigantic patch count released today.
+Further reading:
+Still as confused as before … how could there be 570 flaws if Microsoft engineers are the ones doing the programming ? Is it carelessness or intentional ?
+programming without bugs is between hard and impossible
+security is an adversarial task, so bugs will be fund
+Because much of this has existed for years, subtle mistakes made in various different ways that are not so obvious when created as they are when researched. Consider that this spans different languages, generations of people, billions of lines of code.
+NO one person on earth can simply open and view it all. Ai is digging it out by brute force analytics that did not exist when most of it was written.
+Try to butter some bread without crumbs coming off and then get back to me.
+Humans are flawed creatures!
+Those aren’t the only options, extraordinarily confused person.
+An old joke about programming seems appropriate: “Every program has at least one bug and can be shortened by at least one instruction – from which, by induction, one can deduce that every program can be reduced to one instruction which doesn’t work.”
+Appreciate the coverage man! This month was a monster!
+How many of these AI discovered bugs are not really bugs/holes etc., but the fixes will create new, unforeseen problems?
+None.
+Many of the vulnerabilities are from chaining from one weakness to another. It takes humans time to do this, but AI does this much faster.
+Given literally decades of work fixing stability bugs in the Microsoft codebase, it is not surprising these security bugs get now found. It will likely take many of these cycles. And as noted, new defects will be introduced.
+Scrub scrub scrub!
+Nothing interesting to me this Patch Tuesday. Still the same old crap. Good write-up, as per usual. Tired of these sorts of small AI-located bugs still being counted as some sort to pump up numbers, I assume, when they are basically just bugs not flaws. My only MS system showed no improvement. So, your usual Patch Tuesday.
+It has improved security.
+Yawn.
+“Microsoft also addressed three zero-day flaws that are already being exploited in the wild.”
+CVE-2026-50661, according to Microsoft is:
+Publicly disclosed: Yes
+Exploited: No
+Exploitability assessment: Exploitation Less Likely
+https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-50661
+If Microsoft used AI to write a complete Windows replacement OS fresh from the ground up, it would have almost zero security holes, require a lot less maintenance and would do away with tens of thousands of human coding and QA jobs inside Microsoft, meaning more profits for the investors!
+I have done it myself on a local LLM. It is running great (only 100MB in memory) and I think it is very secure. And because it is so great, it doesn’t require maintenance at all!
+Finally built out that qemu win 3.11/wfw instance with stripped out UI?
+They should probably go back to their origins and build from win 98 and windows 2000, perhaps windows XP, and drop any lineage post win 7. Let AI slug it out instead of plopping it down with win 10/win 11.
+Sincerely, that is a better option. I feel like we are not grasping the differences between how we code vs how AI code vs how Ai code vs how Dimon might code. I don’t wanna think about Dimon vibe coding. Thinking about Gates vibe coding suddenly sounds kind of fascinating, though. I do wonder how rich ex developers would vibe code now. I worry about how AI might be interested in how we all vibe code differently. Not so scary locally, damn creepy as a communistic concept. Hoping MS never patches any of my personal bugs/flaws. I am guessing those models are taking notes on the catwalk. :/
+Nonsense. It would be just another one of their expensive fiascos. LLM code generators don’t know secure from insecure, just what they’re trained on. That’s why what drew my eye in Brian’s article was the mention of the “remote code execution flaw in Microsoft Copilot”. Mindless AI shovelware creates more problems than it’ll ever solve. An OS based on it would be a nightmare.
+I think the complete opposite, AI struggles to write working code, let alone code without vulnerabilities.
+Recent studies have shown AI code meets Secure By Design principals 16% of the time after 5 prompts and 17.5% after 10 prompts. So you are suggesting something that would probably reintroduce insecure code from XP in critical components in the thousands.
+As far as saving money, Ford lost a ton trying this: https://www.bbc.com/news/articles/cgrkd41n2v9o
+AI… Are you AI or not?
+Great article and important reminder about the need for regular security updates. With the increasing number of vulnerabilities being discovered, staying informed and using reliable tools has become more important than ever. Resources like https://vanced.com.co/revanced-sync-for-lemmy/ also show how open-source communities continue to create useful solutions for users who value privacy and better digital experiences.
+Impressive. Now let’s compaire: PC Mag, in 1995, reported that M$ was releasing Win95, ->in spite of over 64,000 known bugs and issues<-.
+Do we imagine that number's decreased?
+if you are doing any major SW or HW development (also IC HW is developed with SW tools), and are compiling and then running any verification tool on it, you will always get massive numbers of items flagged as errors / issues / bugs, whatever the tool calls it. Most of these are syntax items that the verification tool may not like or understand.
+A bit like how your car’s “stay-in-the-lane” monitor behaves while you are driving through a construction site and the white stripes are replaced with seemingly contradicting yellow stripes for a lane shift.
+This is a fundamental thing, probably no way around it. The world is very complex, and there are so many corner cases that it is plain impossible (not mathematically impossible, but impossible with limited effort) to develop “fully clean” code.
+Obviously these 622 bugs and flaws have nothing to do with day to day de-bugging and syntax crap.
+Brian’s got some problems with his arithmetic chip also.
+Some publications count the Chromium bugs included in each Patch Tuesday. I generally have not. YMMV.
+That makes sense. I would like to pretend Chromium never existed also.
+Microsoft advisory said, some Dell PC maybe cause loop reboots after July updates
+I got my 570 updates installed! Went smoothly. Took 4 reboots. Everything has been running smoothly for the last day now.
+Ready for you now hackers!
+So AI did the discovery work here. But who triaged the bugs and scored their severity? Also an AI?
+With 570 patches released at once, I’m wondering how many organizations actually have a maintenance plan to test and deploy them without breaking production systems?
+Individually?!
+Thanks for putting this together. The scale of this month’s Patch Tuesday is remarkable, but what I found most useful was the focus on the vulnerabilities that are actually being exploited and deserve immediate attention. It’s a good reminder that keeping systems updated isn’t just routine maintenance anymore, it’s one of the most effective defenses against active threats.
+I found it especially interesting that AI is now accelerating both vulnerability discovery and patch development, but it also seems to be shrinking the window defenders have before attackers can weaponize newly disclosed flaws. Do you think we’re reaching a point where organizations should prioritize patching based on AI-driven exploit predictions instead of traditional severity ratings alone?
+someone depo me $15 ltc ltc1q4vtynfv3spfcymsykrvw5ndvt08636lhyv2nr0
+But did they vibe code this one too? Because I don’t want to have to roll back another set of updates when they break basic stuff.
+In other news, not that it is widely reported, Apple have just released over 500 fixes as well in July’s 26.6 and related releases.
+Given how few platforms Apple has to support compared to Microsoft, proportionally I’d say this was an even bigger release than Microsoft’s July Patch Tuesday.
+AI is definitely a factor in identifying and helping software publishers, deploy products and patches before threat actors take advantage of them.
+It is worth nothing that attacks via vulnerabilities are down, most current breach are based on human errors.
+What vulnerabilities coming a scale, faster than they can identified, organizations needs a comprehensive process for risk management applications like attack surface can help organizations reduce risk
+It is remarkable how machine intelligence is fundamentally reshaping iteration speed across tech. The article points out how faster discovery cycles are changing vulnerability management, and we see a very similar shift happening in digital production. Just as developers rely on automation to analyze massive codebases, creative teams use multi-model platforms like Seedeo to rapidly generate and test video, audio, and visual assets. As production velocity increases across both cybersecurity and media workflows, the real challenge for teams becomes maintaining strong oversight and quality control alongside that accelerated output.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
