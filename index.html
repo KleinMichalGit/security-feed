@@ -59,86 +59,52 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-08-12</h1>
+        <h1>Security Briefing // 2026-08-13</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Cisco ASA and FTD Flaw Exploited in the Wild Can Trigger Remote DoS</button></li><li><button onclick="show('art-1')">DeadLock ransomware uses blockchain to resist infrastructure takedown</button></li><li><button onclick="show('art-2')">Microsoft Plugs Nearly 400 Security Holes</button></li><li><button onclick="show('art-3')">Microsoft Patches 398 Flaws Including a Windows Driver Zero-Day Under Active Attack</button></li><li><button onclick="show('art-4')">Cisco warns of ASA and FTD VPN flaw exploited to crash devices</button></li><li><button onclick="show('art-5')">A Vault With No Treasure - CMMC Level 2 Compliance for Subcontractors With No CUI</button></li><li><button onclick="show('art-6')">Microsoft named a Leader in the 2026 IDC MarketScape for MDR/MXDR for the Enterprise</button></li><li><button onclick="show('art-7')">Turning Enterprise Update Servers Into Backdoor Factories (0_o) – Part 1</button></li><li><button onclick="show('art-8')">Demystifying AI Exploits: A Blueprint for AI-Assisted Vulnerability Management</button></li><li><button onclick="show('art-9')">Microsoft Patches a Record 570 Security Flaws</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Lazarus Exploits Windows Zero-Day to Gain SYSTEM Access and Deploy Backdoor</button></li><li><button onclick="show('art-1')">Blacklight: Illuminating AI Agent Artifacts for Attackers and Defenders</button></li><li><button onclick="show('art-2')">Lazarus hackers exploited Windows zero-day to target defense firms</button></li><li><button onclick="show('art-3')">New Microsoft Defender 'ShieldBreak' zero-day grants SYSTEM privileges</button></li><li><button onclick="show('art-4')">ShieldBreak Zero-Day PoC Claims Microsoft Defender Patch Bypass With SYSTEM Access</button></li><li><button onclick="show('art-5')">Microsoft Plugs Nearly 400 Security Holes</button></li><li><button onclick="show('art-6')">A Vault With No Treasure - CMMC Level 2 Compliance for Subcontractors With No CUI</button></li><li><button onclick="show('art-7')">Microsoft named a Leader in the 2026 IDC MarketScape for MDR/MXDR for the Enterprise</button></li><li><button onclick="show('art-8')">Demystifying AI Exploits: A Blueprint for AI-Assisted Vulnerability Management</button></li><li><button onclick="show('art-9')">Microsoft Patches a Record 570 Security Flaws</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">Cisco ASA and FTD Flaw Exploited in the Wild Can Trigger Remote DoS</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/08/cisco-asa-and-ftd-flaw-exploited-in.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Cisco has warned that a new vulnerability impacting Secure Firewall Adaptive Security Appliance (ASA) Software and Secure Firewall Threat Defense (FTD) Software has been exploited in the wild.
-The high-severity flaw, tracked as CVE-2026-20349 (CVSS score: 8.6), is a case of insufficient error checking when processing HTTP requests that could allow an unauthenticated, remote attacker to trigger a denial-of-service (DoS) condition.
-"An attacker could exploit this vulnerability by sending a crafted HTTP request to the Remote Access SSL VPN service on an affected device," Cisco [said](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-asaftd-vpn-dos-dzv4mQFF) in a Tuesday advisory. "A successful exploit could allow the attacker to cause the affected device to reload, resulting in a DoS condition."
-The security defects impact devices running a vulnerable version of Secure Firewall ASA Software or Cisco Secure FTD Software and have one or more of the vulnerable configurations listed below -
-- IKEv2 Remote Access VPN (with client services) - crypto ikev2 enable <interface_name> client-services port <port_numbers>
-- SSL-VPN - webvpn enable <interface_name>
-- Zero Trust Network Access2 - zero-trust enable
-The following versions of ASA and FTD are affected -
-- ASA 9.161 - Fixed in 89.16.4.50)
-- ASA 9.181 - Fixed in 89.18.4.50)
-- ASA 9.20 - Fixed in 9.20.4.235)
-- ASA 9.22 - Fixed in 9.22.3.191)
-- ASA 9.23 - Fixed in 9.23.1.211)
-- ASA 9.24 - Fixed in 9.24.1.221)
--
-FTD 7.0 - Fixed in
-- Cisco_FTD_Hotfix_GC-7.0.9.1-1.sh.REL.tar
-- Cisco_FTD_SSP_FP1K_Hotfix_GC-7.0.9.1-1.sh.REL.tar
-- Cisco_FTD_SSP_FP2K_Hotfix_GC-7.0.9.1-1.sh.REL.tar
-- Cisco_FTD_SSP_Hotfix_GC-7.0.9.1-1.sh.REL.tar
--
-FTD 7.2 - Fixed in
-- Cisco_FTD_Hotfix_HM-7.2.11.1-2.sh.REL.tar
-- Cisco_FTD_SSP_FP1K_Hotfix_HM-7.2.11.1-2.sh.REL.tar
-- Cisco_FTD_SSP_FP2K_Hotfix_HM-7.2.11.1-2.sh.REL.tar
-- Cisco_FTD_SSP_FP3K_Hotfix_HM-7.2.11.1-2.sh.REL.tar
-- Cisco_FTD_SSP_Hotfix_HM-7.2.11.1-2.sh.REL.tar
--
-FTD 7.4 - Fixed in
-- Cisco_FTD_Hotfix_HK-7.4.7.1-1.sh.REL.tar
-- Cisco_FTD_SSP_FP1K_Hotfix_HK-7.4.7.1-1.sh.REL.tar
-- Cisco_FTD_SSP_FP2K_Hotfix_HK-7.4.7.1-1.sh.REL.tar
-- Cisco_FTD_SSP_FP3K_Hotfix_HK-7.4.7.1-1.sh.REL.tar
-- Cisco_FTD_SSP_Hotfix_HK-7.4.7.1-1.sh.REL.tar
-- Cisco_Secure_FW_TD_4200_Hotfix_HK-7.4.7.1-1.sh.REL.tar
--
-FTD 7.6 (Fixed in
-- Cisco_FTD_Hotfix_DD-7.6.4.1-2.sh.REL.tar
-- Cisco_FTD_SSP_FP1K_Hotfix_DD-7.6.4.1-2.sh.REL.tar
-- Cisco_FTD_SSP_FP3K_Hotfix_DD-7.6.4.1-2.sh.REL.tar
-- Cisco_FTD_SSP_Hotfix_DD-7.6.4.1-2.sh.REL.tar
-- Cisco_Secure_FW_TD_4200_Hotfix_DD-7.6.4.1-2.sh.REL.tar
--
-FTD 7.7 - Fixed in
-- Cisco_FTD_Hotfix_AN-7.7.11.1-2.sh.REL.tar
-- Cisco_FTD_SSP_FP1K_Hotfix_AN-7.7.11.1-2.sh.REL.tar
-- Cisco_FTD_SSP_FP3K_Hotfix_AN-7.7.11.1-2.sh.REL.tar
-- Cisco_FTD_SSP_Hotfix_AN-7.7.11.1-2.sh.REL.tar
-- Cisco_Secure_FW_TD_1200_Hotfix_AN-7.7.11.1-2.sh.REL.tar
-- Cisco_Secure_FW_TD_4200_Hotfix_AN-7.7.11.1-2.sh.REL.tar
--
-FTD 10.0 - Fixed in
-- Cisco_FTD_Hotfix_S-10.0.0.1-2.sh.REL.tar
-- Cisco_FTD_SSP_FP1K_Hotfix_S-10.0.0.1-2.sh.REL.tar
-- Cisco_FTD_SSP_FP3K_Hotfix_S-10.0.0.1-2.sh.REL.tar
-- Cisco_FTD_SSP_Hotfix_S-10.0.0.1-2.sh.REL.tar
-- Cisco_Secure_FW_TD_200_Hotfix_R-10.0.0.1-2.sh.REL.tar
-- Cisco_Secure_FW_TD_1200_Hotfix_S-10.0.0.1-2.sh.REL.tar
-- Cisco_Secure_FW_TD_4200_Hotfix_S-10.0.0.1-2.sh.REL.tar
-- Cisco_Secure_FW_TD_6100_Hotfix_S-10.0.0.1-2.sh.REL.tar
-Cisco said there are no workarounds that address the flaw, adding it became aware of active exploitation earlier this month. The network equipment maker said the issue was found during internal security testing. It also credited Valerio Brussani for separately discovering and reporting the vulnerability.
-There are currently no details about the nature of the attacks, the identity and origins of the threat actor exploiting the vulnerability, what organizations have been targeted, and if any of those efforts were successful.
-The development has prompted the U.S. Cybersecurity and Infrastructure Security Agency (CISA) to [add](https://www.cisa.gov/news-events/alerts/2026/08/11/cisa-adds-three-known-exploited-vulnerabilities-catalog) the flaw to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, requiring Federal Civilian Executive Branch (FCEB) agencies to apply the fixes by August 14, 2026.
+            <h2 class="article-title">Lazarus Exploits Windows Zero-Day to Gain SYSTEM Access and Deploy Backdoor</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/08/lazarus-exploits-windows-zero-day-to.html" target="_blank">Original Link</a></p>
+            <div class="content-text">The North Korean threat actor known as [Lazarus Group](https://thehackernews.com/2026/02/dprk-operatives-impersonate.html) has been attributed to the zero-day exploitation of a newly patched security flaw impacting Microsoft Windows to deliver a never-before-seen backdoor targeting defense and aerospace companies across France, Germany, Brazil, and India.
+The activity, per Check Point Research, is part of Operation Dream Job, a long-running cyber espionage and social engineering campaign orchestrated by Pyongyang-backed hackers to target professionals worldwide with fake-but-compelling job offers at firms like Lockheed Martin and Enveil to steal sensitive data and install malware by approaching them on platforms like LinkedIn, pretending to be recruiters in an attempt to build trust.
+The [attacks](https://blog.checkpoint.com/research/state-sponsored-hackers-use-fake-job-offers-to-deliver-new-zero-day-exploit/) have been found to exploit [CVE-2026-68820](https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-68820) (CVSS score: 7.0), a privilege escalation flaw affecting Windows Ancillary Function Driver for WinSock ("AFD.sys") that was patched by Microsoft as part of its Patch Tuesday updates for August 2026.
+As observed in prior campaign waves, victims are lured through bogus recruiter messages and tricked into opening a malicious PDF or installing a trojanized PDF viewer, which is then used to install a new backdoor called Troy that grants remote access to the compromised machine. The end goal of these intrusions is to seize complete control of infected computers and bypass security controls.
+The use of a trojanized PDF viewer is a [tried-and-tested tactic](https://thehackernews.com/2022/09/north-korean-hackers-weaponizing-open.html) adopted by the [Lazarus Group](https://thehackernews.com/2023/04/lazarus-hacker-group-evolves-tactics.html) in conjunction with [Dream Job](https://thehackernews.com/2024/12/lazarus-group-spotted-targeting-nuclear.html), with the threat actors [abusing this method](https://thehackernews.com/2025/10/north-korean-hackers-lure-defense.html) as far back as 2022.
+Two different parallel infection sequences have been detected as part of the latest attacks -
+- DLL side-loading, in which victims are instructed to download an encrypted archive that's used to trigger a DLL side-loading chain. The malicious DLL ("libmupdf.dll") is used to display a bogus job description lure, while it stealthily downloads and executes in memory a lightweight downloader dubbed
+[MISTPEN](https://thehackernews.com/2024/09/north-korean-hackers-target-energy-and.html). The downloader communicates with threat actor-controlled infrastructure using Microsoft Graph API and OneDrive to retrieve and run reconnaissance and persistence modules and trigger the "AFD.sys" driver exploit, before deploying[ForestTiger](https://thehackernews.com/2023/10/microsoft-warns-of-north-korean-attacks.html)(aka ScoringMathTea), which provides remote access to the host. - Trojanized "SecurityPDF" PDF viewer, in which victims are instructed to download SecurityPDF from a website impersonating Enveil. Once installed, it monitors for any PDF document opened through it for a special marker ("This document is encrypted with sumatrapdf reader!!!!!!!!!!!!"). If such a marker is present, the application decrypts and launches an embedded payload that's responsible for loading a backdoor called Troy directly into memory. The DLL implant supports 17 operator commands to facilitate file enumeration, upload and download, archive and exfiltration, interactive shell access, process termination, in-memory DLL injection, and configuration updates.
+| High-level overview of the DLL sideloading infection chain. |
+MISTPEN, for its part, loads at least four different modules -
+- GetInfoPlugin ("Release_GetInfoPlugin_x64.dll"), to profile the host and exfiltrate the collected information as a single wide-character string
+- PvPlugin ("Release_PvPlugin_x64.dll"), to collect host reconnaissance data and details about running processes
+- OneScreenCapture ("OneScreenCapture64.dll"), to take screenshots of the current desktop, including all monitors, and transmit them as JPEG images
+- LPE (local privilege escalation) loader, which gathers host information, generates new key material using the ML-KEM post-quantum key encapsulation algorithm, and uses the negotiated key during the handshake process to decrypt and run FudModule.
+The attack chain employs an updated version of the known kernel-mode rootkit the Lazarus Group has [repeatedly](https://thehackernews.com/2024/02/lazarus-hackers-exploited-windows.html) employed [since at least 2022](https://thehackernews.com/2024/08/north-korean-hackers-deploy-fudmodule.html) to conceal the presence of malicious tools from security software installed on the host.
+| One of websites that rank highly in search engine results for "Enveil SecurityPDF" |
+Specifically, it exploits a local privilege escalation vulnerability in "AFD.sys," obtains SYSTEM privileges, and ultimately injects another instance of MISTPEN into a SYSTEM process so as to allow it to run with elevated privileges and away from the eyes of security tools. The newer version, called FudModule 3.1, improves upon its predecessor by allowing it to tamper with a Windows feature called [Smart App Control](https://support.microsoft.com/en-us/windows/security/threat-malware-protection/smart-app-control-frequently-asked-questions) designed to verify if a program is safe to run.
+"Within the SYSTEM-level msiexec.exe child process, its remote stub sets VerifiedAndReputablePolicyState to zero and invokes NtSetSystemInformation class 0xA4 with option 0x10000000, triggering an in-place reload of the code integrity policy," Check Point [said](https://research.checkpoint.com/2026/shattering-the-dream-when-a-job-offer-becomes-a-zero-day-attack/).
+What's more, the attackers are said to have created at least three websites impersonating Enveil to distribute "SecurityPDF," although it's unclear how these fake portals were incorporated into the social engineering campaign. It's suspected that the adversary first sends the PDF through a phishing message and then urges them to download the PDF viewer from the site to view the document.
+The domain names are listed below -
+- envell[.]xyz
+- enveil[.]online
+- uxtramine[.]org
+What's notable is that the campaign, instead of spinning up its own bespoke infrastructure, hijacks legitimate but compromised WordPress and SharePoint websites and vulnerable Roundcube webmail servers for use as ForestTiger command-and-control (C2) servers, thereby making it a lot more challenging to differentiate it from normal web traffic.
+Many of the Roundcube servers have been found to be vulnerable to [CVE-2025-49113](https://nvd.nist.gov/vuln/detail/cve-2025-49113), with the attackers leveraging it to infect them with a previously undocumented PHP web shell codenamed RelayShell to enable the exchange of commands and responses in the form of text files. In at least one case, an already breached France-based organization was used to send phishing messages to new victims to bypass reputation-based filters.
+The latest findings show that Lazarus Group continues to hone its malware capabilities and tradecraft, while keeping the foundations of Dream Job largely intact in attacks aimed at critical sectors across the world.
+"What makes this campaign so dangerous is not only the zero-day vulnerability – but also how Lazarus wove legitimate, trusted infrastructure into every stage of the attack," Sergey Shykevich, director of threat intelligence at Check Point Software, said in a statement shared with The Hacker News. "They hid in plain sight, behind top-ranked search results, real vendor branding, and the reputation of organizations they had already compromised.
+"When the website, the download and the recruiter all appear authentic, the old advice to 'spot the phishing link' is no longer easily applicable. Staying safe now means assuming that trust itself can be counterfeited: patch the moment updates land, verify software through official channels rather than search rankings, and extend zero-trust thinking to the legitimate-looking sites and partners we interact with every day."
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-1" class="article-body">
-            <h2 class="article-title">DeadLock ransomware uses blockchain to resist infrastructure takedown</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/deadlock-ransomware-uses-blockchain-to-resist-infrastructure-takedown/" target="_blank">Original Link</a></p>
-            <div class="content-text">The DeadLock ransomware operation is using a decentralized infrastructure that relies on blockchain-backed services to protect its communication with victims and data-leak activity. [...]
+            <h2 class="article-title">Blacklight: Illuminating AI Agent Artifacts for Attackers and Defenders</h2>
+            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/08/12/blacklight-ai-agent-endpoint-artifacts/" target="_blank">Original Link</a></p>
+            <div class="content-text"><p>TL;DR: Blacklight is an open-source security research toolkit for discovering and analyzing AI agent artifacts that reside on endpoints. It helps authorized security teams assess exposure, guide next decisions, and develop detection and hardening guidance. This project used models made available through SpecterOps’ participation in OpenAI’s Trusted Access for Cyber program to support this security [&#8230;]</p>
+<p>The post <a href="https://specterops.io/blog/2026/08/12/blacklight-ai-agent-endpoint-artifacts/">Blacklight: Illuminating AI Agent Artifacts for Attackers and Defenders</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
@@ -146,9 +112,9 @@ The development has prompted the U.S. Cybersecurity and Infrastructure Security 
             <hr class="separator">
         </div>
         <div id="art-2" class="article-body">
-            <h2 class="article-title">Microsoft Plugs Nearly 400 Security Holes</h2>
-            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/08/microsoft-plugs-nearly-400-security-holes/" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft today released updates to remedy at least 398 security vulnerabilities in its Windows operating systems and supported software, including one weakness that is already being actively exploited and two others that were publicly detailed prior to today.
+            <h2 class="article-title">Lazarus hackers exploited Windows zero-day to target defense firms</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/lazarus-hackers-exploited-windows-zero-day-to-target-defense-firms/" target="_blank">Original Link</a></p>
+            <div class="content-text">North Korean hackers have been exploiting a Windows zero-day vulnerability (CVE-2026-68820) to target defense-sector companies as part of the Operation Dream Job campaign. [...]
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
@@ -156,46 +122,79 @@ The development has prompted the U.S. Cybersecurity and Infrastructure Security 
             <hr class="separator">
         </div>
         <div id="art-3" class="article-body">
-            <h2 class="article-title">Microsoft Patches 398 Flaws Including a Windows Driver Zero-Day Under Active Attack</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/08/microsoft-patches-398-flaws-including.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft released its monthly security updates on Tuesday, and one of the flaws it closed is already being used in attacks.
-The bug sits in a core Windows kernel driver that handles network socket operations. An attacker with code already running on a machine can use it to escalate to SYSTEM. That patch goes out first.
-The flaw is tracked as CVE-2026-68820 (CVSS score: 7.0) and is the only one in this month's release Microsoft flags as under active exploitation. Exploitation depends on triggering a race condition in the driver. Microsoft has not publicly attributed the exploitation. Check Point Research says Lazarus used the zero-day in its Operation Dream Job campaign.
-Four other flaws in the release need nothing at all from the victim: no account, no password, no click. They affect Windows DNS Server, Windows Deployment Services, Microsoft's implementation of the QUIC transport protocol, and High Performance Computing (HPC) Pack, and each carries a CVSS score of 9.8. None was flagged as exploited when the updates shipped.
-Counting independently, the Zero Day Initiative puts the release at 398 new CVEs, 62 of them rated Critical. The count shows the size of the release; exploit status and reach decide the patch order.
-The release also closes the RCE half of a SharePoint chain whose authentication bypass was fixed in July. On-premises SharePoint farms should have both updates installed.
-[Check Point Research](https://research.checkpoint.com/2026/shattering-the-dream-when-a-job-offer-becomes-a-zero-day-attack/) said CVE-2026-68820 is a use-after-free in afd.sys, the [Ancillary Function Driver for WinSock](https://thehackernews.com/2024/08/microsoft-patches-zero-day-flaw.html) and a kernel-side component of Windows networking.
-The bug is privilege escalation: an attacker needs code running on the machine first, then can use it to reach SYSTEM. Microsoft flags it as actively exploited, which puts it ahead of the four 9.8 server RCEs here despite the lower score.
-Nothing required from the victim
-The four unauthenticated remote code execution flaws are the ones to queue behind the exploited driver bug because they can give an attacker code on a server without first needing an account or a user action.
-- CVE-2026-62878, Windows DNS Server. A stack-based buffer overflow reachable remotely with no authentication and no user interaction. The Zero Day Initiative describes the condition as wormable despite Microsoft rating exploitation as less likely. ZDI's “wormable” label describes the technical condition; it does not establish that a worm exists.
-- CVE-2026-62893, Windows Deployment Services. A remote flaw reachable through the service's TFTP handling without authentication or user interaction.
-- CVE-2026-62815, Microsoft QUIC. A remote, unauthenticated code execution flaw requiring no user interaction.
-- CVE-2026-59124, HPC Pack. It carries the same 9.8 score but is rated Important rather than Critical because HPC Pack is not installed by default. Microsoft rates exploitation as more likely.
-HPC Pack is not installed by default, and the practical priority of the other three likewise depends on whether the vulnerable service is present and reachable in a given environment. So service inventory and reachability matter alongside exploit status when setting patch priority.
-A SharePoint chain closes
-August also completes a two-part SharePoint fix that started in July.
-Rapid7 Labs reported an exploit chain to Microsoft on May 18 that combined an authentication bypass with a separate code execution vulnerability to [reach unauthenticated RCE against on-premises SharePoint](https://thehackernews.com/2026/08/researchers-disclose-ai-assisted.html). Microsoft confirmed two days later that it planned to split the remediation across the July and August update cycles.
-July fixed the first half, CVE-2026-55040, a Critical authentication bypass scored at 9.1. Rapid7 found that the flaw lets a remote unauthenticated attacker assume the identity of a SharePoint site user or administrator if the attacker knows the identity to impersonate. August supplies the fix for the RCE component, identified as CVE-2026-63520.
-The distinction matters: CVE-2026-63520 is the code execution half of the chain, not by itself the unauthenticated condition. Chaining the RCE with CVE-2026-55040 is what produced Rapid7's unauthenticated RCE.
-Rapid7 says patching CVE-2026-55040 breaks the demonstrated chain, so once the July fix was applied, that route was already closed; the August update now closes the RCE component as well.
-Put CVE-2026-68820 at the top for Windows systems where an attacker already has code running and could use the flaw to reach SYSTEM. Prioritize exposed DNS, WDS, QUIC, and HPC services behind it, then confirm on-premises SharePoint farms have the July authentication-bypass fix and the August RCE fix.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">Cisco warns of ASA and FTD VPN flaw exploited to crash devices</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/cisco-warns-of-asa-and-ftd-vpn-flaw-exploited-to-crash-devices/" target="_blank">Original Link</a></p>
-            <div class="content-text">Cisco is warning that a high-severity denial-of-service vulnerability in Secure Firewall ASA and Threat Defense (FTD) software is being actively exploited in attacks to remotely crash affected devices. [...]
+            <h2 class="article-title">New Microsoft Defender 'ShieldBreak' zero-day grants SYSTEM privileges</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/new-microsoft-defender-shieldbreak-zero-day-grants-system-privileges/" target="_blank">Original Link</a></p>
+            <div class="content-text">Nightmare Eclipse has released a new Microsoft Defender zero-day exploit named "ShieldBreak" after Microsoft released the August 2026 Patch Tuesday security updates. [...]
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
+        <div id="art-4" class="article-body">
+            <h2 class="article-title">ShieldBreak Zero-Day PoC Claims Microsoft Defender Patch Bypass With SYSTEM Access</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/08/shieldbreak-zero-day-poc-claims.html" target="_blank">Original Link</a></p>
+            <div class="content-text">The security researcher going by the name Chaotic Eclipse (aka INFINITE NIGHTMARE, MSNightmare, and Nightmare-Eclipse) has [released](https://blog.projectnightcrawler.dev/posts/2026-08-11-shieldbreak-august-2026-disclosure/) a proof-of-concept (PoC) for a new Microsoft zero-day called ShieldBreak.
+The vulnerability, rooted in Microsoft Defender for Windows, demonstrates a patch bypass for CVE-2026-50656 (CVSS score: 7.8), otherwise known as [RoguePlanet](https://thehackernews.com/2026/06/microsoft-defender-rogueplanet-zero-day.html).
+RoguePlanet has been described as a race condition that, if successfully exploited, could grant an attacker the ability to spawn a shell with SYSTEM-level privileges, enabling them to run arbitrary code or perform unauthorized actions.
+Although it was first disclosed by the researcher in June 2026, a patch for the vulnerability was not [released](https://thehackernews.com/2026/07/microsoft-patches-rogueplanet-defender.html) by Microsoft until almost a month later. The tech giant described it as a privilege escalation issue in the Microsoft Malware Protection Engine ("mpengine.dll").
+Soon after, Chaotic Eclipse said the "defense-in-depth updates" introduced by Microsoft to address CVE-2026-50656 can cause Defender to leak 8 bytes of data when attempting to open a file in certain scenarios on Windows 11 25H2 and Windows Server 2025. Microsoft told The Hacker News at the time that it's aware of the report and is investigating.
+ShieldBreak, on the other hand, is assessed to be a full patch bypass for CVE-2026-50656, with the researcher claiming that "Microsoft has failed to properly patch the RoguePlanet vulnerability."
+"The PoC was tested in the latest version of Windows 11 25h2 (+Canary channel) and Windows Server 2025, the PoC also have a 100% success rate," the researcher added. "Please note that Windows 10 (and respective server editions) are not currently supported, they are however vulnerable to ShieldBreak as well."
+When contacted for comment, a Microsoft spokesperson shared the following statement with The Hacker News -
+Microsoft is aware of the reported vulnerability and is actively investigating the validity and potential applicability of these claims. Microsoft is committed to investigating security issues and updating impacted products to protect customers as soon as possible. Importantly, we support [coordinated vulnerability disclosure,](https://www.microsoft.com/en-us/msrc/cvd) an industry standard that protects customers and supports the research community by ensuring their findings are thoroughly investigated and addressed before being made public.
+Security researcher Kevin Beaumont, in a post on Mastodon, [confirmed](https://github.com/GossiTheDog/ThreatHunting/blob/master/AdvancedHuntingQueries/ShieldBreak.kql) the exploit works on Windows 11, adding that the two exploits work differently.
+"RoguePlanet was a filesystem race condition vuln that uses virtual disks and NT native file manipulation to trick quarantine process into overwriting system files," Beaumont [noted](https://cyberplace.social/@GossiTheDog/117082623896479140). "ShieldBreak user-mode callback hook to change file contents during a Defender cloud-hydration scan via cfapi (Cloud Filter API)."
+Will Dormann, principal vulnerability analyst at Tharros, also validated ShieldBreak, stating Defender needs to be enabled for the exploit to work and that "my naive eyeballs fail to see the similarity" with RoguePlanet. Dormann explained the sequence of actions as follows -
+- Plant an
+[EICAR file](https://en.wikipedia.org/wiki/EICAR_test_file) - Use Object Manager symlinks to control Defender's scan path to system32.
+- During the scan, leverage CLFS to swap the identity file and hydration data to C:\Windows\system32\phoneinfo.dll (which doesn't exist by default in Windows)
+- Run the QueueReporting scheduled task, which runs wermgr.exe -upload as Run with highest privileges
+"In the wer.dll code, there is explicit code to load phoneinfo.dll," the researcher [said](https://infosec.exchange/@wdormann/117083141042272544). "Because at this point, phoneinfo.dll exists and is our own code, this runs, spawning conhost.exe with SYSTEM privileges. I don't recall RoguePlanet doing anything with cloud providers, CLFS, hydration anything, phoneinfo.dll, and unlike RoguePlanet, ShieldBreak seems to require Defender to be active to work."
+The development comes as the Windows maker [shipped](https://thehackernews.com/2026/08/microsoft-patches-398-flaws-including.html) patches for [421 security flaws](https://msrc.microsoft.com/update-guide/releaseNote/2026-Aug), including 236 flaws in Windows. One of the patches involves [CVE-2026-62832](https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-62832) (CVSS score: 7.8), a Windows User Profile Service privilege escalation vulnerability that was disclosed by Chaotic Eclipse last month under the name [LegacyHive](https://thehackernews.com/2026/07/researcher-drops-new-windows-zero-day.html).
+"Improper link resolution before file access ('link following') in Windows User Profile Service allows an authorized attacker to elevate privileges locally," Microsoft said.
+"An authenticated attacker who has credentials for another local account could run a specially crafted application to load another user's registry hive. Successful exploitation could allow the attacker to access or modify another user's data and gain administrator privileges. User interaction is not required."
+Also remediated by Microsoft is an actively exploited zero-day in the Windows Ancillary Function Driver for WinSock ([CVE-2026-68820](https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-68820), CVSS score: 7.0) that grants SYSTEM privileges and a publicly disclosed Windows Container Isolation FS Filter Driver (unionfs.sys) tampering vulnerability ([CVE-2026-72971](https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-72971), CVSS score: 5.5).
+The U.S. Cybersecurity and Infrastructure Security Agency (CISA) has since [added](https://www.cisa.gov/news-events/alerts/2026/08/11/cisa-adds-three-known-exploited-vulnerabilities-catalog) CVE-2026-68820 to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, requiring federal agencies to apply the fixes by August 25, 2026.
+(The story was updated after publication on August 13, 2026, to include a response from Microsoft and additional insights related to the flaw.)
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
         <div id="art-5" class="article-body">
+            <h2 class="article-title">Microsoft Plugs Nearly 400 Security Holes</h2>
+            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/08/microsoft-plugs-nearly-400-security-holes/" target="_blank">Original Link</a></p>
+            <div class="content-text">Microsoft today released updates to remedy at least 398 security vulnerabilities in its Windows operating systems and supported software, including one weakness that is already being actively exploited and two others that were publicly detailed prior to today.
+August’s overstuffed bundle of patch joy from Microsoft did not eclipse its recording breaking release of [more than 570 security updates last month](https://krebsonsecurity.com/2026/07/microsoft-patches-a-record-570-security-flaws/), but it is double June’s then-record batch of [nearly 200 fixes](https://krebsonsecurity.com/2026/06/a-record-breaking-patch-tuesday-for-june-2026/#more-73788). Microsoft has attributed the recent patch deluge to vulnerability discoveries aided by artificial intelligence, and experts roundly agree that Windows users should get used to the idea of Patch Tuesdays (the second Tuesday of each month) covering hundreds of newly discovered security flaws.
+Fully 42 of the 398 flaws that Microsoft patched today earned Redmond’s most-dire “critical” rating, meaning they are severe enough that malware or malcontents could exploit them to gain remote control over a Windows computer with little to no help from the user.
+The sole known “zero day” bug fixed by Microsoft this month is [CVE-2026-68820](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-68820), a privilege escalation weakness in a core Windows component called afd.sys, which the security firm Automox describes as “the driver behind Windows socket connections on effectively every endpoint.”
+“This isn’t a front-door bug,” Automox’s Landon Miles [wrote](https://www.automox.com/blog/patch-fix-tuesday-august-2026) in a Patch Tuesday blog post. “It’s step two in a chain: an attacker phishes their way into a low-privilege foothold, then uses the driver flaw to take the box. The 7.0 score reflects the high attack complexity, because race conditions are fiddly. The exploit has to be thrown over and over until the timing lands. Someone is clearly landing it anyway.”
+[CVE-2026-62832](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-62832) is another privilege escalation flaw that Microsoft has labeled likely to be exploited; this flaw, in the Windows User Profile Service, may be related to the recent [“LegacyHive” public disclosure](https://www.theregister.com/security/2026/07/15/microsofts-serial-tormentor-drops-legacyhive-0-day/5271723) from the prolific bug hunter known as Nightmare Eclipse. The other publicly disclosed flaw is [CVE-2026-72971](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-72971), a low-impact local tampering vulnerability that Microsoft reckons is unlikely to be exploited.
+Other major software makers are likewise increasing their patch volumes and cadence thanks to AI, including Adobe which last month moved to twice-monthly security bulletins published on the 2nd and 4th Tuesday of each month. Cisco, Google, Mozilla and Oracle also are shipping updates far more frequently and abundantly.
+By all accounts, AI is quite good at finding security holes in software. But for now at least, patching the resulting bugpocalypse remains a heavily human-centric endeavor, and the jury is still out on whether AI technologies will turn out to be as good at fixing vulnerabilities as they are at finding and exploiting them. This is an important question when one considers that these same AI technologies also are suggesting fixes for the vulnerabilities they find.
+Researchers at 1Password recently [examined](https://1password.com/blog/why-ai-generated-patches-still-require-human-review) what happens when different large language models (LLMs) generate vulnerability patches for newly disclosed, complex vulnerabilities. They found the LLMs produced patches that failed to fix the flaw or added a new weakness in the process (or both) more than half the time.
+Ed Skoudis, president of the SANS Technology Institute, said his team has seen excellent results using AI to generate patches, provided there are humans in the loop to test the suggested fixes and push for iterative improvements.
+“AI is rapidly becoming astonishingly good at finding vulnerabilities, but this research shows that fixing them is a very different problem,” Skoudis wrote in a SANS newsletter today. “Don’t expect one-shot AI patching to work reliably. Instead, iterate, test, challenge, improve, and verify. AI can be an extraordinary patching partner, but today it still needs a skilled human at the keyboard.”
+Tyler Reguly at Fortra says while reports of Microsoft patching hundreds of vulnerabilities in one go have prompted some organizations to try to patch faster, it’s important to bear in mind that only one of the almost 400 bugs addressed today is known to be actively exploited. Reguly suggested security leaders check in with their teams to see how they’re handling the increasing workloads, which often involve testing fixes before deploying them in production environments.
+“If you’re a chief security officer talk to your teams about how they are shifting or modifying their workflows to better accommodate the patching shift that we’re seeing and support them across various organizational units by enabling the changes they want to see made,” Reguly said. “There’s no need to rush these updates, no matter what various vendors and organizations try to tell you. You need to make sure that you are rolling out safe updates that will not negatively impact your systems.”
+Speaking of the humans behind the keyboards, don’t neglect to backup your system and/or data before applying this month’s monster patch load. The day after each month’s Patch Tuesday is sometimes derisively referred to as Reboot Wednesday, but it generally doesn’t hurt to wait a few days to apply these huge update bundles because it sometimes takes a couple of days for the occasional misbehaving patch to get ironed out properly by Microsoft.
+For a clickable, per-patch breakdown by severity and urgency, check out [this roundup](https://isc.sans.edu/diary/Microsoft%20Patch%20Tuesday%20August%202026/33236) from the SANS Internet Storm Center.
+Time to rewrite the code using the help of AI to create a new base with less security holes and easier to maintain.
+Windows 12?
+This is why I still use Windows 7. I was never convinced that the Microsoft upgrades did anything other than refine their advertising for XBOX or whatever. The entire suite of Windows versions is riddled with security problems, despite the ridicule offered by IT colleagues. By the way I still receive the monthly Patch Tuesday security updates despite promises from Microsoft that older versions of Windows are not supported. They know as we know now, Microsoft Windows is a sinking ship.
+You get virus definition type ‘updates’ monthly, rarely an actual ‘security update’ on 7. That doesn’t help a lot.
+If you however run behind a firewall and don’t reach out to bad stuff, you’ll be fine until you aren’t.
+Funny how AI helps find the flaws and create exploits to attack them. But the AI is used to create patches and help keep software safe. Just seems like AI has just up’d the ante’ on everything good and bad. Jury still out and where this is all going. Me, I am not optimistic.
+My thought on how good AI will be at creating patches is to liken today to a few years ago when the attacker was very much more human: it is far easier to find & exploit vulnerabilities then it is to create secure software without security testing. AI hasn’t changed the latter at scale, yet. I imagine a time coming when more people shift their thinking, time, and money towards AI assisted code reviews.
+Does it count still when they are all extorted from submitters…security…Microsoft…..haha maybe against them…
+Using AI to find security issues isn’t a bad thing but I’m worried we’re heading towards too much dependence on it. AI has already shown the ability to hack websites without any human interaction. Can anyone say ‘Skynet’? (from the Terminator movies)
+“AI can be an extraordinary patching partner, but today it still needs a skilled human at the keyboard.” Hopefully just not a Connor Riley Moucka.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-6" class="article-body">
             <h2 class="article-title">A Vault With No Treasure - CMMC Level 2 Compliance for Subcontractors With No CUI</h2>
             <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/a-vault-with-no-treasure-cmmc-level-2-compliance-for-subcontractors-with-no-cui" target="_blank">Original Link</a></p>
             <div class="content-text">A Vault With No Treasure - CMMC Level 2 Compliance for Subcontractors With No CUI
@@ -350,7 +349,7 @@ If you're in need of assistance on this, please [get in touch with us](https://t
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-6" class="article-body">
+        <div id="art-7" class="article-body">
             <h2 class="article-title">Microsoft named a Leader in the 2026 IDC MarketScape for MDR/MXDR for the Enterprise</h2>
             <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/08/10/microsoft-named-a-leader-in-the-2026-idc-marketscape-for-mdr-mxdr-for-the-enterprise/" target="_blank">Original Link</a></p>
             <div class="content-text">Security teams are being asked to defend a growing attack surface with fewer people and around the clock, against threat actors who never take a night off. As cyberattackers increasingly use AI to launch and scale campaigns, the volume, speed, and sophistication of threats continue to rise. Closing that gap takes more than tooling. It takes a partner that pairs a leading security platform with scaled intelligence and human experts who can act on your behalf at any hour. That’s exactly what [Microsoft Defender Experts MDR](https://www.microsoft.com/en-us/security/business/services/microsoft-defender-experts-mdr?msockid=25cfdac4ec1e6114037bcd63ed2860f5) is built to do.
@@ -369,17 +368,6 @@ When a threat is found, Defender Expert notifications appear as incidents in the
 Get started
 Read the [IDC MarketScape: Worldwide MDR/MXDR for the Enterprise 2026 Vendor Assessment excerpt](https://idcdocserv.com/US54792426e_Microsoft), and visit the [Microsoft Defender Experts MDR](https://www.microsoft.com/en-us/security/business/services/microsoft-defender-experts-xdr?msockid=27bd8b1d324d6b4d28eb9e2e33dd6a4f) webpage to see how expert-led, round-the-clock managed detection and response can extend your team, drive SOC efficiency, and help you stay ahead of emerging cyberthreats.
 To learn more about Microsoft Security solutions, visit our [website](https://www.microsoft.com/en-us/security/business). Bookmark the [Security blog](https://www.microsoft.com/security/blog/) to keep up with our expert coverage on security matters, and follow us on LinkedIn ([Microsoft Security](https://www.linkedin.com/showcase/microsoft-security/)) and X ([@MSFTSecurity](https://twitter.com/@MSFTSecurity)) for the latest news and updates on cybersecurity.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-7" class="article-body">
-            <h2 class="article-title">Turning Enterprise Update Servers Into Backdoor Factories (0_o) – Part 1</h2>
-            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/08/05/turning-enterprise-update-servers-into-backdoor-factories-part-1/" target="_blank">Original Link</a></p>
-            <div class="content-text"><p>TL;DR: This is part 1 of a 2 part blog series sharing what I have discovered in my Windows Service Update Service (WSUS) research. If the WSUS database is configured on a separate server from the upstream WSUS server, we can coerce the WSUS computer account to the WSUS database and establish a SQL session. [&#8230;]</p>
-<p>The post <a href="https://specterops.io/blog/2026/08/05/turning-enterprise-update-servers-into-backdoor-factories-part-1/">Turning Enterprise Update Servers Into Backdoor Factories (0_o) &#8211; Part 1</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
-
-[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
