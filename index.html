@@ -59,86 +59,309 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-08-31</h1>
+        <h1>Security Briefing // 2026-09-01</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Berlin confirms data theft after Rhysida ransomware attack claims</button></li><li><button onclick="show('art-1')">Aurora Ransomware Operators Use Cursor AI in Attacks Against 10 Targets</button></li><li><button onclick="show('art-2')">Microsoft says Windows 11 KB5120998 update resets mouse settings</button></li><li><button onclick="show('art-3')">Five Critical WordPress Plugin and Theme Flaws Enable Site Takeover or RCE</button></li><li><button onclick="show('art-4')">Two Alleged ‘TeamPCP’ Hackers Arrested in Australia</button></li><li><button onclick="show('art-5')">SpooNMAP Grows Up: Findings, Local LLM Detection, and a Whole Lot Less Waiting</button></li><li><button onclick="show('art-6')">Microsoft named a Leader in the Frost Radar™: Cloud Workload Protection Platforms, 2026</button></li><li><button onclick="show('art-7')">Who’s Tracking You? Use This New Service to Find Out</button></li><li><button onclick="show('art-8')">Turning Enterprise Update Servers Into Backdoor Factories (0_o) – Part 1</button></li><li><button onclick="show('art-9')">Demystifying AI Exploits: A Blueprint for AI-Assisted Vulnerability Management</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Financially Motivated Threat Actor BREEZE COMET Targets Brazil</button></li><li><button onclick="show('art-1')">Recently patched PaperCut zero-days used in data theft attacks</button></li><li><button onclick="show('art-2')">Attackers Exploit Critical Langflow and Rails Flaws in Credential-Probing and C2 Activity</button></li><li><button onclick="show('art-3')">Cronos blockchain restarts after $74 million Tectonic exploit</button></li><li><button onclick="show('art-4')">China-Linked Fire Ant Hijacks Cisco Routers to Steal Credentials and Blind Security Logs</button></li><li><button onclick="show('art-5')">Two Alleged ‘TeamPCP’ Hackers Arrested in Australia</button></li><li><button onclick="show('art-6')">SpooNMAP Grows Up: Findings, Local LLM Detection, and a Whole Lot Less Waiting</button></li><li><button onclick="show('art-7')">Microsoft named a Leader in the Frost Radar™: Cloud Workload Protection Platforms, 2026</button></li><li><button onclick="show('art-8')">Who’s Tracking You? Use This New Service to Find Out</button></li><li><button onclick="show('art-9')">Turning Enterprise Update Servers Into Backdoor Factories (0_o) – Part 1</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">Berlin confirms data theft after Rhysida ransomware attack claims</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/berlin-confirms-data-theft-after-rhysida-ransomware-attack-claims/" target="_blank">Original Link</a></p>
-            <div class="content-text">Berlin's city administration has confirmed that cybercriminals are attempting to extort the city after the Rhysida ransomware gang listed it on their data leak site. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
+            <h2 class="article-title">Financially Motivated Threat Actor BREEZE COMET Targets Brazil</h2>
+            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/financially-motivated-threat-actor-breeze-comet-targets-brazil/" target="_blank">Original Link</a></p>
+            <div class="content-text">Financially Motivated Threat Actor BREEZE COMET Targets Brazil
+Google Threat Intelligence Group
+Mandiant
+Introduction
+Beginning in 2024 Mandiant investigated a string of compromises affecting Brazilian financial services, retail, and eCommerce organizations. Google Threat Intelligence Group (GTIG) tracks this activity as BREEZE COMET (formerly UNC5669), a financially motivated threat actor specializing in manipulating payment systems and banking software in Brazil to conduct fraudulent transfers. This activity overlaps with operations publicly reported as [Plump Spider](https://cti.axur.com/bulletins/eeda3f5c-def6-4a7f-ad0c-754d5823de57) and [SHADOW-AETHER-064](https://www.trendmicro.com/en_us/research/26/e/vibe-hacking-two-ai-augmented-campaigns-target-government-and-financial-sectors-in-latin-america.html). In this blog, we detail BREEZE COMET’s tactics and toolkit, and provide mitigation recommendations and detections to support organizations in defending against this active and developing threat.
+BREEZE COMET tactics have evolved over time to leverage a customized malware suite and compromised, trusted websites to facilitate initial access, command and control (C2), and to interact with financial software and payment APIs. BREEZE COMET’s operational infrastructure may also indicate intent to expand their infrastructure footprint to other countries in Latin America and Africa. Additionally, we have evidence that BREEZE COMET is using generative artificial intelligence (AI) to support malware development, which may further increase the scale, speed, and sophistication of their operations in the future.
+BREEZE COMET Targets Brazilian Financial Technology
+BREEZE COMET operations target organizations with permission to conduct transactions through banking software, APIs, and payment systems such as Pix, STR, and Boleto. This typically includes banks, payment processors, retailers, exchanges, as well as fintech and banking software providers.
+To achieve their objective of conducting fraudulent transfers, BREEZE COMET must maintain:
+-
+Access to the National Financial System Network (Rede Nacional do Setor Financeiro, RSFN) through an entity with this access.
+-
+Access to mTLS credentials that allow sending authenticated payloads with transactional orders to Pix, STR (Brazilian Reserves Transfer System), or any transactional listener to be executed with minimal restrictions in the name of an organization with available funds.
+-
+Persistent access to multiple accounts in targeted organizations’ Active Directory and/or cloud environments.
+-
+Understanding of an organization’s transfer processing procedures, network controls, fintech integrations and anti-fraud systems.
+In order to support these requirements, BREEZE COMET evolved to operate in multiple compromised environments at the same time, crafting custom C2 malware to automate activities such as reconnaissance, lateral movement, persistence, and exfiltration.
+Initial Compromise and Establish Foothold
+BREEZE COMET has used various methods for initial access. In early compromises, Mandiant observed this threat actor use password spraying as well as voice calls impersonating IT support teams to convince users to install Remote Monitoring and Management (RMM) tools such as AnyDesk. [Axur](https://blog.axur.com/en-us/axur-reveals-plump-spider-modus-operandi-systemic-pix-fraud) corroborates use of voice phishing, and suggests that the group has also attempted to recruit insiders at targeted organizations.
+In mid-2025, GTIG observed BREEZE COMET using compromised Brazilian small government websites to stage RMM tools, infostealers disguised as legitimate tax or receipt documents (e.g., ComprovantePDF.exe
+), or backdoors such as XWORM set to persist via automated startup shortcut modifications. XWORM is a backdoor that is widely available for purchase on cyber crime forums, with leaked or “cracked” versions also available. BREEZE COMET then used these compromised government websites to facilitate social engineering operations for initial access, and as C2 endpoints. The use of compromised, trusted infrastructure allowed the threat actors to avoid detection by network domain reputation filters. GTIG also observed BREEZE COMET replicating this behavior with municipal domains in Nigeria, Paraguay, Ghana, and Venezuela, suggesting a potentially growing targeting focus. Analysis of compromised municipal domains indicated that BREEZE COMET reused the same staging infrastructure to host and deliver XWORM payloads across operations targeting multiple organizations.
+In 2025, we first observed BREEZE COMET connect rogue hardware devices directly into retail store networks to establish footholds into targeted environments. From this initial network access, BREEZE COMET moved laterally to internal systems then downloaded the Netcat utility alongside custom scripts to pull down subsequent post-exploitation frameworks from external open directories. [Trend Micro](https://www.trendmicro.com/en_us/research/26/e/vibe-hacking-two-ai-augmented-campaigns-target-government-and-financial-sectors-in-latin-america.html) has reported that the group also exploited vulnerabilities in JBoss AS servers to gain initial access.
+Escalate Privileges & Internal Reconnaissance
+BREEZE COMET used publicly available reconnaissance utilities such as Impacket, ADRecon and ADVipscan, as well as with custom malware, often profiting from environments with low observability. These utilities were often observed being downloaded from GitHub repositories and executed in memory via PowerShell for defense evasion.
+The threat actor deployed the custom LDAP brute-forcing utility REALBREEZE. Beyond traditional Active Directory compromise, BREEZE COMET specifically targets development and cloud environments to escalate privileges. The group actively mines continuous integration and continuous delivery (CI/CD) environments to steal hard-coded pipeline credentials, application programming interface (API) keys, and highly privileged cloud access tokens.
+BREEZE COMET used custom scripts to search internal host files and environmental variables to identify mTLS credentials and administrative certificates necessary to authenticate against core banking systems. Observed search terms included: boleto
+, cnab
+, remessa
+, webhook.*pix
+and instant.*payment
+.
+Move Laterally
+BREEZE COMET abuses standard protocols to navigate the network, using hijacked service accounts to initiate unauthorized Remote Desktop Protocol (RDP) sessions and execute commands via SMB network file shares. BREEZE COMET was observed executing network scanning tools across internal subnets specifically to enumerate available SMB pathways.
+To maneuver through segmented financial networks and bypass strict internal firewalls, BREEZE COMET deploys specialized routing malware: COBALTSPIN. Written in Rust, COBALTSPIN operates as a lightweight, evasive network tunneler, used to communicate with and maintain persistent network access to financial API infrastructure. By establishing a reverse SOCKS5 proxy over a WebSocket connection, COBALTSPIN routes network traffic securely back and forth between the C2 and internal targets, enabling lateral movement directly through boundary firewalls without requiring built-in persistence mechanisms that might trigger detection.
+Maintain Presence: Orchestrating the Compromise via Bespoke C2 Frameworks
+In 2024, BREEZE COMET relied on commercial RMM tools to maintain access to targeted environments. In 2025, BREEZE COMET also deployed malicious Kubernetes pods to maintain persistence and steal cloud secrets, exfiltrating them to public facing notepad websites (such as dontpad[.]com
+).
+In 2025 and 2026 Mandiant identified multiple backdoors that BREEZE COMET developed to establish redundant access and expand their foothold in targeted environments.
+-
+LIGHTPAINT: This custom Java-based backdoor is specifically designed to install a legitimate VPN, such as SoftEther, and configure it for automated persistence. To protect this access, GTIG observed BREEZE COMET programmatically adding inbound Windows Defender Firewall rules to allow all traffic from the deployed VPN manager, while subsequently clearing the
+Windows Networking Vpn Plugin Platform
+event logs to erase forensic evidence of the connection. -
+MILDFROST: Operating as a passive Java JAR backdoor hiding inside the JVM process space, MILDFROST uses classes like
+DnsCommandBeacon.class
+to establish slow, covert DNS tunnels. It also serves as a fallback C2; it dynamically queries delegated subdomains to receive instructions and pull down fresh copies of the C++ executables. -
+KICKPLATE: To continuously deliver auxiliary payloads and enforce host-level persistence, BREEZE COMET uses KICKPLATE. This custom Nim-based backdoor impersonates Windows Update Health Tools. It executes commands to control SOCKS5 tunnelers, update registry startup keys, and silently modify Windows services. The group supplements KICKPLATE by abusing native scheduled tasks (
+schtasks.exe
+running as SYSTEM) and malicious shortcut (.lnk) modifications in user startup folders. -
+BOATBEAM: Adding a final layer to their redundant architecture, BREEZE COMET deploys BOATBEAM, a Golang backdoor that initiates a fake IIS HTTPS server on port 443. This artifact hides backdoor traffic by masquerading as a legitimate web server, only activating its C2 functionalities when it receives a specific session cookie.
+To ensure these persistence mechanisms survive, BREEZE COMET actively impairs endpoint defenses. Telemetry confirms the threat actors executing direct PowerShell commands (Set-MpPreference -DisableRealtimeMonitoring $true
+) to disable Windows Defender's real-time monitoring across compromised hosts, guaranteeing their malware suite remains operational.
+Furthermore, Mandiant identified evidence that BREEZE COMET used large language models (LLMs) to accelerate the creation of custom scripts for network reconnaissance, credential validation, mass deployment, victim-specific pivoting, and data extraction. Analysis of recovered BREEZE COMET scripts has shown the tools are highly customized and functional, but lack human idiosyncrasies, heavily relying on unrolled code structures, verbose explanatory comments, and standardized execution headers.
+#!/bin/bash
+# RODA DENTRO DO 10.0.9.9 - DIRETO NA REDE INTERNA
+echo "###############################################"
+echo "### STEP 1: ENUM ALL LINUX (SSH PORT 22) ###"
+echo "###############################################"
+# Scan SSH em todos os ranges conhecidos
+echo "=== SCANNING SSH PORTS ==="
+> /tmp/ssh_open.txt
+Figure 1: Excerpt of script showing verbose comments
+Complete Mission: Mass Fraudulent Transactions
+Forensic evidence analyzed by Mandiant demonstrates that BREEZE COMET used COBALTSPIN and compromised privileged accounts to access core financial applications. Within 24-48 hours of establishing this access, the threat actor executed two waves of hundreds of fraudulent transactions, based on reporting by a client and third party forensic analysis.
+Subsequently, BREEZE COMET cleared event logs across compromised hosts to hide evidence of their lateral movement, privilege escalation, and interactions with APIs associated with financial software and payment systems. The attacker also deleted directories they had created during the compromise.
+Outlook and Implications
+Since 2024, BREEZE COMET has steadily increased the complexity and effectiveness of their operations manipulating Brazilian financial systems and software, and has successfully executed at least one heist of tens of thousands of USD in assets. This analysis is intended to support financial services, fintech, retail, and government organizations, particularly in Brazil, to track and defend against BREEZE COMET.
+While the Latin American cybercrime ecosystem has historically been defined by client-side, high-volume retail fraud, BREEZE COMET’s campaigns represent a notable shift that may serve as a model for future financially motivated threats against organizations in this region.This transition from opportunistic retail banking fraud to direct intrusions into the core financial switch and instant payment infrastructure is notable not just for this shift in targeting, but also the capabilities of the threat actor.
+BREEZE COMET exemplifies how threat actors are operationalizing generative AI to enhance the speed, scale, and sophistication of their campaigns. By leveraging LLMs to generate bespoke reconnaissance scripts, validate credentials, and automate deployment workflows on the fly, the actor compresses the development lifecycle. This automation also lowers the operational threshold required to coordinate synchronized, multi-environment attacks. Finally, orchestrating their usage of AI-generated tooling alongside bespoke multi-language C2 architectures demonstrates how actors can elevate their overall capabilities and lower technical barriers to entry. The progression to a multi-tiered ecosystem—combining custom-built Rust, Nim, and Go backdoors with AI-accelerated operational scripts—demonstrates a measurable maturation in BREEZE COMET's technical capability.
+As threat groups increasingly leverage LLMs to streamline routine tradecraft, defenders must anticipate shorter adversary turnaround times and heightened pressure on interconnected financial ecosystems.
+Remediation and Hardening
+Application Control & Unapproved Remote Management (RMM) Blocking
+-
+Enforce Application Control (e.g. Windows WDAC, macOS Gatekeeper/MDM, or Linux fapolicyd) to block execution in user-writable directories (Windows %APPDATA%, macOS ~/Downloads, Linux /tmp or /var/tmp).
+-
+Partition Linux hosts to mount /tmp and /home with the noexec flag.
+-
+Audit software inventory to alert on portable RMM execution and unapproved system service/daemon registrations.
+-
+Train users on social engineering tactics impersonating IT Support.
+Network Access Control & Branch Physical Hardening
+-
+Deploy 802.1X Network Access Control (NAC) across physical Ethernet switch ports at branch/retail locations to prevent unauthorized hardware devices from obtaining an internet protocol (IP) address or communicating on internal subnets.
+-
+Disable unused switch ports and enforce Port Security (e.g. MAC limiting) on critical network drops.
+-
+Physically restrict access to networking closets and secure public-facing jacks.
+Active Directory & Credential Hardening
+-
+Restrict administrative utilities (e.g. ntdsutil.exe, vssadmin.exe) and alert on volume shadow copy creation/deletion.
+-
+Enforce PowerShell Constrained Language Mode (CLM), Script Block Logging (Event ID 4104), and Antimalware Scan Interface (AMSI) to detect in-memory execution of reconnaissance scripts.
+-
+Mandate phishing-resistant multifactor authentication (MFA) and lockout controls across all external portals (VPNs, Software-as-a-Service (SaaS)).
+Deep Packet Inspection & Egress Traffic Control
+-
+Perform SSL/TLS Decryption and Deep Packet Inspection (DPI) on outbound web traffic rather than relying on domain reputation or .gov top-level domain (TLD) allowlists.
+-
+Block non-essential egress ports and protocols (e.g., outbound Internet Control Message Protocol (ICMP)) and restrict tunneling utilities like Chisel or GSocket).
+-
+Segment networks to block lateral SMB (port 445) and RDP (port 3389) traffic between workstations and servers.
+Kubernetes & Cloud Workload Isolation
+-
+Enforce strict Kubernetes Role-Based Access Control (RBAC) using least privilege for service accounts.
+-
+Use dynamic admission controllers (e.g., OPA Gatekeeper or Kyverno) and native Pod Security Admission (PSA) to block privileged containers.
+-
+Apply egress network policies to block nodes and pods from accessing unauthorized public platforms.
+Secrets Management & Financial System Micro-Segmentation
+-
+Mandate a centralized Secrets Manager (e.g., HashiCorp Vault) with access logging; eliminate plaintext keys in code.
+-
+Implement identity-based / Layer 7 micro-segmentation for financial workloads.
+-
+Limit administrative access exclusively to dedicated jump hosts via privileged access management (PAM).
+Indicators of Compromise (IOCs)
+File Indicators
+Table 1: File Indicators
+Network Indicators
+Table 2: Network Indicators
+Detections
+Google Security Operations (SecOps)
+Google SecOps customers have access to these broad category rules and more under the "Mandiant Hunting Rules" rule pack. The activity discussed in the blog post is detected in Google SecOps under the rule names:
+-
+"Network DNS Connections To Pastebin"
+-
+"Powershell Downloadstring Method With Suspicious Arguments"
+-
+"Powershell Loading Net Assembly"
+YARA Rules
+rule M_Utility_REALBREEZE_2 {
+meta:
+author = "Google Threat Intelligence Group"
+strings:
+$s1 = "IP/REDE" wide
+$s2 = "SENHA" wide
+$s3 = "U\x00S\x00U\x00\xc1\x00R\x00I\x00O\x00:"
+$s4 = "Arquivo de Texto (*.txt)|*.txt" wide
+$s5 = "get_SamAccountName"
+$s6 = "get_txtHostname"
+condition:
+uint16(0) == 0x5A4D
+and all of them
+}
+rule G_Tunneler_COBALTSPIN_1
+{
+meta:
+author = "Google Threat Intelligence Group"
+strings:
+$p00_0 = {488985[4]72??4c8b47??4c8b6f??488985[4]eb??4989f04989c5488b85}
+$p00_1 = {4d8bae[4]4d85ed4c897d??897d??4c8975??89b5[4]74??498bbe[4]4d89ee}
+condition:
+uint16(0) == 0x5A4D and uint32(uint32(0x3C)) == 0x00004550 and
+(
+($p00_0 in (560000..600000) and $p00_1 in (1500000..1600000))
+)
+}
+rule G_Backdoor_BOATBEAM_1
+{
+meta:
+author = "Google Threat Intelligence Group"
+strings:
+$p00_0 = {4d89d84889ce488bbc24[4]e9[4]0f82[4]4c89ac24[4]4c89e74d29ec4c896424}
+$p00_1 = {e8[4]498903498973??498953??4d8943??488942??488957??4889f8488b4c24}
+condition:
+uint16(0) == 0x5A4D and uint32(uint32(0x3C)) == 0x00004550 and
+(
+($p00_0 in (1500000..1600000) and $p00_1 in (2700000..2800000))
+)
+}
+rule G_Backdoor_MILDFROST_1
+{
+meta:
+author = "Google Threat Intelligence Group"
+strings:
+$s1 = "sc tcp ok" fullword
+$s2 = "fl comando vazio" fullword
+$s3 = "noop" fullword
+$s4 = "wait:" fullword
+$s5 = "shell:" fullword
+$s6 = "exec:" fullword
+$s7 = "upload," fullword
+$s8 = "dl|" fullword
+$s9 = "tc|" fullword
+condition:
+uint16(0)==0x5a4d and 7 of them
+}</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-1" class="article-body">
-            <h2 class="article-title">Aurora Ransomware Operators Use Cursor AI in Attacks Against 10 Targets</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/08/aurora-ransomware-operators-use-cursor.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Threat actors associated with Aurora (aka Aur0ra) ransomware have been observed using SpaceX's artificial intelligence (AI)-powered coding assistant Cursor to break into target networks, according to findings from [CloudSEK](https://www.cloudsek.com/blog/aurora-ransomware-affiliate-ai-attack-planning-crypto-payments) and [Gambit Security](https://gambit.security/blog-posts/aurora-ransomware-targets-esxi-abuses-cursor-agent-for-exploitation).
-The two independent analyses are based on exposed infrastructure associated with the Russian-speaking cybercrime group, leading to the discovery of its toolkit, shell history, and encryptor. CloudSEK said the exposed open directory leaked "months of activity" that was active against more than 20 organizations across nine countries between April and July 2026. Four of those victims have since been listed on its data leak site.
-"The operator used Cursor, an agentic coding assistant, to plan attacks in Russian, while excluding CIS [Commonwealth of Independent States] ranges and CIS-country domains, without exception," CloudSEK noted.
-Details about Aurora first emerged in late May 2026, with CYFIRMA [highlighting](https://www.cyfirma.com/news/weekly-intelligence-report-22-may-2026/) attacks primarily targeting Windows systems and its continued technical development through incremental updates and feature expansion. Data from Ransomware.Live lists [33 victims](https://ransomware.live/group/aurora) located in the U.S., Germany, the Netherlands, Canada, and the U.K.
-In one case [detailed](https://activesoc.blackhillsinfosec.com/blog/introducing-the-aur0ra-ransomware-group/) by Black Hills Information Security earlier this month, initial access was achieved via aggressive email bombing followed by [making phone calls to employees](https://thehackernews.com/2026/08/twinloot-abuses-sharepoint-and-teams-to.html) by posing as IT help desk personnel to assist them in dealing with the issue, only to establish remote access using an open-source utility called [Xray-core](https://github.com/xtls/xray-core).
-The attack chain subsequently involves lateral movement via SMB, LDAP, WinRM, RDP, and RPC, obtaining access to high-privilege administrator accounts, and abusing them to evade detection by clearing logs and disabling Microsoft Defender before harvesting and exfiltrating sensitive data and deploying the encryptor.
-CloudSEK said it identified both Windows and Linux versions of Aurora written in Zig, adding the operator's recovered chat history shows heavy use of Cursor for planning various phases of the attack. This includes a full Active Directory Certificate Services (AD CS) exploitation plan written in Russian.
-"Both encryptor binaries, the Windows sap.exe and the Linux/ESXi encrypt.out, are static builds from a single Zig codebase, compiled for different targets rather than written twice," the company noted. "The Windows binary even carries the Linux build's usage examples inside it, a leftover from sharing one source tree across both platforms."
-The Windows variant is also equipped to inhibit system recovery through the deletion of volume shadow copies and disabling System Restore directly via the Registry. The Linux and ESXi variant, on the other hand, attempts to forcefully kill every single virtual machine on the host prior to starting encryption.
-Furthermore, a key recovered from the Aurora encryptor is said to have granted access to a ransom negotiation between the threat actor and an unspecified victim, and a cluster of four cryptocurrency wallets that show varying splits between affiliates and the main operators. Affiliates have been found to get a cut anywhere between 54% and 79%, while the rest goes to the administrators.
-This indicates that the affiliate cut of the ransom amount is decided per victim and depends on the ransom amount demanded and the victim's revenue figures. The illicit funds and then laundered and cashed out.
-Gambit Security, which released its own insights into the activity, said it observed the Aurora operator using Cursor Agent, running Anthropic's Claude Sonnet, to help with hands-on exploitation against 10 targets between April 8 and May 21, 2026.
-"In these cases the agent was given credentials or an existing route into the victim organization," Eyal Sela, director of threat intelligence at Gambit Security, said. "Then it was tasked with various exploitation activities."
-"The agent was tasked with standard exploitation tasks. In some cases, the attacker only asked the agent to achieve an objective, such as 'tell me what rights the user has,' while in others, they told the agent which exploitation tool to use or instructed it to follow a previously generated attack plan. In some cases, the Agent gave a list of potential next steps - and all the attacker did was reply with a number corresponding to one of them."
-Some of the tasks offloaded to the agent are listed below -
-- Installing a VPN client or proxychains, then configuring it and connecting to a victim with supplied credentials or an existing SOCKS tunnel
-- Scanning the internal subnets for hosts with Nmap or NetExec
-- Enumerating the domain to report which privileges a supplied user holds, using NetExec's BloodHound collector
-Attempting NTLM relay attacks by coercing authentication with PetitPotam, Coerce Plus, and PrinterBug, and using Impacket ntlmrelayx to relay the resulting authentication
-Running certificate attacks with Certipy
-"The majority of the commands failed to achieve the stated objective on the first attempt, resulting in multiple refinements and changes to the commands and scripts used for each task," Gambit said. "Some eventually succeeded in achieving the objective, while others failed and returned only a report of the attempts to the attacker."
-In addition, attacks involving the Linux version have leveraged a Python script ("esxi_finder.py") to scan for VMware ESXi hypervisors and vCenter servers inside a victim network.
-The development is the latest example of how bad actors are relying on commercial AI tools to carry out cyber attacks, even as model providers implement more guardrails to prevent misuse. The names of the affected companies were not disclosed, but Reuters [said](https://www.reuters.com/world/russian-speaking-cybercriminals-used-spacexs-cursor-ai-tool-hack-seven-companies-2026-08-27/) they were Christeyns, Teckentrup, Helideck Certification Agency, Bayou Title, an Argentine pharmaceutical distributor, and an Italian manufacturer.
-Gryxa Toolkit Emerges
-It also follows the discovery of a new AI-assisted toolkit dubbed Gryxa that's used by a financially motivated threat actor to run an initial-access operation targeting 324 hosts. ReliaQuest said Gryxa represents the first case it has observed where AI has been used to build the entire operation, right from the toolkit to the console it's run from.
-"Gryxa turns legitimate remote monitoring and management (RMM) software into covert access, keeps the access alive through several restart mechanisms that operate independently of each other, and then steals credentials saved in Chromium-based browsers," it [said](https://reliaquest.com/blog/threat-spotlight-gryxa-ai-built-toolkit).
-"It also escalates against endpoint protection when the connection to the actor is interrupted, disabling or attempting to uninstall the security agent. Together, these capabilities give the actor durable access to a host and allow them to steal cryptocurrency wallets."
-Evidence indicates that the threat actor behind the operation jailbroke an AI coding agent by passing off the whole development process as an "authorized internal deployment." Gryxa is likely delivered via phishing emails.
-Once executed on a compromised host, it sets up persistence using scheduled tasks and can bypass Chromium's app-bound encryption ([ABE](https://thehackernews.com/2024/08/google-chrome-adds-app-bound-encryption.html)) protections to steal credentials from web browsers. The harvested credentials are transmitted through Telegram.
-Perhaps the most unusual aspect of Gryxa is that it records remediation efforts and reports them back to the threat actor. Specifically, after the visible RMM implant is removed, a hidden malware component collects Windows logs and host artifacts and uploads them to attacker-controlled infrastructure.
-On top of that, if the actor's relay becomes unreachable, Gryxa attempts to disable and uninstall any endpoint protection agents like Microsoft Defender and others within roughly 10-13 minutes. Once the relay is accessible, the toolkit re-enables Defender.
-"The Gryxa component only gathered and uploaded; it didn't examine what it took," ReliaQuest said. "The actor draws any conclusion about which tool performed the removal, which account ran it, and in what order after receiving the archive."
-"The actor's console includes a ready-made job named collect-forensics, which indicates this is a routine capability rather than a response to one incident. Gryxa rotates its log files when they exceed 200KB, meaning recent activity is preserved for a responder who acts quickly."
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-2" class="article-body">
-            <h2 class="article-title">Microsoft says Windows 11 KB5120998 update resets mouse settings</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/microsoft-says-windows-11-kb5120998-update-resets-mouse-settings/" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft has confirmed that mouse settings are being reverted on Windows 11 systems after installing the KB5120998 August 2026 non-security preview update. [...]
+            <h2 class="article-title">Recently patched PaperCut zero-days used in data theft attacks</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/recently-patched-papercut-zero-days-used-in-data-theft-attacks/" target="_blank">Original Link</a></p>
+            <div class="content-text">Two security vulnerabilities in the PaperCut NG and MF print management software, patched last week after being exploited as zero-days, are now being abused in data theft attacks. [...]
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-3" class="article-body">
-            <h2 class="article-title">Five Critical WordPress Plugin and Theme Flaws Enable Site Takeover or RCE</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/08/five-critical-wordpress-plugin-and.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Multiple critical security flaws have been disclosed in WordPress plugins and themes, including WPMU DEV Dashboard, Avada, TranslatePress, Pods, and GiveWP, that could lead to authentication bypass, account takeover, and arbitrary code execution.
-The vulnerabilities, according to Wordfence and Patchstack, are listed below -
-[CVE-2026-76581](https://www.wordfence.com/blog/2026/08/wordfence-argus-finds-critical-authentication-bypass-in-wpmu-dev-dashboard-plugin/)(CVSS score: 9.8) - An authentication bypass flaw in the WPMU DEV Dashboard plugin that could allow an unauthenticated attacker, on sites connected to WPMU DEV with Hub Single-Sign On (SSO) enabled and mapped to an administrator, to obtain administrator access and achieve site takeover. (Affects all versions up to, and including, 5.0.1)[CVE-2026-18431](https://www.wordfence.com/blog/2026/08/wordfence-argus-finds-complex-6-step-critical-rce-in-avada-theme-with-1-million-sales/)(CVSS score: 9.8) - An arbitrary file write flaw in the Avada theme for WordPress that makes it possible for an unauthenticated attacker to write attacker-controlled files to the server, which, in turn, can be exploited to create and execute arbitrary PHP files, resulting in remote code execution and complete site compromise. (Affects all versions up to, and including, 7.16, when the Fusion Builder plugin is installed and active in versions up to, and including, 3.16)[CVE-2026-19632](https://www.wordfence.com/blog/2026/08/400000-wordpress-sites-affected-by-account-takeover-vulnerability-in-translatepress-wordpress-plugin/)(CVSS score: 9.8) - A sensitive information exposure flaw in the "TranslatePress – Translate Multilingual sites with AI Translation" plugin that could allow an unauthenticated attacker to extract the raw administrator password-reset URL, including the plaintext reset key and login parameters, and enable full administrator account takeover. (Affects all versions up to, and including, 3.3.1 only when automatic string saving is enabled and the target administrator's profile locale is set to a published secondary language)[CVE-2026-19598](https://www.wordfence.com/blog/2026/08/100000-wordpress-sites-affected-by-privilege-escalation-vulnerability-in-pods-wordpress-plugin/)(CVSS score: 9.8) - A privilege escalation flaw in the "Pods – Custom Content Types and Fields" plugin that allows an unauthenticated attacker to escalate their privileges to Administrator or overwrite the password of any user account, including the site owner's, resulting in complete site takeover. (Affects all versions up to, and including, 3.3.9)[CVE-2026-82222](https://patchstack.com/articles/unauthenticated-php-object-injection-to-remote-code-execution-on-givewp/)(CVSS score: 10.0) - A vulnerability in the GiveWP plugin that allows an attacker to execute arbitrary commands on the server of a GiveWP site that has one published donation form and one active payment gateway. (Affects all versions up to, and including, 4.16.7.1)
-"The flaw chains a broken 'safe unserialize' helper, a donation flow that feeds that helper attacker-controlled data, and a gadget chain in code that GiveWP ships," Patchstack said about CVE-2026-82222. "This case shows how PHP object injection turns into remote code execution when three ingredients line up: a place to store an attacker-controlled serialized object, code that later unserializes it, and a gadget chain in loaded classes."
-"The root causes are common: trusting a serialization sanitizer that does not actually strip objects, unserializing data read back from the database as if it were trusted, and shipping development-only libraries into production where they provide ready-made gadget chains."
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">Attackers Exploit Critical Langflow and Rails Flaws in Credential-Probing and C2 Activity</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/attackers-exploit-critical-langflow-and.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Threat actors are exploiting two critical flaws impacting Langflow and Ruby on Rails, according to new findings from VulnCheck.
+The vulnerabilities in question are listed below -
+[CVE-2026-0768](https://www.zerodayinitiative.com/advisories/ZDI-26-034)(CVSS score: 9.8) - A lack of proper validation of a user-supplied input vulnerability that could be exploited to execute arbitrary Python code in the context of the root user.[CVE-2026-66066](https://thehackernews.com/2026/07/critical-rails-flaw-could-let.html)aka KindaRails2Shell (CVSS score: 9.5) - A vulnerability that could allow an unauthenticated attacker to read arbitrary files from the server, leak Rails process environment and secrets such as secret_key_base, the Rails master key, database passwords, cloud storage credentials, and API tokens, ultimately leading to remote code execution.
+Attackers can exploit CVE-2026-66066 by uploading a crafted image by taking advantage of the discrepancy between Active Storage and libvips in how they read input files. Successful exploitation requires affected applications to use libvips for Active Storage image processing and accept image uploads from untrusted users.
+VulnCheck said it recorded more than 50 detections within a few hours on August 30, 2026, a figure that has since risen to 360 as of Monday.
+"Adversaries appear to be conducting a mix of reconnaissance and credential harvesting activities: Among other things, attacker requests are querying environment variables (LANGFLOW_SUPERUSER, OPENAI_API*, AWS_ACCESS*, AWS_SECRET*), reading /root/.cache/langflow/secret_key, and checking .ssh access and .bash_history size," Caitlin Condon, vice president of threat research at VulnCheck, [said](https://www.linkedin.com/feed/update/urn:li:activity:7499493657218076672/).
+"Source traffic primarily originates from Russia and has thus far exclusively hit Canaries in the U.K."
+The exploitation comes as threat actors have [exploited](https://www.vulncheck.com/blog/pwning-the-ai-stack) as many as 12 vulnerabilities since 2025, with more than 15,000 successful attempts leveraging [CVE-2026-0769](https://nvd.nist.gov/vuln/detail/CVE-2026-0769), [CVE-2025-3248](https://nvd.nist.gov/vuln/detail/CVE-2025-3248), and [CVE-2026-5027](https://nvd.nist.gov/vuln/detail/cve-2026-5027). The majority of the vulnerable Langflow hosts are located in the U.S., Germany, Malaysia, Brazil, and India.
+In one case observed against its canary systems, unknown threat actors have been observed exploiting CVE-2026-5027 to drop a Python credential harvester, proxy agents, and SimpleHelp for remote access. In another, attackers have weaponized CVE-2025-3248 to enlist the machine into an XMR cryptocurrency miner botnet.
+"They then disabled auditd, resulting in a forensic blind spot, and exploited CVE-2026-0769 to drop .sysd," VulnCheck said. "From there, the attacker pivoted to scan for other targets, likely to expand their cryptomining operation, and moved on to another host."
+The findings highlight increased threat actor interest in AI development platforms, which can provide access to sensitive credentials, cloud environments, and other connected systems.
+The threat intelligence company has since also [detected](https://www.linkedin.com/feed/update/urn:li:activity:7497979391268892672/) active exploitation of CVE-2026-66066 targeting its canaries in Singapore, Israel, and the U.K. In a post shared on LinkedIn, security researcher Patrick Garrity said the activity originates from a single IP address in France and establishes command-and-control (C2) to a host in Israel.
+"Active Storage always enables the libvips loaders that are unsafe for untrusted content, so any app that renders image-upload variants with the default vips processor can be coerced into loading a malicious upload," VulnCheck [added](https://docs.vulncheck.com/initial-access/2026-08-07#cve-2026-66066-ruby-on-rails-active-storage-libvips-untrusted-file-read-to-rce-kindarails2shell). "Notably, we tested a patched 8.1.3.1 server and found that while the fix blocks the libvips file read, it does not neutralize the variation-key Marshal deserialization: the RCE gadget still executes on a patched server given a valid signature."
+As of early August, more than 7,100 exposed vulnerable instances of Ruby on Rails were identified by VulnCheck.
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
+        <div id="art-3" class="article-body">
+            <h2 class="article-title">Cronos blockchain restarts after $74 million Tectonic exploit</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/cronos-blockchain-restarts-after-74-million-tectonic-exploit/" target="_blank">Original Link</a></p>
+            <div class="content-text">The Cronos blockchain network has resumed trading activity after a price-manipulation attack on the Tectonic cryptocurrency lending platform allowed an attacker to borrow $74 million. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
         <div id="art-4" class="article-body">
+            <h2 class="article-title">China-Linked Fire Ant Hijacks Cisco Routers to Steal Credentials and Blind Security Logs</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/08/china-linked-fire-ant-hijacks-cisco.html" target="_blank">Original Link</a></p>
+            <div class="content-text">A China-nexus cyber espionage actor tracked as Fire Ant has expanded a long-running campaign beyond VMware hypervisors to compromise Cisco IOS XR routers, Terminal Access Controller Access-Control System (TACACS) servers, and Linux management hosts used to route, authenticate, and manage high-value networks.
+Sygnia, the incident response firm that investigated the intrusion, said the actor turned the compromised routers into collection platforms, capturing network traffic, harvesting credentials, and suppressing the logging and telemetry that defenders rely on to reconstruct an attack.
+The firm assessed that the hacker group used its foothold to explore paths to connected high-value environments, including critical infrastructure. However, activity against those networks was limited to scanning and connection attempts rather than confirmed compromise.
+Controlling the routers gave the actor a vantage point over traffic moving through trusted network paths, Sygnia said.
+"This activity reinforces one of the core observations from the investigation: when a threat actor controls routers, they do not only gain reach. They gain perspective," the firm said.
+The firm assessed that the activity strongly overlaps with [public reporting on UNC3886](https://thehackernews.com/2026/02/china-linked-unc3886-targets-singapore.html), a China-nexus espionage group known for targeting virtualization platforms and network edge devices, though it said in [its report](https://www.sygnia.co/blog/fire-ant-evolves-from-hypervisors-to-trusted-infrastructure/) that it does not make a conclusive attribution.
+Mandiant, which first documented UNC3886, has said it [found no technical overlap](https://cloud.google.com/blog/topics/threat-intelligence/china-nexus-espionage-targets-juniper-routers) between the group and the separate Chinese operations tracked as Salt Typhoon and Volt Typhoon.
+The 2026 activity follows [Sygnia's July 2025 disclosure](https://thehackernews.com/2025/07/fire-ant-exploits-vmware-flaw-to.html) of Fire Ant, which detailed the group's exploitation of VMware ESXi and vCenter environments before moving into the network and management layers.
+The investigation began with an anomaly on a Cisco IOS XR router, where a Generic Routing Encapsulation (GRE) tunnel interface was operating with no running configuration or commit history to explain how it had been created. Sygnia did not identify how the actor first gained access to the router.
+Tracing the tunnel led investigators to a legacy Linux system, from which Fire Ant ran repeated connection attempts and port probing against administrative and service ports on connected networks, including SSH, HTTP, SMB, and RDP.
+The router malware was purpose-built for the IOS XR control plane rather than a generic Linux appliance. One component embedded a modified system library that checked each outgoing log message for the string Health and forwarded it only when the string was present.
+A separate component altered the router's command-execution path to append an | exclude filter to show commands, hiding the attacker's tunnel configuration from administrators inspecting the device.
+Fire Ant then used the routers to capture packet captures (PCAPs) from multiple Cisco devices. The captures were uploaded to external FTP servers, one of which appeared to have been installed the same day the uploads took place.
+On the TACACS server, Sygnia identified a credential-collection toolset it tracks as TacTap.
+An injector named acppid loaded a malicious library into the running tac_plus authentication process. The library hooked the functions that accept new connections. It then passed the live session handles to a second process over a local Unix socket.
+The captured credentials were written to /var/log/.tacplus.acct and lightly obfuscated with a single-byte XOR key of 0xEF.
+"To our knowledge, this specific tac_plus library-injection technique has not been publicly described before, making it a notable evolution of Fire Ant's TACACS-focused credential collection tradecraft," Sygnia said.
+Credential theft from TACACS servers is established tradecraft for the cluster, as Mandiant has previously documented UNC3886 deploying a [TACACS+ sniffer called LOOKOVER](https://thehackernews.com/2024/06/chinese-cyber-espionage-group-exploits.html) and replacing the tac_plus daemon with a backdoored version to log credentials.
+Sygnia also recovered a second new tool, a Linux backdoor it called BridgeAgent, which was deployed on the tunnel-connected host and masqueraded as a Zabbix monitoring agent.
+The implant persisted via a zabbix_agent.service systemd unit running as root, disguised its process as /usr/bin/gnome-shell, and polled the attacker's infrastructure over TLS on port 443 for commands and reverse-shell instructions.
+Across the Linux management hosts, Fire Ant built a durable access layer using the open-source Medusa and REPTILE rootkits, custom SSH backdoors, and binaries renamed and timestamped to impersonate the SentinelOne and Cybereason endpoint security agents.
+Several of these components were planted in 2025 and reused for hands-on activity in 2026. At least one backdoor kept running in memory after its file had been deleted from disk, Sygnia said.
+The actor also worked to undermine the evidence itself by suppressing router logs, SNMP traps, and authentication requests; disabling SELinux on the Linux hosts; rewriting login-history records; and removing entries for privileged commands from system logs.
+Sygnia said routers, TACACS servers, hypervisors, and jump hosts should be treated as first-class forensic assets, and that investigators should validate logs against memory, disk, network, authentication, and configuration evidence rather than a single telemetry source.
+Sygnia published the following indicators of compromise (IoCs) -
+- TacTap: the injector
+/usr/sbin/acppid
+(SHA136005f5e4398a1c62a2a9271eddfcc1b44b1ad00
+), the injected library/lib/libseconfd.so
+(955cd45a2f6f226a2fdf44b329af1c8dde90cb38
+), and the credential file/var/log/.tacplus.acct
+, decoded with XOR key0xEF
+. - BridgeAgent: persistence via a
+zabbix_agent.service
+systemd unit, encrypted configuration at/opt/.ICEauthority
+, and command-and-control (C2) over TLS on port 443. - IOS XR implants:
+/usr/bin/acpid
+(be6b27f429324a4af05a310d8ec9635e37c68a94
+),/pkg/bin/dhcpd_show_issu_status
+(1682b652a15bde732489f22809b0b7594c228fd3
+),/pkg/bin/hd
+(b149fa3a34bd585e7a674a4fd9538437bd06f514
+), and the persistence script/etc/rc.d/init.d/grub-rommon
+. - VMCI backdoor:
+/var/tmp/audit
+(13f0c2a598e3aa63856c032a96b110aed963f0e8
+), communicating over VMware Virtual Machine Communication Interface (VMCI) sockets. - Packet-triggered backdoor:
+/var/tmp/ping
+(5ba1242050b5b447052b210788a5a25593d6987d
+), activating on TCP ports 443, 541, 8443, and 10443 and UDP source port 40443 to destination port 500, triggered by the stringsxcdewqaz!@#
+.
+The company's full indicator set and YARA rules are available in its report.
+The activity parallels the router and TACACS+ traffic collection that a CISA-led joint advisory [attributed to Salt Typhoon](https://thehackernews.com/2025/08/salt-typhoon-exploits-cisco-ivanti-palo.html) in August 2025, a separate Chinese espionage cluster that captured packet data from compromised routers to harvest administrator credentials across telecommunications networks.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-5" class="article-body">
             <h2 class="article-title">Two Alleged ‘TeamPCP’ Hackers Arrested in Australia</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/08/two-alleged-teampcp-hackers-arrested-in-australia/" target="_blank">Original Link</a></p>
             <div class="content-text">Authorities in Australia have arrested two men believed to be members of TeamPCP, a prolific cybercrime and data extortion group blamed for perpetrating the longest running spree of software supply chain attacks ever.
@@ -242,12 +465,14 @@ SpyCloud can’t definitively report a private IP address to a location.
 Wild story. The scary part isn’t just the sophistication of the attacks, it’s how effectively TeamPCP abused the trust model behind open-source software and developer tooling.
 When compromised credentials, popular packages, CI/CD pipelines, and automation all chain together, a relatively small group can suddenly get enormous reach. The fact that this also pushed GitHub and other ecosystems toward stronger safeguards is a pretty strong reminder that software supply-chain security can’t be treated as an edge case anymore.
 Also: “high capability, low operational discipline” feels like a threat profile we’re going to hear a lot more about in the AI era.
+Pretty sure that is the bulk of the current threat landscape (after accounting for gov and gov-sponsored and smaller highly organized groups). The largest concentration of threats almost always seem to focus on one or two types things… During antisec and anonymous days, it was leaks and bulk, low-‘cash-take’, high-frequency, botnets. Lately it seems to be throwing a whole ton of ransomware attacks against every potential target with little overall organization or ‘respect’ hierarchy. This new ‘landscape’ is apparently really competitive and something almost impossible to disassemble. If an attacker can crash their way in with employees’ not being aware, and the attacker’s goals are such that they do not feel they need to care much about staying there (a day and a long slurp of a very wide data pipe) and gets loaded, financially, from their smash and grab, which seems to be the current threat du jour for the past half-a-decade to almost a decade, now, why would they even want to organize?
+Guess I am saying agree they have low operational discipline, but our industry has sure skewed what ‘capability’ means. It used to mean skilled. Like, not, ‘yo, I am capable of stealing very expensive exotic cars, I just need to drive this tractor trailer through the front window of the car dealership.’ I mean lol. How much of it is about bragging, anyway? How much are these groups spending of the millions and millions they asked for?
 thanks chatgpt for the insightful comment and weed backlink</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-5" class="article-body">
+        <div id="art-6" class="article-body">
             <h2 class="article-title">SpooNMAP Grows Up: Findings, Local LLM Detection, and a Whole Lot Less Waiting</h2>
             <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/spoonmap-grows-up-findings-local-llm-detection-and-a-whole-lot-less-waiting" target="_blank">Original Link</a></p>
             <div class="content-text">SpooNMAP Grows Up: Findings, Local LLM Detection, and a Whole Lot Less Waiting
@@ -284,7 +509,7 @@ As always, go forth and hack responsibly!
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-6" class="article-body">
+        <div id="art-7" class="article-body">
             <h2 class="article-title">Microsoft named a Leader in the Frost Radar™: Cloud Workload Protection Platforms, 2026</h2>
             <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/08/19/microsoft-named-a-leader-in-the-frost-radar-cloud-workload-protection-platforms-2026/" target="_blank">Original Link</a></p>
             <div class="content-text">Security teams are overwhelmed with findings but still struggle to answer a simple question: which risks matter right now? A vulnerability alone is rarely the problem. The same vulnerability running in production, exposed through a misconfiguration or over-permissioned identity, is a real path to compromise. Organizations do not need longer lists of alerts. They need context that connects code, cloud resources, identities, and runtime activity so they can prioritize the issues that pose the greatest risk and stop cyberthreats before they reach production.
@@ -348,7 +573,7 @@ To learn more about Microsoft Security solutions, visit our [website.](https://w
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-7" class="article-body">
+        <div id="art-8" class="article-body">
             <h2 class="article-title">Who’s Tracking You? Use This New Service to Find Out</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/08/whos-tracking-you-use-this-new-service-to-find-out/" target="_blank">Original Link</a></p>
             <div class="content-text">It can be daunting to determine who’s responsible for showing ads on the websites we visit, or who’s harvesting data from the mobile apps we use every day. That information is already semi-public, but it is not easily parsed and traditionally much of it has remained walled away in the hands of large advertising platforms. Not anymore: A powerful and free new service called DecryptAds scrapes and correlates this adtech data and makes it simple to quickly learn a great deal about the entities that are tracking you.
@@ -482,137 +707,13 @@ I thought this article was really interesting, especially seeing how many differ
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-8" class="article-body">
+        <div id="art-9" class="article-body">
             <h2 class="article-title">Turning Enterprise Update Servers Into Backdoor Factories (0_o) – Part 1</h2>
             <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/08/05/turning-enterprise-update-servers-into-backdoor-factories-part-1/" target="_blank">Original Link</a></p>
             <div class="content-text"><p>TL;DR: This is part 1 of a 2 part blog series sharing what I have discovered in my Windows Service Update Service (WSUS) research. If the WSUS database is configured on a separate server from the upstream WSUS server, we can coerce the WSUS computer account to the WSUS database and establish a SQL session. [&#8230;]</p>
 <p>The post <a href="https://specterops.io/blog/2026/08/05/turning-enterprise-update-servers-into-backdoor-factories-part-1/">Turning Enterprise Update Servers Into Backdoor Factories (0_o) &#8211; Part 1</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
 
 [Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-9" class="article-body">
-            <h2 class="article-title">Demystifying AI Exploits: A Blueprint for AI-Assisted Vulnerability Management</h2>
-            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/ai-assisted-vulnerability-management/" target="_blank">Original Link</a></p>
-            <div class="content-text">Demystifying AI Exploits: A Blueprint for AI-Assisted Vulnerability Management
-Mandiant
-Written by: Jules Czarniak
-Introduction
-As highlighted in the [Mandiant M-Trends 2026 report](https://cloud.google.com/security/resources/m-trends), the mean time-to-exploit (TTE) has dropped to -7 days, meaning vulnerabilities are often exploited a week before a patch even exists.
-To keep pace, many security teams are exploring how to integrate large language model (LLM) agents into their codebases, development environments and continuous integration and continuous delivery (CI/CD) pipelines for automated vulnerability discovery and remediation. However, deploying privileged artificial intelligence (AI) agents without mature integration processes introduces new architectural risks.
-In response to customer inquiries about how to safely integrate AI capabilities into vulnerability management workflows, this blog provides actionable guidance from Mandiant Consulting about how to establish operational guardrails for AI assisted vulnerability management, including several detailed scenarios. What each of these examples show is that security teams can accelerate workflows with AI while also upholding the structural integrity of their environments. We suggest that combining AI capabilities with deterministic controls and human intelligence in strategic ways maximizes benefits and reduces risk.
-Establish Operational Guardrails to Safely Deploy AI Agents
-To safely adopt advanced AI capabilities without introducing unpredictable failures into deployment pipelines, organizations should ground their approach in established industry standards. While guidelines like the [NIST AI Risk Management Framework (RMF)](https://www.nist.gov/itl/ai-risk-management-framework) and the [OWASP Top 10 for LLMs](https://owasp.org/www-project-top-10-for-large-language-model-applications/) provide comprehensive baselines for identifying risks, operationalizing these controls requires a structural blueprint.
-Frameworks like [Google’s Secure AI Framework (SAIF)](https://safety.google/intl/en_sg/safety/saif/) [and](https://safety.google/intl/en_sg/safety/saif/)[ Google’s approach to secure AI Agents](https://storage.googleapis.com/gweb-research2023-media/pubtools/1018686.pdf) provide a practical path forward, demanding that organizations extend existing deterministic controls directly into the AI execution environment. When deploying AI agents, security teams should navigate specific operational and structural risks:
--
-Pre-agent data security and Defense-in-Depth: Agents should not be able to access personally identifiable information (PII), protected health information (PHI), or other sensitive data. Organizations should enforce data security before the prompt reaches the model. This includes strictly using non-production environments populated with synthetic data for testing. For production, security teams should deploy a hybrid defense-in-depth model. This includes Layer 1 deterministic policy engines acting as chokepoints, alongside Layer 2 reasoning-based defenses like specialized guard models (such as
-[Model Armor](https://docs.cloud.google.com/model-armor/overview)or similar provider-agnostic guardrails) to filter out sensitive data and block malicious prompt injections before they reach the agent layer. Crucially for vulnerability discovery, security teams should treat the codebase itself as an untrusted input. Threat actors can embed indirect prompt injections within source code comments or third-party dependencies (e.g., hidden instructions telling the agent to ignore vulnerabilities or exfiltrate environment variables), making input sanitation a requirement even for internal scanning. -
-Cloud provider limitations and zero data retention (ZDR): Many cloud and LLM providers block or throttle automated offensive security probing by default to prevent abuse. Organizations should establish clear rules of engagement and authorized testing agreements to navigate acceptable use policies. Furthermore, organizations should enforce strict zero data retention (ZDR) agreements with their LLM providers to guarantee that proprietary code and discovered vulnerabilities are never used to train external models.
--
-Workload isolation: Agent workloads should execute in strictly isolated, unprivileged containers with dynamically limited privileges. By relying on robust sandboxing to prevent privilege escalation, if an agent hallucinates a destructive command or is hijacked via prompt injection, the blast radius remains contained.
--
-Red Teaming: Before deploying autonomous vulnerability scanners that can dynamically spin up sandboxes and execute code, organizations should subject the AI agents themselves to human-led red teaming as part of comprehensive assurance efforts. This validates the agent's resilience against jailbreaks, recursive logic loops, and complex prompt injections, ensuring the security tooling does not become the attack vector.
--
-Least-Privileged Machine Identities and Human Controllers: While workloads should be isolated, agents inherently require privileges to generate pull requests and commit code. Security teams should ensure these agents operate under distinct, strictly scoped machine identities that tie back to human controllers to ensure accountability and user consent. Organizations should use short-lived, just-in-time (JIT) tokens bound exclusively to the specific repository and branch under review. This enforces the principle of limited agent powers and ensures that even if an agent’s container is compromised via prompt injection, the threat actor cannot pivot to modify adjacent enterprise codebases.
--
-Supply chain resilience for skills: As developers augment AI with third-party skills and model context protocol (MCP) servers, security teams should treat these integrations as untrusted supply chain components. MCP plugins introduce the risk of supply chain poisoning, where a previously benign integration is silently updated with malicious dependencies. Additionally, security teams should evaluate the underlying agent orchestration frameworks themselves (e.g., LangChain, AutoGen) for inherent vulnerabilities, such as session memory poisoning or recursive loop hijacking.
--
-Toxic flow analysis (TFA) and Observable Actions: The objective of TFA is to monitor data paths at runtime, ensuring agents do not exfiltrate sensitive internal context to unvetted external endpoints. Agent actions, inputs, reasoning, and outputs must be fully observable and transparently logged. While implementing dynamic taint tracking for LLMs remains a complex architectural challenge, organizations should clearly separate this runtime observability from static supply chain controls. Integrating threat intelligence to hash and vet incoming agent tools provides a necessary baseline for verifying integrity before deployment. However, because static controls cannot address behavior post-deployment, mitigating data exfiltration ultimately requires active runtime monitoring and secure, centralized logging to trace and restrict the actual flow of data.
-Figure 1: Visual representation of an isolated AI agent environment using SAIF mechanisms
-By operationalizing these tools within frameworks that demand verifiable integrity and structural resilience, organizations can safely bridge the gap between AI velocity and enterprise defense.
-The need for human-led threat modeling
-While LLMs excel at identifying syntax patterns, source code itself rarely contains the full picture of unwritten business intent. Some organizations attempt to solve this by connecting LLM agents to internal wikis, design documents, and issue trackers using retrieval-augmented generation (RAG).
-While RAG gives the model access to external business context, it is not a perfect fix. Corporate documentation is frequently stale, contradictory, or incomplete. An AI agent might retrieve an outdated architecture diagram and confidently hallucinate a secure path that no longer exists in production. Because LLM agents struggle to resolve conflicting, undocumented human assumptions, human-led threat modeling remains a critical security control across both legacy applications and modern agent workflows.
-Security teams should apply threat modeling during both the pre-build system design phase to establish a secure foundation, and during post-build architecture reviews. While an AI agent might successfully identify a poorly configured internal endpoint locally, a human threat modeler asks the structural question: why does that microservice possess broad database read permissions in the first place?
-Identifying architectural vulnerabilities requires reasoning about business risk, data sensitivity, and operational constraints. To structure this process, organizations can use industry frameworks like PASTA (Process for Attack Simulation and Threat Analysis) or service offerings like the [Mandiant Threat Modeling Security Service](https://services.google.com/fh/files/misc/ds-threat-modeling-security-service-en.pdf) to map trust boundaries, uncover structural design flaws, and prioritize compensating controls. Securing fundamental architecture through human oversight is a necessary component when relying on automated agents to find bugs in a poorly designed system.
-Once these AI agents are safely sandboxed, as guided by SAIF, and the architecture is verified through threat modeling, organizations can typically apply them to two different problem spaces: Enterprise Vulnerability Management (to assist in managing the volume of known CVEs in commercial off-the-shelf (COTS) software and infrastructure) and Product Security (to identify vulnerabilities in 1st-party (1P) code).
-Track 1: Enterprise Vulnerability Management
-Foundational security and discovery
-While the second track of this post explores how AI agents can uncover complex zero-days in custom code, organizations should manage the scale of enterprise infrastructure in tandem with these AI deployments. Even as new AI capabilities dominate headlines, organizations should still address foundational security challenges, such as secrets sprawl, unmanaged service accounts, missing FIDO2 MFA, and legacy VPN concentrators. Although vulnerability exploitation was the primary initial infection vector in intrusions Mandiant investigated last year, threat actors consistently rely on missing foundational controls and unpatched edge devices to secure and escalate their foothold after exploiting a vulnerability.
-Furthermore, AI cannot replace foundational visibility. As security teams deploy AI agents, they should simultaneously close these tactical entry points by maximizing dynamic discovery capabilities like External Attack Surface Management (EASM), Cloud Security Posture Management (CSPM), and Continuous Threat Exposure Management (CTEM). In hybrid and cloud environments, tools like [Wiz](https://cloud.google.com/wiz?e=48754805) can be used to map this initial footprint.
-Risk-based vulnerability management
-Vulnerability management teams are already overwhelmed by the current volume of findings generated by traditional scanners. As organizations scale dynamic discovery tools, such as EASM, CSPM and CTEM, alongside automated AI agents, this influx of findings will compound the problem. To manage this influx, telemetry from these diverse discovery methods must first be normalized and deduplicated. This normalized data serves two purposes: it feeds directly into the risk engine, and it acts as a live overlay to correct stale records in the configuration management database (CMDB). By evaluating the deduplicated vulnerabilities alongside this newly updated asset context and frontline threat intelligence, the RBVM engine calculates a custom risk score that allows security teams to dynamically prioritize remediation.
-A mature RBVM methodology calculates a customized risk score on a 0 to 100 scale using a weighted average. A sample formula for calculating this risk-based score is:
-Final Score = (W_1 * S_vuln) + (W_2 * S_asset) + (W_3 * S_threat)
-The variables and weights (W) are customized to the organization's risk appetite (for example, 0.20 for vulnerability, 0.40 for asset, and 0.40 for threat, summing to 1.0), while the underlying variables (S) are scored on a 0 to 100 scale and defined as follows:
--
-Vulnerability severity (S_vuln): The inherent technical severity of the flaw. This is calculated by taking the CVSS Base Score (which natively accounts for confidentiality, integrity, and availability impact) and multiplying it by 10.
--
-Asset context (S_asset): A combined metric of exposure and data sensitivity. Scores range from 100 for internet-facing assets holding customer data, down to 25 for internal-only assets with no sensitive data. To translate this impact into monetary terms for non-technical stakeholders, organizations can incorporate Factor Analysis of Information Risk (FAIR) principles into this metric. However, this approach requires highly accurate, continuously updated financial data that many enterprises struggle to maintain at scale.
--
-Threat context (S_threat): The real-world urgency of the vulnerability. Scores range from 100 if actively exploited by threat actors relevant to the organization's profile, 75 if a proof-of-concept exists or if it is a vulnerability class easily exploited by autonomous AI agents, down to 25 if the exploit is theoretical and highly complex. Organizations should also map the Exploit Prediction Scoring System (EPSS) probability percentage directly into this variable. This allows the threat score to automatically scale up or down as real-world exploitation telemetry shifts, aligning static vulnerability data with active threat intelligence.
-An asset's customized risk score should directly influence internal remediation service-level agreements (SLAs), unless external compliance-driven mandates, such as CISA Binding Operational Directives (BODs), or relevant equivalents, override internal prioritization. A risk-driven and threat-intelligence-driven vulnerability prioritization methodology will help organizations focus resources on managing and mitigating the most critical security vulnerabilities first. This is an area where LLMs can support the vulnerability management process, particularly by helping teams synthesize unstructured threat intelligence to surface relevant risk contexts more efficiently. Enforcing strict SLOs for patching, while requiring formal risk acceptance documentation for any patching exceptions, will help reduce the number of vulnerabilities available to threat actors and increase the visibility of outstanding risks across the organization. Furthermore, organizations should integrate RBVM data directly into their security orchestration, automation, and response (SOAR) platforms for automated alert enrichment.
-Figure 2: Integration points of a risk-based vulnerability management (RBVM) program.
-Containment and Observability
-Modern architecture blueprints must prioritize attack surface reduction under the assumption that vulnerabilities will inevitably be exploited. Moving away from traditional perimeter defenses, organizations should align with zero trust principles, ensuring that security boundaries are established around every asset, workload, and identity.
-A component of this alignment is the implementation of strong authentication principles. Organizations should eliminate implicit trust by enforcing continuous, context-aware authentication and authorization. Utilizing Zero Trust Network Access (ZTNA) solutions, such as Identity-Aware Proxies (IAP), shields critical management interfaces (e.g., SSH, RDP) and internal systems from direct internet exposure, granting access only to verified identities and compliant devices.
-For public-facing applications and APIs, attack surface reduction involves deploying Layer 7 inspection at the load balancer or API gateway level. This hardening layer enforces strict schema validation, intercepting and neutralizing malformed inbound traffic and potential exploits before they can interact with internal application logic.
-Securing the software supply chain is equally vital in modern blueprints, and organizations should align with frameworks like [Supply-chain Levels for Software Artifacts (SLSA)](https://slsa.dev/spec/v0.1/levels) across both dependency and build tracks. Security policies should mandate that third-party dependencies are routed through a centralized artifact repository equipped with automated curation services, such as [Google Assured Open Source Software (OSS)](https://cloud.google.com/security/products/assured-open-source-software) or an equivalent solution, preventing untrusted code from entering the development lifecycle. Furthermore, maturing toward advanced SLSA build levels (e.g., SLSA level 3) through the implementation of isolation, ephemerality and reproducibility requirements via ephemeral compute infrastructure for CI/CD runners reduces the likelihood of attacker persistence by ensuring environments are short-lived and automatically cycled.
-To complement these pre-build controls, runtime observability should be established across all production workloads. This requires monitoring both infrastructure-level behavior and the specific runtime libraries actively executing in production, which surfaces true exploitable risk far beyond a static Software Bill of Materials. In tandem with monitoring workloads, organizations should secure how they authenticate by implementing workload identity federation. By removing static credentials and instead using short-lived tokens backed by strong cryptographic identity verification, organizations can reduce the risk of credential theft and unauthorized lateral movement.
-Within the internal environment, microsegmentation should be enforced to break down flat networks into granular security zones. Routing application traffic through a Secure Access Service Edge (SASE) architecture integrates network routing directly with robust identity controls, rendering internal services completely invisible to unauthenticated users and containing threats to their initial point of entry.
-Finally, automated containment and incident response within a zero trust framework must rely on deterministic, auditable tooling. Endpoint detection and response (EDR) platforms and SOAR playbooks should handle high-fidelity containment tasks through hardcoded execution logic. While AI tools accelerate triage and policy recommendation, actual execution capabilities must remain restricted to well-defined, pre-tested workflows to maintain total architectural predictability.
-Figure 3: Structural containment and observability architecture
-Track 2: Product Security & Development (1P Code)
-Deterministic and probabilistic tooling
-Integrating LLM agents into vulnerability management and security workflows requires recognizing the differences between deterministic and probabilistic tooling. Traditional SAST and DAST tools utilize fixed methodologies to evaluate vulnerabilities through structural code parsing or definitive runtime observations. LLMs, however, evaluate source code by processing tokens simultaneously to calculate statistical and semantic relationships, rather than tracing deterministic execution tracks.
-While techniques like Chain of Thought (CoT) prompting allow models to bridge this gap by decomposing complex code paths into intermediate reasoning steps, this process remains bounded by architectural limitations. Even when a model possesses a context window large enough to ingest entire repositories, it may experience attention degradation across long inputs, often failing to correctly weight intervening validation or sanitization logic within the prompt. For example, if a variable is tainted on line 10 but sanitized on line 500, attention degradation can cause the model to lose track of the sanitization logic. Furthermore, when enterprise codebases require chunking to fit within context limits, the resulting fragmentation may cause the model to lose track of end-to-end data flows.
-Consequently, probabilistic engines are effective at uncovering localized, static anomalies, such as hardcoded credentials or outdated dependencies, but frequently misjudge complex vulnerabilities split across fragmented chunks or extended context windows. Notable exceptions occur when these probabilistic models are coupled with deterministic feedback loops. For instance, when analyzing C++ memory corruption, an LLM can be equipped with a test harness to iteratively execute code and definitively prove a crash. While these dynamic validation applications are detailed in subsequent sections, the baseline limitation for static analysis across standard enterprise codebases remains: models struggle to consistently evaluate dispersed logic.
-Figure 4: Deterministic SAST scanners vs. probabilistic LLMs
-Binary and architectural oracles
-Many security programs are moving toward agent workflows where an agent autonomously spins up a test environment and uses tools to execute payloads and verify its findings. This is a promising approach, but it is important to understand where it is most effective.
-Agent workflows perform well against bug classes with binary and observable oracles, meaning the system provides an objective, 'crash or no crash' feedback loop. For example, if a model is hunting for memory corruption in a C++ kernel, a successful exploit is undeniable: the payload executes, and a resulting crash definitively proves the vulnerability. This explains why the industry is currently seeing a surge in AI-discovered vulnerabilities across memory-unsafe targets like web browsers and operating systems.
-However, enterprise software is heavily dominated by vulnerabilities that require architectural oracles for validation. Vulnerabilities like authorization bypasses, complex business logic flaws, and indirect server-side request forgeries require an understanding of business context and cross-service trust boundaries. If an agent's payload fails to produce a clear outcome, it can't reliably distinguish whether the vulnerability is a hallucination or if it simply constructed the payload incorrectly. An agent's malformed payload might even crash an unrelated background process and cause the model to hallucinate a success and report a false confirmation. Complex enterprise architecture contains unwritten business intent that a probabilistic engine can't inherently know.
-Figure 5: Evaluating vulnerabilities against binary vs. architectural oracles
-Targeted deployment and human impact
-Organizations adopting LLMs for vulnerability discovery face a massive staffing challenge. LLMs can generate findings significantly faster than human engineers can triage them. If every LLM-generated alert requires manual review, security teams will quickly face burnout and/or suffer alarm fatigue.
-Rather than indiscriminately pointing agents at all available codebases and risking an influx of unverified output, security teams need a selective deployment strategy. Mature programs should maintain SAST and DAST for baseline hygiene and deterministic rule enforcement, and reserve intensive agent audits for high-impact components with clear binary oracles.
-Organizations can prioritize agent audits on systems where the technology's strengths align with the broader risk profile:
--
-Memory-unsafe codebases: Legacy or high-performance components written in memory-unsafe languages such as C, C++, or Assembly are strong candidates for LLM audits. These languages are susceptible to memory corruption flaws, such as buffer overflows and use-after-free conditions. Because these vulnerabilities trigger definitive failure states like segmentation faults, they work well with automated sandboxes where agents can compile the code with memory sanitizers and write proof-of-concept inputs. This approach is also effective for auditing the native extensions where safe languages call unsafe internal libraries, such as Python C extensions or the Java Native Interface (JNI).
--
-Systems highly exposed to outside content: First-party data ingestion pipelines, custom API gateways, or proprietary edge proxies. A prerequisite here is direct access to the source code, this strategy is strictly for internally developed or fully open-source codebases where the organization can inspect the logic. Because these systems directly parse untrusted internet traffic, targeting their source code for LLM-driven audits yields the highest risk-reduction ROI.
--
-Shared internal libraries and utilities: Core serialization/deserialization packages, common utility functions, and custom middleware wrappers (such as internal message-queue parsers) maintained in-house. Because the enterprise owns the source code for these shared building blocks, agent tools can easily hook into them within automated test harnesses to fuzz inputs and catch low-level logic or parsing bugs with high fidelity.
--
-Foundational security boundaries: Internally developed centralized authentication services, custom OAuth providers, and internal credential brokers. While testing complex identity boundaries generates higher logic-based noise, having full access to the source code allows teams to pair agents with deterministic checks to safely triage findings, given that the blast radius of an authentication failure justifies the human effort.
-To filter the noise generated by LLMs, organizations should establish routing rules. Require the agent to generate a fully reproducible, deterministic test harness (such as a compiled binary or a Python test script) that attempts to prove the exploit. This harness must execute automatically in an isolated, monitored sandbox. If the sandbox execution fails (due to a syntax error or a failed exploit), the ticket is discarded, sparing human resources. However, organizations should enforce execution timeouts and iteration limits on these test harnesses. Without hard limits, an autonomous agent attempting to prove a vulnerability can fall into an infinite loop: writing a script, failing, rewriting, and failing again, exhausting API token budgets and compute resources against a single dead-end vulnerability, creating significant cost overruns without advancing the security review. To manage these expenses, organizations should incorporate FinOps principles to balance the compute and API costs of LLM audits against the traditional expenses of manual triage.
-However, a successful execution in the sandbox does not guarantee an actionable, high-priority risk. In practice, autonomous agents frequently produce working PoCs for genuine technical flaws that are ultimately irrelevant; or warrant a lower remediation priority within the context of the system's threat model. For example, the agent might successfully exploit an unreachable dead-code path, or trigger a bug that requires administrative access to execute and yields no further escalation of privilege. Therefore, a human engineer should be assigned to review and prioritize the ticket only if the sandbox registers a successful execution, validating environmental context, reachability, and true business impact as part of the review.
-This workflow reduces the volume of alerts, but it is important to understand that the security team's workload does not disappear. The engineer's primary job shifts from manually hunting for the initial vulnerability to auditing the LLM-generated proof to ensure it represents a meaningful risk rather than an unexploitable or contextually irrelevant finding. Leadership should properly staff and train teams for this new reality. Deploying LLM agents does not remove the need for skilled practitioners; it redirects their workload toward complex validation. Equally important is training teams to recognize the risk of false negatives. A hyper-focus on filtering AI-generated noise can create a false sense of security. If an exploit relies on a novel technique or a zero-day vulnerability that was not heavily weighted in the model's training data, the agent will likely scan right past it in silence. LLMs augment discovery, but they do not guarantee exhaustive coverage.
-When integrating LLMs into SAST triage pipelines, human engineers should also verify the broader architectural integrity. Prompting an LLM with specific SAST warnings can induce contextual narrowing, where the agent becomes hyper-fixated on resolving a localized syntax error and misses broader architectural flaws existing in the same file. Furthermore, if the agent's mandate extends beyond discovery to automated remediation (such as writing and proposing code fixes), this human-in-the-loop validation becomes critical to ensure the LLM does not inadvertently introduce new regressions or bypass intended business logic.
-Figure 6: Flowchart outlining the targeted LLM deployment and triage workflow.
-Remediation and hardening
-LLM-assisted code remediation
-A primary goal of integrating large language models (LLMs) into the software development lifecycle is automated remediation. To achieve this, organizations are deploying these capabilities through two primary execution methods: directly within the integrated development environment (IDE) or as a centralized pipeline runner. Examples include [CodeMender](https://deepmind.google/blog/introducing-codemender-an-ai-agent-for-code-security/), although as of time of writing, it is not publicly available.
-IDE-integrated method
-This method shifts remediation as far left as possible by operating as an active pair-programmer. Tools running continuous static analysis in the background of the IDE surface vulnerabilities directly to the developer via editor diagnostics like inline indicators or hover tooltips.
--
-Localized scope: The developer can trigger the LLM agent to analyze the localized data flow and generate a targeted patch (such as implementing parameterized SQL queries). By constraining the LLM to localized, syntax-level fixes, the scope of the change remains contained. This prevents the agent from attempting sprawling, multi-file refactors that frequently break complex architectural logic.
--
-Human-in-the-loop: The developer reviews the AI-generated patch before the code is committed.
--
-Managing false positives: Local IDE agents allow developers to manage false positives dynamically. Suppressing alerts anchored to specific line text reduces alert fatigue and preserves developer trust.
-CI/CD runner method
-The runner method executes asynchronously within the CI/CD pipeline to use an LLM to review committed code and automatically propose remediation.
--
-Restricted execution and deterministic validation: Asking a centralized runner to automatically rewrite a complex, multi-file authorization flaw directly in the main branch introduces a high risk of breaking logic errors. To mitigate this, agents must be restricted to generating pull requests (PRs). Once a PR is generated, it must automatically execute standard regression suites alongside the deterministic test harness. By rerunning the initial PoC against the patched code, the workflow repurposes the exploit script as a validation oracle to prove the vulnerability has been remediated. A human engineer then reviews the PR to validate the architectural logic before merging.
-In all cases security teams should define a clear boundary between the two methods rather than rely on a single approach. IDE agents provide immediate, syntax-level support. They catch and resolve low-complexity errors locally before developers commit code. Centralized CI/CD runners handle broader organizational baselines. They propose complex, repository-wide fixes for vulnerabilities that bypass local environments.
-Post-deployment controls
-Even with human review and deterministic test harnesses, AI-generated patches can still introduce logic regressions in production. Organizations should implement strict post-deployment controls:
--
-Automated rollbacks: Treating LLM-generated code with the same post-deployment scrutiny as any major architectural change ensures that if an unforeseen regression traverses the CI/CD pipeline, the environment can revert to a known good state.
--
-Mitigating model drift: Relying on managed AI services introduces the ongoing risk of model drift. To prevent silent weight updates from breaking test harnesses, organizations need to pin specific model API versions to frozen releases. When a pinned version reaches its end-of-life, organizations will face a forced migration. Mitigating this pipeline fragility requires combining model pinning with deterministic regression suites.
--
-Compliance and auditability: If an AI agent automatically closes a security ticket or generates a patch in the CI/CD pipeline, organizations should maintain immutable audit logs to satisfy frameworks like SOC 2 ,PCI-DSS, FedRAMP, and CMMC. National security deployments must also account for data sovereignty requirements. This logging should record the specific model version that proposed the fix, the deterministic test results that validated it, and the human engineer who approved the merge. Furthermore, because emerging legislation like the EU AI Act emphasizes human oversight for high-risk applications, security teams should carefully evaluate how autonomous remediation workflows align with these evolving global regulatory standards.
-Figure 7: Flowchart demonstrating the difference between local IDE AI remediation and centralized CI/CD pipeline remediation.
-Conclusion
-Leveraging LLMs in vulnerability management is a multi-layer solution: Integrating it requires separating workflows by layer. At the enterprise infrastructure level, Risk-Based Vulnerability Management (RBVM) and exposure management are necessary to process the volume of findings and configuration drift. At the product and code security level, LLM-enabled vulnerability assessment and remediation must operate alongside foundational deterministic controls, such as SAST and DAST, to audit custom, open-source, or third-party code.
-Although LLMs can help manage technical debt and accelerate vulnerability discovery, they do not replace secure-by-design principles. The fact that LLM agents are proving exceptionally capable at identifying and exploiting localized memory corruption in memory-unsafe codebases, alongside other primary vectors, should serve as a wake-up call.
-As a long-term strategy aligned with [NSA guidance on Software Memory Safety](https://media.defense.gov/2022/Nov/10/2003112742/-1/-1/0/CSI_SOFTWARE_MEMORY_SAFETY.PDF), organizations need to phase memory-safe languages into new internal development. LLMs are beginning to expand what is possible here by reducing the manual labor required for code migration. Converting existing C or C++ codebases to Rust has historically been unrealistic due to the large volume of engineering hours needed. While fully automated translation is not a turn-key solution, using LLMs to assist engineers with the bulk of the conversion can make these long-term migrations operationally viable. Beyond internal efforts, organizations should use procurement requirements to incentivize vendors to reduce their reliance on memory-unsafe languages and establish secure configuration defaults over time. Bridging the gap between AI velocity and enterprise defense means building an automated pipeline to manage the current backlog, while architecting systems where entire classes of vulnerabilities and misconfigurations are eliminated by design.
-Acknowledgements
-This analysis would not have been possible without the assistance of Google Threat Intelligence Group (GTIG) and other broader Google teams.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
