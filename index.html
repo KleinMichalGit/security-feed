@@ -59,12 +59,339 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-09-01</h1>
+        <h1>Security Briefing // 2026-09-02</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Financially Motivated Threat Actor BREEZE COMET Targets Brazil</button></li><li><button onclick="show('art-1')">Recently patched PaperCut zero-days used in data theft attacks</button></li><li><button onclick="show('art-2')">Attackers Exploit Critical Langflow and Rails Flaws in Credential-Probing and C2 Activity</button></li><li><button onclick="show('art-3')">Cronos blockchain restarts after $74 million Tectonic exploit</button></li><li><button onclick="show('art-4')">China-Linked Fire Ant Hijacks Cisco Routers to Steal Credentials and Blind Security Logs</button></li><li><button onclick="show('art-5')">Two Alleged ‘TeamPCP’ Hackers Arrested in Australia</button></li><li><button onclick="show('art-6')">SpooNMAP Grows Up: Findings, Local LLM Detection, and a Whole Lot Less Waiting</button></li><li><button onclick="show('art-7')">Microsoft named a Leader in the Frost Radar™: Cloud Workload Protection Platforms, 2026</button></li><li><button onclick="show('art-8')">Who’s Tracking You? Use This New Service to Find Out</button></li><li><button onclick="show('art-9')">Turning Enterprise Update Servers Into Backdoor Factories (0_o) – Part 1</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Attackers Exploit Critical Switchvox Flaw to Deploy Reverse Shells Without Credentials</button></li><li><button onclick="show('art-1')">Counterfeit installers to system compromise: Tracking a deceptive software download campaign</button></li><li><button onclick="show('art-2')">FBI Probes Service Selling 153M+ Drivers Licenses</button></li><li><button onclick="show('art-3')">Aesto Health says data breach affects over 9.5 million patients</button></li><li><button onclick="show('art-4')">Critical Langflow flaw exploited to steal OpenAI and AWS keys</button></li><li><button onclick="show('art-5')">Attackers Exploit Critical JFrog Artifactory Flaw to Mint Admin Tokens Days After Disclosure</button></li><li><button onclick="show('art-6')">Financially Motivated Threat Actor BREEZE COMET Targets Brazil</button></li><li><button onclick="show('art-7')">waf-fu, or Some Log Replay Nonsense</button></li><li><button onclick="show('art-8')">Two Alleged ‘TeamPCP’ Hackers Arrested in Australia</button></li><li><button onclick="show('art-9')">Turning Enterprise Update Servers Into Backdoor Factories (0_o) – Part 1</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
+            <h2 class="article-title">Attackers Exploit Critical Switchvox Flaw to Deploy Reverse Shells Without Credentials</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/attackers-exploit-critical-switchvox.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Threat actors are exploiting a severe security vulnerability in Sangoma Switchvox, an enterprise VoIP platform, that could allow unauthenticated remote code execution.
+The vulnerability in question is [CVE-2026-9586](https://www.cve.org/CVERecord?id=CVE-2026-9586) (CVSS score: 9.3), a critical unauthenticated SQL injection vulnerability in Sangoma Switchvox SMB Edition 8.3 (104997) that can allow attackers to remotely execute arbitrary code as the PostgreSQL superuser without credentials. Sangoma [released patches](https://sangomakb.atlassian.net/wiki/spaces/Switchvox/pages/1802371073/Switchvox+-+Release+Notes+Version+8.4.0.2+July+14+2026) for the flaw in Switchvox 8.4.0.2 on July 14, 2026.
+"An unauthenticated SQL injection vulnerability exists in Sangoma Switchvox SMB Edition 8.3 (104997). The /pa endpoint processes XML content beginning with <PolycomIPPhone> and directly concatenates the user-controlled PhoneIP value into PostgreSQL queries without sanitization or parameterization," according to a description of the flaw on CVE.org.
+"An unauthenticated remote attacker can execute arbitrary SQL statements against the backend PostgreSQL database using a single crafted request, including database operations and remote code execution."
+Horizon3.ai [said](https://horizon3.ai/attack-research/disclosures/cve-2026-9586-sangoma-switchvox-rce/) CVE-2026-9586 is among the 12 distinct vulnerabilities in Switchvox that were reported to Sangoma in April 2026, and that it is now seeing valid exploitation attempts in the wild against the flaw starting August 30, 2026. There are about 4,000 instances exposed to the internet, most of them located in the U.S.
+The same vulnerability was independently [discovered](https://labs.sra.io/posts/switchvox/) and [reported](https://labs.sra.io/posts/switchvox-post/) by Security Risk Advisors (SRA) Labs in May.
+"As an unauthenticated attacker, we were able to perform arbitrary database operations, including extracting database contents, modifying user records, and escalating privileges to Switchvox web administrators," SRA Labs said. "We also successfully executed arbitrary code on the server, invoking a reverse shell on the target machine."
+In one example highlighted by SRA Labs, successful exploitation of CVE-2026-9586 makes it possible to exfiltrate the cookie signing key to an external server, thereby allowing an attacker to forge authentication material for arbitrary users.
+The exploitation efforts targeting its honeypots involve the deployment of reverse shells on compromised systems, followed by running Base64-encoded commands to enumerate running processes. The autonomous penetration testing platform has shared the following indicators of compromise -
+- On devices that have SSH access enabled, evidence of the SQL injection payload used can be observed in "/var/log/switchvox/db-quirks.log"
+- Attacker IP address "
+[176.65.148[.]184](https://www.virustotal.com/gui/ip-address/176.65.148.184/detection)"
+It's worth noting that the IP address has been flagged on VirusTotal for conducting port scanning, brute-force, and exploitation efforts.
+"Given the quick succession of exploit attempts across multiple honeypots from the same source IP, we believe that it is likely that most internet exposed Switchvox instances will be or have already been targeted," security researcher Zach Hanley said.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">Counterfeit installers to system compromise: Tracking a deceptive software download campaign</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/09/01/counterfeit-installers-system-compromise-tracking-deceptive-software-download-campaign/" target="_blank">Original Link</a></p>
+            <div class="content-text">Microsoft Defender Experts is tracking an active malware campaign that uses counterfeit software-download websites to impersonate trusted vendors and distribute malicious installers. The campaign has targeted users looking to download popular software and has resulted in compromises across multiple organizations and industries, primarily affecting China-based operations of multinational organizations and Chinese-speaking users. Microsoft has observed victims across healthcare, manufacturing, gaming, technology, logistics, government, and education sectors.
+Once executed, the malicious installers deploy malware that establishes persistence, attempts to weaken security protections, and communicates with attacker-controlled infrastructure. Microsoft assesses with moderate confidence that this activity is consistent with the publicly reported Silver Fox (also known as Yinhu, 银狐) fake software campaign but has not attributed it to a nation-state actor. Microsoft Defender detected and disrupted activity across multiple stages of the attack, including automated containment through attack disruption. Organizations should prioritize preventing downloads from untrusted software sources and ensure protections such as SmartScreen, network protection, tamper protection, and Microsoft Defender XDR are enabled to help identify, block, and respond to related activity.
+Attack chain overview
+The campaign follows a consistent attack chain from a spoofed vendor download page to a self-protecting, persistent implant. The stages below trace that chain — initial access, delivery, execution, persistence, privilege escalation, defense evasion, and command and control.
+Campaign scope and targeting
+Microsoft observed affected devices predominantly associated with China-based operations and Chinese-speaking users, consistent with the Chinese-language lure content and the .com.cn and .hl.cn infrastructure. Confirmed activity spans medical devices and healthcare, manufacturing, gaming, technology, logistics, government, and higher education across multiple organizations and industries.
+Initial access: spoofed software-download sites
+The entry point is a fraudulent software-download website that spoofs a legitimate vendor. In one case, endpoint telemetry captured a device navigating to the fake Razer page pc-razerzone[.]com[.]cn and downloading app_setup.6653004.zip from the delivery host gehie246[.]com/712down; two content-distinct copies of the same-named archive were written within roughly 69 seconds — a direct observation of server-side payload regeneration.
+Across the estate, FileOriginReferrerUrl telemetry ties each downloaded archive to the impersonation page that served it and to rotating delivery hosts (yimxg25tiy[.]com/73inst, cc8ttkv35b[.]com/7qinst, n7b8t85zsg[.]com/ins711) and a suspected attacker-controlled Alibaba Cloud Object Storage Service (OSS) bucket. The lure domains predominantly use .com.cn, .hl.cn, and .cn and embed the impersonated brand name.
+Delivery: a dynamically generated installer archive
+The following examples illustrate how look-alike domains routed users to the same delivery infrastructure while preserving brand-specific lure pages.
+When the user selects the download control, Microsoft Edge retrieves a malicious installer archive from a small set of dedicated delivery domains.
+pc-razerzone[.]com[.]cn (spoofed Razer download site) → www[.]gehie246[.]com/712down → app_setup.6653004.zip → stage-one loader |
+A defining characteristic is that the archive keeps the same filename while its hash changes on every download — a strong indicator the payload is generated server-side, per request. Microsoft observed families of same-named archives (app_setup.*, zinst.*, zintall.*, intsoft.*, innstll.*) whose contents differ across downloads while the delivery URL stays constant; the full validated hash set is in the indicators of compromise below.
+kaspersky-lab[.]hl[.]cn → hxxp://www.gehie246[.]com/712down pc-razerzone[.]com[.]cn → hxxp://www.gehie246[.]com/712down calibre-ebook[.]com[.]cn → hxxp://www.gehie246[.]com/712down |
+Brand-impersonation infrastructure
+The campaign runs a large, uniform set of vendor look-alike pages on .com.cn and .hl.cn domains, each cloning the real product’s branding and presenting a prominent “Download now” button. All funnel to the same delivery and payload infrastructure.
+| Impersonated brand | Spoofed domain (defanged) | Category |
+| Razer (Synapse driver) | pc-razerzone[.]com[.]cn | Peripherals / drivers |
+| Microsoft Edge | app-microsoft-edge[.]com[.]cn | Browser |
+| Kaspersky | kaspersky-lab[.]hl[.]cn | Security software |
+| Sejda PDF | sejda[.]hl[.]cn | Productivity |
+| NetEase Youdao Dictionary | translate-youdao[.]hl[.]cn | Translation |
+| DiskGenius | zh-diskgenius[.]com[.]cn | Disk utility |
+| Baidu Netdisk (Pan) | baidu-pan[.]com[.]cn | Cloud storage |
+| oCam Screen Recorder | ocam-pc[.]com[.]cn | Screen capture |
+| draw.io | cn-drawio[.]com[.]cn | Diagramming |
+| SteelSeries | steelseries-cn[.]com[.]cn | Peripherals |
+| Sogou | gw-sogou[.]com[.]cn | Input method |
+| Calibre | calibre-ebook[.]com[.]cn | E-book |
+| MindMaster (typosquat) | mindmoster[.]com[.]cn | Mind-mapping |
+| Others | pc-codex, jinshan-cibapc, zh-tbtool, web-tbtool, zh-doubaosrf, ieway-cn (all [.]com[.]cn / [.]hl[.]cn) | Various utilities |
+Although these domains impersonate unrelated vendors, they are not independently hosted. Infrastructure enrichment, corroborated by Microsoft telemetry where the two overlap, resolves them into two groupings. Six domains resolve within AS132839, spread across four unrelated netblocks and three registered country codes, and share a common pair of nameservers. Two further domains resolve within AS8796 in a single /21, using a different nameserver pair. One additional domain is served through a content delivery network (CDN), concealing its origin. Because hosting and Domain Name System (DNS) are frequently bundled by the same reseller, these are best read as two consistent procurement channels rather than two independent corroborating signals.
+The practical implication for defenders is that netblock- and geography-based grouping will miss these relationships, while Autonomous System Number (ASN)-level analysis surfaces them.The autonomous system remains constant even where the address space and registered country vary. These are shared commercial hosting and DNS providers carrying substantial unrelated tenancy, so the ASN and nameserver should be treated as hunting pivots, not blocklist entries.
+The following capture shows a representative impersonation page served by the campaign. The pages are high-fidelity clones of a legitimate vendor’s site with a prominent download call-to-action.
+Execution: a wrapped installer drops a randomized stage-one payload
+The wrapper installer creates a randomized executable path while reusing stable payload content, making names unreliable but behavior and hashes useful for detection.
+Opening the archive yields a wrapper installer whose name follows a generated pattern (for example, a_instapp83353001.exe or ainst8663586104.exe).
+Executing the wrapper creates and launches a stage-one payload at a randomized path under a world-writable or system location; the directory and file names are randomized, but the payload content is stable. The same stage-one 256-bit Secure Hash Algorithm (SHA-256) (676a2a7b94ca…) was observed under many names and paths.
+C:\Users\Public\sE94yD\aLcUaw.exe (SHA-256 676a2a7b94ca… stage-one) C:\Users\Public\nvdPX5\2b3L5i.exe (SHA-256 676a2a7b94ca… stage-one) C:\Program Files (x86)\i3LH90\ErNGxW.exe (SHA-256 6d6ba2bc9ad4… later-stage) C:\Program Files (x86)\Q8Maj\7EIr6VA.exe (SHA-256 6d6ba2bc9ad4… later-stage) C:\ProgramData\zsMmvukD\beuv4Mie.exe (SHA-256 c6100166e2d3… persistent) |
+The end-to-end chain is visible as a parent-to-child process tree: msedge.exe writes the archive, an archiving tool (7zFM.exe, 360zip.exe, or WinRAR.exe) extracts it, the bundled wrapper runs, and the wrapper launches the randomized stage-one payload.
+msedge.exe downloads app_setup.6653004.zip └─ 7zFM.exe / 360zip.exe / WinRAR.exe (user opens the downloaded archive) └─ a_instapp83353001.exe (wrapper installer bundled in the archive) └─ C:\Users\Public\yZ6A88\9bEELI.exe (stage-one payload, randomized) |
+Payloads are masqueraded; Microsoft confirmed the masquerade through file metadata on the later-stage payload (SHA-256 6d6ba2bc…), staged at C:\Program Files (x86)\<random>\. The binary’s version resource declares CompanyName: “Speech Processing Solutions GmbH”, FileDescription: “Philips Speech Driver Client Configuration”, OriginalFileName: PhilipsSpeechDriverConfiguration.exe, and ProductVersion: 4.7.471.07,while executing from a randomized directory under a randomized file name. The same resource retains an unfilled build-template placeholder, ProductName: “TODO: <Product name>”, indicating the version information was fabricated for the payload rather than inherited from genuine vendor software. Microsoft also observed svchost.exe executing from a non-system path (D:\hellothere\svchost.exe) rather than C:\Windows\System32.
+FileName XPSPLOG.dll FolderPath C:\Program Files (x86)\72q1o6\XPSPLOG.dll InitiatingProcessFileName 40gK5T.exe InitiatingProcessFolderPath C:\Program Files (x86)\72q1o6\40gK5T.exe InitiatingProcessSHA256 6d6ba2bc9ad414837826f7278bc3e0116f1aeda02d0c2284ed65819f5d9180a8 InitiatingProcessCommandLine "40gK5T.exe" InitiatingProcessVersionInfoCompanyName Speech Processing Solutions GmbH InitiatingProcessVersionInfoFileDescription Philips Speech Driver Client Configuration InitiatingProcessVersionInfoOriginalFileName PhilipsSpeechDriverConfiguration.exe InitiatingProcessVersionInfoProductVersion 4.7.471.07 InitiatingProcessVersionInfoProductName TODO: <product name=""> InitiatingProcessParentFileName svchost.exe </product> |
+A payload staged under C:\ProgramData\<random>\ (SHA-256 c6100166…) carries the version metadata of the Indigo Rose TrueUpdate Client (OriginalFileName: tu_rt.exe, ProductVersion: 3.8.0.0) and exhibits that product’s runtime behavior, writing _ir_tu2_temp_* artifacts to the user’s temp directory on each execution. Dropped by the later-stage payload and launched repeatedly by the Task Scheduler service, it connects to an attacker-controlled Alibaba Cloud OSS bucket over Transport Layer Security (TLS) and writes a further payload to a second randomized C:\ProgramData\ directory — a legitimate update mechanism repurposed for payload delivery.
+00:24:43 ErNGxW.exe (6d6ba2bc…) creates C:\ProgramData\zsMmvukD\beuv4Mie.exe (c6100166…) 00:24:43 beuv4Mie.exe executes ← parent: svchost.exe -k netsvcs -p -s Schedule 00:24:44 beuv4Mie.exe → ConnectionSuccess | upitem.oss-cn-hangzhou.aliyuncs.com | 443 00:24:44 beuv4Mie.exe creates C:\ProgramData\uwMUCYBN\SaYC4Mga.exe (f33d160d…) 02:12:22 beuv4Mie.exe creates …\Temp\_ir_tu2_temp_4 ← TrueUpdate runtime artifact 02:44:20 beuv4Mie.exe re-executes (scheduled task) → _ir_tu2_temp_5 02:59:00 … _temp_6 03:15:54 … _temp_7 08:02:52 … _temp_8 08:32:20 … _temp_9 08:38:51 … _temp_11 |
+| Wrapper installer | Stage-one payload created |
+| a_instapp83353001.exe | C:\Users\Public\yZ6A88\9bEELI.exe |
+| z_instapp83351010.exe | C:\Users\Public\Y93eny\Ge86Zr.exe |
+| ainstaller-86533003.exe | C:\Users\Public\Mmzm0e\Lrrhwp.exe |
+| ainst8663586104.exe | C:\Users\Public\YJMvsB\BcQVw7.exe |
+Alternate execution vector: Windows Installer (msiexec)
+In parallel with the wrapped-installer chain, Microsoft observed a second execution vector that uses the Windows Installer service. The installer performs its intended function; what the campaign gains is execution under a signed, trusted Windows component. The extracted installer invokes msiexec.exe in embedded mode, which writes and launches a randomized executable into a world-writable C:\Users\Public\<random>\ directory, the same masquerade pattern as the wrapper chain, but delivered through msiexec.exe.
+msiexec.exe -Embedding <productcode> E Global\MSI0000 └─ C:\Users\Public\<random>\<random>.exe (payload, randomized path/name) </random></random></productcode> |
+The behavior is consistent and repeated: more than twenty distinct payload names were written this way, spawned by a range of parents including msedge.exe, explorer.exe, and svchost.exe.
+Persistence and recurring execution: disguised scheduled tasks
+Persistence and recurring execution are achieved through scheduled tasks whose display names imitate routine IT or productivity jobs (for example “Deadline Mission Target” and “Hierarchy Tools Smooth Inventory”), each launching a specific payload staged under C:\ProgramData\.
+Each task launches a specific payload:
+| Scheduled task name | Payload launched |
+| \Deadline Mission Target | 7fYptijy.exe |
+| \Hierarchy Tools Smooth Inventory | beuv4Mie.exe |
+| \Empowering Status Tools productivity Ahead | SaYC4Mga.exe |
+| \5nboF | aLcUaw.exe (stage-one) |
+The persistent payloads are staged in locations such as C:\ProgramData\7fYptijy.exe, C:\ProgramData\zsMmvukD\beuv4Mie.exe, and C:\ProgramData\uwMUCYBN\SaYC4Mga.exe. Because the payloads are launched by the Task Scheduler service (parented to svchost.exe -k netsvcs -p -s Schedule) and multiple staggered tasks run per device, affected hosts exhibit a characteristic ~60-second re-execution cadence.
+Privilege escalation: SYSTEM scheduled task and process injection
+To perform privileged actions such as writing Microsoft Defender exclusions, the malware creates a short-lived scheduled task that runs as SYSTEM (SCHTASKS /Create … /RL HIGHEST /RU “SYSTEM”), executes the privileged action, then immediately runs and deletes the task
+SCHTASKS /Create /F /TN "Task1" /SC ONCE /ST 00:00 /RL HIGHEST /RU "SYSTEM" /TR "cmd.exe /c reg add \"HKLM\SOFTWARE\Microsoft\Windows Defender\Exclusions\Paths\" /v \"C:\Program Files (x86)\NPq6k16Om\" /t REG_DWORD /d 0 /f" SCHTASKS /Run /TN "Task1" & SCHTASKS /Delete /TN "Task1" /F |
+The /RL HIGHEST /RU “SYSTEM” combination elevates the exclusion write to SYSTEM, and the create-run-delete sequence minimizes the footprint of the helper task. Process injection was also observed. A persistent campaign payload (SHA-256 1bd3662d…), launched from C:\ProgramData\ by the Task Scheduler service, created a remote thread in a legitimate user application moments after that application started — executing payload code inside the context of a trusted process. Microsoft Defender detected the activity as A process was injected with potentially malicious code.
+ActionType CreateRemoteThreadApiCall InitiatingProcessFileName <random>.exe InitiatingProcessFolderPath C:\ProgramData\<random>.exe InitiatingProcessSHA256 1bd3662d784840e410d2d3c0a1040277f7f549089447359f01e05c2559cb1f17 InitiatingProcessCommandLine "<random>.exe" InitiatingProcessCreationTime 2026-07-13 02:44:20.887 InitiatingProcessParentFileName svchost.exe FileName <messaging application="">.exe (target process) ProcessCommandLine "<messaging application="">.exe" -autorun ProcessCreationTime 2026-07-13 02:44:37.568 AdditionalFields {"IntegrityLevel":8192} </messaging></messaging></random></random></random> |
+The sequence below shows a single execution cycle end to end: the Task Scheduler service launches the payload, the payload immediately attempts command-and-control on two non-standard ports — both blocked at the host firewall — and, seventeen seconds later, injects into a user application within milliseconds of that application starting.
+02:44:20.887 PROC <random>.exe started parent: svchost.exe (Task Scheduler) 02:44:21.971 NETWORK outbound to 47.239.232[.]245:8050 → FirewallOutboundConnectionBlocked 02:44:24.860 NETWORK outbound to 47.243.218[.]255:28300 → FirewallOutboundConnectionBlocked 02:44:37.568 PROC target application starts (-autorun) 02:44:37.604 INJECT CreateRemoteThreadApiCall <random>.exe → target application </random></random> |
+Defense evasion: disabling host protections
+Follow-on payloads take a layered approach to weakening the host. They add sweeping Microsoft Defender path exclusions via PowerShell (Add-MpPreference -ExclusionPath) and the SYSTEM scheduled-task registry write;
+powershell.exe Add-MpPreference -ExclusionPath 'C:\ProgramData','C:\Users','C:\Program Files (x86)','C:\' -Force powershell.exe -c if (Get-Process -Name HAhahahah) {} else { Add-MpPreference -ExclusionPath $env:localappdata,'C:\','C:\ProgramData', 'C:\ProgramData\7b3St9HS','C:\ProgramData\7b3St9HS\27s7ihjC.exe' -ExclusionExtension '.dat' -Force } |
+delete volume shadow copies (vssadmin delete shadows /all /quiet) to inhibit recovery;
+cmd.exe /c vssadmin delete shadows /all /quiet |
+harden payload directories with icacls so standard users cannot remove the files;
+icacls "C:\Program Files (x86)\NPq6k16Om\xo7Tj9xQ.exe" /grant:r Administrators:(OI)(CI)F /grant:r SYSTEM:(OI)(CI)F |
+and neutralize Windows Update by stopping and disabling wuauserv, UsoSvc, uhssvc, and WaaSMedicSvc, renaming update dynamic-link libraries (DLLs), and deleting the SoftwareDistribution cache.
+for %i in (wuauserv UsoSvc uhssvc WaaSMedicSvc) do ( net stop %i & sc config %i start= disabled & sc failure %i reset= 0 actions= "" ) for %i in (WaaSMedicSvc wuaueng) do ( takeown /f C:\Windows\System32\%i.dll & icacls …\%i.dll /grant *S-1-1-0:F & rename …\%i.dll %i_BAK.dll & icacls …\%i_BAK.dll /setowner "NT SERVICE\TrustedInstaller" & icacls …\%i_BAK.dll /remove *S-1-1-0 ) reg add "HKLM\…\Services\WaaSMedicSvc" /v Start /t REG_DWORD /d 4 /f reg add "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate\AU" /v NoAutoUpdate /t REG_DWORD /d 1 /f erase /f /s /q c:\windows\softwaredistribution\*.* & rmdir /s /q c:\windows\softwaredistribution powershell -Command Get-ScheduledTask -TaskPath '\Microsoft\Windows\WindowsUpdate\*' | Disable-ScheduledTask |
+A malicious Windows Defender Application Control policy was written to the code-integrity store on multiple devices; Microsoft Defender Antivirus detected the tamper behavior as Behavior:Win32/MpTamperGpDisableAVFriendly.A.
+Command and control (C2)
+A later-stage networking payload establishes command-and-control over application-layer protocols on non-standard ports — observed ports include 5090, 7031, 7032, 7088–7090, 8050, 28290, and 28300.
+| Initiating payload | C2 endpoint (defanged) | Result |
+| 40gK5T.exe, RhT9aQ.exe (Program Files (x86)) | 103.156.25[.]35:7031 | Connection failed |
+| Multiple C:\ProgramData\ payloads | 103.183.3[.]162:5090 (oijfwe[.]net) | Connection failed |
+| Stage-one / persistent payloads | Alibaba Cloud object storage over TLS (443) | Connection succeeded |
+C2 endpoints comprise a set of six-character [.]net domains (iualef, oijfwe, euioxu, czijbh, wfmwsj, tbdqxq) and IP-and-port endpoints; a primary hub was observed on 202.95.14[.]237 (AS152194, CTG Server Limited). Payloads were observed beaconing to these endpoints with both successful and failed callbacks; the dedicated [.]net and IP-and-port C2 was intermittently unreachable while the same payloads still completed TLS connections to cloud object storage, consistent with a dedicated C2 tier that was often down while cloud-hosted staging remained live.
+Detection and disruption
+In observed environments, Microsoft Defender surfaced alerts across multiple stages and, where criteria were met, Attack Disruption engaged to contain affected devices and accounts.
+Representative alerts include Modification attempt in Microsoft Defender Antivirus exclusion list, Compromised device (attack disruption), A process was injected with potentially malicious code, Potential C2 connection behavior, Suspicious Task Scheduler activity, and Compromised account conducting hands-on-keyboard attack. The campaign is not purely automated. In a subset of environments, the automated execution was accompanied by interactive, hands-on-keyboard activity, which attack disruption engaged to contain.
+Microsoft Defender also blocked the attempted Server Message Block (SMB) lateral movement to additional hosts (Lateral movement using SMB remote file access blocked on multiple devices) and detected the C2 connection behavior; the campaign’s C2 endpoints are included in the blocked indicator set.
+Attack disruption contained the device and account; full eradication of persistence still required responder action.
+| Stage | Microsoft Defender coverage |
+| Fake-download landing and delivery domains | Microsoft Defender SmartScreen, Network Protection, Web content filtering |
+| Malicious ZIP and stage-one execution (including msiexec proxy execution) | Microsoft Defender Antivirus (behavioral + cloud-delivered protection); Microsoft Defender for Endpoint |
+| Defender tampering & exclusion writes | Tamper Protection; Modification attempt in exclusion list alerts; Behavior:Win32/MpTamperGpDisableAVFriendly.A |
+| Persistence, privilege escalation, and injection | Microsoft Defender for Endpoint — “Suspicious Task Scheduler activity”; “A process was injected with potentially malicious code” |
+| Command and control, lateral movement, and hands-on-keyboard | Microsoft Defender XDR — “Potential C2 connection behavior”; “Lateral movement using SMB remote file access blocked on multiple devices”; “Compromised account conducting hands-on-keyboard attack”; Network protection (C2 block); Attack disruption (automatic containment) |
+Mitigation and protection guidance
+Microsoft recommends the following mitigations to reduce the impact of this threat. Check the recommendations card for the deployment status of monitored mitigations.
+Campaign-specific recommendations
+- Enforce Tamper Protection. It blocks exclusion and registry writes to Microsoft Defender even when the payload runs as SYSTEM — directly countering the throwaway SYSTEM scheduled-task technique this campaign relies on.
+- Hunt behavior, not file names. File names and hashes rotate on every download; pivot on the C:\Users\Public\<random>\<random>.exe and C:\Program Files (x86)\<random>\<random>.exe drop pattern, the Philips-Speech masquerade, and the stable stage-one and networking payload hashes.
+- Alert on the tamper sequence. A SYSTEM scheduled task writing HKLM\…\Windows Defender\Exclusions\Paths then self-deleting, vssadmin delete shadows /all /quiet, and disabling wuauserv, UsoSvc, WaaSMedicSvc and uhssvc are high-fidelity signals.
+- Treat look-alike download archives as malicious in web and mail flow. Block ZIPs named app_setup.*, zinst.*, zintall.*, intsoft.*, and innstll.* served from *.com.cn or *.hl.cn brand-look-alike domains and the /712down, /73inst, /7qinst, and /ins711 delivery endpoints.
+- Correlate download referrers. Use FileOriginUrl and FileOriginReferrerUrl to catch landing-page to delivery-host pairs even after individual domains rotate, and block the C2 IP:port set and .net C2 domains.
+Microsoft Defender XDR hardening recommendations
+Microsoft Defender XDR customers can turn on attack surface reduction rules to prevent several of the infection vectors of this threat. These rules, which can be configured by any user, offer significant hardening against targeted attacks. In observed attacks, Microsoft customers who had the following rules turned on could mitigate the attack in the initial stages and prevent hands-on-keyboard activity:
+[Block executable files from running unless they meet a prevalence, age, or trusted list criterion](https://learn.microsoft.com/en-us/defender-endpoint/attack-surface-reduction-rules-reference#block-executable-files-from-running-unless-they-meet-a-prevalence-age-or-trusted-list-criterion)[Block execution of potentially obfuscated scripts](https://learn.microsoft.com/en-us/defender-endpoint/attack-surface-reduction-rules-reference#block-execution-of-potentially-obfuscated-scripts)[Block use of copied or impersonated system tools](https://learn.microsoft.com/en-us/defender-endpoint/attack-surface-reduction-rules-reference#block-use-of-copied-or-impersonated-system-tools)[Use advanced protection against ransomware](https://learn.microsoft.com/en-us/defender-endpoint/attack-surface-reduction-rules-reference#use-advanced-protection-against-ransomware)
+Microsoft Defender XDR detections
+Microsoft Defender XDR customers can refer to the list of applicable detections below. Microsoft Defender XDR coordinates detection, prevention, investigation, and response across endpoints, identities, email, and apps to provide integrated protection against attacks like the threat discussed in this blog.
+Customers with provisioned access can also use [Microsoft Security Copilot in Microsoft Defender](https://learn.microsoft.com/en-us/defender-xdr/security-copilot-in-microsoft-365-defender) to investigate and respond to incidents, hunt for threats, and protect their organization with relevant threat intelligence.
+Microsoft Security Copilot
+Security Copilot customers can use the standalone experience to [create their own prompts](https://learn.microsoft.com/copilot/security/prompting-security-copilot#create-your-own-prompts) or run the following [prebuilt promptbooks](https://learn.microsoft.com/copilot/security/using-promptbooks) to automate incident response or investigation tasks related to this threat:
+- Incident investigation
+- Microsoft User analysis
+- Threat actor profile
+- Threat Intelligence 360 report based on MDTI article
+- Vulnerability impact assessment
+These promptbooks can help analysts summarize affected entities, review alert timelines, and pivot on the IOCs included in this blog. Note that some promptbooks require access to plugins for Microsoft products such as Microsoft Defender XDR or Microsoft Sentinel.
+Threat intelligence reports
+Microsoft Defender XDR customers can use [threat analytics](https://learn.microsoft.com/defender-xdr/threat-analytics) reports in the Defender portal (requires license for at least one Defender XDR product) to get the most up-to-date information about the malicious activity and techniques discussed in this blog. These reports provide the intelligence, protection information, and recommended actions to prevent, mitigate, or respond to associated threats found in customer environments.
+Advanced hunting
+Microsoft Defender XDR and Microsoft Sentinel customers can run the following queries. . The behavior-based queries continue to work even as filenames, hashes, and domains rotate.
+Campaign payloads and loaders Surfaces execution or creation of the campaign’s stable stage-one, later-stage, persistent, networking, and loader binaries by SHA-256.
+let campaignSha256 = dynamic([ "676a2a7b94ca2f8ec76352ee656e4d075bb342bd7ad6efbc7c19c060001eace7", // stage-one "6d6ba2bc9ad414837826f7278bc3e0116f1aeda02d0c2284ed65819f5d9180a8", // later-stage "c4100ad39d8db98f063feb6c3b6c8e9a9f9d9bf25a1e0233f43b058ff8a7dbdf", // networking "1bd3662d784840e410d2d3c0a1040277f7f549089447359f01e05c2559cb1f17", // persistent "c6100166e2d3b40388980f7674712ef39e937ac04925ca5d370415399ed73faf", // TrueUpdate loader "f33d160d757e4b39019fdef21cf90cafb501b800ca0d4039366bc30856e3d81b", // persistent/networking "e4fe2dee8f0bb132fa15fc686d1f93df39530a2d3a8d3a1f3a605a057c04e7b3" // supporting DLL ]); union (DeviceProcessEvents | where SHA256 in (campaignSha256)), (DeviceFileEvents | where SHA256 in (campaignSha256)) | project Timestamp, DeviceName, ActionType, FileName, FolderPath, SHA256, InitiatingProcessFileName, InitiatingProcessCommandLine | order by Timestamp desc |
+Randomized payload drop pattern Finds executables dropped into randomized folders under world-writable or system locations — the campaign’s stable staging behavior regardless of filename.
+DeviceProcessEvents | where FolderPath matches regex @"(?i)^C:\\(Users\\Public|ProgramData|Program Files \(x86\))\\[A-Za-z0-9]{4,10}\\[A-Za-z0-9]{4,10}\.exe$" | where InitiatingProcessFileName in~ ("msiexec.exe","explorer.exe","svchost.exe","cmd.exe","7zFM.exe","360zip.exe","WinRAR.exe") | project Timestamp, DeviceName, AccountName, FolderPath, FileName, SHA256, InitiatingProcessFileName, InitiatingProcessCommandLine | order by Timestamp desc |
+Microsoft Defender exclusion tampering Detects the SYSTEM scheduled-task and PowerShell routines that write sweeping Microsoft Defender path exclusions.
+DeviceProcessEvents | where ProcessCommandLine has @"Windows Defender\Exclusions\Paths" or ProcessCommandLine has "Add-MpPreference -ExclusionPath" or (ProcessCommandLine has "SCHTASKS" and ProcessCommandLine has "SYSTEM" and ProcessCommandLine has "Exclusions") | project Timestamp, DeviceName, AccountName, InitiatingProcessFileName, ProcessCommandLine | order by Timestamp desc |
+Recovery inhibition and Windows Update neutralization Surfaces shadow-copy deletion and the routine that stops, disables, or renames Windows Update service components.
+DeviceProcessEvents | where ProcessCommandLine has "vssadmin delete shadows" or (ProcessCommandLine has_all ("sc","config","disabled") and ProcessCommandLine has_any ("wuauserv","UsoSvc","uhssvc","WaaSMedicSvc")) or ProcessCommandLine has "NoAutoUpdate" or (ProcessCommandLine has "rename" and ProcessCommandLine has_any ("wuaueng","WaaSMedicSvc")) | project Timestamp, DeviceName, InitiatingProcessFileName, ProcessCommandLine | order by Timestamp desc |
+Windows Installer (msiexec) embedded-mode execution Catches the parallel delivery vector where msiexec launches a randomized payload from a world-writable path.
+DeviceProcessEvents | where InitiatingProcessFileName =~ "msiexec.exe" | where InitiatingProcessCommandLine has "-Embedding" and InitiatingProcessCommandLine has @"Global\MSI0000" | where FolderPath has @"C:\Users\Public\" | project Timestamp, DeviceName, FileName, FolderPath, SHA256, InitiatingProcessCommandLine | order by Timestamp desc |
+Disguised scheduled-task execution Flags payloads relaunched by the Task Scheduler service from user-writable directories (the ~60-second re-execution loop).
+DeviceProcessEvents | where InitiatingProcessCommandLine has "netsvcs" and InitiatingProcessCommandLine has "Schedule" | where FolderPath matches regex @"(?i)^C:\\(Users\\Public|ProgramData|Program Files \(x86\))\\" | where FileName endswith ".exe" | project Timestamp, DeviceName, FileName, FolderPath, SHA256, InitiatingProcessFileName | order by Timestamp desc |
+Command-and-control connections Matches callbacks to the campaign’s C2 IP:port set and six-character .net C2 domains.
+let c2ip = dynamic(["202.95.14.237","47.239.232.245","161.248.87.157","103.156.25.35","103.183.3.162","43.99.100.248","47.239.175.163","47.86.205.97","47.243.218.255"]); let c2ports = dynamic([5090,7031,7032,7088,7089,7090,8050,28290,28300]); let c2dom = dynamic(["iualef.net","euioxu.net","czijbh.net","wfmwsj.net","tbdqxq.net","oijfwe.net"]); DeviceNetworkEvents | where (RemoteIP in (c2ip) and RemotePort in (c2ports)) or (RemoteUrl has_any (c2dom)) | project Timestamp, DeviceName, InitiatingProcessFileName, InitiatingProcessSHA256, RemoteIP, RemotePort, RemoteUrl, ActionType | order by Timestamp desc |
+Malicious delivery domains and download endpoints Identifies connections to the dedicated delivery domains and the /712down, /73inst, /7qinst, /ins711 download paths.
+let deliveryHosts = dynamic(["gehie246.com","yimxg25tiy.com","cc8ttkv35b.com","n7b8t85zsg.com","bxfh.tzcdq.cn","tmsq.tzcdq.cn","mebx78e02.com","qwjre1487.com"]); DeviceNetworkEvents | where RemoteUrl has_any (deliveryHosts) or RemoteUrl has_any ("/712down","/73inst","/7qinst","/ins711") | project Timestamp, DeviceName, InitiatingProcessFileName, RemoteUrl, RemoteIP, ActionType | order by Timestamp desc |
+MITRE ATT&CK techniques observed
+This threat has exhibited use of the following attack techniques. For standard industry documentation about these techniques, refer to the [MITRE ATT&CK framework](https://attack.mitre.org/).
+| Tactic | Technique | ID | Observed in this campaign |
+| Resource Development | Acquire Infrastructure: Domains / Web Services | T1583.001 / T1583.006 | Registered look-alike .com.cn / .hl.cn brand domains, dedicated delivery hosts, and abused cloud object storage. |
+| Execution | User Execution: Malicious File | T1204.002 | Victims run a counterfeit installer downloaded from a spoofed vendor page. |
+| Execution | Command and Scripting Interpreter: PowerShell / Windows Command Shell | T1059.001 / T1059.003 | PowerShell and cmd routines write Defender exclusions, delete shadow copies, and disable Windows Update. |
+| Execution | System Binary Proxy Execution: Msiexec | T1218.007 | msiexec.exe -Embedding launches a randomized payload under a trusted, signed Windows binary. |
+| Persistence / Privilege Escalation | Scheduled Task/Job: Scheduled Task | T1053.005 | Disguised scheduled tasks provide ~60-second recurring execution and SYSTEM privilege escalation. |
+| Defense Evasion | Impair Defenses: Disable or Modify Tools | T1562.001 | Broad Add-MpPreference exclusions and registry exclusion writes weaken Microsoft Defender. |
+| Defense Evasion | Masquerading: Match Legitimate Name or Location | T1036.005 | Payloads impersonate a Philips Speech driver and run svchost.exe from non-system paths. |
+| Defense Evasion | Hijack Execution Flow: DLL Side-Loading | T1574.002 | Payloads load a malicious library from their own directory — XPSPLOG.dll with the later-stage payload, UxEnhance64.dll with the stage-one payload. |
+| Defense Evasion | Process Injection | T1055 | Payload code is injected into the context of another process. |
+| Defense Evasion | File and Directory Permissions Modification | T1222.001 | icacls strips inheritance and hardens payload directories against removal. |
+| Defense Evasion | Modify Registry | T1112 | Registry keys are set for Defender exclusions and Windows Update policy. |
+| Lateral Movement | Remote Services: SMB/Windows Admin Shares | T1021.002 | Attempted SMB remote file access to additional hosts. |
+| Impact | Inhibit System Recovery | T1490 | vssadmin delete shadows /all /quiet removes volume shadow copies. |
+| Impact | Service Stop | T1489 | Stops and disables wuauserv / UsoSvc / WaaSMedicSvc to neutralize Windows Update. |
+| Command and Control | Ingress Tool Transfer | T1105 | A repurposed updater runtime retrieves content from attacker-controlled cloud object storage and writes a further payload to disk. |
+| Command and Control | Application Layer Protocol / Non-Standard Port | T1071 / T1571 | C2 over application-layer protocols on non-standard ports (5090, 7031–7090, 8050, 28290/28300). |
+Indicators of compromise (IOC)
+| Campaign Layer | Indicator | Type |
+| Lure / Impersonation | pc-razerzone[.]com[.]cn | Domain |
+| Lure / Impersonation | app-microsoft-edge[.]com[.]cn | Domain |
+| Lure / Impersonation | kaspersky-lab[.]hl[.]cn | Domain |
+| Delivery | hxxps://www.gehie246[.]com/712down | URL |
+| Delivery | gehie246[.]com | Domain |
+| Cloud Staging | newopt001.oss-cn-hongkong.aliyuncs[.]com/innstll.1.0.61.zip | URL |
+| C2 Domain | iualef[.]net | Domain |
+| C2 Domain | oijfwe[.]net | Domain |
+| C2 Endpoint | 202.95.14[.]237:5090 | IP:Port |
+| C2 Endpoint | 103.183.3[.]162:5090 | IP:Port |
+| Payload | 676a2a7b94ca… | SHA256 |
+| Payload | c6100166e2d3… | SHA256 |
+| Payload | c4100ad39d8d… | SHA256 |
+References
+Prior reporting and OSINT sources — Silver Fox (also known as Yinhu, 银狐)
+[TweetFeed community indicator feed — weekly IOC export](https://github.com/0xDanielLopez/TweetFeed/blob/master/week.csv)[AlienVault OTX pulse — campaign delivery infrastructure and C2 indicators](https://otx.alienvault.com/pulse/6a36fe5a3c1568785b59c4d7)[MalwareBazaar — campaign payload sample (aea879a0…)](https://bazaar.abuse.ch/sample/aea879a0689d4f0510d63043570474978bf51013a2d5b5d9154ec1238d8b2da5)[MalwareBazaar — campaign payload sample (6dacf281…)](https://bazaar.abuse.ch/sample/6dacf28164ad873fe98c5d583e73531cded11dfcb2955146b1adc333b3510002)[LGSRC public indicator repository](https://github.com/Lingggao/LGSRC)
+Learn more
+For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
+To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
+To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
+Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
+- Evaluate your AI readiness with our latest
+[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). [Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)- Learn more about
+[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection)</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">FBI Probes Service Selling 153M+ Drivers Licenses</h2>
+            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/09/fbi-probes-service-selling-153m-drivers-licenses/" target="_blank">Original Link</a></p>
+            <div class="content-text">A new identity theft service launched on the dark web this week is selling digital scans of more than 153 million drivers licenses from people in the United States and Canada. Based on interviews with individuals whose licenses are available for purchase on this service, it appears to be siphoning images collected by a widely-used identity verification company based in Louisiana. KrebsOnSecurity also has learned that the New Orleans field office of the Federal Bureau of Investigation (FBI) today launched an official inquiry into the source of the images.
+On Monday, Aug. 31, a source alerted KrebsOnSecurity to a service advertised by a new user on the Russian cybercrime forum Exploit, offering access to digital scans of identity documents on more than 170 million people in North America. The source brought it to my attention because the proprietor of this identity theft service offered my Virginia drivers license as a free sample in their initial sales thread on Exploit.
+The service, dubbed Nexus, claims to have more than 153 million drivers licenses for people in the United States and Canada, as well as more than 10 million identification cards; more than three million travel documents and/or international IDs; and at least 579,000 medical cards.
+A quick look around Nexus finds they are likely not exaggerating about that 153 million number: Running a blank search in Nexus (with no search parameters entered) returns approximately 11.5 million pages of results, with roughly 15 results displayed per page. It includes documents from people in both Canada and the United States, but the bulk of these records are on Americans: searching for just Canadian drivers licenses returns approximately 1.1 million results, with the largest concentration from Ontario (473,673 records).
+Curiously, the identity records include not only drivers licenses but also marijuana dispensary cards. Some of the records list their “source” as “CDL,” presumably short for “commercial drivers license.” Other records carry the source notation of “CAC,” which may refer to Common Access Cards, government issued identity cards that grant physical access to government buildings and secure rooms.
+The people behind Nexus claim the license images are coming from an active breach at “a major identity verification company” whose customers include multiple Fortune 500 companies.
+“We have been continuously exfiltrating new data for over a year into our private database,” the service enthused in its introductory post on Exploit. “Records are available to preview before purchase with pertinent information redacted. Customer photos are displayed if available.”
+Indeed, over the past 24 hours, the number of drivers license records listed as available in Nexus has increased by nearly 400,000, suggesting that freshly stolen license data is being harvested and uploaded to this service on a semi-regular basis.
+The record that features my drivers license includes six image files — three pairs of photos of the license’s front and back — a basic image scan — as well as infrared and ultraviolet versions of the same images. A date and timestamp is appended to each image file, and the timestamp on my license scan corresponds to a date in June 2025 when I took a flight to the midwest United States to attend a family funeral.
+Intent on discovering the source of this data, KrebsOnSecurity asked more than a dozen friends and family members for permission to search for their licenses in this service. Each person whose license could be found (nine of them) confirmed having traveled on or very close to the dates in the timestamps attached to their images. It is unclear what timezone these timestamps are in, but from reviewing car rental records shared by several people who helped with this research, it appears the timezone is set to Greenwich Mean Time (GMT).
+At first, I thought the source of the data might have something to do with airports. However, that theory went out the window when it became apparent there were no passports in this data set. Also, only some of those who helped with this research said they showed their drivers license at the airport on the day of their travel. One person whose license was in Nexus hadn’t flown at all recently, but was renting a car from Hertz for several months around the date of their timestamp.
+Two of those who agreed to help are federal employees who said they shared other forms of government identification when passing through airport security. However, those individuals each said they shared their state-issued drivers licenses later that day when renting vehicles at their respective destinations, and that both rented their cars from Hertz.
+After finding a note in my calendar for the day of my June 2025 flight reminding me to bring my passport, I remembered that I also never actually shared my drivers license when I went through security at Reagan National Airport on that day because I did not yet have a Real ID, a security-enhanced drivers license that is now required by the Transportation Security Administration (TSA) for all domestic travel. Instead, I showed the TSA agent my government-issued U.S. passport.
+Here’s where it gets interesting: I was able to find my mother’s drivers license in this service as well, and the timestamps for her images are just a few seconds apart from mine. That’s notable because we both handed our licenses to the Hertz rental car representative at the same time.
+According to my mom, the only place she gave her drivers license to that day was the rental car company, and if memory serves that is also true for me. I don’t recall if the rental car representative inserted our licenses into any kind of machine, but I remember they held onto them for several minutes behind the counter while we were signing various forms. KrebsOnSecurity sought comment from Hertz and will update this story in the event they reply.
+Zach Edwards is a well-known security and privacy researcher who recently launched a service called [DecryptAds](https://krebsonsecurity.com/2026/08/whos-tracking-you-use-this-new-service-to-find-out/) to help people better understand how online advertisers are tracking them. A scan of Edwards’s drivers license is available for purchase on this identity theft service, and Edwards said the timestamp on his record corresponds to the middle of a trip last month to Las Vegas for the annual DEFCON security conference.
+Edwards told KrebsOnSecurity that although he did not rent a car in Vegas, he did hand over his license at the TSA checkpoint, at a marijuana dispensary in Vegas, and at his hotel (the Aria). But he said the only one of those three that for sure scanned his ID in some kind of device was the dispensary.
+Edwards said the dispensary he visited that day was Planet13, a multi-state chain with stores in California, Florida, Illinois and Nevada. In 2022, the New Orleans-based identity provider idscan.net published [a press release](https://idscan.net/press-release/planet-13-partners-with-idscan-net/?srsltid=AfmBOooFV0QbsE8UCJBUhGP8mbYCl7j4iKJljXTf4NZA5n79ey00b5Qo) announcing an exclusive identity verification agreement with Planet13’s dispensaries nationally. IDScan says it processes ID verification for more than 1,000 marijuana dispensaries in 19 U.S. states.
+The “trust” page of idscan.net states that the company provides identity verification services for numerous big brands, including Hertz, Target, Fedex, Motorola Solutions, the financial services giant Jack Henry, and Caesars Entertainment. And as idscan.net’s own [documentation states](https://idscan.net/press-release/2025-id-fraud-report/), the technology scans IDs with both infrared and ultraviolet light. Idscan.net says the company’s systems and technology perform more than 21 million verifications monthly, at more than 20,000 locations around the world.
+Contacted by KrebsOnSecurity, idscan.net said it was investigating the matter, but the company has not yet shared an official statement or a substantive reply to specific questions sent via email.
+“At this point I’m not able to share any additional information, but the updates you have provided have been welcome, and helpful to our team’s investigation,” wrote Jillian Kossman, a marketing and operations leader at idscan.net.
+During the course of my research for this story, word apparently got around to the FBI that I was poking at the apparent source of this new identity theft service’s data. Probably they were tipped off when I shared with a trusted source that Nexus also is selling the drivers license information for the assistant director of the FBI (I did not find FBI Director Kash Patel’s license in Nexus).
+Earlier this afternoon, I was added to a conference call with a half-dozen FBI agents, including senior leaders from the agency’s cyber division. During that call, the FBI shared that earlier today their New Orleans field office opened an official investigation into an apparent breach involving idscan.net.
+Edwards said that as more in-person and online experiences require sharing drivers licenses, vendors who collect this sensitive data need to be held to a higher standard.
+“This episode should further strengthen the resolve for people who are fighting back against online ID schemes which are requiring countless providers to ask for drivers licenses in order to access services under the guise of protecting kids,” Edwards told KrebsOnSecurity. “These systems are putting sensitive data into more and more 3rd party vendors, and we don’t have nearly the oversight to ensure they are safe.”
+Larry Baldwin is principal intelligence researcher at the cybersecurity firm [Cybera](https://www.cybera.io). Baldwin said a front and back scan of his drivers license available at Nexus contains timestamps that correspond to the date of a car rental from Hertz on a recent vacation.
+Baldwin said the Nexus identity theft service presents multiple serious security and privacy threats, noting that state-issued drivers licenses are commonly used as proof of one’s identity when opening new lines of credit. Baldwin said the service could also dangerously expose many people who do not wish to be found but who cannot meaningfully change their appearance (or at least not enough to fool today’s AI-based image matching tools).
+This category of people, he said, includes those fleeing domestic violence, and even people who have been assigned a whole new life and identity as part of the federal government’s witness protection program, which is generally reserved for criminal defendants in racketeering and conspiracy investigations who agree to cooperate with federal authorities.
+“Just when it seems like we’re making some headway in improving authentication controls through drivers license verification systems, this happens and the very thing those improvements are dependent on are compromised,” Baldwin said.
+Update, 8:56 p.m. ET: Shortly after this story was published, the Nexus identity theft service website vanished from the darkweb, replacing its login page with a plain text message that reads, “This service is no longer available.”
+This is a potentially fast-moving story. Any changes or updates will be noted here along with a timestamp.
+Love the way you connected the dots to identify the source. Given the companies named, I am probably in that list too.
+What is a safe method to determine if my identity card was compromised in this breach?
+Assume it was.
+Good job everyone I’m very proud of you keep up the good work
+Great article. Next question/leak: What private/secret information does Real ID and new Passports contain and how long\, if not already this information is compromised.
+It’s a bit late to hold ID vendors to a higher security standard, when the ID data has been exfiltrating for over a year. IDscan is so concerned about it, they sent a marketing person to talk to you. Surely, the next step is for IDscan to issue a press release saying “your security is our top priority”.
+… and to show we’re sincere, here’s a year’s free identity theft protection service, etc.
+IDscan.net sent us the message below on Wed 9/2/2026 12:55 AM UTC. Our company was considering doing business with them. Don’t believe we will be anymore.
+Message:
+We are writing to inform you of a potential security incident that we are actively investigating.
+Our relationship with our customers is extremely important to us, and we wanted you to hear about this directly from us at an early stage, even though our investigation is still preliminary.
+Earlier today, September 1, we received information suggesting that certain information may have been exposed and that IDScan.net may be implicated. We are working urgently to validate that information and determine whether any unauthorized access occurred, and the scope of such activity.
+Upon learning this information, we immediately initiated our incident response procedures, including:
+1. Taking steps to secure potentially affected systems and investigate possible points of access;
+2. Notifying our cyber insurance carrier and activating incident response protocols;
+3. Engaging outside legal counsel;
+4. Beginning the engagement of an independent forensic firm;
+5. Coordinating with law enforcement; and
+6. Preserving relevant logs and system data.
+At this time, we have not reached conclusions regarding the nature or scope of the incident, including what information was involved. However, based on the information available to us at this stage, we believe it is important to notify our clients promptly while we continue our investigation and work to determine the relevant facts.
+We are committed to keeping you informed as we learn more. You may reach out to privacy@idscan.net with any questions.
+First rule of Fight Club? Same first rule of security, don’t discuss your security, and sure as heck do not allow an identity provider to list you on their website as a customer. Operational security ring a bell?
+It’s worth noting that multiple local, state, and federal agencies utilize ID scanning for identity verification — I’m not naming vendors to not muddy the water — and tie your identity back to card data, biometrics, health data, tax data, etc. These platforms, for the most part, are not goverment owned but simply licensed for government and commercial use, and deployments can vary widely depending on the technical acumen of staff, budget, GRC, ethical behavior, etc. So, while it is easy to blame the vendor, you have to take a hard look at each deployed environment (public cloud, private cloud, hybrid, and on-premises) in addition to the software vendors.
+Great coverage nonetheless.
+opsec level: opera gx
+Take a look at cities that have setup Night Life or Night Economy managers and you’ll see a ton of these similar devices and mandates to use them, along with Youtube and Instragram endorsement videos.
+Patronscan is another really bad one.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
+            <h2 class="article-title">Aesto Health says data breach affects over 9.5 million patients</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/aesto-health-says-data-breach-affects-over-95-million-patients/" target="_blank">Original Link</a></p>
+            <div class="content-text">Aesto LLC, operating as Aesto Health, disclosed that a data breach discovered recently affects more than 9.5 million individuals. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-4" class="article-body">
+            <h2 class="article-title">Critical Langflow flaw exploited to steal OpenAI and AWS keys</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/critical-langflow-flaw-exploited-to-steal-openai-and-aws-keys/" target="_blank">Original Link</a></p>
+            <div class="content-text">Threat actors are exploiting an unauthenticated remote code execution vulnerability (CVE-2026-0768) in Langflow, an open-source framework for building AI applications, to steal credentials, tokens, and keys. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-5" class="article-body">
+            <h2 class="article-title">Attackers Exploit Critical JFrog Artifactory Flaw to Mint Admin Tokens Days After Disclosure</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/attackers-exploit-critical-jfrog.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Threat actors are exploiting a newly patched critical security flaw impacting JFrog Artifactory merely days after public disclosure, according to [watchTowr](https://x.com/watchtowrcyber/status/2094639075726668267).
+The vulnerability in question is [CVE-2026-82329](https://www.cve.org/CVERecord?id=CVE-2026-82329) (CVSS score: 9.8), a case of authentication bypass that could lead to administrative access in Artifactory.
+"JFrog Artifactory contains an authentication weakness that, under default configuration, may allow an unauthenticated attacker with network access to obtain administrative privileges," according to a description of the flaw on CVE.org.
+The vulnerability was patched by JFrog with [Artifactory version 7.161.20](https://docs.jfrog.com/releases/docs/artifactory-self-managed-releases) released on August 28, 2026. It [affects](https://docs.jfrog.com/releases/docs/jfrog-security-advisories) the following versions -
+- 7.161.0 > 7.161.19
+- 7.146.0 > 7.146.36
+- 7.133.0 > 7.133.28
+- 7.125.0 > 7.125.19
+- 7.117.0 > 7.117.27
+- 7.111.4 > 7.111.21
+"It affects default configs, requires no auth, no user interaction," Vercel CEO Guillermo Rauch [said](https://www.linkedin.com/posts/rauchg_two-days-ago-jfrog-dropped-cve-2026-82329-activity-7499907121031991297-QVfg/) in a post on LinkedIn. "It's an RCE bomb because Artifactory hosts binaries, so you can basically poison everything, but an admin escalation can cause damage even beyond that."
+The issue resides in JFrog Access, which is designed to issue and validate credentials. "Instances without an additional join key configured receive a 'phantom' join key that attackers can abuse to forge access and mint administrator-level credentials," Yordan Ganchev, principal threat intelligence specialist at watchTowr, said in a statement shared with The Hacker News.
+Ganchev also pointed out that threat actors have begun to weaponize the flaw as of September 1, 2026, to generate admin tokens and enumerate users, groups, credential sets and federated access topologies.
+"This moved from disclosure to real-world exploitation with uncomfortable efficiency," Ganchev added. "Anyone following along knows what comes next: things will get worse."
+"When attackers gain admin level access to a central software supply chain system, they can do what every engineering team does best – build, ship and distribute software fast. From there, they could tamper with build pipelines, move laterally into production systems and potentially push malicious changes downstream to customers."
+Ganchev said exploitation efforts targeting watchtower's honeypots have originated from a small number of IP addresses from varying geographies, although there is no evidence of broad-scale scanning or mass exploitation at this stage.
+"Some observed activity showed evidence of CVE verification only, where the vulnerability was successfully exploited and then stopped. Other attempts successfully exploited the vulnerability and then probed or enumerated the JFrog Artifactory instances to determine whether the environment was worth further exploitation," Ganchev added.
+"In limited cases, threat actors created backdoor users and enumerated existing Artifactory users, their groups, tokens, and the system's federated access topologies."
+Organizations that are running self-managed versions of JFrog Artifactory are recommended to apply patches to internet-exposed systems with immediate effect, as well as inspect audit logs, rotate exposed credentials, and review connected systems for malicious changes or backdoor access.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-6" class="article-body">
             <h2 class="article-title">Financially Motivated Threat Actor BREEZE COMET Targets Brazil</h2>
             <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/financially-motivated-threat-actor-breeze-comet-targets-brazil/" target="_blank">Original Link</a></p>
             <div class="content-text">Financially Motivated Threat Actor BREEZE COMET Targets Brazil
@@ -183,6 +510,7 @@ Implement identity-based / Layer 7 micro-segmentation for financial workloads.
 -
 Limit administrative access exclusively to dedicated jump hosts via privileged access management (PAM).
 Indicators of Compromise (IOCs)
+To assist the wider community in hunting and identifying activity outlined in this blog post, we have included indicators of compromise (IOCs) in a [GTI Collection](https://www.virustotal.com/gui/collection/de4e533c9062c62b3ba3a5d88eff111156075f2c92d243737edeead6481a9fd5) for registered users.
 File Indicators
 Table 1: File Indicators
 Network Indicators
@@ -258,110 +586,92 @@ uint16(0)==0x5a4d and 7 of them
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-1" class="article-body">
-            <h2 class="article-title">Recently patched PaperCut zero-days used in data theft attacks</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/recently-patched-papercut-zero-days-used-in-data-theft-attacks/" target="_blank">Original Link</a></p>
-            <div class="content-text">Two security vulnerabilities in the PaperCut NG and MF print management software, patched last week after being exploited as zero-days, are now being abused in data theft attacks. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
+        <div id="art-7" class="article-body">
+            <h2 class="article-title">waf-fu, or Some Log Replay Nonsense</h2>
+            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/waf-fu-or-some-log-replay-nonsense" target="_blank">Original Link</a></p>
+            <div class="content-text">waf-fu, or Some Log Replay Nonsense
+Table of contents
+1 waf-fu Your Way to Better Credential Access
+So, a gig or two ago I was reviewing CloudWatch logs to search for any credentials that I may be able to use, in order to gain additional access to the environment. Various Web Application Firewalls (WAFs) were configured so that all headers were captured in the log, which was pretty convenient!
+The part that wasn’t so fun was trying to replay multiple requests across multiple WAF logs, each with their own required content, just to see if at least one may provide a way to hopefully gain additional access into the applications the WAFs were configured to protect. It’s possible to do it all manually, but I found it to be a frustrating process when reviewing dozens or hundreds of log groups or individual log entries that needed to be checked to find out which may get me where I wanted to go.
+Soo, I figured that there must be a better solution to handle building AWS WAF log replay traffic more at scale and that’s what was built. Feel free to jump to [Replay With waf-fu](#Replay) if you want to see the tool that’s being released. But for everyone else, we’ll first talk about what WAF does and doesn’t capture by default.
+2 Straight From the Horse’s Docs
+Okay, so what does an AWS WAF capture with the default configuration? [Surprisingly a lot](https://docs.aws.amazon.com/waf/latest/developerguide/logging-fields.html), and none of it is automatically redacted. So…good news for us. You may see some cutoff if dealing with [logs of exceptional size](https://docs.aws.amazon.com/waf/latest/developerguide/waf-oversize-request-components.html), but for most cases it’s probably the whole hog. Here’s a small table with the details to look professional about it.
+Field | Source | Details |
+|---|---|---|
+HTTP Method | httpRequest.httpMethod | Request operation, such as GET, POST, PUT, DELETE, etc. |
+URI Path | httpRequest.uri | Path identifying the requested resource |
+Query String | httpRequest.args | Query parameters and their values |
+All Headers | httpRequest.headers[] | Header names and values supplied with the request |
+HTTP Version | httpRequest.httpVersion | HTTP protocol version used for the request |
+Client IP | httpRequest.clientIp | IP address of the client sending the request |
+Country | httpRequest.country | Country associated with the request's origin or a literal ‘-‘ when AWS WAF cannot determine it |
+Timestamp | timestamp | Request timestamp recorded in milliseconds since the Unix epoch |
+It’s a lot of neato stuff. And as seen with the CAPTCHA log example on the AWS [WAF logging examples](https://docs.aws.amazon.com/waf/latest/developerguide/logging-examples.html) documentation, their examples show that logged content can certainly include session cookie data.
+To be fair, some of WAFv2 documentation does recommend redacting common headers, but I only found this mentioned in the [WAFv2 Best Practices documentation](https://aws.github.io/aws-security-services-best-practices/guides/waf/waf-logging/docs/), which is not part of their main documentation site at [https://docs.aws.amazon.com/](https://docs.aws.amazon.com/).
+“Common headers to redact include Authorization, Proxy-Authorization, Cookie, Set-Cookie, X-API-Key, and X-Amz-Security-Token.” |
+While full POST request body details aren’t captured, we can still find use for everything else. After all, just because a POST request uses body content doesn’t mean the service will fully validate it.
+3 Hunting to be Repetitive
+So, the logs may be used to re-create a replay attack, which is pretty darn nice. But where do we find them and how difficult is it to do that. Honestly, it’s not too bad. For our use case we looked at three that can be used to pull logs from that can potentially be replayed.
+But, as can be seen below, obtaining WAF logs doesn’t require too many permissions overall, and because it’s made of mostly read permissions, it’s more likely to be part of an overly permissive principal.
+3.1 CloudWatch Logs Groups
+By default, all WAF logs set to store logs in CloudWatch are configured with the prefix aws-waf-logs-, followed by whatever name is desired. Most deployments seem to just use the WAF name for this. Either way, the required prefix makes it super simple to search for any CloudWatch Log Groups that are configured for WAF logging. And just two actions are needed to list the log groups and then read log group data.
+{
+"Effect": "Allow",
+"Action": [
+"logs:DescribeLogGroups",
+"logs:FilterLogEvents"
+],
+"Resource": "*"
+}
+3.2 S3 Buckets
+Similarly, all WAF logs configured to store logs in an S3 bucket use the same prefix aws-waf-logs-, again followed by whatever name is desired. Here we only need three actions to find and download WAF logs delivered to an S3 bucket.
+{
+"Effect": "Allow",
+"Action": [
+"s3:ListAllMyBuckets",
+"s3:ListBucket",
+"s3:GetObject"
+],
+"Resource": "*"
+}
+3.3 WAF Sample Pulling
+The last method we’re looking at for pulling WAF logs is to get them from the WAF directly, which can have a few benefits, but also some disadvantages. The big one is that the WAF’s logging configuration RedactedFields element [“has no impact on request sampling”](https://docs.aws.amazon.com/waf/latest/APIReference/API_LoggingConfiguration.html). This means that any fields configured for redaction using the RedactedFields element will not be redacted when retrieved directly from the WAF through request sampling.
+The downside is that sampling only pulls up to 500 log entries of sampled log data, which is randomly pulled from a 5,000 log sample set. This time we just need four actions to complete WAF log sampling requests.
+{
+"Effect": "Allow",
+"Action": [
+"wafv2:ListWebACLs",
+"wafv2:GetWebACL",
+"wafv2:GetLoggingConfiguration",
+"wafv2:GetSampledRequests"
+],
+"Resource": "*"
+}
+4 Replay With waf-fu
+But that’s enough fancy talk! Now for the new toy: waf-fu. We’ll leave additional details of the tool to the markdown files in the [repo](https://github.com/confused-binary/waf-fu). But it’s a simple tool that pulls AWS WAF log data to store in a local sqlite database for cache, analysis, review, and replay of a logged session. All done with a nifty TUI so nobody is required to leave their favorite shell.
+waf-fu --profile $PROFILE --region $REGION --log-group aws-waf-logs-$WEBACL
+Once started, you're dropped into the interactive TUI, where you can browse, filter, and search until you find a log to replay as curl commands, through Chrome or Firefox with full header injection, or as a batch HAR (HTTP Archive) export for Burp Suite import.
+5 Plugging the Gaps
+New toys are fun and all, but what can be done to help prevent this? AWS has two redaction mechanisms to choose from. But, as mentioned before, one doesn’t really provide great coverage if request sampling is achievable.
+5.1 RedactedFields Configuration
+As the [docs](https://docs.aws.amazon.com/waf/latest/APIReference/API_LoggingConfiguration.html) say, RedactedFields on PutLoggingConfiguration accepts four FieldToMatch types: UriPath, QueryString, SingleHeader, Method. No Cookies option, you use SingleHeader with Name: cookie.
+Three things it doesn’t cover:
+- SingleHeader vs. Headers. From the AWS API reference: SingleHeader redaction doesn’t apply to rules using the Headers aggregate match type. A rule inspecting all Headers logs those values unredacted even with SingleHeader redaction configured for the same header name.
+- Sampling. From AWS: “This setting has no impact on request sampling.” So GetSampledRequests returns full,
+[unredacted headers](https://docs.aws.amazon.com/waf/latest/APIReference/API_GetSampledRequests.html)regardless. - Amazon Security Lake. consumes an independent WAF log stream and only respects DataProtectionConfig, not RedactedFields. We didn’t include that as a source to look for WAF logs, but I still felt it was worth including in this list of limitations.
+5.2 DataProtectionConfig Configuration
+Released in [February 2025](https://aws.amazon.com/about-aws/whats-new/2025/02/aws-waf-data-protection-logging-experience/), this option provides better web ACL-level data protection. Like is [talked about](https://docs.aws.amazon.com/waf/latest/developerguide/data-protection-masking.html), this setting provides actual redacting of content for CloudWatch, S3 buckets, request sampling, and others. Yeah, the three destinations for logs we talked about here aren't all that’s supported. It’s better, but it still has these [quirks](https://docs.aws.amazon.com/waf/latest/developerguide/data-protection-limitations.html) to keep in mind:
+- aws-waf-token is explicitly exempt, so you can’t protect it.
+- SINGLE_HEADER protection doesn’t cover rules inspecting all Headers. Same caveat as RedactedFields.
+6 Live, Log, (Replay), Laugh
+So that's the end of our story. WAF logs are undoubtedly useful for troubleshooting, building and firing detections, and analysis when tracking down what a bad actor may have done. But they can also reveal a lot about the applications they protect, including exposing sensitive authentication details for their users.
+There's nothing inherently wrong with keeping such logs to get work done, but it's worth locking down who can access the data, making sure nothing gets written to the logs that shouldn't be there, and that redaction is working how it is intended. After all, anything readable in logs, wherever they live, could be the final piece of the puzzle we need to get the access we're after.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-2" class="article-body">
-            <h2 class="article-title">Attackers Exploit Critical Langflow and Rails Flaws in Credential-Probing and C2 Activity</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/attackers-exploit-critical-langflow-and.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Threat actors are exploiting two critical flaws impacting Langflow and Ruby on Rails, according to new findings from VulnCheck.
-The vulnerabilities in question are listed below -
-[CVE-2026-0768](https://www.zerodayinitiative.com/advisories/ZDI-26-034)(CVSS score: 9.8) - A lack of proper validation of a user-supplied input vulnerability that could be exploited to execute arbitrary Python code in the context of the root user.[CVE-2026-66066](https://thehackernews.com/2026/07/critical-rails-flaw-could-let.html)aka KindaRails2Shell (CVSS score: 9.5) - A vulnerability that could allow an unauthenticated attacker to read arbitrary files from the server, leak Rails process environment and secrets such as secret_key_base, the Rails master key, database passwords, cloud storage credentials, and API tokens, ultimately leading to remote code execution.
-Attackers can exploit CVE-2026-66066 by uploading a crafted image by taking advantage of the discrepancy between Active Storage and libvips in how they read input files. Successful exploitation requires affected applications to use libvips for Active Storage image processing and accept image uploads from untrusted users.
-VulnCheck said it recorded more than 50 detections within a few hours on August 30, 2026, a figure that has since risen to 360 as of Monday.
-"Adversaries appear to be conducting a mix of reconnaissance and credential harvesting activities: Among other things, attacker requests are querying environment variables (LANGFLOW_SUPERUSER, OPENAI_API*, AWS_ACCESS*, AWS_SECRET*), reading /root/.cache/langflow/secret_key, and checking .ssh access and .bash_history size," Caitlin Condon, vice president of threat research at VulnCheck, [said](https://www.linkedin.com/feed/update/urn:li:activity:7499493657218076672/).
-"Source traffic primarily originates from Russia and has thus far exclusively hit Canaries in the U.K."
-The exploitation comes as threat actors have [exploited](https://www.vulncheck.com/blog/pwning-the-ai-stack) as many as 12 vulnerabilities since 2025, with more than 15,000 successful attempts leveraging [CVE-2026-0769](https://nvd.nist.gov/vuln/detail/CVE-2026-0769), [CVE-2025-3248](https://nvd.nist.gov/vuln/detail/CVE-2025-3248), and [CVE-2026-5027](https://nvd.nist.gov/vuln/detail/cve-2026-5027). The majority of the vulnerable Langflow hosts are located in the U.S., Germany, Malaysia, Brazil, and India.
-In one case observed against its canary systems, unknown threat actors have been observed exploiting CVE-2026-5027 to drop a Python credential harvester, proxy agents, and SimpleHelp for remote access. In another, attackers have weaponized CVE-2025-3248 to enlist the machine into an XMR cryptocurrency miner botnet.
-"They then disabled auditd, resulting in a forensic blind spot, and exploited CVE-2026-0769 to drop .sysd," VulnCheck said. "From there, the attacker pivoted to scan for other targets, likely to expand their cryptomining operation, and moved on to another host."
-The findings highlight increased threat actor interest in AI development platforms, which can provide access to sensitive credentials, cloud environments, and other connected systems.
-The threat intelligence company has since also [detected](https://www.linkedin.com/feed/update/urn:li:activity:7497979391268892672/) active exploitation of CVE-2026-66066 targeting its canaries in Singapore, Israel, and the U.K. In a post shared on LinkedIn, security researcher Patrick Garrity said the activity originates from a single IP address in France and establishes command-and-control (C2) to a host in Israel.
-"Active Storage always enables the libvips loaders that are unsafe for untrusted content, so any app that renders image-upload variants with the default vips processor can be coerced into loading a malicious upload," VulnCheck [added](https://docs.vulncheck.com/initial-access/2026-08-07#cve-2026-66066-ruby-on-rails-active-storage-libvips-untrusted-file-read-to-rce-kindarails2shell). "Notably, we tested a patched 8.1.3.1 server and found that while the fix blocks the libvips file read, it does not neutralize the variation-key Marshal deserialization: the RCE gadget still executes on a patched server given a valid signature."
-As of early August, more than 7,100 exposed vulnerable instances of Ruby on Rails were identified by VulnCheck.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-3" class="article-body">
-            <h2 class="article-title">Cronos blockchain restarts after $74 million Tectonic exploit</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/cronos-blockchain-restarts-after-74-million-tectonic-exploit/" target="_blank">Original Link</a></p>
-            <div class="content-text">The Cronos blockchain network has resumed trading activity after a price-manipulation attack on the Tectonic cryptocurrency lending platform allowed an attacker to borrow $74 million. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">China-Linked Fire Ant Hijacks Cisco Routers to Steal Credentials and Blind Security Logs</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/08/china-linked-fire-ant-hijacks-cisco.html" target="_blank">Original Link</a></p>
-            <div class="content-text">A China-nexus cyber espionage actor tracked as Fire Ant has expanded a long-running campaign beyond VMware hypervisors to compromise Cisco IOS XR routers, Terminal Access Controller Access-Control System (TACACS) servers, and Linux management hosts used to route, authenticate, and manage high-value networks.
-Sygnia, the incident response firm that investigated the intrusion, said the actor turned the compromised routers into collection platforms, capturing network traffic, harvesting credentials, and suppressing the logging and telemetry that defenders rely on to reconstruct an attack.
-The firm assessed that the hacker group used its foothold to explore paths to connected high-value environments, including critical infrastructure. However, activity against those networks was limited to scanning and connection attempts rather than confirmed compromise.
-Controlling the routers gave the actor a vantage point over traffic moving through trusted network paths, Sygnia said.
-"This activity reinforces one of the core observations from the investigation: when a threat actor controls routers, they do not only gain reach. They gain perspective," the firm said.
-The firm assessed that the activity strongly overlaps with [public reporting on UNC3886](https://thehackernews.com/2026/02/china-linked-unc3886-targets-singapore.html), a China-nexus espionage group known for targeting virtualization platforms and network edge devices, though it said in [its report](https://www.sygnia.co/blog/fire-ant-evolves-from-hypervisors-to-trusted-infrastructure/) that it does not make a conclusive attribution.
-Mandiant, which first documented UNC3886, has said it [found no technical overlap](https://cloud.google.com/blog/topics/threat-intelligence/china-nexus-espionage-targets-juniper-routers) between the group and the separate Chinese operations tracked as Salt Typhoon and Volt Typhoon.
-The 2026 activity follows [Sygnia's July 2025 disclosure](https://thehackernews.com/2025/07/fire-ant-exploits-vmware-flaw-to.html) of Fire Ant, which detailed the group's exploitation of VMware ESXi and vCenter environments before moving into the network and management layers.
-The investigation began with an anomaly on a Cisco IOS XR router, where a Generic Routing Encapsulation (GRE) tunnel interface was operating with no running configuration or commit history to explain how it had been created. Sygnia did not identify how the actor first gained access to the router.
-Tracing the tunnel led investigators to a legacy Linux system, from which Fire Ant ran repeated connection attempts and port probing against administrative and service ports on connected networks, including SSH, HTTP, SMB, and RDP.
-The router malware was purpose-built for the IOS XR control plane rather than a generic Linux appliance. One component embedded a modified system library that checked each outgoing log message for the string Health and forwarded it only when the string was present.
-A separate component altered the router's command-execution path to append an | exclude filter to show commands, hiding the attacker's tunnel configuration from administrators inspecting the device.
-Fire Ant then used the routers to capture packet captures (PCAPs) from multiple Cisco devices. The captures were uploaded to external FTP servers, one of which appeared to have been installed the same day the uploads took place.
-On the TACACS server, Sygnia identified a credential-collection toolset it tracks as TacTap.
-An injector named acppid loaded a malicious library into the running tac_plus authentication process. The library hooked the functions that accept new connections. It then passed the live session handles to a second process over a local Unix socket.
-The captured credentials were written to /var/log/.tacplus.acct and lightly obfuscated with a single-byte XOR key of 0xEF.
-"To our knowledge, this specific tac_plus library-injection technique has not been publicly described before, making it a notable evolution of Fire Ant's TACACS-focused credential collection tradecraft," Sygnia said.
-Credential theft from TACACS servers is established tradecraft for the cluster, as Mandiant has previously documented UNC3886 deploying a [TACACS+ sniffer called LOOKOVER](https://thehackernews.com/2024/06/chinese-cyber-espionage-group-exploits.html) and replacing the tac_plus daemon with a backdoored version to log credentials.
-Sygnia also recovered a second new tool, a Linux backdoor it called BridgeAgent, which was deployed on the tunnel-connected host and masqueraded as a Zabbix monitoring agent.
-The implant persisted via a zabbix_agent.service systemd unit running as root, disguised its process as /usr/bin/gnome-shell, and polled the attacker's infrastructure over TLS on port 443 for commands and reverse-shell instructions.
-Across the Linux management hosts, Fire Ant built a durable access layer using the open-source Medusa and REPTILE rootkits, custom SSH backdoors, and binaries renamed and timestamped to impersonate the SentinelOne and Cybereason endpoint security agents.
-Several of these components were planted in 2025 and reused for hands-on activity in 2026. At least one backdoor kept running in memory after its file had been deleted from disk, Sygnia said.
-The actor also worked to undermine the evidence itself by suppressing router logs, SNMP traps, and authentication requests; disabling SELinux on the Linux hosts; rewriting login-history records; and removing entries for privileged commands from system logs.
-Sygnia said routers, TACACS servers, hypervisors, and jump hosts should be treated as first-class forensic assets, and that investigators should validate logs against memory, disk, network, authentication, and configuration evidence rather than a single telemetry source.
-Sygnia published the following indicators of compromise (IoCs) -
-- TacTap: the injector
-/usr/sbin/acppid
-(SHA136005f5e4398a1c62a2a9271eddfcc1b44b1ad00
-), the injected library/lib/libseconfd.so
-(955cd45a2f6f226a2fdf44b329af1c8dde90cb38
-), and the credential file/var/log/.tacplus.acct
-, decoded with XOR key0xEF
-. - BridgeAgent: persistence via a
-zabbix_agent.service
-systemd unit, encrypted configuration at/opt/.ICEauthority
-, and command-and-control (C2) over TLS on port 443. - IOS XR implants:
-/usr/bin/acpid
-(be6b27f429324a4af05a310d8ec9635e37c68a94
-),/pkg/bin/dhcpd_show_issu_status
-(1682b652a15bde732489f22809b0b7594c228fd3
-),/pkg/bin/hd
-(b149fa3a34bd585e7a674a4fd9538437bd06f514
-), and the persistence script/etc/rc.d/init.d/grub-rommon
-. - VMCI backdoor:
-/var/tmp/audit
-(13f0c2a598e3aa63856c032a96b110aed963f0e8
-), communicating over VMware Virtual Machine Communication Interface (VMCI) sockets. - Packet-triggered backdoor:
-/var/tmp/ping
-(5ba1242050b5b447052b210788a5a25593d6987d
-), activating on TCP ports 443, 541, 8443, and 10443 and UDP source port 40443 to destination port 500, triggered by the stringsxcdewqaz!@#
-.
-The company's full indicator set and YARA rules are available in its report.
-The activity parallels the router and TACACS+ traffic collection that a CISA-led joint advisory [attributed to Salt Typhoon](https://thehackernews.com/2025/08/salt-typhoon-exploits-cisco-ivanti-palo.html) in August 2025, a separate Chinese espionage cluster that captured packet data from compromised routers to harvest administrator credentials across telecommunications networks.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-5" class="article-body">
+        <div id="art-8" class="article-body">
             <h2 class="article-title">Two Alleged ‘TeamPCP’ Hackers Arrested in Australia</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/08/two-alleged-teampcp-hackers-arrested-in-australia/" target="_blank">Original Link</a></p>
             <div class="content-text">Authorities in Australia have arrested two men believed to be members of TeamPCP, a prolific cybercrime and data extortion group blamed for perpetrating the longest running spree of software supply chain attacks ever.
@@ -442,6 +752,7 @@ Ruben Thomson is unemployable and will never be trusted in a cybersecurity job. 
 Off-world mining, no doubt.
 I would hire him
 Meet me in april 2003 for the sat sitch! Does your time machine work? Doubtful.
+Time for pattaya!
 What an absolutely astonishing job of sleuthing!
 Flower Drum Song called and asked for Hulk Hogan to leave.
 Agreed, many thanks Brian, I am always fascinated by the way you find and follow these links. Please keep doing what you are doing, it makes the world a little bit safer.
@@ -467,242 +778,9 @@ When compromised credentials, popular packages, CI/CD pipelines, and automation 
 Also: “high capability, low operational discipline” feels like a threat profile we’re going to hear a lot more about in the AI era.
 Pretty sure that is the bulk of the current threat landscape (after accounting for gov and gov-sponsored and smaller highly organized groups). The largest concentration of threats almost always seem to focus on one or two types things… During antisec and anonymous days, it was leaks and bulk, low-‘cash-take’, high-frequency, botnets. Lately it seems to be throwing a whole ton of ransomware attacks against every potential target with little overall organization or ‘respect’ hierarchy. This new ‘landscape’ is apparently really competitive and something almost impossible to disassemble. If an attacker can crash their way in with employees’ not being aware, and the attacker’s goals are such that they do not feel they need to care much about staying there (a day and a long slurp of a very wide data pipe) and gets loaded, financially, from their smash and grab, which seems to be the current threat du jour for the past half-a-decade to almost a decade, now, why would they even want to organize?
 Guess I am saying agree they have low operational discipline, but our industry has sure skewed what ‘capability’ means. It used to mean skilled. Like, not, ‘yo, I am capable of stealing very expensive exotic cars, I just need to drive this tractor trailer through the front window of the car dealership.’ I mean lol. How much of it is about bragging, anyway? How much are these groups spending of the millions and millions they asked for?
-thanks chatgpt for the insightful comment and weed backlink</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-6" class="article-body">
-            <h2 class="article-title">SpooNMAP Grows Up: Findings, Local LLM Detection, and a Whole Lot Less Waiting</h2>
-            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/spoonmap-grows-up-findings-local-llm-detection-and-a-whole-lot-less-waiting" target="_blank">Original Link</a></p>
-            <div class="content-text">SpooNMAP Grows Up: Findings, Local LLM Detection, and a Whole Lot Less Waiting
-A while back, we released [SpooNMAP](https://trustedsec.com/blog/get-to-hacking-massively-faster-the-release-of-spoonmap). A little wrapper that lets masscan do what masscan does best (find open ports at ludicrous speed) and then hands the results to Nmap for the banner grabbing it does best. The whole point was to get you hacking faster, and it worked. People used it, and it was great. Then vibe coding came along, which prompted a lot of "You know what would make this better?" kinds of ideas to work through.
-This release is a big one. SpooNMAP used to stop at "here are your open ports." Now, it keeps going and tells you which of those ports are actually interesting, and it does it faster than before!
-From Port Scanner to Findings Machine
-SpooNMAP now runs context-aware NSE scripts against the services it finds and writes you a real, severity-sorted findings report. Turn on script scanning and you get findings.txt
-, findings.md
-, and findings.json
-, each finding tagged CRITICAL/HIGH/MEDIUM/LOW with a copy-paste command to reproduce it.
-Out of the box, it flags anonymous FTP, weak SSH ciphers, SMBv1, NFS exports, exposed MSSQL instances, weak RDP encryption, expired certificates, LDAP without signing or channel binding, anonymous LDAP enumeration, default SNMP community strings, unauthenticated VNC, and a pile of others. Internal and external scans get different script sets, because the things worth checking from the outside aren't the same as the things worth checking once you're on the inside.
-We also bundled 15 custom NSE scripts for stuff the stock library doesn't cover, including RAKP hash capture from IPMI/BMC interfaces (drop it straight into Hashcat mode 7300), DameWare detection (CVE-2019-3980), cups-browsed (CVE-2024-47176), and proper LDAP signing / channel-binding checks.
-Yes, it Hunts for Exposed Local LLMs
-Everybody and their startup is running a local LLM now, and half of them are sitting wide open on the network with no authentication. SpooNMAP now looks for that. There's a dedicated Local LLM scan category and detection for Ollama, OpenAI-compatible endpoints, Gradio, and KoboldCpp, flagged HIGH externally and MEDIUM internally, complete with a proof-of-concept curl so you can prove it talks back. Free model access is a good finding. Free model access on someone's DMZ is a great finding.
-Pick What You Actually Want to Scan
-Instead of memorizing port lists, you now choose from service categories at the prompt. The new Containers & Debuggers category is one of my favorites: Docker APIs, kubelet, Node.js inspector, Delve, JDWP, and friends. All of the "why is this exposed?" ports in one bucket!
-Discovery that Doesn't Melt the Firewall
-Host discovery got reworked from the ground up. SpooNMAP now leads with an ICMP Nmap -sn
-sweep and brings in masscan for the big ranges, taking the union so you don't miss hosts that only answer one of them. Internal scans run the masscan sweep concurrently with Nmap and hard-cap the rate at 1,000 pps with automatic port-list trimming for huge ranges. Nothing ends an engagement faster than filling an enterprise firewall's state table. External scans use a curated, IDS-friendly port list and automatically calibrate whether spoofing a source port actually helps. Exclusions get subtracted before the sweep so you're not wasting packets. Additionally, the whole thing streams progress to your terminal so you're not staring at a blinking cursor wondering if it hung.
-Faster Where it Counts
-For the port scan itself, SpooNMAP now runs a quick calibration probe to pick a safe rate. It'll actually use Nmap instead of masscan for small-to-medium jobs, because below a certain size Nmap is both faster and more reliable. UDP discovery moved to Nmap -sU
-with post-scan filtering so you're not drowning in open|filtered
-noise. It also plays nicer with the OS now (raises file-descriptor limits, isolates Nmap so a stray Ctrl-C doesn't nuke your scan).
-Stop, Resume, and Don't Redo Work
-Long scans get interrupted sometimes. Now, SpooNMAP can pick up where it left off. There's a --resume
-flag, so your interactive choices get saved to config.json
-automatically, and if it detects previous results it'll just ask to delete, append, or resume. Resume is smart about it, too. If your target list hasn't changed, it skips discovery entirely, and if you did add ranges, it re-discovers only what's needed. Add JSON output alongside the XML, host-grouped results, Metasploit-ready files, ETAs, and a --cleanup
-command, and the day-to-day is just smoother.
-Go Get It
-It's all on GitHub: [github.com/trustedsec/spoonmap](https://github.com/trustedsec/spoonmap). Grab it, point it at something you're authorized to hit, and let it do the boring part so you can get to the fun part.
-As always, go forth and hack responsibly!
-— Larry Spohn (@Spoonman1091)</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-7" class="article-body">
-            <h2 class="article-title">Microsoft named a Leader in the Frost Radar™: Cloud Workload Protection Platforms, 2026</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/08/19/microsoft-named-a-leader-in-the-frost-radar-cloud-workload-protection-platforms-2026/" target="_blank">Original Link</a></p>
-            <div class="content-text">Security teams are overwhelmed with findings but still struggle to answer a simple question: which risks matter right now? A vulnerability alone is rarely the problem. The same vulnerability running in production, exposed through a misconfiguration or over-permissioned identity, is a real path to compromise. Organizations do not need longer lists of alerts. They need context that connects code, cloud resources, identities, and runtime activity so they can prioritize the issues that pose the greatest risk and stop cyberthreats before they reach production.
-As organizations adopt cloud-native architectures at scale, protecting workloads requires more than scanning. Today, 82% of container users run Kubernetes in production, making runtime visibility and protection critical for modern applications.1
-That change, from scanning workloads to protecting them where they run, is exactly what Frost & Sullivan describes in its [Frost Radar™: Cloud Workload Protection Platforms, 2026](https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/en-us/security/Frost%20Radar-CWPP%202026-Microsoft.pdf). Out of more than 45 qualified vendors, it benchmarked 20, and it found the category moving to a single runtime security model, one that ties together code, cloud, runtime, identity, and the security operations center (SOC).
-Within that market, Frost & Sullivan names Microsoft a visionary leader, its category for vendors that balance innovation with growth and help set the direction of the market. Microsoft is also the largest cloud workload protection platform (CWPP) provider by revenue, with an estimated share of more than 22% of the global CWPP market. In the analyst’s words:
-“Microsoft is positioned as a visionary leader in this analysis for its scale and breadth of [Microsoft] Defender for Cloud within a unified framework. The platform stands out for its breadth of coverage across infrastructure, workloads, identities, entitlements, data, and applications, and for its deep integration with Microsoft’s broader security ecosystem, allowing organizations to secure modern and AI-native application lifecycles, while reducing operational complexity.”
-Scale and breadth, in one framework. That is what customers are asking for, and it is where this category is heading.
-Why cloud workload protection is being redefined
-For a long time, protecting a workload meant scanning its image, fixing known vulnerabilities, and hardening configurations before deployment. That still matters. But it is no longer enough, because what looks safe before deployment can become exploitable once the workload is running.
-Most teams are also dealing with real sprawl. A modern estate spans several clouds and mixes containers, Kubernetes, serverless functions, microservices, and AI workloads. Every layer throws off its own signals, and those signals rarely connect on their own. One misconfiguration looks harmless until it sits next to an over-permissioned identity and a container that is already live. Then it is a path into production.
-The tools were not built for this. Posture sits in one console, workload scanning in another, detection in a third, and teams are left connecting them by hand, usually in the middle of an incident. What they need instead is one platform that can:
-- Bring posture, runtime, identity, and control-plane signals into one place.
-- Rank risk by what is truly exploitable, not by a severity score alone.
-- Stop risky workloads close to deployment, before they reach production.
-- Get what it finds at runtime to the developers and the SOC who can act on it.
-The market is moving the same way. Frost & Sullivan expects CWPP spending to grow from $6.43 billion in 2025 to about $7.95 billion in 2026, and 19.1% a year through 2030. That is teams voting with their budgets to modernize cloud security, meet regulation, and protect the workloads behind their apps, data, and AI services.
-What distinguishes leading platforms
-Frost & Sullivan scores vendors on two things: how fast they innovate and how fast they grow. But the report is blunt about something more telling: the bar for leadership has moved. It is now, in the analyst’s words:
-“Increasingly defined by runtime telemetry depth, container, and K8s security, workload behavior analysis, cloud-native threat detection, remediation and response automation, SOC integration, AI workload protection, and global go-to-market execution.”
-Put plainly, discovery, scanning, and compliance checklists no longer separate the leaders. Depth at runtime does. The platforms pulling ahead tend to share a few traits:
-- They cover real ground, from infrastructure and workloads to identities, data, and applications, without asking you to bolt five products together.
-- They go deep at runtime, not just posture and log review.
-- They carry cloud detection and response (CDR) straight into the SOC.
-- They connect code, cloud, and the SOC instead of treating each as its own island.
-- They span clouds with both agent and agentless coverage, and they are moving quickly on AI and data security.
-None of that is about longer findings lists. It is about context: seeing how the pieces connect and acting on the few that matter.
-How Microsoft helps organizations protect cloud workloads
-Microsoft’s capabilities address the problems customers raise most, and Frost & Sullivan points to the same strengths:
-“The strength in scaled runtime protection depth, strong CDR expansion, and ability to operationalize cloud runtime security across [Microsoft] Defender XDR, [Microsoft] Sentinel, GitHub, [Microsoft] Security Copilot, and the broader Microsoft security stack give Microsoft clearest advantages, particularly for large enterprises that already operate across Microsoft security, Azure infrastructure, GitHub, and Sentinel environments.”
-Here is what that looks like in practice, starting from the problem in each case.
-1. Protect workloads while they are running
-[Microsoft Defender for Cloud](https://www.microsoft.com/en-us/security/business/cloud-security/microsoft-defender-cloud) watches workloads while they run. A lightweight sensor (eBPF-based) picks up Kubernetes events, process activity, and network traffic, and detections map to MITRE ATT&CK, so alerts line up with real cyberattacker behavior. Most of the recent effort has gone into the container layer: DNS detection for Kubernetes on Azure AKS, Amazon EKS, and Google GKE; anti-malware that blocks rather than just alerts; runtime protection for EKS Bottlerocket; and drift blocking when a binary changes mid-run.
-Defender for Cloud can also act before a workload starts. Kubernetes’ gating applies policy at the cluster and namespace level, so a risky or non-compliant image is blocked before it ever starts. Frost & Sullivan calls this out as especially relevant to CWPP, because it puts preventive controls right next to production. That is the whole idea: catch a bad image before it becomes an incident, not after.
-2. Get runtime signal to the SOC
-Runtime signal only helps if it reaches the people who respond. With expanded CDR, Defender for Cloud ties runtime telemetry, Kubernetes audit data, process and network activity, control-plane events, and identity signals to specific workload incidents, then hands them to [Microsoft Defender XDR](https://www.microsoft.com/en-us/security/business/solutions/extended-detection-response-xdr) and [Microsoft Sentinel](https://www.microsoft.com/en-us/security/business/siem-and-xdr/microsoft-sentinel-siem). A suspicious process in a running cluster does not land as a lonely alert. It arrives already connected to the identity that launched it and the activity around it.
-For the SOC, that means faster answers and far less stitching signals together by hand.
-3. Send runtime findings back to the developers who can fix them
-Finding a problem at runtime is only half the work. Someone still has to fix it. Defender for Cloud links runtime context, exploitability, and attack-path detail to developer workflows through GitHub Advanced Security and Copilot Autofix, syncing both ways between security and development. A risk caught in production can go straight to the engineer who owns the code, get fixed at the source, and be checked afterward.
-The right issue reaches the right owner, and security and DevOps finally work from the same list.
-4. Extend protection to AI and across clouds
-More and more, the workloads worth protecting are AI. Defender for Cloud supports model scanning and threat protection, including prompt injection and suspicious access, for Azure AI Foundry and Azure OpenAI, and AI security posture management for Google Vertex AI and Amazon Bedrock. It spans Microsoft Azure, Amazon Web Services (AWS), Google Cloud Platform (GCP), and hybrid environments with both agent and agentless coverage, and [Microsoft Security Copilot](https://www.microsoft.com/en-us/security/business/ai-machine-learning/microsoft-security-copilot) adds guided investigation across the workflow.
-Protection follows the workload, whether that is a new AI service or a third cloud.
-What this signals for security leaders
-For anyone choosing a workload protection platform this year, the shift in this report changes the questions worth asking. The ones to put at the top:
-- Is workload protection part of one cloud security platform, or a separate tool wired onto the SOC after the fact?
-- Can it stop a risky workload before production, or only flag it afterward?
-- Does it connect runtime activity to identity, data, and control-plane context, and rank what is genuinely exploitable?
-- Do its findings reach both the SOC and the developers who can act on them?
-- Does it hold up across several clouds and AI workloads?
-The vendors that can answer “yes” are the ones shaping what comes next, and the Frost Radar places Microsoft among them.
-Bottom line
-Frost & Sullivan’s [Frost Radar™: Cloud Workload Protection Platforms, 2026](https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/en-us/security/Frost%20Radar-CWPP%202026-Microsoft.pdf) reinforces a clear shift. Cloud workload protection is leaving isolated scanning behind for runtime security that connects posture, identity, code, and the SOC. Frost & Sullivan positions Microsoft as a visionary leader, and the largest CWPP provider by revenue, because Defender for Cloud brings that range together in one framework, goes deep at runtime and in CDR, and plugs into the wider Microsoft security stack.
-Learn more
-- Read
-[Frost & Sullivan’s Frost Radar™: Cloud Workload Protection Platforms, 2026](https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/en-us/security/Frost%20Radar-CWPP%202026-Microsoft.pdf)to see how leading vendors are evaluated and how the category is shifting toward unified cloud runtime security. - Explore
-[Microsoft cloud security solutions](https://www.microsoft.com/en-us/security/business/solutions/cloud-security)to see how unified posture management, risk prioritization, and protection across cloud and AI can help reduce risk.
-To learn more about Microsoft Security solutions, visit our [website.](https://www.microsoft.com/en-us/security/business) Bookmark the [Security blog](https://www.microsoft.com/security/blog/) to keep up with our expert coverage on security matters. Also, follow us on LinkedIn ([Microsoft Security](https://www.linkedin.com/showcase/microsoft-security/)) and X ([@MSFTSecurity](https://twitter.com/@MSFTSecurity)) for the latest news and updates on cybersecurity.
-1[Kubernetes Established as the De Facto ‘Operating System’ for AI as Production Use Hits 82% in 2025 CNCF Annual Cloud Native Survey](https://www.prnewswire.com/news-releases/kubernetes-established-as-the-de-facto-operating-system-for-ai-as-production-use-hits-82-in-2025-cncf-annual-cloud-native-survey-302663249.html). PR Newswire, January 20, 2026.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-8" class="article-body">
-            <h2 class="article-title">Who’s Tracking You? Use This New Service to Find Out</h2>
-            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/08/whos-tracking-you-use-this-new-service-to-find-out/" target="_blank">Original Link</a></p>
-            <div class="content-text">It can be daunting to determine who’s responsible for showing ads on the websites we visit, or who’s harvesting data from the mobile apps we use every day. That information is already semi-public, but it is not easily parsed and traditionally much of it has remained walled away in the hands of large advertising platforms. Not anymore: A powerful and free new service called DecryptAds scrapes and correlates this adtech data and makes it simple to quickly learn a great deal about the entities that are tracking you.
-The [newly launched](https://decryptads.com/blog/posts/ad-tech-transparency-launch.html) decryptads.com says it is constantly scraping the files that websites and apps make publicly available to disclose the companies that are permitted to run ads or collect user data. These files include:
-–ads.txt: all of the adtech companies and data brokers that may run ads or harvest data from the site;
-–app-ads.txt: entities that can harvest data from or display ads on mobile and smart TV apps;
-–buyers.json/sellers.json: the entities buying, selling or reselling ad inventory for a given site or app.
-Zach Edwards is chief research officer for DecryptAds and a threat researcher at the security company Infoblox. Edwards said he and two other founders decided the service was needed because the adtech data in these files is generally only useful when it can be cross-referenced to build a more complete picture of the advertising ecosystem for each website or app.
-“It’s an adtech tool but we’re trying to approach adtech from a security perspective,” Edwards said. “It’s really built for a lot of privacy and security use cases that have been dramatically underserved.”
-Those use cases, he said, include tracking down the source of malicious ads that try to foist malware on targeted users, identifying ad networks located in adversarial nations, and detecting the fast growing swarms of AI-generated slop websites and apps. And as decryptads.com demonstrates, these potential security and privacy threats are near impossible to detect just by viewing a single apps.txt or app-ads.txt file.
-“Supply-chain integrity issues rarely live in a single file,” the site [explains](https://decryptads.com/blog/posts/analytical-features.html). “They show up as broken cross-references between ads.txt, app-ads.txt, and sellers.json files; as cloned declaration sets across unrelated domains; as seller removals that only make sense when viewed across exchanges; and even as supply paths in bid logs that never actually appear in any given publisher’s authorized-seller list.”
-A search in DecryptAds for the hugely popular sports network espn.com reveals 143 ad partners and 19 registered data broker domains are listed within its [ads.txt](https://www.espn.com/ads.txt) and [app-ads.txt](https://www.espn.com/app-ads.txt) files. That data broker information is gradually becoming available because four states — California, Oregon, Texas and Vermont — have recently passed laws requiring data brokers to register if they buy or sell data on consumers from those states. DecryptAds reports that almost half of those data brokers are collecting geolocation data from espn.com visitors who aren’t blocking ads, while another three disclose that they collect device fingerprints and sensitive personal information.
-HIGH-RISK AD PARTNERS
-DecryptAds also makes it easy to learn the beneficiaries and national origins of the advertising firms lurking in apps and websites, displaying a conspicuous warning when adtech partners of an app or website are based in [“geo-risk”](https://decryptads.com/geo_risk) areas like China and Russia, or in countries with strong financial and political ties to both — such as Cyprus and the United Arab Emirates (UAE).
-According to DecryptAds, espn.com works with four different advertising entities that are based in either Russia, China or the UAE, including the adtech firm Between Digital, which lists a New York address. However, the [dossier on Between Digital](https://decryptads.com/ad_system/betweendigital.com) flags them as a Russian firm, showing that [their publisher offers](https://cp.betweendigital.com/files/PublisherOffer.pdf) (PDF) are processed through Alfa Bank, Russia’s largest private commercial bank and one of several financial institutions placed under U.S. sanctions in 2022 after Russia invaded Ukraine. KrebsOnSecurity sought comment from both Between Digital and the company’s founder, and will update this story in the event that either replies.
-A search for several top U.S. military news websites — including [armytimes.com](https://decryptads.com/search/publisher/armytimes.com), [airforcetimes.com](https://decryptads.com/publisher/airforcetimes.com), [defensenews.com](https://decryptads.com/publisher/defensenews.com), [navytimes.com](https://decryptads.com/publisher/navytimes.com), [marinecorpstimes.com](https://decryptads.com/publisher/marinecorpstimes.com) and [federaltimes.com](https://decryptads.com/publisher/federaltimes.com) — shows they all allow Between Digital to serve ads and track users, as well as two entities in the UAE and another in the ownership secrecy haven of Panama. DecryptAds reports that Between Digital is collecting ad data on approximately 55,000 partner websites.
-Pivoting on Between Digital’s [app-ads.txt file](https://decryptads.com/ad_system_sites/betweendigital.com/app_ads_txt/all) reveals hundreds of domains featuring simple web-based games that are frequently interrupted by ads. Edwards said Between Digital’s own declarations show the company is listed as both a publisher and a reseller on approximately two-thirds of their portfolio.
-“It means they are basically playing both sides of the bidding equation, which creates opportunities to direct client spend at your owned and operated properties or client infrastructure, essentially creating opportunities for conflicts of interest,” Edwards told KrebsOnSecurity. “The problem we have right now is that for years we’ve had almost no one policing these ads.txt and app-ads.txt files.”
-The Opera Web browser remains quite popular, and probably many users are unaware that since 2016 it has been majority owned and controlled by the Chinese company Kunlun Tech (the operational headquarters of Opera remain in Oslo, Norway).
-Opera.com’s [profile at DecryptAds](https://decryptads.com/search/ad_system/opera.com) identifies 27 registered data brokers collecting information, including 15 adtech partners in the UAE, six in China, three in Cyprus, two in Russia and one each in Hong Kong and Ukraine. DecryptAds makes clear, however, that these companies represent just seven percent of the adtech partners specified in Opera.com’s ads.txt and app-ads.txt files.
-LEGAL DOSSIERS
-One feature of DecryptAds that sent this author down multiple hours-long research rabbit holes is its [Legal Dossier lookup](https://decryptads.com/legal_dossier), which takes several minutes for each search but eventually churns out oodles of useful information about who owns a particular domain or app, when it was registered, and any aliases or relationships it may have to adtech companies and other websites or apps.
-For example, last month KrebsOnSecurity wrote about researchers from Bitsight who found that an extremely popular line of TV streaming sticks called H96 quietly rent out each user’s Internet connection to strangers. Bitsight also discovered that when these devices aren’t being used to stream pirated video content, they [are spoofing themselves as mobile phones clicking ads on AI-generated slop websites](https://krebsonsecurity.com/2026/07/read-this-before-you-buy-that-tv-streaming-stick/).
-Bitsight concluded that the same Chinese company that made several of the malicious apps common to all of these H96 streaming sticks — the Fengwo Group — also also ran the network of ads and AI slop websites being clicked on by tens of thousands of these devices that are pretending to be mobile phones.
-A DecryptAds legal dossier on the (now dormant) Fengwo Group domain name for the AI slop website pictured on the left in the screenshot above ([medicalbeautyhub dot com](https://decryptads.com/search/publisher/medicalbeautyhub.com)) shows it shares a seller ID ([1674071](https://decryptads.com/seller_id/1674071)) with a gaming website — [giacoloredstones[.]com](https://decryptads.com/publisher/giacoloredstones.com) — which features yet another seller ID ([103488000](https://decryptads.com/seller_id/103488000)).
-Pivoting on that latter seller ID reveals hundreds of active websites within Russia’s Yandex ad system featuring extremely low-quality games or simple utilities that pepper visitors with ads.
-QUIET REMOVALS
-Edwards said that when advertising networks suspect a given advertiser is engaged in unauthentic clicks or displaying malicious ads, very often those networks will quietly remove the offender from their list of approved partners without letting anyone else know about their suspicions.
-This practice, he said, makes it easier for dodgy adtech firms to avoid accountability and continue victimizing others. To address that visibility gap, DecryptAds features a [quiet removals feed](https://decryptads.com/quiet_removals_feed) that records and correlates all of the sellers.json removals across ad exchanges for the same seller domain or name.
-“The way the adtech industry works, someone will write a report about ad fraud and only share it with their own clients and they won’t make it public,” Edwards said. “The ban is just removing them from the sellers.json file, but they told nobody. One day it was there, the next it was gone. So if you’re trying to navigate who is suspicious, that’s usually tough to do because there are a lot of adtech companies removing things all at once.”
-MALVERTISING AND AI SLOP
-Malvertising, the term given to the practice of inserting malicious ads that foist malware or redirect visitors to phishing pages, remains an all-too-frequent occurrence in the modern adtech industry. But Edwards said these malicious ads are far more commonly found now on newly generated AI slop websites than on high traffic destinations that typically employ a variety of technologies and third party tools to quickly flag bad ads.
-“None of these slop AI content farms are paying for that kind of protection,” he said. “They’re just signing up the lowest quality partners, and it essentially becomes a greased rail to target the users of those sites with malicious ads. Most malvertising attacks don’t happen on espn.com or huffpost.com, but rather [on] some lower quality content farm and someone just went there because it came up in a search.”
-Edwards said the AI slop websites are populated with machine-generated blog posts and images, and cover a wide array of themes from home improvement and decorating to food recipes, hunting, cars and consumer technology. He said organizations that get hit with malicious ads are often at a loss for what to do next, unaware that in most cases the answer is one of the entities listed inside the website’s ads.txt or app-ads.txt file.
-“A lot of serious organizations are starting to understand that if we’re not breaking down this ad data, we’re not going to know who’s targeting government people with zero-click payloads on an almost daily basis,” he said.
-Edwards maintains that truly getting a handle on the malvertising and AI slop problems will require more data-sharing by the major ad networks. Specifically, he says those platforms do not broadly share what’s known as the “supply chain object” or SCO, structured data attached to each advertising bid request that lets buyers see every seller, reseller and intermediary involved in passing an ad impression from the publisher to the final buyer.
-“That SCO tells you who sold it or resold it, and who was the final entity that bought the impression that served that malware payload,” Edwards explained. “You may see the malicious zero-click redirection, but without the supply chain object — which is only served server side — you won’t know who targeted your people with malware and won’t have a way to try and prevent it properly. But if we can encourage the adtech industry to expose that SCO, it will get easier to find the culprit behind any one bad ad.”
-DecryptAds also offers an application programming interface (API) that allows researchers to automate queries and integrate the site’s functionality into popular AI platforms.
-WHAT CAN YOU DO?
-The only sane reaction to the examples described above is to block all online ads outright. This approach is broadly endorsed by security experts because it also makes it more difficult for adtech firms and data brokers to build detailed profiles on you and track your movements around the web and in the real world.
-However, much depends on how you normally prefer to browse the Internet, and how much trust you place in third party browser plugins and extensions. For those primarily surfing via a regular desktop or laptop Web browser, uBlock Origin Lite is an excellent free and well-maintained open source option. uBlock Origin also should work with mobile browsers like Firefox, but apparently only on Android-based devices.
-Adblock Plus is a decent option for iPhone and iPad users. For power users, Adblock and uBlock Origin both support custom blocking rules from [easylist.to](https://easylist.to/), which publishes a frequently updated list that removes most advertisements from webpages.
-The well established browser extension NoScript blocks all non-approved Javascript code, and it generally does a fine job blocking most ads from loading. However, script blockers like NoScript may not be suitable for average users who don’t enjoy constantly having to referee which scripts should be allowed to load so that each site displays properly.
-More technically inclined/adventuresome readers should strongly consider a hardware approach to blocking ads at the local network level, because that is easily the cheapest, most secure and scalable way to do it. A tiny, low-cost and broadly available computer known as a Raspberry Pi can be turned into [a powerful ad blocker for all devices on a local network](https://www.raspberrypi.com/tutorials/running-pi-hole-on-a-raspberry-pi/) when fitted with a microSD memory card and a free program called [Pi-hole](https://github.com/pi-hole/pi-hole). Once you’ve set it up properly and changed your router’s network settings to use the Pi-hole’s DNS sinkhole and DHCP servers, it should prevent ads from displaying on any devices connected to that network.
-Bear in mind that ad blockers often do little to block ads and/or tracking that occurs from within mobile apps that users have chosen to install on their devices. Many websites now push users to install a mobile app, supposedly in order to more fully access and enjoy the site’s services and content. But in my experience, they’re not doing this because the user experience is somehow way better on the app (as LinkedIn tries to convince us non-app users several times a week via email). On the contrary, I find most mobile apps to be horribly designed, annoying, and/or completely unnecessary, and when given the option I will almost always choose to interact with a website or service directly in a Web browser.
-No, the cold truth is that big web destinations tend to get pushy with their apps because they make it easier for these companies to keep you on their platforms longer and to collect (and in many cases resell) [far more precise data](https://krebsonsecurity.com/2024/10/the-global-surveillance-free-for-all-in-mobile-ad-data/) about who, what and where their users are. Also, companies pushing customers the hardest to install mobile apps always seem to liberally opt everyone in to having their data used to train large language models these days. So be cautious about the apps you install on your mobile devices ([including any smart TVs!](https://krebsonsecurity.com/2026/07/lg-to-ban-residential-proxies-from-smart-tv-apps/)), and poke around their listings at DecryptAds if you want to learn more about their privacy practices and any relationships they may have to adtech firms.
-Perhaps in an excess of caution, I avoid installing extensions in my browsers. After all, the extensions require access to my browsing data, and they are owned and operated by developers… who are they, by the way?
-So, I use Safari on my Apple devices, setting up DuckDuckGo (a privacy-aware search engine) instead of using Google as my default browser search engine. On Windows, which I use rarely, I use Brave, a browser based on Chrome, which works fairly well. I access no online services that require passwords from Windows.
-So, perforce I trust Apple’s privacy practices. ‘cuz I gotta, ya know?
-I’ve tried switching my default browser to a privacy-aware browser like DuckDuckGo or Mullvad or Brave, but sometimes web pages don’t work well, and I lose access to passwords.
-Any thoughts? I’ve been slipping my gears on this issue for several months.
-just use firefox
-Am not a big mobile user for accessing the internet. It’s and age and eyes thing, so I stick to computers 99% of the time. I just bit the bullet years ago and use Firefox and uBlock Origin, and the Electronic Freedom Foundations’ fantastic Privacy Badger add-on, and NoScript which has been on every browser I’ve used since day one. I only use Safari for accessing the apple site directly, since it handles the forums there better than anything else. No Chrome since it’s keystoneupdate agent eats CPU cycles mercilessly and of course the whole manifest v3 rollout making the ad-blockers not as adaptable. Firefox only. Outside of that, I seldom encounter ads, and with uBO, I can whitelist sites that crab about having an ad-blocker.. Which is interesting, as when I DO whitelist sites, the ads still do not show so one of the other add-ons is stepping up in the background to maintain the restrictions on the ads? Hmm. I do also use Dan Pollocks’ Hosts file (which can be found at someonewhocares-dot-org/ hosts/ – I’ve used it for over 2 decades – started with my beigh G3 PowerMac running MacOS 8.6 and it’s been faithfully updated weekly -seriously, Dan’s an absolute God…) so maybe that is why I seldom get ads even on whitelisted sites.
-I haven’t gone near EFF since autumn 2012. Evil people. Worse even than FISA in a way.
-Can you please explain that? While I usually disagree with their “politics”, I do use “Privacy Badger” and run “Cover your Tracks” sometimes.
-Excellent Article!!! Thank you
-@Some guy on the Internet
-You are correct to be careful with extensions, after all even a legitimate one could eventually be compromised, and depending on your browser and the permissions you grant the extensions, this could lead to full page content being exposed for everything you browse, including credential cookies.
-However, since you use Safari, this is different for Safari content blockers. They are somewhat less powerful by design as they are essentially a static list of patterns to block that gets built and added to Safari. This is closer to Chrome’s Manifest V3 than V2 which was more powerful. So, privacy upside, with a downside being features.
-So if you use a basic content blocker on Safari, that only has a content blocker extension, it will not see your browsing activity, but it will not be as good at reformatting pages after ads are removed, or at removing ads from more complex websites etc.
-This is an excellent (and eye-opening!) article. I’m glad to see that as time goes on, dodgy internet entities that used to be able to hide in the shadows are now able to be unmasked. Our details aren’t just being used to target advertising. People search sites often list relatives associated with the searched name. I currently have stupid scammers sending me emails from several of my relatives in hopes that I will be enticed to open the messages to view all of the great family photos I’m missing. But given that data on those sites is not always correct, they don’t realize that it’s not possible for someone who’s been dead for twenty years to be sending emails about family reunions.
-My hope is that we are able to continue to “reverse engineer” these crappy sites and eventually develop the technology that allows us to trace and unmask all of these leeches. Keep up the great work, Brian!
-I love that phrase “AI slop”!
-@Some guy on the Internet:
-How about using a stand alone password manager? I use Bitwarden and there are others as well.
-As this article illustrates, Decrypt’s web pages are annoyingly formatted as white on black, which is very difficult to read. If Decrypt wants its pages to be more easy to red, change them to the normal black on white.
-Hey Jay. If you register a free account, you can change the default to light mode.
-Should we really care about how and data scraping site has “themes”?
-As Brian Krebs himself mentioned, we have a light mode available! Just go to your Account dropdown in the top-right, go to Appearance, and you can swap between Dark / Light.
-If anyone else has questions/feedback, happy to help!
-Just as an aside for purposes of “representation,” I use dark mode on everything I can. With my eyes, I’m able to read much longer in dark mode than I am in black on white.
-I’m glad we livein an age when we get to choose.
-One suggestion: always use incognito mode in your web browser. Unless a site is doing fingerprinting, it should help avoid long term spying on you. And, some browsers have defenses against fingerprinting.
-The suggestion to use two browsers is excellent. Have one with no extensions, other than ad blocking, for sensitive websites (however you define that) and a browser with extensions for normal day to day browsing.
-I don’t think incognito mode actually does quite what you think it does.
-I think it is totally fair to assume a strange looking shadowed figure is following you around wearing either a masquerade mask, opera glasses, or some form of sunglasses resembling the Nazi officer’s in Raiders of the Lost Ark (but updated to at least a half century later, and with the man’s self tinted a dark grey). This figure then physically locates the bits and bytes in question, whisks them away to a safe place, modifies the date to one in a different dimension, unique only to you, then returns the results, scrubbed of all identifying marks, to your extra dimensional browser. It is further incognitoed by the fact that anyone witnessing you viewing the results will see neither hide nor hair of the actual results without the special invisible decoder ring that only your specifical browser’s session cookies bestows.
-Fingerprinting is a lot more than whether your search history/cache is turned on. It involved your networking fingerprint (TLS Hello) which is unique to your browser and it’s configuration (doesn’t change with/without incognito), your IP address, geolocation, the advertising IDs associated with your IP address, time of day, and so many other things. All incognito does it makes it to where the advertisers have to look up your advertising ID rather than you sending it attached to the web request (super trivial)
-We all like to make every real life event a scene here in the world of Macromedia Director in the 90s. Not sure that would be worth much either almost thirty years after becoming heirless.
-I read this looking for a reference to email spam as I assume this is part of the same effort by these ad groups, but I didn’t see any. I’m curious why.
-For context I ask because I receive several dozen email spam daily, of which a good portion are phishing (your photo storage will be deleted etc.) and others are the usual medical “trick” garbage. However the most puzzling aspect is that 95% of all spam are sent from Microsoft Outlook or an Amazon hosted domain. Neither Microsoft nor Amazon do anything about the hundreds of abuse reports they have been sent. Why?
-Using DNS to avoid ads/trackers is very useful. However, DNS is complicated and modifying your router, either with Pi-Hole, or NextDNS or any DNS service that offers blocking of ads/trackers/malware is far from the whole story. The DNS configuration can also be set by your Operating System, your browser, or a VPN. Which one over-rides the others? There are assorted testers of your live DNS configuration here
-https://routersecurity.org/testdns.php
-“too many emails created with this domain today” [gmail[.]com]. hooray
-Please try again, we had some initial security restrictions that have been raised due to the flood of interest.
-There are national security concerns if the Chinese and less than friendly nations are tracking our military via ads.
-Whether or not DecryptAds is black on white or white on black is a 1st world complaint.
-One would think the DOD/DOW, DIA, CIA, NSA, etc. will be contacting Mr. Best real soon now for assistance, if they haven’t already.
-Why do I need to register a ‘free’ account to simply change from Dark mode to Light ????
-Nothing is ‘free’ in this world….
-Note to ‘Kasey Best (DecryptAds CEO) ‘ ……a show of good faith and best of intentions, would be to make the page light without the need to make an account.
-Pay no attention to the man behind the dark curtain
-Why do I need to register to run any search? By registering we are freely giving an email address to DecryptAds and DecryptAds is collecting and storing that information for subsequent logins. If DecryptAds is concerned about privacy and revealing who’s tracking me, why should I allow them to track me?
-Just browse through Yahoo.com news articles if you want to find some malvertsing
-You can literally use that page to test your Malwarebytes or similar software
-Unless they have cleaned it up in the past few years, have not tried it lately?
-Just use wget and scrape.
-“Bear in mind that ad blockers often do little to block ads and/or tracking that occurs from within mobile apps that users have chosen to install on their devices. Many websites now push users to install a mobile app, supposedly in order to more fully access and enjoy the site’s services and content.”
-—-
-Get Blokada. Works great! It’s showing it has so far blocked 2,635,424 ads and trackers on my Android phone. Works against all apps, although there are a few apps that refuse to show content when they sense an ad blocker. I just ignore them. Most content is always available somewhere else.
-Kind of ironic when companies acting like they want to add privacy link lookups like these to users’ identities. What is THEIR profit model?
-Annoyingly, this service uses some dark-patterns. I wanted to re-scan a URL, but the button was disabled. I inspected and found a title attribute that indicates this feature requires you to sign-in. After creating a free account, I navigated to the same results to see that the button is still disabled. Another inspection revealed that the title reads “Enterprise account required — sign in to use this feature”. This is never mentioned clearly on the homepage, and even on the pricing page. I decided to delete my account, and guess what, they do not have a delete account feature. I am guessing you have to email them to delete your account. I suggest you don’t create an account with this company.
-It does say straight up that some features are only for enterprise/researchers and basic free trial account is “limited.”
-I don’t think “having an account” does anything except allow you to use the service, hence deleting it is not real necessary, assuming they’re not going to bombard you with spam – which given the nature of their service would be pretty ironic.
-I recently upped my add blocking to include running my phone through tailscale to use my home server as an exit node, making my phone use the home technitium DNS (fancy man’s pihole) and it’s really nice. Getting DNS ad blocking for all my mobile browsing and apps is very pleasing.
-I’m not suggesting that as a solution for everyone, but it is very nice
-Tried to register several times with my proton account, nothing ever received.
-Most places poopoo on protonmail. I have attempted to use protonmail, tutanota, and a couple of other email services for things in the past and not only never got email verifications but got locked out of email addresses for some places that feel merely the idea of a non-top-five email provider was criminal; not sure how they pull that off, but it is no fun. Be warned. note, I am not a Nixon fan (especially the one who ran for Office in 2018), but that doesn’t make me also not a crook; I am pretty damn clean.
-One additional use for this kind of mapping is evidence preservation. Files such as ads.txt and sellers.json are mutable, so a present-day lookup may not show the supply path that existed when a malicious ad or unexpected data transfer occurred. A useful workflow would save timestamped copies of the relevant declarations, record redirects and ownership identifiers, and compare changes over time. That would help distinguish a partner that was never authorized from one that was listed briefly and later removed. It could also make incident reviews more reproducible for publishers, exchanges, and researchers without treating every current declaration as proof of past behavior.
-In the land of dead ptah’s every dead bird we killed urself is speech taking day for the innocent
-Hey SIM nearest you, turn.
-Great antennas. Almost as good as due process and lawyers.
-This is why I switched completely to the Brave browser recently. They have recently introduced native Containers in which you can lock websites you visit to certain containers so that cross cookie contamination/tracking between sites can somewhat be managed or controlled. Another feature I enable is whenever I close a tab, all cookies for those domains I visited get deleted after 30 seconds or so. Even with Private Browsing, the cookies are still stored in that session until you close it. The three ad-blocking extension I use include ublock origin, adguard, disconnect and the prebuilt Brave Shields.
-Finally, I use a VPN.
-Thank you for the article, Brian.
-I recommend using an alternate DNS system to protect against all ads and censorship, such as NextDNS. It requires 30 min of setup to create your profile, add blocking lists, and configure your devices. But once it’s done, you’ll never have to do it again.
-From my point of view, it’s simpler than setting up a Pi-hole, and it works outside your home, for your movile connection too. It does require trusting the DNS provider, but since everybody has been using Google for decades, and they have not been the most respectful actor regarding privacy, I guess it can’t be any worse! Just choose a well-established alternate DNS provider that allows adding block lists, and you’re good to go.
-I used a flat hosts file on my old macbook for my most often visited sites, then sent certain IP ranges to certain DNS servers through a simple shell script for privacy purposes.
-I had more than one of these host files and setups, depending on my usage and whether or not my VPN(s) were on.
-Carry a smart phone, you can be tracked.
-Drive a late model car, you can be tracked.
-Use Google with an account, you’re being tracked.
-AI does a great job of figuring out who/where you are.
-I mostly use Duckduckgo for most searches, and before you…
-it’s safer than Google.
-Krebs must have hated hackers since he was a child.. or anyone who uses hacked logs..
-Had a family member install Pihole. It was mindboggling the amount of tracking going on.
-I think this is really interesting because most people don’t know how much information websites and apps collect about them. Tools like DecryptAds can help people understand where their data is going and protect their privacy.
-I became very concerned by the fact it seemed not only Google was tracking my packages even a decade and a half ago when I used it. Can we talk about that? This seems benign by comparison.
-I thought this article was really interesting, especially seeing how many different companies can be involved in tracking people online. I don’t think most people realize how much information can be collected just from visiting a website or using an app. The part about advertising networks being used for malicious ads also stood out to me. It shows that privacy and cybersecurity are connected in ways that people might not think about. This was a good reminder of why it’s important to pay attention to what is happening online and keep up with new security threats.</div>
+thanks chatgpt for the insightful comment and weed backlink
+Very orchestrated attack and pretty clever compared to attacking organizations individually. Companies need to invest more in cybersecurity professionals and better security practices. If they did, attacks like this might not happen as easily or be as successful.
+Femboy catboy Squad.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
