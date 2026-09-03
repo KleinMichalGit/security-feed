@@ -59,12 +59,214 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-09-02</h1>
+        <h1>Security Briefing // 2026-09-03</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Attackers Exploit Critical Switchvox Flaw to Deploy Reverse Shells Without Credentials</button></li><li><button onclick="show('art-1')">Counterfeit installers to system compromise: Tracking a deceptive software download campaign</button></li><li><button onclick="show('art-2')">FBI Probes Service Selling 153M+ Drivers Licenses</button></li><li><button onclick="show('art-3')">Aesto Health says data breach affects over 9.5 million patients</button></li><li><button onclick="show('art-4')">Critical Langflow flaw exploited to steal OpenAI and AWS keys</button></li><li><button onclick="show('art-5')">Attackers Exploit Critical JFrog Artifactory Flaw to Mint Admin Tokens Days After Disclosure</button></li><li><button onclick="show('art-6')">Financially Motivated Threat Actor BREEZE COMET Targets Brazil</button></li><li><button onclick="show('art-7')">waf-fu, or Some Log Replay Nonsense</button></li><li><button onclick="show('art-8')">Two Alleged ‘TeamPCP’ Hackers Arrested in Australia</button></li><li><button onclick="show('art-9')">Turning Enterprise Update Servers Into Backdoor Factories (0_o) – Part 1</button></li></ul>
+            <ul><li><button onclick="show('art-0')">CISA Adds Seven Exploited Flaws as Attackers Deploy Reverse Shells and Crypto Miners</button></li><li><button onclick="show('art-1')">Impersonating IT support: how threat actors turn a remote session into enterprise-wide access</button></li><li><button onclick="show('art-2')">Hackers exploit Sangoma Switchvox flaw to deploy reverse shells</button></li><li><button onclick="show('art-3')">Hackers exploit critical JFrog Artifactory flaw to forge admin tokens</button></li><li><button onclick="show('art-4')">Attackers Exploit Critical Switchvox Flaw to Deploy Reverse Shells Without Credentials</button></li><li><button onclick="show('art-5')">FBI Probes Service Selling 153M+ Drivers Licenses</button></li><li><button onclick="show('art-6')">Financially Motivated Threat Actor BREEZE COMET Targets Brazil</button></li><li><button onclick="show('art-7')">waf-fu, or Some Log Replay Nonsense</button></li><li><button onclick="show('art-8')">Two Alleged ‘TeamPCP’ Hackers Arrested in Australia</button></li><li><button onclick="show('art-9')">Turning Enterprise Update Servers Into Backdoor Factories (0_o) – Part 1</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
+            <h2 class="article-title">CISA Adds Seven Exploited Flaws as Attackers Deploy Reverse Shells and Crypto Miners</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/cisa-adds-seven-exploited-flaws-as.html" target="_blank">Original Link</a></p>
+            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Wednesday [added](https://www.cisa.gov/news-events/alerts/2026/09/02/cisa-adds-seven-known-exploited-vulnerabilities-catalog) seven security flaws to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog after they landed in attackers' crosshairs.
+The vulnerabilities are as follows -
+[CVE-2026-83548](https://thehackernews.com/2026/09/attackers-exploit-two-sonicwall-sma.html)(CVSS score: 10.0) - A server-side request forgery vulnerability in SonicWall SMA 1000 Appliances that could allow a remote unauthenticated attacker to gain unauthorized access to sensitive functionality and perform unauthorized operations.[CVE-2026-83549](https://thehackernews.com/2026/09/attackers-exploit-two-sonicwall-sma.html)(CVSS score: 7.8) - A post-authentication operating system command injection vulnerability in SonicWall SMA 1000 Appliances that could enable a remote authenticated attacker as administrator to execute arbitrary OS commands, resulting in remote code execution.[CVE-2026-9586](https://thehackernews.com/2026/09/attackers-exploit-critical-switchvox.html)(CVSS score: 9.3) - An SQL injection vulnerability in Sangoma Switchvox that could allow an unauthenticated remote attacker to execute arbitrary SQL statements against the backend PostgreSQL database using a single crafted request, including database operations and remote code execution.[CVE-2026-82329](https://thehackernews.com/2026/09/attackers-exploit-critical-jfrog.html)(CVSS score: 9.8) - An improper authentication vulnerability in JFrog Artifactory that under default configuration could allow an unauthenticated attacker with network access to obtain administrative privileges.[CVE-2026-48710](https://github.com/Kludex/starlette/security/advisories/GHSA-86qp-5c8j-p5mr)(CVSS score: 6.5) - An HTTP request/response smuggling vulnerability in Kludex Starlette that could allow attackers to inject paths into the host part, prepending the actual path, leading to issues such as authentication bypass when the authentication depends on the reconstructed URL's path.[CVE-2026-49869](https://github.com/kestra-io/kestra/security/advisories/GHSA-5vc5-wxxq-3fjx)(CVSS score: 10.0) - An operating system command injection vulnerability in Kestra OSS that could allow an unauthenticated remote attacker to create and execute arbitrary workflows without credentials.[CVE-2026-59822](https://github.com/BerriAI/litellm/security/advisories/GHSA-7488-6r32-c95q)(CVSS score: 8.8) - An improper authentication vulnerability in Berri LiteLLM's Model Context Protocol (MCP) Streamable HTTP endpoint that could allow an unauthenticated attacker to establish an authenticated MCP session using an arbitrary Bearer token.
+The development comes after SonicWall [disclosed](https://thehackernews.com/2026/09/attackers-exploit-two-sonicwall-sma.html) that it "investigated a case indicating the active exploitation" of CVE-2026-83548 and CVE-2026-83549. According to reports from [Horizon3.ai](https://thehackernews.com/2026/09/attackers-exploit-critical-switchvox.html) and [watchTowr](https://thehackernews.com/2026/09/attackers-exploit-critical-jfrog.html), unknown threat actors have been observed weaponizing CVE-2026-9586 and CVE-2026-82329 to deploy reverse shells and and minted admin tokens for follow-on enumeration of users, groups, credential sets, and federated access topologies.
+As for CVE-2026-48710, a report from Horizon3.ai in June 2026 [revealed](https://thehackernews.com/2026/06/litellm-flaw-cve-2026-42271-exploited.html) that the vulnerability could be chained alongside another Berri LiteLLM flaw (CVE-2026-42271, CVSS score: 8.7) to bypass authentication and achieve remote code execution against vulnerable LiteLLM deployments.
+It's worth noting that CVE-2026-42271 was added to CISA's KEV catalog around the same time. Per Google-owned Wiz, threat actors [associated](https://www.wiz.io/blog/ai-infrastructure-honeypot) with the Qilin (aka Agenda) ransomware have been linked to active exploitation of this chain. The cloud security platform said it has also observed exploitation efforts involving CVE-2026-59822 against its honeypots to probe model enumeration endpoints.
+The addition of CVE-2026-49869 to the KEV catalog is driven by a Microsoft report last week in which the vulnerability was likely exploited by a threat actor in late June 2026 to establish a reverse shell, conduct Docker container environment discovery, perform defense evasion, deploy a cryptocurrency miner, and facilitate data harvesting.
+| Kestra compromise attack chain |
+"The Kestra compromise exposed four impact paths: shell execution through the workflow engine, container-environment exposure through Docker socket access, host resource hijacking through miner deployment, and follow-on collection through workflow task execution," Microsoft [said](https://www.microsoft.com/en-us/security/blog/2026/08/26/when-ai-infrastructure-becomes-target-securing-gateways-control-points/).
+"The later curl-pipe-shell event encoded collected output and stored it through Kestra's own key-value interface, reducing reliance on standalone file artifacts."
+Separately, the Windows maker also revealed that malicious actors are breaking into LiteLLM gateways using CVE-2026-42271 and CVE-2026-48710 to deliver an XMRig miner via an ELF binary, but not before fingerprinting the host and terminating competing mining processes.
+The attackers have also been found to abuse previously collected database information to access the LiteLLM-backed PostgreSQL data tier and target LiteLLM tables, including LiteLLM_ProxyModelTable and LiteLLM_VerificationToken, to harvest records related to model configuration, upstream provider key material, provider endpoints, and proxy-issued virtual keys.
+Furthermore, the attack chain is characterized by the addition of persistence using "~/.ssh/authorized_keys" modification, command-and-control (C2), and defense-evasion mechanisms.
+The attacks, Microsoft and Wiz said, indicate artificial intelligence (AI) infrastructure, such as LiteLLM, Flowise, LangChain, Langflow, ChromaDB, Ollama, Marimo, and MCP servers, has become a lucrative target to steal API keys, gain access to backend systems, maintain persistence, engage in blind prompt injections and AI-native post-exploitation, and monetize infected hosts through illicit cryptocurrency mining.
+In another campaign documented by Redmond, it's suspected that adversaries are exploiting exposed RAGFlow instances using flaws like [CVE-2026-45312](https://nvd.nist.gov/vuln/detail/CVE-2026-45312), [CVE-2026-28797](https://nvd.nist.gov/vuln/detail/CVE-2026-28797), [CVE-2026-24770](https://nvd.nist.gov/vuln/detail/CVE-2026-24770), [CVE-2025-68700](https://nvd.nist.gov/vuln/detail/CVE-2025-68700), and [CVE-2025-69286](https://nvd.nist.gov/vuln/detail/CVE-2025-69286) to establish persistence and steal large language model (LLM) provider keys and related metadata.
+"The observed objectives were consistent. Across the cases, telemetry showed credential collection, durable access mechanisms, and resource monetization, even though the execution path differed by product," Microsoft said. "Defenders should monitor AI workloads according to their control-plane role, not only as isolated applications."
+Pursuant to "Binding Operational Directive (BOD) 26-04: Prioritizing Security Updates Based on Risk," Federal Civilian Executive Branch (FCEB) agencies are recommended to apply patches for all the vulnerabilities, barring CVE-2026-48710 and CVE-2026-59822, by September 5, 2026. Agencies have time until September 16, 2026, to address the Starlette and LiteLLM flaws.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">Impersonating IT support: how threat actors turn a remote session into enterprise-wide access</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/09/02/impersonating-it-support-threat-actors-turn-remote-session-into-enterprise-wide-access/" target="_blank">Original Link</a></p>
+            <div class="content-text">Microsoft Threat Intelligence has observed a human-operated intrusion campaign that abuses Microsoft Teams external collaboration to impersonate IT or helpdesk personnel and socially engineer users into granting an interactive remote session. Once remote control is established via RMM tools, the threat actor uses PowerShell to download and silently install a malicious MSI package, which in turn stages a portable Node.js runtime and an obfuscated JavaScript implant that provides persistent command execution and command and control (C2).
+Unlike commodity phishing that ends with an infostealer, this campaign follows a full hands-on-keyboard playbook. After the implant is deployed, the threat actor performs extensive host and Active Directory reconnaissance, periodically captures screenshots of the victim’s desktop, executes follow-on payloads through trusted Windows binaries, and pivots across the enterprise over Windows Remote Management (WinRM) toward high-value assets such as domain controllers. The intrusion relies heavily on legitimate tooling, including Microsoft Teams, remote support software, Windows Installer, Node.js, and native administrative protocols, allowing the activity to blend into expected enterprise operations at nearly every stage.
+This intrusion pattern is especially high-impact because it hands an external operator credential-backed, interactive access to internal infrastructure. The reconnaissance and lateral movement patterns observed: domain enumeration, server discovery, and WinRM pivoting toward identity systems, are consistent with intrusion activity that can precede data theft, extortion, ransomware deployment, or other follow-on objectives, in which threat actors map the environment, escalate privileges, disable security controls, exfiltrate business-relevant data, and ultimately deploy ransomware across the organization.
+In this blog, we share our analysis of this attack chain, from initial Microsoft Teams contact through internal lateral movement, along with mitigation and hunting guidance to help defenders detect and disrupt this user-initiated access pathway before it escalates into broader compromise.
+Risk to enterprise environments
+By abusing enterprise collaboration workflows instead of traditional email-based phishing, the threat actor initiates contact through Microsoft Teams in a way that appears consistent with routine IT support. Microsoft Teams applies multiple security controls at the point of first external contact, including external tenant labeling, Accept/Block prompts, message previews, and phishing indicators, but this attack chain depends on convincing the user to bypass those warnings and voluntarily grant remote access through legitimate support tools.
+An approved external Teams interaction, followed by a remote session, can enable the threat actor to:
+- Establish interactive, credential-backed system access through a legitimate remote support tool.
+- Execute threat actor-controlled code (MSI loader and Node.js implant) using trusted installers and runtimes.
+- Map the host and Active Directory environment through automated discovery
+- Move laterally toward high-value infrastructure using WinRM.
+- Capture on-screen activity and create opportunities for follow-on data access or other post-compromise actions.
+Attack chain overview
+The campaign follows a multi-stage attack chain that progresses from social engineering through payload delivery, execution, reconnaissance, and ultimately lateral movement:
+- Initial access via Teams (T1566.003): A threat actor operating from an external tenant initiates a Teams chat or call while impersonating IT/helpdesk staff and coaxes the user into handing over their device, for example, approving a “request control” prompt during a Teams screen-share, or opening Quick Assist and reading back the connection code.
+- Remote session and MSI delivery: During the remote session, the threat actor runs PowerShell to download a malicious MSI from cloud storage and installs it silently with msiexec.
+- Node.js runtime and implant staging: The MSI installs a script-based loader and a separate encrypted implant file under LocalAppData. If Node.js is not already available, the bootstrap downloads the legitimate portable Node.js runtime from the official distribution. The loader decrypts the implant at runtime, either in memory or into a temporary JavaScript file.
+- Script-based bootstrap and Node.js execution:The MSI launches hidden bootstrap code through trusted Windows script hosts, including PowerShell, cmd.exe, and WScript. The bootstrap obtains a portable Node.js runtime and uses it to decrypt and execute the JavaScript implant from a user-writable directory.
+- Command-and-control and operator tasking:The implant uses randomized HTTPS polling to receive JavaScript tasks from its C2 server. Observed operator-issued tasking performed host reconnaissance, security-product and virtualization discovery, and periodic desktop screen capture.
+- Domain discovery: The operator enumerates domain accounts, servers, and users through native tools and Active Directory Service Interfaces (ADSI) queries.
+- Follow-on payload execution: Additional payloads are executed through rundll32 loading threat actor-supplied DLLs.
+- Lateral movement via WinRM:Operator-issued tasking executed through the Node.js backdoor initiates WinRM connections over TCP port 5985 to domain-joined systems, including domain controllers and certificate authorities.
+Stage 1: Initial contact via Teams (T1566.003 Spearphishing via Service)
+The intrusion begins with abuse of external collaboration features in Microsoft Teams, where a threat actor operating from a separate tenant initiates contact while impersonating internal IT or helpdesk personnel. This activity does not stem from a weakness in Microsoft Teams or its built-in protections; instead, the threat actor abuses legitimate collaboration features by persuading the user to override clearly presented security warnings, highlighting the broader challenge of defending against social engineering rather than technical exploitation.
+Because interaction occurs within an enterprise collaboration platform rather than through traditional email, it could bypass the initial skepticism associated with unsolicited external communication. The lure varies, for example “Microsoft Security Update,” “Spam Filter Update,” “Account Verification,” or tasks required to stop deactivation of an account, but the objective is consistent: convince the user to ignore external-contact flags, launch a remote management session, and accept elevation. Voice phishing (vishing) is sometimes layered to increase trust or compliance, or so malicious instructions or URLs never enter the chat logs.
+With user consent obtained through social engineering, the threat actor gains interactive control of the device using a remote support tool. From the user’s perspective, they are guided to open the remote-assistance application, enter a short key, and follow prompts to grant access.
+The urgency and interactivity are the signal: a remote-assist process tree followed immediately by cmd.exe or PowerShell on the same desktop. In vishing scenarios, the threat actor might talk the victim through the process to prevent logging of malicious instructions.
+Stage 2: Remote session and malicious MSI delivery
+Immediately after establishing control, the threat actor uses PowerShell within the remote session to download a malicious MSI package from threat actor-controlled cloud storage and installs it silently. The installer is disguised with benign, update-themed names such as “devfix” or “Hotfix,” reinforcing the helpdesk pretext.
+The payload is hosted on a widely used cloud storage platform, allowing the download to blend in with legitimate traffic and benefit from a trusted domain reputation. The /qn switch suppresses all installer UI so the victim sees no indication that software is being installed.
+Stage 3: MSI staging and Node.js runtime acquisition
+Upon installation, the MSI retrieves a portable Node.js runtime directly from the official Node.js distribution and extracts it into a randomly named directory under the user’s local application data. Downloading a legitimate, signed runtime from a trusted source lets the threat actor run a full JavaScript execution environment without deploying custom binaries that might attract scrutiny.
+The MSI installs a script-based loader and a separate encrypted implant file in the current user’s LocalAppData directory. The encrypted implant is packaged within the MSI rather than downloaded separately. At runtime, the loader decrypts the JavaScript implant either in memory or into a temporary JavaScript file. This separation of a legitimate runtime from the malicious script allows the initial backdoor to execute as interpreted JavaScript while additional native payloads can be delivered later through operator tasking.
+Stage 4: Script-based bootstrap and encrypted implant execution
+The MSI schedules a deferred, asynchronous custom action immediately after installing its files. The action starts hidden bootstrap code through PowerShell, cmd.exe, or WScript and then launches Node.js from LocalAppData. The loader decrypts a separate high-entropy data file and executes the resulting JavaScript either through standard input or by loading a temporary JavaScript file.
+Endpoint activity shows Node.js, or a renamed copy whose original file metadata identifies it as Node.js, executing a staged script loader from LocalAppData. The loaders and encrypted payload files use nonstandard extensions such as .tmp, .ini, .dat, .bin, or .cfg. After decrypting the payload, the loader either provides JavaScript to Node.js through standard input or writes a temporary .js file and loads it into the running Node process.
+By using a signed Node.js runtime, including renamed copies of the runtime, to execute nonstandard-extension loaders or JavaScript supplied through standard input, the threat actor can evade controls focused only on unsigned executables and conventional script extensions.
+Stage 5: Per-user persistence
+The analyzed MSI packages established per-user persistence using update-themed entries. Observed installers created either an HKEY_CURRENT_USER Run value or a shortcut in the current user’s Startup folder. Both mechanisms used the name EdgeUpdate and launched a Node.js loader from LocalAppData when the user signed in.
+The Startup-folder implementation launched WScript with the staged JScript wrapper, portable Node.js runtime, and nonstandard-extension loader. The Run-key implementation invoked the portable Node.js runtime directly.
+Stage 6: Command-and-control and operator tasking
+Once running, the implant establishes communication with its C2 server and begins receiving JavaScript tasking. Observed threat actor issued tasks launched short-lived cmd.exe and PowerShell processes to perform a burst of host reconnaissance, hardware and locale details, installed antivirus products, and disk information.
+The querying of the display adapter name and installed antivirus is characteristic of sandbox and defense evasion checks. Generic virtual display adapters and analysis tooling are common tells of an automated analysis environment.
+The recovered implant communicates through randomized HTTPS long-polling requests. Responses from the C2 server are treated as JavaScript source and executed dynamically with access to Node.js module loading, process execution, environment variables, buffers, and the file system.
+Through JavaScript tasking delivered by the C2 server, operators repeatedly captured the victim’s screen, resized the image, encoded it as Base64, and wrote it to a temporary file before exfiltration. Screenshots are captured at varying scale factors to balance image quality against transfer size.
+Dormant blockchain-based C2 discovery
+The analyzed implants also contained dormant logic capable of querying an Ethereum smart contract for an updated C2 URL. This functionality was disabled in the recovered builds, which instead used a hard-coded fallback server. The contract stores only a URL string and does not contain or execute the malware payload.
+Stage 7: Domain discovery and reconnaissance
+With a foothold validated, the operator uses C2-delivered tasking to expand reconnaissance into Active Directory. Native commands enumerate specific domain accounts, while ADSI searches identify domain-joined servers and collect user description attributes, which can contain operational notes, privileged-account context, or other sensitive information.
+An ADSI-based sweep enumerates Windows Server computer objects, resolves their addresses, and probes each for administrative reachability, effectively building a live map of high-value targets:
+A second ADSI query enumerates all user objects and their description attributes:
+The use of randomized sleep jitter and CIM-based reachability checks indicates a deliberate, operator-driven effort to enumerate the domain quietly rather than through noisy, high-volume scanning.
+Stage 8: Follow-on payload execution
+Using commands delivered through the Node.js backdoor, the operator executes additional payloads through rundll32.exe, loading threat actor-supplied DLLs by invoking exported functions with a token argument. Using rundll32 to execute malicious DLL exports is a well-established defense-evasion and proxy-execution technique.
+The DLLs are given short, innocuous names and are invoked with an exported function (open) and a per-execution token, consistent with modular loaders that gate execution behind a runtime-supplied key.
+Stage 9: Lateral movement via WinRM toward high-value assets
+Following local execution and discovery, operator-issued tasking executed through the Node.js backdoor initiated internal remote-management connections over WinRM on TCP port 5985 to a large set of domain-joined systems. The target list spans dozens of hosts across multiple regions and roles, including file servers, database and application servers, and, critically, domain controllers and certificate authorities.
+The use of WinRM from a non-administrative application context strongly suggests credential-backed lateral movement directed by an external operator. Targeting identity-centric infrastructure, domain controllers and certificate authorities, at this stage reflects a shift from initial foothold toward broader enterprise control, and is a hallmark of intrusions that precede large-scale data theft or ransomware deployment.
+Mitigation and response recommendations
+This campaign relies less on platform exploitation and more on persuading users to initiate trusted remote-access workflows within legitimate collaboration tools. Organizations should treat any unsolicited external support contact as inherently suspicious and implement layered defenses across the identity, endpoint, and collaboration layers.
+- Reinforce user education. Establish internal helpdesk authentication phrases and train employees to recognize external-tenant indicators and to never grant remote access or run commands provided by an unsolicited contact.
+- Verify unsolicited support contact. Treat any unsolicited external Microsoft Teams chat or call claiming to be IT or helpdesk as suspicious, and verify the request through a known internal channel before granting remote access. Restrict Teams external access to trusted domains only.
+- Harden Microsoft Teams and email against social engineering. Use
+[Microsoft Defender for Office 365](https://learn.microsoft.com/defender-office-365/mdo-about)with[Safe Links](https://learn.microsoft.com/defender-office-365/safe-links-about)and[Zero-hour auto purge (ZAP)](https://learn.microsoft.com/defender-office-365/zero-hour-auto-purge)so malicious messages and URLs are neutralized at time of click and removed after delivery. - Microsoft Teams: Apply the
+[Security best practices for Microsoft Teams](https://learn.microsoft.com/en-us/MicrosoftTeams/teams-security-best-practices-for-safer-messaging), revisit your[external collaboration policies](https://learn.microsoft.com/en-us/microsoftteams/trusted-organizations-external-meetings-chat), and make sure users see clear[external sender notifications](https://learn.microsoft.com/en-us/defender-office-365/mdo-support-teams-about)when engaging with cross-tenant contacts. Require device- or identity-based access checks before any remote support session is granted. - Enforce phishing-resistant access controls. Require MFA and compliant or managed devices through
+[Microsoft Entra Conditional Access](https://learn.microsoft.com/entra/identity/conditional-access/overview)to limit the value of credential-backed remote sessions established through social engineering. - Deploy attack surface reduction rules. Enable
+[ASR rules](https://learn.microsoft.com/defender-endpoint/attack-surface-reduction-rules-deployment-implement)that block executable content from email and scripting interpreters, process creation from PowerShell/WScript/cmd, and execution of downloaded content to disrupt MSI- and script-based staging. - Restrict administrative protocols. Limit
+[WinRM](https://learn.microsoft.com/windows/win32/winrm/portal)(TCP 5985) to authorized management workstations and alert on WinRM initiated from user-context or non-administrative processes. - Turn on network and web protection. Enable network protection and web protection in Microsoft Defender for Endpoint to block connections to threat actor infrastructure and cloud-hosted staging endpoints used for payload delivery and C2.
+- Enable cloud-delivered protection. Turn on
+[cloud-delivered protection](https://learn.microsoft.com/microsoft-365/security/defender-endpoint/configure-block-at-first-sight-microsoft-defender-antivirus)in Microsoft Defender Antivirus to cover rapidly evolving threat actor tooling; cloud-based machine learning helps detect and block newly observed threats. - Control remote support tooling. Limit or monitor remote monitoring and management (RMM) and interactive remote-support software, and control which remote-assistance tools are permitted in the environment.
+- Investigate and rotate credentials. Organizations that find indicators of this campaign should assume the operator obtained network-level access through the compromised host and prioritize credential rotation for any credentials accessible from the affected machine, including domain admin accounts if the host was domain-joined.
+Microsoft Defender XDR detections
+Microsoft Defender XDR coordinates detection, prevention, investigation, and response across endpoints, identities, email, and apps. The representative alerts below can surface activity associated with this campaign. Alert titles are illustrative and may vary by environment and product version.
+| Tactic | Observed activity | Microsoft Defender coverage |
+| Initial access | External Teams chat or call from an IT/helpdesk persona operating in a separate tenant | Microsoft Defender for Cloud Applications / Office 365 – Microsoft Teams chat initiated by a suspicious external user – IT Support Teams Voice phishing following mail bombing activity – A user clicked through to a potentially malicious URL. – A potentially malicious URL click was detected. – Suspicious Teams Chat likely involved in remote management and dangerous commands Microsoft Defender for Endpoint – Possible initial access from an emerging threat |
+| Execution | PowerShell downloads and silently installs an MSI | Microsoft Defender Antivirus – Trojan:PowerShell/PowExec.MX!MTB – Trojan:Win32/FakeAll!MTB – Trojan:JS/FakeAll.DA!MTB – Trojan:JS/FakeAll.DB!MTB Microsoft Defender for Endpoint – Possible initial access from an emerging threat |
+| Execution | Portable Node.js runtime executes an obfuscated loader from LocalAppData; observed execution includes WScript, nonstandard script extensions, renamed Node.js copies, and standard-input execution. | Microsoft Defender Antivirus – Trojan:JS/SynkLoader.SA – Trojan:JS/EtherRatz.A!MTB – Trojan:JS/EtherRatz.B!MTB Microsoft Defender for Endpoint – Suspicious Node.js process behavior – Suspicious JavaScript process |
+| Defense evasion | Silent msiexec install and rundll32 loading threat actor-supplied DLLs | Microsoft Defender Antivirus – Trojan:Win32/SynkLoader.SA Microsoft Defender for Endpoint – Low-reputation arbitrary code executed by signed executable – Suspicious process launch by Rundll32.exe |
+| Discovery | WMI/ADSI host and Active Directory enumeration and periodic screen capture | Microsoft Defender for Endpoint – Suspicious screen capture activity – Suspicious LDAP query – Suspicious Active Directory enumeration – Possible hands-on-keyboard pre-ransom activity – Anomalous account lookups – Possible hands-on-keyboard pre-ransom activity |
+| Lateral movement | WinRM (TCP 5985) pivot toward domain controllers and certificate authorities | Microsoft Defender for Endpoint – Suspicious WinRM activity was observed |
+Microsoft Security Copilot
+Security Copilot customers can use the standalone experience to create their own prompts or run prebuilt promptbooks to automate investigation and response tasks related to this threat. Useful promptbooks for this activity include Incident investigation, Microsoft User analysis, Threat actor profile, Threat intelligence 360 report, and Vulnerability impact assessment. Some promptbooks require access to Microsoft Defender XDR, Microsoft Sentinel, or related Microsoft security plugins.
+For this campaign, Security Copilot can help analysts summarize affected devices where Node.js or a renamed Node.js runtime executed a staged loader from a user-writable path, reconstruct the Teams-to-remote-session-to-MSI delivery chain, and build containment and credential-rotation plans for affected domain-joined endpoints.
+Threat intelligence reports
+Microsoft customers can use [Microsoft Defender XDR Threat Analytics](https://learn.microsoft.com/defender-xdr/threat-analytics) and related Microsoft threat intelligence reporting to stay current on the malicious activity, indicators, detection coverage, and recommended response actions associated with this campaign.
+For campaign-specific intelligence, see Threat Analytics: Teams-based helpdesk impersonation delivers MSI loader and Node.js implant for hands-on-keyboard intrusion ([View report](https://security.microsoft.com/threatanalytics3/923854ec-9f40-4053-bc8a-4de71a43cd33)). These reports provide investigation context, protection guidance, and updated intelligence that security teams can use to prevent, mitigate, or respond to related activity in their environments.
+Advanced hunting queries
+Microsoft Defender XDR customers can run the following advanced hunting queries to locate related activity. Tune time windows, tool lists, and filters for your environment.
+External Teams activity
+Sender, Recipient, and ThreadId can be used for pivoting other useful information. CloudAppEvents is useful for searching first contact information.
+CloudAppEvents | where Timestamp > ago(7d) // optional time filters between ([_startTime] .. [_endTime]) | where Application == "Microsoft Teams" | where ActionType == "ChatCreated" | where IsExternalUser == true | extend ThreadCreatorUpn = tostring(RawEventData.Members[0].UPN) ,ThreadCreatorDisplayName = tostring(RawEventData.Members[0].DisplayName) ,ThreadCreatorOrganizationId = tostring(RawEventData.Members[0].OrganizationId) ,TRecipient1Upn = tostring(RawEventData.Members[1].UPN) ,Recipient1DisplayName = tostring(RawEventData.Members[1].DisplayName) ,Recipient1OrganizationId = tostring(RawEventData.Members[1].OrganizationId) ,Recipient2Upn = tostring(RawEventData.Members[2].UPN) ,Recipient2DisplayName = tostring(RawEventData.Members[2].DisplayName) ,Recipient2OrganizationId = tostring(RawEventData.Members[2].OrganizationId) ,ThreadId = tostring(RawEventData.ChatThreadId) | summarize by ThreadCreatorUpn, ThreadCreatorDisplayName, ThreadCreatorOrganizationId, TRecipient1Upn, Recipient1DisplayName, Recipient1OrganizationId, Recipient2Upn, Recipient2DisplayName, Recipient2OrganizationId, ThreadId, tostring(IsExternalUser), tostring(IsImpersonated) |
+MessageEvents, CallActivityEvents, MessageUrlInfo, and others can be searched alone or in a union to correlate threads with messages and calls.
+let _threadIds = pack_array( "19:[thread]", "19:[thread]", "19:[thread]"); union MessageEvents, CallActivityEvents, MessageUrlInfo | where ThreadId in (_threadIds) or TeamsMessageId has_any (_threadIds) | sort by ThreadId, TeamsMessageId asc |
+PowerShell writing an MSI to a user-writable path
+DeviceFileEvents | where Timestamp > ago(7d) | where InitiatingProcessParentFileName =~ "explorer.exe" | where InitiatingProcessFileName =~ "powershell.exe" | where FileName endswith ".msi" where FolderPath contains @"\Downloads\" or FolderPath contains @"\AppData\" or FolderPath contains @"\Temp\" |
+node.exe executing a staged payload from user-writable paths
+DeviceProcessEvents | where Timestamp > ago(7d) | where FileName =~ "node.exe" | where ProcessCommandLine has @"\AppData\Local\" and ProcessCommandLine !contains ".js" | where InitiatingProcessFileName =~ "wscript.exe" | where InitiatingProcessCommandLine has_all (@"\AppData\Local\", "node.exe", ".js") |
+Screen capture via hidden PowerShell writing Base64 to a temp file
+DeviceProcessEvents | where Timestamp > ago(7d) | where InitiatingProcessParentFileName =~ "node.exe" or InitiatingProcessFileName =~ "node.exe" | where FileName in~ ("powershell.exe", "cmd.exe") | where ProcessCommandLine has_all ("CopyFromScreen", "ToBase64String", "System.Drawing.Bitmap", "System.Drawing", "WriteAllText") | project Timestamp, DeviceName, AccountName, ProcessCommandLine | order by Timestamp desc |
+WinRM lateral movement from a non-administrative process
+DeviceNetworkEvents | where Timestamp > ago(7d) | where InitiatingProcessFileName =~ "powershell.exe" | where InitiatingProcessCommandLine endswith "-NoLogo -NoProfile -ExecutionPolicy Bypass" | where RemoteUrl endswith ":5985/wsman" |
+MITRE ATT&CK Techniques observed
+The following table maps the observed activity to MITRE ATT&CK techniques:
+| Tactic | Technique ID | Technique | Observed activity |
+| Initial Access | T1566.003 | Phishing: Spearphishing via Service | External Teams chat/call impersonating IT helpdesk |
+| Execution | T1059.001 | Command and Scripting Interpreter: PowerShell | PowerShell used to download and install the MSI |
+| Execution | T1059.007 | Command and Scripting Interpreter: JavaScript | Malicious JavaScript implant run via node.exe |
+| Execution | T1218.007 | System Binary Proxy Execution: Msiexec | Silent MSI installation via msiexec /qn |
+| Execution | T1218.011 | System Binary Proxy Execution: Rundll32 | Follow-on DLL payloads executed via rundll32 |
+| Defense Evasion | T1036 | Masquerading | Update/helpdesk-themed MSI names (devfix, Hotfix) |
+| Defense Evasion | T1497.001 | Virtualization/Sandbox Evasion: System Checks | Display adapter and antivirus product queries |
+| Discovery | T1082 | System Information Discovery | systeminfo, MachineGuid, ProductName, disk inventory |
+| Discovery | T1016 | System Network Configuration Discovery | net session, net use, domain membership checks |
+| Discovery | T1087.002 | Account Discovery: Domain Account | net user /domain and ADSI user enumeration |
+| Discovery | T1018 | Remote System Discovery | ADSI server enumeration with reachability probing |
+| Discovery | T1518.001 | Security Software Discovery | Antivirus product enumeration via SecurityCenter2 |
+| Collection | T1113 | Screen Capture | Periodic Base64-encoded desktop screenshots |
+| Command and Control | T1071.001 | Application Layer Protocol: Web Protocols | Randomized HTTPS long-polling used for core C2; separate post-compromise tasking installed the ws package for an additional or optional capability. |
+| Command and Control | T1105 | Ingress Tool Transfer | Portable Node.js runtime downloaded and JavaScript tasks received from C2; the initial loader and encrypted implant are extracted from the MSI. |
+| Lateral Movement | T1021.006 | Remote Services: Windows Remote Management | WinRM (5985) pivoting to domain-joined systems |
+Indicators of Compromise (IOCs)
+The following indicator types were observed in this campaign. Environment-specific values (paths, hostnames, and account names) have been generalized; defenders should hunt for the corresponding behaviors and patterns in their own telemetry.
+File indicators
+| Indicator (SHA-256) | Description |
+| 4cfdcae6dd1d6d98b870c8f0654d504f2bf10479a117dc297de789c249dc389d | Malicious MSI loader package (silent msiexec install) |
+| a4d145a6347e47d40b3ca48af5c6dba01bf019d0110e31a44bb70fc77d1d1676 | Malicious MSI loader package |
+| cc6d0f3f47afeba018173604e34f527e8413d3a54ffb35caed529bff49055ec5 | Malicious MSI loader package |
+| 0d2fc28af246f62f27e49207d1f64e236ad9ea029412b27877d1ae6c098e86e3 | Second-stage DLL (rundll32-loaded module) |
+| 69e10e0cb7bb2137ebea12971adb02c662cf5543a4f8c9530812bcbf7b183a23 | Second-stage DLL (rundll32-loaded module) |
+| a135fe4df18c711097e69b4f27ea32a74a955160bf2fb12da841f21866d95d87 | Second-stage DLL (rundll32-loaded module) |
+Payload delivery infrastructure
+| Indicator | Type | Description |
+| update1n5[.]blob.core.windows.net | Domain | Azure Blob Storage endpoint hosting the malicious MSI loader |
+| update1n6[.]blob.core.windows.net | Domain | Azure Blob Storage endpoint hosting the malicious MSI loader |
+| update1n7[.]blob.core.windows.net | Domain | Azure Blob Storage endpoint hosting the malicious MSI loader |
+| update1n9[.]blob.core.windows.net | Domain | Azure Blob Storage endpoint hosting the malicious MSI loader |
+| updatetmp[.]blob.core.windows.net | Domain | Azure Blob Storage endpoint hosting the malicious MSI loader |
+Command-and-control infrastructure
+| Indicator | Type | Description |
+| synctimes[.]australiaeast[.]cloudapp[.]azure[.]com | Domain | Hardcoded fallback C2 and latest URL stored in the associated Ethereum contract |
+| webwether[.]eastus[.]cloudapp[.]azure[.]com | Domain | Earlier URL stored in the Ethereum contract |
+| dssdfvsdfvsdfvsdgbfbdvdzv[.]org | Domain | Earlier URL stored briefly in the Ethereum contract |
+Learn more
+For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
+To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
+To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
+Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
+- Learn more about
+[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection) - Evaluate your AI readiness with our latest
+[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). [Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">Hackers exploit Sangoma Switchvox flaw to deploy reverse shells</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-sangoma-switchvox-flaw-to-deploy-reverse-shells/" target="_blank">Original Link</a></p>
+            <div class="content-text">Attackers are actively exploiting CVE-2026-9586, an unauthenticated SQL injection vulnerability in the Sangoma Switchvox VoIP platform that can lead to remote code execution. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
+            <h2 class="article-title">Hackers exploit critical JFrog Artifactory flaw to forge admin tokens</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-critical-jfrog-artifactory-flaw-to-forge-admin-tokens/" target="_blank">Original Link</a></p>
+            <div class="content-text">A critical authentication bypass vulnerability (CVE-2026-82329) in JFrog Artifactory is being exploited in attacks to create tokens that provide administrative access. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-4" class="article-body">
             <h2 class="article-title">Attackers Exploit Critical Switchvox Flaw to Deploy Reverse Shells Without Credentials</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/attackers-exploit-critical-switchvox.html" target="_blank">Original Link</a></p>
             <div class="content-text">Threat actors are exploiting a severe security vulnerability in Sangoma Switchvox, an enterprise VoIP platform, that could allow unauthenticated remote code execution.
@@ -86,200 +288,7 @@ It's worth noting that the IP address has been flagged on VirusTotal for conduct
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-1" class="article-body">
-            <h2 class="article-title">Counterfeit installers to system compromise: Tracking a deceptive software download campaign</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/09/01/counterfeit-installers-system-compromise-tracking-deceptive-software-download-campaign/" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft Defender Experts is tracking an active malware campaign that uses counterfeit software-download websites to impersonate trusted vendors and distribute malicious installers. The campaign has targeted users looking to download popular software and has resulted in compromises across multiple organizations and industries, primarily affecting China-based operations of multinational organizations and Chinese-speaking users. Microsoft has observed victims across healthcare, manufacturing, gaming, technology, logistics, government, and education sectors.
-Once executed, the malicious installers deploy malware that establishes persistence, attempts to weaken security protections, and communicates with attacker-controlled infrastructure. Microsoft assesses with moderate confidence that this activity is consistent with the publicly reported Silver Fox (also known as Yinhu, 银狐) fake software campaign but has not attributed it to a nation-state actor. Microsoft Defender detected and disrupted activity across multiple stages of the attack, including automated containment through attack disruption. Organizations should prioritize preventing downloads from untrusted software sources and ensure protections such as SmartScreen, network protection, tamper protection, and Microsoft Defender XDR are enabled to help identify, block, and respond to related activity.
-Attack chain overview
-The campaign follows a consistent attack chain from a spoofed vendor download page to a self-protecting, persistent implant. The stages below trace that chain — initial access, delivery, execution, persistence, privilege escalation, defense evasion, and command and control.
-Campaign scope and targeting
-Microsoft observed affected devices predominantly associated with China-based operations and Chinese-speaking users, consistent with the Chinese-language lure content and the .com.cn and .hl.cn infrastructure. Confirmed activity spans medical devices and healthcare, manufacturing, gaming, technology, logistics, government, and higher education across multiple organizations and industries.
-Initial access: spoofed software-download sites
-The entry point is a fraudulent software-download website that spoofs a legitimate vendor. In one case, endpoint telemetry captured a device navigating to the fake Razer page pc-razerzone[.]com[.]cn and downloading app_setup.6653004.zip from the delivery host gehie246[.]com/712down; two content-distinct copies of the same-named archive were written within roughly 69 seconds — a direct observation of server-side payload regeneration.
-Across the estate, FileOriginReferrerUrl telemetry ties each downloaded archive to the impersonation page that served it and to rotating delivery hosts (yimxg25tiy[.]com/73inst, cc8ttkv35b[.]com/7qinst, n7b8t85zsg[.]com/ins711) and a suspected attacker-controlled Alibaba Cloud Object Storage Service (OSS) bucket. The lure domains predominantly use .com.cn, .hl.cn, and .cn and embed the impersonated brand name.
-Delivery: a dynamically generated installer archive
-The following examples illustrate how look-alike domains routed users to the same delivery infrastructure while preserving brand-specific lure pages.
-When the user selects the download control, Microsoft Edge retrieves a malicious installer archive from a small set of dedicated delivery domains.
-pc-razerzone[.]com[.]cn (spoofed Razer download site) → www[.]gehie246[.]com/712down → app_setup.6653004.zip → stage-one loader |
-A defining characteristic is that the archive keeps the same filename while its hash changes on every download — a strong indicator the payload is generated server-side, per request. Microsoft observed families of same-named archives (app_setup.*, zinst.*, zintall.*, intsoft.*, innstll.*) whose contents differ across downloads while the delivery URL stays constant; the full validated hash set is in the indicators of compromise below.
-kaspersky-lab[.]hl[.]cn → hxxp://www.gehie246[.]com/712down pc-razerzone[.]com[.]cn → hxxp://www.gehie246[.]com/712down calibre-ebook[.]com[.]cn → hxxp://www.gehie246[.]com/712down |
-Brand-impersonation infrastructure
-The campaign runs a large, uniform set of vendor look-alike pages on .com.cn and .hl.cn domains, each cloning the real product’s branding and presenting a prominent “Download now” button. All funnel to the same delivery and payload infrastructure.
-| Impersonated brand | Spoofed domain (defanged) | Category |
-| Razer (Synapse driver) | pc-razerzone[.]com[.]cn | Peripherals / drivers |
-| Microsoft Edge | app-microsoft-edge[.]com[.]cn | Browser |
-| Kaspersky | kaspersky-lab[.]hl[.]cn | Security software |
-| Sejda PDF | sejda[.]hl[.]cn | Productivity |
-| NetEase Youdao Dictionary | translate-youdao[.]hl[.]cn | Translation |
-| DiskGenius | zh-diskgenius[.]com[.]cn | Disk utility |
-| Baidu Netdisk (Pan) | baidu-pan[.]com[.]cn | Cloud storage |
-| oCam Screen Recorder | ocam-pc[.]com[.]cn | Screen capture |
-| draw.io | cn-drawio[.]com[.]cn | Diagramming |
-| SteelSeries | steelseries-cn[.]com[.]cn | Peripherals |
-| Sogou | gw-sogou[.]com[.]cn | Input method |
-| Calibre | calibre-ebook[.]com[.]cn | E-book |
-| MindMaster (typosquat) | mindmoster[.]com[.]cn | Mind-mapping |
-| Others | pc-codex, jinshan-cibapc, zh-tbtool, web-tbtool, zh-doubaosrf, ieway-cn (all [.]com[.]cn / [.]hl[.]cn) | Various utilities |
-Although these domains impersonate unrelated vendors, they are not independently hosted. Infrastructure enrichment, corroborated by Microsoft telemetry where the two overlap, resolves them into two groupings. Six domains resolve within AS132839, spread across four unrelated netblocks and three registered country codes, and share a common pair of nameservers. Two further domains resolve within AS8796 in a single /21, using a different nameserver pair. One additional domain is served through a content delivery network (CDN), concealing its origin. Because hosting and Domain Name System (DNS) are frequently bundled by the same reseller, these are best read as two consistent procurement channels rather than two independent corroborating signals.
-The practical implication for defenders is that netblock- and geography-based grouping will miss these relationships, while Autonomous System Number (ASN)-level analysis surfaces them.The autonomous system remains constant even where the address space and registered country vary. These are shared commercial hosting and DNS providers carrying substantial unrelated tenancy, so the ASN and nameserver should be treated as hunting pivots, not blocklist entries.
-The following capture shows a representative impersonation page served by the campaign. The pages are high-fidelity clones of a legitimate vendor’s site with a prominent download call-to-action.
-Execution: a wrapped installer drops a randomized stage-one payload
-The wrapper installer creates a randomized executable path while reusing stable payload content, making names unreliable but behavior and hashes useful for detection.
-Opening the archive yields a wrapper installer whose name follows a generated pattern (for example, a_instapp83353001.exe or ainst8663586104.exe).
-Executing the wrapper creates and launches a stage-one payload at a randomized path under a world-writable or system location; the directory and file names are randomized, but the payload content is stable. The same stage-one 256-bit Secure Hash Algorithm (SHA-256) (676a2a7b94ca…) was observed under many names and paths.
-C:\Users\Public\sE94yD\aLcUaw.exe (SHA-256 676a2a7b94ca… stage-one) C:\Users\Public\nvdPX5\2b3L5i.exe (SHA-256 676a2a7b94ca… stage-one) C:\Program Files (x86)\i3LH90\ErNGxW.exe (SHA-256 6d6ba2bc9ad4… later-stage) C:\Program Files (x86)\Q8Maj\7EIr6VA.exe (SHA-256 6d6ba2bc9ad4… later-stage) C:\ProgramData\zsMmvukD\beuv4Mie.exe (SHA-256 c6100166e2d3… persistent) |
-The end-to-end chain is visible as a parent-to-child process tree: msedge.exe writes the archive, an archiving tool (7zFM.exe, 360zip.exe, or WinRAR.exe) extracts it, the bundled wrapper runs, and the wrapper launches the randomized stage-one payload.
-msedge.exe downloads app_setup.6653004.zip └─ 7zFM.exe / 360zip.exe / WinRAR.exe (user opens the downloaded archive) └─ a_instapp83353001.exe (wrapper installer bundled in the archive) └─ C:\Users\Public\yZ6A88\9bEELI.exe (stage-one payload, randomized) |
-Payloads are masqueraded; Microsoft confirmed the masquerade through file metadata on the later-stage payload (SHA-256 6d6ba2bc…), staged at C:\Program Files (x86)\<random>\. The binary’s version resource declares CompanyName: “Speech Processing Solutions GmbH”, FileDescription: “Philips Speech Driver Client Configuration”, OriginalFileName: PhilipsSpeechDriverConfiguration.exe, and ProductVersion: 4.7.471.07,while executing from a randomized directory under a randomized file name. The same resource retains an unfilled build-template placeholder, ProductName: “TODO: <Product name>”, indicating the version information was fabricated for the payload rather than inherited from genuine vendor software. Microsoft also observed svchost.exe executing from a non-system path (D:\hellothere\svchost.exe) rather than C:\Windows\System32.
-FileName XPSPLOG.dll FolderPath C:\Program Files (x86)\72q1o6\XPSPLOG.dll InitiatingProcessFileName 40gK5T.exe InitiatingProcessFolderPath C:\Program Files (x86)\72q1o6\40gK5T.exe InitiatingProcessSHA256 6d6ba2bc9ad414837826f7278bc3e0116f1aeda02d0c2284ed65819f5d9180a8 InitiatingProcessCommandLine "40gK5T.exe" InitiatingProcessVersionInfoCompanyName Speech Processing Solutions GmbH InitiatingProcessVersionInfoFileDescription Philips Speech Driver Client Configuration InitiatingProcessVersionInfoOriginalFileName PhilipsSpeechDriverConfiguration.exe InitiatingProcessVersionInfoProductVersion 4.7.471.07 InitiatingProcessVersionInfoProductName TODO: <product name=""> InitiatingProcessParentFileName svchost.exe </product> |
-A payload staged under C:\ProgramData\<random>\ (SHA-256 c6100166…) carries the version metadata of the Indigo Rose TrueUpdate Client (OriginalFileName: tu_rt.exe, ProductVersion: 3.8.0.0) and exhibits that product’s runtime behavior, writing _ir_tu2_temp_* artifacts to the user’s temp directory on each execution. Dropped by the later-stage payload and launched repeatedly by the Task Scheduler service, it connects to an attacker-controlled Alibaba Cloud OSS bucket over Transport Layer Security (TLS) and writes a further payload to a second randomized C:\ProgramData\ directory — a legitimate update mechanism repurposed for payload delivery.
-00:24:43 ErNGxW.exe (6d6ba2bc…) creates C:\ProgramData\zsMmvukD\beuv4Mie.exe (c6100166…) 00:24:43 beuv4Mie.exe executes ← parent: svchost.exe -k netsvcs -p -s Schedule 00:24:44 beuv4Mie.exe → ConnectionSuccess | upitem.oss-cn-hangzhou.aliyuncs.com | 443 00:24:44 beuv4Mie.exe creates C:\ProgramData\uwMUCYBN\SaYC4Mga.exe (f33d160d…) 02:12:22 beuv4Mie.exe creates …\Temp\_ir_tu2_temp_4 ← TrueUpdate runtime artifact 02:44:20 beuv4Mie.exe re-executes (scheduled task) → _ir_tu2_temp_5 02:59:00 … _temp_6 03:15:54 … _temp_7 08:02:52 … _temp_8 08:32:20 … _temp_9 08:38:51 … _temp_11 |
-| Wrapper installer | Stage-one payload created |
-| a_instapp83353001.exe | C:\Users\Public\yZ6A88\9bEELI.exe |
-| z_instapp83351010.exe | C:\Users\Public\Y93eny\Ge86Zr.exe |
-| ainstaller-86533003.exe | C:\Users\Public\Mmzm0e\Lrrhwp.exe |
-| ainst8663586104.exe | C:\Users\Public\YJMvsB\BcQVw7.exe |
-Alternate execution vector: Windows Installer (msiexec)
-In parallel with the wrapped-installer chain, Microsoft observed a second execution vector that uses the Windows Installer service. The installer performs its intended function; what the campaign gains is execution under a signed, trusted Windows component. The extracted installer invokes msiexec.exe in embedded mode, which writes and launches a randomized executable into a world-writable C:\Users\Public\<random>\ directory, the same masquerade pattern as the wrapper chain, but delivered through msiexec.exe.
-msiexec.exe -Embedding <productcode> E Global\MSI0000 └─ C:\Users\Public\<random>\<random>.exe (payload, randomized path/name) </random></random></productcode> |
-The behavior is consistent and repeated: more than twenty distinct payload names were written this way, spawned by a range of parents including msedge.exe, explorer.exe, and svchost.exe.
-Persistence and recurring execution: disguised scheduled tasks
-Persistence and recurring execution are achieved through scheduled tasks whose display names imitate routine IT or productivity jobs (for example “Deadline Mission Target” and “Hierarchy Tools Smooth Inventory”), each launching a specific payload staged under C:\ProgramData\.
-Each task launches a specific payload:
-| Scheduled task name | Payload launched |
-| \Deadline Mission Target | 7fYptijy.exe |
-| \Hierarchy Tools Smooth Inventory | beuv4Mie.exe |
-| \Empowering Status Tools productivity Ahead | SaYC4Mga.exe |
-| \5nboF | aLcUaw.exe (stage-one) |
-The persistent payloads are staged in locations such as C:\ProgramData\7fYptijy.exe, C:\ProgramData\zsMmvukD\beuv4Mie.exe, and C:\ProgramData\uwMUCYBN\SaYC4Mga.exe. Because the payloads are launched by the Task Scheduler service (parented to svchost.exe -k netsvcs -p -s Schedule) and multiple staggered tasks run per device, affected hosts exhibit a characteristic ~60-second re-execution cadence.
-Privilege escalation: SYSTEM scheduled task and process injection
-To perform privileged actions such as writing Microsoft Defender exclusions, the malware creates a short-lived scheduled task that runs as SYSTEM (SCHTASKS /Create … /RL HIGHEST /RU “SYSTEM”), executes the privileged action, then immediately runs and deletes the task
-SCHTASKS /Create /F /TN "Task1" /SC ONCE /ST 00:00 /RL HIGHEST /RU "SYSTEM" /TR "cmd.exe /c reg add \"HKLM\SOFTWARE\Microsoft\Windows Defender\Exclusions\Paths\" /v \"C:\Program Files (x86)\NPq6k16Om\" /t REG_DWORD /d 0 /f" SCHTASKS /Run /TN "Task1" & SCHTASKS /Delete /TN "Task1" /F |
-The /RL HIGHEST /RU “SYSTEM” combination elevates the exclusion write to SYSTEM, and the create-run-delete sequence minimizes the footprint of the helper task. Process injection was also observed. A persistent campaign payload (SHA-256 1bd3662d…), launched from C:\ProgramData\ by the Task Scheduler service, created a remote thread in a legitimate user application moments after that application started — executing payload code inside the context of a trusted process. Microsoft Defender detected the activity as A process was injected with potentially malicious code.
-ActionType CreateRemoteThreadApiCall InitiatingProcessFileName <random>.exe InitiatingProcessFolderPath C:\ProgramData\<random>.exe InitiatingProcessSHA256 1bd3662d784840e410d2d3c0a1040277f7f549089447359f01e05c2559cb1f17 InitiatingProcessCommandLine "<random>.exe" InitiatingProcessCreationTime 2026-07-13 02:44:20.887 InitiatingProcessParentFileName svchost.exe FileName <messaging application="">.exe (target process) ProcessCommandLine "<messaging application="">.exe" -autorun ProcessCreationTime 2026-07-13 02:44:37.568 AdditionalFields {"IntegrityLevel":8192} </messaging></messaging></random></random></random> |
-The sequence below shows a single execution cycle end to end: the Task Scheduler service launches the payload, the payload immediately attempts command-and-control on two non-standard ports — both blocked at the host firewall — and, seventeen seconds later, injects into a user application within milliseconds of that application starting.
-02:44:20.887 PROC <random>.exe started parent: svchost.exe (Task Scheduler) 02:44:21.971 NETWORK outbound to 47.239.232[.]245:8050 → FirewallOutboundConnectionBlocked 02:44:24.860 NETWORK outbound to 47.243.218[.]255:28300 → FirewallOutboundConnectionBlocked 02:44:37.568 PROC target application starts (-autorun) 02:44:37.604 INJECT CreateRemoteThreadApiCall <random>.exe → target application </random></random> |
-Defense evasion: disabling host protections
-Follow-on payloads take a layered approach to weakening the host. They add sweeping Microsoft Defender path exclusions via PowerShell (Add-MpPreference -ExclusionPath) and the SYSTEM scheduled-task registry write;
-powershell.exe Add-MpPreference -ExclusionPath 'C:\ProgramData','C:\Users','C:\Program Files (x86)','C:\' -Force powershell.exe -c if (Get-Process -Name HAhahahah) {} else { Add-MpPreference -ExclusionPath $env:localappdata,'C:\','C:\ProgramData', 'C:\ProgramData\7b3St9HS','C:\ProgramData\7b3St9HS\27s7ihjC.exe' -ExclusionExtension '.dat' -Force } |
-delete volume shadow copies (vssadmin delete shadows /all /quiet) to inhibit recovery;
-cmd.exe /c vssadmin delete shadows /all /quiet |
-harden payload directories with icacls so standard users cannot remove the files;
-icacls "C:\Program Files (x86)\NPq6k16Om\xo7Tj9xQ.exe" /grant:r Administrators:(OI)(CI)F /grant:r SYSTEM:(OI)(CI)F |
-and neutralize Windows Update by stopping and disabling wuauserv, UsoSvc, uhssvc, and WaaSMedicSvc, renaming update dynamic-link libraries (DLLs), and deleting the SoftwareDistribution cache.
-for %i in (wuauserv UsoSvc uhssvc WaaSMedicSvc) do ( net stop %i & sc config %i start= disabled & sc failure %i reset= 0 actions= "" ) for %i in (WaaSMedicSvc wuaueng) do ( takeown /f C:\Windows\System32\%i.dll & icacls …\%i.dll /grant *S-1-1-0:F & rename …\%i.dll %i_BAK.dll & icacls …\%i_BAK.dll /setowner "NT SERVICE\TrustedInstaller" & icacls …\%i_BAK.dll /remove *S-1-1-0 ) reg add "HKLM\…\Services\WaaSMedicSvc" /v Start /t REG_DWORD /d 4 /f reg add "HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate\AU" /v NoAutoUpdate /t REG_DWORD /d 1 /f erase /f /s /q c:\windows\softwaredistribution\*.* & rmdir /s /q c:\windows\softwaredistribution powershell -Command Get-ScheduledTask -TaskPath '\Microsoft\Windows\WindowsUpdate\*' | Disable-ScheduledTask |
-A malicious Windows Defender Application Control policy was written to the code-integrity store on multiple devices; Microsoft Defender Antivirus detected the tamper behavior as Behavior:Win32/MpTamperGpDisableAVFriendly.A.
-Command and control (C2)
-A later-stage networking payload establishes command-and-control over application-layer protocols on non-standard ports — observed ports include 5090, 7031, 7032, 7088–7090, 8050, 28290, and 28300.
-| Initiating payload | C2 endpoint (defanged) | Result |
-| 40gK5T.exe, RhT9aQ.exe (Program Files (x86)) | 103.156.25[.]35:7031 | Connection failed |
-| Multiple C:\ProgramData\ payloads | 103.183.3[.]162:5090 (oijfwe[.]net) | Connection failed |
-| Stage-one / persistent payloads | Alibaba Cloud object storage over TLS (443) | Connection succeeded |
-C2 endpoints comprise a set of six-character [.]net domains (iualef, oijfwe, euioxu, czijbh, wfmwsj, tbdqxq) and IP-and-port endpoints; a primary hub was observed on 202.95.14[.]237 (AS152194, CTG Server Limited). Payloads were observed beaconing to these endpoints with both successful and failed callbacks; the dedicated [.]net and IP-and-port C2 was intermittently unreachable while the same payloads still completed TLS connections to cloud object storage, consistent with a dedicated C2 tier that was often down while cloud-hosted staging remained live.
-Detection and disruption
-In observed environments, Microsoft Defender surfaced alerts across multiple stages and, where criteria were met, Attack Disruption engaged to contain affected devices and accounts.
-Representative alerts include Modification attempt in Microsoft Defender Antivirus exclusion list, Compromised device (attack disruption), A process was injected with potentially malicious code, Potential C2 connection behavior, Suspicious Task Scheduler activity, and Compromised account conducting hands-on-keyboard attack. The campaign is not purely automated. In a subset of environments, the automated execution was accompanied by interactive, hands-on-keyboard activity, which attack disruption engaged to contain.
-Microsoft Defender also blocked the attempted Server Message Block (SMB) lateral movement to additional hosts (Lateral movement using SMB remote file access blocked on multiple devices) and detected the C2 connection behavior; the campaign’s C2 endpoints are included in the blocked indicator set.
-Attack disruption contained the device and account; full eradication of persistence still required responder action.
-| Stage | Microsoft Defender coverage |
-| Fake-download landing and delivery domains | Microsoft Defender SmartScreen, Network Protection, Web content filtering |
-| Malicious ZIP and stage-one execution (including msiexec proxy execution) | Microsoft Defender Antivirus (behavioral + cloud-delivered protection); Microsoft Defender for Endpoint |
-| Defender tampering & exclusion writes | Tamper Protection; Modification attempt in exclusion list alerts; Behavior:Win32/MpTamperGpDisableAVFriendly.A |
-| Persistence, privilege escalation, and injection | Microsoft Defender for Endpoint — “Suspicious Task Scheduler activity”; “A process was injected with potentially malicious code” |
-| Command and control, lateral movement, and hands-on-keyboard | Microsoft Defender XDR — “Potential C2 connection behavior”; “Lateral movement using SMB remote file access blocked on multiple devices”; “Compromised account conducting hands-on-keyboard attack”; Network protection (C2 block); Attack disruption (automatic containment) |
-Mitigation and protection guidance
-Microsoft recommends the following mitigations to reduce the impact of this threat. Check the recommendations card for the deployment status of monitored mitigations.
-Campaign-specific recommendations
-- Enforce Tamper Protection. It blocks exclusion and registry writes to Microsoft Defender even when the payload runs as SYSTEM — directly countering the throwaway SYSTEM scheduled-task technique this campaign relies on.
-- Hunt behavior, not file names. File names and hashes rotate on every download; pivot on the C:\Users\Public\<random>\<random>.exe and C:\Program Files (x86)\<random>\<random>.exe drop pattern, the Philips-Speech masquerade, and the stable stage-one and networking payload hashes.
-- Alert on the tamper sequence. A SYSTEM scheduled task writing HKLM\…\Windows Defender\Exclusions\Paths then self-deleting, vssadmin delete shadows /all /quiet, and disabling wuauserv, UsoSvc, WaaSMedicSvc and uhssvc are high-fidelity signals.
-- Treat look-alike download archives as malicious in web and mail flow. Block ZIPs named app_setup.*, zinst.*, zintall.*, intsoft.*, and innstll.* served from *.com.cn or *.hl.cn brand-look-alike domains and the /712down, /73inst, /7qinst, and /ins711 delivery endpoints.
-- Correlate download referrers. Use FileOriginUrl and FileOriginReferrerUrl to catch landing-page to delivery-host pairs even after individual domains rotate, and block the C2 IP:port set and .net C2 domains.
-Microsoft Defender XDR hardening recommendations
-Microsoft Defender XDR customers can turn on attack surface reduction rules to prevent several of the infection vectors of this threat. These rules, which can be configured by any user, offer significant hardening against targeted attacks. In observed attacks, Microsoft customers who had the following rules turned on could mitigate the attack in the initial stages and prevent hands-on-keyboard activity:
-[Block executable files from running unless they meet a prevalence, age, or trusted list criterion](https://learn.microsoft.com/en-us/defender-endpoint/attack-surface-reduction-rules-reference#block-executable-files-from-running-unless-they-meet-a-prevalence-age-or-trusted-list-criterion)[Block execution of potentially obfuscated scripts](https://learn.microsoft.com/en-us/defender-endpoint/attack-surface-reduction-rules-reference#block-execution-of-potentially-obfuscated-scripts)[Block use of copied or impersonated system tools](https://learn.microsoft.com/en-us/defender-endpoint/attack-surface-reduction-rules-reference#block-use-of-copied-or-impersonated-system-tools)[Use advanced protection against ransomware](https://learn.microsoft.com/en-us/defender-endpoint/attack-surface-reduction-rules-reference#use-advanced-protection-against-ransomware)
-Microsoft Defender XDR detections
-Microsoft Defender XDR customers can refer to the list of applicable detections below. Microsoft Defender XDR coordinates detection, prevention, investigation, and response across endpoints, identities, email, and apps to provide integrated protection against attacks like the threat discussed in this blog.
-Customers with provisioned access can also use [Microsoft Security Copilot in Microsoft Defender](https://learn.microsoft.com/en-us/defender-xdr/security-copilot-in-microsoft-365-defender) to investigate and respond to incidents, hunt for threats, and protect their organization with relevant threat intelligence.
-Microsoft Security Copilot
-Security Copilot customers can use the standalone experience to [create their own prompts](https://learn.microsoft.com/copilot/security/prompting-security-copilot#create-your-own-prompts) or run the following [prebuilt promptbooks](https://learn.microsoft.com/copilot/security/using-promptbooks) to automate incident response or investigation tasks related to this threat:
-- Incident investigation
-- Microsoft User analysis
-- Threat actor profile
-- Threat Intelligence 360 report based on MDTI article
-- Vulnerability impact assessment
-These promptbooks can help analysts summarize affected entities, review alert timelines, and pivot on the IOCs included in this blog. Note that some promptbooks require access to plugins for Microsoft products such as Microsoft Defender XDR or Microsoft Sentinel.
-Threat intelligence reports
-Microsoft Defender XDR customers can use [threat analytics](https://learn.microsoft.com/defender-xdr/threat-analytics) reports in the Defender portal (requires license for at least one Defender XDR product) to get the most up-to-date information about the malicious activity and techniques discussed in this blog. These reports provide the intelligence, protection information, and recommended actions to prevent, mitigate, or respond to associated threats found in customer environments.
-Advanced hunting
-Microsoft Defender XDR and Microsoft Sentinel customers can run the following queries. . The behavior-based queries continue to work even as filenames, hashes, and domains rotate.
-Campaign payloads and loaders Surfaces execution or creation of the campaign’s stable stage-one, later-stage, persistent, networking, and loader binaries by SHA-256.
-let campaignSha256 = dynamic([ "676a2a7b94ca2f8ec76352ee656e4d075bb342bd7ad6efbc7c19c060001eace7", // stage-one "6d6ba2bc9ad414837826f7278bc3e0116f1aeda02d0c2284ed65819f5d9180a8", // later-stage "c4100ad39d8db98f063feb6c3b6c8e9a9f9d9bf25a1e0233f43b058ff8a7dbdf", // networking "1bd3662d784840e410d2d3c0a1040277f7f549089447359f01e05c2559cb1f17", // persistent "c6100166e2d3b40388980f7674712ef39e937ac04925ca5d370415399ed73faf", // TrueUpdate loader "f33d160d757e4b39019fdef21cf90cafb501b800ca0d4039366bc30856e3d81b", // persistent/networking "e4fe2dee8f0bb132fa15fc686d1f93df39530a2d3a8d3a1f3a605a057c04e7b3" // supporting DLL ]); union (DeviceProcessEvents | where SHA256 in (campaignSha256)), (DeviceFileEvents | where SHA256 in (campaignSha256)) | project Timestamp, DeviceName, ActionType, FileName, FolderPath, SHA256, InitiatingProcessFileName, InitiatingProcessCommandLine | order by Timestamp desc |
-Randomized payload drop pattern Finds executables dropped into randomized folders under world-writable or system locations — the campaign’s stable staging behavior regardless of filename.
-DeviceProcessEvents | where FolderPath matches regex @"(?i)^C:\\(Users\\Public|ProgramData|Program Files \(x86\))\\[A-Za-z0-9]{4,10}\\[A-Za-z0-9]{4,10}\.exe$" | where InitiatingProcessFileName in~ ("msiexec.exe","explorer.exe","svchost.exe","cmd.exe","7zFM.exe","360zip.exe","WinRAR.exe") | project Timestamp, DeviceName, AccountName, FolderPath, FileName, SHA256, InitiatingProcessFileName, InitiatingProcessCommandLine | order by Timestamp desc |
-Microsoft Defender exclusion tampering Detects the SYSTEM scheduled-task and PowerShell routines that write sweeping Microsoft Defender path exclusions.
-DeviceProcessEvents | where ProcessCommandLine has @"Windows Defender\Exclusions\Paths" or ProcessCommandLine has "Add-MpPreference -ExclusionPath" or (ProcessCommandLine has "SCHTASKS" and ProcessCommandLine has "SYSTEM" and ProcessCommandLine has "Exclusions") | project Timestamp, DeviceName, AccountName, InitiatingProcessFileName, ProcessCommandLine | order by Timestamp desc |
-Recovery inhibition and Windows Update neutralization Surfaces shadow-copy deletion and the routine that stops, disables, or renames Windows Update service components.
-DeviceProcessEvents | where ProcessCommandLine has "vssadmin delete shadows" or (ProcessCommandLine has_all ("sc","config","disabled") and ProcessCommandLine has_any ("wuauserv","UsoSvc","uhssvc","WaaSMedicSvc")) or ProcessCommandLine has "NoAutoUpdate" or (ProcessCommandLine has "rename" and ProcessCommandLine has_any ("wuaueng","WaaSMedicSvc")) | project Timestamp, DeviceName, InitiatingProcessFileName, ProcessCommandLine | order by Timestamp desc |
-Windows Installer (msiexec) embedded-mode execution Catches the parallel delivery vector where msiexec launches a randomized payload from a world-writable path.
-DeviceProcessEvents | where InitiatingProcessFileName =~ "msiexec.exe" | where InitiatingProcessCommandLine has "-Embedding" and InitiatingProcessCommandLine has @"Global\MSI0000" | where FolderPath has @"C:\Users\Public\" | project Timestamp, DeviceName, FileName, FolderPath, SHA256, InitiatingProcessCommandLine | order by Timestamp desc |
-Disguised scheduled-task execution Flags payloads relaunched by the Task Scheduler service from user-writable directories (the ~60-second re-execution loop).
-DeviceProcessEvents | where InitiatingProcessCommandLine has "netsvcs" and InitiatingProcessCommandLine has "Schedule" | where FolderPath matches regex @"(?i)^C:\\(Users\\Public|ProgramData|Program Files \(x86\))\\" | where FileName endswith ".exe" | project Timestamp, DeviceName, FileName, FolderPath, SHA256, InitiatingProcessFileName | order by Timestamp desc |
-Command-and-control connections Matches callbacks to the campaign’s C2 IP:port set and six-character .net C2 domains.
-let c2ip = dynamic(["202.95.14.237","47.239.232.245","161.248.87.157","103.156.25.35","103.183.3.162","43.99.100.248","47.239.175.163","47.86.205.97","47.243.218.255"]); let c2ports = dynamic([5090,7031,7032,7088,7089,7090,8050,28290,28300]); let c2dom = dynamic(["iualef.net","euioxu.net","czijbh.net","wfmwsj.net","tbdqxq.net","oijfwe.net"]); DeviceNetworkEvents | where (RemoteIP in (c2ip) and RemotePort in (c2ports)) or (RemoteUrl has_any (c2dom)) | project Timestamp, DeviceName, InitiatingProcessFileName, InitiatingProcessSHA256, RemoteIP, RemotePort, RemoteUrl, ActionType | order by Timestamp desc |
-Malicious delivery domains and download endpoints Identifies connections to the dedicated delivery domains and the /712down, /73inst, /7qinst, /ins711 download paths.
-let deliveryHosts = dynamic(["gehie246.com","yimxg25tiy.com","cc8ttkv35b.com","n7b8t85zsg.com","bxfh.tzcdq.cn","tmsq.tzcdq.cn","mebx78e02.com","qwjre1487.com"]); DeviceNetworkEvents | where RemoteUrl has_any (deliveryHosts) or RemoteUrl has_any ("/712down","/73inst","/7qinst","/ins711") | project Timestamp, DeviceName, InitiatingProcessFileName, RemoteUrl, RemoteIP, ActionType | order by Timestamp desc |
-MITRE ATT&CK techniques observed
-This threat has exhibited use of the following attack techniques. For standard industry documentation about these techniques, refer to the [MITRE ATT&CK framework](https://attack.mitre.org/).
-| Tactic | Technique | ID | Observed in this campaign |
-| Resource Development | Acquire Infrastructure: Domains / Web Services | T1583.001 / T1583.006 | Registered look-alike .com.cn / .hl.cn brand domains, dedicated delivery hosts, and abused cloud object storage. |
-| Execution | User Execution: Malicious File | T1204.002 | Victims run a counterfeit installer downloaded from a spoofed vendor page. |
-| Execution | Command and Scripting Interpreter: PowerShell / Windows Command Shell | T1059.001 / T1059.003 | PowerShell and cmd routines write Defender exclusions, delete shadow copies, and disable Windows Update. |
-| Execution | System Binary Proxy Execution: Msiexec | T1218.007 | msiexec.exe -Embedding launches a randomized payload under a trusted, signed Windows binary. |
-| Persistence / Privilege Escalation | Scheduled Task/Job: Scheduled Task | T1053.005 | Disguised scheduled tasks provide ~60-second recurring execution and SYSTEM privilege escalation. |
-| Defense Evasion | Impair Defenses: Disable or Modify Tools | T1562.001 | Broad Add-MpPreference exclusions and registry exclusion writes weaken Microsoft Defender. |
-| Defense Evasion | Masquerading: Match Legitimate Name or Location | T1036.005 | Payloads impersonate a Philips Speech driver and run svchost.exe from non-system paths. |
-| Defense Evasion | Hijack Execution Flow: DLL Side-Loading | T1574.002 | Payloads load a malicious library from their own directory — XPSPLOG.dll with the later-stage payload, UxEnhance64.dll with the stage-one payload. |
-| Defense Evasion | Process Injection | T1055 | Payload code is injected into the context of another process. |
-| Defense Evasion | File and Directory Permissions Modification | T1222.001 | icacls strips inheritance and hardens payload directories against removal. |
-| Defense Evasion | Modify Registry | T1112 | Registry keys are set for Defender exclusions and Windows Update policy. |
-| Lateral Movement | Remote Services: SMB/Windows Admin Shares | T1021.002 | Attempted SMB remote file access to additional hosts. |
-| Impact | Inhibit System Recovery | T1490 | vssadmin delete shadows /all /quiet removes volume shadow copies. |
-| Impact | Service Stop | T1489 | Stops and disables wuauserv / UsoSvc / WaaSMedicSvc to neutralize Windows Update. |
-| Command and Control | Ingress Tool Transfer | T1105 | A repurposed updater runtime retrieves content from attacker-controlled cloud object storage and writes a further payload to disk. |
-| Command and Control | Application Layer Protocol / Non-Standard Port | T1071 / T1571 | C2 over application-layer protocols on non-standard ports (5090, 7031–7090, 8050, 28290/28300). |
-Indicators of compromise (IOC)
-| Campaign Layer | Indicator | Type |
-| Lure / Impersonation | pc-razerzone[.]com[.]cn | Domain |
-| Lure / Impersonation | app-microsoft-edge[.]com[.]cn | Domain |
-| Lure / Impersonation | kaspersky-lab[.]hl[.]cn | Domain |
-| Delivery | hxxps://www.gehie246[.]com/712down | URL |
-| Delivery | gehie246[.]com | Domain |
-| Cloud Staging | newopt001.oss-cn-hongkong.aliyuncs[.]com/innstll.1.0.61.zip | URL |
-| C2 Domain | iualef[.]net | Domain |
-| C2 Domain | oijfwe[.]net | Domain |
-| C2 Endpoint | 202.95.14[.]237:5090 | IP:Port |
-| C2 Endpoint | 103.183.3[.]162:5090 | IP:Port |
-| Payload | 676a2a7b94ca… | SHA256 |
-| Payload | c6100166e2d3… | SHA256 |
-| Payload | c4100ad39d8d… | SHA256 |
-References
-Prior reporting and OSINT sources — Silver Fox (also known as Yinhu, 银狐)
-[TweetFeed community indicator feed — weekly IOC export](https://github.com/0xDanielLopez/TweetFeed/blob/master/week.csv)[AlienVault OTX pulse — campaign delivery infrastructure and C2 indicators](https://otx.alienvault.com/pulse/6a36fe5a3c1568785b59c4d7)[MalwareBazaar — campaign payload sample (aea879a0…)](https://bazaar.abuse.ch/sample/aea879a0689d4f0510d63043570474978bf51013a2d5b5d9154ec1238d8b2da5)[MalwareBazaar — campaign payload sample (6dacf281…)](https://bazaar.abuse.ch/sample/6dacf28164ad873fe98c5d583e73531cded11dfcb2955146b1adc333b3510002)[LGSRC public indicator repository](https://github.com/Lingggao/LGSRC)
-Learn more
-For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
-To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
-To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
-Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
-- Evaluate your AI readiness with our latest
-[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). [Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)- Learn more about
-[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection)</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-2" class="article-body">
+        <div id="art-5" class="article-body">
             <h2 class="article-title">FBI Probes Service Selling 153M+ Drivers Licenses</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/09/fbi-probes-service-selling-153m-drivers-licenses/" target="_blank">Original Link</a></p>
             <div class="content-text">A new identity theft service launched on the dark web this week is selling digital scans of more than 153 million drivers licenses from people in the United States and Canada. Based on interviews with individuals whose licenses are available for purchase on this service, it appears to be siphoning images collected by a widely-used identity verification company based in Louisiana. KrebsOnSecurity also has learned that the New Orleans field office of the Federal Bureau of Investigation (FBI) today launched an official inquiry into the source of the images.
@@ -303,7 +312,7 @@ Edwards said the dispensary he visited that day was Planet13, a multi-state chai
 The “trust” page of idscan.net states that the company provides identity verification services for numerous big brands, including Hertz, Target, Fedex, Motorola Solutions, the financial services giant Jack Henry, and Caesars Entertainment. And as idscan.net’s own [documentation states](https://idscan.net/press-release/2025-id-fraud-report/), the technology scans IDs with both infrared and ultraviolet light. Idscan.net says the company’s systems and technology perform more than 21 million verifications monthly, at more than 20,000 locations around the world.
 Contacted by KrebsOnSecurity, idscan.net said it was investigating the matter, but the company has not yet shared an official statement or a substantive reply to specific questions sent via email.
 “At this point I’m not able to share any additional information, but the updates you have provided have been welcome, and helpful to our team’s investigation,” wrote Jillian Kossman, a marketing and operations leader at idscan.net.
-During the course of my research for this story, word apparently got around to the FBI that I was poking at the apparent source of this new identity theft service’s data. Probably they were tipped off when I shared with a trusted source that Nexus also is selling the drivers license information for the assistant director of the FBI (I did not find FBI Director Kash Patel’s license in Nexus).
+During the course of my research for this story, word got around to the FBI that I was poking at the apparent source of this new identity theft service’s data. Probably they were tipped off when I shared with a trusted source that Nexus also is selling the drivers license information for the assistant director of the FBI (I did not find FBI Director Kash Patel’s license in Nexus).
 Earlier this afternoon, I was added to a conference call with a half-dozen FBI agents, including senior leaders from the agency’s cyber division. During that call, the FBI shared that earlier today their New Orleans field office opened an official investigation into an apparent breach involving idscan.net.
 Edwards said that as more in-person and online experiences require sharing drivers licenses, vendors who collect this sensitive data need to be held to a higher standard.
 “This episode should further strengthen the resolve for people who are fighting back against online ID schemes which are requiring countless providers to ask for drivers licenses in order to access services under the guise of protecting kids,” Edwards told KrebsOnSecurity. “These systems are putting sensitive data into more and more 3rd party vendors, and we don’t have nearly the oversight to ensure they are safe.”
@@ -311,11 +320,17 @@ Larry Baldwin is principal intelligence researcher at the cybersecurity firm [Cy
 Baldwin said the Nexus identity theft service presents multiple serious security and privacy threats, noting that state-issued drivers licenses are commonly used as proof of one’s identity when opening new lines of credit. Baldwin said the service could also dangerously expose many people who do not wish to be found but who cannot meaningfully change their appearance (or at least not enough to fool today’s AI-based image matching tools).
 This category of people, he said, includes those fleeing domestic violence, and even people who have been assigned a whole new life and identity as part of the federal government’s witness protection program, which is generally reserved for criminal defendants in racketeering and conspiracy investigations who agree to cooperate with federal authorities.
 “Just when it seems like we’re making some headway in improving authentication controls through drivers license verification systems, this happens and the very thing those improvements are dependent on are compromised,” Baldwin said.
+Update, Sept. 2, 6:05 p.m. ET: A spokesperson for Caesars Entertainment said Caesars has not been a client of IDScan.net and has not used VeriScan since February 2025, despite IDScan.net listing them as a client on their website. That person said Caesars had no active VeriScan accounts at the time of the incident and did not authorize IDScan.net to retain data from its accounts, and that IDScan.net said the incident should have no impact on Caesars Entertainment.
 Update, 8:56 p.m. ET: Shortly after this story was published, the Nexus identity theft service website vanished from the darkweb, replacing its login page with a plain text message that reads, “This service is no longer available.”
 This is a potentially fast-moving story. Any changes or updates will be noted here along with a timestamp.
 Love the way you connected the dots to identify the source. Given the companies named, I am probably in that list too.
 What is a safe method to determine if my identity card was compromised in this breach?
 Assume it was.
+asshat reply
+Considering the site offering the scans is now offline, the only other alternative for now is to assume it wasn’t.
+Or don’t, nobody’s making you do anything. It’s wild how much your username and comment are reflecting you, mr asshat redditor
+Scans of personal driver’s licenses appears to be a de rigueur part of checking in at Labcorp locations and various medical facilities, as I can attest from multiple experiences in the last couple of years.
+When checking in at Quest, you can choose to decline scanning your ID, and check in with your phone number, which is not validated via SMS.
 Good job everyone I’m very proud of you keep up the good work
 Great article. Next question/leak: What private/secret information does Real ID and new Passports contain and how long\, if not already this information is compromised.
 It’s a bit late to hold ID vendors to a higher security standard, when the ID data has been exfiltrating for over a year. IDscan is so concerned about it, they sent a marketing person to talk to you. Surely, the next step is for IDscan to issue a press release saying “your security is our top priority”.
@@ -334,59 +349,67 @@ Upon learning this information, we immediately initiated our incident response p
 6. Preserving relevant logs and system data.
 At this time, we have not reached conclusions regarding the nature or scope of the incident, including what information was involved. However, based on the information available to us at this stage, we believe it is important to notify our clients promptly while we continue our investigation and work to determine the relevant facts.
 We are committed to keeping you informed as we learn more. You may reach out to privacy@idscan.net with any questions.
+Until some actual malice is shown, this seems like a good thing for them to have done, and the responsible actions of a company that actually is concerned about it.
+That’s the bar now? The bare minimum? You have to inform people their data is compromised – it is the law in all 50 states. Why is breaking it becoming so normalized? It makes sense for the people that have millions of dollars, but for people commenting on articles like this? Why are we fellating these companies when they do the smallest amount required of them? How about they use the time and effort that they are paid for to secure our private data we are forced to trust them with?
+So concerned their first three steps were protecting themselves.
+The fact there IDPS did not pick this up in the first place, vibe coded horrible site, we need more regulations on security for storing documents.
 First rule of Fight Club? Same first rule of security, don’t discuss your security, and sure as heck do not allow an identity provider to list you on their website as a customer. Operational security ring a bell?
 It’s worth noting that multiple local, state, and federal agencies utilize ID scanning for identity verification — I’m not naming vendors to not muddy the water — and tie your identity back to card data, biometrics, health data, tax data, etc. These platforms, for the most part, are not goverment owned but simply licensed for government and commercial use, and deployments can vary widely depending on the technical acumen of staff, budget, GRC, ethical behavior, etc. So, while it is easy to blame the vendor, you have to take a hard look at each deployed environment (public cloud, private cloud, hybrid, and on-premises) in addition to the software vendors.
 Great coverage nonetheless.
 opsec level: opera gx
 Take a look at cities that have setup Night Life or Night Economy managers and you’ll see a ton of these similar devices and mandates to use them, along with Youtube and Instragram endorsement videos.
-Patronscan is another really bad one.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-3" class="article-body">
-            <h2 class="article-title">Aesto Health says data breach affects over 9.5 million patients</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/aesto-health-says-data-breach-affects-over-95-million-patients/" target="_blank">Original Link</a></p>
-            <div class="content-text">Aesto LLC, operating as Aesto Health, disclosed that a data breach discovered recently affects more than 9.5 million individuals. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">Critical Langflow flaw exploited to steal OpenAI and AWS keys</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/critical-langflow-flaw-exploited-to-steal-openai-and-aws-keys/" target="_blank">Original Link</a></p>
-            <div class="content-text">Threat actors are exploiting an unauthenticated remote code execution vulnerability (CVE-2026-0768) in Langflow, an open-source framework for building AI applications, to steal credentials, tokens, and keys. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-5" class="article-body">
-            <h2 class="article-title">Attackers Exploit Critical JFrog Artifactory Flaw to Mint Admin Tokens Days After Disclosure</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/attackers-exploit-critical-jfrog.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Threat actors are exploiting a newly patched critical security flaw impacting JFrog Artifactory merely days after public disclosure, according to [watchTowr](https://x.com/watchtowrcyber/status/2094639075726668267).
-The vulnerability in question is [CVE-2026-82329](https://www.cve.org/CVERecord?id=CVE-2026-82329) (CVSS score: 9.8), a case of authentication bypass that could lead to administrative access in Artifactory.
-"JFrog Artifactory contains an authentication weakness that, under default configuration, may allow an unauthenticated attacker with network access to obtain administrative privileges," according to a description of the flaw on CVE.org.
-The vulnerability was patched by JFrog with [Artifactory version 7.161.20](https://docs.jfrog.com/releases/docs/artifactory-self-managed-releases) released on August 28, 2026. It [affects](https://docs.jfrog.com/releases/docs/jfrog-security-advisories) the following versions -
-- 7.161.0 > 7.161.19
-- 7.146.0 > 7.146.36
-- 7.133.0 > 7.133.28
-- 7.125.0 > 7.125.19
-- 7.117.0 > 7.117.27
-- 7.111.4 > 7.111.21
-"It affects default configs, requires no auth, no user interaction," Vercel CEO Guillermo Rauch [said](https://www.linkedin.com/posts/rauchg_two-days-ago-jfrog-dropped-cve-2026-82329-activity-7499907121031991297-QVfg/) in a post on LinkedIn. "It's an RCE bomb because Artifactory hosts binaries, so you can basically poison everything, but an admin escalation can cause damage even beyond that."
-The issue resides in JFrog Access, which is designed to issue and validate credentials. "Instances without an additional join key configured receive a 'phantom' join key that attackers can abuse to forge access and mint administrator-level credentials," Yordan Ganchev, principal threat intelligence specialist at watchTowr, said in a statement shared with The Hacker News.
-Ganchev also pointed out that threat actors have begun to weaponize the flaw as of September 1, 2026, to generate admin tokens and enumerate users, groups, credential sets and federated access topologies.
-"This moved from disclosure to real-world exploitation with uncomfortable efficiency," Ganchev added. "Anyone following along knows what comes next: things will get worse."
-"When attackers gain admin level access to a central software supply chain system, they can do what every engineering team does best – build, ship and distribute software fast. From there, they could tamper with build pipelines, move laterally into production systems and potentially push malicious changes downstream to customers."
-Ganchev said exploitation efforts targeting watchtower's honeypots have originated from a small number of IP addresses from varying geographies, although there is no evidence of broad-scale scanning or mass exploitation at this stage.
-"Some observed activity showed evidence of CVE verification only, where the vulnerability was successfully exploited and then stopped. Other attempts successfully exploited the vulnerability and then probed or enumerated the JFrog Artifactory instances to determine whether the environment was worth further exploitation," Ganchev added.
-"In limited cases, threat actors created backdoor users and enumerated existing Artifactory users, their groups, tokens, and the system's federated access topologies."
-Organizations that are running self-managed versions of JFrog Artifactory are recommended to apply patches to internet-exposed systems with immediate effect, as well as inspect audit logs, rotate exposed credentials, and review connected systems for malicious changes or backdoor access.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+Patronscan is another really bad one.
+The bitter irony here is that the scans appear to come from identity verification vendors – the companies paid to establish trust are the ones that became the breach. A leaked license image plus a selfie cannot be rotated like a password, so victims carry this forever. Concentrating that much verified PII in a few IDV platforms creates honeypots that will keep getting hit; retention-minimization rules would do more long-term than takedowns. Thanks for chasing the sourcing instead of stopping at the headline number.
+thanks claude
+stfu clanka
+Great work Brian.
+I wonder if this company will be sending letters to each individual along with what info was lost.
+TBH I imagine it won’t happen without a well deserved class action lawsuit.
+So basically you are not safe and your privacy isnt protected. The world has lost its purpose to the human race. Fingerprint and eye scan probably will be the only option to keep one single human from being actually cloned, and voilated. The government owes me trillions of bucks now i want it all…
+Brian, Thank you for your security work and article. I have found this article to be very insightful and leaving me hopeful for the pursuit to resolve. It also leaves me alarmed now they have moved on to build another sight. I will be following your journalism. Thank you for all you do and your cooperation with the agencies to get this on record.
+Meridianlink is listed on idscan.net’s website.
+They are the data broker that provides services for 100’s of background check companies that in turn service 1,000’s of companies. “If” idscan is indeed confirmed to be the source this will have a huge blast radius.
+Great job Brian. First time you’ve deployed your mother to crack open a case?
+The only comment here. If he were Letterman.
+The real bone chiller is these types of services which can be breached are used by prediction markets and betting sites, as well as places like id.me, stored debit card sites, studentloans.gov, and their ilk.
+Weird you focus on the reuse and purchase and not the fact that it should not be possible.
+Oh I wouldn’t worry about places like id.me. It’s not as though Montenegro might someday stop being a trusted ally of the US.
+The government has tools such as zero days; but just don’t have the jurisdiction to use them. I also, think that hackers from other countries (Such as Russia) are hardest to capture, because laws are different.
+We need to start putting people in the dirt
+Criminals of this caliber are scum
+There is no recourse for victims
+I am sick of hearing about breaches every week
+At least cut off some fingers….
+Why dub them Nexus? You know the name of the service, tell us?
+The name of the service is/was Nexus. You can see the name Nexus in the first screenshot.
+But WHY! ¯\_(ツ)_/¯
+Great investigative work Brian, I see this as just proof that giving people your identity to scan for proof just means trusting a series of entities to protect that information. As we keep pushing more and more personal data onto servers. We have to expect a bad link along the way. Unfortunately we deal with this always after the barn door is left open and all the horses are long since gone.
+In Canada it is illegal to copy/scan/photograph Government issued I.D. Protected under the Privacy Act.
+But since there is no enforcement, unless the potential victim knows the Law, businesses keep doing it.
+Getting a cell phone account? Under CRTC rules, the company can not get your License number nor Social Insurance number, yet they do anyway. Keep a piece of tape over your number, easy to remove when actually needed (legitimate police interaction), to when showing your I.D. , the service agent does not see the number and type it in.
+Credit check is ‘name’ and ‘current address’. Nothing more.
+Always keep your I.D. in your hand. Don’t let it wander off.
+Next up, lets get the Credit Reporting agencies to delete a lot of their collected information. Businesses have been known to get missing information from them, from that time you submitted protected information and did not know the Law.
+@Fed Up, do you have a link to a source saying it’s illegal to copy/scan/photograph Government issued I.D. in Canada?
+Never heard of that and can’t find anything with a google search. Thanks!
+Fedex scans my driver’s license when I receive alcohol.
+Does anyone know if Garret Langley’s driver license is on there as well? I’m curious
+This hack was too perfect—it had to be an inside job. They probably only went public because negotiations broke down, otherwise they would’ve just kept copying data. An IT worker who wasn’t even on that team found the glitch a long time ago and used their own personal external setup to break in.
+Class action lawsuit (should be) coming in 3.2.1…
+Whoever let it get out into the wild can figure it out. It’s not my problem and am not spending my mental energy on stuff like this.
+Great work investigating this. I escaped violence and do absolutely everything I can to not be found, but there’s nothing I can do to prevent required ID scans from leaking. It’s a scary digital world we live in. Incidents like these happen every day, but “we” only increase our reliance and trust in third parties to keep sensitive information safe.
+I’m happy I lied about my weight on my driver’s license.
+Is there any reason that idscan.met retains this information past the lifetime of the transaction? One basic security rule is that simply don’t keep information that you no longer need.
+The identity verification service that my employer just signed up with states that any scanned data is deleted after 30 days. Whether it is, whether they get rid of backups, etc. is another matter, but at least they have that policy.
+I don’t know anything about how long IDScan retains records (yet). But if a company that collects data gets breached, then the data they’re collecting is also very likely at risk. What this means is that it’s entirely possible for both things to be technically true at the same time: They can both have and possibly even follow a strict data retention rule of deleting scans after they are made, and be compromised by malware or active attackers in a way that captures any scanned card data, saves it to a file and periodically zips up those files and sends them to the ID theft service.
+People always assume that the breached company was storing data when it shouldn’t have, and that might be the case here, I really don’t know. But when Target got breached, a lot of readers got mad, thinking hey why are they even storing all this data in the first place? They weren’t. The cybercriminals had just installed malware on every point of sale across each store nationwide, and were constantly snarfing up newly swiped cards in real time.
+From what I’m seeing on other media channels, the HERTZ – Chief Information Security Officer (CISO) just moved onto/into a Global hotel CISO role…. timely knowledge?
+The trust.idscan.com site no longer shows any companies. Maybe your reporting revealed IDScan was incorrectly sharing companies names who don’t utilize their services and it’s been corrected
+https://web.archive.org/web/20260608050950/https://idscan.net/id-scanning-for-driver-verification/ also shows logos of 7 companies, including Hertz.
+If RealID implimented RFID with embedded private key and signing tokens (like FIDO2/CTAP2).. this sort of breach would not be that big of a deal. REalID needs to get off its proverbial 455.
+My Chase bank account was hacked early this year despite having 2 factor authentication, and when I contacted them to ask how, they said because the person used my actual driver’s license to verify their identity and remove my security features from the account. I told them there was no way for someone to have my driver’s license, as it never leaves my sight, but they refused to believe that it wasn’t somehow my fault.
+I also purchased a used vehicle from Hertz last year, so this is extremely validating. Please let me know if I can provide any helpful info to get to the bottom of this.
+The scale here keeps getting harder to wrap your head around – 153 million driver’s license records changes the math on how much damage a single leak can do downstream. What I find striking is how quickly these aggregation services turn a batch of stolen PII into a routine product with tiers and bulk pricing, as if the supply side had normalized the whole thing. Fingers crossed the FBI probe lands accountability on the people reselling the data and not just on the original breach.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
@@ -779,8 +802,9 @@ Also: “high capability, low operational discipline” feels like a threat prof
 Pretty sure that is the bulk of the current threat landscape (after accounting for gov and gov-sponsored and smaller highly organized groups). The largest concentration of threats almost always seem to focus on one or two types things… During antisec and anonymous days, it was leaks and bulk, low-‘cash-take’, high-frequency, botnets. Lately it seems to be throwing a whole ton of ransomware attacks against every potential target with little overall organization or ‘respect’ hierarchy. This new ‘landscape’ is apparently really competitive and something almost impossible to disassemble. If an attacker can crash their way in with employees’ not being aware, and the attacker’s goals are such that they do not feel they need to care much about staying there (a day and a long slurp of a very wide data pipe) and gets loaded, financially, from their smash and grab, which seems to be the current threat du jour for the past half-a-decade to almost a decade, now, why would they even want to organize?
 Guess I am saying agree they have low operational discipline, but our industry has sure skewed what ‘capability’ means. It used to mean skilled. Like, not, ‘yo, I am capable of stealing very expensive exotic cars, I just need to drive this tractor trailer through the front window of the car dealership.’ I mean lol. How much of it is about bragging, anyway? How much are these groups spending of the millions and millions they asked for?
 thanks chatgpt for the insightful comment and weed backlink
+You are such a favoritist, Llun.
 Very orchestrated attack and pretty clever compared to attacking organizations individually. Companies need to invest more in cybersecurity professionals and better security practices. If they did, attacks like this might not happen as easily or be as successful.
-Femboy catboy Squad.</div>
+Alleged-team takedowns tend to read like win-condition press releases until the indictment lands – until then it is hard to separate signal from the loudest leak. What helps is the boring infrastructure: timestamped forum handles, wallet trails that survive exchange off-ramps, and patient cross-referencing of operational-security mistakes. Reporting like this that maps the thread-by-thread reconstruction does more for the field than the immediate arrests, because it teaches the next investigator what breadcrumbs actually hold up in court. I keep a small independent tracker for a different field (https://codexreset.today/) and the same lesson applies – calm, verifiable signals beat repeated hearsay.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
