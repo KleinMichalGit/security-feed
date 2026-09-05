@@ -59,241 +59,111 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-09-04</h1>
+        <h1>Security Briefing // 2026-09-05</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">ASCII smuggling crosses over from AI prompt injection to phishing evasion</button></li><li><button onclick="show('art-1')">Critical Cisco Nexus 9000 Flaw Lets Unauthenticated Remote Attackers Run Code as Root</button></li><li><button onclick="show('art-2')">LLMHaxor Update</button></li><li><button onclick="show('art-3')">Hackers exploit Sangoma Switchvox flaw to deploy reverse shells</button></li><li><button onclick="show('art-4')">Hackers exploit critical JFrog Artifactory flaw to forge admin tokens</button></li><li><button onclick="show('art-5')">Attackers Exploit Critical Switchvox Flaw to Deploy Reverse Shells Without Credentials</button></li><li><button onclick="show('art-6')">FBI Probes Service Selling 153M+ Drivers Licenses</button></li><li><button onclick="show('art-7')">Financially Motivated Threat Actor BREEZE COMET Targets Brazil</button></li><li><button onclick="show('art-8')">Two Alleged ‘TeamPCP’ Hackers Arrested in Australia</button></li><li><button onclick="show('art-9')">Turning Enterprise Update Servers Into Backdoor Factories (0_o) – Part 1</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Attackers Exploit PaperCut Flaws to Steal Credentials From Schools and Universities</button></li><li><button onclick="show('art-1')">How to secure edge AI in customer-owned environments</button></li><li><button onclick="show('art-2')">Google warns of new Chrome zero-day flaw exploited in attacks</button></li><li><button onclick="show('art-3')">HPE patches critical ArubaOS-CX remote code execution flaw</button></li><li><button onclick="show('art-4')">LLMHaxor Update</button></li><li><button onclick="show('art-5')">Attackers Exploit Critical Switchvox Flaw to Deploy Reverse Shells Without Credentials</button></li><li><button onclick="show('art-6')">FBI Probes Service Selling 153M+ Drivers Licenses</button></li><li><button onclick="show('art-7')">Two Alleged ‘TeamPCP’ Hackers Arrested in Australia</button></li><li><button onclick="show('art-8')">Turning Enterprise Update Servers Into Backdoor Factories (0_o) – Part 1</button></li><li><button onclick="show('art-9')">Demystifying AI Exploits: A Blueprint for AI-Assisted Vulnerability Management</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">ASCII smuggling crosses over from AI prompt injection to phishing evasion</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/09/03/ascii-smuggling-crosses-over-from-ai-prompt-injection-to-phishing-evasion/" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft researchers observed a high-volume phishing campaign using invisible Unicode tag characters, a technique popularized in AI prompt injection research as ASCII Smuggling. Instead of using these characters to hide instructions from people while exposing them to AI models, the attacker used them to split financial lure words such as ‘funding’ to prevent email filters from parsing them.
-The finding emerged from Microsoft Defender for Office 365 prompt injection protection research, showing how AI-era evasion techniques can surface in traditional phishing campaigns. In Microsoft telemetry, hits on a hunting signature designed to detect ASCII-smuggling increased sharply beginning February 9, 2026, and remained elevated on weekdays for approximately three months. Microsoft Defender for Office 365 telemetry showed that the majority of messages were flagged by layered protections rather than by reliance on a single Unicode-specific signal.
-What is ASCII smuggling?
-“ASCII smuggling” refers to the use of invisible or non-rendering Unicode characters to hide content inside text that looks normal. The most abused range is the Unicode Tags block, U+E0000 to U+E007F. This block contains a shadow copy of the printable ASCII characters (for example, U+E0041 mirrors ‘A’, U+E0061 mirrors ‘a’). The block was originally intended for language tagging and is now largely deprecated.
-The important property for an attacker is this: most of these code points are not rendered by typical fonts and user interfaces. A string can therefore carry a message that is not readable to a human but will be processed by any language model or other software that receives a copy of the email content.
-Why the AI-security world made it famous
-Over the past year, ASCII smuggling became a recurring technique in the prompt injection and cross-prompt injection (XPIA) literature. The attack pattern is straightforward:
-- An attacker hides instructions inside invisible tag characters embedded in a web page, document, email, or other content.
-- A human (and many user interfaces) sees nothing unusual.
-- An AI assistant that ingests the raw text does “see” the hidden characters, decodes them as text, and may be induced to follow threat actor-controlled instructions, potentially including data exposure or unauthorized actions depending on the assistant’s permissions and safeguards.
-Because this technique cleanly demonstrates the gap between what the human sees and what the model reads, it appeared frequently in AI red-teaming write-ups, conference talks, and tooling throughout 2025. That attention put a spotlight on the U+E0000-U+E007F range.
-Because tag characters are invisible to humans but exist at the text-processing level, the same property that makes them useful for smuggling instructions into a model also makes them useful for obfuscating keywords before a detector evaluates them. The intent is inverted, but the mechanism is similar and a user’s suspicions are not raised.
-Writing a practical ASCII-smuggling signature
-As part of work on Microsoft Defender for Office 365 prompt injection protection, we built hunting logic for email-borne XPIA and prompt obfuscation patterns: content that looks harmless to users but may carry hidden instructions for an AI system that ingests the raw message. The same hunt designed to identify prompt injection risk in email became the starting point for this phishing-evasion discovery.
-One practical way to hunt for ASCII smuggling is to look for messages carrying characters from the Unicode tags block (U+E0000-U+E007F), the hallmark of attempts to hide instructions from, or for, an AI model. That broad signature is a useful starting point, but it needs enough Unicode context to avoid mistaking legitimate tag-character sequences for abuse.
-The first version simply flagged any code point in that range, which proved too blunt. It kept firing on a small subset of perfectly legitimate messages – which, on inspection, all contained one of three subdivision flag emojis: the flags of England, Scotland, and Wales – because those emojis are encoded using tag characters.
-After those exclusions, remaining hits were mostly benign artifacts from email-security gateways, mailbox providers, and security or AI researchers forwarding or testing messages that contained tag characters. This provided a good baseline where any spikes would indicate abuse of this technique by attackers.
-Figure 1. The three subdivision flag emojis – England, Scotland, and Wales – that tripped the naive signature. Each is encoded as a sequence of invisible Unicode tag characters (U+E0000-U+E007F).
-Figure 2. The Wales flag emoji pasted into the ASCII Smuggler tool from Embrace The Red. What renders as a single flag is actually a base flag code point (U+1F3F4) followed by an invisible tag-character sequence spelling gbwls (U+E0067 U+E0062 U+E0077 U+E006C U+E0073) and a terminating tag (U+E007F) – the same U+E0000-U+E007F range the signature watches for.
-What we observed: ASCII smuggling repurposed for phishing
-New activity emerges in telemetry
-The tuned ASCII-smuggling signature began as an AI-security hunt for hidden prompt injection content in email. Instead, it surfaced finance-themed phishing messages using the same Unicode range for filter evasion.
-On February 9, 2026, signature hits increased sharply. The following chart reflects Microsoft Defender for Office 365 telemetry for the hunting signature over the measured period:
-The day before onset (February 8) the signature fired on roughly 21,000 messages; the next day it fired on more than 1.3 million. Most of the emails can be formed into a cluster of roughly 150 finance-themed sender domains.
-Observed over three months with a weekly rhythm
-Continuing to track the clustered sender domains forward in time, we measured messages matching the activity described every day. The high-volume phase persisted for roughly three months after February 9 and dropped sharply after May 15, 2026. These dates bound the observed use of the specific technique in our telemetry, not the broader campaign, which started earlier without it and continued without it.
-Two characteristics stand out:
-- A strict weekly cadence. The campaign ran hard on weekdays and went almost completely silent every weekend. Sundays’ volume collapsed to a near-zero and then back to full volume the next day. This on/off pattern is typical of scheduled bulk-sending infrastructure.
-- A long, gradual decline. After an intense first phase, with weekday volumes of 1 to 2.37 million messages, peaking on February 26, the numbers stepped down slowly to roughly 80% less per weekday by late March. The high-volume usage of the technique dropped sharply after May 15, with lower residual activity through mid-June and occasional smaller spikes.
-After identifying the activity through this technique-specific signal, we connected it to a broader ActiveCampaign-delivered SBA-themed phishing campaign that Fortra had documented earlier. That earlier reporting indicates the campaign predated the adoption of Unicode tag characters; our analysis focuses on the period and messages in which this method was present, not the full lifetime of the broader campaign.
-Not instruction smuggling, but filter evasion
-Observed obfuscation pattern
-When we looked at a sampling of the flagged messages, the surprise was there were no smuggled instructions to an AI assistant. Instead, the invisible tag characters were inserted inside common financial keywords, splitting them apart so that a literal signature or keyword match would fail.
-For example, a finance lure term that appeared normal to the recipient could be transmitted with an invisible tag character in the middle:
-funding
-became:
-Here, ⟨U+E0020⟩ represents the invisible Unicode TAG SPACE inserted between letters. In the messages we examined, the campaign did not encode a hidden ASCII message in the tag block; it used a single invisible tag character as a separator sprinkled inside high-signal words. Strictly speaking, this is invisible-character insertion using a code point from the ASCII-smuggling tag block, rather than full message smuggling.
-Why it can affect detection
-To a recipient, and to parsing pipelines that drop or normalize these characters, the word still reads as funding. To a detector matching the literal string funding, or a regex that does not account for interleaved invisible code points, the byte sequence no longer contains the contiguous keyword. Whether real-world detectors behave that way depends on their normalization step, which is examined below.
-The bigger prize for the attacker, though, is not preventing the literal string matches; it is the ML- and NLP-based models that increasingly drive modern spam and phishing classification. Unless a filtering system takes a picture of a message and does OCR extraction over the visual image, it may miss this type of attack. A standard email classifier may not reason over whole words exactly as a human sees them; for efficiency, they can first split text into tokens or sub-word pieces. A clean lure term such as funding may be represented as a familiar token or a familiar sequence of sub-tokens. Insert an invisible U+E0020 into the middle, however, and the tokenizer may no longer see that same familiar unit. It might split the text into fun, an unexpected tag character, and ding; it might emit rare or unknown sub-tokens; or, if normalization runs first, it simply removes the U+E0020 character, leaving funding.
-Why it can help defenders
-There is also a defensive opportunity. Since this kind of manipulation appears so seldom in normal traffic, its presence becomes a high-confidence signal. A technique meant to make messages look more benign to ML models can instead give defenders a low-false-positive indicator to detect on.
-What is known and what is new
-Inserting invisible or look-alike characters to break keyword and signature matching is a long-standing evasion technique used in spam and phishing: defenders have for years seen zero-width spaces (U+200B), zero-width non-joiners, the no-break space (U+00A0), soft hyphens, and homoglyph substitutions used to fracture words so naive string matchers fail.
-What is new is the specific characters and scale of the campaign:
-- The character choice. Instead of the usual zero-width space or NBSP, this campaign reached for the Unicode Tags block. That block went from forgotten to famous over the past year because of AI security research into ASCII smuggling and prompt injections.
-- The scale and discipline. At its peak in Microsoft telemetry, the campaign generated multi-million message daily volume.
-- A possible detection blind spot. Because the Unicode Tags block is less commonly abused than zero-width spaces or NBSP, defenders should verify that normalization and tokenization pipelines handle tag characters consistently.
-Financially themed sending domains
-The campaign ran on hundreds of disposable, finance-themed sender domains with lures that resembled business loan, line-of-credit, and advance-funding phishing patterns often associated with fraud or credential-harvesting funnels. This pattern accounted for roughly 96% of the volume flagged by the hunting signature. The signature also fired on other domains, but those were unrelated senders – chiefly email-security gateways and personal mailbox providers – not part of the campaign.
-A partial sample of sender domains counts from February 9, 2026 alone illustrates both the naming pattern and the per-domain volume:
-| Sender domain | Hits (Feb 9, 2026) |
-| guardiangrowthfunding[.]com | 30,442 |
-| digitalcapitalboost[.]com | 27,021 |
-| thebusinessloanexpress[.]com | 25,048 |
-| yourlocfunding[.]com | 24,482 |
-| advancefundingboost[.]com | 24,053 |
-| guardiancapitalway[.]com | 23,921 |
-| harboradvancefunding[.]com | 23,595 |
-| unitedfundingwave[.]com | 23,269 |
-| directcapitalboost[.]com | 22,875 |
-| onlinedirectfinance[.]com | 21,195 |
-| catalystcapitalharbor[.]com | 21,130 |
-| rocketboostfunding[.]com | 20,908 |
-| digitalrushcapital[.]com | 20,796 |
-| guardianloccapital[.]com | 20,781 |
-| guardianlocchoice[.]com | 20,553 |
-| ourbusinessloans[.]com | 20,444 |
-| directcapitalpulse[.]com | 19,767 |
-| catalystboostfunding[.]com | 19,519 |
-| elevatecapitalrush[.]com | 19,395 |
-| fundingexpresscapital[.]com | 18,695 |
-Table 1. Top 20 (by signature hits) of the 148 finance-themed campaign sender domains seen on February 9, 2026, illustrating the naming convention and per-domain volume.
-Every domain is just a recombination of the same small vocabulary. The 20 domains above are built from only 28 word-tokens:
-advance · boost · business · capital · catalyst · choice · digital · direct · elevate · express · finance · funding · growth · guardian · harbor · loan · loans · loc · online · our · pulse · rocket · rush · the · united · wave · way · your |
-Sent through a legitimate email-marketing platform
-The finance-themed domains in Table 1 are the brand (header / P2) domains the recipient sees, but the actual mail was relayed through infrastructure associated with the legitimate email-marketing platform ActiveCampaign. The platform, which is used widely for marketing, rewrites every outbound link in the message body to route through its own click-tracking domains (acemlnd[.]com and activehosted[.]com), so the URLs the recipient clicks do not point at the brand domain at all – they look like:
-hxxps://＜account-id＞.acemlnd[.]com/＜tracking-token＞ hxxps://＜brand-subdomain＞.activehosted[.]com/＜tracking-token＞ |
-Most of the flagged messages carried links associated with the platform’s tracking domains rather than direct links that point directly to the sender-branded domains. The envelope (P1) senders were platform subdomains of the form em-<id>.<brand-domain>.
-ActiveCampaign response
-Before we published this information, we shared our findings with ActiveCampaign to help them with this abuse, and they wanted us to share the following statement on their work to detect it:
-“We appreciate Microsoft’s research and welcome collaboration with the security community to combat this activity. We take abuse, fraud, and security extremely seriously. We tested the specific technique described in this research against our content-moderation systems: messages containing invisible Unicode characters receive the same moderation verdicts as their unobfuscated equivalents, and heavy use of the technique is itself treated as a suspicious signal. We continually invest in improving our detection and prevention capabilities, including expanding our use of AI and machine learning to identify abusive sending behavior earlier in the account lifecycle.” — ActiveCampaign spokesperson
-As with any shared sending service, attacker abuse of customer accounts or workflows can complicate reputation-based filtering. By originating from a reputable marketing platform with established IP reputation and authentication, the activity may appear more similar to legitimate marketing traffic and can complicate reputation-based filtering.
-Most observed volume also originated from cloud-hosting ranges consistent with the platform’s outbound infrastructure, with the vast majority coming froma single network block, 173.236.20[.]0/24. This indicator helped us cluster the campaign more precisely but note that this is a legitimate segment that belongs to the abused service, and not an IOC on its own.
-Identifying the campaign
-Content and infrastructure remained consistent for a long time span, providing an effective way to easily fingerprint this phase of the campaign:
-- Unicode content (primary). Invisible Unicode tag characters in the range U+E0000-U+E007F – specifically U+E0020 – spliced inside keywords. Legitimate mail rarely ever carries these code points: the one routine exception, the England/Scotland/Wales flag emojis, is easily excluded.
-- Lure and brand pattern. Sender (header / P2) domains assembled from a small finance vocabulary – capital, fund/funding, loan, loc, lend, finance, business, express, growth, solutions, choice, hedge, pillar – recombined into fresh, disposable domains and rotated.
-- Envelope (P1) pattern. The bulk of mail is relayed through a single email-marketing platform, recognizable by envelope shape rather than any one name:
-- per-account subdomains shaped em-<digits>.<brand-domain> (regex em-\d+\.), where a small set of reused account numbers fans out across hundreds of brand domains; and
-- the platform’s shared sending pool, shaped acems<N>[.]com and emsd<N>[.]com (e.g. emsd4[.]com, s9.acems10[.]com). Across the measured activity, ~98.5% of messages matched this envelope pattern, and ~99.8% matched the envelope pattern or the platform’s tracking-URL pattern (below).
-- Tracking-URL pattern. Click/tracking links on the platform’s domains activehosted[.]com and acemlnd[.]com.
-- Sending-origin pattern. The bulk of daily volume – about 92% across two measured weeks – originated from a single /24 network block, 173.236.20[.]0/24.
-For a high-precision rule, look for the Unicode content pattern combined with the finance-brand pattern, using the sender infrastructure patterns as corroboration.
-However, this is just a phase in a long-running broader campaign, that keeps adapting and evolving. The campaign was observed months earlier following a different set of behaviors and continued even after the usage of the specific technique was dropped. During these shifts in behavior, one signature may no longer describe the campaign, while another still matches.
-Is there a detection gap?
-The potential gap for mail-defense pipelines is whether Unicode tag characters are normalized or flagged before content detections run. In Defender, our filter stack can take a picture of message contents, extract visible text through OCR, and run analysis over that extracted text to avoid these types of tricks. Implementations vary, so defenders should test how these characters are handled in their own pipelines. For MDO protection, over 99% of messages were flagged by layers that did not depend on catching the tag characters directly, including sender, IP, URL and domain reputations, ML spam/phishing classification, brand-impersonation detection, authentication checks and more.
-Emerging techniques don’t stay in one domain
-ASCII smuggling earned its reputation as an AI attack, hiding instructions from people while leaving them visible to models. This campaign shows the same technique being repurposed for a different objective: obscuring phishing content from detection systems while remaining readable to the intended target.
-The broader lesson is that security techniques rarely stay confined to a single domain. As AI-era attack methods become better understood, threat actors may adapt them for use in more traditional threats such as phishing and spam. This case illustrates how techniques that emerge in AI security research can quickly cross over into established attack ecosystems, reinforcing the need for defenders to view emerging threats through a cross-domain lens.
-Mitigation and protection guidance
-The core defensive principle is simple: normalize before you match. Any content that will be evaluated by keyword, signature, or regex logic should first have invisible and non-rendering Unicode code points stripped or folded, so that splicing them into a word no longer defeats the match.
-Recommended controls
-- Strip or normalize Unicode tag characters (U+E0000-U+E007F) – and other zero-width / invisible code points – from email subject and body text before applying spam and phishing content signatures.
-- Treat the presence of tag-block characters as a strong anomaly signal. Outside known legitimate tag-sequence uses such as certain subdivision flag emojis, these code points are rare in ordinary mail and can be a high-value anomaly signal.
-- Look for the behavioral fingerprint. The observed activity had a distinctive shape: bulk volume from churning, finance-themed disposable domains, on a strict weekday-on / weekend-off schedule. A sudden spike of tag-block characters concentrated on finance-themed senders, switching on and off weekly, is a high-confidence campaign indicator.
-- Apply the same normalization upstream of AI ingestion. The same control that defeats this evasion also reduces XPIA / ASCII-smuggling exposure for AI assistants that ingest email content.
-Microsoft protections
-[Microsoft Defender for Office 365](https://learn.microsoft.com/en-us/defender-office-365/) has heuristic detections in place to flag these the tactics employed in this type of campaign. The detection that first surfaced the spike continues to flag messages carrying Unicode tag-block characters, and the financially themed sending domains are being tracked and blocked as they rotate. Microsoft uses layered email protections, including standard and OCR content analysis, sender and domain reputation, URL detonation and reputation, bulk-mail detection, and anti-phishing models, to reduce reliance on any single signal that an attacker can try to evade.
-[Microsoft Defender for Office 365 prompt injection protection](https://learn.microsoft.com/en-us/defender-office-365/step-by-step-guides/prompt-injection-protection-defender-for-office-365) further helps protect against emails that contain prompt injection attempts, including cases where invisible characters are used to hide instructions from users while exposing them to AI systems. The same normalization and detection principles that reduce ASCII-smuggling-based prompt injection risk also help blunt this email-borne reuse of the technique for phishing evasion. Investments in AI security and traditional email security increasingly reinforce one another.
-Coverage depends on product licensing, configuration, and telemetry.
-Advanced hunting
-These queries run against the EmailEvents Advanced Hunting table (and EmailUrlInfo for URL joins). They hunt the campaign by its infrastructure fingerprint – the finance-vocabulary brand senders and the marketing-platform envelope shape – rather than by the invisible tag characters, as the mail body is not exposed through the table’s columns. These queries are starting points and may require environment-specific tuning. The proactive defense is implemented with multiple layers of the enterprise mail-filtering pipeline.
-1. Infrastructure pattern – finance-vocabulary senders relayed with the campaign’s envelope shape. Combines the brand-domain pattern (a header sender built from three or more adjacent finance/brand keywords, e.g. digital+capital+boost) with the envelope (MAIL FROM) shape em-<digits> / acems<digits> / emsd<digits> – the durable fingerprint that held across the entire period we measured.
-// Finance/brand vocabulary the operator recombines into disposable domains. let kwds = @"(capital|fund|hedge|express|solutions|choice|lend|growth|loan|loc|finance|business|pillar|advance|boost|catalyst|digital|direct|elevate|guardian|harbor|online|pulse|rocket|rush|united|wave|way|surge|swift|elite)"; EmailEvents | where Timestamp > ago(30d) | where EmailDirection == "Inbound" // Header sender domain made of 3 or more adjacent finance/brand tokens. | where SenderFromDomain matches regex strcat("(?i)", kwds, kwds, kwds) // Envelope (MAIL FROM) shape: em-[digits] | acems[digits] | emsd[digits]. | where SenderMailFromDomain matches regex @"(?i)(em-|acems|emsd)\d" | sort by Timestamp desc |
-For extra corroboration you can scope to the single dominant /24 that carried the bulk of this campaign’s volume, 173.236.20[.]0/24, by adding | where ipv4_is_in_range(SenderIPv4, “173.236.20.0/24”). Like the tracking URLs, that network block is shared platform space (it also carries unrelated legitimate newsletters), so use it to scope, never as a standalone filter.
-2. Pivot on the platform tracking URLs. Start from the click/tracking links and join back to the mail events. Useful for scoping, but treat it as corroboration, not a verdict: the tracking domains activehosted[.]com and acemlnd[.]com are shared by every legitimate customer of the same marketing platform, so the URL on its own is not a malicious indicator. The finance-brand filter is what keeps this on the campaign; drop it only if you deliberately want a wider search.
-let kwds = @"(capital|fund|hedge|express|solutions|choice|lend|growth|loan|loc|finance|business|pillar|advance|boost|catalyst|digital|direct|elevate|guardian|harbor|online|pulse|rocket|rush|united|wave|way|surge|swift|elite)"; EmailEvents | where Timestamp > ago(30d) | where EmailDirection == "Inbound" | where SenderFromDomain matches regex strcat("(?i)", kwds, kwds, kwds) | join kind=inner ( EmailUrlInfo | where Timestamp > ago(30d) | where UrlDomain endswith "activehosted.com" or UrlDomain endswith "acemlnd.com" | distinct NetworkMessageId ) on NetworkMessageId | sort by Timestamp desc |
-3. Filter for prompt injection detection in emails
-The feature used in the query below is available for Microsoft Defender for Office 365 Plan 2 or Microsoft 365 E5 customers.
-EmailEvents | where DetectionMethods has "Prompt Injection Protection" |
-MITRE ATT&CK techniques observed
-This campaign exhibits the following MITRE ATT&CK® techniques. The table includes MITRE ATT&CK for phishing/evasion behavior and MITRE ATLAS for the AI-security technique class related to prompt obfuscation.
-| Tactic | Technique ID | Technique | How it presents in this campaign |
-| Initial Access |
-|
-[T1027](https://attack.mitre.org/techniques/T1027/)[AML.T0068](https://atlas.mitre.org/techniques/AML.T0068)Indicators and hunting pivots
-| Indicator | Type | Description |
-| Characters in range U+E0000-U+E007F in email subject/body | Content pattern | Unicode tag-block characters spliced into spam/phishing keywords to evade signatures |
-| Finance-themed disposable domains (capital, fund, funding, loan, loc, lend, finance, business, express, growth, solutions, choice, pillar) | Sender domain pattern | Bulk-registered, rotating sender domains used by the campaign. See representative sample in Table 1. |
-| Envelope (P1) sender shaped em-<digits>.<brand> or shared pool acems<N>[.]com / emsd<N>[.]com | Infrastructure pattern | Reputation-laundering relay through a legitimate email-marketing platform |
-| Sending IPv4 block 173.236.20[.]0/24 | Infrastructure (IPv4) | Single /24 that carried ~92% of the measured activity volume; legitimate shared email-marketing-platform egress space – a strong scoping/corroboration signal, not a standalone block indicator |
-References
-[Unicode Standard Annex #45 – Tags (U+E0000-U+E007F)](https://unicode.org/charts/PDF/Unicode-3.1/U31-E0000.pdf)– the deprecated Unicode tags block abused for ASCII smuggling[ASCII Smuggler Tool: Crafting Invisible Text and Decoding Hidden Codes | Embrace The Red](https://embracethered.com/blog/posts/2024/hiding-and-finding-text-with-unicode-tags/)– public write-up showing how Unicode tag characters can hide text from users while remaining present to language models[LLM Prompt Obfuscation | MITRE ATLAS™](https://atlas.mitre.org/techniques/AML.T0068)– the AI-security technique class this evasion crossed over from[Attackers exploit ActiveCampaign to deliver thousands of AI-generated SBA phish | Fortra](https://www.fortra.com/blog/attackers-exploit-activecampaign-deliver-thousands-ai-generated-sba-phish)– earlier reporting on the broader ActiveCampaign-delivered SBA-themed phishing campaign, before the Unicode tag-character evolution examined here
-Learn More
-For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
-To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
-To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
-Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
-- Learn more about
-[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection) - Evaluate your AI readiness with our latest
-[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). [Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)
-[Manipulating AI memory for profit: The rise of AI Recommendation Poisoning | Microsoft Security Blog](https://www.microsoft.com/en-us/security/blog/2026/02/10/ai-recommendation-poisoning/)– a related example of an AI-era technique observed in email traffic[Defending the inbox against prompt injection attacks | Microsoft Defender for Office 365 Blog](https://techcommunity.microsoft.com/blog/microsoftdefenderforoffice365blog/defending-the-inbox-against-prompt-injection-attacks/4534636)– feature announcement introducing prompt injection protection in Microsoft Defender for Office 365.[Prompt injection protection in Microsoft Defender for Office 365](https://learn.microsoft.com/en-us/defender-office-365/step-by-step-guides/prompt-injection-protection-defender-for-office-365)– official documentation of the prompt injection protection in Microsoft Defender for Office 365.[How Microsoft discovers and mitigates evolving attacks against AI guardrails | Microsoft Security Blog](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-1" class="article-body">
-            <h2 class="article-title">Critical Cisco Nexus 9000 Flaw Lets Unauthenticated Remote Attackers Run Code as Root</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/critical-cisco-nexus-9000-flaw-lets.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Cisco has released patches to address a critical security flaw affecting 10 Silicon One-based Nexus 9000 switches that could allow an unauthenticated, remote attacker to execute code as root, alongside an IOS XR hardening release bundling 7 umbrella CVEs, 2 of which are rated 9.8, with no workaround for any IOS XR version.
-The Nexus vulnerability, tracked as CVE-2026-20212 (CVSS score: 9.8), is a case of binding to an unrestricted IP address that leaves TCP ports 43210 and 43211 reachable in the default Layer 3 virtual routing and forwarding (VRF) instance.
-An attacker who can reach a switch's address on either port can connect directly to the service. Crafted input sent to that service is then executed as code with root privileges. An exploitation attempt can also crash the S1HAL process and reload the device.
-Cisco said it's not aware of any malicious use of the flaw as of its September 2 disclosure. It has published no fixed-release table and directs customers to its Software Checker, with an infrastructure access control list (iACL) blocking the two ports and a temporary Live Protect shield as stopgaps.
-Cisco tells IOS XR customers, including those on IOS XR7 (LNT), to upgrade to a release that includes software maintenance updates (SMUs), then apply them.
-"At the same time, the window between disclosure and exploitation has effectively closed," Russ Smoak, vice president of information security at Cisco, said in [a June blog post](https://blogs.cisco.com/security/strengthening-the-foundation-a-predictable-customer-focused-response-to-ai-accelerated-vulnerability-discovery) announcing the twice-monthly disclosure model that groups internally found bugs into umbrella CVEs.
-Cisco lists the following affected product identifiers (PIDs) in [its Nexus 9000 advisory](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-n9k-s1-rce-EH8dEtr), checkable against the output of the show module command -
-- N9324C-SE1U (Nexus Smart Switch)
-- N9348Y2C6D-SE1U (Nexus Smart Switch)
-- N9364E-SG2-O
-- N9364E-SG2-Q
-- N9396T12C-SE1
-- N9348Y12C-SE1
-- N9396Y12C-SE1
-- N9336C-SE1
-- N9K-C9804
-- N9K-C9808
-Other Nexus 9000 models, Nexus 9000 fabric switches running in Application Centric Infrastructure (ACI) mode, and the Nexus 3000 and 7000 lines are unaffected.
-The Hacker News confirmed via [the CVE Program's record](https://www.cve.org/CVERecord?id=CVE-2026-20212) on September 3 that Cisco lists 45 NX-OS releases, from 10.3(1) through 10.6(3s), as affected, a range the advisory itself leaves to the Software Checker.
-Until a fixed release is confirmed, Cisco offers the following -
-- Upgrade to the release named by
-[Cisco's Software Checker](https://sec.cloudapps.cisco.com/security/center/softwarechecker.x);[the shield's release notes](https://www.cisco.com/c/en/us/td/docs/dcn/nx-os/nexus9000/106x/release-notes/release-notes-nxos-live-protect-shield-1063.html)state that its operational mode transitions to N/A on upgrade to NX-OS 10.6(4) or higher. - iACL permitting only required management and control-plane traffic, or explicitly denying TCP packets to a locally configured IP address on destination port 43210 or 43211, proven in a test environment.
-- Live Protect shield lp00031, a temporary mitigation described in
-[Cisco's Live Protect documentation](https://www.cisco.com/c/en/us/td/docs/dcn/nx-os/nexus9000/106x/configuration/security/cisco-nexus-9000-series-nx-os-security-configuration-guide-release-106x/m-secure-nxos-with-cisco-live-protect.html), supported only on NX-OS 10.6(3) and, via[a second shield package](https://www.cisco.com/c/en/us/td/docs/dcn/nx-os/nexus9000/106x/release-notes/release-notes-nxos-live-protect-shield-1063s.html), on 10.6(3s) for the two Smart Switches; it's unsupported on the Nexus 9804 and 9808 and needs SSH, Telnet, or NX-API access.
-IOS XR Hardening Release Reaches Every Version
-The IOS XR release assigns one CVE to each Common Weakness Enumeration (CWE) bucket of fixed bugs and scores it at the most severe defect in that bucket, per the rules in [its risk-based disclosure FAQ](https://sec.cloudapps.cisco.com/security/center/resources/risk-based-disclosure).
-CVE-2026-20274, which covers memory-safety and resource-lifetime bugs, and CVE-2026-20279, which covers access-control bugs including missing authentication for critical functions and improper certificate validation, each carry a 9.8 ceiling in [the record for CVE-2026-20274](https://www.cve.org/CVERecord?id=CVE-2026-20274) and [that for CVE-2026-20279](https://www.cve.org/CVERecord?id=CVE-2026-20279).
-The remaining five, CVE-2026-20275 through 20278 and CVE-2026-20280, top out between 8.2 and 8.8.
-The vulnerabilities affect all releases regardless of device configuration, [the IOS XR hardening advisory](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-hardening-iosxr-qg64NcM) said.
-The XR7 (LNT) platforms, which include the Cisco 8000 Series, NCS 1010, NCS 540L, and NCS 5700 Series, have a dedicated SMU that applies across all releases.
-Cisco said there may be "approximately 16 SMUs available for each release," that future releases 26.2.2 and 26.3.1 will be the first fixed releases needing no SMUs, and that customers running a release outside its table should open a Technical Assistance Center (TAC) case.
-SMUs are available for the following releases -
-- 6.9.2
-- 7.3.2
-- 7.9.2
-- 7.9.21
-- 7.10.2
-- 7.11.2
-- 7.11.21
-- 24.2.2
-- 24.2.21
-- 24.4.2
-- 25.2.21
-- 25.4.1
-- 25.4.2
-- 26.1.2
-- 26.2.1
-SMUs are listed as future releases for 24.1.2, 24.3.2, 25.1.2, and 25.2.2.
-The advisory lists the following SMU identifiers by functional area -
-- All XR7 (LNT) platforms - CSCwv19790, on all releases.
-- BGP - CSCwu14807; the 7.10 and earlier trains and 26.2.1 are not vulnerable.
-- crypto-ike - CSCwv19170.
-- gRPC - CSCwt41683.
-- IP-SLA - CSCwv19173.
-- IS-IS - CSCwv45645 and CSCwv19171; on 25.4.2, and on 25.4.1 for the NCS1001, NCS1004, and NCS1010, CSCwu13271 and CSCwv19171; 26.1.2 and 26.2.1 are not vulnerable.
-- MPLS and MPLS-TE - CSCwv40753 and CSCwu14825; on 24.2.21 for 64-bit ARM Cisco 8000 Series routers, CSCwv19181 and CSCwu14825.
-- Multicast - CSCwv19180 and CSCwu08799.
-- OSPF - CSCwv40741 and CSCwv19171; on 24.2.21 for 64-bit ARM Cisco 8000 Series routers, CSCwv19174 and CSCwv19171.
-- Segment routing, IPv6 only - CSCwu13268; CSCwv56312 on 7.11.21, 24.2.21, 25.2.21, and 25.4.1, on 7.9.21 for 64-bit ASR 9000 Series routers, and on 7.3.2 for the NCS1002; 26.1.2 and 26.2.1 are not vulnerable.
-- Segment routing, IPv4 only or IPv4 and IPv6 - CSCwv38342; on 24.2.21 for 64-bit ARM Cisco 8000 Series routers, CSCwv19178.
-- TCP Authentication Option - CSCwv36143; on 24.2.21 for 64-bit ARM Cisco 8000 Series routers, CSCwu14817; on 6.9.2 for 32-bit ASR 9000 Series routers, CSCww16661.
-- Zero Touch Provisioning (ZTP) - CSCwu36622; 26.2.1 is not vulnerable.
-CSCwv19171 applies to both IS-IS and OSPF, Cisco noted.
-The Hacker News cross-checked the seven CVE records against the advisory on September 3 and found that, of the 111 IOS XR releases Cisco lists as affected, 14 have SMUs available today, four are awaiting SMUs, and 93 must first be upgraded before a fix can be applied.
-The September 2 drop is the third scheduled hardening release in 30 days, following [the first hardening drop](https://thehackernews.com/2026/08/cisco-patches-12-sd-wan-and-ios-xe.html) on August 5, which delivered [the IOS XE hardening release](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-hardening-iosxe-V8NMuMZJ) and [a Catalyst SD-WAN release](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-hardening-sdwan-faLcR3K), and [two CVSS 10.0 releases](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-notice-LDquvx5d) for Crosswork and Secure Workload [two weeks later](https://thehackernews.com/2026/08/cisco-patches-nine-crosswork-and-secure.html).
-Separately, two publicly disclosed Secure/Multipurpose Internet Mail Extensions (S/MIME) decryption flaws in Secure Email, CVE-2026-20354 and CVE-2026-20355 (CVSS scores: 5.9), allow a machine-in-the-middle attacker to recover plaintext from mail passing between gateways running AsyncOS 16.5.0 or earlier with S/MIME configured, Cisco said in [the Secure Email advisory](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-esa-smime-disc-dzw4rEdY). Fixed releases for that pair are stated only in the bug records.
-The same day's advisories also fixed [a phone denial-of-service bug](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-phone-dos-txMYNRzv), CVE-2026-20281 (CVSS score: 7.5), in Desk Phone 9800, IP Phone 7800 and 8800, and Video Phone 8875 devices registered to Unified Communications Manager with Web Access enabled, a setting that's off by default. Fixes arrive in SIP Software 5.0(1), 14.4(1)SR3, 14.4(1)SR4, or 11.0(6)SR8 depending on the model.
-The development comes six days after Sygnia said the China-nexus threat actor Fire Ant, [first documented in 2025](https://thehackernews.com/2025/07/fire-ant-exploits-vmware-flaw-to.html), ran purpose-built [implants on IOS XR routers](https://thehackernews.com/2026/08/china-linked-fire-ant-hijacks-cisco.html) that suppressed syslog delivery, filtered show command output, and supported a hidden Generic Routing Encapsulation (GRE) tunnel.
-The actor also captured packets from routers, uploaded them to external FTP servers, and made connection attempts and port scans against connected systems associated with critical infrastructure.
-The investigation began with a tunnel interface active on a router with no running configuration or commit history to explain it, which, Sygnia said in [its Fire Ant report](https://www.sygnia.co/blog/fire-ant-evolves-from-hypervisors-to-trusted-infrastructure/), suggested the device's operational state "could no longer be trusted to match the configuration and audit records."
-Sygnia did not identify how the actor first gained access to the routers or name any vulnerability.
+            <h2 class="article-title">Attackers Exploit PaperCut Flaws to Steal Credentials From Schools and Universities</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/attackers-exploit-papercut-flaws-to.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Threat actors are exploiting the newly disclosed PaperCut flaws to facilitate credential theft in attacks targeting the education sector in the U.S. and Europe.
+The Arctic Wolf Adversary Research Team [said](https://github.com/rtkwlf/wolf-tools/tree/main/pack_alerts/202609-papercut-cve-exploitation) it observed attackers exploiting [CVE-2026-81578 and CVE-2026-82078](https://thehackernews.com/2026/08/attackers-chain-two-papercut-flaws-to.html) – an authentication bypass and remote code execution chain – to conduct command execution and reconnaissance, as well as create privileged accounts.
+"Observed post-exploitation activity included delivery of Windows registry hive collection tools, Metasploit/Meterpreter-related Java payloads, and commands used to identify hosts, users, processes, and sensitive configuration data," Arctic Wolf said.
+The cybersecurity company told The Hacker News that the activity has targeted vulnerable PaperCut servers across the education sector, impacting organizations ranging from K-12 schools to major universities in the U.S. and Europe.
+Some of the identified malicious activity includes -
+- Running discovery commands like uname, whoami, ver, and tasklist, and privileged account creation ("Administrator17")
+- Inbound GET requests from "45.142.193[.]132" that request for "/custom/pcp_*.txt" and "/custom/web/pcp_*.txt" files on compromised hosts, containing harvested system and user data
+- Deliver credential-harvesting tools like lsa_collect.exe, lsa_collect_small.exe, and save_hives.exe via "certutil.exe" from "45.142.193[.]132"
+- Retrieve Meterpreter Java payloads from, and establish sessions to, "194.180.48[.]134"
+- Use "findstr" to search PaperCut *.config files for the terms "password," "secret," "ldap," "bind,v and "token"
+Arctic Wolf said it also detected "lsa_collect.exe" in a sandbox that extracted specific registry keys to reconstruct the system BootKey, which can then grant the attacker access to the SAM database.
+"The concern is that those stolen logins could give attackers a pathway into other critical systems across the environment. Post-compromise activity included deployment of Windows registry," Arctic Wolf said in a statement.
+Users are advised to restrict PaperCut servers from being exposed to the internet and monitor for the execution of cmd.exe, powershell.exe, or other scripting and command interpreters, along with commands containing whoami, tasklist, ver, or uname -a with pc-app.exe as the parent process.
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">How to secure edge AI in customer-owned environments</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/09/04/secure-edge-ai-customer-owned-environments/" target="_blank">Original Link</a></p>
+            <div class="content-text">Edge AI moves model execution, model IP, customer data, and system authority into infrastructure the customer owns and operates. That changes who must verify the stack before sensitive assets are released.
+[Edge AI](https://learn.microsoft.com/en-us/azure/azure-local/overview) includes AI systems where inference runs on or near the device, sensor, or other local environments where data is produced and acted on, rather than relying entirely on a centralized cloud service. It is chosen for cost, model selection, sovereignty, latency, and disconnected operation.
+Edge AI changes the trust model for AI systems
+In Cloud AI, separate companies own and attest the hardware, platform, and model weights. Edge AI deployments often place customers in control of more of the AI stack. This changes the security model because the customer is now responsible for establishing trust across the environment where the AI operates.
+In Edge AI, attacks such as prompt injection, model tampering, or malicious firmware updates can occur in the same environment that stores the model, customer data, credentials, and access to physical systems. This shifts trust decisions that were previously handled by cloud providers to the customer. Both the model provider and the customer now share risk: the provider’s models run on customer-owned infrastructure, while the customer must protect the systems, data, and models operating in that environment.
+What changes with Edge AI?
+- Customers operate more of the AI stack.
+- AI systems can be influenced by prompts, retrieval data, agent instructions, and runtime inputs.
+- Models, credentials, and data can live in environments outside the provider’s direct control.
+- Traditional software security controls alone are not enough.
+What should organizations do?
+- Verify runtimes using attestation.
+- Verify AI artifacts using provenance.
+- Constrain model actions through mediation.
+- Bind and release sensitive assets only to trusted environments.
+Our [post on threat modeling for AI systems](https://aka.ms/aithreatmodeling) covers safety and security issues related to the underlying model. These concerns apply to Edge AI as well. Edge AI adds another question: before releasing weights, keys, or data, what evidence shows the runtime and loaded components can be trusted?
+Why Edge AI increases exposure
+An Edge AI deployment may include models, prompts, agents, retrieval data, policies, local data stores, and update mechanisms running on infrastructure outside the provider’s cloud environment.
+This moves sensitive AI assets and decision logic into potentially hostile environments. Attackers may have physical access to devices, local access to model artifacts, opportunities to tamper with retrieval data or tool configurations, compromise model supply chain and more direct paths from model behavior to real-world consequences.
+Disconnected Edge deployments cannot rely on live cloud detection, policy updates, or revocation. They must maintain local verification and enforcement when cloud connectivity is unavailable. Risky AI operations should run only where hardware can protect assets and provide acceptable evidence. Otherwise, the operation should be deferred or revalidated.
+Why AI changes the security problem
+Unlike conventional software, AI models can be influenced by untrusted content while still using legitimate interfaces and credentials. This article focuses on the security response: architectures that constrain model actions and protect the model, credentials, and data around it.
+Traditional software executes code developers ship. AI systems can change behavior based on prompts, retrieval data, agent instructions, and other runtime inputs. Protecting code alone is no longer sufficient; organizations must also establish trust in the data, context, and actions surrounding the model.
+- Prompt injection can change model behavior. Assume prompt injection will occur, whether direct or indirect. Inputs can affect systems just like executable code because the context window itself acts as an instruction surface. Traditional controls such as signed binaries and code integrity checks were not designed to address this risk.
+- Trusted data is not always safe data. Traditional vulnerability management does not map cleanly to “data as code,” such as a poisoned retrieval document. Origin signatures can prove where data came from, but they do not prove that the content is safe for an AI system to interpret.
+- AI behavior is not fully deterministic. The same input may produce different outputs, and small context changes can significantly alter behavior. This limits the effectiveness of techniques such as signature detection and fuzzing. Grounding and tuning improve reliability, but they cannot enforce an acceptable risk boundary. At the authority boundaries it mediates, deterministic policy can still constrain actions when alignment, prompt-injection defenses, or content filters fail to stop an unsafe instruction.
+Prompt injection, MCP, multi-agent systems, and computer-use agents on Edge expose different surfaces of these problems. Tool calls are delegated authority, agent output is untrusted input, and screen state is input, not authorization.
+These characteristics mean organizations cannot rely on traditional software security controls alone. They also need to verify the environment where AI runs and constrain the actions an AI system is permitted to take.
+Constrain model actions through deterministic mediation
+Model output should recommend actions, not authorize them. A deterministic mediator outside the model enforces policy by allowlisting actions, scoping arguments, limiting frequency, and releasing credentials only when approved. The mediator is a logical boundary, not another model. It may be provided by the platform or integrated by the customer.
+In this pattern, the mediator and its credentials are protected and attested. Mediation bounds what the model can do but does not guarantee that every permitted action is safe; high-consequence or irreversible actions require independent approval, an interlock, or fail-safe behavior.
+Establish trust before releasing sensitive assets
+Organizations must establish trust in the environment where AI runs and in the artifacts that shape AI behavior. Sensitive assets face two theft vectors: at-rest theft from stored artifacts and keys, and runtime theft while a compromised process holds them decrypted. Before release, the verifier asks two questions:
+- Do I trust this runtime and the platform on which I am about to execute this workload?
+- Do I trust these components, such as model weights, tool descriptors, agent definitions, and retrieval indexes, because I trust the system in which they were built and delivered?
+Attestation answers the runtime question. Provenance answers the component question. Verifier policy requires both. Either question alone leaves a gap: an approved runtime can load a poisoned artifact, while a trusted artifact can run on a compromised platform. In this trust model, the build system that produced an artifact is treated as another runtime whose evidence is evaluated, and the chain continues until it reaches hardware the verifier accepts. Evidence comes from across the hardware, firmware, runtime, model, integration, and customer layers. It serves different relying parties: customers containing model behavior, publishers protecting model IP, and integrators validating the supply chain. The verifier combines that evidence to gate release.
+Verify runtime before releasing sensitive assets
+This pattern evaluates a runtime by whether it is measurable, can report its state, and matches an approved baseline before sensitive assets are released.
+Confidential compute provides one way to do this. Without end-to-end confidential computing, a privileged host or unprotected accelerator path may be able to read or modify decrypted weights, credentials, and data. GPU/NPU drivers and DMA extend the trusted computing base beyond ordinary application-security visibility. Where confidential computing covers that path within the platform’s documented threat model, protected memory and hardware-rooted attestation can support release to an approved runtime. This is designed to protect assets from host access; it does not constrain a steered model’s actions through authorized interfaces. Those vectors need additional controls.
+Because system state can change after deployment, release is treated as a renewable lease that expires when fresh evidence no longer matches the approved state. Physical controls address what measurement cannot see.
+In this pattern, evidence gates scheduler placement, storage, identity, and credential release. Bind credentials to the approved runtime and action scope to reduce the risk that credential theft enables bulk exfiltration; otherwise, evidence does not enforce trust.
+Verify artifacts that shape model behavior
+Runtime trust proves only that the platform is acceptable; it does not prove that the artifacts loaded into it are trustworthy. A clean runtime can still execute a poisoned artifact.
+That is why artifact trust has to be evaluated separately. Because these artifacts shape model behavior, accepting one into the system is more than data transfer. Creation, distribution, deployment, and use can each introduce a tampered artifact.
+Model IP can extend beyond weights to provider-owned components that handle them; those components may warrant the same evidence-gated release.
+In this pattern, approved components and updates enter through a trusted build environment; on-site changes appear as measurement drift rather than silently becoming a new baseline.
+Each artifact should carry evidence of its origin, build pipeline, and input integrity. The verifier evaluates that evidence before accepting it. Provenance should chain to hardware and be produced inside a measured, policy-approved runtime. Signatures establish origin and integrity but may not show whether the producing runtime met verifier policy. Provenance helps responders reconstruct what happened: which model acted on which data, in what runtime, and under which policy.
+Next steps
+Bottom line: Edge AI changes the trust model for AI systems. Customers operate more of the stack, AI behavior is influenced by runtime inputs, and sensitive assets run in environments outside the provider’s direct control. Attestation, provenance, mediation, and evidence-based release help establish trust before models, data, and credentials are exposed.
+Edge AI pushes security controls into devices, gateways, vehicles, factories, hospitals, retail spaces, and other customer environments.
+For depth on the agent case, see our [post on defense in depth for autonomous AI agents](https://aka.ms/agenticdefense). Map sensitive assets, the runtimes and artifacts that can access them, and the party responsible for each release decision. Then define the evidence and policy required at every boundary. At the Edge, security should be architectural: anchored at hardware, enforced at every action.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
         <div id="art-2" class="article-body">
+            <h2 class="article-title">Google warns of new Chrome zero-day flaw exploited in attacks</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/google-warns-of-new-chrome-zero-day-flaw-exploited-in-attacks/" target="_blank">Original Link</a></p>
+            <div class="content-text">Google has updated the Chrome browser to address an actively exploited high-severity zero-day flaw in the V8 engine and 11 other vulnerabilities. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
+            <h2 class="article-title">HPE patches critical ArubaOS-CX remote code execution flaw</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/hpe-patches-critical-arubaos-cx-remote-code-execution-flaw/" target="_blank">Original Link</a></p>
+            <div class="content-text">Hewlett Packard Enterprise (HPE) has patched a critical vulnerability in the ArubaOS-CX network operating system that could lead to remote code execution. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-4" class="article-body">
             <h2 class="article-title">LLMHaxor Update</h2>
             <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/llmhaxor-update" target="_blank">Original Link</a></p>
             <div class="content-text">LLMHaxor Update
@@ -313,26 +183,6 @@ My original LLMHaxor tool still fits the bill. One comment I made in my original
 Find your websocket API, usually a GET with a “1XX Switching Protocols” response, change the protocol to ‘ws/wss’, point your intruder at local host and Go!
 It is ‘almost’ that simple, you might need to move some http headers around as well. You can read all the details at: [https://github.com/GeoffWalton/LLMHaxor/blob/main/WS_ADAPTER_GUIDE.md](https://github.com/GeoffWalton/LLMHaxor/blob/main/WS_ADAPTER_GUIDE.md)
 You can get an updated version of the plugin with the new WebSock proxy support and an number of other bug fixes and improvements to reliability and logging at: [https://github.com/GeoffWalton/LLMHaxor/blob/main/LLMHaxor.rb](https://github.com/GeoffWalton/LLMHaxor/blob/main/LLMHaxor.rb)</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-3" class="article-body">
-            <h2 class="article-title">Hackers exploit Sangoma Switchvox flaw to deploy reverse shells</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-sangoma-switchvox-flaw-to-deploy-reverse-shells/" target="_blank">Original Link</a></p>
-            <div class="content-text">Attackers are actively exploiting CVE-2026-9586, an unauthenticated SQL injection vulnerability in the Sangoma Switchvox VoIP platform that can lead to remote code execution. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">Hackers exploit critical JFrog Artifactory flaw to forge admin tokens</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-critical-jfrog-artifactory-flaw-to-forge-admin-tokens/" target="_blank">Original Link</a></p>
-            <div class="content-text">A critical authentication bypass vulnerability (CVE-2026-82329) in JFrog Artifactory is being exploited in attacks to create tokens that provide administrative access. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
@@ -403,6 +253,9 @@ Thank you for your research and writing this article. I’m shocked and appalled
 Data brokers need to be put into a rocket and fired into the sun.
 There is a difference between this and data brokers. Anyone who can tell the difference between “data” and PII useable to take over an identity can tell you that. Hell, your own Christmas address book is ‘data brokering’ the minute you sit down with it to send out your yuletide cards,
 This is grotesque sh%t.
+That’s like saying there’s a difference between the p*do preying on 5 year olds and the one preying on 12 year old. Sure, they’re different, but they both belong on the other side of the grass. Look up the NPD guy. He’s a serious pos and NPD has caused a LOT of people to experience identity theft.
+So mostly legit data brokers should be given supplies for their trip to burn up on the sun, and these folks should die of dehydration on the way?
+A data broker is a specific business entity whose primary commercial model is to collect, aggregate, and license or sell personal data to third parties. Using an address book to address Christmas cards is not data brokering.
 This is crazy, and infuriating that there is almost no mainstream coverage of this incident. Actually, since the image of Hegseth or you (Krebs) on the Nexus screenshots are what is being widely shared, people are commenting that its ‘no big deal’ that a tiny face pic has been leaked.
 Wsb-tv in atlanta featured a story on your report and said there was a way to check and see if your license was compromised, however, i find no mention of how to check, any ideas?
 Not sure where they got that information, but the site as far as I know is currently offline, and nobody I know has a copy of their database.
@@ -418,6 +271,7 @@ The inclusion of CACs has sparked a bit of a debate between some of my associate
 Just a beyond face palm, I swear hopefully this breaks the camels back, and FORCES both chambers to draft proper legislation that states if you store X amount of data if you loose it n a breach the fine is = repeat = to shutting down your company, thank you have nice day. And verify every fuckin HD is physically destroyed, every serial recorded Mr C level, everyone of them.
 Bill Germany:
 You’re shocked at the lack of MSM coverage? Hoo, boy, this is America, man, and “If it bleeds, it leads.” Why dote on something geekish like this, when you can parade the latest murders, shootings, stabbings, and other gory gory stories? Our mainstream media this country is pathetic when it comes to anything more complicated but the latest video game.
+This story was actually on the morning National news (CBS) 2 days ago.
 We are all to wrapped up in our own business.
 That the big guys Don t care about our info .
 It generates money for the scammers and the it guys.
@@ -436,207 +290,31 @@ I’m old enough to remember when all a rental car company needed with your lice
 Terrorism. That’s why.
 Multiple terrorists used rented cars in their attacks.
 I swear this country’s desperate attempt to curb terrorism puts all of us at risk of having our rights taken away.
-It is, indeed disheartening and who knows how many will suffer. Whereas I wish and want the guilty to be brought to justice, on the other hand, I wish the corporate world is held accountable for letting the PII leakage. They treat citizens’ data as a commodity to trade and make money by selling the information. If you jail the officials of companies who did not do due diligence in safe keeping PII data, like encrypt at column level, perhaps future loss of data will get reduced or people (corporations) will think before asking PII data that they cannot safely keep. Paying a small fine or issuing apology should not be an option. Jail time should be mandatory for the profiteering companies.</div>
+They use that as an excuse byt really it is just bout theft and insurance and whatnot.
+It is, indeed disheartening and who knows how many will suffer. Whereas I wish and want the guilty to be brought to justice, on the other hand, I wish the corporate world is held accountable for letting the PII leakage. They treat citizens’ data as a commodity to trade and make money by selling the information. If you jail the officials of companies who did not do due diligence in safe keeping PII data, like encrypt at column level, perhaps future loss of data will get reduced or people (corporations) will think before asking PII data that they cannot safely keep. Paying a small fine or issuing apology should not be an option. Jail time should be mandatory for the profiteering companies.
+Great reporting and writing, Brian.
+You do amazing work.
+I just dont think it’s a leak. I think it’s a paid for siphon that certain lobbying for id verification has made even easier and more profitable for the siphoner.BUT MY MIDDLE NAME IS “SKEPTICAL”
+The road to chip
+Brian, ShinyHunters has reached out to Nexus, promising a large amount of money for the DLs. This situation is going from bad to worse. I wanted to let you know about that.
+Beginning Jan 1, 2026
+The state of Utah implemented what they called “the most rigorous alcohol compliance updates in recent years”.
+Utah House Bill 437, commonly referred to as Utah’s “100% ID law,” changes how alcohol sales are verified across the state.
+For those who may not know Utah owns all liquor stores through out the state. IDScan.net offered several ID scanning solutions with the use of either VeriScan or ParseLink. The plan is to have restricted licenses which will be used to deny alcohol sales. Also, if you have cannabis delivered by a Utah dispensary, yup you guessed it your license must be scanned.
+Hackers and scammer should get death pen penalty…
+I’m somewhat baffled. Basically they aren’t scanning ID to see if its valid and not a fake one. They are verifying the ID and storing a digital copy?
+The road to chip inplant.
+Sometimes I wonder if we need a US GDPR. But I am also not sure if it helps – companies should be f liable for loosing data, with very very expensive and especially easy reimbursement for us victims.
+Wonder if there is an easy way to fingerprint each time one hands id over? Kind of like adding + to email when registering for. Service to then see who else starts sending emails.
+A commenter described criminals resetting his Chase banking online credentials by using the victim’s driver’s license after he bought a car from Hertz.
+Since the criminal used the victim’s driver’s license to reset the account but not open a new account, I suspect a credit freeze wouldn’t help. A freeze wouldn’t seem to stop someone with the victim’s driver’s license from resetting the victim’s login credentials or adding their own while leaving the victim’s intact.
+Banks and other institutions must stop using driver’s licenses as ID. Only orgs related to actual driving should use customer’s driver’s licenses.
+What is the “NEXUS” you refer to? When I google it, several different entities show up. Is it different from Nexus/Lexus?</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-7" class="article-body">
-            <h2 class="article-title">Financially Motivated Threat Actor BREEZE COMET Targets Brazil</h2>
-            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/financially-motivated-threat-actor-breeze-comet-targets-brazil/" target="_blank">Original Link</a></p>
-            <div class="content-text">Financially Motivated Threat Actor BREEZE COMET Targets Brazil
-Google Threat Intelligence Group
-Mandiant
-Introduction
-Beginning in 2024 Mandiant investigated a string of compromises affecting Brazilian financial services, retail, and eCommerce organizations. Google Threat Intelligence Group (GTIG) tracks this activity as BREEZE COMET (formerly UNC5669), a financially motivated threat actor specializing in manipulating payment systems and banking software in Brazil to conduct fraudulent transfers. This activity overlaps with operations publicly reported as [Plump Spider](https://cti.axur.com/bulletins/eeda3f5c-def6-4a7f-ad0c-754d5823de57) and [SHADOW-AETHER-064](https://www.trendmicro.com/en_us/research/26/e/vibe-hacking-two-ai-augmented-campaigns-target-government-and-financial-sectors-in-latin-america.html). In this blog, we detail BREEZE COMET’s tactics and toolkit, and provide mitigation recommendations and detections to support organizations in defending against this active and developing threat.
-BREEZE COMET tactics have evolved over time to leverage a customized malware suite and compromised, trusted websites to facilitate initial access, command and control (C2), and to interact with financial software and payment APIs. BREEZE COMET’s operational infrastructure may also indicate intent to expand their infrastructure footprint to other countries in Latin America and Africa. Additionally, we have evidence that BREEZE COMET is using generative artificial intelligence (AI) to support malware development, which may further increase the scale, speed, and sophistication of their operations in the future.
-BREEZE COMET Targets Brazilian Financial Technology
-BREEZE COMET operations target organizations with permission to conduct transactions through banking software, APIs, and payment systems such as Pix, STR, and Boleto. This typically includes banks, payment processors, retailers, exchanges, as well as fintech and banking software providers.
-To achieve their objective of conducting fraudulent transfers, BREEZE COMET must maintain:
--
-Access to the National Financial System Network (Rede Nacional do Setor Financeiro, RSFN) through an entity with this access.
--
-Access to mTLS credentials that allow sending authenticated payloads with transactional orders to Pix, STR (Brazilian Reserves Transfer System), or any transactional listener to be executed with minimal restrictions in the name of an organization with available funds.
--
-Persistent access to multiple accounts in targeted organizations’ Active Directory and/or cloud environments.
--
-Understanding of an organization’s transfer processing procedures, network controls, fintech integrations and anti-fraud systems.
-In order to support these requirements, BREEZE COMET evolved to operate in multiple compromised environments at the same time, crafting custom C2 malware to automate activities such as reconnaissance, lateral movement, persistence, and exfiltration.
-Initial Compromise and Establish Foothold
-BREEZE COMET has used various methods for initial access. In early compromises, Mandiant observed this threat actor use password spraying as well as voice calls impersonating IT support teams to convince users to install Remote Monitoring and Management (RMM) tools such as AnyDesk. [Axur](https://blog.axur.com/en-us/axur-reveals-plump-spider-modus-operandi-systemic-pix-fraud) corroborates use of voice phishing, and suggests that the group has also attempted to recruit insiders at targeted organizations.
-In mid-2025, GTIG observed BREEZE COMET using compromised Brazilian small government websites to stage RMM tools, infostealers disguised as legitimate tax or receipt documents (e.g., ComprovantePDF.exe
-), or backdoors such as XWORM set to persist via automated startup shortcut modifications. XWORM is a backdoor that is widely available for purchase on cyber crime forums, with leaked or “cracked” versions also available. BREEZE COMET then used these compromised government websites to facilitate social engineering operations for initial access, and as C2 endpoints. The use of compromised, trusted infrastructure allowed the threat actors to avoid detection by network domain reputation filters. GTIG also observed BREEZE COMET replicating this behavior with municipal domains in Nigeria, Paraguay, Ghana, and Venezuela, suggesting a potentially growing targeting focus. Analysis of compromised municipal domains indicated that BREEZE COMET reused the same staging infrastructure to host and deliver XWORM payloads across operations targeting multiple organizations.
-In 2025, we first observed BREEZE COMET connect rogue hardware devices directly into retail store networks to establish footholds into targeted environments. From this initial network access, BREEZE COMET moved laterally to internal systems then downloaded the Netcat utility alongside custom scripts to pull down subsequent post-exploitation frameworks from external open directories. [Trend Micro](https://www.trendmicro.com/en_us/research/26/e/vibe-hacking-two-ai-augmented-campaigns-target-government-and-financial-sectors-in-latin-america.html) has reported that the group also exploited vulnerabilities in JBoss AS servers to gain initial access.
-Escalate Privileges & Internal Reconnaissance
-BREEZE COMET used publicly available reconnaissance utilities such as Impacket, ADRecon and ADVipscan, as well as with custom malware, often profiting from environments with low observability. These utilities were often observed being downloaded from GitHub repositories and executed in memory via PowerShell for defense evasion.
-The threat actor deployed the custom LDAP brute-forcing utility REALBREEZE. Beyond traditional Active Directory compromise, BREEZE COMET specifically targets development and cloud environments to escalate privileges. The group actively mines continuous integration and continuous delivery (CI/CD) environments to steal hard-coded pipeline credentials, application programming interface (API) keys, and highly privileged cloud access tokens.
-BREEZE COMET used custom scripts to search internal host files and environmental variables to identify mTLS credentials and administrative certificates necessary to authenticate against core banking systems. Observed search terms included: boleto
-, cnab
-, remessa
-, webhook.*pix
-and instant.*payment
-.
-Move Laterally
-BREEZE COMET abuses standard protocols to navigate the network, using hijacked service accounts to initiate unauthorized Remote Desktop Protocol (RDP) sessions and execute commands via SMB network file shares. BREEZE COMET was observed executing network scanning tools across internal subnets specifically to enumerate available SMB pathways.
-To maneuver through segmented financial networks and bypass strict internal firewalls, BREEZE COMET deploys specialized routing malware: COBALTSPIN. Written in Rust, COBALTSPIN operates as a lightweight, evasive network tunneler, used to communicate with and maintain persistent network access to financial API infrastructure. By establishing a reverse SOCKS5 proxy over a WebSocket connection, COBALTSPIN routes network traffic securely back and forth between the C2 and internal targets, enabling lateral movement directly through boundary firewalls without requiring built-in persistence mechanisms that might trigger detection.
-Maintain Presence: Orchestrating the Compromise via Bespoke C2 Frameworks
-In 2024, BREEZE COMET relied on commercial RMM tools to maintain access to targeted environments. In 2025, BREEZE COMET also deployed malicious Kubernetes pods to maintain persistence and steal cloud secrets, exfiltrating them to public facing notepad websites (such as dontpad[.]com
-).
-In 2025 and 2026 Mandiant identified multiple backdoors that BREEZE COMET developed to establish redundant access and expand their foothold in targeted environments.
--
-LIGHTPAINT: This custom Java-based backdoor is specifically designed to install a legitimate VPN, such as SoftEther, and configure it for automated persistence. To protect this access, GTIG observed BREEZE COMET programmatically adding inbound Windows Defender Firewall rules to allow all traffic from the deployed VPN manager, while subsequently clearing the
-Windows Networking Vpn Plugin Platform
-event logs to erase forensic evidence of the connection. -
-MILDFROST: Operating as a passive Java JAR backdoor hiding inside the JVM process space, MILDFROST uses classes like
-DnsCommandBeacon.class
-to establish slow, covert DNS tunnels. It also serves as a fallback C2; it dynamically queries delegated subdomains to receive instructions and pull down fresh copies of the C++ executables. -
-KICKPLATE: To continuously deliver auxiliary payloads and enforce host-level persistence, BREEZE COMET uses KICKPLATE. This custom Nim-based backdoor impersonates Windows Update Health Tools. It executes commands to control SOCKS5 tunnelers, update registry startup keys, and silently modify Windows services. The group supplements KICKPLATE by abusing native scheduled tasks (
-schtasks.exe
-running as SYSTEM) and malicious shortcut (.lnk) modifications in user startup folders. -
-BOATBEAM: Adding a final layer to their redundant architecture, BREEZE COMET deploys BOATBEAM, a Golang backdoor that initiates a fake IIS HTTPS server on port 443. This artifact hides backdoor traffic by masquerading as a legitimate web server, only activating its C2 functionalities when it receives a specific session cookie.
-To ensure these persistence mechanisms survive, BREEZE COMET actively impairs endpoint defenses. Telemetry confirms the threat actors executing direct PowerShell commands (Set-MpPreference -DisableRealtimeMonitoring $true
-) to disable Windows Defender's real-time monitoring across compromised hosts, guaranteeing their malware suite remains operational.
-Furthermore, Mandiant identified evidence that BREEZE COMET used large language models (LLMs) to accelerate the creation of custom scripts for network reconnaissance, credential validation, mass deployment, victim-specific pivoting, and data extraction. Analysis of recovered BREEZE COMET scripts has shown the tools are highly customized and functional, but lack human idiosyncrasies, heavily relying on unrolled code structures, verbose explanatory comments, and standardized execution headers.
-#!/bin/bash
-# RODA DENTRO DO 10.0.9.9 - DIRETO NA REDE INTERNA
-echo "###############################################"
-echo "### STEP 1: ENUM ALL LINUX (SSH PORT 22) ###"
-echo "###############################################"
-# Scan SSH em todos os ranges conhecidos
-echo "=== SCANNING SSH PORTS ==="
-> /tmp/ssh_open.txt
-Figure 1: Excerpt of script showing verbose comments
-Complete Mission: Mass Fraudulent Transactions
-Forensic evidence analyzed by Mandiant demonstrates that BREEZE COMET used COBALTSPIN and compromised privileged accounts to access core financial applications. Within 24-48 hours of establishing this access, the threat actor executed two waves of hundreds of fraudulent transactions, based on reporting by a client and third party forensic analysis.
-Subsequently, BREEZE COMET cleared event logs across compromised hosts to hide evidence of their lateral movement, privilege escalation, and interactions with APIs associated with financial software and payment systems. The attacker also deleted directories they had created during the compromise.
-Outlook and Implications
-Since 2024, BREEZE COMET has steadily increased the complexity and effectiveness of their operations manipulating Brazilian financial systems and software, and has successfully executed at least one heist of tens of thousands of USD in assets. This analysis is intended to support financial services, fintech, retail, and government organizations, particularly in Brazil, to track and defend against BREEZE COMET.
-While the Latin American cybercrime ecosystem has historically been defined by client-side, high-volume retail fraud, BREEZE COMET’s campaigns represent a notable shift that may serve as a model for future financially motivated threats against organizations in this region.This transition from opportunistic retail banking fraud to direct intrusions into the core financial switch and instant payment infrastructure is notable not just for this shift in targeting, but also the capabilities of the threat actor.
-BREEZE COMET exemplifies how threat actors are operationalizing generative AI to enhance the speed, scale, and sophistication of their campaigns. By leveraging LLMs to generate bespoke reconnaissance scripts, validate credentials, and automate deployment workflows on the fly, the actor compresses the development lifecycle. This automation also lowers the operational threshold required to coordinate synchronized, multi-environment attacks. Finally, orchestrating their usage of AI-generated tooling alongside bespoke multi-language C2 architectures demonstrates how actors can elevate their overall capabilities and lower technical barriers to entry. The progression to a multi-tiered ecosystem—combining custom-built Rust, Nim, and Go backdoors with AI-accelerated operational scripts—demonstrates a measurable maturation in BREEZE COMET's technical capability.
-As threat groups increasingly leverage LLMs to streamline routine tradecraft, defenders must anticipate shorter adversary turnaround times and heightened pressure on interconnected financial ecosystems.
-Remediation and Hardening
-Application Control & Unapproved Remote Management (RMM) Blocking
--
-Enforce Application Control (e.g. Windows WDAC, macOS Gatekeeper/MDM, or Linux fapolicyd) to block execution in user-writable directories (Windows %APPDATA%, macOS ~/Downloads, Linux /tmp or /var/tmp).
--
-Partition Linux hosts to mount /tmp and /home with the noexec flag.
--
-Audit software inventory to alert on portable RMM execution and unapproved system service/daemon registrations.
--
-Train users on social engineering tactics impersonating IT Support.
-Network Access Control & Branch Physical Hardening
--
-Deploy 802.1X Network Access Control (NAC) across physical Ethernet switch ports at branch/retail locations to prevent unauthorized hardware devices from obtaining an internet protocol (IP) address or communicating on internal subnets.
--
-Disable unused switch ports and enforce Port Security (e.g. MAC limiting) on critical network drops.
--
-Physically restrict access to networking closets and secure public-facing jacks.
-Active Directory & Credential Hardening
--
-Restrict administrative utilities (e.g. ntdsutil.exe, vssadmin.exe) and alert on volume shadow copy creation/deletion.
--
-Enforce PowerShell Constrained Language Mode (CLM), Script Block Logging (Event ID 4104), and Antimalware Scan Interface (AMSI) to detect in-memory execution of reconnaissance scripts.
--
-Mandate phishing-resistant multifactor authentication (MFA) and lockout controls across all external portals (VPNs, Software-as-a-Service (SaaS)).
-Deep Packet Inspection & Egress Traffic Control
--
-Perform SSL/TLS Decryption and Deep Packet Inspection (DPI) on outbound web traffic rather than relying on domain reputation or .gov top-level domain (TLD) allowlists.
--
-Block non-essential egress ports and protocols (e.g., outbound Internet Control Message Protocol (ICMP)) and restrict tunneling utilities like Chisel or GSocket).
--
-Segment networks to block lateral SMB (port 445) and RDP (port 3389) traffic between workstations and servers.
-Kubernetes & Cloud Workload Isolation
--
-Enforce strict Kubernetes Role-Based Access Control (RBAC) using least privilege for service accounts.
--
-Use dynamic admission controllers (e.g., OPA Gatekeeper or Kyverno) and native Pod Security Admission (PSA) to block privileged containers.
--
-Apply egress network policies to block nodes and pods from accessing unauthorized public platforms.
-Secrets Management & Financial System Micro-Segmentation
--
-Mandate a centralized Secrets Manager (e.g., HashiCorp Vault) with access logging; eliminate plaintext keys in code.
--
-Implement identity-based / Layer 7 micro-segmentation for financial workloads.
--
-Limit administrative access exclusively to dedicated jump hosts via privileged access management (PAM).
-Indicators of Compromise (IOCs)
-To assist the wider community in hunting and identifying activity outlined in this blog post, we have included indicators of compromise (IOCs) in a [GTI Collection](https://www.virustotal.com/gui/collection/de4e533c9062c62b3ba3a5d88eff111156075f2c92d243737edeead6481a9fd5) for registered users.
-File Indicators
-Table 1: File Indicators
-Network Indicators
-Table 2: Network Indicators
-Detections
-Google Security Operations (SecOps)
-Google SecOps customers have access to these broad category rules and more under the "Mandiant Hunting Rules" rule pack. The activity discussed in the blog post is detected in Google SecOps under the rule names:
--
-"Network DNS Connections To Pastebin"
--
-"Powershell Downloadstring Method With Suspicious Arguments"
--
-"Powershell Loading Net Assembly"
-YARA Rules
-rule M_Utility_REALBREEZE_2 {
-meta:
-author = "Google Threat Intelligence Group"
-strings:
-$s1 = "IP/REDE" wide
-$s2 = "SENHA" wide
-$s3 = "U\x00S\x00U\x00\xc1\x00R\x00I\x00O\x00:"
-$s4 = "Arquivo de Texto (*.txt)|*.txt" wide
-$s5 = "get_SamAccountName"
-$s6 = "get_txtHostname"
-condition:
-uint16(0) == 0x5A4D
-and all of them
-}
-rule G_Tunneler_COBALTSPIN_1
-{
-meta:
-author = "Google Threat Intelligence Group"
-strings:
-$p00_0 = {488985[4]72??4c8b47??4c8b6f??488985[4]eb??4989f04989c5488b85}
-$p00_1 = {4d8bae[4]4d85ed4c897d??897d??4c8975??89b5[4]74??498bbe[4]4d89ee}
-condition:
-uint16(0) == 0x5A4D and uint32(uint32(0x3C)) == 0x00004550 and
-(
-($p00_0 in (560000..600000) and $p00_1 in (1500000..1600000))
-)
-}
-rule G_Backdoor_BOATBEAM_1
-{
-meta:
-author = "Google Threat Intelligence Group"
-strings:
-$p00_0 = {4d89d84889ce488bbc24[4]e9[4]0f82[4]4c89ac24[4]4c89e74d29ec4c896424}
-$p00_1 = {e8[4]498903498973??498953??4d8943??488942??488957??4889f8488b4c24}
-condition:
-uint16(0) == 0x5A4D and uint32(uint32(0x3C)) == 0x00004550 and
-(
-($p00_0 in (1500000..1600000) and $p00_1 in (2700000..2800000))
-)
-}
-rule G_Backdoor_MILDFROST_1
-{
-meta:
-author = "Google Threat Intelligence Group"
-strings:
-$s1 = "sc tcp ok" fullword
-$s2 = "fl comando vazio" fullword
-$s3 = "noop" fullword
-$s4 = "wait:" fullword
-$s5 = "shell:" fullword
-$s6 = "exec:" fullword
-$s7 = "upload," fullword
-$s8 = "dl|" fullword
-$s9 = "tc|" fullword
-condition:
-uint16(0)==0x5a4d and 7 of them
-}</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-8" class="article-body">
             <h2 class="article-title">Two Alleged ‘TeamPCP’ Hackers Arrested in Australia</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/08/two-alleged-teampcp-hackers-arrested-in-australia/" target="_blank">Original Link</a></p>
             <div class="content-text">Authorities in Australia have arrested two men believed to be members of TeamPCP, a prolific cybercrime and data extortion group blamed for perpetrating the longest running spree of software supply chain attacks ever.
@@ -751,13 +429,137 @@ Alleged-team takedowns tend to read like win-condition press releases until the 
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-9" class="article-body">
+        <div id="art-8" class="article-body">
             <h2 class="article-title">Turning Enterprise Update Servers Into Backdoor Factories (0_o) – Part 1</h2>
             <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/08/05/turning-enterprise-update-servers-into-backdoor-factories-part-1/" target="_blank">Original Link</a></p>
             <div class="content-text"><p>TL;DR: This is part 1 of a 2 part blog series sharing what I have discovered in my Windows Service Update Service (WSUS) research. If the WSUS database is configured on a separate server from the upstream WSUS server, we can coerce the WSUS computer account to the WSUS database and establish a SQL session. [&#8230;]</p>
 <p>The post <a href="https://specterops.io/blog/2026/08/05/turning-enterprise-update-servers-into-backdoor-factories-part-1/">Turning Enterprise Update Servers Into Backdoor Factories (0_o) &#8211; Part 1</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
 
 [Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-9" class="article-body">
+            <h2 class="article-title">Demystifying AI Exploits: A Blueprint for AI-Assisted Vulnerability Management</h2>
+            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/ai-assisted-vulnerability-management/" target="_blank">Original Link</a></p>
+            <div class="content-text">Demystifying AI Exploits: A Blueprint for AI-Assisted Vulnerability Management
+Mandiant
+Written by: Jules Czarniak
+Introduction
+As highlighted in the [Mandiant M-Trends 2026 report](https://cloud.google.com/security/resources/m-trends), the mean time-to-exploit (TTE) has dropped to -7 days, meaning vulnerabilities are often exploited a week before a patch even exists.
+To keep pace, many security teams are exploring how to integrate large language model (LLM) agents into their codebases, development environments and continuous integration and continuous delivery (CI/CD) pipelines for automated vulnerability discovery and remediation. However, deploying privileged artificial intelligence (AI) agents without mature integration processes introduces new architectural risks.
+In response to customer inquiries about how to safely integrate AI capabilities into vulnerability management workflows, this blog provides actionable guidance from Mandiant Consulting about how to establish operational guardrails for AI assisted vulnerability management, including several detailed scenarios. What each of these examples show is that security teams can accelerate workflows with AI while also upholding the structural integrity of their environments. We suggest that combining AI capabilities with deterministic controls and human intelligence in strategic ways maximizes benefits and reduces risk.
+Establish Operational Guardrails to Safely Deploy AI Agents
+To safely adopt advanced AI capabilities without introducing unpredictable failures into deployment pipelines, organizations should ground their approach in established industry standards. While guidelines like the [NIST AI Risk Management Framework (RMF)](https://www.nist.gov/itl/ai-risk-management-framework) and the [OWASP Top 10 for LLMs](https://owasp.org/www-project-top-10-for-large-language-model-applications/) provide comprehensive baselines for identifying risks, operationalizing these controls requires a structural blueprint.
+Frameworks like [Google’s Secure AI Framework (SAIF)](https://safety.google/intl/en_sg/safety/saif/) [and](https://safety.google/intl/en_sg/safety/saif/)[ Google’s approach to secure AI Agents](https://storage.googleapis.com/gweb-research2023-media/pubtools/1018686.pdf) provide a practical path forward, demanding that organizations extend existing deterministic controls directly into the AI execution environment. When deploying AI agents, security teams should navigate specific operational and structural risks:
+-
+Pre-agent data security and Defense-in-Depth: Agents should not be able to access personally identifiable information (PII), protected health information (PHI), or other sensitive data. Organizations should enforce data security before the prompt reaches the model. This includes strictly using non-production environments populated with synthetic data for testing. For production, security teams should deploy a hybrid defense-in-depth model. This includes Layer 1 deterministic policy engines acting as chokepoints, alongside Layer 2 reasoning-based defenses like specialized guard models (such as
+[Model Armor](https://docs.cloud.google.com/model-armor/overview)or similar provider-agnostic guardrails) to filter out sensitive data and block malicious prompt injections before they reach the agent layer. Crucially for vulnerability discovery, security teams should treat the codebase itself as an untrusted input. Threat actors can embed indirect prompt injections within source code comments or third-party dependencies (e.g., hidden instructions telling the agent to ignore vulnerabilities or exfiltrate environment variables), making input sanitation a requirement even for internal scanning. -
+Cloud provider limitations and zero data retention (ZDR): Many cloud and LLM providers block or throttle automated offensive security probing by default to prevent abuse. Organizations should establish clear rules of engagement and authorized testing agreements to navigate acceptable use policies. Furthermore, organizations should enforce strict zero data retention (ZDR) agreements with their LLM providers to guarantee that proprietary code and discovered vulnerabilities are never used to train external models.
+-
+Workload isolation: Agent workloads should execute in strictly isolated, unprivileged containers with dynamically limited privileges. By relying on robust sandboxing to prevent privilege escalation, if an agent hallucinates a destructive command or is hijacked via prompt injection, the blast radius remains contained.
+-
+Red Teaming: Before deploying autonomous vulnerability scanners that can dynamically spin up sandboxes and execute code, organizations should subject the AI agents themselves to human-led red teaming as part of comprehensive assurance efforts. This validates the agent's resilience against jailbreaks, recursive logic loops, and complex prompt injections, ensuring the security tooling does not become the attack vector.
+-
+Least-Privileged Machine Identities and Human Controllers: While workloads should be isolated, agents inherently require privileges to generate pull requests and commit code. Security teams should ensure these agents operate under distinct, strictly scoped machine identities that tie back to human controllers to ensure accountability and user consent. Organizations should use short-lived, just-in-time (JIT) tokens bound exclusively to the specific repository and branch under review. This enforces the principle of limited agent powers and ensures that even if an agent’s container is compromised via prompt injection, the threat actor cannot pivot to modify adjacent enterprise codebases.
+-
+Supply chain resilience for skills: As developers augment AI with third-party skills and model context protocol (MCP) servers, security teams should treat these integrations as untrusted supply chain components. MCP plugins introduce the risk of supply chain poisoning, where a previously benign integration is silently updated with malicious dependencies. Additionally, security teams should evaluate the underlying agent orchestration frameworks themselves (e.g., LangChain, AutoGen) for inherent vulnerabilities, such as session memory poisoning or recursive loop hijacking.
+-
+Toxic flow analysis (TFA) and Observable Actions: The objective of TFA is to monitor data paths at runtime, ensuring agents do not exfiltrate sensitive internal context to unvetted external endpoints. Agent actions, inputs, reasoning, and outputs must be fully observable and transparently logged. While implementing dynamic taint tracking for LLMs remains a complex architectural challenge, organizations should clearly separate this runtime observability from static supply chain controls. Integrating threat intelligence to hash and vet incoming agent tools provides a necessary baseline for verifying integrity before deployment. However, because static controls cannot address behavior post-deployment, mitigating data exfiltration ultimately requires active runtime monitoring and secure, centralized logging to trace and restrict the actual flow of data.
+Figure 1: Visual representation of an isolated AI agent environment using SAIF mechanisms
+By operationalizing these tools within frameworks that demand verifiable integrity and structural resilience, organizations can safely bridge the gap between AI velocity and enterprise defense.
+The need for human-led threat modeling
+While LLMs excel at identifying syntax patterns, source code itself rarely contains the full picture of unwritten business intent. Some organizations attempt to solve this by connecting LLM agents to internal wikis, design documents, and issue trackers using retrieval-augmented generation (RAG).
+While RAG gives the model access to external business context, it is not a perfect fix. Corporate documentation is frequently stale, contradictory, or incomplete. An AI agent might retrieve an outdated architecture diagram and confidently hallucinate a secure path that no longer exists in production. Because LLM agents struggle to resolve conflicting, undocumented human assumptions, human-led threat modeling remains a critical security control across both legacy applications and modern agent workflows.
+Security teams should apply threat modeling during both the pre-build system design phase to establish a secure foundation, and during post-build architecture reviews. While an AI agent might successfully identify a poorly configured internal endpoint locally, a human threat modeler asks the structural question: why does that microservice possess broad database read permissions in the first place?
+Identifying architectural vulnerabilities requires reasoning about business risk, data sensitivity, and operational constraints. To structure this process, organizations can use industry frameworks like PASTA (Process for Attack Simulation and Threat Analysis) or service offerings like the [Mandiant Threat Modeling Security Service](https://services.google.com/fh/files/misc/ds-threat-modeling-security-service-en.pdf) to map trust boundaries, uncover structural design flaws, and prioritize compensating controls. Securing fundamental architecture through human oversight is a necessary component when relying on automated agents to find bugs in a poorly designed system.
+Once these AI agents are safely sandboxed, as guided by SAIF, and the architecture is verified through threat modeling, organizations can typically apply them to two different problem spaces: Enterprise Vulnerability Management (to assist in managing the volume of known CVEs in commercial off-the-shelf (COTS) software and infrastructure) and Product Security (to identify vulnerabilities in 1st-party (1P) code).
+Track 1: Enterprise Vulnerability Management
+Foundational security and discovery
+While the second track of this post explores how AI agents can uncover complex zero-days in custom code, organizations should manage the scale of enterprise infrastructure in tandem with these AI deployments. Even as new AI capabilities dominate headlines, organizations should still address foundational security challenges, such as secrets sprawl, unmanaged service accounts, missing FIDO2 MFA, and legacy VPN concentrators. Although vulnerability exploitation was the primary initial infection vector in intrusions Mandiant investigated last year, threat actors consistently rely on missing foundational controls and unpatched edge devices to secure and escalate their foothold after exploiting a vulnerability.
+Furthermore, AI cannot replace foundational visibility. As security teams deploy AI agents, they should simultaneously close these tactical entry points by maximizing dynamic discovery capabilities like External Attack Surface Management (EASM), Cloud Security Posture Management (CSPM), and Continuous Threat Exposure Management (CTEM). In hybrid and cloud environments, tools like [Wiz](https://cloud.google.com/wiz?e=48754805) can be used to map this initial footprint.
+Risk-based vulnerability management
+Vulnerability management teams are already overwhelmed by the current volume of findings generated by traditional scanners. As organizations scale dynamic discovery tools, such as EASM, CSPM and CTEM, alongside automated AI agents, this influx of findings will compound the problem. To manage this influx, telemetry from these diverse discovery methods must first be normalized and deduplicated. This normalized data serves two purposes: it feeds directly into the risk engine, and it acts as a live overlay to correct stale records in the configuration management database (CMDB). By evaluating the deduplicated vulnerabilities alongside this newly updated asset context and frontline threat intelligence, the RBVM engine calculates a custom risk score that allows security teams to dynamically prioritize remediation.
+A mature RBVM methodology calculates a customized risk score on a 0 to 100 scale using a weighted average. A sample formula for calculating this risk-based score is:
+Final Score = (W_1 * S_vuln) + (W_2 * S_asset) + (W_3 * S_threat)
+The variables and weights (W) are customized to the organization's risk appetite (for example, 0.20 for vulnerability, 0.40 for asset, and 0.40 for threat, summing to 1.0), while the underlying variables (S) are scored on a 0 to 100 scale and defined as follows:
+-
+Vulnerability severity (S_vuln): The inherent technical severity of the flaw. This is calculated by taking the CVSS Base Score (which natively accounts for confidentiality, integrity, and availability impact) and multiplying it by 10.
+-
+Asset context (S_asset): A combined metric of exposure and data sensitivity. Scores range from 100 for internet-facing assets holding customer data, down to 25 for internal-only assets with no sensitive data. To translate this impact into monetary terms for non-technical stakeholders, organizations can incorporate Factor Analysis of Information Risk (FAIR) principles into this metric. However, this approach requires highly accurate, continuously updated financial data that many enterprises struggle to maintain at scale.
+-
+Threat context (S_threat): The real-world urgency of the vulnerability. Scores range from 100 if actively exploited by threat actors relevant to the organization's profile, 75 if a proof-of-concept exists or if it is a vulnerability class easily exploited by autonomous AI agents, down to 25 if the exploit is theoretical and highly complex. Organizations should also map the Exploit Prediction Scoring System (EPSS) probability percentage directly into this variable. This allows the threat score to automatically scale up or down as real-world exploitation telemetry shifts, aligning static vulnerability data with active threat intelligence.
+An asset's customized risk score should directly influence internal remediation service-level agreements (SLAs), unless external compliance-driven mandates, such as CISA Binding Operational Directives (BODs), or relevant equivalents, override internal prioritization. A risk-driven and threat-intelligence-driven vulnerability prioritization methodology will help organizations focus resources on managing and mitigating the most critical security vulnerabilities first. This is an area where LLMs can support the vulnerability management process, particularly by helping teams synthesize unstructured threat intelligence to surface relevant risk contexts more efficiently. Enforcing strict SLOs for patching, while requiring formal risk acceptance documentation for any patching exceptions, will help reduce the number of vulnerabilities available to threat actors and increase the visibility of outstanding risks across the organization. Furthermore, organizations should integrate RBVM data directly into their security orchestration, automation, and response (SOAR) platforms for automated alert enrichment.
+Figure 2: Integration points of a risk-based vulnerability management (RBVM) program.
+Containment and Observability
+Modern architecture blueprints must prioritize attack surface reduction under the assumption that vulnerabilities will inevitably be exploited. Moving away from traditional perimeter defenses, organizations should align with zero trust principles, ensuring that security boundaries are established around every asset, workload, and identity.
+A component of this alignment is the implementation of strong authentication principles. Organizations should eliminate implicit trust by enforcing continuous, context-aware authentication and authorization. Utilizing Zero Trust Network Access (ZTNA) solutions, such as Identity-Aware Proxies (IAP), shields critical management interfaces (e.g., SSH, RDP) and internal systems from direct internet exposure, granting access only to verified identities and compliant devices.
+For public-facing applications and APIs, attack surface reduction involves deploying Layer 7 inspection at the load balancer or API gateway level. This hardening layer enforces strict schema validation, intercepting and neutralizing malformed inbound traffic and potential exploits before they can interact with internal application logic.
+Securing the software supply chain is equally vital in modern blueprints, and organizations should align with frameworks like [Supply-chain Levels for Software Artifacts (SLSA)](https://slsa.dev/spec/v0.1/levels) across both dependency and build tracks. Security policies should mandate that third-party dependencies are routed through a centralized artifact repository equipped with automated curation services, such as [Google Assured Open Source Software (OSS)](https://cloud.google.com/security/products/assured-open-source-software) or an equivalent solution, preventing untrusted code from entering the development lifecycle. Furthermore, maturing toward advanced SLSA build levels (e.g., SLSA level 3) through the implementation of isolation, ephemerality and reproducibility requirements via ephemeral compute infrastructure for CI/CD runners reduces the likelihood of attacker persistence by ensuring environments are short-lived and automatically cycled.
+To complement these pre-build controls, runtime observability should be established across all production workloads. This requires monitoring both infrastructure-level behavior and the specific runtime libraries actively executing in production, which surfaces true exploitable risk far beyond a static Software Bill of Materials. In tandem with monitoring workloads, organizations should secure how they authenticate by implementing workload identity federation. By removing static credentials and instead using short-lived tokens backed by strong cryptographic identity verification, organizations can reduce the risk of credential theft and unauthorized lateral movement.
+Within the internal environment, microsegmentation should be enforced to break down flat networks into granular security zones. Routing application traffic through a Secure Access Service Edge (SASE) architecture integrates network routing directly with robust identity controls, rendering internal services completely invisible to unauthenticated users and containing threats to their initial point of entry.
+Finally, automated containment and incident response within a zero trust framework must rely on deterministic, auditable tooling. Endpoint detection and response (EDR) platforms and SOAR playbooks should handle high-fidelity containment tasks through hardcoded execution logic. While AI tools accelerate triage and policy recommendation, actual execution capabilities must remain restricted to well-defined, pre-tested workflows to maintain total architectural predictability.
+Figure 3: Structural containment and observability architecture
+Track 2: Product Security & Development (1P Code)
+Deterministic and probabilistic tooling
+Integrating LLM agents into vulnerability management and security workflows requires recognizing the differences between deterministic and probabilistic tooling. Traditional SAST and DAST tools utilize fixed methodologies to evaluate vulnerabilities through structural code parsing or definitive runtime observations. LLMs, however, evaluate source code by processing tokens simultaneously to calculate statistical and semantic relationships, rather than tracing deterministic execution tracks.
+While techniques like Chain of Thought (CoT) prompting allow models to bridge this gap by decomposing complex code paths into intermediate reasoning steps, this process remains bounded by architectural limitations. Even when a model possesses a context window large enough to ingest entire repositories, it may experience attention degradation across long inputs, often failing to correctly weight intervening validation or sanitization logic within the prompt. For example, if a variable is tainted on line 10 but sanitized on line 500, attention degradation can cause the model to lose track of the sanitization logic. Furthermore, when enterprise codebases require chunking to fit within context limits, the resulting fragmentation may cause the model to lose track of end-to-end data flows.
+Consequently, probabilistic engines are effective at uncovering localized, static anomalies, such as hardcoded credentials or outdated dependencies, but frequently misjudge complex vulnerabilities split across fragmented chunks or extended context windows. Notable exceptions occur when these probabilistic models are coupled with deterministic feedback loops. For instance, when analyzing C++ memory corruption, an LLM can be equipped with a test harness to iteratively execute code and definitively prove a crash. While these dynamic validation applications are detailed in subsequent sections, the baseline limitation for static analysis across standard enterprise codebases remains: models struggle to consistently evaluate dispersed logic.
+Figure 4: Deterministic SAST scanners vs. probabilistic LLMs
+Binary and architectural oracles
+Many security programs are moving toward agent workflows where an agent autonomously spins up a test environment and uses tools to execute payloads and verify its findings. This is a promising approach, but it is important to understand where it is most effective.
+Agent workflows perform well against bug classes with binary and observable oracles, meaning the system provides an objective, 'crash or no crash' feedback loop. For example, if a model is hunting for memory corruption in a C++ kernel, a successful exploit is undeniable: the payload executes, and a resulting crash definitively proves the vulnerability. This explains why the industry is currently seeing a surge in AI-discovered vulnerabilities across memory-unsafe targets like web browsers and operating systems.
+However, enterprise software is heavily dominated by vulnerabilities that require architectural oracles for validation. Vulnerabilities like authorization bypasses, complex business logic flaws, and indirect server-side request forgeries require an understanding of business context and cross-service trust boundaries. If an agent's payload fails to produce a clear outcome, it can't reliably distinguish whether the vulnerability is a hallucination or if it simply constructed the payload incorrectly. An agent's malformed payload might even crash an unrelated background process and cause the model to hallucinate a success and report a false confirmation. Complex enterprise architecture contains unwritten business intent that a probabilistic engine can't inherently know.
+Figure 5: Evaluating vulnerabilities against binary vs. architectural oracles
+Targeted deployment and human impact
+Organizations adopting LLMs for vulnerability discovery face a massive staffing challenge. LLMs can generate findings significantly faster than human engineers can triage them. If every LLM-generated alert requires manual review, security teams will quickly face burnout and/or suffer alarm fatigue.
+Rather than indiscriminately pointing agents at all available codebases and risking an influx of unverified output, security teams need a selective deployment strategy. Mature programs should maintain SAST and DAST for baseline hygiene and deterministic rule enforcement, and reserve intensive agent audits for high-impact components with clear binary oracles.
+Organizations can prioritize agent audits on systems where the technology's strengths align with the broader risk profile:
+-
+Memory-unsafe codebases: Legacy or high-performance components written in memory-unsafe languages such as C, C++, or Assembly are strong candidates for LLM audits. These languages are susceptible to memory corruption flaws, such as buffer overflows and use-after-free conditions. Because these vulnerabilities trigger definitive failure states like segmentation faults, they work well with automated sandboxes where agents can compile the code with memory sanitizers and write proof-of-concept inputs. This approach is also effective for auditing the native extensions where safe languages call unsafe internal libraries, such as Python C extensions or the Java Native Interface (JNI).
+-
+Systems highly exposed to outside content: First-party data ingestion pipelines, custom API gateways, or proprietary edge proxies. A prerequisite here is direct access to the source code, this strategy is strictly for internally developed or fully open-source codebases where the organization can inspect the logic. Because these systems directly parse untrusted internet traffic, targeting their source code for LLM-driven audits yields the highest risk-reduction ROI.
+-
+Shared internal libraries and utilities: Core serialization/deserialization packages, common utility functions, and custom middleware wrappers (such as internal message-queue parsers) maintained in-house. Because the enterprise owns the source code for these shared building blocks, agent tools can easily hook into them within automated test harnesses to fuzz inputs and catch low-level logic or parsing bugs with high fidelity.
+-
+Foundational security boundaries: Internally developed centralized authentication services, custom OAuth providers, and internal credential brokers. While testing complex identity boundaries generates higher logic-based noise, having full access to the source code allows teams to pair agents with deterministic checks to safely triage findings, given that the blast radius of an authentication failure justifies the human effort.
+To filter the noise generated by LLMs, organizations should establish routing rules. Require the agent to generate a fully reproducible, deterministic test harness (such as a compiled binary or a Python test script) that attempts to prove the exploit. This harness must execute automatically in an isolated, monitored sandbox. If the sandbox execution fails (due to a syntax error or a failed exploit), the ticket is discarded, sparing human resources. However, organizations should enforce execution timeouts and iteration limits on these test harnesses. Without hard limits, an autonomous agent attempting to prove a vulnerability can fall into an infinite loop: writing a script, failing, rewriting, and failing again, exhausting API token budgets and compute resources against a single dead-end vulnerability, creating significant cost overruns without advancing the security review. To manage these expenses, organizations should incorporate FinOps principles to balance the compute and API costs of LLM audits against the traditional expenses of manual triage.
+However, a successful execution in the sandbox does not guarantee an actionable, high-priority risk. In practice, autonomous agents frequently produce working PoCs for genuine technical flaws that are ultimately irrelevant; or warrant a lower remediation priority within the context of the system's threat model. For example, the agent might successfully exploit an unreachable dead-code path, or trigger a bug that requires administrative access to execute and yields no further escalation of privilege. Therefore, a human engineer should be assigned to review and prioritize the ticket only if the sandbox registers a successful execution, validating environmental context, reachability, and true business impact as part of the review.
+This workflow reduces the volume of alerts, but it is important to understand that the security team's workload does not disappear. The engineer's primary job shifts from manually hunting for the initial vulnerability to auditing the LLM-generated proof to ensure it represents a meaningful risk rather than an unexploitable or contextually irrelevant finding. Leadership should properly staff and train teams for this new reality. Deploying LLM agents does not remove the need for skilled practitioners; it redirects their workload toward complex validation. Equally important is training teams to recognize the risk of false negatives. A hyper-focus on filtering AI-generated noise can create a false sense of security. If an exploit relies on a novel technique or a zero-day vulnerability that was not heavily weighted in the model's training data, the agent will likely scan right past it in silence. LLMs augment discovery, but they do not guarantee exhaustive coverage.
+When integrating LLMs into SAST triage pipelines, human engineers should also verify the broader architectural integrity. Prompting an LLM with specific SAST warnings can induce contextual narrowing, where the agent becomes hyper-fixated on resolving a localized syntax error and misses broader architectural flaws existing in the same file. Furthermore, if the agent's mandate extends beyond discovery to automated remediation (such as writing and proposing code fixes), this human-in-the-loop validation becomes critical to ensure the LLM does not inadvertently introduce new regressions or bypass intended business logic.
+Figure 6: Flowchart outlining the targeted LLM deployment and triage workflow.
+Remediation and hardening
+LLM-assisted code remediation
+A primary goal of integrating large language models (LLMs) into the software development lifecycle is automated remediation. To achieve this, organizations are deploying these capabilities through two primary execution methods: directly within the integrated development environment (IDE) or as a centralized pipeline runner. Examples include [CodeMender](https://deepmind.google/blog/introducing-codemender-an-ai-agent-for-code-security/), although as of time of writing, it is not publicly available.
+IDE-integrated method
+This method shifts remediation as far left as possible by operating as an active pair-programmer. Tools running continuous static analysis in the background of the IDE surface vulnerabilities directly to the developer via editor diagnostics like inline indicators or hover tooltips.
+-
+Localized scope: The developer can trigger the LLM agent to analyze the localized data flow and generate a targeted patch (such as implementing parameterized SQL queries). By constraining the LLM to localized, syntax-level fixes, the scope of the change remains contained. This prevents the agent from attempting sprawling, multi-file refactors that frequently break complex architectural logic.
+-
+Human-in-the-loop: The developer reviews the AI-generated patch before the code is committed.
+-
+Managing false positives: Local IDE agents allow developers to manage false positives dynamically. Suppressing alerts anchored to specific line text reduces alert fatigue and preserves developer trust.
+CI/CD runner method
+The runner method executes asynchronously within the CI/CD pipeline to use an LLM to review committed code and automatically propose remediation.
+-
+Restricted execution and deterministic validation: Asking a centralized runner to automatically rewrite a complex, multi-file authorization flaw directly in the main branch introduces a high risk of breaking logic errors. To mitigate this, agents must be restricted to generating pull requests (PRs). Once a PR is generated, it must automatically execute standard regression suites alongside the deterministic test harness. By rerunning the initial PoC against the patched code, the workflow repurposes the exploit script as a validation oracle to prove the vulnerability has been remediated. A human engineer then reviews the PR to validate the architectural logic before merging.
+In all cases security teams should define a clear boundary between the two methods rather than rely on a single approach. IDE agents provide immediate, syntax-level support. They catch and resolve low-complexity errors locally before developers commit code. Centralized CI/CD runners handle broader organizational baselines. They propose complex, repository-wide fixes for vulnerabilities that bypass local environments.
+Post-deployment controls
+Even with human review and deterministic test harnesses, AI-generated patches can still introduce logic regressions in production. Organizations should implement strict post-deployment controls:
+-
+Automated rollbacks: Treating LLM-generated code with the same post-deployment scrutiny as any major architectural change ensures that if an unforeseen regression traverses the CI/CD pipeline, the environment can revert to a known good state.
+-
+Mitigating model drift: Relying on managed AI services introduces the ongoing risk of model drift. To prevent silent weight updates from breaking test harnesses, organizations need to pin specific model API versions to frozen releases. When a pinned version reaches its end-of-life, organizations will face a forced migration. Mitigating this pipeline fragility requires combining model pinning with deterministic regression suites.
+-
+Compliance and auditability: If an AI agent automatically closes a security ticket or generates a patch in the CI/CD pipeline, organizations should maintain immutable audit logs to satisfy frameworks like SOC 2 ,PCI-DSS, FedRAMP, and CMMC. National security deployments must also account for data sovereignty requirements. This logging should record the specific model version that proposed the fix, the deterministic test results that validated it, and the human engineer who approved the merge. Furthermore, because emerging legislation like the EU AI Act emphasizes human oversight for high-risk applications, security teams should carefully evaluate how autonomous remediation workflows align with these evolving global regulatory standards.
+Figure 7: Flowchart demonstrating the difference between local IDE AI remediation and centralized CI/CD pipeline remediation.
+Conclusion
+Leveraging LLMs in vulnerability management is a multi-layer solution: Integrating it requires separating workflows by layer. At the enterprise infrastructure level, Risk-Based Vulnerability Management (RBVM) and exposure management are necessary to process the volume of findings and configuration drift. At the product and code security level, LLM-enabled vulnerability assessment and remediation must operate alongside foundational deterministic controls, such as SAST and DAST, to audit custom, open-source, or third-party code.
+Although LLMs can help manage technical debt and accelerate vulnerability discovery, they do not replace secure-by-design principles. The fact that LLM agents are proving exceptionally capable at identifying and exploiting localized memory corruption in memory-unsafe codebases, alongside other primary vectors, should serve as a wake-up call.
+As a long-term strategy aligned with [NSA guidance on Software Memory Safety](https://media.defense.gov/2022/Nov/10/2003112742/-1/-1/0/CSI_SOFTWARE_MEMORY_SAFETY.PDF), organizations need to phase memory-safe languages into new internal development. LLMs are beginning to expand what is possible here by reducing the manual labor required for code migration. Converting existing C or C++ codebases to Rust has historically been unrealistic due to the large volume of engineering hours needed. While fully automated translation is not a turn-key solution, using LLMs to assist engineers with the bulk of the conversion can make these long-term migrations operationally viable. Beyond internal efforts, organizations should use procurement requirements to incentivize vendors to reduce their reliance on memory-unsafe languages and establish secure configuration defaults over time. Bridging the gap between AI velocity and enterprise defense means building an automated pipeline to manage the current backlog, while architecting systems where entire classes of vulnerabilities and misconfigurations are eliminated by design.
+Acknowledgements
+This analysis would not have been possible without the assistance of Google Threat Intelligence Group (GTIG) and other broader Google teams.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
