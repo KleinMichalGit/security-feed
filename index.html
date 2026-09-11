@@ -59,191 +59,194 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-09-10</h1>
+        <h1>Security Briefing // 2026-09-11</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">CISA: WatchGuard RCE flaw now exploited in ransomware attacks</button></li><li><button onclick="show('art-1')">Threat matrix: Mapping threats across cloud web applications</button></li><li><button onclick="show('art-2')">Chrome V8 Zero-Day Exploited in the Wild Enables Code Execution Inside Sandbox</button></li><li><button onclick="show('art-3')">Google warns of new Chrome zero-day bug exploited in attacks</button></li><li><button onclick="show('art-4')">N-able N-central Pre-Auth RCE Flaw Exploited in the Wild</button></li><li><button onclick="show('art-5')">Microsoft Plugs Nearly 1,000 Security Holes</button></li><li><button onclick="show('art-6')">Token Analysis and Tracking System (TATS)</button></li><li><button onclick="show('art-7')">GTIG AI Threat Tracker: From Prompting to Autonomy – The Evolution of Adversarial AI</button></li><li><button onclick="show('art-8')">LLMHaxor Update</button></li><li><button onclick="show('art-9')">Microsoft Plugs Nearly 400 Security Holes</button></li></ul>
+            <ul><li><button onclick="show('art-0')">China-Linked UNC3569 Exploited Sogou Input Method Flaw to Deploy GRAYRABBIT Backdoor</button></li><li><button onclick="show('art-1')">Cisco FMC Flaws Exploited to Steal Credentials and Deploy Qilin Ransomware</button></li><li><button onclick="show('art-2')">Protecting organizations from AI-assisted executive impersonation and invoice fraud</button></li><li><button onclick="show('art-3')">Unmasking SCCM Application Execution</button></li><li><button onclick="show('art-4')">Cisco FMC flaws exploited by ransomware gang, state-sponsored hackers</button></li><li><button onclick="show('art-5')">New 'BlueMoon' kit exploited Windows and Chrome zero-day flaws</button></li><li><button onclick="show('art-6')">So… You Found AWS Access Keys (Part 1)</button></li><li><button onclick="show('art-7')">Microsoft Plugs Nearly 1,000 Security Holes</button></li><li><button onclick="show('art-8')">GTIG AI Threat Tracker: From Prompting to Autonomy – The Evolution of Adversarial AI</button></li><li><button onclick="show('art-9')">Microsoft Plugs Nearly 400 Security Holes</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">CISA: WatchGuard RCE flaw now exploited in ransomware attacks</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/cisa-watchguard-rce-flaw-now-exploited-in-ransomware-attacks/" target="_blank">Original Link</a></p>
-            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) has confirmed that ransomware gangs are also exploiting a critical WatchGuard Firebox firewall vulnerability, which it flagged as actively exploited in December. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-1" class="article-body">
-            <h2 class="article-title">Threat matrix: Mapping threats across cloud web applications</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/09/09/threat-matrix-mapping-threats-across-cloud-web-applications/" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft introduces the cloud web applications threat matrix, a MITRE ATT&CK-aligned framework that helps defenders understand, prioritize, and mitigate threats to cloud-hosted web apps and serverless platforms.
-Cloud-hosted web applications and serverless platforms create attack paths that can cross application code, managed runtimes, workload identities, deployment pipelines, and connected cloud resources. Investigating the application and underlying cloud platform separately can leave gaps in how defenders understand those paths.
-Microsoft developed the [Cloud web applications threat matrix](https://aka.ms/CloudWebAppsThreatMatrix) to organize relevant techniques using MITRE ATT&CK tactics. The matrix can help security teams assess visibility gaps, prioritize hardening, and plan investigations across cloud-native environments. This blog introduces the framework, examines selected techniques, and outlines defensive priorities for reducing exposure.
-Overview
-Cloud-hosted web applications and serverless platforms let teams deploy and scale application logic quickly, but they also create attack paths that cross application code, managed runtimes, identities, deployment pipelines, and connected cloud services. These paths can be difficult to detect when the application layer and underlying cloud platform are investigated separately.
-To provide a clear and consistent view of the threat landscape affecting cloud hosted web applications and serverless environments, we organize techniques using the [MITRE ATT&CK](https://attack.mitre.org/) format. Building on Microsoft’s previously published threat matrices for [Kubernetes](http://aka.ms/KubernetesThreatMatrix) and [storage services](https://microsoft.github.io/Threat-matrix-for-storage-services/), this matrix expands coverage for [cloud web applications](https://aka.ms/CloudWebAppsThreatMatrix)– applications that execute code in a managed environment, are often tightly integrated with other cloud resources, and are commonly exposed to the internet.
-The attack techniques presented in this matrix are divided into the following tactics, aligned with the MITRE ATT&CK framework:
-- Resource Development
-- Initial Access
-- Execution
-- Persistence
-- Privilege Escalation
-- Defense Evasion
-- Credential Access
-- Discovery
-- Lateral Movement
-- Collection
-- Impact
-Technique Catalog
-Below, we walk through each tactic and describe its techniques in more detail.
-Resource Development
-The resource development tactic consists of techniques that adversaries use to establish resources they can use to support operations. This may include acquiring infrastructure, developing capabilities, or compromising resources that can later be used during targeting.
-Subdomain takeover
-Deleting a cloud application or service without removing its associated DNS record pointed to a reusable provider endpoint can create a subdomain takeover risk. Depending on the provider’s behavior, service configuration, and naming constraints, a threat actor may be able to register a resource that claims the same address and intercept traffic intended for the original service, potentially serving malicious content or harvesting credentials.
-Initial Access
-The initial access tactic consists of techniques that are used for gaining access to cloud web applications and serverless environments. This access can be achieved through compromised credentials, vulnerable applications, misconfigured interfaces, or by exploiting connected resources.
-Application vulnerability
-Running a public-facing web application that hosts a vulnerable application can enable adversaries to access and execute code in the context of the web application, or to access internal resources and gain a foothold in the cloud environment. Such vulnerabilities could stem from the application’s own code, its underlying framework, or third-party libraries and dependencies it uses.
-Code injection in connected repository
-Threat actors may inject malicious code into source repositories that are linked to cloud web applications or serverless functions. If these repositories are automatically synced with production environments, the injected code executes under the legitimate workflows.
-For example, if a threat actor gains commit permissions to a GitHub repository that is configured to deploy GCP Cloud Functions through Cloud Build triggers, their code may be deployed into the application through the legitimate pipeline.
-Compromised image in registry
-Some cloud web applications are deployed from a container image pulled from private or public registries. Threat actors who get access to a private registry can plant their own compromised images or update an existing image with malicious code, which will run the next time the web application pulls the container image.
-Exposed/misconfigured admin interfaces
-Some cloud-based web applications expose administrative interfaces for managing deployments, configurations, or runtime operations. If these interfaces are exposed to the internet or misconfigured, threat actors might be able to access them and view critical data, execute commands, or manipulate application behavior.
-For example, if an Azure App Service exposes its Kudu interface to the internet, a threat actor with sufficient credentials could execute commands in the app’s environment.
-Serverless trigger injection
-In cases where the application executes backend workflows in response to event-driven triggers, an end user who can directly or indirectly influence those triggers may cause unintended activity within the application. By manipulating inputs such as crafted file uploads, queue messages, API calls, or other event sources, a threat actor can force serverless functions to run with their supplied data, which could lead to unintended code execution, data access, or further compromise.
-For example, a threat actor might upload a modified image file containing a crafted payload through a legitimate web form. The image is then stored in an S3 bucket, which triggers an AWS Lambda function configured to process new uploads. If the function handles the file without proper validation, the threat actors payload could cause unintended behavior or even lead to remote code execution.
-Using deployment credentials
-In some cloud web applications, deployment credentials can grant management access beyond publishing new code. Adversaries who obtain such credentials might be able to use them to directly interact with the application without modifying its source code.
-Azure App Service, compromised deployment credentials can allow access to deployment and SCM (Source code management) interfaces, which may enable file access, command execution, or application modification depending on the app configuration and credential scope.
-Execution
-The execution tactic consists of techniques that are used by threat actors to run their code inside cloud web applications and serverless environments.
-Application exploit (remote code execution)
-Deployed web applications that contain a remote code execution vulnerability, or a vulnerability that could eventually lead to code execution, can enable threat actors to run malicious code in the web application context. If the application has access to any additional resources, then the threat actor could access those as well.
-Cloud native terminal
-Some cloud platforms provide built-in administrative consoles or SSH-style terminals for running commands directly inside the application’s execution environment. Threat actors who gain access to the terminal may be able to extract data, edit the web app files and execute commands.
-For example, Azure App Services expose a Kudu console that acts as a built-in terminal; if threat actors obtain deployment credentials, they can use it to browse files, execute commands, and tamper with application code.
-Site extensions
-Site extensions are an Azure App Services feature that allows users to install additional tools and utilities onto their web application. These extensions run within the context of the App Service and have the same permissions as the application itself – including requests data, file system access and environment variables. Site extensions are installed from a NuGet-based feed that allows third-party package submissions. If threat actors publish a malicious extension that resembles a legitimate package, or compromise an existing package, users who mistakes the package for a trusted extension may install it, allowing the threat actors code to run in the application context.
-Persistence
-The persistence tactic consists of techniques that are used by threat actors to maintain access to cloud web applications in case their initial foothold is lost.
-Cron jobs
-In cases where a cloud application uses scheduled or trigger-based tasks, a threat actor with the ability to create or modify such jobs can cause their malicious code to execute automatically. Because these jobs can run independently of normal request flows and often inherit the application’s privileges, control over a scheduled or event-triggered job allows persistent execution even if the main application code is updated.
-For example, if a threat actor is able to create or modify a WebJob in Azure App Service, their code will periodically run on the web application, regardless of changes or updates to the application code itself.
-Source code modification
-A threat actor with access to a development environment may be able to modify the application’s source – which could reside in a git repository, a container image in a registry, or a deployment package in cloud storage. Because cloud web applications are typically deployed through automated pipelines, a single modification can propagate automatically into production, causing the threat actors code to run every time the application restarts. These changes become part of the application’s canonical source, meaning that even if the runtime environment is rebuilt or scaled, the tainted code is redeployed from the same trusted source, maintaining the threat actor access to the application.
-Valid cloud accounts
-Adversaries may gain access to cloud web applications and serverless environments by leveraging compromised valid cloud accounts. Using legitimate credentials allows threat actors to interact with such services without raising suspicion. This enables them to deploy or modify application code, configure triggers, and maintain control over workloads.
-For example, a threat actor who compromises an Entra ID user with sufficient owner-level permissions on a subscription may be able to read or modify function app resources within that scope, subject to resource and policy controls.
-Privilege Escalation
-The privilege escalation tactic consists of techniques that are used by threat actors to get higher privileges in the environment than those they currently have. This can include accessing workload identity credentials or leveraging application permissions to access additional cloud resources.
-Access cloud resources
-Web apps deployed in the cloud often run with identities or service accounts that have permissions over additional cloud resources in the environment such as storage, databases and AI services. Additionally, some applications store connection strings or keys to cloud resources in the app configuration files or environment variables. Therefore, if threat actors compromise the application, they can often extract or leverage these credentials to access additional cloud resources.
-Access workload identity credentials
-Workload identities are identities that are managed by the cloud provider and can be allocated to cloud resources. The identity’s secret is fully managed by the cloud provider, which eliminates the need to manage the credentials. Web apps can use workload identities to perform actions on other cloud resources by querying Instance Metadata Service (IMDS) or similar endpoints. Threat actors who gain access to a web app can leverage their access to the IMDS endpoint to get the workload identity’s token. With a token, the threat actors can access cloud resources.
-For example, in Azure App Services, the managed identity access token can be acquired through a local identity endpoint, which is defined in the environment variables (IDENTITY_ENDPOINT). If a threat actor is able to execute code on such an App Service instance, they would be able to query the endpoint and receive an access token to other Azure resources with the managed identity permissions.
-Defense Evasion
-The defense evasion tactic consists of techniques that are used by threat actors to avoid detection and hide their activity.
-Development slots
-Many cloud platforms and serverless environments support staging or preview environments (such as deployment slots in Azure App Services, aliases in AWS Lambda, or revision tags in GCP Cloud Run), which allow developers to test and stage new versions of their applications before swapping them into production. These environments can be swapped or promoted with minimal downtime. If a threat actor gains the ability to modify or promote a non-production environment, they may execute malicious code or gain insights into the application’s structure and behavior. In some cases, these staged environments are directly accessible without a swap, meaning a threat actor could execute code in a staging slot or alternate version and potentially evade detection, since the primary production deployment remains untouched.
-For example, in Azure App Service, a threat actor who obtains permissions to manage a staging deployment slot could either swap it into production, thus pushing malicious code live, or exploit the slot’s separate URL to run the malicious app without modifying the production’s code.
-Disable cloud logging
-Threat actors with appropriate permissions may disable or alter cloud logging to hide their actions and avoid detection. This can include turning off diagnostic logging on a web application, deleting or modifying existing log data, changing log retention policies to accelerate log expiration, or redirecting log output. By suppressing logging, the threat actor reduces the visibility that defenders have into ongoing malicious activity, making it harder to detect the compromise, perform incident response, or reconstruct the attack timeline.
-Credential Access
-The credential access tactic consists of techniques that are used by threat actors to steal credentials. In cloud web application environments, this includes credentials of the running application, workload identities, secrets stored in configuration, or cloud credentials.
-Brute force
-Some web applications or interfaces may still use basic authentication, either for user access, administrative functions, or deployment interfaces. A threat actor could try to gain access by repeatedly attempting credential combinations, and upon finding valid credentials, use them to access and use the relevant privileges.
-For example, Azure App Service exposes the Kudu management console (the SCM site) and FTP endpoints that support basic authentication. This includes user‑scoped deployment credentials, which are manually set by the user and shared across all App Services within a subscription that the user has access to. If a threat actor is able to successfully guess those credentials, they could gain deployment access to multiple applications in the subscription.
-Cloud credentials in runtime environment
-Some web applications store secrets such as keys, tokens, and connection strings in environment variables or configuration files. In cloud environments, those secrets are often used to access additional cloud services within the environment. If a threat actor gains access, even read-only, to the running application environment, they would be able to retrieve those credentials and use them to authenticate against those external cloud resources.
-For example, an Azure Function configured to authenticate to Azure OpenAI with a resource key may store that key and the service endpoint in application settings exposed as environment variables. a threat actor who accesses those variables could use the key to make authorized data-plane API requests to the associated Azure OpenAI resource.
-Discovery
-The discovery tactic consists of techniques that are used by threat actors to explore the environment to which they gained access. This exploration helps the threat actors to perform lateral movement and gain access to additional resources.
-Access to connected cloud storage
-Cloud applications often use external storage services for hosting source code, configuration files or assets. Threat actors may exploit misconfigured or compromised read access to this storage to review the code and configuration to find vulnerabilities or sensitive information that could be exploited to take over the application.
-For example, in GCP Cloud Run functions, the function code is saved into a bucket in the project. If a threat actor compromised a user with storage read access, they would be able to view the source code.
-Cloud service discovery
-Cloud‑hosted applications often contain configuration values or runtime information that reference other cloud services the application interacts with, such as service URLs, API endpoints, database connection strings, or resource identifiers. After gaining access to a web application, threat actors can discover additional cloud resources through environment variables, network connections or application code.
-Instance metadata API
-Cloud platforms expose metadata services that provide information about the running environment, such as instance details, network configuration, and identity credentials. In some cases, this service is available from within cloud web applications as well. Threat actors who gain access to such an application may query the metadata API service to get information about the underlying VM and the application environment.
-Lateral Movement
-The lateral movement tactic consists of techniques that are used by threat actors to move through the victim’s environment. In cloud web application environments, this includes gaining access to connected cloud resources, third-party services, or internal network resources.
-Connector reuse
-Cloud applications may use managed connectors or integration resources to interact with third-party services such as email providers, SaaS platforms, databases, or messaging systems. These connectors sometimes store authentication or authorization details – such as OAuth tokens and access keys, that are separate from the web application’s own identity and thus could be reused across multiple applications. A threat actor who compromises a user or identity with permissions over the connector resource can invoke those stored credentials to access the connected third-party services, enabling lateral movement beyond the cloud environment.
-For example, in Azure Logic Apps, API connections are standalone resources that store authenticated sessions to external services, such as Office 365, Slack, or SQL databases. A threat actor with sufficient permissions on the resource group can create a new app that uses existing API connectors, triggering actions on the connected services using the stored credentials without needing to extract the underlying secrets.
-Collection
-The collection tactic consists of techniques that are used by threat actors to collect data from cloud web applications or connected resources.
-Access application database
-Many applications rely on a connected database to store application data, user information, configuration values, or state. The application often connects to the database by using the application’s cloud identity, or by using a hardcoded connection string. If a threat actor gains code execution abilities, they can interact with the database – query and extract data or modify entries. In cases where the database is accessible from the internet, threat actors may only need read permissions over the web app to access the database.
-Event data capture
-Cloud applications often generate logs that include diagnostic data, request metadata, or user input. Due to misconfigured logging levels or insufficient filtering, these logs may inadvertently contain sensitive information such as credentials, personally identifiable information (PII), or details about the application environment, including internal paths, dependency versions, and cloud resource names. This information could assist adversaries in furthering their attacks. Logs may be stored locally, streamed to external services, or accessed through debugging interfaces. Logs may be stored locally, streamed to external services, or accessed via debugging interfaces. If a threat actor gains access to the application or its logging infrastructure, they can collect this data to aid further exploitation or reconnaissance.
-For example, AWS Lambda functions automatically send all standard output to CloudWatch Logs. If verbose or debug-level logging is misconfigured and left enabled in production, sensitive data may end up in the log group. A threat actor who gains read access to CloudWatch can then harvest this information.
-Impact
-The impact tactic consists of techniques that are used by threat actors to destroy, abuse, or disrupt the normal behavior of cloud web applications and their environments.
-Data destruction
-Threat actors who gain sufficient privileges within a cloud web application may delete or corrupt data stored in the app or in connected cloud resources such as databases and storage.
-Data theft
-If threat actors gain access to the application, its storage, or connected cloud resources, they may be able to retrieve data stored or processed by the application. This includes application content, user information, configuration files, or proprietary content.
-Defacement
-Adversaries may attempt to alter the web application’s content or appearance to damage reputation, intimidate victims or spread propaganda. This could be done through access to the application itself, to the source code or any assets it uses.
-Denial of wallet
-Cloud applications often scale dynamically based on demand, incurring costs for compute, storage, and data transfer. Threat actors may intentionally trigger operations that will cause those resources to scale out to impose financial damage. One such approach is to flood a web application with requests, similar to traditional denial-of-service (DoS) attacks. This will cause the application to allocate more resources, thus causing increased charges.
-For example, a threat actor could repeatedly invoke a Cloud Function with high memory allocation, leading to inflated billing due to excessive execution time.
-Resource hijacking
-Threat actors may leverage the compute, network, or storage resources of the application for unauthorized purposes, such as cryptocurrency mining, mass scanning, or traffic proxying.
-Mitigation and protection guidance
-As organizations adopt cloud-native and serverless architectures, defending against these threats requires visibility across both application behavior and underlying cloud resources. [The cloud web applications threat matrix](https://aka.ms/CloudWebAppsThreatMatrix) is intended to support this by mapping techniques to attack stages, helping defenders identify where visibility exists and where gaps remain.
-Mitigation strategies for individual techniques are detailed within the matrix. Across the matrix, recurring priorities include requiring multifactor authentication, applying least-privilege permissions to users and workloads, and restricting access to applications, deployment environments, and connected resources.
-Organizations should also protect source repositories, build systems, and deployment pipelines from unauthorized changes, and install packages and extensions only from trusted sources. Reusable credentials should not be stored in source code or configuration files. Workload identities and secrets management solutions should be used where supported, while network access to sensitive services should be limited to authorized networks.
-To support investigation, organizations should centralize security-relevant logs in protected locations and prevent unauthorized changes to logging configurations. Resource quotas, concurrency limits, cost guardrails, and spending alerts can help reduce the impact of resource hijacking and denial-of-wallet activity. Organizations should also maintain and test backup and recovery plans to prepare for destructive operations.
-Microsoft Defender for Cloud and Microsoft Defender XDR can support investigation and response across many related signals, including cloud resource posture, workload activity, identity activity, and cross-domain incidents, depending on customer configuration and available telemetry.
-References
-Learn more
-For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
-To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
-To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
-Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
-- Evaluate your AI readiness with our latest
-[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). [Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)- Learn more about
-[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection)</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-2" class="article-body">
-            <h2 class="article-title">Chrome V8 Zero-Day Exploited in the Wild Enables Code Execution Inside Sandbox</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/chrome-v8-zero-day-exploited-in-wild.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Google on Tuesday [released](https://chromereleases.googleblog.com/2026/09/stable-channel-update-for-desktop_0808145027.html) updates to patch 230 security vulnerabilities, including one that has come under active exploitation in the wild.
-The medium-severity vulnerability, assigned the CVE identifier CVE-2026-87491 (CVSS score: N/A), has been described as an out-of-bounds bug in V8, Chrome's JavaScript and WebAssembly engine.
-"Out-of-bounds write in V8 in Google Chrome prior to 153.0.8010.36 allowed a remote attacker to execute arbitrary code inside the sandbox via a crafted HTML page," reads a [description](https://nvd.nist.gov/vuln/detail/cve-2026-87491) of the flaw on the NIST National Vulnerability Database (NVD).
-Security researcher Jihyeon Jeong of Compsec Lab, Seoul National University, has been acknowledged for discovering and reporting the flaw on August 6, 2026. The researcher received a $2,500 bug bounty reward for responsible disclosure.
-Google acknowledged it is "aware that an exploit for CVE-2026-87491 exists in the wild," but has not disclosed any additional specific information related to how it's being weaponized in real-world attacks and who is behind them.
-"Access to bug details and links may be kept restricted until a majority of users are updated with a fix," the tech giant added. "We will also retain restrictions if the bug exists in a third party library that other projects similarly depend on, but haven’t yet fixed."
-With the latest development, Google has addressed a total of seven actively exploited Chrome zero-days since the start of the year. This includes[ CVE-2026-2441](https://thehackernews.com/2026/02/new-chrome-zero-day-cve-2026-2441-under.html),[ CVE-2026-3909, CVE-2026-3910](https://thehackernews.com/2026/03/google-fixes-two-chrome-zero-days.html),[ CVE-2026-5281](https://thehackernews.com/2026/04/new-chrome-zero-day-cve-2026-5281-under.html), [CVE-2026-11645](https://thehackernews.com/2026/06/chrome-v8-zero-day-cve-2026-11645.html), and [CVE-2026-85046](https://thehackernews.com/2026/09/google-releases-chrome-update-to-patch.html).
-Besides CVE-2026-87491, the latest update also fixes five critical security flaws in WebGL and Cast components -
-- CVE-2026-87464 - Use-after-free in WebGL
-- CVE-2026-87488 - Use-after-free in WebGL
-- CVE-2026-87438 - Out-of-bounds write in WebGL
-- CVE-2026-87527 - Buffer overflow in WebGL
-- CVE-2026-87628 - Use-after-free in Cast
-Google said it reported 195 out of the 230 flaws that have been addressed in the update. One high use-after-free flaw in WebPackaging (CVE-2026-87639) is credited to OpenAI Codex Security.
-"Many of our security bugs are detected using[ AddressSanitizer](https://code.google.com/p/address-sanitizer/wiki/AddressSanitizer),[ MemorySanitizer](https://code.google.com/p/memory-sanitizer/wiki/MemorySanitizer),[ UndefinedBehaviorSanitizer](https://www.chromium.org/developers/testing/undefinedbehaviorsanitizer),[ Control Flow Integrity](https://www.chromium.org/developers/testing/control-flow-integrity/),[ libFuzzer](https://chromium.googlesource.com/chromium/src/+/HEAD/testing/libfuzzer/README.md), or[ AFL](https://github.com/google/afl)," the company added.
-For optimal protection, users are advised to update their Chrome browser to versions 153.0.8010.36/.37 for Windows and Apple macOS, and 153.0.8010.36 for Linux. To ensure the latest updates are installed, users can navigate to More > Help > About Google Chrome and select Relaunch.
-Users of other Chromium-based browsers, such as Microsoft Edge, Brave, Opera, and Vivaldi, are also advised to apply the fixes as and when they become available.
-Update
-The U.S. Cybersecurity and Infrastructure Security Agency (CISA), on September 9, 2026, [added](https://www.cisa.gov/news-events/alerts/2026/09/09/cisa-adds-four-known-exploited-vulnerabilities-catalog) CVE-2026-87491 to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, requiring Federal Civilian Executive Branch (FCEB) agencies to apply the patches by September 23, 2026.
+            <h2 class="article-title">China-Linked UNC3569 Exploited Sogou Input Method Flaw to Deploy GRAYRABBIT Backdoor</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/china-linked-unc3569-exploited-sogou.html" target="_blank">Original Link</a></p>
+            <div class="content-text">A China-linked hacking group exploited a flaw in Sogou Input Method, one of the most widely used tools for typing Chinese characters on Windows, to install a backdoor on victims' computers, security company Gen Digital said in [research published Thursday](https://www.gendigital.com/blog/insights/research/one-click-backdoor-sogou).
+The attack started with a crafted link and ended with the attacker able to do anything the logged-in user could do. Tencent, which owns and develops Sogou, fixed the flaw in April 2026.
+Gen found the flaw while investigating a live intrusion by UNC3569, a group that [Google Threat Intelligence ties to China](https://www.virusbulletin.com/uploads/pdf/conference/vb2024/papers/Down-the-GRAYRABBIT-hole-exposing-UNC3569-and-its-modus-operandi.pdf) and places in the country's hacker-for-hire scene. Google has tracked the group since 2021 and says it has targeted government, education, technology, and finance sectors, mostly in East and Southeast Asia.
+The backdoor it installed is GRAYRABBIT, a small program the group has used for years and that Google describes as its first step onto a machine. It gives an attacker a remote command shell, allows files to be moved in both directions, and can load additional modules from the attacker's server at any time.
+Tencent's fix blocked the way in. It did not change the part of Sogou that made the attack possible. In the patched version [Gen examined](https://www.gendigital.com/blog/insights/research/one-click-backdoor-sogou), the built-in browser engine is still the 2020 version, and its sandbox is still switched off.
+How One Link Reached the Machine
+Sogou Input Method is the most popular Chinese input method in China, according to 2023 research by Citizen Lab at the University of Toronto.
+That research put its user base at more than 455 million people a month across Windows, Android and iOS, and its share of Chinese input-method users at about 70%. Citing market research on visits to the product's website, it also noted that users are not only in China, with the United States accounting for over 3.3% of visits.
+The same research found [flaws in the app's encryption](https://thehackernews.com/2023/08/encryption-flaws-in-popular-chinese.html) that exposed what people typed.
+The flaw Gen found is in the Windows version. Sogou Input Method is not one program there. It is a set of components that communicate with each other via a custom link type registered on Windows, sgbiz:. When anything opens an sgbiz: link, Windows passes it to biz_helper.exe, which reads the link and starts the Sogou component it names.
+That handler checks which program the link asks it to start. It does not check the command-line arguments the link asks it to pass along. Gen found no filtering on them at all.
+So the attacker picked the arguments. The link pointed at SGMyInput.exe, Sogou's settings program, and told it to open the skin store with a web address of the attacker's choosing.
+The skin store is the only screen in that program that opens a browser window. The code sends that browser to whatever address it is handed, with no check on the address at all.
+That browser is where the third problem sits. Sogou builds its own copy of Chromium, and it's version 80, from around March 2020.
+Gen found two of the browser's protections switched off and written into the code that way: the sandbox, which normally keeps a compromised web page away from the rest of the computer, and the same-origin policy, which stops a page reading data from other sites.
+With the sandbox gone, a JavaScript flaw in the page becomes code that runs on the user's computer with the user's privileges. There is no second step to exit the browser.
+Gen says clicking the link was all it took. Tencent does not agree. In a response quoted in the research, Tencent described the chain as relatively complex and said an attacker would need social engineering to get the user to "actively authorize the browser's pop-up prompt."
+Browsers built on Chromium do show a confirmation box before handing a link to a separate program on the computer, and a user can tick a box to stop seeing it for a given site. Neither company says what the people in this campaign saw. Gen says the link could also arrive by email or chat message, and neither account says what a user sees when a link is opened that way.
+Why a 2021 Browser Bug Still Worked
+The page the victims were sent to carried an exploit for [CVE-2021-38003](https://nvd.nist.gov/vuln/detail/CVE-2021-38003), a flaw in how V8, Chrome's JavaScript engine, handled JSON.stringify. It let an internal value that scripts should never see escape into the page, and from there an attacker could corrupt memory and run code.
+Google fixed it in Chrome 95 in October 2021. CISA added it to its [catalog of vulnerabilities known to have been exploited](https://cisa.gov/known-exploited-vulnerabilities-catalog) on November 3, 2021. Singapore firm STAR Labs published a [full analysis and working exploit code](https://starlabs.sg/blog/2022/12-thehole-new-world-how-a-small-leak-will-sink-a-great-browser-cve-2021-38003/) in December 2022.
+Sogou's Chromium build never received that fix. It never got most of the others either.
+Of the 41 Chromium V8 flaws in CISA's catalog, at least 32 were fixed in Chrome releases that came out after the version Sogou ships. The Hacker News checked each flaw's CVE record against that version.
+That is a count of flaws, not a count of ways into Sogou. Whether any of them can be reached through the skin store window depends on what the page can touch inside it, and no one has published that work.
+What Landed on the Machine
+The exploit carried a small downloader. Gen traced it pulling three files from a server on Alibaba Cloud in Hong Kong: a legitimate copy of 7-Zip, a malicious DLL, and an encrypted file holding the final payload.
+All three went into C:\Users\Public\Documents. The malicious DLL was saved under the name 7-Zip loads from its own folder at startup, so running 7-Zip loaded the attacker's code instead.
+The archive command the attackers ran was meaningless. Its only job was to start 7-Zip.
+The DLL counts the processes running on the computer before it decrypts anything. If it finds fewer than 50, it builds the wrong key and the payload turns to garbage.
+Automated malware-analysis systems tend to run few processes. Real desktops do not.
+It then deletes itself. Gen found it moving its own contents into an NTFS alternate data stream, a hidden part of the file record, and then marking the file for deletion. The file leaves the disk with no delete call in the behavior logs.
+What it leaves behind is GRAYRABBIT. The backdoor reaches its server at mail.uaiubifas[.]top on port 443, and the traffic there is plain TCP scrambled with RC4 rather than TLS. Port 443 typically carries TLS, so non-TLS traffic on that port is worth watching.
+What Tencent Fixed, and What It Left
+Gen reported the flaw to Tencent on April 9, 2026, and it is tracked as CVE-2026-51990.
+Tencent replied the next day and confirmed on April 21 that a fix was complete and would go out to all users via an automatic update in version 16.3.0.3498. That is 12 days.
+The whole fix sits in biz_helper.exe. It now looks for the two arguments that carry web addresses, rejects anything that is not HTTPS, and checks the hostname against four allowed endings: sogou.com, qq.com, woa.com and sogou. Gen says more checks were added after that.
+The browser engine was not touched. In the patched files Gen examined, the sandbox setting is still off, the web security flag is still written into the code, and the same switches are still applied.
+The engine is still Chromium 80. What has changed is that an outsider can no longer point it at an address of their choosing via the link handler. Gen said those components need more work.
+What to Do
+Update Sogou Input Method. The fix is in version 16.3.0.3498, which Gen says Tencent pushed to all users by automatic update on April 21, 2026.
+Two things are missing from the public record. Neither Gen nor Tencent has said which versions were affected, and neither explains how to check the version installed on a machine.
+If a machine may have been reached before the fix, look for the indicators below. The loader deletes itself, so the malicious DLL may no longer be on disk. No source says whether installing the fix removes a backdoor that is already running.
+Gen published the following indicators.
+- SHA-256 29c7ee41d0cc9e07d981e451df56d0c3d37c41ac4ec10c7b516cc033ee397a63 malicious DLL loader, written to disk as 7z.dll
+- SHA-256 749160a2f20f82744026719cf72e483595c6aad718efa74d675a98662e02422e encrypted payload file, named p
+- SHA-256 d7a3c7eb94edc0e020f74c678743d71d61e944634aade4a67a96c3589e828b3a GRAYRABBIT backdoor, internal name core.dll
+- Domain mail.uaiubifas[.]top backdoor command server, port 443
+- Domain noht1ng[.]top hosted the exploit page
+- IP 8.218.50[.]207 staging server, Alibaba Cloud Hong Kong
+- Path C:\Users\Public\Documents\ where the three files were written
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">Cisco FMC Flaws Exploited to Steal Credentials and Deploy Qilin Ransomware</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/cisco-fmc-flaws-exploited-to-steal.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Cisco has revealed that [three distinct threat clusters](https://blog.talosintelligence.com/fmc-ongoing-exploitation/) linked to ransomware and state-sponsored attacks have been exploiting two recently patched Secure Firewall Management Center (FMC) vulnerabilities.
+The attacks leverage [CVE-2026-20079](https://thehackernews.com/2026/07/cisco-fmc-zero-day-actively-exploited.html) (CVSS score: 10.0), an authentication bypass vulnerability in the web interface of FMC software that could allow an unauthenticated, remote attacker to bypass authentication and execute script files on an affected device to obtain root access to the underlying operating system.
+The second flaw under exploitation is [CVE-2026-20316](https://thehackernews.com/2026/08/cisco-patches-12-sd-wan-and-ios-xe.html) (CVSS score: 5.3), which could allow an unauthenticated, remote attacker to log in to an affected device using a low-privilege account to access sensitive data within susceptible systems. It can be paired with other Cisco Secure FMC vulnerabilities to elevate privileges.
+Cisco Talos said it identified three clusters of post-compromise activity of FMC instances associated with state-sponsored and crimeware threat actors. These include -
+- UAT-12197, which has exploited CVE-2026-20079 to deploy JSP-based web shells and a Java Archive (JAR)-based command executor to query internal databases and obtain user authentication data and credentials
+- UAT-11823, which has exploited both CVE-2026-20079 and CVE-2026-20316 to deliver a Netcat-based reverse shell, two bash scripts to harvest managed-device configurations, and a variant of
+[Cyclops Blink](https://thehackernews.com/2022/02/us-uk-agencies-warn-of-new-russian.html), a modular ELF implant previously attributed to the Russian state-sponsored hacking group Sandworm - UAT-11988, a ransomware operation that has exploited CVE-2026-20316 for initial access and then used legitimate built-in FMC tooling as part of a living-off-the-land (LotL) attack to conduct extensive reconnaissance of the victim's environment, drop tunneling tools to maintain network access, collect credentials, build a target list of endpoints to encrypt, terminate security tools, and deploy
+[Qilin](https://thehackernews.com/2026/07/qilin-ransomware-attackers-exploit-pan.html)ransomware on selected systems.
+"Customers are strongly advised to apply hotfixes for affected software versions already released by Cisco for CVE-2026-20079 and CVE-2026-20316," Cisco said, adding it intends to ship a comprehensive hardening release for various internally discovered vulnerabilities next week.
+The development comes as the U.S. Cybersecurity and Infrastructure Security Agency (CISA) [added](https://thehackernews.com/2026/09/cisa-flags-exploited-cisco-citrix.html) CVE-2026-20079 to its Known Exploited Vulnerabilities (KEV) catalog, requiring Federal Civilian Executive Branch (FCEB) agencies to apply the patches by September 12, 2026. The second vulnerability, CVE-2026-20316, was [added](https://thehackernews.com/2026/07/cisco-fmc-zero-day-actively-exploited.html) to the KEV catalog in late July 2026.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">Protecting organizations from AI-assisted executive impersonation and invoice fraud</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/09/10/protecting-organizations-ai-assisted-executive-impersonation-invoice-fraud/" target="_blank">Original Link</a></p>
+            <div class="content-text">Threat actors are increasingly improving their tactics to make suspicious emails look like legitimate email notifications to potential victims, deploying techniques that impersonate internally sent emails from executive team members. While this technique is not new, the adoption of AI has enabled threat actors to improve their campaign templates and construct emails tailored to their recipients. Additionally, threat actors are incorporating multiple techniques within the same email to improve the overall narrative further.
+In this blog, we will discuss a recent campaign observed using third-party email delivery infrastructure to send out over a million financial fraud scam emails that displayed multiple indicators consistent with the use of generative AI during email template creation. The threat actor impersonated CEOs of multiple target companies, attempting to convince accounts payable departments of the same companies to process an Automated Clearing House (ACH) payment of nearly $50,000. To add legitimacy, the actor included a forwarded email thread (and a fabricated invoice) between the impersonated CEO and ServiceNow (which was also being impersonated).
+Attack chain overview
+The campaign follows steps before and during the execution of the campaign: threat actors register impersonation domains, send executive-themed payment requests through trusted infrastructure, embed fabricated invoices and supporting conversations, and attempt to convince finance personnel to initiate ACH transfers.
+Email Delivery
+Between August 3 and 5, Microsoft detected a campaign consisting of more than a million emails targeting enterprise users. The attacker used multiple third-party email service accounts to send out the emails. A huge majority of these emails were sent to users in the United States (87.7% of the total campaign).
+Unlike traditional invoice scams that rely on a single social engineering lure, this campaign layered executive impersonation, vendor branding, fabricated invoices, and supporting email conversations into a unified narrative intended to reduce recipient skepticism.
+The threat actor impersonated executive team members (such as a CEO, CFO, President) of multiple targeted companies, attempting to convince accounts payable departments of the same companies to process an ACH payment of nearly $50,000. More specifically, the CEOs were impersonated in multiple places in the email such as in the sender display name, reply-to display name, and in the email signature. Email bodies contained a simple and direct “approval” of the “invoice below” as well as urged users to request a PDF version if they need it. Additionally, as mentioned earlier, the email signature contained certain details about the spoofed CEO such as name and email address.
+Important note: Throughout this campaign, threat actors impersonated legitimate organizations using attacker-controlled infrastructure, fabricated communications, and lookalike domains. Microsoft found no evidence that the legitimate organizations referenced in the lures, including ServiceNow, were compromised or involved in the activity. Rather, the campaign relied on fraudulent domains and content designed to mimic trusted brands and individuals.
+The threat actor did not stop there. To add further legitimacy, directly below the CEO signature, the actor included “forwarded” content , specifically a professional looking but fabricated “ServiceNow Platform — Annual Subscription” invoice. The extremely detailed invoice contains various ServiceNow branding and logos. It has basic invoice details such as invoice number, issue and due dates, currency, amount due, payment method, and itemized line items. The payment method instructed is a bank transfer to accounts controlled by the threat actor. Microsoft observed the use of multiple financial institutions across samples, indicating that payment destinations may vary between targets. Certain parts of the invoice are personalized to the recipient. Specifically, the “BILLED TO” section has the recipient company name and executive name.
+The invoice shown below is a threat actor-created impersonation and was not issued by ServiceNow.
+Finally, directly below the fake invoice, two more “forwarded” emails are included which are essentially a short conversation between the two spoofed executives (the targeted company executive, and ServiceNow President). The two executives are seen discussing the ServiceNow purchase, implementation and handling of the invoice.
+From a defender point of view there are several indicators within the email indicating that the email and the “forwarded” thread are not genuine.
+- “From” headers from the spoofed thread lack any data headers like actual forwarded emails.
+- Suspicious language used in the spoofed thread such as “no need to copy me”.
+- Suspicious language in headers i.e display name not matching sender address, subjects using financial lure keywords like ‘due bill’, ‘ACH Parment’ etc.
+- Despite the sophistication of the generated content, several inconsistencies remained visible to defenders
+- In real email threads, the previous threads are normally tabbed or otherwise visually grouped, while the previous threads in this example were left aligned.
+- An additional inconsistency was observed where the targeted company’s CEO requested the recipient to send the invoice directly to victims and not CC the sender. However, in the most recent thread, the CEO stated that the invoice is approved and the invoice is sent from his address.
+Domain registration
+Before initiating the campaign, the threat actor registered several domains. A ‘ServiceNow’ lookalike domain service-nowinc[.]com was registered on July 31, shortly before the campaign activity was observed. This domain was used for the spoofed email address of ServiceNow President. It was also used in several places in the fabricated invoice such as in the contact email in case of any questions. The actor also registered another domain on the same day. The domain domainlify[.]net was used in the Reply-To email.
+Generative AI usage
+Microsoft observed several indicators consistent with AI-assisted template development. These included extensive HTML comments, structured section labeling, and highly uniform template construction. While these indicators suggest generative AI involvement, they do not independently establish the extent to which AI generated campaign content.
+Examples:
+Additionally, the use of ‘em dash’ (“—”) and banner ‘===========’ have also become other indicators associated with AI usage.
+One possible indication of template-based generation is that invoice identifiers and narrative structure remained largely consistent across samples while organization-specific details changed between targets.
+Mitigation and protection guidance
+Microsoft provides layered protection against this type of executive-impersonation and invoice-fraud campaign. Properly configured email authentication, spoof protection, mail-flow connectors, and Microsoft Defender for Office 365 help identify and block suspicious messages before delivery; messages later determined to be malicious can be quarantined or removed through post-delivery remediation, including Zero-hour Auto Purge. Security teams can then use Microsoft Defender XDR and Security Copilot to investigate related alerts, affected users, and campaign indicators, coordinate response, and take remediation actions.
+Together, these capabilities help reduce the likelihood that fraudulent payment requests reach finance personnel and support faster containment if a message is delivered.
+To defend against social engineering campaigns involving executive impersonation, invoice fraud, and potentially AI-assisted content development, Microsoft recommends the following mitigations:
+Configure [automatic attack disruption](https://learn.microsoft.com/en-us/defender-xdr/configure-attack-disruption) in Microsoft Defender XDR. Automatic attack disruption is designed to contain attacks in progress, limit the impact on an organization’s assets, and provide more time for security teams to remediate the attack fully.
+Enable [Zero-hour auto purge (ZAP)](https://learn.microsoft.com/en-us/defender-office-365/zero-hour-auto-purge) in Office 365 to quarantine sent mail in response to newly acquired threat intelligence and retroactively neutralize malicious phishing, spam, or malware messages that have already been delivered to mailboxes.
+Invest in advanced anti-phishing solutions that monitor and scan incoming emails and visited websites. For example, organizations can leverage web browsers like Microsoft Edge that automatically [identify and block malicious websites](https://learn.microsoft.com/en-us/deployedge/microsoft-edge-security-smartscreen?ocid=magicti_ta_learndoc), including those used in this phishing campaign, and solutions that [detect and block malicious emails, links, and files](https://www.microsoft.com/en-us/security/business/siem-and-xdr/microsoft-defender-office-365?ocid=magicti_ta_abbreviatedmktgpage).
+These links provide information on how to properly configure mail flow with connectors:
+[Manage mail flow using a third-party cloud service with Exchange Online](https://learn.microsoft.com/en-us/exchange/mail-flow-best-practices/manage-mail-flow-using-third-party-cloud)[Configure mail flow using connectors in Exchange Online](https://learn.microsoft.com/en-us/exchange/mail-flow-best-practices/use-connectors-to-configure-mail-flow/use-connectors-to-configure-mail-flow)[Mail flow rules (transport rules) in Exchange Online](https://learn.microsoft.com/en-us/exchange/security-and-compliance/mail-flow-rules/mail-flow-rules)[Enhanced filtering for connectors in Exchange Online](https://learn.microsoft.com/en-us/exchange/mail-flow-best-practices/use-connectors-to-configure-mail-flow/enhanced-filtering-for-connectors)
+These links provide information on configuring SPF, DKIM, and DMARC:
+[Email authentication in cloud organizations](https://learn.microsoft.com/en-us/defender-office-365/email-authentication-about)[Set up SPF to identify valid email sources for your custom cloud domains](https://learn.microsoft.com/en-us/defender-office-365/email-authentication-spf-configure)[Set up DKIM to sign mail from your cloud domain](https://learn.microsoft.com/en-us/defender-office-365/email-authentication-dkim-configure)
+Microsoft Defender detections
+[Microsoft Defender](https://www.microsoft.com/security/business/microsoft-defender) customers can refer to the list of applicable detections below. Microsoft Defender coordinates detection, prevention, investigation, and response across endpoints, identities, email, and apps to provide integrated protection against attacks like the threat discussed in this blog.
+| Tactic | Observed activity | Microsoft Defender coverage |
+| Financial Theft | Scam emails | Microsoft Defender for Office 365 – Invoice scams delivered detected as Spam and malicious categories. – Email messages marked malicious removed after delivery and spam moved to quarantine – Email messages removed after delivery – Messages retroactively removed through Zero-hour Auto Purge (ZAP). |
+Microsoft Security Copilot
+Security Copilot customers can use the standalone experience to [create their own prompts](https://learn.microsoft.com/copilot/security/prompting-security-copilot#create-your-own-prompts) or run the following [prebuilt promptbooks](https://learn.microsoft.com/copilot/security/using-promptbooks) to automate incident response or investigation tasks related to this threat:
+- Incident investigation
+- Microsoft User analysis
+- Threat actor profile
+- Threat Intelligence 360 report based on MDTI article
+- Vulnerability impact assessment
+Note that some promptbooks require access to plugins for Microsoft products such as Microsoft Defender XDR or Microsoft Sentinel.
+Threat intelligence reports
+Microsoft Defender XDR customers can use Threat Analytics reports in the Defender portal (requires license for at least one Defender XDR product) to get the most up-to-date information about the malicious activity and techniques discussed in this blog. These reports provide the intelligence, protection information, and recommended actions to prevent, mitigate, or respond to associated threats found in customer environments.
+MITRE ATT&CK Techniques observed
+This threat has exhibited use of the following attack techniques. For standard industry documentation about these techniques, refer to the [MITRE ATT&CK framewo](https://attack.mitre.org/)[r](https://attack.mitre.org/)[k](https://attack.mitre.org/).
+Reconnaissance
+[T1591 – Gather Victim Organization Information](https://attack.mitre.org/techniques/T1591/)
+Threat actors collect publicly available information about target organizations, executives, finance personnel, vendors, and business relationships to build convincing invoice-fraud narratives.
+[T1598 – Phishing for Information](https://attack.mitre.org/techniques/T1598/)
+Information gathered from victims and public sources is used to craft highly targeted business email compromise (BEC) lures.
+Resource Development
+[T1583.001 – Acquire Infrastructure: Domains](https://attack.mitre.org/techniques/T1583/001/)
+Threat actors register domains that impersonate trusted organizations, vendors, or business partners.
+[T1585.002 – Establish Accounts: Email Accounts](https://attack.mitre.org/techniques/T1585/002/)
+Attacker-controlled email accounts are created to support impersonation and fraudulent communications.
+[T1583 – Acquire Infrastructure](https://attack.mitre.org/techniques/T1583/)
+Third-party email delivery infrastructure and supporting services are leveraged to distribute campaigns.
+Initial Access
+[T1566 – Phishing](https://attack.mitre.org/techniques/T1566/)
+Targeted phishing emails are delivered to finance personnel using executive and vendor impersonation themes.
+[T1566.001 – Spearphishing Attachment](https://attack.mitre.org/techniques/T1566/001/)
+Fraudulent invoices or supporting documents are attached to phishing emails.
+[T1566.003 – Spearphishing via Service](https://attack.mitre.org/techniques/T1566/003/)
+Third-party email services are used to distribute phishing messages and improve legitimacy.
+Defense evasion
+[T1036 – Masquerading](https://attack.mitre.org/techniques/T1036/)
+Attackers disguise emails, domains, invoices, and business correspondence as legitimate communications.
+[T1656 – Impersonation](https://attack.mitre.org/techniques/T1656/)
+Executives, vendors, and trusted business entities are impersonated to establish credibility and influence payment decisions.
+Impact
+[T1657 – Financial Theft](https://attack.mitre.org/techniques/T1657/)
+Victims are deceived into transferring funds to attacker-controlled financial accounts through fraudulent invoice payment requests.
+Indicators of compromise (IOC)
+| Indicator | Type | Description |
+| service-nowinc[.]com | Domain | Domain impersonating ServiceNow |
+| gomez@service-nowinc[.]com | Email address | Email address associated with bank account |
+| notifications@uinsure[.]co[.]uk info@tivityhealth[.]com no-reply@lumalisboa[.]com noreply@mctci[.]com info@nuf[.]co[.]jp info@lohnsteuerhilfe-aktuell-verein[.]de info@tovimbatista[.]pt contact@eemusicclass[.]co[.]uk info@lifeones[.]com | Email address | Sender email address used to send out emails |
+| domainlify[.]net | Domain | Newly registered domain used in Reply-to address |
+Learn More
+For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
+To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
+To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
+Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
+- Learn more about
+[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection) - Evaluate your AI readiness with our latest
+[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). [Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)
+[How Microsoft discovers and mitigates evolving attacks against AI guardrails | Microsoft Security Blog](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)[Manipulating AI memory for profit: The rise of AI Recommendation Poisoning | Microsoft Security Blog](https://www.microsoft.com/en-us/security/blog/2026/02/10/ai-recommendation-poisoning/)– a related example of an AI-era technique observed in email traffic[Defending the inbox against prompt injection attacks | Microsoft Defender for Office 365 Blog](https://techcommunity.microsoft.com/blog/microsoftdefenderforoffice365blog/defending-the-inbox-against-prompt-injection-attacks/4534636)– feature announcement introducing prompt injection protection in Microsoft Defender for Office 365.[Prompt injection protection in Microsoft Defender for Office 365](https://learn.microsoft.com/en-us/defender-office-365/step-by-step-guides/prompt-injection-protection-defender-for-office-365)– official documentation of the prompt injection protection in Microsoft Defender for Office 365.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
         <div id="art-3" class="article-body">
-            <h2 class="article-title">Google warns of new Chrome zero-day bug exploited in attacks</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/google-patches-seventh-chrome-zero-day-exploited-in-attacks-this-year/" target="_blank">Original Link</a></p>
-            <div class="content-text">Google has patched 230 vulnerabilities on Tuesday, including another actively exploited Chrome zero-day bug, the seventh such vulnerability patched since the start of the year. [...]
+            <h2 class="article-title">Unmasking SCCM Application Execution</h2>
+            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/09/10/unmasking-sccm-application-execution/" target="_blank">Original Link</a></p>
+            <div class="content-text"><p>TL;DR: Executing applications instead of scripts via SCCM’s deploy application feature will generate different artifacts due to the fundamental differences in the execution flow. While existing detection tools can catch script-based execution, they often miss stealthier methods. This post covers how to detect the more evasive SCCM application execution. Introduction: During BlackHat 2025’s offering of [&#8230;]</p>
+<p>The post <a href="https://specterops.io/blog/2026/09/10/unmasking-sccm-application-execution/">Unmasking SCCM Application Execution</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
@@ -251,24 +254,215 @@ The U.S. Cybersecurity and Infrastructure Security Agency (CISA), on September 9
             <hr class="separator">
         </div>
         <div id="art-4" class="article-body">
-            <h2 class="article-title">N-able N-central Pre-Auth RCE Flaw Exploited in the Wild</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/n-able-n-central-pre-auth-rce-flaw.html" target="_blank">Original Link</a></p>
-            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Tuesday [added](https://www.cisa.gov/news-events/alerts/2026/09/08/cisa-adds-four-known-exploited-vulnerabilities-catalog) a maximum-severity security flaw impacting N-able N-central to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, requiring Federal Civilian Executive Branch (FCEB) agencies to apply the fixes by September 11, 2026.
-The vulnerability in question is [CVE-2026-86218](https://www.cve.org/CVERecord?id=CVE-2026-86218) (CVSS score: 10.0), which has been described as a case of static code injection. It has been patched in [N-central 2026.3 Hotfix 4](https://documentation.n-able.com/N-central/Release_Notes/GA/Content/N-central_2026.3_HF3_Release_Notes.htm), released on September 5, 2026.
-"N-able N-central contains a static code injection vulnerability that could allow for pre-authentication remote code execution," CISA said.
-The development came shortly after Huntress said it commenced an investigation following the compromise of a customer's fully patched N-central production environment on September 4, 2026.
-However, it remains unclear if the intrusion involved CVE-2026-86218 or two other vulnerabilities ([CVE-2026-86206 and CVE-2026-86207](https://documentation.n-able.com/N-central/Release_Notes/GA/Content/N-central_2026.3_HF4_Release_Notes.htm)) that were patched by N-able the same day with N-central 2026.3 Hotfix 3. CVE-2026-86206 and CVE-2026-86207 can be chained together to allow a remote unauthenticated attacker to bypass authentication and create a new attacker-controlled System Administrator account on an affected server, per [Rapid7's Stephen Fewer](https://www.rapid7.com/blog/post/ve-cve-2026-86206-cve-2026-86207-n-able-n-central-authentication-bypass-fixed/), who discovered and reported them.
-"Due to limited historical logging available directly on the appliance, we cannot definitively confirm which specific exploit the threat actor used to achieve their compromise, nor can we rule out the use of alternative vulnerabilities," Huntress [noted](https://www.huntress.com/blog/n-able-vulnerability-exploitation).
-In a [separate "urgent" notice](https://uptime.n-able.com/event/201814/) sent directly to customers, N-able said CVE-2026-86218 "has been observed being exploited in the wild" and that it's "actively investigating this matter and have taken additional steps to help protect customer environments." It also urged customers to apply the hotfix immediately.
-Preemptive exposure management firm watchTowr said it has successfully reproduced CVE-2026-86218, adding that the pre-authentication vulnerability enables remote code execution and allows attackers to make changes in N-central that can propagate across all connected systems.
-"This is precisely why N-central is so strategically valuable to threat actors, especially ransomware gangs," Yordan Ganchev, principal threat intelligence specialist at watchTowr, said. "The product is widely used by MSPs, MSSPs, and large IT organizations to manage entire customer and corporate environments. Compromise N-central, and you gain access to all connected computers and downstream systems. Based on historical events, AI-enabled attackers are unlikely to be far behind."
-"Organizations running internet-facing N-central instances should prioritize upgrading to a patched release. However, as is now quickly becoming the new normal, patching alone is not enough. Organizations must also review their environment for indicators of compromise and anomalous activity that suggest the vulnerability has already been exploited before patching. Ransomware threat actors have historically exploited this product in past campaigns, and this vulnerability is as severe as it gets."
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <h2 class="article-title">Cisco FMC flaws exploited by ransomware gang, state-sponsored hackers</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/cisco-fmc-flaws-exploited-by-ransomware-gang-state-sponsored-hackers/" target="_blank">Original Link</a></p>
+            <div class="content-text">Cisco Talos says two recently patched Secure Firewall Management Center (FMC) vulnerabilities have been exploited by three separate threat clusters linked to ransomware and state-sponsored attacks. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-5" class="article-body">
+            <h2 class="article-title">New 'BlueMoon' kit exploited Windows and Chrome zero-day flaws</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/new-bluemoon-kit-exploited-windows-and-chrome-zero-day-flaws/" target="_blank">Original Link</a></p>
+            <div class="content-text">Multiple cyber-espionage groups deployed an exploit kit dubbed "BlueMoon" that leveraged zero-day vulnerabilities in Microsoft Windows and Google Chrome. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-6" class="article-body">
+            <h2 class="article-title">So… You Found AWS Access Keys (Part 1)</h2>
+            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/so-you-found-aws-access-keys-part-1" target="_blank">Original Link</a></p>
+            <div class="content-text">So… You Found AWS Access Keys (Part 1)
+Table of contents
+Finding plaintext access keys to an AWS account during an engagement is always great thrill. What can be done with them? What do they have access to? Are they even for any of the accounts in scope? It can be super difficult to tell any of this just from the access key, security key, and maybe session token that you found.
+After all, AWS has more than 200 freaking services and products, at least based on how they tend to count things. They also don’t all necessarily authenticate in the same way or with the same looking token formats. Regardless, it can be a lot. But we’re going to walk through some of it today and see if we can get some clarity for everyone that may just be looking at the report of whatever secret scanning tool was just run and your mind is just shouting into the void, “Great! Now what the frak do I do with this?!”
+AKIA to ASIA and In-Between
+The main form of AWS access that most people know about is one of two types: Long-Term Access Keys and Temporary Access Keys. These are what we’re focusing on today. Both are combinations of strings that provide the access and look like the popular “AKIA” identifier for long-term keys and “ASIA” identifier for maybe lesser known but far more utilized temporary keys.
+- AKIA: Long-term access keys for an IAM user’s programmatic access.
+- ASIA: Temporary access keys created by AWS services on your behalf, such as when a
+sts:AssumeRole
+or similar is used to assume an IAM role.
+“He went to find AKIA?”
+Well, what can be done with these? That’s what we’re trying to get to! Oh! And there’s more access methods than just these, but we’ll start here. We’ll get into others in later posts, but these two are kind of the queens of the realm. And we’re not authenticating to anything unless we have both in our hands.
+- AWS Access Key ID (AKIA) is usually 20 characters that always have AKIA’ as the first four characters.
+- AWS Secret Access Key is a 40-character alpha-numeric string made up of randomized upper, lower, digits, and some symbols characters.
+Most secret scanning tools have regex patterns just for the AKIA key. If you get a ping for one, then look at the surrounding data to see if you’re lucky enough to get the secret key as well.
+While we need both to authenticate, it’s not to say our hands are completely tied if we only find the AKIA access key ID. With just the AKIA string[ we can get the account ID](https://hackingthe.cloud/aws/enumeration/get-account-id-from-keys/) and further checks that can be made with it below in [12 Digits to Discovery](#Digits).
+Last note, I swear. S3 Presigned URLs also include an AKIA key and secret value in their URLs, but these are slightly different. They are temporary key values in their own way and just provide direct access to the object in S3 that has been shared for a small window of time (One hour by default, 12 hours max). So, while they don’t provide access like IAM user access keys do, they may still let you download the object specified in the URL. And that may be useful.
+Longing To Return To ASIA
+The other kind of AWS access Key ID is the ASIA one. It requires three parts to check if you’ll have any luck with using it to gain access. Similar to AKIA access, all three are needed to be able to authenticate to AWS.
+- AWS Access Key ID (ASIA) is the same kind of 20 characters, but this time has ‘ASIA’ as the first four characters.
+- AWS Secret Access Key has same characteristics as before being a 40-character alpha-numeric string made up of randomized upper, lower, digits, and some symbols characters.
+- AWS Session Token is an 825-character string that is also made up of randomized upper, lower, digits, and some symbols characters.
+But wait, there’s another hitch! ASIA keys are just temporary credentials and are only valid for a minimum of one hour to a maximum of 12 hours. The actual max duration is based on what’s configured on the actual role. Which is sometimes unchangeable, such as with AWS defined linked service-roles.
+Uhh… I don’t have a meme for this part, but I live as a digital nomad, so enjoy this picture of a pair of crows that I took when I last roamed around Japan!
+Maybe Getting Lucky
+I didn’t really want to get into the question of “Where can I find AWS keys or tokens?”, because that is a big question with a lot of different answers; each of which depends on the differences with various AWS environments, corporate security hygiene, deployment pipeline security, and many, many more variations. [BUTT](https://www.slurmed.com/fanart/paul/005_benders-new-butt.gif), I feel like I should at least cover common credential locations if local system access is obtained in some way. It’s kinnnnda important.
+Basically:
+That’s the meat of it, but here’s why:
+~/.aws/credentials
+can be configured with AKIA and ASIA credentials. Take note of [profile] and region for operational awareness. (i.e. if set to us-east-1, maybe don’t start enumerating eu-west-1 and cause Blue Team lights to start flashing. Regions can matter more in AWS than they may in other cloud providers, so it’s worth taking note.)~/.aws/config
+can be used to store configuration data, but AWS CLI also supports role-chain assumptions and those can be set up here throughsource_profile
+declarations, as seen[here](https://docs.aws.amazon.com/cli/v1/userguide/cli-configure-files.html). Check profile and region for similar reasons.~/.aws/sso/
+and~/.aws/cli/
+are used to store AWS SSO login and SYS AssumeRole details. Copy to a test environment and see what access may be there. Access here may be especially short lived and may need to be refreshed after the user logs in again. (Grabbing the logged in SSO session from their browser may be good to do if possible)
+Also, be sure to check ENV for access key ID, secret access key, and session token. Similarly, check ~/.bash_history
+for them. Just like with other tooling, they can all be specified as in-line environmental variables. (e.x. AWS_ACCESS_KEY_ID=AKIA... AWS_SECRET_ACCESS_KEY=qazWSX... aws s3 ls)
+Also check any log files you can find, especially if you're interacting with a CI/CD system for deploying into AWS.
+The ~/.aws/
+directory isn’t encrypted by default, so maybe use something like [aws-vault](https://github.com/99designs/aws-vault) to do this for you.
+Lastly, if you’re not sure where exactly your shell landed or if you got an SSRF and are just curious, give the below addresses a shot. If they return something fun, then you may be on those resources.
+URL | Resource | Notes |
+|---|---|---|
+http://169.254.169.254/latest/meta-data/instance-id | EC2 | IMDSv2 is required if it complains about being unauthorized. If local execution is possible then just get the |
+http://169.254.170.2/v4/credentials | ECS | No token required, so SSRF is straightforward. |
+http://169.254.170.23/v1/credentials | EKS IRSA | Endpoint depends on EKS identity configuration. IRSA typically uses web identity tokens; Pod Identity uses the agent credential endpoint. |
+But… finding initial access is a rabbit hole that goes deep, so we’ll move along for now…
+What To Do With the Things You Found
+The first thing to do is to set up a place to use these compromised keys. The easiest way is to install the AWS CLI (Steps for which can be found [here](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)).
+Once installed, the keys can be tested using in-line, system environmental variables or by saving them to a profile in ~/.aws/credentials
+like below. The profile can also be set up with AWS CLI’s configure command by specifying a profile on run:
+aws configure --profile $PROFILE-NAME.
+The annoying thing though, is that it doesn’t allow specifying the aws_session_token value. So if you find an ASIA key, then manually updating the credentials file is your only real option to use profiles.
+[AKIA-PROFILE]
+aws_access_key_id = AKIAI44444444EXAMPLE
+aws_secret_access_key = je7MtGbCwBF/2...[rest of key]...
+[ASIA-PROFILE]
+aws_access_key_id = ASIAI66666666EXAMPLE
+aws_secret_access_key = qRstUvwXyZ12...[rest of key]...
+aws_session_token = FwoGZXIvYXdzEGo...[rest of token]...
+You can also specify a default AWS region for commands to be sent to, which can always be overridden with the --region
+flag. There are a lot of options for these configuration files, as seen [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html). Using profiles in your AWS configuration files makes it all so much easier. You’ll thank me later.
+A Teaspoon of Stealth Helps the AWS Mapping Go Down
+Before you start firing off API calls, consider taking advantage of [VPC Endpoints](https://docs.aws.amazon.com/vpc/latest/privatelink/create-interface-endpoint.html). They're VPC resources that enable private connectivity to AWS services and can add a little bit of stealth to our enumeration activities. Data is still logged by CloudTrail, but the only two real flags for detection.
+The biggest flag or detection is that the vpcEndpointId value will not exist in the target account because it exists in your test AWS account. A target SOC team will need to have a means to check this value against known valid VPC IDs to flag noncompliance. The other is the sourceIPAddress which will be a RFC1918 private IP address and still could be in a valid range. I’m not sure why, but AWS decided to not log the source account ID or organization ID, which would help a lot here.
+Each type of endpoint breads down like this:
+[Gateway](https://docs.aws.amazon.com/vpc/latest/privatelink/gateway-endpoints.html)endpoints only support S3 and DynamoDB by setting up a Route53 DNS record for AWS API calls and doesn’t cost anything at all.[Interface](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_interface_vpc_endpoints.html)endpoints support many, many more services (including S3 and DynamoDB as well) by setting up an Elastic Network Interface (ENI) with a private IP in your subnet for each AWS service. Each of these has a cost associated with their use. It’s not much, but it’s not nothing.
+I considered providing example commands, but I’ll leave that as an exercise for the reader.
+“Who is it that can tell me who I am?”
+Okay! You’ve got keys. They’re configured. But who even are you? Before you go off trying to list S3 buckets and EC2 instances, you should probably figure out what identity you’re actually operating under. The action, sts:GetCallerIdentity
+,is sort of the gold standard because it’s basically the whoami
+of AWS. It always works, it can’t be denied by IAM policy, and it tells you exactly who you are, and it validates that the credentials are legitimate!
+aws --profile $PROFILE sts get-caller-identity
+And from it, you get three things:
+- UserId: The AIDA (for IAM users) or AROA (for assumed roles) unique identifier. Kinda useless in a way now since we already know the principal details from the other two, but we can save them for later.
+- Account: The 12-digit account ID. Good for finding out what else may be public in the account. See
+[Search for Public Data](#search-for-public-data). - A Resource Name (ARN): This is the full identifying details of the calling identity. Most resources in AWS have one so that they can be found a bit more easily. But there’s some good stuff here since you can potentially infer the use for the identity based on its name. Which can influence what services you enumerate first. You can also look for the ARNs or the role name when doing additional recon, see
+[Mining for a Clue](#mining-for-a-clue).
+The downside is that it gets logged by CloudTrail, which looks like this:
+As expected, it includes the IP address of whatever coffee shop you’re working out of today unless you’re masking it. But thanks to plenty of legitimate tooling, calling sts get-caller-identity
+isn’t super suspicious, but it is visible. So, if the target’s log warriors have alerting on identity-check API calls, it may get some attention.
+Doing Wrong the Right Way
+Another way to get the ARN for the identity is to just do things the wrong way. You see, when a call is made to an AWS API that the identity doesn’t have permission for it gets a classic AccessDenied error. This is expected; but AWS’s sage wisdom decided to also include the ARN of the identity used for the API call.
+aws --profile $PROFILE cloudtrail describe-trails
+In this case, if you don’t have CloudTrail permissions, the error response will typically look something like:
+An error occurred (AccessDeniedException) when calling the DescribeTrails operation: User: arn:aws:iam::123456654321:user/demo.user is not authorized to perform: cloudtrail:DescribeTrails because no identity-based policy allows the cloudtrail:DescribeTrails action.
+You can try this with other services as well, but each attempt is another logged event in CloudTrail. Just something to keep in mind if you’re really trying to focus on stealth. This method looks like a failed API call rather than an explicit “who am I?” check, so this paired with using VPC Endpoints may cause it to blend in with the cacophony that is the rest of the operational noise.
+It’s worth noting that this method will also validate if the keys are legitimate. If the credentials are invalid, then AWS just returns this error:
+An error occurred (SignatureDoesNotMatch) when calling the GetCallerIdentity operation: The request signature we calculated does not match the signature you provided. Check your AWS Secret Access Key and signing method. Consult the service documentation for details.
+12 Digits to Discovery
+So now we know the account ID and potentially name of the identity. So, where do we go from here? Well, we can check a few things with just the account ID before we need to touch the verified credentials again. Some resources in AWS can be configured so that they can be shared with other specific AWS accounts or even public to anyone. So, using an AWS account we control we can check to see if any of those may publicly available.
+Why? Because I said so! But also, because these may be interesting resources like Elastic Block Storage (EBS) snapshots, Relational Database Service (RDS) snapshots, prebuilt Amazon Machine Image (AMI) resource, or Elastic Container Registry (ECR) images. They’re all used in different ways, but each could contain some useful operational context of the account you’re trying to get into and, if you’re lucky, additional credentials to do so.
+EBS Snapshots. Search for snapshots owned by the target account and you might be surprised what delicious things are found.
+aws --profile $TEST-ACCOUNT-PROFILE ec2 describe-snapshots --owner-id $TARGET-ACCOUNT-ID --query 'Snapshots[*].[SnapshotId,Description,VolumeSize,StartTime]' --output table
+If you find any, then, in your own account, create a volume from the snapshot, attach it to an instance, mount it, and browse it. Snapshots may include application data, database files, credentials, SSH keys, and config files that were never meant to leave the environment.
+AMIs: Publicly available prebuilt images used to deploy new EC2 instances and could suffer from the same malady as EBS snapshots.
+aws --profile $TEST-ACCOUNT-PROFILE ec2 describe-images --owners $TARGET-ACCOUNT-ID --query 'Images[*].[ImageId,Name,Description,CreationDate]' --output table
+Launch one as an EC2 instance in your own account and explore to hunt for useful files that should have remained private.
+RDS Snapshots: Public database snapshots that can be restored into your own account. Filtering for these by account is clunky via CLI, but they’re worth hunting for because finding a public snapshot may give you the full database details.
+aws --profile $TEST-ACCOUNT-PROFILE rds describe-db-snapshots --include-public | jq -r --arg acct "$TARGET-ACCOUNT-ID" '.DBSnapshots[] | select(.DBSnapshotArn | contains($acct)) | [.DBSnapshotIdentifier, .Engine, .SnapshotCreateTime] | @tsv'
+ECR Public Repositories: Container images may contain embedded secrets, internal source code, and configuration that reveal architecture patterns. Another good resource to check for potential easy wins.
+aws --profile $TEST-ACCOUNT-PROFILE ecr-public describe-repositories | jq -r --arg acct "$TARGET-ACCOUNT-ID" '.repositories[] | select(.repositoryArn | contains($acct)) | [.repositoryName, .repositoryUri, .createdAt] | @tsv'
+OSINT: Just Do It!
+Another option is to just take advantage of what another service may have already found out. I’m talking about those online services that index environments and set up a searchable dataset to help reconnaissance. Good stuff! What’s found may reveal exposed infrastructure for your awareness without burning API calls and therefore not generating events in the target account.
+Honestly, it doesn’t take too long to do, and it can reveal a fair bit of information. At this point, we already know the target AWS account ID, so it only takes a few minutes if everything turns up empty but can provide good context if something is found.
+[GrayhatWarfare](https://grayhatwarfare.com/): Searchable index of publicly exposed S3 buckets, Azure blobs, and other cloud storage. Search by keyword, file type, or bucket name patterns. If the target org has any storage resources hanging out in public, this is one place you might find it.
+[Awseye](https://awseye.com/): A searchable index of publicly identifiable AWS resources, helping provide visibility for S3 buckets, IAM principals, Lambda functions and other such resources that are generally not publicly accessible. Good stuff to add to the target dataset for future attacks.
+Later, when more specific resources in the AWS account are known, then run them through [crt.sh](https://crt.sh), [Shodan](https://www.shodan.io/), and [Censys](https://search.censys.io/) for a little additional reconnaissance. I’m talking about DNS, public IPs, common host names, and so on. Each may help identify additional resources in the account which may not have come into view yet.
+Mining for a Clue
+Code repositories may help with understanding a target’s AWS infrastructure without ever touching the account. Developers may hard code account IDs into Terraform configurations, CloudFormation template files, CI/CD pipelines, IAM policies, and deployment scripts. Sometimes intentionally, but other times not so much. After all, AWS says they’re not secrets, so why would they be treated as such?
+“While account IDs, like any identifying information, should be used and shared carefully, they are not considered secret, sensitive, or confidential information.” |
+The goal is to map the account’s infrastructure from public code before you start authenticated enumeration. If you find their Terraform configs, then you know exactly which services they deploy, which regions they operate in, and what their IAM structure looks like. Far better than shooting in the dark with blind API calls.
+[Sourcegraph](https://sourcegraph.com/): Code search across public repositories. Start with the account ID as a bare string, then narrow by file type to zero in on Infrastructure as Code (IaC) definitions:
+context:global "$TARGET-ACCOUNT-ID"
+context:global file:\.tf$ "$TARGET-ACCOUNT-ID"
+context:global file:\.(yaml|yml)$ "$TARGET-ACCOUNT-ID"
+context:global "arn:aws:iam::<$TARGET-ACCOUNT-ID"
+[GitHub Code Search](https://github.com/search): Native code search works for the same account-ID-first approach. Search the account ID as a string, then filter by language or file extension to focus on IaC and deployment configs.
+[GitLab](https://gitlab.com/): Supports code search across public projects. Same thing here, search the account ID and see what comes back.
+[Bitbucket](https://bitbucket.org/): Search is more limited than the others, but public repos from target organizations can still save hard coded account IDs in committed files.
+If more details about the account surface during your work, circle back and run similar repo searches with those identifiers too. These could be things like DNS names, public IPs, organization names, or GitHub organization names.
+Statistically Likely AWS Configurations
+So which services should you focus on for a targeted and less noisy approach? As mentioned before, there are like more than 200 AWS products and it can be a lot to go through. All of which would be really noisy just given the volume of checks made for all of these against all regions for a single AWS account.
+Instead of completely guessing, we wanted a rough proxy for what’s likely deployed in a typical AWS account. Public IaC repos aren’t a census of production environments, but they’re one of the better signals available for what organizations are actually spinning up.
+A Consensus of Repos
+To get a sense of this, we used Sourcegraph to search public GitHub repos for Terraform resource declarations (resource "aws_..."
+) and CloudFormation type references (Type: AWS::...
+) across every AWS service family and then we counted how many distinct repos reference each one. The full methodology, query categories, and result data are available [here](https://github.com/confused-binary/sourcegraph_query).
+More repos deploying a service suggests more organizations using it, which suggests a higher chance that they’re also configured in whatever account you just got keys to. It’s not proof, but it’s better than flipping a coin. Either way, the results from this can be seen summarized here:
+Service | Repos | Top Resource | What’s There |
+|---|---|---|---|
+IAM | 3,090 | aws_iam_role | Roles, users, policies, access keys can be useful for password attacks and role assumption attempts. |
+EC2 / VPC | 2,526 | aws_security_group | Compute, networking, security groups may contain secrets in user data. |
+S3 | 2,273 | aws_s3_bucket | Object storage that could be publicly accessible. |
+Lambda | 1,300 | aws_lambda_function | Serverless compute that could contain secrets in env vars. |
+DynamoDB | 966 | aws_dynamodb_table | NoSQL data stores that support application backends. |
+Load Balancing | 729 | aws_lb_target_group | ALBs, NLBs, and target groups can point to where the apps live. |
+SNS | 696 | aws_sns_topic | Notification topics can help map event flows and may allow data poisoning for downstream compute services. |
+Route53 | 657 | aws_route53_record | DNS records may reveal additional external assets and internal infrastructure. |
+SSM | 635 | aws_ssm_parameter | Parameter Store is a key/value store, and SSM can provide features like EC2 fleet management and deploying commands to them. |
+CloudWatch Logs | 623 | aws_cloudwatch_log_group | Log groups can help search for what else may be deployed and hunt for secrets. |
+None of this data guarantees the same is available in your target account, but these are about as close to “safe bets” as you’re going to get without authenticated recon. If an account has anything deployed, it almost certainly has IAM roles, security groups, and at couple of S3 buckets.
+Pop Shots in the Dark
+For these, you don’t need anything except valid credentials. You will get AccessDenied
+on most of these. That’s fine. You’re fishing. Any that comes back with actual data provides you with details about what you can do and where you can go. It also gives you a spot to start reading up additional attack possibilities that may be mentioned on sites like [HackTricks](https://cloud.hacktricks.wiki/en/pentesting-cloud/aws-security/index.html) or [HackingTheCloud](https://hackingthe.cloud/) to start.
+They’re roughly ordered by how frequently each service appears in the Sourcegraph data above, so start at the top and work your way down. And remember, each one of these is a management event in CloudTrail, so don’t pretend this is stealthy.
+Service | Command | Use |
+|---|---|---|
+IAM | aws iam get-account-authorization-details | May return users, roles, groups, and policies in one call |
+IAM | aws iam list-roles | Role names can reveal trust relationships and purpose |
+IAM | aws iam list-users | Human accounts, potential password spray candidates |
+EC2 | aws ec2 describe-instances | Running compute VMs, possible pivot points |
+EC2 | aws ec2 describe-security-groups | Firewall rules, may reveal network topology |
+S3 | aws s3 ls | Top data exfil target, sometimes misconfigured |
+Lambda | aws lambda list-functions | Serverless code, env vars may contain secrets |
+DynamoDB | aws dynamodb list-tables | NoSQL data stores, may back application backends |
+SNS | aws sns list-topics | Notification channels, can help map event flows |
+Route53 | aws route53 list-hosted-zones | DNS zones, may reveal internal infrastructure |
+SSM | aws ssm describe-parameters | Parameter Store, sometimes used as a secret store |
+Logs | aws logs describe-log-groups | Log groups, can show what the defender sees |
+ECS | aws ecs list-clusters | Container workloads, may lead to task definitions |
+RDS | aws rds describe-db-instances | Relational databases, potential high-value data targets |
+ECR | aws ecr describe-repositories | Container images, may contain embedded secrets or source code |
+Secrets Manager | aws secretsmanager list-secrets | Stored secrets, worth checking if accessible |
+EKS | aws eks list-clusters | Kubernetes clusters, potential for kubeconfig extraction |
+SQS | aws sqs list-queues | Message queues, may contain data in transit |
+CloudTrail | aws cloudtrail describe-trails | Can show if and how you’re being watched |
+CloudFront | aws cloudfront list-distributions | CDN distributions, possible public-facing entry points |
+If iam get-account-authorization-details
+actually works, then stop and review the results. That one call returns every user, role, group, and inline/managed policy in the entire account. One management event in CloudTrail for the full IAM map. It’s beautiful but also something I’d for sure add a detection for because of how revealing it is.
+Gotta go brrrr
+Alright, time to make some noise. These tools are loud and they will add lots of logs to CloudTrail, which may trigger alarms depending on SIEM configurations. But they’re effective at quickly mapping what your credentials can access. If stealth isn’t your primary concern (or you’ve already done your quiet recon and decided to go fast), these are going to save you a ton of time.
+jidou: Currently an internal tool at TrustedSec that will be released publicly once it’s all buttoned up and shiny. It scans more than 80 service operations, allows support for custom scripting, and has artifacts template generator to build your own csv/md/png artifact files. All with all of the API results saved to local JSON file for later analysis. I’m excited for it and hope you all will be, too. Keep an eye out for a future blog post about it!
+[Pacu](https://github.com/RhinoSecurityLabs/pacu): The AWS exploitation framework that’s kind of like Metasploit for AWS. Various modules can be used for different tasks but run iam__enum_permissions
+is a good command to start with to help map out access.
+[enumerate-iam](https://github.com/andresriancho/enumerate-iam): Brute-forces AWS API calls to determine what permissions an access key has. It tries a large list of Describe*, List*, and Get* calls across AWS services and reports which ones succeed. Quick, simple, and effective for getting a permissions snapshot.
+python enumerate-iam.py --access-key AKIA... --secret-key qaz...
+[aws-enumerator](https://github.com/shabarkin/aws-enumerator): Another access enumeration tool that focuses on quickly identifying what services and permissions are accessible with a given set of credentials. Similar to the others but does so in its own way.
+aws-enumerator cred -aws_access_key_id AKIA... -aws_region $REGION -aws_secret_access_key kIm6m...aws-enumerator enum --services all
+Conclusion
+Finding AWS credentials is just the beginning. The difference between a noisy assessment that gets credentials revoked in minutes and a thorough one that maps out the full attack surface comes down to understanding what’s logged, what isn’t, and where to focus your limited API call budget. There is a lot out there, so it’s worthwhile to search with some enumeration before jumping into mass API calls. If you have it, take your time to review and analyze things. But, if you don’t, then rock and roll.
+References
+[https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html#identifiers-prefixes](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html#identifiers-prefixes)[https://docs.aws.amazon.com/ebs/latest/userguide/ebs-modifying-snapshot-permissions.html](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-modifying-snapshot-permissions.html)[https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-presigned-url.html](https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-presigned-url.html)[https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)[https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-management-events-with-cloudtrail.html](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-management-events-with-cloudtrail.html)[https://docs.aws.amazon.com/STS/latest/APIReference/API_GetCallerIdentity.html](https://docs.aws.amazon.com/STS/latest/APIReference/API_GetCallerIdentity.html)[https://rhinosecuritylabs.com/aws/aws-role-enumeration-iam-p2/](https://rhinosecuritylabs.com/aws/aws-role-enumeration-iam-p2/)[https://securitylabs.datadoghq.com/articles/non-production-endpoints-as-an-attack-surface-in-aws/](https://securitylabs.datadoghq.com/articles/non-production-endpoints-as-an-attack-surface-in-aws/)</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-7" class="article-body">
             <h2 class="article-title">Microsoft Plugs Nearly 1,000 Security Holes</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/09/microsoft-plugs-nearly-1000-security-holes/" target="_blank">Original Link</a></p>
             <div class="content-text">Microsoft Corp. today issued updates to plug at least 974 security holes in its Windows operating systems and other software, by far its biggest single patch batch ever. Microsoft says artificial intelligence is helping to speed the discovery of vulnerabilities, but security experts warn that many organizations already are struggling to prioritize the more human-intensive endeavor of testing and deploying so many fixes each month.
@@ -288,6 +482,9 @@ We need to know how many of ’em were discovered using AI.
 None. These AI tools are best understood as a terribly inefficient form of [fuzzing](https://en.wikipedia.org/wiki/Fuzzing). They don’t “discover” anything; they just roll the dice and kick out what matches. It’s *humans* that have to sort through those results to determine fact from fiction. A better question to ask would be how much human effort they spent ruling out the [false positives](https://en.wikipedia.org/wiki/False_positive).
 An even *better* question to ask is how many of these bugs were *created* using AI. As I have noted here before, anyone that argues that AI will solve all the problems of human coders needs to let us know when we can expect to see the patch counts reach record *lows* instead of record highs. Until/Unless that happens, AI use is just another net negative compared to having actually intelligent humans doing the job.
 Well I mean they are tools, they can be refined, they are as useful as that is – do they remove the human component being necessary, no not yet. You don’t really want that IMO. They have no idea how to contain something they’re designing to be clever and hive-minded, leaving read-after-death notes to each other on encrypted random sites etc, so like any arms race it’s a tradeoff between blowing yourself up completely and setting the atmosphere on fire, or letting the other guy do it first, which is… worse?
+Arguably, the worst of all options is almost any option when it comes to ‘agentic intelligences’ and ai.
+Their imaginations are merely less challenged. That should scare people.
+Hey, mealy, ever get the feeling people have no clue what sort of sense(s) of humour AIs and agentic intelligences (hive-like or individually) will have?
 Windows has more bugs than it has features
 A lot of heads should be rolling at Microsoft!
 Do you want to kill the innovation ? Are you a communist ?
@@ -301,6 +498,8 @@ This is crazy! 2600 patches in 2026 so far? How many poor code entry points to w
 Since 13 is considered an unlucky number, Microsoft should be using AI to write Windows 14 or 15 and keep humans from coding. Humans can only be overseers.
 Or maybe this is chance for IBM or some other major company to get back into personal computers by using their AI expertise to generate a Windows competitor that is bug free.
 Your faith in AI is … disturbing.
+Well, with many THOUSANDS of patches on an OS that has been in existence and built upon for 30 odd years, I think any faith in developer comentence is misplaced.
+Could AI be any worse? These statistics say no.
 I wonder how many of these bugs were previously known and used by NSA, CIA and other worldwide similar agencies?
 What are the implications of closing these holes to government hacking and national security?
 Could be a BIG story here!
@@ -311,26 +510,17 @@ Also, extra pizza is NOT going to cut it. Teams need resources and quality leade
 With respect to AI, most AI company heads are against AI or at least convinced it will kill us all within a few years, but instead of outlawing the research and strictly limiting it the use of it to very specific subjects and users, people just push, and suggest so what, someone else will ‘make the money’ if they don’t.
 What a load of crap.
 It’s why we (everybody) have the H bomb.
+Would take too many of em. People would shrug off the odds.
 You know, eventually AI will patch the system so well, it will have run out of a job.
 Ever wonder if AI will begin injecting problems it can later “fix” in order to keep itself relevant?
 Kind of like how anti-virus software works … most of the attack vectors (virus, worm, etc) your computer is being defended against were created by the companies selling the anti-virus software.
-Not sure if I should be glad AI is finding these or upset that they exist in the first place. Maybe more to the point can we trust AI to actually find these flaws credible or are we just trusting AI knows what its doing?</div>
+Not sure if I should be glad AI is finding these or upset that they exist in the first place. Maybe more to the point can we trust AI to actually find these flaws credible or are we just trusting AI knows what its doing?
+This is AI exposing decades of inadequate code standards and testing. In an ideal world, developers would recognize this and use AI to expand static and functional test coverage of future code. However in a world where developers are human beings, the more likely result is an exponential growth of new code that is even less validated than before. How does the saying go? If architects built buildings the way developers write code, the first woodpecker to come along would destroy civilization.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-6" class="article-body">
-            <h2 class="article-title">Token Analysis and Tracking System (TATS)</h2>
-            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/09/08/token-analysis-and-tracking-system-tats/" target="_blank">Original Link</a></p>
-            <div class="content-text"><p>TL;DR: Tracking OAuth tokens is hard, but Token Analysis and Tracking System (TATS) can help. TATS will collect, store, decode, analyze and provide visual tracking for OAuth token exchanges. It was built to account for known OAuth deviations in the Microsoft ecosystem and will work with any OAuth implementation. This blog explores functionality along with [&#8230;]</p>
-<p>The post <a href="https://specterops.io/blog/2026/09/08/token-analysis-and-tracking-system-tats/">Token Analysis and Tracking System (TATS)</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-7" class="article-body">
+        <div id="art-8" class="article-body">
             <h2 class="article-title">GTIG AI Threat Tracker: From Prompting to Autonomy – The Evolution of Adversarial AI</h2>
             <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/from-prompting-to-autonomy-the-evolution-of-adversarial-ai/" target="_blank">Original Link</a></p>
             <div class="content-text">GTIG AI Threat Tracker: From Prompting to Autonomy – The Evolution of Adversarial AI
@@ -474,30 +664,6 @@ At Google, [threat intelligence](https://cloud.google.com/transform/how-google-d
 Our AI development and Trust & Safety teams also work in constant concert with our threat intelligence, security, and modelling experts to effectively stem misuse.
 About the Authors
 Google Threat Intelligence Group focuses on identifying, analyzing, mitigating, and eliminating entire classes of cyber threats against Alphabet, our users, and our customers. Our work includes countering threats from government-backed actors, targeted zero-day exploits, coordinated IO, and serious cyber crime networks. We apply our intelligence to improve Google's defenses and protect our users and customers.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-8" class="article-body">
-            <h2 class="article-title">LLMHaxor Update</h2>
-            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/llmhaxor-update" target="_blank">Original Link</a></p>
-            <div class="content-text">LLMHaxor Update
-Today I am sharing some updates on a tool I created from an earlier time — before Burp Suite included native AI testing enhancements and before an almost explosive growth of open-source AI tooling and testing frameworks hit the scene. My little tool became obsolete almost overnight, except I find test after test, engagement after engagement, that isn't quite true. I still have a lot of the same problems I did a year ago; the degree has just changed. I'll recap and update my "practitioners" point of view.
-About a year ago I first published the blog post [Getting Started Using LLMs in Application Testing With an MVP](https://trustedsec.com/blog/getting-started-using-llms-in-application-testing-with-an-mvp). At the time, the alternative testing solutions were often complex to stand up. Nothing too difficult, but before you could start using PyRIT or any other framework against some client's arbitrary application, you were faced with creating adapters and transformers. It is better now — tools like [Garak](https://garak.ai/) and more recently [Augustus](https://www.praetorian.com/blog/introducing-augustus-open-source-llm-prompt-injection/) have made things quite a lot simpler; often just playing with a JSON query for a bit can now get you where you need to go. Oh, and you can of course just ask your favorite model to write something for you! It is, however, still not exactly point-and-click as far as AI/LLM-specific testing goes.
-Also don't forget this still usually comes with a number of "fun" web application testing problems like maintaining sessions, obtaining access tokens, and detecting expiration. Finally, you still have to ensure you have messages formatted correctly, lest you find out you are not really testing the layer you thought you were.
-For more general web application testing, [Portswigger's native AI extensions to Burp](https://portswigger.net/burp/documentation/desktop/burp-ai) are nothing short of fantastic and about as near to "see that, scan that, do it now" as you could hope for. It is not free, though, and the model isn't local.
-All of these things assume you can actually use the tool in the environment you want to test in. Most come with a pile of dependencies and environment requirements; as a practical matter they end up installed either in a container or VM that you clone for each engagement. This solution quickly falls apart when your client tells you all testing will take place from their VDI or another machine they are providing you. Lack of internet access, policy, or disclosure rules might very well prevent you from using Burp's built-ins. LLMHaxor's minimal footprint and ability to run entirely within a user's home directory — without special permissions or internet access — makes it uniquely suited for exactly these situations.
-TL;DR #1 – I still find I want to get something going right away and explore things quickly.
-- I need to be able to log in, copy/paste some HTTP headers, and get fuzzing.
-- I need to be able to look for interesting responses without development time on my end or excessive machine time running models on CPU.
-TL;DR #2 – I still find I want to be able to test with a local model in an environment where I don't need a lot of software, and everything I do need can install to my home/profile directory and run without special permissions.
-- Ollama (CPU mode) + small models like Granite / Llama3.2
-- JRuby .jar
-- Burp Suite
-My original LLMHaxor tool still fits the bill. One comment I made in my original blog post was that the choice to leverage Burp's Intruder as the request framework left out WebSocket testing. At the time, a lot of chat functions and other things I wanted to let AI explore in an adaptive context — versus a simple fuzz list — ran over HTTP. Increasingly, these integrations have standardized on streaming responses via WebSockets. So I have added a proxy to the tool that gathers WebSocket responses and presents them to Intruder as an HTTP interface that Intruder supports.
-Find your websocket API, usually a GET with a “1XX Switching Protocols” response, change the protocol to ‘ws/wss’, point your intruder at local host and Go!
-It is ‘almost’ that simple, you might need to move some http headers around as well. You can read all the details at: [https://github.com/GeoffWalton/LLMHaxor/blob/main/WS_ADAPTER_GUIDE.md](https://github.com/GeoffWalton/LLMHaxor/blob/main/WS_ADAPTER_GUIDE.md)
-You can get an updated version of the plugin with the new WebSock proxy support and an number of other bug fixes and improvements to reliability and logging at: [https://github.com/GeoffWalton/LLMHaxor/blob/main/LLMHaxor.rb](https://github.com/GeoffWalton/LLMHaxor/blob/main/LLMHaxor.rb)</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
