@@ -59,103 +59,96 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-09-12</h1>
+        <h1>Security Briefing // 2026-09-13</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Hackers abused Claude to extract secrets from 1.8M Android apps</button></li><li><button onclick="show('art-1')">Passkey-themed phishing attacks lead to Microsoft 365 data theft</button></li><li><button onclick="show('art-2')">China-Linked UNC3569 Exploited Sogou Input Method Flaw to Deploy GRAYRABBIT Backdoor</button></li><li><button onclick="show('art-3')">Cisco FMC Flaws Exploited to Steal Credentials and Deploy Qilin Ransomware</button></li><li><button onclick="show('art-4')">Protecting organizations from AI-assisted executive impersonation and invoice fraud</button></li><li><button onclick="show('art-5')">Unmasking SCCM Application Execution</button></li><li><button onclick="show('art-6')">So… You Found AWS Access Keys (Part 1)</button></li><li><button onclick="show('art-7')">Microsoft Plugs Nearly 1,000 Security Holes</button></li><li><button onclick="show('art-8')">Microsoft Plugs Nearly 400 Security Holes</button></li><li><button onclick="show('art-9')">Demystifying AI Exploits: A Blueprint for AI-Assisted Vulnerability Management</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Attackers Use Passkey Phishing to Hijack Microsoft Cloud Accounts and Exfiltrate Data</button></li><li><button onclick="show('art-1')">CISA Adds 5 Actively Exploited Artifactory, ScreenConnect, and RouterOS Flaws to KEV</button></li><li><button onclick="show('art-2')">Dutch NCSC: Critical Check Point VPN flaws exploitation is imminent</button></li><li><button onclick="show('art-3')">Passkey-themed phishing attacks lead to Microsoft 365 data theft</button></li><li><button onclick="show('art-4')">Protecting organizations from AI-assisted executive impersonation and invoice fraud</button></li><li><button onclick="show('art-5')">Unmasking SCCM Application Execution</button></li><li><button onclick="show('art-6')">So… You Found AWS Access Keys (Part 1)</button></li><li><button onclick="show('art-7')">Microsoft Plugs Nearly 1,000 Security Holes</button></li><li><button onclick="show('art-8')">Microsoft Plugs Nearly 400 Security Holes</button></li><li><button onclick="show('art-9')">Demystifying AI Exploits: A Blueprint for AI-Assisted Vulnerability Management</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">Hackers abused Claude to extract secrets from 1.8M Android apps</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/hackers-abused-claude-to-extract-secrets-from-18m-android-apps/" target="_blank">Original Link</a></p>
-            <div class="content-text">Anthropic says multiple threat groups, including the financially motivated and state-sponsored espionage groups linked to Russia and China, tried to abuse its Claude AI model for malicious purposes. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
+            <h2 class="article-title">Attackers Use Passkey Phishing to Hijack Microsoft Cloud Accounts and Exfiltrate Data</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/attackers-use-passkey-phishing-to.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Microsoft has disclosed details of two campaigns in which threat actors are abusing third-party email delivery infrastructure to blast financial fraud scam messages and using passkey-themed social engineering to breach cloud environments.
+The first campaign, per the tech giant, [involved](https://www.microsoft.com/en-us/security/blog/2026/09/10/protecting-organizations-ai-assisted-executive-impersonation-invoice-fraud/) sending over a million scam emails between August 3 and 5, 2026, by masquerading as chief executive officers (CEOs) of various target companies, aiming to persuade accounts payable departments at those firms to initiate Automated Clearing House ([ACH](https://en.wikipedia.org/wiki/Automated_clearing_house)) transfers for a supposed ServiceNow annual subscription.
+Evidence indicates that the operators behind the campaign have leveraged generative artificial intelligence (AI) to facilitate the creation of email templates and draft emails tailored to their recipients. The activity primarily singled out enterprise users in the U.S., spanning IT services, consumer goods, real estate, and discrete manufacturing sectors.
+"The campaign follows steps before and during the execution of the campaign: threat actors register impersonation domains, send executive-themed payment requests through trusted infrastructure, embed fabricated invoices and supporting conversations, and attempt to convince finance personnel to initiate ACH transfers," the Microsoft Security Research team said.
+"Unlike traditional invoice scams that rely on a single social engineering lure, this campaign layered executive impersonation, vendor branding, fabricated invoices, and supporting email conversations into a unified narrative intended to reduce recipient skepticism."
+The spoofed email messages contained a purported "approval" of the fake invoice to trick recipients into making payments to attacker-controlled accounts. To lend a veneer of legitimacy to the deception, the threat actor included a forged email thread along with the fabricated invoice.
+In a clever twist, the attackers identified CEOs, CFOs, and presidents at victim organizations and plugged their names and email addresses into the emails' signatures so that they look convincing to the targets. The campaign also heavily relied on bogus domains and content designed to impersonate trusted brands and individuals. Some of the registered domains are below -
+- service-nowinc[.]com
+- domainlify[.]net
+Passkey-Themed Social Engineering Leads to Cloud Compromise
+The second campaign [documented](https://www.microsoft.com/en-us/security/blog/2026/09/09/passkey-themed-social-engineering-leads-identity-cloud-compromise/) by Redmond revolves around cloud-based intrusions targeting multiple accounts in which suspicious sign-ins are followed by the threat actors adding their own authentication methods, as well as high-volume Microsoft Graph activity, SharePoint and OneDrive downloads, and mailbox collection through REST APIs.
+The activity, which has been detected since May 2026, is consistent with "automated collection from compromised cloud identities using proxy-associated infrastructure," Microsoft said.
+The attack commonly begins with identity-focused social engineering. The threat actors call or message a user's personal phone number, while claiming to be from the organization's IT help desk and urging them to immediately update their passkey, multi-factor authentication (MFA), or single sign-on (SSO) configuration to avoid access disruptions.
+Unsuspecting employees are redirected to counterfeit websites that mimic the legitimate Microsoft sign-in experience via SMS messages sent to their personal devices. The end goal here is to use the pretext to guide them through adversary-in-the-middle (AitM) or [device-code authentication](https://thehackernews.com/2026/07/debull-tooling-abuses-microsoft-device.html) flows and take control of their Microsoft accounts either by capturing the credentials or unknowingly granting access on the actor's behalf.
+"The actor appears to invest heavily in pre-attack research, likely gathering information about employees and organizational structure from public sources such as social networking and professional profiling platforms," Microsoft said. "In a smaller number of cases, actors take advantage of already compromised accounts to expand their reach" by sending similar passkey-themed messages via Microsoft Teams.
+What's more, the threat actor has been observed registering domains built around themes such as passkeys, SSO enrollment, account activation, and identity verification, at the same time including the target organization's name as a subdomain in the pattern: "<company name>.<malicious domain>[.]com" -
+- passkeyhelpdesk[.]com
+- secure-passkey[.]com
+- setupmypasskey[.]com
+- add-passkey[.]com
+- integratedsso[.]com
+- oktasession[.]com
+- syncmykey[.]com
+- portalsetuphub[.]com
+It's worth noting that this modus operandi [overlaps](https://thehackernews.com/2026/08/unc6671-vishing-attacks-target-personal.html) with a [loose-knit cybercrime collective](https://thehackernews.com/2026/09/microsoft-365-attackers-use-help-desk.html) tracked by the cybersecurity community under the monikers Cordial Spider, O-UNC-045, PREY-0058, and UNC6671. The e-crime adversary has been described as a coordinated group of threat actors that operates multiple public extortion brands while sharing overlaps in the underlying phishing infrastructure and targeting footprint.
+"UNC6671 uses credential harvesting panels hosted on generic root domains masquerading as being related to passkeys, appending victim-specific subdomains to facilitate targeted voice phishing campaigns," noted last month.
+Although the exact nature of these connections is unclear, it's suspected that they have been driven by splintered affiliates retaining access to shared initial access playbooks or relying on the same commoditized phishing panels, voice-phishing callers, and shared infrastructure.
+Microsoft, for its part, has attributed the initial access activity observed in this campaign to a range of threat actors, including Storm-3121 and Storm-3032. While Storm-3121 carries out initial access activity leading to [ShinyHunters](https://thehackernews.com/2026/01/mandiant-finds-shinyhunters-using.html) and Falcon (aka CL-CRI-1182) extortion, Storm-3032 is its designation for UNC6671, which refers to a set of actors that broke off from the BlackFile (aka CL-CRI-1116) group and now operate under the Helix extortion brand.
+In at least one case investigated by Microsoft, the threat actors are said to have carried out an anomalous sign-in to [Microsoft Office Home](https://learn.microsoft.com/en-us/windows/privacy/windows-11-endpoints-non-enterprise-editions) from an unmanaged device to expand their access to other applications like SharePoint Online and OneDrive through the Graph API and enumerate sensitive files and internal services.
+Another incident involved the use of a passkey lure to launch a device code phishing attack and gain control of a victim's account without having to steal their credentials or cookies, effectively getting around MFA safeguards. The third attack pattern detected by Microsoft employs compromised credentials, likely obtained from a prior event, to register their own [phone-based method](https://learn.microsoft.com/en-us/entra/identity/authentication/howto-authentication-methods-activity) to bypass MFA and engage in reconnaissance and post-exploitation activity.
+"Following initial access, the actor's first objective was to transform a temporary compromise into a persistent foothold," the Windows maker said. "Rather than relying solely on stolen credentials, the actor enrolled an MFA method under their control, typically by registering a new phone number, authenticator application, or software-based one-time password (OTP) token."
+An advantage this actor-controlled second factor offers is that it allows the threat actor to sign-in into the victim's corporate account without their participation and maintain continued access in combination with unrevoked sessions or valid credentials. The various actions the threat actor can take upon establishing MFA persistence are as follows -
+- Conduct extensive internal reconnaissance using the Graph API and inventory users, groups, permissions, resources, and accessible content across the tenant using the compromised identity.
+- Inspect roles and high-value accounts and service identities for privilege escalation.
+- Enumerate mailbox messages, folders, and attachment metadata for intelligence collection.
+- Conduct high-volume access and download activity aimed at SharePoint Online and OneDrive for Business, and even Microsoft Exchange Online in some cases.
+- Engage in sustained data exfiltration that lasts from several hours to multiple days depending on the volume of files and email content harvested from the compromised user.
+- Deliberately rotate infrastructure across the attack lifecycle and use separate IP addresses for authentication, reconnaissance, and exfiltration activities so as to subvert network-based indicators.
+"The attack underscores a critical detection challenge: Microsoft Graph abuse rarely appears suspicious when viewed through a single API call," Microsoft said. "This attack serves as a strong example of why Graph activity must be assessed holistically, with emphasis on behavioral progression and cross-event correlation rather than individual API requests in isolation."
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-1" class="article-body">
-            <h2 class="article-title">Passkey-themed phishing attacks lead to Microsoft 365 data theft</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/passkey-themed-phishing-attacks-lead-to-microsoft-365-data-theft/" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft says threat actors linked to ShinyHunters, Helix, and other extortion gangs are using passkey and single sign-on-themed social engineering attacks to compromise corporate Microsoft accounts and steal data from Microsoft 365 services. [...]
+            <h2 class="article-title">CISA Adds 5 Actively Exploited Artifactory, ScreenConnect, and RouterOS Flaws to KEV</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/cisa-adds-5-actively-exploited.html" target="_blank">Original Link</a></p>
+            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) has added five security flaws impacting [JFrog Artifactory, ConnectWise ScreenConnect](https://www.cisa.gov/news-events/alerts/2026/09/11/cisa-adds-three-known-exploited-vulnerabilities-catalog), and [MikroTik RouterOS](https://www.cisa.gov/news-events/alerts/2026/09/10/cisa-adds-two-known-exploited-vulnerabilities-catalog) to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, following reports of active exploitation in the wild.
+Details of the vulnerabilities are as follows -
+- CVE-2026-42016 (CVSS score: 8.1) - An incorrect authorization vulnerability in JFrog Artifactory that could lead to privilege escalation due to a validation check of the token signature/issuer and not the token's scope.
+- CVE-2026-42018 (CVSS score: 7.5) - An improper authentication vulnerability in JFrog Artifactory that could return an internal anonymous-user token to an unauthenticated caller when anonymous access is disabled, potentially leaking sensitive resources.
+- CVE-2026-84869 (CVSS score: 9.9) - An improper privilege management and missing authorization vulnerability in ConnectWise ScreenConnect that could allow an attacker to file transfer and execute through an active remote session without authorization or host confirmation.
+- CVE-2026-67277 (CVSS score: 8.8) - A missing authentication for a critical function vulnerability in MikroTik RouterOS that could allow kernel memory disclosure and denial-of-service in the btest service.
+- CVE-2026-86060 (CVSS score: 9.2) - An improper neutralization of argument delimiters in a command vulnerability in MikroTik RouterOS that could allow an attacker to change the trusted RouterOS policy mask and achieve privilege escalation.
+As [previously reported](https://thehackernews.com/2026/09/attackers-chain-jfrog-artifactory-flaws.html) by The Hacker News, attackers have been observed chaining the two Artifactory bugs alongside [CVE-2026-82329](https://thehackernews.com/2026/09/attackers-exploit-critical-jfrog.html) (CVSS score: 9.8) to take administrator control of self-hosted servers and deploy backdoors between August 15 and September 8, 2026. CVE-2026-82329 was [added](https://thehackernews.com/2026/09/cisa-adds-seven-exploited-flaws-as.html) to CISA's KEV catalog earlier this month.
+"Attackers are chaining these vulnerabilities to bypass authentication, escalate privileges, and gain administrative control over vulnerable Artifactory instances," Google-owned Wiz said. "Observed post-exploitation activity includes the creation of persistent administrator accounts, the deployment of malicious Groovy plugins for code execution, and the installation of Rust-based backdoors to establish persistence."
+The exploitation of CVE-2026-84869, on the other hand, has been linked to a set of three unrelated incidents [documented](https://thehackernews.com/2026/09/rogue-screenconnect-clients-spread-four.html) by Huntress in which threat actors abused ScreenConnect to distribute a malicious Visual Basic Script (VBScript) payload to newly connected systems.
+ConnectWise has [described](https://www.connectwise.com/company/trust/security-bulletins/2026-09-08-screenconnect-bulletin) the flaw as a "condition" in the ScreenConnect client that "may allow files to be transferred and executed through an active remote session without authorization or Host confirmation in certain circumstances." The issue does not impact ScreenConnect servers.
+"Under certain circumstances, this could enable files to be transferred to and executed on the Host client system, including through elevated execution actions," Huntress [said](https://www.huntress.com/blog/rogue-screenconnect-installations) in an update, urging organizations to update to ScreenConnect version 26.6.5.
+CISA's addition of CVE-2026-67277 and CVE-2026-86060 [follows a report](https://thehackernews.com/2026/09/attackers-hijack-mikrotik-routers.html) from CERT Polska last week in which it said it [observed](https://thehackernews.com/2026/09/weekly-recap-chrome-0-day-router.html#:~:text=MikroTik%20RouterOS%20Flaws%20Exploited) unknown threat actors exploiting two flaws in MikroTik RouterOS to seize control of vulnerable devices without authentication. The cybersecurity agency dubbed the exploit chain MikroTrick.
+Federal Civilian Executive Branch (FCEB) agencies are required to patch the RouterOS flaws by September 13, 2026, the ScreenConnect flaw by September 14, 2026, and the Artifactory flaws by September 25, 2026.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">Dutch NCSC: Critical Check Point VPN flaws exploitation is imminent</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/dutch-ncsc-critical-check-point-vpn-flaws-exploitation-is-imminent/" target="_blank">Original Link</a></p>
+            <div class="content-text">The Dutch Nationaal Cyber Security Centrum (NCSC) is warning of imminent exploitation of two critical flaws in Check Point VPN tracked as CVE-2026-85102 and CVE-2026-85103. [...]
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-2" class="article-body">
-            <h2 class="article-title">China-Linked UNC3569 Exploited Sogou Input Method Flaw to Deploy GRAYRABBIT Backdoor</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/china-linked-unc3569-exploited-sogou.html" target="_blank">Original Link</a></p>
-            <div class="content-text">A China-linked hacking group exploited a flaw in Sogou Input Method, one of the most widely used tools for typing Chinese characters on Windows, to install a backdoor on victims' computers, security company Gen Digital said in [research published Thursday](https://www.gendigital.com/blog/insights/research/one-click-backdoor-sogou).
-The attack started with a crafted link and ended with the attacker able to do anything the logged-in user could do. Tencent, which owns and develops Sogou, fixed the flaw in April 2026.
-Gen found the flaw while investigating a live intrusion by UNC3569, a group that [Google Threat Intelligence ties to China](https://www.virusbulletin.com/uploads/pdf/conference/vb2024/papers/Down-the-GRAYRABBIT-hole-exposing-UNC3569-and-its-modus-operandi.pdf) and places in the country's hacker-for-hire scene. Google has tracked the group since 2021 and says it has targeted government, education, technology, and finance sectors, mostly in East and Southeast Asia.
-The backdoor it installed is GRAYRABBIT, a small program the group has used for years and that Google describes as its first step onto a machine. It gives an attacker a remote command shell, allows files to be moved in both directions, and can load additional modules from the attacker's server at any time.
-Tencent's fix blocked the way in. It did not change the part of Sogou that made the attack possible. In the patched version [Gen examined](https://www.gendigital.com/blog/insights/research/one-click-backdoor-sogou), the built-in browser engine is still the 2020 version, and its sandbox is still switched off.
-How One Link Reached the Machine
-Sogou Input Method is the most popular Chinese input method in China, according to 2023 research by Citizen Lab at the University of Toronto.
-That research put its user base at more than 455 million people a month across Windows, Android and iOS, and its share of Chinese input-method users at about 70%. Citing market research on visits to the product's website, it also noted that users are not only in China, with the United States accounting for over 3.3% of visits.
-The same research found [flaws in the app's encryption](https://thehackernews.com/2023/08/encryption-flaws-in-popular-chinese.html) that exposed what people typed.
-The flaw Gen found is in the Windows version. Sogou Input Method is not one program there. It is a set of components that communicate with each other via a custom link type registered on Windows, sgbiz:. When anything opens an sgbiz: link, Windows passes it to biz_helper.exe, which reads the link and starts the Sogou component it names.
-That handler checks which program the link asks it to start. It does not check the command-line arguments the link asks it to pass along. Gen found no filtering on them at all.
-So the attacker picked the arguments. The link pointed at SGMyInput.exe, Sogou's settings program, and told it to open the skin store with a web address of the attacker's choosing.
-The skin store is the only screen in that program that opens a browser window. The code sends that browser to whatever address it is handed, with no check on the address at all.
-That browser is where the third problem sits. Sogou builds its own copy of Chromium, and it's version 80, from around March 2020.
-Gen found two of the browser's protections switched off and written into the code that way: the sandbox, which normally keeps a compromised web page away from the rest of the computer, and the same-origin policy, which stops a page reading data from other sites.
-With the sandbox gone, a JavaScript flaw in the page becomes code that runs on the user's computer with the user's privileges. There is no second step to exit the browser.
-Gen says clicking the link was all it took. Tencent does not agree. In a response quoted in the research, Tencent described the chain as relatively complex and said an attacker would need social engineering to get the user to "actively authorize the browser's pop-up prompt."
-Browsers built on Chromium do show a confirmation box before handing a link to a separate program on the computer, and a user can tick a box to stop seeing it for a given site. Neither company says what the people in this campaign saw. Gen says the link could also arrive by email or chat message, and neither account says what a user sees when a link is opened that way.
-Why a 2021 Browser Bug Still Worked
-The page the victims were sent to carried an exploit for [CVE-2021-38003](https://nvd.nist.gov/vuln/detail/CVE-2021-38003), a flaw in how V8, Chrome's JavaScript engine, handled JSON.stringify. It let an internal value that scripts should never see escape into the page, and from there an attacker could corrupt memory and run code.
-Google fixed it in Chrome 95 in October 2021. CISA added it to its [catalog of vulnerabilities known to have been exploited](https://cisa.gov/known-exploited-vulnerabilities-catalog) on November 3, 2021. Singapore firm STAR Labs published a [full analysis and working exploit code](https://starlabs.sg/blog/2022/12-thehole-new-world-how-a-small-leak-will-sink-a-great-browser-cve-2021-38003/) in December 2022.
-Sogou's Chromium build never received that fix. It never got most of the others either.
-Of the 41 Chromium V8 flaws in CISA's catalog, at least 32 were fixed in Chrome releases that came out after the version Sogou ships. The Hacker News checked each flaw's CVE record against that version.
-That is a count of flaws, not a count of ways into Sogou. Whether any of them can be reached through the skin store window depends on what the page can touch inside it, and no one has published that work.
-What Landed on the Machine
-The exploit carried a small downloader. Gen traced it pulling three files from a server on Alibaba Cloud in Hong Kong: a legitimate copy of 7-Zip, a malicious DLL, and an encrypted file holding the final payload.
-All three went into C:\Users\Public\Documents. The malicious DLL was saved under the name 7-Zip loads from its own folder at startup, so running 7-Zip loaded the attacker's code instead.
-The archive command the attackers ran was meaningless. Its only job was to start 7-Zip.
-The DLL counts the processes running on the computer before it decrypts anything. If it finds fewer than 50, it builds the wrong key and the payload turns to garbage.
-Automated malware-analysis systems tend to run few processes. Real desktops do not.
-It then deletes itself. Gen found it moving its own contents into an NTFS alternate data stream, a hidden part of the file record, and then marking the file for deletion. The file leaves the disk with no delete call in the behavior logs.
-What it leaves behind is GRAYRABBIT. The backdoor reaches its server at mail.uaiubifas[.]top on port 443, and the traffic there is plain TCP scrambled with RC4 rather than TLS. Port 443 typically carries TLS, so non-TLS traffic on that port is worth watching.
-What Tencent Fixed, and What It Left
-Gen reported the flaw to Tencent on April 9, 2026, and it is tracked as CVE-2026-51990.
-Tencent replied the next day and confirmed on April 21 that a fix was complete and would go out to all users via an automatic update in version 16.3.0.3498. That is 12 days.
-The whole fix sits in biz_helper.exe. It now looks for the two arguments that carry web addresses, rejects anything that is not HTTPS, and checks the hostname against four allowed endings: sogou.com, qq.com, woa.com and sogou. Gen says more checks were added after that.
-The browser engine was not touched. In the patched files Gen examined, the sandbox setting is still off, the web security flag is still written into the code, and the same switches are still applied.
-The engine is still Chromium 80. What has changed is that an outsider can no longer point it at an address of their choosing via the link handler. Gen said those components need more work.
-What to Do
-Update Sogou Input Method. The fix is in version 16.3.0.3498, which Gen says Tencent pushed to all users by automatic update on April 21, 2026.
-Two things are missing from the public record. Neither Gen nor Tencent has said which versions were affected, and neither explains how to check the version installed on a machine.
-If a machine may have been reached before the fix, look for the indicators below. The loader deletes itself, so the malicious DLL may no longer be on disk. No source says whether installing the fix removes a backdoor that is already running.
-Gen published the following indicators.
-- SHA-256 29c7ee41d0cc9e07d981e451df56d0c3d37c41ac4ec10c7b516cc033ee397a63 malicious DLL loader, written to disk as 7z.dll
-- SHA-256 749160a2f20f82744026719cf72e483595c6aad718efa74d675a98662e02422e encrypted payload file, named p
-- SHA-256 d7a3c7eb94edc0e020f74c678743d71d61e944634aade4a67a96c3589e828b3a GRAYRABBIT backdoor, internal name core.dll
-- Domain mail.uaiubifas[.]top backdoor command server, port 443
-- Domain noht1ng[.]top hosted the exploit page
-- IP 8.218.50[.]207 staging server, Alibaba Cloud Hong Kong
-- Path C:\Users\Public\Documents\ where the three files were written
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
         <div id="art-3" class="article-body">
-            <h2 class="article-title">Cisco FMC Flaws Exploited to Steal Credentials and Deploy Qilin Ransomware</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/cisco-fmc-flaws-exploited-to-steal.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Cisco has revealed that [three distinct threat clusters](https://blog.talosintelligence.com/fmc-ongoing-exploitation/) linked to ransomware and state-sponsored attacks have been exploiting two recently patched Secure Firewall Management Center (FMC) vulnerabilities.
-The attacks leverage [CVE-2026-20079](https://thehackernews.com/2026/07/cisco-fmc-zero-day-actively-exploited.html) (CVSS score: 10.0), an authentication bypass vulnerability in the web interface of FMC software that could allow an unauthenticated, remote attacker to bypass authentication and execute script files on an affected device to obtain root access to the underlying operating system.
-The second flaw under exploitation is [CVE-2026-20316](https://thehackernews.com/2026/08/cisco-patches-12-sd-wan-and-ios-xe.html) (CVSS score: 5.3), which could allow an unauthenticated, remote attacker to log in to an affected device using a low-privilege account to access sensitive data within susceptible systems. It can be paired with other Cisco Secure FMC vulnerabilities to elevate privileges.
-Cisco Talos said it identified three clusters of post-compromise activity of FMC instances associated with state-sponsored and crimeware threat actors. These include -
-- UAT-12197, which has exploited CVE-2026-20079 to deploy JSP-based web shells and a Java Archive (JAR)-based command executor to query internal databases and obtain user authentication data and credentials
-- UAT-11823, which has exploited both CVE-2026-20079 and CVE-2026-20316 to deliver a Netcat-based reverse shell, two bash scripts to harvest managed-device configurations, and a variant of
-[Cyclops Blink](https://thehackernews.com/2022/02/us-uk-agencies-warn-of-new-russian.html), a modular ELF implant previously attributed to the Russian state-sponsored hacking group Sandworm - UAT-11988, a ransomware operation that has exploited CVE-2026-20316 for initial access and then used legitimate built-in FMC tooling as part of a living-off-the-land (LotL) attack to conduct extensive reconnaissance of the victim's environment, drop tunneling tools to maintain network access, collect credentials, build a target list of endpoints to encrypt, terminate security tools, and deploy
-[Qilin](https://thehackernews.com/2026/07/qilin-ransomware-attackers-exploit-pan.html)ransomware on selected systems.
-"Customers are strongly advised to apply hotfixes for affected software versions already released by Cisco for CVE-2026-20079 and CVE-2026-20316," Cisco said, adding it intends to ship a comprehensive hardening release for various internally discovered vulnerabilities next week.
-The development comes as the U.S. Cybersecurity and Infrastructure Security Agency (CISA) [added](https://thehackernews.com/2026/09/cisa-flags-exploited-cisco-citrix.html) CVE-2026-20079 to its Known Exploited Vulnerabilities (KEV) catalog, requiring Federal Civilian Executive Branch (FCEB) agencies to apply the patches by September 12, 2026. The second vulnerability, CVE-2026-20316, was [added](https://thehackernews.com/2026/07/cisco-fmc-zero-day-actively-exploited.html) to the KEV catalog in late July 2026.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <h2 class="article-title">Passkey-themed phishing attacks lead to Microsoft 365 data theft</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/passkey-themed-phishing-attacks-lead-to-microsoft-365-data-theft/" target="_blank">Original Link</a></p>
+            <div class="content-text">Microsoft says threat actors linked to ShinyHunters, Helix, and other extortion gangs are using passkey and single sign-on-themed social engineering attacks to compromise corporate Microsoft accounts and steal data from Microsoft 365 services. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
@@ -482,9 +475,22 @@ We need to know how many of ’em were discovered using AI.
 None. These AI tools are best understood as a terribly inefficient form of [fuzzing](https://en.wikipedia.org/wiki/Fuzzing). They don’t “discover” anything; they just roll the dice and kick out what matches. It’s *humans* that have to sort through those results to determine fact from fiction. A better question to ask would be how much human effort they spent ruling out the [false positives](https://en.wikipedia.org/wiki/False_positive).
 An even *better* question to ask is how many of these bugs were *created* using AI. As I have noted here before, anyone that argues that AI will solve all the problems of human coders needs to let us know when we can expect to see the patch counts reach record *lows* instead of record highs. Until/Unless that happens, AI use is just another net negative compared to having actually intelligent humans doing the job.
 Well I mean they are tools, they can be refined, they are as useful as that is – do they remove the human component being necessary, no not yet. You don’t really want that IMO. They have no idea how to contain something they’re designing to be clever and hive-minded, leaving read-after-death notes to each other on encrypted random sites etc, so like any arms race it’s a tradeoff between blowing yourself up completely and setting the atmosphere on fire, or letting the other guy do it first, which is… worse?
+> They have no idea how to contain something they’re designing to be clever and hive-minded
+You’ve fallen victim to the fraud these companies fill their press releases with; none of what you said is true. There is no “mind” to be “clever” in anything they’ve done. Even the fundamental design of the neural networks involved is unchanged from where it was in the 80s and 90s. The two major changes since then are only:
+1. algorithms for training have improved a bit
+2. hardware advances that allowed all the brute force computation still necessary to be not impossible
+3. (bonus point!) an Internet full of data that has been stolen for those first two points
+That’s it. Everything else is still just a bottomless pit of computation, as evidenced by their endless desire for more and more resource hogging data centers. Even these “hives” of agents they’re selling are just ways to do random actions in parallel to get to a passing result more quickly.
+> like any arms race
+But it’s *not* an arms race, because the solution isn’t throwing more AI at the problem. Or, put another way, imagine where Microsoft would be if they had simply invested the same billions of dollars they’re throwing at AI today into improving Windows security all along! I mean, is there any actual computer *science* in their operation? Any publications on details of the holes that have been patched and what existing, more efficient techniques would have found them earlier if only Microsoft had cared to look?
+So why the push, now, to use AI to do it? My guess is that it’s all a desperate attempt to *still* sell the LLM con job, because there is no actual market that can possibly make it profitable unless they hook a lot of suckers with more money than sense. To be fair, though, those are *exactly* the kind of people who are most easily tricked by the promise of AI.
+There is no “mind” to be “clever”
+Ok ‘impossibly’ stupid but I’m using common terms.
+If you don’t like me using them that’s fine by me.
 Arguably, the worst of all options is almost any option when it comes to ‘agentic intelligences’ and ai.
 Their imaginations are merely less challenged. That should scare people.
 Hey, mealy, ever get the feeling people have no clue what sort of sense(s) of humour AIs and agentic intelligences (hive-like or individually) will have?
+If the work is related to Project Glasswing, it is likely AI found more than were fixed. AI is proving good at processing data in amounts and speeds people could not.
 Windows has more bugs than it has features
 A lot of heads should be rolling at Microsoft!
 Do you want to kill the innovation ? Are you a communist ?
@@ -507,6 +513,7 @@ Ars technica just dropped their story on this:
 https://arstechnica.com/security/2026/09/microsoft-patches-a-record-972-vulnerabilities-112-of-them-critical/
 With respect to Tyler Reguly, associate director of security research and development at Fortra, it’s a mistake to suggest that this is a CISO/CSO challenge that needs to be put on notice. This is really a CIO/CTO issue. Security teams aren’t the ones deploying patches and updates, operational teams are.
 Also, extra pizza is NOT going to cut it. Teams need resources and quality leadership to relieve the pressure. Otherwise, you’re just adding pressure without support.
+Ask anyone that has worked in healthcare, extra pizza does not cut it. We need good resources to automate this level of mass patching, and requires an adequate budget for IT.
 With respect to AI, most AI company heads are against AI or at least convinced it will kill us all within a few years, but instead of outlawing the research and strictly limiting it the use of it to very specific subjects and users, people just push, and suggest so what, someone else will ‘make the money’ if they don’t.
 What a load of crap.
 It’s why we (everybody) have the H bomb.
@@ -520,7 +527,8 @@ It looks like the September Windows Server patches may be breaking RDS.
 We installed KB5122882 on a Windows Server 2022 VM. About 31 hours later, the server became largely unresponsive and required intervention to recover. No one could log in through RDP, and even console logon was unavailable.
 From what we observed, the issue appears to involve the Remote Desktop session stack. The server seemed to hang after an RDP user logged off, with session management becoming unresponsive and preventing new logons.
 What we saw closely matches reports from other administrators on Reddit, where RDS hosts begin hanging after users disconnect or log off and can eventually require a hard reset. The recent BleepingComputer article also describes the September Windows Server updates causing RDS failures across Server 2019, 2022, and 2025.
-do you thing delayed kb5122876?, because the culprit is chrome V8 attached vía email subject false linkedin recuitment, only if sin 10 and server have web explorer (chrome, edge, #..)</div>
+do you thing delayed kb5122876?, because the culprit is chrome V8 attached vía email subject false linkedin recuitment, only if sin 10 and server have web explorer (chrome, edge, #..)
+Off topic, but do many sites just block all visitors using a VPN? This is frustrating because it seems a brute-force method of protection. In effect they are expecting me to drop my protection in order to get past their protection. It happened again today when attempting to login at lowes.com. With the VPN on, it returns a “forbidden” page. With the VPN off, it loads the login page. Typically when I complain about such things the response is a shrug.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
