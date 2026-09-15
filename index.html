@@ -59,87 +59,186 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-09-14</h1>
+        <h1>Security Briefing // 2026-09-15</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">AI Changed the Exposure Problem. Validation Needs to Change With It.</button></li><li><button onclick="show('art-1')">CISA: Hackers now exploit max severity GitLab flaw in attacks</button></li><li><button onclick="show('art-2')">Hackers exploit Tencent app flaw to deploy GrayRabbit malware</button></li><li><button onclick="show('art-3')">CISA Adds 5 Actively Exploited Artifactory, ScreenConnect, and RouterOS Flaws to KEV</button></li><li><button onclick="show('art-4')">So… You Found AWS Access Keys (Part 1)</button></li><li><button onclick="show('art-5')">Microsoft Plugs Nearly 1,000 Security Holes</button></li><li><button onclick="show('art-6')">Impersonating IT support: how threat actors turn a remote session into enterprise-wide access</button></li><li><button onclick="show('art-7')">Microsoft Plugs Nearly 400 Security Holes</button></li><li><button onclick="show('art-8')">Turning Enterprise Update Servers Into Backdoor Factories (0_o) – Part 1</button></li><li><button onclick="show('art-9')">Demystifying AI Exploits: A Blueprint for AI-Assisted Vulnerability Management</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Cisco patches Secure Email Gateway zero-day exploited in attacks</button></li><li><button onclick="show('art-1')">LiteSpeed Enterprise Flaw Could Let One Hosting Account Gain Root Access on a Shared Server</button></li><li><button onclick="show('art-2')">Cisco Secure Email Gateway Flaw Exploited in the Wild, Enables Root Command Execution</button></li><li><button onclick="show('art-3')">Microsoft: September updates cause RDS failures on Windows Server</button></li><li><button onclick="show('art-4')">Protecting organizations from AI-assisted executive impersonation and invoice fraud</button></li><li><button onclick="show('art-5')">So… You Found AWS Access Keys (Part 1)</button></li><li><button onclick="show('art-6')">Microsoft Plugs Nearly 1,000 Security Holes</button></li><li><button onclick="show('art-7')">Microsoft Plugs Nearly 400 Security Holes</button></li><li><button onclick="show('art-8')">Turning Enterprise Update Servers Into Backdoor Factories (0_o) – Part 1</button></li><li><button onclick="show('art-9')">Demystifying AI Exploits: A Blueprint for AI-Assisted Vulnerability Management</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">AI Changed the Exposure Problem. Validation Needs to Change With It.</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/ai-changed-exposure-problem-validation.html" target="_blank">Original Link</a></p>
-            <div class="content-text">There's a lot of noise around AI and cybersecurity right now. What’s actually important is far simpler, if often lost in the hubbub. Vulnerability discovery is getting faster and happening at a much greater scale, while defenders still have to work out which findings actually deserve their action.
-In the first half of 2026, a whopping 35,853 CVEs were published, [roughly 49%](https://zerodayclock.com/) more than in the year before. Yet only [495 were catalogued](https://www.vulncheck.com/blog/state-of-exploitation-1h-2026) as exploited in the wild during that same period, and 116 were already under attack on the day they became public. Meanwhile, Anthropic’s own [disclosure data](https://red.anthropic.com/2026/cvd/ledger/) shows Mythos-class models surfacing 26,153 vulnerability candidates in open-source software, with only [421 of those](https://red.anthropic.com/2026/cvd/) getting patched upstream.
-That small exploited subset is a very important point. It tells defenders that treating every vulnerability with a High or Critical CVSS rating as an emergency is not only impossible, it’s actually the wrong model. The critical task security teams face is deciding which exposures, on which assets, require immediate action, especially as both the number of findings grows and the gap between disclosure and exploitation narrows.
-The CVSS Alone Can’t Tell You What Matters in Your Environment
-The same CVE can affect hundreds of assets, but the impact is rarely the same across them. Some instances are unreachable. Some sit behind controls that interrupt the techniques required for exploitation. Others are exposed on business-critical systems where prevention fails, and detection never fires.
-The CVSS gives you a common severity baseline. It can’t give you the context that determines impact to your organization.
-This is why defenders need evidence from their own environment to find out whether the exposure is actually exploitable, which assets it affects, and whether those assets are reachable and important to the business. As vulnerability volume grows, this distinction becomes more and more important.
-Automated Pentesting Alone Can’t Validate Every Exposure
-Once you move beyond severity scores, automated pentesting gives you some of the strongest evidence you can gather. It can run real exploits, prove that an exposure is exploitable in your environment, chain vulnerabilities, credentials, and misconfigurations into attack paths, and show how far an attacker could actually progress across your network.
-Yet coverage remains limited in practice. [Omdia research](https://go.synack.com/ai-pentesting-report-omdia) found that while 95% of organizations rank pentesting as a top or high priority, only 32% of their average attack surface is tested each year. Agentic and automated approaches can expand that coverage, but they don’t remove every constraint of live exploitation.
-For CVE-based exploitation, a working exploit still has to exist, and the target has to be safe to test. Newly disclosed CVEs may have no working exploit yet, while it simply may not be possible to test a live exploit on business-critical, restricted, and air-gapped assets. Those exposures still need an exploitability verdict, even when there’s nothing an automated pentest can safely run.
-This is the gap automated pentesting can’t close on its own. It’s a required part of validation, but it can’t validate every exposure.
-All for One. One for All Exposures.
-This is where the pieces come together.
-[Exploitability validation](https://www.picussecurity.com/platform/exposure-validation)determines whether an exposure is, in fact, exploitable in your environment, including CVEs with no working exploit and assets that live exploitation can’t safely reach.[Security control validation](https://www.picussecurity.com/platform/breach-and-attack-simulation)tests whether your prevention and detection controls actually block, detect, or miss the attack.[Agentic pentesting](https://www.picussecurity.com/platform/autonomous-penetration-testing)safely runs real exploits and chains exposures to show how far an attacker can progress through your specific environment.
-These methods answer different questions under different exposure conditions. Mythos readiness requires all three capabilities, brought together in one platform with the same goal: validating exposures across your unique environment. This doesn’t mean you have to always use all three against every exposure. The goal is to apply each method where it fits best and let the evidence contribute to the same decision process.
-These three key pieces become even more powerful when they operate as one program. A finding can trigger the validation step it actually needs, new evidence can change remediation priority, and fixes can be re-validated instead of disappearing into a closed ticket. That keeps exploitability, control effectiveness, and attack-path evidence connected instead of leaving them to wallow in separate workflows.
-This is also where [Gartner®’s May research](https://www.gartner.com/en/documents/7851581) note points: toward validated attack paths, decision-driven response, and exposure reduction all integrated into operational workflows.
-This also happens to be the working model behind our[ Validation Summit ’26](https://hubs.li/Q04x66s80).
-What Security Experts See and How Leading Enterprises Put Validation Into Practice
-On October 14 and 15, Picus Security will host The Validation Summit ’26 to bring together an independent view of what's changed, our approach to validation, and lessons from security leaders who’ve already put it into practice.
-Mikko Hyppönen will open with why this shift is different from past ones. Picus CTO Volkan Ertürk will then lay out what security validation needs to look like when attackers are powering their attacks with AI, and why exploitability validation, security control validation, and agentic pentesting work better together than on their own. The Picus team will then show the validation workflow live with a newly disclosed vulnerability. It starts with no patch and no working exploit, moves through validation before a PoC exists, tests the exploit against live controls once it appears, and then re-validates after the fix.
-Then security leaders from Chanel, Atlassian, and the NFL will discuss what this looks like inside real enterprise environments: how mature security teams are adapting their validation programs, what they’ve changed, and the successes and failures they’ve experienced along the way.
-Two hours. One validation blueprint. [Join us for the Picus Validation Summit ’26.](https://hubs.li/Q04x66s80)
-Note: This article was written by [Sila Ozeren Hacioglu](https://www.linkedin.com/in/silaozeren/), Security Research Engineer at Picus Security.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <h2 class="article-title">Cisco patches Secure Email Gateway zero-day exploited in attacks</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/new-cisco-secure-email-zero-day-exploited-to-execute-commands-as-root/" target="_blank">Original Link</a></p>
+            <div class="content-text">Cisco warned customers to patch a critical Secure Email Gateway zero-day security flaw that threat actors have been exploiting in attacks. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-1" class="article-body">
-            <h2 class="article-title">CISA: Hackers now exploit max severity GitLab flaw in attacks</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/cisa-hackers-now-exploit-max-severity-gitlab-flaw-in-attacks/" target="_blank">Original Link</a></p>
-            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) warned that hackers are now exploiting a maximum-severity GitLab vulnerability in attacks. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-2" class="article-body">
-            <h2 class="article-title">Hackers exploit Tencent app flaw to deploy GrayRabbit malware</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/hackers-exploit-tencent-app-flaw-to-deploy-grayrabbit-malware/" target="_blank">Original Link</a></p>
-            <div class="content-text">Threat actors linked to a China-aligned espionage group are exploiting a critical vulnerability (CVE-2026-51990) in Tencent's Sogou Input Method for Windows to deploy the GrayRabbit backdoor. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-3" class="article-body">
-            <h2 class="article-title">CISA Adds 5 Actively Exploited Artifactory, ScreenConnect, and RouterOS Flaws to KEV</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/cisa-adds-5-actively-exploited.html" target="_blank">Original Link</a></p>
-            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) has added five security flaws impacting [JFrog Artifactory, ConnectWise ScreenConnect](https://www.cisa.gov/news-events/alerts/2026/09/11/cisa-adds-three-known-exploited-vulnerabilities-catalog), and [MikroTik RouterOS](https://www.cisa.gov/news-events/alerts/2026/09/10/cisa-adds-two-known-exploited-vulnerabilities-catalog) to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, following reports of active exploitation in the wild.
-Details of the vulnerabilities are as follows -
-- CVE-2026-42016 (CVSS score: 8.1) - An incorrect authorization vulnerability in JFrog Artifactory that could lead to privilege escalation due to a validation check of the token signature/issuer and not the token's scope.
-- CVE-2026-42018 (CVSS score: 7.5) - An improper authentication vulnerability in JFrog Artifactory that could return an internal anonymous-user token to an unauthenticated caller when anonymous access is disabled, potentially leaking sensitive resources.
-- CVE-2026-84869 (CVSS score: 9.9) - An improper privilege management and missing authorization vulnerability in ConnectWise ScreenConnect that could allow an attacker to file transfer and execute through an active remote session without authorization or host confirmation.
-- CVE-2026-67277 (CVSS score: 8.8) - A missing authentication for a critical function vulnerability in MikroTik RouterOS that could allow kernel memory disclosure and denial-of-service in the btest service.
-- CVE-2026-86060 (CVSS score: 9.2) - An improper neutralization of argument delimiters in a command vulnerability in MikroTik RouterOS that could allow an attacker to change the trusted RouterOS policy mask and achieve privilege escalation.
-As [previously reported](https://thehackernews.com/2026/09/attackers-chain-jfrog-artifactory-flaws.html) by The Hacker News, attackers have been observed chaining the two Artifactory bugs alongside [CVE-2026-82329](https://thehackernews.com/2026/09/attackers-exploit-critical-jfrog.html) (CVSS score: 9.8) to take administrator control of self-hosted servers and deploy backdoors between August 15 and September 8, 2026. CVE-2026-82329 was [added](https://thehackernews.com/2026/09/cisa-adds-seven-exploited-flaws-as.html) to CISA's KEV catalog earlier this month.
-"Attackers are chaining these vulnerabilities to bypass authentication, escalate privileges, and gain administrative control over vulnerable Artifactory instances," Google-owned Wiz said. "Observed post-exploitation activity includes the creation of persistent administrator accounts, the deployment of malicious Groovy plugins for code execution, and the installation of Rust-based backdoors to establish persistence."
-The exploitation of CVE-2026-84869, on the other hand, has been linked to a set of three unrelated incidents [documented](https://thehackernews.com/2026/09/rogue-screenconnect-clients-spread-four.html) by Huntress in which threat actors abused ScreenConnect to distribute a malicious Visual Basic Script (VBScript) payload to newly connected systems.
-ConnectWise has [described](https://www.connectwise.com/company/trust/security-bulletins/2026-09-08-screenconnect-bulletin) the flaw as a "condition" in the ScreenConnect client that "may allow files to be transferred and executed through an active remote session without authorization or Host confirmation in certain circumstances." The issue does not impact ScreenConnect servers.
-"Under certain circumstances, this could enable files to be transferred to and executed on the Host client system, including through elevated execution actions," Huntress [said](https://www.huntress.com/blog/rogue-screenconnect-installations) in an update, urging organizations to update to ScreenConnect version 26.6.5.
-CISA's addition of CVE-2026-67277 and CVE-2026-86060 [follows a report](https://thehackernews.com/2026/09/attackers-hijack-mikrotik-routers.html) from CERT Polska last week in which it said it [observed](https://thehackernews.com/2026/09/weekly-recap-chrome-0-day-router.html#:~:text=MikroTik%20RouterOS%20Flaws%20Exploited) unknown threat actors exploiting two flaws in MikroTik RouterOS to seize control of vulnerable devices without authentication. The cybersecurity agency dubbed the exploit chain MikroTrick.
-Federal Civilian Executive Branch (FCEB) agencies are required to patch the RouterOS flaws by September 13, 2026, the ScreenConnect flaw by September 14, 2026, and the Artifactory flaws by September 25, 2026.
+            <h2 class="article-title">LiteSpeed Enterprise Flaw Could Let One Hosting Account Gain Root Access on a Shared Server</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/litespeed-enterprise-flaw-could-let-one.html" target="_blank">Original Link</a></p>
+            <div class="content-text">A critical vulnerability in LiteSpeed Web Server Enterprise could let a low-privilege website user gain root access on a shared-hosting server, cPanel warned in an [advisory published on September 14](https://support.cpanel.net/hc/en-us/articles/43483286674583-Security-LiteSpeed-Enterprise-security-advisory-September-14-2026).
+On such servers, many customers' sites run on a single machine, and an attacker with one of those hosting accounts could exploit the flaw to access or alter other sites and the server itself, according to the advisory.
+cPanel said it had received notice of the flaw, which affects versions before 6.3.7, and urged administrators to update to that release, which LiteSpeed [published on September 11](https://store.litespeedtech.com/store/index.php?rp=/announcements/895/LiteSpeed-Web-Server-v6.3.7-Now-Available.html).
+The flaw can bypass the controls that keep hosting accounts apart, including [CageFS](https://docs.cloudlinux.com/cloudlinuxos/cloudlinux_os_components/#cagefs), cPanel said. CageFS is a CloudLinux tool that gives each hosting account a restricted view of the file system, so it cannot see other accounts or the server's configuration files.
+Neither cPanel's advisory nor LiteSpeed's release notes describe how the flaw works. LiteSpeed's announcement of 6.3.7 called it a release with "Security improvements, bug fixes, and more!" Its [changelog](https://docs.litespeedtech.com/lsws/changelog/) lists three security changes but does not mention a privilege-escalation flaw, and neither company has said publicly which change fixes it.
+The advisory carries no CVE identifier or severity score, and a check of published CVE records on September 15 found none for the flaw. The advisory also does not say whether the flaw has been exploited.
+Both cPanel and LiteSpeed give the same command to install 6.3.7 now: /usr/local/lsws/admin/misc/lsup.sh -f -v 6.3.7
+The manual update matters because 6.3.7 may not arrive on its own: LiteSpeed said there "may be some delay" before the release reaches auto-update.
+As of September 15, LiteSpeed's [download page](https://www.litespeedtech.com/products/litespeed-web-server/download) still listed 6.3.6 as the stable release, alongside a July pre-release build of 6.4.0 (RC1) whose changelog does not list the three security changes. cPanel's advisory does not say whether the 6.4.0 release candidates are affected.
+LiteSpeed's [update documentation](https://docs.litespeedtech.com/lsws/updates/) says that forcing a specific version with this command stops the server from following its stable update tier, and that administrators can resume automatic stable updates afterward by running touch /usr/local/lsws/autoupdate/follow_stable.
+Neither cPanel's advisory nor LiteSpeed's release notes offer a workaround for servers that cannot update at once, or indicators for checking whether a server has already been attacked. The advisory names only the Enterprise edition and does not address OpenLiteSpeed, LiteSpeed's open-source server, for which LiteSpeed had released no matching update as of September 15.
+It is the third time since May that a flaw in LiteSpeed software on cPanel servers has been reported to grant a hosting account root access, but the first in the web server itself.
+In May and June, LiteSpeed disclosed two such flaws in its user-end cPanel plugin, [CVE-2026-48172](https://blog.litespeedtech.com/2026/05/21/security-update-for-litespeed-cpanel-plugin/) and [CVE-2026-54420](https://blog.litespeedtech.com/2026/06/01/security-update-for-litespeed-cpanel-plugin-2/), said both were being actively exploited, and fixed both in the plugin. CISA later added both to its Known Exploited Vulnerabilities catalog, as The Hacker News reported in [May](https://thehackernews.com/2026/05/litespeed-cpanel-plugin-cve-2026-48172.html) and [June](https://thehackernews.com/2026/06/cisa-flags-litespeed-cpanel-plugin-flaw.html).
+The Hacker News has contacted LiteSpeed, cPanel, and CloudLinux with questions about the flaw.
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">Cisco Secure Email Gateway Flaw Exploited in the Wild, Enables Root Command Execution</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/cisco-secure-email-gateway-flaw.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Cisco has warned that a new critical vulnerability impacting AsyncOS Software for Cisco Secure Email Gateway has come under active exploitation in the wild.
+The vulnerability, tracked as CVE-2026-76461, carries a CVSS score of 9.8 out of a maximum of 10.0. It has been described as a case of insufficient validation in the email parsing logic that could allow an unauthenticated, remote attacker to run arbitrary commands with root privileges on the underlying operating system.
+"An attacker could exploit this vulnerability by sending a crafted email message that contains malicious SQL statements through an affected device," Cisco [said](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-esa-inj-2bLVGmhX) in a Monday advisory. "A successful exploit could allow the attacker to execute arbitrary SQL statements, leading to command execution with root privileges on the underlying operating system."
+The shortcoming affects Cisco Secure Email Gateway, both physical and virtual, regardless of device configuration. However, the networking equipment maker said other products like Secure Email and Web Manager and Secure Web Appliance are not impacted.
+Fixes are available for the following versions of Cisco AsyncOS for Cisco Secure Email Gateway Software Release -
+- 15.5 and earlier (Fixed in 15.5.5-0141)
+- 16.0 (Fixed in 16.0.4-302)
+- 16.5 (Fixed in 16.5.0-780)
+There are no workarounds other than updating to the latest supported version. Cisco said it became aware of active exploitation of this vulnerability this month, sharing the following indicators of compromise (IoCs) -
+- Review mail_logs and look for suspicious SQL statements.
+- If the device is part of a cluster, review the logs of each cluster device.
+- To detect potentially malicious SQL statements, it's advised to run the command: cisco-esa> grep -i "COPY.*TO PROGRAM" [IronPort Text Mail Logs Log name - Default: mail_logs]
+- The presence of any entry in the output may indicate malicious activity.
+Cisco also said it has directly contacted customers who own Cisco Secure Email Cloud devices on which malicious activity was detected. It did not disclose the scale of the attacks.
+"Upon successful exploitation of this vulnerability, threat actors may obtain command execution with root privileges," the company warned. "Because of this level of access, evidence of exploitation and indicators of compromise may be removed or hidden by the threat actors."
+As a result, administrators are recommended to cross-check the network logs and the firewall logs outside of the impacted device to identify any potential anomalous activity, including unexpected uploads that were initiated from the affected device to external IP addresses or downloads from malicious IP addresses.
+The development has prompted the U.S. Cybersecurity and Infrastructure Security Agency (CISA) to [add](https://www.cisa.gov/news-events/alerts/2026/09/14/cisa-adds-one-known-exploited-vulnerability-catalog) CVE-2026-76461 to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, requiring Federal Civilian Executive Branch (FCEB) agencies to apply the patches by September 17, 2026.
+Large-Scale Credential Attacks Target Fortinet VPNs
+The disclosure comes days after Arctic Wolf said it detected large-scale credential attacks targeting internet-facing Fortinet VPN appliances in late August 2026. The high-volume activity took place over two sustained waves across multiple U.S. customer environments from August 26 through August 28, 2026, generating tens of millions of authentication failures.
+"The actor used organization-specific usernames, corporate email addresses, affiliate accounts, and common administrative identities, indicating access to previously collected or enumerated identity information," security researcher Kyle Siddall [said](https://github.com/rtkwlf/wolf-tools/tree/main/pack_alerts/202609-large-scale-fortinet-vpn-cred-attacks).
+"The attempted usernames included employee names, corporate email addresses, affiliate identities, and common administrative accounts associated with the targeted organizations. This targeted identity selection, rather than generic username spraying, indicates access to previously collected or enumerated identity information."
+In one observed case, a successful Fortinet VPN authentication originating from the IP address "158.94.211[.]14" was followed by malicious activity in the affected environment.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
+            <h2 class="article-title">Microsoft: September updates cause RDS failures on Windows Server</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-september-updates-cause-rds-failures-on-windows-server/" target="_blank">Original Link</a></p>
+            <div class="content-text">Microsoft has confirmed reports that the September 2026 security updates cause Remote Desktop Services (RDS) failures on Windows Server systems. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
         <div id="art-4" class="article-body">
+            <h2 class="article-title">Protecting organizations from AI-assisted executive impersonation and invoice fraud</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/09/10/protecting-organizations-ai-assisted-executive-impersonation-invoice-fraud/" target="_blank">Original Link</a></p>
+            <div class="content-text">Threat actors are increasingly improving their tactics to make suspicious emails look like legitimate email notifications to potential victims, deploying techniques that impersonate internally sent emails from executive team members. While this technique is not new, the adoption of AI has enabled threat actors to improve their campaign templates and construct emails tailored to their recipients. Additionally, threat actors are incorporating multiple techniques within the same email to improve the overall narrative further.
+In this blog, we will discuss a recent campaign observed using third-party email delivery infrastructure to send out over a million financial fraud scam emails that displayed multiple indicators consistent with the use of generative AI during email template creation. The threat actor impersonated CEOs of multiple target companies, attempting to convince accounts payable departments of the same companies to process an Automated Clearing House (ACH) payment of nearly $50,000. To add legitimacy, the actor included a forwarded email thread (and a fabricated invoice) between the impersonated CEO and ServiceNow (which was also being impersonated).
+Attack chain overview
+The campaign follows steps before and during the execution of the campaign: threat actors register impersonation domains, send executive-themed payment requests through trusted infrastructure, embed fabricated invoices and supporting conversations, and attempt to convince finance personnel to initiate ACH transfers.
+Email Delivery
+Between August 3 and 5, Microsoft detected a campaign consisting of more than a million emails targeting enterprise users. The attacker used multiple third-party email service accounts to send out the emails. A huge majority of these emails were sent to users in the United States (87.7% of the total campaign).
+Unlike traditional invoice scams that rely on a single social engineering lure, this campaign layered executive impersonation, vendor branding, fabricated invoices, and supporting email conversations into a unified narrative intended to reduce recipient skepticism.
+The threat actor impersonated executive team members (such as a CEO, CFO, President) of multiple targeted companies, attempting to convince accounts payable departments of the same companies to process an ACH payment of nearly $50,000. More specifically, the CEOs were impersonated in multiple places in the email such as in the sender display name, reply-to display name, and in the email signature. Email bodies contained a simple and direct “approval” of the “invoice below” as well as urged users to request a PDF version if they need it. Additionally, as mentioned earlier, the email signature contained certain details about the spoofed CEO such as name and email address.
+Important note: Throughout this campaign, threat actors impersonated legitimate organizations using attacker-controlled infrastructure, fabricated communications, and lookalike domains. Microsoft found no evidence that the legitimate organizations referenced in the lures, including ServiceNow, were compromised or involved in the activity. Rather, the campaign relied on fraudulent domains and content designed to mimic trusted brands and individuals.
+The threat actor did not stop there. To add further legitimacy, directly below the CEO signature, the actor included “forwarded” content , specifically a professional looking but fabricated “ServiceNow Platform — Annual Subscription” invoice. The extremely detailed invoice contains various ServiceNow branding and logos. It has basic invoice details such as invoice number, issue and due dates, currency, amount due, payment method, and itemized line items. The payment method instructed is a bank transfer to accounts controlled by the threat actor. Microsoft observed the use of multiple financial institutions across samples, indicating that payment destinations may vary between targets. Certain parts of the invoice are personalized to the recipient. Specifically, the “BILLED TO” section has the recipient company name and executive name.
+The invoice shown below is a threat actor-created impersonation and was not issued by ServiceNow.
+Finally, directly below the fake invoice, two more “forwarded” emails are included which are essentially a short conversation between the two spoofed executives (the targeted company executive, and ServiceNow President). The two executives are seen discussing the ServiceNow purchase, implementation and handling of the invoice.
+From a defender point of view there are several indicators within the email indicating that the email and the “forwarded” thread are not genuine.
+- “From” headers from the spoofed thread lack any data headers like actual forwarded emails.
+- Suspicious language used in the spoofed thread such as “no need to copy me”.
+- Suspicious language in headers i.e display name not matching sender address, subjects using financial lure keywords like ‘due bill’, ‘ACH Parment’ etc.
+- Despite the sophistication of the generated content, several inconsistencies remained visible to defenders
+- In real email threads, the previous threads are normally tabbed or otherwise visually grouped, while the previous threads in this example were left aligned.
+- An additional inconsistency was observed where the targeted company’s CEO requested the recipient to send the invoice directly to victims and not CC the sender. However, in the most recent thread, the CEO stated that the invoice is approved and the invoice is sent from his address.
+Domain registration
+Before initiating the campaign, the threat actor registered several domains. A ‘ServiceNow’ lookalike domain service-nowinc[.]com was registered on July 31, shortly before the campaign activity was observed. This domain was used for the spoofed email address of ServiceNow President. It was also used in several places in the fabricated invoice such as in the contact email in case of any questions. The actor also registered another domain on the same day. The domain domainlify[.]net was used in the Reply-To email.
+Generative AI usage
+Microsoft observed several indicators consistent with AI-assisted template development. These included extensive HTML comments, structured section labeling, and highly uniform template construction. While these indicators suggest generative AI involvement, they do not independently establish the extent to which AI generated campaign content.
+Examples:
+Additionally, the use of ‘em dash’ (“—”) and banner ‘===========’ have also become other indicators associated with AI usage.
+One possible indication of template-based generation is that invoice identifiers and narrative structure remained largely consistent across samples while organization-specific details changed between targets.
+Mitigation and protection guidance
+Microsoft provides layered protection against this type of executive-impersonation and invoice-fraud campaign. Properly configured email authentication, spoof protection, mail-flow connectors, and Microsoft Defender for Office 365 help identify and block suspicious messages before delivery; messages later determined to be malicious can be quarantined or removed through post-delivery remediation, including Zero-hour Auto Purge. Security teams can then use Microsoft Defender XDR and Security Copilot to investigate related alerts, affected users, and campaign indicators, coordinate response, and take remediation actions.
+Together, these capabilities help reduce the likelihood that fraudulent payment requests reach finance personnel and support faster containment if a message is delivered.
+To defend against social engineering campaigns involving executive impersonation, invoice fraud, and potentially AI-assisted content development, Microsoft recommends the following mitigations:
+Configure [automatic attack disruption](https://learn.microsoft.com/en-us/defender-xdr/configure-attack-disruption) in Microsoft Defender XDR. Automatic attack disruption is designed to contain attacks in progress, limit the impact on an organization’s assets, and provide more time for security teams to remediate the attack fully.
+Enable [Zero-hour auto purge (ZAP)](https://learn.microsoft.com/en-us/defender-office-365/zero-hour-auto-purge) in Office 365 to quarantine sent mail in response to newly acquired threat intelligence and retroactively neutralize malicious phishing, spam, or malware messages that have already been delivered to mailboxes.
+Invest in advanced anti-phishing solutions that monitor and scan incoming emails and visited websites. For example, organizations can leverage web browsers like Microsoft Edge that automatically [identify and block malicious websites](https://learn.microsoft.com/en-us/deployedge/microsoft-edge-security-smartscreen?ocid=magicti_ta_learndoc), including those used in this phishing campaign, and solutions that [detect and block malicious emails, links, and files](https://www.microsoft.com/en-us/security/business/siem-and-xdr/microsoft-defender-office-365?ocid=magicti_ta_abbreviatedmktgpage).
+These links provide information on how to properly configure mail flow with connectors:
+[Manage mail flow using a third-party cloud service with Exchange Online](https://learn.microsoft.com/en-us/exchange/mail-flow-best-practices/manage-mail-flow-using-third-party-cloud)[Configure mail flow using connectors in Exchange Online](https://learn.microsoft.com/en-us/exchange/mail-flow-best-practices/use-connectors-to-configure-mail-flow/use-connectors-to-configure-mail-flow)[Mail flow rules (transport rules) in Exchange Online](https://learn.microsoft.com/en-us/exchange/security-and-compliance/mail-flow-rules/mail-flow-rules)[Enhanced filtering for connectors in Exchange Online](https://learn.microsoft.com/en-us/exchange/mail-flow-best-practices/use-connectors-to-configure-mail-flow/enhanced-filtering-for-connectors)
+These links provide information on configuring SPF, DKIM, and DMARC:
+[Email authentication in cloud organizations](https://learn.microsoft.com/en-us/defender-office-365/email-authentication-about)[Set up SPF to identify valid email sources for your custom cloud domains](https://learn.microsoft.com/en-us/defender-office-365/email-authentication-spf-configure)[Set up DKIM to sign mail from your cloud domain](https://learn.microsoft.com/en-us/defender-office-365/email-authentication-dkim-configure)
+Microsoft Defender detections
+[Microsoft Defender](https://www.microsoft.com/security/business/microsoft-defender) customers can refer to the list of applicable detections below. Microsoft Defender coordinates detection, prevention, investigation, and response across endpoints, identities, email, and apps to provide integrated protection against attacks like the threat discussed in this blog.
+| Tactic | Observed activity | Microsoft Defender coverage |
+| Financial Theft | Scam emails | Microsoft Defender for Office 365 – Invoice scams delivered detected as Spam and malicious categories. – Email messages marked malicious removed after delivery and spam moved to quarantine – Email messages removed after delivery – Messages retroactively removed through Zero-hour Auto Purge (ZAP). |
+Microsoft Security Copilot
+Security Copilot customers can use the standalone experience to [create their own prompts](https://learn.microsoft.com/copilot/security/prompting-security-copilot#create-your-own-prompts) or run the following [prebuilt promptbooks](https://learn.microsoft.com/copilot/security/using-promptbooks) to automate incident response or investigation tasks related to this threat:
+- Incident investigation
+- Microsoft User analysis
+- Threat actor profile
+- Threat Intelligence 360 report based on MDTI article
+- Vulnerability impact assessment
+Note that some promptbooks require access to plugins for Microsoft products such as Microsoft Defender XDR or Microsoft Sentinel.
+Threat intelligence reports
+Microsoft Defender XDR customers can use Threat Analytics reports in the Defender portal (requires license for at least one Defender XDR product) to get the most up-to-date information about the malicious activity and techniques discussed in this blog. These reports provide the intelligence, protection information, and recommended actions to prevent, mitigate, or respond to associated threats found in customer environments.
+MITRE ATT&CK Techniques observed
+This threat has exhibited use of the following attack techniques. For standard industry documentation about these techniques, refer to the [MITRE ATT&CK framewo](https://attack.mitre.org/)[r](https://attack.mitre.org/)[k](https://attack.mitre.org/).
+Reconnaissance
+[T1591 – Gather Victim Organization Information](https://attack.mitre.org/techniques/T1591/)
+Threat actors collect publicly available information about target organizations, executives, finance personnel, vendors, and business relationships to build convincing invoice-fraud narratives.
+[T1598 – Phishing for Information](https://attack.mitre.org/techniques/T1598/)
+Information gathered from victims and public sources is used to craft highly targeted business email compromise (BEC) lures.
+Resource Development
+[T1583.001 – Acquire Infrastructure: Domains](https://attack.mitre.org/techniques/T1583/001/)
+Threat actors register domains that impersonate trusted organizations, vendors, or business partners.
+[T1585.002 – Establish Accounts: Email Accounts](https://attack.mitre.org/techniques/T1585/002/)
+Attacker-controlled email accounts are created to support impersonation and fraudulent communications.
+[T1583 – Acquire Infrastructure](https://attack.mitre.org/techniques/T1583/)
+Third-party email delivery infrastructure and supporting services are leveraged to distribute campaigns.
+Initial Access
+[T1566 – Phishing](https://attack.mitre.org/techniques/T1566/)
+Targeted phishing emails are delivered to finance personnel using executive and vendor impersonation themes.
+[T1566.001 – Spearphishing Attachment](https://attack.mitre.org/techniques/T1566/001/)
+Fraudulent invoices or supporting documents are attached to phishing emails.
+[T1566.003 – Spearphishing via Service](https://attack.mitre.org/techniques/T1566/003/)
+Third-party email services are used to distribute phishing messages and improve legitimacy.
+Defense evasion
+[T1036 – Masquerading](https://attack.mitre.org/techniques/T1036/)
+Attackers disguise emails, domains, invoices, and business correspondence as legitimate communications.
+[T1656 – Impersonation](https://attack.mitre.org/techniques/T1656/)
+Executives, vendors, and trusted business entities are impersonated to establish credibility and influence payment decisions.
+Impact
+[T1657 – Financial Theft](https://attack.mitre.org/techniques/T1657/)
+Victims are deceived into transferring funds to attacker-controlled financial accounts through fraudulent invoice payment requests.
+Indicators of compromise (IOC)
+| Indicator | Type | Description |
+| service-nowinc[.]com | Domain | Domain impersonating ServiceNow |
+| gomez@service-nowinc[.]com | Email address | Email address associated with bank account |
+| notifications@uinsure[.]co[.]uk info@tivityhealth[.]com no-reply@lumalisboa[.]com noreply@mctci[.]com info@nuf[.]co[.]jp info@lohnsteuerhilfe-aktuell-verein[.]de info@tovimbatista[.]pt contact@eemusicclass[.]co[.]uk info@lifeones[.]com | Email address | Sender email address used to send out emails |
+| domainlify[.]net | Domain | Newly registered domain used in Reply-to address |
+Learn More
+For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
+To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
+To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
+Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
+- Learn more about
+[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection) - Evaluate your AI readiness with our latest
+[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). [Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)
+[How Microsoft discovers and mitigates evolving attacks against AI guardrails | Microsoft Security Blog](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)[Manipulating AI memory for profit: The rise of AI Recommendation Poisoning | Microsoft Security Blog](https://www.microsoft.com/en-us/security/blog/2026/02/10/ai-recommendation-poisoning/)– a related example of an AI-era technique observed in email traffic[Defending the inbox against prompt injection attacks | Microsoft Defender for Office 365 Blog](https://techcommunity.microsoft.com/blog/microsoftdefenderforoffice365blog/defending-the-inbox-against-prompt-injection-attacks/4534636)– feature announcement introducing prompt injection protection in Microsoft Defender for Office 365.[Prompt injection protection in Microsoft Defender for Office 365](https://learn.microsoft.com/en-us/defender-office-365/step-by-step-guides/prompt-injection-protection-defender-for-office-365)– official documentation of the prompt injection protection in Microsoft Defender for Office 365.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-5" class="article-body">
             <h2 class="article-title">So… You Found AWS Access Keys (Part 1)</h2>
             <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/so-you-found-aws-access-keys-part-1" target="_blank">Original Link</a></p>
             <div class="content-text">So… You Found AWS Access Keys (Part 1)
@@ -328,7 +427,7 @@ References
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-5" class="article-body">
+        <div id="art-6" class="article-body">
             <h2 class="article-title">Microsoft Plugs Nearly 1,000 Security Holes</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/09/microsoft-plugs-nearly-1000-security-holes/" target="_blank">Original Link</a></p>
             <div class="content-text">Microsoft Corp. today issued updates to plug at least 974 security holes in its Windows operating systems and other software, by far its biggest single patch batch ever. Microsoft says artificial intelligence is helping to speed the discovery of vulnerabilities, but security experts warn that many organizations already are struggling to prioritize the more human-intensive endeavor of testing and deploying so many fixes each month.
@@ -367,16 +466,21 @@ Ha. That’s the real test isn’t it?
 Imagine a never-ending mouse maze training facility, based on weighted logic, and almost instantaneous solutions. Sounds super safe.
 The mice already know how to eat the walls and are thinking out loud about faking the logs.
 We are proliferating not evil, but chaotic neutral intelligence. That’s enough.
+Absolutely not neutral. Weirder than chaos. Wouldn’t resemble a thing any ‘person’ would be able to ‘see’. Not a word for it. In essence, machines would not see ‘real’ in any way you would.
 If the work is related to Project Glasswing, it is likely AI found more than were fixed. AI is proving good at processing data in amounts and speeds people could not.
 Windows has more bugs than it has features
 A lot of heads should be rolling at Microsoft!
 Do you want to kill the innovation ? Are you a communist ?
 A slap on the wrist and maybe an asterisks after « we care about your security », and that will be fine.
+Linux isn’t having much better luck. https://www.techspot.com/news/113716-ai-finds-1500-vulnerabilities-linux-kernel-linus-torvalds.html
 It’s been like that for a long time, but M.S. keeps raking in the money because people are ok with such a bad product.
 “ok with such a bad product”? 99.9% of windows users are not reading or searching these kinds of reviews, blogs, or security bulletins and subsequently do not know they are using what’s deemed a bad product by the other 1%. G-ma’s, G-pa’s, fathers, mothers, aunts, and uncles don’t even know what BIOS is or how to build a bootable usb.
 How many of these security holes and other issues affect G-ma’s, G-pa’s email reading and online casino play that deep down they should really care?
 “ok with such a bad product”? 99.9% of windows users are not reading or searching these kinds of reviews, blogs, or security bulletins and subsequently do not know they are using what’s deemed a bad product by the other 1%. G-ma’s, G-pa’s, fathers, mothers, aunts, and uncles don’t even know what BIOS is or how to build a bootable usb.
 As if you could write an operting system, good or bad.
+You could congratulate Microsoft for fixing so many problems.
+or
+You could say, ‘You fixed HOW MANY PROBLEMS with an operating system that you keep telling us is great?’
 This is crazy! 2600 patches in 2026 so far? How many poor code entry points to windows must there have been, may still be there? It’s time to rewrite the whole OS!
 Since 13 is considered an unlucky number, Microsoft should be using AI to write Windows 14 or 15 and keep humans from coding. Humans can only be overseers.
 Or maybe this is chance for IBM or some other major company to get back into personal computers by using their AI expertise to generate a Windows competitor that is bug free.
@@ -408,164 +512,17 @@ What we saw closely matches reports from other administrators on Reddit, where R
 do you thing delayed kb5122876?, because the culprit is chrome V8 attached vía email subject false linkedin recuitment, only if sin 10 and server have web explorer (chrome, edge, #..)
 Off topic, but do many sites just block all visitors using a VPN? This is frustrating because it seems a brute-force method of protection. In effect they are expecting me to drop my protection in order to get past their protection. It happened again today when attempting to login at lowes.com. With the VPN on, it returns a “forbidden” page. With the VPN off, it loads the login page. Typically when I complain about such things the response is a shrug.
 just remember anyone new in IT..
-it’s all about job security and making that GTA</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-6" class="article-body">
-            <h2 class="article-title">Impersonating IT support: how threat actors turn a remote session into enterprise-wide access</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/09/02/impersonating-it-support-threat-actors-turn-remote-session-into-enterprise-wide-access/" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft Threat Intelligence has observed a human-operated intrusion campaign that abuses Microsoft Teams external collaboration to impersonate IT or helpdesk personnel and socially engineer users into granting an interactive remote session. Once remote control is established via RMM tools, the threat actor uses PowerShell to download and silently install a malicious MSI package, which in turn stages a portable Node.js runtime and an obfuscated JavaScript implant that provides persistent command execution and command and control (C2).
-Unlike commodity phishing that ends with an infostealer, this campaign follows a full hands-on-keyboard playbook. After the implant is deployed, the threat actor performs extensive host and Active Directory reconnaissance, periodically captures screenshots of the victim’s desktop, executes follow-on payloads through trusted Windows binaries, and pivots across the enterprise over Windows Remote Management (WinRM) toward high-value assets such as domain controllers. The intrusion relies heavily on legitimate tooling, including Microsoft Teams, remote support software, Windows Installer, Node.js, and native administrative protocols, allowing the activity to blend into expected enterprise operations at nearly every stage.
-This intrusion pattern is especially high-impact because it hands an external operator credential-backed, interactive access to internal infrastructure. The reconnaissance and lateral movement patterns observed: domain enumeration, server discovery, and WinRM pivoting toward identity systems, are consistent with intrusion activity that can precede data theft, extortion, ransomware deployment, or other follow-on objectives, in which threat actors map the environment, escalate privileges, disable security controls, exfiltrate business-relevant data, and ultimately deploy ransomware across the organization.
-In this blog, we share our analysis of this attack chain, from initial Microsoft Teams contact through internal lateral movement, along with mitigation and hunting guidance to help defenders detect and disrupt this user-initiated access pathway before it escalates into broader compromise.
-Risk to enterprise environments
-By abusing enterprise collaboration workflows instead of traditional email-based phishing, the threat actor initiates contact through Microsoft Teams in a way that appears consistent with routine IT support. Microsoft Teams applies multiple security controls at the point of first external contact, including external tenant labeling, Accept/Block prompts, message previews, and phishing indicators, but this attack chain depends on convincing the user to bypass those warnings and voluntarily grant remote access through legitimate support tools.
-An approved external Teams interaction, followed by a remote session, can enable the threat actor to:
-- Establish interactive, credential-backed system access through a legitimate remote support tool.
-- Execute threat actor-controlled code (MSI loader and Node.js implant) using trusted installers and runtimes.
-- Map the host and Active Directory environment through automated discovery
-- Move laterally toward high-value infrastructure using WinRM.
-- Capture on-screen activity and create opportunities for follow-on data access or other post-compromise actions.
-Attack chain overview
-The campaign follows a multi-stage attack chain that progresses from social engineering through payload delivery, execution, reconnaissance, and ultimately lateral movement:
-- Initial access via Teams (T1566.003): A threat actor operating from an external tenant initiates a Teams chat or call while impersonating IT/helpdesk staff and coaxes the user into handing over their device, for example, approving a “request control” prompt during a Teams screen-share, or opening Quick Assist and reading back the connection code.
-- Remote session and MSI delivery: During the remote session, the threat actor runs PowerShell to download a malicious MSI from cloud storage and installs it silently with msiexec.
-- Node.js runtime and implant staging: The MSI installs a script-based loader and a separate encrypted implant file under LocalAppData. If Node.js is not already available, the bootstrap downloads the legitimate portable Node.js runtime from the official distribution. The loader decrypts the implant at runtime, either in memory or into a temporary JavaScript file.
-- Script-based bootstrap and Node.js execution:The MSI launches hidden bootstrap code through trusted Windows script hosts, including PowerShell, cmd.exe, and WScript. The bootstrap obtains a portable Node.js runtime and uses it to decrypt and execute the JavaScript implant from a user-writable directory.
-- Command-and-control and operator tasking:The implant uses randomized HTTPS polling to receive JavaScript tasks from its C2 server. Observed operator-issued tasking performed host reconnaissance, security-product and virtualization discovery, and periodic desktop screen capture.
-- Domain discovery: The operator enumerates domain accounts, servers, and users through native tools and Active Directory Service Interfaces (ADSI) queries.
-- Follow-on payload execution: Additional payloads are executed through rundll32 loading threat actor-supplied DLLs.
-- Lateral movement via WinRM:Operator-issued tasking executed through the Node.js backdoor initiates WinRM connections over TCP port 5985 to domain-joined systems, including domain controllers and certificate authorities.
-Stage 1: Initial contact via Teams (T1566.003 Spearphishing via Service)
-The intrusion begins with abuse of external collaboration features in Microsoft Teams, where a threat actor operating from a separate tenant initiates contact while impersonating internal IT or helpdesk personnel. This activity does not stem from a weakness in Microsoft Teams or its built-in protections; instead, the threat actor abuses legitimate collaboration features by persuading the user to override clearly presented security warnings, highlighting the broader challenge of defending against social engineering rather than technical exploitation.
-Because interaction occurs within an enterprise collaboration platform rather than through traditional email, it could bypass the initial skepticism associated with unsolicited external communication. The lure varies, for example “Microsoft Security Update,” “Spam Filter Update,” “Account Verification,” or tasks required to stop deactivation of an account, but the objective is consistent: convince the user to ignore external-contact flags, launch a remote management session, and accept elevation. Voice phishing (vishing) is sometimes layered to increase trust or compliance, or so malicious instructions or URLs never enter the chat logs.
-With user consent obtained through social engineering, the threat actor gains interactive control of the device using a remote support tool. From the user’s perspective, they are guided to open the remote-assistance application, enter a short key, and follow prompts to grant access.
-The urgency and interactivity are the signal: a remote-assist process tree followed immediately by cmd.exe or PowerShell on the same desktop. In vishing scenarios, the threat actor might talk the victim through the process to prevent logging of malicious instructions.
-Stage 2: Remote session and malicious MSI delivery
-Immediately after establishing control, the threat actor uses PowerShell within the remote session to download a malicious MSI package from threat actor-controlled cloud storage and installs it silently. The installer is disguised with benign, update-themed names such as “devfix” or “Hotfix,” reinforcing the helpdesk pretext.
-The payload is hosted on a widely used cloud storage platform, allowing the download to blend in with legitimate traffic and benefit from a trusted domain reputation. The /qn switch suppresses all installer UI so the victim sees no indication that software is being installed.
-Stage 3: MSI staging and Node.js runtime acquisition
-Upon installation, the MSI retrieves a portable Node.js runtime directly from the official Node.js distribution and extracts it into a randomly named directory under the user’s local application data. Downloading a legitimate, signed runtime from a trusted source lets the threat actor run a full JavaScript execution environment without deploying custom binaries that might attract scrutiny.
-The MSI installs a script-based loader and a separate encrypted implant file in the current user’s LocalAppData directory. The encrypted implant is packaged within the MSI rather than downloaded separately. At runtime, the loader decrypts the JavaScript implant either in memory or into a temporary JavaScript file. This separation of a legitimate runtime from the malicious script allows the initial backdoor to execute as interpreted JavaScript while additional native payloads can be delivered later through operator tasking.
-Stage 4: Script-based bootstrap and encrypted implant execution
-The MSI schedules a deferred, asynchronous custom action immediately after installing its files. The action starts hidden bootstrap code through PowerShell, cmd.exe, or WScript and then launches Node.js from LocalAppData. The loader decrypts a separate high-entropy data file and executes the resulting JavaScript either through standard input or by loading a temporary JavaScript file.
-Endpoint activity shows Node.js, or a renamed copy whose original file metadata identifies it as Node.js, executing a staged script loader from LocalAppData. The loaders and encrypted payload files use nonstandard extensions such as .tmp, .ini, .dat, .bin, or .cfg. After decrypting the payload, the loader either provides JavaScript to Node.js through standard input or writes a temporary .js file and loads it into the running Node process.
-By using a signed Node.js runtime, including renamed copies of the runtime, to execute nonstandard-extension loaders or JavaScript supplied through standard input, the threat actor can evade controls focused only on unsigned executables and conventional script extensions.
-Stage 5: Per-user persistence
-The analyzed MSI packages established per-user persistence using update-themed entries. Observed installers created either an HKEY_CURRENT_USER Run value or a shortcut in the current user’s Startup folder. Both mechanisms used the name EdgeUpdate and launched a Node.js loader from LocalAppData when the user signed in.
-The Startup-folder implementation launched WScript with the staged JScript wrapper, portable Node.js runtime, and nonstandard-extension loader. The Run-key implementation invoked the portable Node.js runtime directly.
-Stage 6: Command-and-control and operator tasking
-Once running, the implant establishes communication with its C2 server and begins receiving JavaScript tasking. Observed threat actor issued tasks launched short-lived cmd.exe and PowerShell processes to perform a burst of host reconnaissance, hardware and locale details, installed antivirus products, and disk information.
-The querying of the display adapter name and installed antivirus is characteristic of sandbox and defense evasion checks. Generic virtual display adapters and analysis tooling are common tells of an automated analysis environment.
-The recovered implant communicates through randomized HTTPS long-polling requests. Responses from the C2 server are treated as JavaScript source and executed dynamically with access to Node.js module loading, process execution, environment variables, buffers, and the file system.
-Through JavaScript tasking delivered by the C2 server, operators repeatedly captured the victim’s screen, resized the image, encoded it as Base64, and wrote it to a temporary file before exfiltration. Screenshots are captured at varying scale factors to balance image quality against transfer size.
-Dormant blockchain-based C2 discovery
-The analyzed implants also contained dormant logic capable of querying an Ethereum smart contract for an updated C2 URL. This functionality was disabled in the recovered builds, which instead used a hard-coded fallback server. The contract stores only a URL string and does not contain or execute the malware payload.
-Stage 7: Domain discovery and reconnaissance
-With a foothold validated, the operator uses C2-delivered tasking to expand reconnaissance into Active Directory. Native commands enumerate specific domain accounts, while ADSI searches identify domain-joined servers and collect user description attributes, which can contain operational notes, privileged-account context, or other sensitive information.
-An ADSI-based sweep enumerates Windows Server computer objects, resolves their addresses, and probes each for administrative reachability, effectively building a live map of high-value targets:
-A second ADSI query enumerates all user objects and their description attributes:
-The use of randomized sleep jitter and CIM-based reachability checks indicates a deliberate, operator-driven effort to enumerate the domain quietly rather than through noisy, high-volume scanning.
-Stage 8: Follow-on payload execution
-Using commands delivered through the Node.js backdoor, the operator executes additional payloads through rundll32.exe, loading threat actor-supplied DLLs by invoking exported functions with a token argument. Using rundll32 to execute malicious DLL exports is a well-established defense-evasion and proxy-execution technique.
-The DLLs are given short, innocuous names and are invoked with an exported function (open) and a per-execution token, consistent with modular loaders that gate execution behind a runtime-supplied key.
-Stage 9: Lateral movement via WinRM toward high-value assets
-Following local execution and discovery, operator-issued tasking executed through the Node.js backdoor initiated internal remote-management connections over WinRM on TCP port 5985 to a large set of domain-joined systems. The target list spans dozens of hosts across multiple regions and roles, including file servers, database and application servers, and, critically, domain controllers and certificate authorities.
-The use of WinRM from a non-administrative application context strongly suggests credential-backed lateral movement directed by an external operator. Targeting identity-centric infrastructure, domain controllers and certificate authorities, at this stage reflects a shift from initial foothold toward broader enterprise control, and is a hallmark of intrusions that precede large-scale data theft or ransomware deployment.
-Mitigation and response recommendations
-This campaign relies less on platform exploitation and more on persuading users to initiate trusted remote-access workflows within legitimate collaboration tools. Organizations should treat any unsolicited external support contact as inherently suspicious and implement layered defenses across the identity, endpoint, and collaboration layers.
-- Reinforce user education. Establish internal helpdesk authentication phrases and train employees to recognize external-tenant indicators and to never grant remote access or run commands provided by an unsolicited contact.
-- Verify unsolicited support contact. Treat any unsolicited external Microsoft Teams chat or call claiming to be IT or helpdesk as suspicious, and verify the request through a known internal channel before granting remote access. Restrict Teams external access to trusted domains only.
-- Harden Microsoft Teams and email against social engineering. Use
-[Microsoft Defender for Office 365](https://learn.microsoft.com/defender-office-365/mdo-about)with[Safe Links](https://learn.microsoft.com/defender-office-365/safe-links-about)and[Zero-hour auto purge (ZAP)](https://learn.microsoft.com/defender-office-365/zero-hour-auto-purge)so malicious messages and URLs are neutralized at time of click and removed after delivery. - Microsoft Teams: Apply the
-[Security best practices for Microsoft Teams](https://learn.microsoft.com/en-us/MicrosoftTeams/teams-security-best-practices-for-safer-messaging), revisit your[external collaboration policies](https://learn.microsoft.com/en-us/microsoftteams/trusted-organizations-external-meetings-chat), and make sure users see clear[external sender notifications](https://learn.microsoft.com/en-us/defender-office-365/mdo-support-teams-about)when engaging with cross-tenant contacts. Require device- or identity-based access checks before any remote support session is granted. - Enforce phishing-resistant access controls. Require MFA and compliant or managed devices through
-[Microsoft Entra Conditional Access](https://learn.microsoft.com/entra/identity/conditional-access/overview)to limit the value of credential-backed remote sessions established through social engineering. - Deploy attack surface reduction rules. Enable
-[ASR rules](https://learn.microsoft.com/defender-endpoint/attack-surface-reduction-rules-deployment-implement)that block executable content from email and scripting interpreters, process creation from PowerShell/WScript/cmd, and execution of downloaded content to disrupt MSI- and script-based staging. - Restrict administrative protocols. Limit
-[WinRM](https://learn.microsoft.com/windows/win32/winrm/portal)(TCP 5985) to authorized management workstations and alert on WinRM initiated from user-context or non-administrative processes. - Turn on network and web protection. Enable network protection and web protection in Microsoft Defender for Endpoint to block connections to threat actor infrastructure and cloud-hosted staging endpoints used for payload delivery and C2.
-- Enable cloud-delivered protection. Turn on
-[cloud-delivered protection](https://learn.microsoft.com/microsoft-365/security/defender-endpoint/configure-block-at-first-sight-microsoft-defender-antivirus)in Microsoft Defender Antivirus to cover rapidly evolving threat actor tooling; cloud-based machine learning helps detect and block newly observed threats. - Control remote support tooling. Limit or monitor remote monitoring and management (RMM) and interactive remote-support software, and control which remote-assistance tools are permitted in the environment.
-- Investigate and rotate credentials. Organizations that find indicators of this campaign should assume the operator obtained network-level access through the compromised host and prioritize credential rotation for any credentials accessible from the affected machine, including domain admin accounts if the host was domain-joined.
-Microsoft Defender XDR detections
-Microsoft Defender XDR coordinates detection, prevention, investigation, and response across endpoints, identities, email, and apps. The representative alerts below can surface activity associated with this campaign. Alert titles are illustrative and may vary by environment and product version.
-| Tactic | Observed activity | Microsoft Defender coverage |
-| Initial access | External Teams chat or call from an IT/helpdesk persona operating in a separate tenant | Microsoft Defender for Cloud Applications / Office 365 – Microsoft Teams chat initiated by a suspicious external user – IT Support Teams Voice phishing following mail bombing activity – A user clicked through to a potentially malicious URL. – A potentially malicious URL click was detected. – Suspicious Teams Chat likely involved in remote management and dangerous commands Microsoft Defender for Endpoint – Possible initial access from an emerging threat |
-| Execution | PowerShell downloads and silently installs an MSI | Microsoft Defender Antivirus – Trojan:PowerShell/PowExec.MX!MTB – Trojan:Win32/FakeAll!MTB – Trojan:JS/FakeAll.DA!MTB – Trojan:JS/FakeAll.DB!MTB Microsoft Defender for Endpoint – Possible initial access from an emerging threat |
-| Execution | Portable Node.js runtime executes an obfuscated loader from LocalAppData; observed execution includes WScript, nonstandard script extensions, renamed Node.js copies, and standard-input execution. | Microsoft Defender Antivirus – Trojan:JS/SynkLoader.SA – Trojan:JS/EtherRatz.A!MTB – Trojan:JS/EtherRatz.B!MTB Microsoft Defender for Endpoint – Suspicious Node.js process behavior – Suspicious JavaScript process |
-| Defense evasion | Silent msiexec install and rundll32 loading threat actor-supplied DLLs | Microsoft Defender Antivirus – Trojan:Win32/SynkLoader.SA Microsoft Defender for Endpoint – Low-reputation arbitrary code executed by signed executable – Suspicious process launch by Rundll32.exe |
-| Discovery | WMI/ADSI host and Active Directory enumeration and periodic screen capture | Microsoft Defender for Endpoint – Suspicious screen capture activity – Suspicious LDAP query – Suspicious Active Directory enumeration – Possible hands-on-keyboard pre-ransom activity – Anomalous account lookups – Possible hands-on-keyboard pre-ransom activity |
-| Lateral movement | WinRM (TCP 5985) pivot toward domain controllers and certificate authorities | Microsoft Defender for Endpoint – Suspicious WinRM activity was observed |
-Microsoft Security Copilot
-Security Copilot customers can use the standalone experience to create their own prompts or run prebuilt promptbooks to automate investigation and response tasks related to this threat. Useful promptbooks for this activity include Incident investigation, Microsoft User analysis, Threat actor profile, Threat intelligence 360 report, and Vulnerability impact assessment. Some promptbooks require access to Microsoft Defender XDR, Microsoft Sentinel, or related Microsoft security plugins.
-For this campaign, Security Copilot can help analysts summarize affected devices where Node.js or a renamed Node.js runtime executed a staged loader from a user-writable path, reconstruct the Teams-to-remote-session-to-MSI delivery chain, and build containment and credential-rotation plans for affected domain-joined endpoints.
-Threat intelligence reports
-Microsoft customers can use [Microsoft Defender XDR Threat Analytics](https://learn.microsoft.com/defender-xdr/threat-analytics) and related Microsoft threat intelligence reporting to stay current on the malicious activity, indicators, detection coverage, and recommended response actions associated with this campaign.
-For campaign-specific intelligence, see Threat Analytics: Teams-based helpdesk impersonation delivers MSI loader and Node.js implant for hands-on-keyboard intrusion ([View report](https://security.microsoft.com/threatanalytics3/923854ec-9f40-4053-bc8a-4de71a43cd33)). These reports provide investigation context, protection guidance, and updated intelligence that security teams can use to prevent, mitigate, or respond to related activity in their environments.
-Advanced hunting queries
-Microsoft Defender XDR customers can run the following advanced hunting queries to locate related activity. Tune time windows, tool lists, and filters for your environment.
-External Teams activity
-Sender, Recipient, and ThreadId can be used for pivoting other useful information. CloudAppEvents is useful for searching first contact information.
-CloudAppEvents | where Timestamp > ago(7d) // optional time filters between ([_startTime] .. [_endTime]) | where Application == "Microsoft Teams" | where ActionType == "ChatCreated" | where IsExternalUser == true | extend ThreadCreatorUpn = tostring(RawEventData.Members[0].UPN) ,ThreadCreatorDisplayName = tostring(RawEventData.Members[0].DisplayName) ,ThreadCreatorOrganizationId = tostring(RawEventData.Members[0].OrganizationId) ,TRecipient1Upn = tostring(RawEventData.Members[1].UPN) ,Recipient1DisplayName = tostring(RawEventData.Members[1].DisplayName) ,Recipient1OrganizationId = tostring(RawEventData.Members[1].OrganizationId) ,Recipient2Upn = tostring(RawEventData.Members[2].UPN) ,Recipient2DisplayName = tostring(RawEventData.Members[2].DisplayName) ,Recipient2OrganizationId = tostring(RawEventData.Members[2].OrganizationId) ,ThreadId = tostring(RawEventData.ChatThreadId) | summarize by ThreadCreatorUpn, ThreadCreatorDisplayName, ThreadCreatorOrganizationId, TRecipient1Upn, Recipient1DisplayName, Recipient1OrganizationId, Recipient2Upn, Recipient2DisplayName, Recipient2OrganizationId, ThreadId, tostring(IsExternalUser), tostring(IsImpersonated) |
-MessageEvents, CallActivityEvents, MessageUrlInfo, and others can be searched alone or in a union to correlate threads with messages and calls.
-let _threadIds = pack_array( "19:[thread]", "19:[thread]", "19:[thread]"); union MessageEvents, CallActivityEvents, MessageUrlInfo | where ThreadId in (_threadIds) or TeamsMessageId has_any (_threadIds) | sort by ThreadId, TeamsMessageId asc |
-PowerShell writing an MSI to a user-writable path
-DeviceFileEvents | where Timestamp > ago(7d) | where InitiatingProcessParentFileName =~ "explorer.exe" | where InitiatingProcessFileName =~ "powershell.exe" | where FileName endswith ".msi" where FolderPath contains @"\Downloads\" or FolderPath contains @"\AppData\" or FolderPath contains @"\Temp\" |
-node.exe executing a staged payload from user-writable paths
-DeviceProcessEvents | where Timestamp > ago(7d) | where FileName =~ "node.exe" | where ProcessCommandLine has @"\AppData\Local\" and ProcessCommandLine !contains ".js" | where InitiatingProcessFileName =~ "wscript.exe" | where InitiatingProcessCommandLine has_all (@"\AppData\Local\", "node.exe", ".js") |
-Screen capture via hidden PowerShell writing Base64 to a temp file
-DeviceProcessEvents | where Timestamp > ago(7d) | where InitiatingProcessParentFileName =~ "node.exe" or InitiatingProcessFileName =~ "node.exe" | where FileName in~ ("powershell.exe", "cmd.exe") | where ProcessCommandLine has_all ("CopyFromScreen", "ToBase64String", "System.Drawing.Bitmap", "System.Drawing", "WriteAllText") | project Timestamp, DeviceName, AccountName, ProcessCommandLine | order by Timestamp desc |
-WinRM lateral movement from a non-administrative process
-DeviceNetworkEvents | where Timestamp > ago(7d) | where InitiatingProcessFileName =~ "powershell.exe" | where InitiatingProcessCommandLine endswith "-NoLogo -NoProfile -ExecutionPolicy Bypass" | where RemoteUrl endswith ":5985/wsman" |
-MITRE ATT&CK Techniques observed
-The following table maps the observed activity to MITRE ATT&CK techniques:
-| Tactic | Technique ID | Technique | Observed activity |
-| Initial Access | T1566.003 | Phishing: Spearphishing via Service | External Teams chat/call impersonating IT helpdesk |
-| Execution | T1059.001 | Command and Scripting Interpreter: PowerShell | PowerShell used to download and install the MSI |
-| Execution | T1059.007 | Command and Scripting Interpreter: JavaScript | Malicious JavaScript implant run via node.exe |
-| Execution | T1218.007 | System Binary Proxy Execution: Msiexec | Silent MSI installation via msiexec /qn |
-| Execution | T1218.011 | System Binary Proxy Execution: Rundll32 | Follow-on DLL payloads executed via rundll32 |
-| Defense Evasion | T1036 | Masquerading | Update/helpdesk-themed MSI names (devfix, Hotfix) |
-| Defense Evasion | T1497.001 | Virtualization/Sandbox Evasion: System Checks | Display adapter and antivirus product queries |
-| Discovery | T1082 | System Information Discovery | systeminfo, MachineGuid, ProductName, disk inventory |
-| Discovery | T1016 | System Network Configuration Discovery | net session, net use, domain membership checks |
-| Discovery | T1087.002 | Account Discovery: Domain Account | net user /domain and ADSI user enumeration |
-| Discovery | T1018 | Remote System Discovery | ADSI server enumeration with reachability probing |
-| Discovery | T1518.001 | Security Software Discovery | Antivirus product enumeration via SecurityCenter2 |
-| Collection | T1113 | Screen Capture | Periodic Base64-encoded desktop screenshots |
-| Command and Control | T1071.001 | Application Layer Protocol: Web Protocols | Randomized HTTPS long-polling used for core C2; separate post-compromise tasking installed the ws package for an additional or optional capability. |
-| Command and Control | T1105 | Ingress Tool Transfer | Portable Node.js runtime downloaded and JavaScript tasks received from C2; the initial loader and encrypted implant are extracted from the MSI. |
-| Lateral Movement | T1021.006 | Remote Services: Windows Remote Management | WinRM (5985) pivoting to domain-joined systems |
-Indicators of Compromise (IOCs)
-The following indicator types were observed in this campaign. Environment-specific values (paths, hostnames, and account names) have been generalized; defenders should hunt for the corresponding behaviors and patterns in their own telemetry.
-File indicators
-| Indicator (SHA-256) | Description |
-| 4cfdcae6dd1d6d98b870c8f0654d504f2bf10479a117dc297de789c249dc389d | Malicious MSI loader package (silent msiexec install) |
-| a4d145a6347e47d40b3ca48af5c6dba01bf019d0110e31a44bb70fc77d1d1676 | Malicious MSI loader package |
-| cc6d0f3f47afeba018173604e34f527e8413d3a54ffb35caed529bff49055ec5 | Malicious MSI loader package |
-| 0d2fc28af246f62f27e49207d1f64e236ad9ea029412b27877d1ae6c098e86e3 | Second-stage DLL (rundll32-loaded module) |
-| 69e10e0cb7bb2137ebea12971adb02c662cf5543a4f8c9530812bcbf7b183a23 | Second-stage DLL (rundll32-loaded module) |
-| a135fe4df18c711097e69b4f27ea32a74a955160bf2fb12da841f21866d95d87 | Second-stage DLL (rundll32-loaded module) |
-Payload delivery infrastructure
-| Indicator | Type | Description |
-| update1n5[.]blob.core.windows.net | Domain | Azure Blob Storage endpoint hosting the malicious MSI loader |
-| update1n6[.]blob.core.windows.net | Domain | Azure Blob Storage endpoint hosting the malicious MSI loader |
-| update1n7[.]blob.core.windows.net | Domain | Azure Blob Storage endpoint hosting the malicious MSI loader |
-| update1n9[.]blob.core.windows.net | Domain | Azure Blob Storage endpoint hosting the malicious MSI loader |
-| updatetmp[.]blob.core.windows.net | Domain | Azure Blob Storage endpoint hosting the malicious MSI loader |
-Command-and-control infrastructure
-| Indicator | Type | Description |
-| synctimes[.]australiaeast[.]cloudapp[.]azure[.]com | Domain | Hardcoded fallback C2 and latest URL stored in the associated Ethereum contract |
-| webwether[.]eastus[.]cloudapp[.]azure[.]com | Domain | Earlier URL stored in the Ethereum contract |
-| dssdfvsdfvsdfvsdgbfbdvdzv[.]org | Domain | Earlier URL stored briefly in the Ethereum contract |
-Learn more
-For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
-To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
-To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
-Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
-- Learn more about
-[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection) - Evaluate your AI readiness with our latest
-[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). [Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)</div>
+it’s all about job security and making that GTA
+This is a germane article!
+When Both Sides of Cybersecurity Are AI
+Peter H. Diamandis
+Sep 14, 2026
+TLDR: Attackers now exploit 87% of vulnerabilities on or before the day they’re disclosed, up from 23% in 2020. Critical bug disclosures have jumped sixfold since spring. The cause is the same on both sides of the fight: AI. GPT-6 Astra just scored 100% on ExploitBench, writing working exploits for every known vulnerability, and OpenAI rated it a “critical” cyber risk.
+The model that can break into anything can also fix anything, and it can rewrite the 50 years of faulty human code that created most of the holes in the first place. You have a 12-to-24 month window to get on the right side of that. This is what to do with it.
+…
+https://metatrends.substack.com/p/when-both-sides-of-cybersecurity
+The volume of kernel and privilege escalation patches highlights why quantitative vulnerability modeling and deterministic verification are critical for modern consumer infrastructure.
+The volume of kernel and privilege escalation patches highlights why quantitative vulnerability modeling and deterministic verification are critical for modern consumer infrastructure: https://gworky.com/tech</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
