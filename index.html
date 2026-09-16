@@ -59,15 +59,15 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-09-15</h1>
+        <h1>Security Briefing // 2026-09-16</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Cisco patches Secure Email Gateway zero-day exploited in attacks</button></li><li><button onclick="show('art-1')">LiteSpeed Enterprise Flaw Could Let One Hosting Account Gain Root Access on a Shared Server</button></li><li><button onclick="show('art-2')">Cisco Secure Email Gateway Flaw Exploited in the Wild, Enables Root Command Execution</button></li><li><button onclick="show('art-3')">Microsoft: September updates cause RDS failures on Windows Server</button></li><li><button onclick="show('art-4')">Protecting organizations from AI-assisted executive impersonation and invoice fraud</button></li><li><button onclick="show('art-5')">So… You Found AWS Access Keys (Part 1)</button></li><li><button onclick="show('art-6')">Microsoft Plugs Nearly 1,000 Security Holes</button></li><li><button onclick="show('art-7')">Microsoft Plugs Nearly 400 Security Holes</button></li><li><button onclick="show('art-8')">Turning Enterprise Update Servers Into Backdoor Factories (0_o) – Part 1</button></li><li><button onclick="show('art-9')">Demystifying AI Exploits: A Blueprint for AI-Assisted Vulnerability Management</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Critical ScreenConnect flaw now actively exploited in attacks</button></li><li><button onclick="show('art-1')">Attackers Exploit WooCommerce Wholesale Lead Capture Flaw to Plant PHP Web Shells</button></li><li><button onclick="show('art-2')">Acronis warns of actively exploited flaw in its cPanel backup plugin</button></li><li><button onclick="show('art-3')">Cisco Secure Email Gateway Flaw Exploited in the Wild, Enables Root Command Execution</button></li><li><button onclick="show('art-4')">Protecting organizations from AI-assisted executive impersonation and invoice fraud</button></li><li><button onclick="show('art-5')">So… You Found AWS Access Keys (Part 1)</button></li><li><button onclick="show('art-6')">Microsoft Plugs Nearly 1,000 Security Holes</button></li><li><button onclick="show('art-7')">Microsoft Plugs Nearly 400 Security Holes</button></li><li><button onclick="show('art-8')">Turning Enterprise Update Servers Into Backdoor Factories (0_o) – Part 1</button></li><li><button onclick="show('art-9')">Demystifying AI Exploits: A Blueprint for AI-Assisted Vulnerability Management</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
-            <h2 class="article-title">Cisco patches Secure Email Gateway zero-day exploited in attacks</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/new-cisco-secure-email-zero-day-exploited-to-execute-commands-as-root/" target="_blank">Original Link</a></p>
-            <div class="content-text">Cisco warned customers to patch a critical Secure Email Gateway zero-day security flaw that threat actors have been exploiting in attacks. [...]
+            <h2 class="article-title">Critical ScreenConnect flaw now actively exploited in attacks</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/cisa-warns-of-hackers-exploiting-critical-screenconnect-flaw/" target="_blank">Original Link</a></p>
+            <div class="content-text">Attackers now exploit a critical-severity ConnectWise ScreenConnect vulnerability in the wild, according to the U.S. Cybersecurity and Infrastructure Security Agency (CISA). [...]
 
 [Full content could not be extracted. Visit source for details.]</div>
             <br>
@@ -75,28 +75,48 @@
             <hr class="separator">
         </div>
         <div id="art-1" class="article-body">
-            <h2 class="article-title">LiteSpeed Enterprise Flaw Could Let One Hosting Account Gain Root Access on a Shared Server</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/litespeed-enterprise-flaw-could-let-one.html" target="_blank">Original Link</a></p>
-            <div class="content-text">A critical vulnerability in LiteSpeed Web Server Enterprise could let a low-privilege website user gain root access on a shared-hosting server, cPanel warned in an [advisory published on September 14](https://support.cpanel.net/hc/en-us/articles/43483286674583-Security-LiteSpeed-Enterprise-security-advisory-September-14-2026).
-On such servers, many customers' sites run on a single machine, and an attacker with one of those hosting accounts could exploit the flaw to access or alter other sites and the server itself, according to the advisory.
-cPanel said it had received notice of the flaw, which affects versions before 6.3.7, and urged administrators to update to that release, which LiteSpeed [published on September 11](https://store.litespeedtech.com/store/index.php?rp=/announcements/895/LiteSpeed-Web-Server-v6.3.7-Now-Available.html).
-The flaw can bypass the controls that keep hosting accounts apart, including [CageFS](https://docs.cloudlinux.com/cloudlinuxos/cloudlinux_os_components/#cagefs), cPanel said. CageFS is a CloudLinux tool that gives each hosting account a restricted view of the file system, so it cannot see other accounts or the server's configuration files.
-Neither cPanel's advisory nor LiteSpeed's release notes describe how the flaw works. LiteSpeed's announcement of 6.3.7 called it a release with "Security improvements, bug fixes, and more!" Its [changelog](https://docs.litespeedtech.com/lsws/changelog/) lists three security changes but does not mention a privilege-escalation flaw, and neither company has said publicly which change fixes it.
-The advisory carries no CVE identifier or severity score, and a check of published CVE records on September 15 found none for the flaw. The advisory also does not say whether the flaw has been exploited.
-Both cPanel and LiteSpeed give the same command to install 6.3.7 now: /usr/local/lsws/admin/misc/lsup.sh -f -v 6.3.7
-The manual update matters because 6.3.7 may not arrive on its own: LiteSpeed said there "may be some delay" before the release reaches auto-update.
-As of September 15, LiteSpeed's [download page](https://www.litespeedtech.com/products/litespeed-web-server/download) still listed 6.3.6 as the stable release, alongside a July pre-release build of 6.4.0 (RC1) whose changelog does not list the three security changes. cPanel's advisory does not say whether the 6.4.0 release candidates are affected.
-LiteSpeed's [update documentation](https://docs.litespeedtech.com/lsws/updates/) says that forcing a specific version with this command stops the server from following its stable update tier, and that administrators can resume automatic stable updates afterward by running touch /usr/local/lsws/autoupdate/follow_stable.
-Neither cPanel's advisory nor LiteSpeed's release notes offer a workaround for servers that cannot update at once, or indicators for checking whether a server has already been attacked. The advisory names only the Enterprise edition and does not address OpenLiteSpeed, LiteSpeed's open-source server, for which LiteSpeed had released no matching update as of September 15.
-It is the third time since May that a flaw in LiteSpeed software on cPanel servers has been reported to grant a hosting account root access, but the first in the web server itself.
-In May and June, LiteSpeed disclosed two such flaws in its user-end cPanel plugin, [CVE-2026-48172](https://blog.litespeedtech.com/2026/05/21/security-update-for-litespeed-cpanel-plugin/) and [CVE-2026-54420](https://blog.litespeedtech.com/2026/06/01/security-update-for-litespeed-cpanel-plugin-2/), said both were being actively exploited, and fixed both in the plugin. CISA later added both to its Known Exploited Vulnerabilities catalog, as The Hacker News reported in [May](https://thehackernews.com/2026/05/litespeed-cpanel-plugin-cve-2026-48172.html) and [June](https://thehackernews.com/2026/06/cisa-flags-litespeed-cpanel-plugin-flaw.html).
-The Hacker News has contacted LiteSpeed, cPanel, and CloudLinux with questions about the flaw.
+            <h2 class="article-title">Attackers Exploit WooCommerce Wholesale Lead Capture Flaw to Plant PHP Web Shells</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/attackers-exploit-woocommerce-wholesale.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Threat actors are exploiting a critical security flaw in WooCommerce Wholesale Lead Capture, a premium WordPress plugin that has more than 6,000 active installs.
+"This vulnerability can be leveraged by unauthenticated attackers to upload arbitrary files, including PHP backdoors, and achieve remote code execution," Wordfence [said](https://www.wordfence.com/blog/2026/09/attackers-actively-exploiting-critical-vulnerability-in-woocommerce-wholesale-lead-capture-plugin/).
+The WordPress security company said it has blocked over 100,000 exploit attempts targeting the vulnerability since June 2026, with 99 of those attack attempts recorded over the past 24 hours. The vulnerability is tracked as CVE-2026-27540 (CVSS score: 9.8).
+The issue is a case of arbitrary file uploads due to missing file type validation in an AJAX action named "wwlc_file_upload_handler" that impacts all versions of the plugin up to, and including, 2.0.3.1. This opens the door for an unauthenticated attacker to upload arbitrary files on the affected site's server, paving the way for remote code execution.
+In the attack observed by Wordfence, threat actors have been observed submitting crafted requests to the "wwlc_file_upload_handler" AJAX action with a forged file_settings parameter and a malicious PHP file ("shell.php").
+The uploaded PHP file is a web shell that reports host details and offers a browser-based upload form for writing additional malicious files to the compromised WordPress site. Attack attempts have originated from the following IP addresses -
+- 92.241.13.213
+- 31.59.129.150
+- 2a0f:85c1:840:5389::1
+- 92.241.13.140
+- 23.137.105.214
+- 23.180.120.140
+- 104.194.9.138
+- 187.75.114.36
+- 114.10.43.203
+- 37.114.144.209
+Because a successful attack permits an attacker to upload arbitrary PHP files, WordPress site owners are advised to check for unexpected or recently created .php files, mainly in the uploads directory, and review for suspicious requests to "/wp-admin/admin-ajax.php" with the action parameter set to "wwlc_file_upload_handler" from the above IP addresses.
+Critical Flaws in The Events Calendar Plugin
+The development comes as Wordfence [detailed](https://www.wordfence.com/blog/2026/09/wordfence-argus-identifies-two-critical-unauthenticated-vulnerability-chains-leading-to-remote-code-execution-in-the-events-calendar-plugin/) two critical flaws impacting The Events Calendar, a WordPress plugin installed on over 600,000 websites. Successful exploitation requires the target event page to have comments enabled and the plugin's "Show comments on event pages" option to be active. A brief description of the vulnerabilities is below -
+- CVE-2026-78159 (CVSS score: 9.8) - A vulnerability arising from insufficient validation of the widget 'classes' map in the "parse_array" function that could be exploited to achieve unauthenticated remote code execution (Affects versions <= 6.17.3)
+- CVE-2026-78006 (CVSS score: 9.8) - A vulnerability arising from insufficient protection in the "is_safe_widget_instance" function that could be exploited to achieve unauthenticated remote code execution (Affects versions <= 6.17.4)
+"Both chains begin in the plugin's widget-rendering pipeline and can ultimately lead to remote code execution without authentication through two separate methods," Wordfence said.
+"The first chain uses PHP Object Injection to execute arbitrary operating system commands on the underlying server. The second chain bypasses the object-injection guard and abuses an arbitrary-callable primitive to reset an administrator’s password, after which an attacker can upload a malicious plugin and take complete control of the site."
+Wordfence has warned that both chains can be triggered through WordPress's pending-comment preview without moderator approval, and that the flaw could lead to complete site takeover, sensitive data theft, and malware deployment. StellarWP, which develops the plugin, has addressed the flaws in version 6.17.3.1 and 6.17.4.1, respectively.
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
         <div id="art-2" class="article-body">
+            <h2 class="article-title">Acronis warns of actively exploited flaw in its cPanel backup plugin</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/acronis-warns-of-actively-exploited-flaw-in-its-cpanel-backup-plugin/" target="_blank">Original Link</a></p>
+            <div class="content-text">Acronis disclosed a high-severity Linux local privilege escalation vulnerability in its backup plugin for cPanel, WebHost Manager (WHM), and Plesk that may be exploited in the wild. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
             <h2 class="article-title">Cisco Secure Email Gateway Flaw Exploited in the Wild, Enables Root Command Execution</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/cisco-secure-email-gateway-flaw.html" target="_blank">Original Link</a></p>
             <div class="content-text">Cisco has warned that a new critical vulnerability impacting AsyncOS Software for Cisco Secure Email Gateway has come under active exploitation in the wild.
@@ -122,16 +142,6 @@ The disclosure comes days after Arctic Wolf said it detected large-scale credent
 "The attempted usernames included employee names, corporate email addresses, affiliate identities, and common administrative accounts associated with the targeted organizations. This targeted identity selection, rather than generic username spraying, indicates access to previously collected or enumerated identity information."
 In one observed case, a successful Fortinet VPN authentication originating from the IP address "158.94.211[.]14" was followed by malicious activity in the affected environment.
 [Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-3" class="article-body">
-            <h2 class="article-title">Microsoft: September updates cause RDS failures on Windows Server</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-september-updates-cause-rds-failures-on-windows-server/" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft has confirmed reports that the September 2026 security updates cause Remote Desktop Services (RDS) failures on Windows Server systems. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
@@ -467,6 +477,7 @@ Imagine a never-ending mouse maze training facility, based on weighted logic, an
 The mice already know how to eat the walls and are thinking out loud about faking the logs.
 We are proliferating not evil, but chaotic neutral intelligence. That’s enough.
 Absolutely not neutral. Weirder than chaos. Wouldn’t resemble a thing any ‘person’ would be able to ‘see’. Not a word for it. In essence, machines would not see ‘real’ in any way you would.
+I realize that, but you’re reading into my word choices. Human words for explaining to other humans, not trying to accurately describe machine subroutine priorities.
 If the work is related to Project Glasswing, it is likely AI found more than were fixed. AI is proving good at processing data in amounts and speeds people could not.
 Windows has more bugs than it has features
 A lot of heads should be rolling at Microsoft!
@@ -487,6 +498,9 @@ Or maybe this is chance for IBM or some other major company to get back into per
 Your faith in AI is … disturbing.
 Well, with many THOUSANDS of patches on an OS that has been in existence and built upon for 30 odd years, I think any faith in developer comentence is misplaced.
 Could AI be any worse? These statistics say no.
+AI is “patched” (without QA as we know it) Billions of times before you prompt it to do something dumb.
+Then it references everything www.* has ever done publicly, for all values of dumb, to come up with the most statistically relevant ‘solution’ to the dumb prompt, rules be damned. Yeah, that is worse.
+Statistics are only as useful as the mind that comprehends their significance.
 I wonder how many of these bugs were previously known and used by NSA, CIA and other worldwide similar agencies?
 What are the implications of closing these holes to government hacking and national security?
 Could be a BIG story here!
