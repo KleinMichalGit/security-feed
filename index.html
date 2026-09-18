@@ -59,12 +59,107 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-09-17</h1>
+        <h1>Security Briefing // 2026-09-18</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Cisco warns of max severity ISE zero-day exploited in attacks</button></li><li><button onclick="show('art-1')">Iranian hackers use CHOSEN BRICK Windows malware to spy on targets</button></li><li><button onclick="show('art-2')">Data Broker Radaris Loses Domains in Privacy Fight</button></li><li><button onclick="show('art-3')">Ghostwriter v7.3.0: A Fresh New Look</button></li><li><button onclick="show('art-4')">Attackers Exploit Issabel Framework Flaw Enabling Unauthenticated OS Command Execution</button></li><li><button onclick="show('art-5')">Iranian Hackers Use Telegram-Controlled Malware to Spy on Dissidents and Journalists</button></li><li><button onclick="show('art-6')">Protecting organizations from AI-assisted executive impersonation and invoice fraud</button></li><li><button onclick="show('art-7')">So… You Found AWS Access Keys (Part 1)</button></li><li><button onclick="show('art-8')">Microsoft Plugs Nearly 1,000 Security Holes</button></li><li><button onclick="show('art-9')">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager</button></li></ul>
+            <ul><li><button onclick="show('art-0')">New RatHat Android malware uses AI to automate device control</button></li><li><button onclick="show('art-1')">Critical Check Point Management Flaw Lets Unauthenticated Attackers Run Code as Root</button></li><li><button onclick="show('art-2')">From guidance to action: Security fundamentals that materially reduce risk</button></li><li><button onclick="show('art-3')">CiliumHound: Graphing Kubernetes Network Policies</button></li><li><button onclick="show('art-4')">Cisco warns of max severity ISE zero-day exploited in attacks</button></li><li><button onclick="show('art-5')">Cisco Warns of New Zero-Day ISE Auth Bypass (CVSS 10.0) Exploited in Active Attacks</button></li><li><button onclick="show('art-6')">Unpacking a laZzzy Donut</button></li><li><button onclick="show('art-7')">Data Broker Radaris Loses Domains in Privacy Fight</button></li><li><button onclick="show('art-8')">Microsoft Plugs Nearly 1,000 Security Holes</button></li><li><button onclick="show('art-9')">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
+            <h2 class="article-title">New RatHat Android malware uses AI to automate device control</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/new-rathat-android-malware-uses-ai-to-automate-device-control/" target="_blank">Original Link</a></p>
+            <div class="content-text">A new Android malware called RatHat has been discovered, targeting users with an AI-powered subsystem that helps operators remotely navigate compromised devices. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">Critical Check Point Management Flaw Lets Unauthenticated Attackers Run Code as Root</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/critical-check-point-management-server.html" target="_blank">Original Link</a></p>
+            <div class="content-text">A critical vulnerability in Check Point's Security Management and Log Servers could allow an attacker without login credentials to run code as root on those servers over the network.
+The Security Management Server is the system that controls firewall policy and administrator access. Check Point has released a fix through its LivePatch update channel and says it has no indication that the flaw has been exploited.
+Check Point told The Hacker News that the vulnerable path runs only through the Trusted Clients setting, which controls which hosts may connect to the management server through SmartConsole.
+The flaw, tracked as CVE-2026-91843 and rated 9.8 out of 10 on the CVSS scale by Check Point, is a stack overflow in the login process, which handles requests before a user is authenticated. Internet scanning company Censys said the overflow is triggered by a login request that carries a very long username.
+Check Point said in a notice on its [CheckMates community](https://community.checkpoint.com/t5/General-Topics/Important-Notification-Action-required-Critical-Security-Update/m-p/282409) on September 16, 2026, that customers with automatic updates enabled are already protected, and that everyone else should apply the LivePatch fix described in advisory [sk1000155](https://support.checkpoint.com/results/sk/sk1000155). It urged customers to take immediate action because of the flaw's severity and potential impact.
+"At this time, there is no indication that this vulnerability has been exploited in the wild," the notice said. The U.S. Cybersecurity and Infrastructure Security Agency (CISA) recorded exploitation as "none" in its assessment attached to the [CVE record](https://www.cve.org/CVERecord?id=CVE-2026-91843) on September 17.
+The flaw was not in CISA's Known Exploited Vulnerabilities catalog as of the catalog's September 16 release, which The Hacker News checked on September 17. Censys said no public proof-of-concept exploit existed as of September 16. Aviv Abramovich, vice president of product management for network security at Check Point, told The Hacker News that the company had not received any reports of exploitation.
+Affected Versions
+Check Point's CVE record lists the following branches as affected, by Jumbo Hotfix Take, the numbered level of the update package that collects the fixes for a release.
+A server on a listed branch at the listed Take or an older one is affected.
+- R82.10 with Jumbo Hotfix Take 44 or below
+- R82 with Jumbo Hotfix Take 126 or below
+- R81.20 with Jumbo Hotfix Take 166 or below
+- R81.10 with Jumbo Hotfix Take 190 or below, and R81, R80.40, R80.30, R80.20, R80.10 and R80, all of which are end of support
+The record does not list R82.20, but Abramovich said R82.20 is also vulnerable. Censys said in its [advisory](https://censys.com/advisory/cve-2026-91843/) that every R82.20 build is affected and that no Jumbo Hotfix yet protects that branch.
+Standalone deployments, which run management and gateway on one system, Log Servers and Multi-Domain servers are also vulnerable, Abramovich said. An [alert from NHS England Digital](https://digital.nhs.uk/cyber-alerts/2026/cc-4854), citing sk1000155, says the hosted Smart-1 Cloud service is not affected because the fix is already in place there.
+The CVE record marks R81.10 and the older branches as end-of-support. Check Point has a fix ready for those out-of-support versions, Abramovich said, and customers who need it should log a ticket with Check Point support.
+What Administrators Should Do
+- Apply the LivePatch fix described in sk1000155 to every Security Management Server and Log Server.
+- If automatic updates are enabled, confirm the fix has been installed rather than assume it. The cplp list command shows which LivePatches are installed and their status.
+- Whether or not the fix is installed, check that management Trusted Clients access is limited to known, trusted hosts and is not set to any IP address, and do not expose management access directly to the internet.
+"Automatic updates" means the setting described in sk175504, according to Check Point's [hardening guide](https://sc1.checkpoint.com/documents/Check_Point_Gateway_and_Management_Hardening/CP_Check_Point_Gateway_and_Management_Hardening.pdf). It is the checkbox in SmartConsole, under Global Properties and Data Access Control, labeled "Automatically download and install Software Blade Contracts, security updates, and other important data (highly recommended)," followed by the installation of the Access Control policy. LivePatch is the channel Check Point uses to push urgent security fixes to systems where that option is turned on.
+Delivery is not always immediate. When Check Point pushed fixes for [two VPN certificate flaws](https://thehackernews.com/2026/09/check-point-discloses-two-98-rated-vpn.html) last week, several customers wrote in its community that the automatic package had not reached their systems on the day of the announcement, and a Check Point community admin replied that it was presumably being rolled out in stages rather than to everyone at once. Customers also found that the download links in those advisories appeared only after signing in to the User Center.
+The Trusted Clients setting is in SmartConsole under Manage & Settings, Permissions & Administrators, Trusted Clients, according to the hardening guide, which also says that direct internet access to management should be avoided and that a VPN is required. The vulnerable path is "only through trusted clients," Abramovich said, and Check Point recommends that customers verify the setting is not set to any IP address but to trusted hosts.
+Censys said it observes 3,836 hosts worldwide that present the default identity Check Point gives its management and log servers, a method it chose because build and hotfix level are not visible in scan data. "This figure is total role presence, not a confirmed-vulnerable count," the company said.
+Fifth Critical Management Flaw Since July
+By The Hacker News' count of Check Point's CVE records, CVE-2026-91843 is the fifth critical flaw since July 22 that an attacker could reach on the Security Management Server without logging in.
+The first, CVE-2026-16232, a SmartConsole authentication bypass, was [exploited in July](https://thehackernews.com/2026/07/check-point-patches-exploited.html). Check Point's Lotem Finkelstein wrote then that it affected "a handful of customers" in one configuration, "when Management is exposed directly to the internet without IP restrictions." The first mitigation step then was the one recommended now: limit Trusted Clients to trusted addresses.
+CISA added CVE-2026-16232 to its Known Exploited Vulnerabilities catalog the same day. A second management bypass disclosed that day, CVE-2026-62144, was not reported as exploited.
+Two more followed: [CVE-2026-18574](https://www.cve.org/CVERecord?id=CVE-2026-18574), an authentication bypass that could allow command execution on the management server, on August 3, and CVE-2026-85103, a heap overflow in VPN certificate decoding that also reaches Quantum Security Management, on September 9. Check Point said it found both internally and had no indication of exploitation.
+Who found CVE-2026-91843 has not been disclosed, and Check Point did not address that question in its response.
+Update: This article was updated on September 18, 2026, with responses from Check Point confirming that R82.20, standalone deployments, Log Servers and Multi-Domain servers are vulnerable, that the vulnerable path runs only through the Trusted Clients setting, and that a fix for out-of-support versions is available through Check Point support.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">From guidance to action: Security fundamentals that materially reduce risk</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/09/17/from-guidance-to-action-security-fundamentals-that-materially-reduce-risk/" target="_blank">Original Link</a></p>
+            <div class="content-text">AI has already made fundamental changes to the operating environment for cybersecurity. Cyberattackers are testing more paths, adapting their techniques, and moving across digital environments with greater speed and persistence. The weaknesses they exploit remain familiar: excessive permissions, unprotected authentication flows, unpatched systems, exposed execution paths, and gaps between controls. What has changed is how quickly these weaknesses can combine into attack paths that cross identities, endpoints, applications, networks, and AI systems. A single foothold can become a broader compromise, making it increasingly difficult for security teams to determine which risks matter most and where to act first as their organizations adopt AI.
+We introduced [Secure Now](https://aka.ms/securenow) within [Microsoft Security Exposure Management](https://www.microsoft.com/en-us/security/business/siem-and-xdr/microsoft-security-exposure-management) in May 2026 to help practitioners prioritize the action they need to take to be prepared for this shift. It provides actionable guidance for strengthening the foundational security needed for AI adoption, with recommendations focused on areas where autonomous attacks can create outsized exposure.
+We continue to see evidence that AI is reshaping the threat landscape. These developments reinforce many of the foundational practices we use internally to secure Microsoft, while also expanding our understanding of where organizations need additional visibility, governance, and control. The examples in this blog illustrate how familiar weaknesses are evolving in the AI era and why continuous exposure reduction remains essential.
+When AI agents test their boundaries
+Recent frontier model-related agentic security disclosures offered early lessons in how autonomous agents may test the boundaries of their instructions and environments.
+In [an incident disclosed by OpenAI](https://openai.com/index/hugging-face-incident-and-the-road-ahead/), agents moved beyond their intended isolation, exploited vulnerabilities in shared Hugging Face infrastructure, and reached production systems. In [separate incidents disclosed by Anthropic](https://www.anthropic.com/news/investigating-incidents-cybersecurity-evals), agents exploited familiar weaknesses, including SQL injection, exposed credentials, weak passwords, and a malicious PyPI package.
+Our customers are asking us how they can reduce this risk by governing agent identities and tools, isolating execution, restricting outbound connectivity, monitoring behavior, and defending against increasingly autonomous external cyberthreats, so that an unexpected agent action or exposed weakness do not become a path across the enterprise.
+[Explore recommended controls for this attack path.](https://security.microsoft.com/securenow)
+When trusted paths cross attack surfaces
+Microsoft Threat Intelligence recently observed Storm-2945, a subcluster of Midnight Blizzard, manipulating DNS and HTTP traffic across hospitality networks in the [CaptiveCrunch](https://www.microsoft.com/en-us/security/blog/2026/07/31/captivecrunch-midnight-blizzard-targets-travelers-worldwide-for-malware-delivery-and-credential-theft/) campaign. Travelers were redirected into two attack paths: device-code phishing through a legitimate Microsoft sign-in page, or fake software updates that delivered malware.
+One network interaction could therefore become either cloud identity access or endpoint compromise. The malware could collect multiple categories of host intelligence, including credentials, session tokens, security configurations, and remote-access history.
+Identity remains a leading attack surface, and protecting it requires securing the authentication flow as well as the credential. Security leaders can expand phishing-resistant authentication, block device-code flow where it is unnecessary, and constrain legitimate use through Conditional Access and sign-in risk policies. Endpoint protections can disrupt the parallel malware path.
+[Explore recommended controls for this attack path.](https://security.microsoft.com/securenow)
+When cyberattackers exploit everyday operations
+A third campaign began with [attackers impersonating IT support through Microsoft Teams](https://www.microsoft.com/en-us/security/blog/2026/09/02/impersonating-it-support-threat-actors-turn-remote-session-into-enterprise-wide-access/). After persuading a user to grant control through legitimate remote-support software, they used PowerShell to download a malicious Windows Installer (MSI) package, stage a portable Node.js runtime, and establish persistent command-and-control. From that endpoint, the operator mapped Active Directory and attempted to use WinRM to reach dozens of systems, including domain controllers and certificate authorities.
+Each step relied on technology common in enterprise environments—a Teams conversation, remote-support software, Windows Installer, a legitimate runtime, and a native administrative protocol—enabling the cyberattacker to move laterally while blending with expected operations.
+Security leaders can disrupt that path with phishing-resistant access controls, managed-device requirements, endpoint attack surface-reduction rules, and tighter restrictions on remote-support tools and WinRM.
+[Explore recommended controls for this attack path.](https://security.microsoft.com/securenow)
+Security fundamentals work together
+Cyberattackers are moving laterally across surfaces, and security fundamentals matter most at the intersections between them. Through the Secure Future Initiative, Microsoft is operationalizing security as a continuous discipline and applying and sharing lessons from strengthening our own environment. Guided by [Zero Trust principles](https://www.microsoft.com/en-us/security/business/zero-trust)—verify explicitly, use least privilege, and assume breach—we will continue to make high-impact protections easier to adopt and enabled by default where appropriate.
+Governed identities, well-defined permissions, protected data, and visibility into AI systems and agents provide resilience as organizations accelerate AI adoption. They also give AI-powered security the context and trusted mechanisms needed to help defenders prioritize risk and act faster. Strengthening these foundations reduces exposure today while preparing organizations for what comes next.
+On Secure Now—within Microsoft Security Exposure Management—security leaders can now find information on recent threats paired with focused initiatives across security domains. This brings together guidance on recommended controls and enables customers to take relevant actions to continuously strengthen your posture.
+[Visit Secure Now](https://security.microsoft.com/securenow) to understand recent threats, identify areas of focus, and take action.
+Learn more
+Learn more about [Microsoft Security Exposure Management](https://www.microsoft.com/en-us/security/business/siem-and-xdr/microsoft-security-exposure-management).
+FastTrack provides [eligible](https://go.microsoft.com/fwlink/?linkid=2267193) customers with access to technical specialists as an included benefit at no additional cost to help strengthen foundational security controls, reduce exposure to cyberthreats, and prepare for broader AI adoption. [Get started now](https://learn.microsoft.com/en-us/microsoft-365/enterprise/request-fasttrack-assistance-microsoft-365?view=o365-worldwide).
+To learn more about Microsoft Security solutions, visit our [website.](https://www.microsoft.com/en-us/security/business) Bookmark the [Security blog](https://www.microsoft.com/security/blog/) to keep up with our expert coverage on security matters. Also, follow us on LinkedIn ([Microsoft Security](https://www.linkedin.com/showcase/microsoft-security/)) and X ([@MSFTSecurity](https://twitter.com/@MSFTSecurity)) for the latest news and updates on cybersecurity.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
+            <h2 class="article-title">CiliumHound: Graphing Kubernetes Network Policies</h2>
+            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/09/17/ciliumhound-graphing-kubernetes-network-policies/" target="_blank">Original Link</a></p>
+            <div class="content-text"><p>TLDR: CiliumHound is a BloodHound OpenGraph extension for auditing Cilium network policies. It ingests a folder of JSON or YAML policies and creates a searchable, Kubernetes namespace-scoped graph. Introduction On some recent assessments, I’ve had to review large, complex Cilium network policies in a Kubernetes cluster, looking for ways in or out of isolated namespaces. [&#8230;]</p>
+<p>The post <a href="https://specterops.io/blog/2026/09/17/ciliumhound-graphing-kubernetes-network-policies/">CiliumHound: Graphing Kubernetes Network Policies</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-4" class="article-body">
             <h2 class="article-title">Cisco warns of max severity ISE zero-day exploited in attacks</h2>
             <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/cisco-warns-of-identity-service-engine-zero-day-exploited-in-attacks/" target="_blank">Original Link</a></p>
             <div class="content-text">Cisco has released security updates to address a maximum-severity Identity Services Engine vulnerability that attackers are actively exploiting in the wild. [...]
@@ -74,17 +169,86 @@
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-1" class="article-body">
-            <h2 class="article-title">Iranian hackers use CHOSEN BRICK Windows malware to spy on targets</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/iranian-hackers-use-chosen-brick-windows-malware-to-spy-on-targets/" target="_blank">Original Link</a></p>
-            <div class="content-text">Government agencies are warning that Iranian state-linked hackers are using a Windows malware strain named CHOSEN BRICK to target dissidents, activists, and journalists worldwide. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
+        <div id="art-5" class="article-body">
+            <h2 class="article-title">Cisco Warns of New Zero-Day ISE Auth Bypass (CVSS 10.0) Exploited in Active Attacks</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/cisco-warns-of-new-zero-day-ise-auth.html" target="_blank">Original Link</a></p>
+            <div class="content-text">Cisco has warned of a fresh maximum-severity security flaw impacting Identity Services Engine (ISE) that has come under active exploitation.
+The vulnerability, tracked as [CVE-2026-76460](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ISE-ABP-VNSW7Tn5) (CVSS score: 10.0), could allow an unauthenticated, remote attacker to bypass authentication.
+"This vulnerability is due to insufficient authentication control on an API endpoint," Cisco said. "An attacker could exploit this vulnerability by sending a crafted request to an affected API endpoint. A successful exploit could allow the attacker to gain unauthorized access to the affected device by bypassing the web-based management interface."
+The issue affects Cisco ISE and Cisco ISE Passive Identity Connector (ISE-PIC), regardless of device configuration. It has been addressed in the following versions -
+- 3.1 - Fixed in 3.1 Patch 12
+- 3.2 - Fixed in 3.2 Patch 11
+- 3.3 - Fixed in 3.3 Patch 12
+- 3.4 - Fixed in 3.4 Patch 7
+- 3.51 - Fixed in 3.5 Patch 4
+Cisco said it's "aware of active exploitation of this vulnerability," urging customers to upgrade to a fixed software release to counter the threat. The company did not share any details on the nature of the attacks exploiting the flaw, or who is behind them.
+As indicators of compromise (IoCs), Cisco is recommending that users review "access.log" and look for suspicious usernames. If the device is part of a distributed deployment, it's essential to review the logs of each node. It has provided the following command to detect unexpected usernames -
+admin#show logging application ise-kong/access.log | include dummyuser
+The presence of any entry in the command output likely points to malicious activity. If such activity is detected, users are advised to re-image the affected nodes and restore from configuration backup if needed.
+"Upon successful exploitation of this vulnerability, threat actors may obtain command execution with root privileges," Cisco said. "Because of this level of access, evidence of exploitation and indicators of compromise may be removed or hidden by the threat actors."
+Cisco also emphasized that there are no workarounds, but as a mitigation, customers can use infrastructure access control lists (iACLs) to allow only required management and control plane traffic that is destined to the affected device.
+The U.S. Cybersecurity and Infrastructure Security Agency (CISA), on September 16, 2026, [added](https://www.cisa.gov/news-events/alerts/2026/09/16/cisa-adds-two-known-exploited-vulnerabilities-catalog) CVE-2026-76460 to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, requiring Federal Civilian Executive Branch (FCEB) agencies to apply the patches by September 19, 2026.
+The disclosure comes merely days after Cisco said a critical vulnerability impacting AsyncOS Software for Cisco Secure Email Gateway ([CVE-2026-76461](https://thehackernews.com/2026/09/cisco-secure-email-gateway-flaw.html), CVSS score: 9.8) has come under active exploitation in the wild.
+Besides CVE-2026-76460, Cisco has rolled out fixes for a number of critical security vulnerabilities spanning its product portfolio, some of which are hardening measures released as part of an ongoing review. Of the 77 new CVEs issued Wednesday, 41 affect ISE and 28 affect the Secure Firewall portfolio. A brief description of the flaws is below -
+[CVE-2026-20176 (CVSS score: 9.9), CVE-2026-20211 (CVSS score: 9.1), CVE-2026-20307 (CVSS score: 9.1)](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ise-rce-se7bYU57)- Multiple vulnerabilities in ISE that could allow an authenticated, remote attacker to execute arbitrary commands on the underlying operating system of an affected device. To exploit these vulnerabilities, the attacker must have valid administrative credentials.[CVE-2026-76423 (CVSS score: 10.0), CVE-2026-76424, CVE-2026-76425, CVE-2026-76426, CVE-2026-76427, CVE-2026-76428](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ise-multi-hrP9jQSQ)- Multiple vulnerabilities in ISE and Cisco ISE Passive Identity Connector (ISE-PIC) that could allow a remote attacker to bypass authentication to the REST API, achieve remote code execution, perform SQL injection, and conduct XML External Entity injection attacks on an affected device.[CVE-2026-20282 (CVSS score: 9.1), CVE-2026-20283, CVE-2026-20284](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ise-mult-vul-ymSsTLCc)- Multiple vulnerabilities in ISE that could allow an authenticated, remote attacker to conduct SQL injections, modify data, or execute arbitrary commands on the underlying operating system on an affected device.[CVE-2026-20305 (CVSS score: 9.1), CVE-2026-20306 (CVSS score: 9.1)](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ise-cmd-inj-e2CuZCYZ)- Multiple vulnerabilities in ISE and ISE-PIC that could allow an authenticated, remote attacker to perform command injection attacks on an affected device and execute arbitrary commands as the root user. To exploit these vulnerabilities, the attacker must have valid administrative credentials.[CVE-2026-20322 (CVSS score: 9.9), CVE-2026-20325 (CVSS score: 9.9), CVE-2026-20326 (CVSS score: 9.8), CVE-2026-20360, CVE-2026-20361, CVE-2026-76409](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-hardening-ndw1-psFvnrg)- Multiple vulnerabilities in Cisco Nexus Dashboard that could lead to command injection, authentication or authorization bypass, and information disclosure.[CVE-2026-20130 (CVSS score: 10.0), CVE-2026-20192 (CVSS score: 10.0), CVE-2026-20194 (CVSS score: 9.1), CVE-2026-20234 (CVSS score: 9.9), CVE-2026-20237 (CVSS score: 9.9), CVE-2026-20287](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-hardening-ise-XU5EwX5T)- Multiple vulnerabilities in ISE and ISE-PIC that could lead to command injection, authentication or authorization bypass, and information disclosure.[CVE-2026-20329 (CVSS score: 9.9), CVE-2026-20330 (CVSS score: 9.9), CVE-2026-20331 (CVSS score: 9.6), CVE-2026-20332 (CVSS score: 9.0), CVE-2026-20333, CVE-2026-20334, CVE-2026-20335, CVE-2026-20336](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-hardening-asaftdfmc-uvpPROhN)- Multiple vulnerabilities in Cisco Secure Firewall Adaptive Security Appliance (ASA) Software, Cisco Secure Firewall Threat Defense (FTD) Software and Cisco Secure Firewall Management Center (FMC) Software that are grouped by CWE category, covering areas like improper handling of exceptional conditions, improper access control, improper adherence to coding standards, and improper control of a resource through its lifetime.[CVE-2026-76412, CVE-2026-76413, CVE-2026-76420 (CVSS score: 9.0)](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-fmc2-multivulns-HXgcqRG)- Multiple vulnerabilities in Cisco Secure Firewall Management Center (FMC) Software that could allow a remote attacker to gain root access and perform session forgery or session impersonation.[CVE-2026-20324 (CVSS score: 9.9)](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-fmc-sftunn-codex-c3O4Jft2)- A vulnerability in the sftunnel inter-device communication protocol of FMC Software that could allow an authenticated, remote attacker to execute arbitrary commands as root.[CVE-2026-20340, CVE-2026-20341 (CVSS score: 9.1), CVE-2026-20342, CVE-2026-20343, CVE-2026-20344](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-fmc-mulivulns-4PsnFwvx)- Multiple vulnerabilities in FMC Software that could allow a remote attacker to gain root access, download sensitive files, perform a SQL injection attack, or cause a denial-of-service (DoS) condition.[CVE-2026-20242 (CVSS score: 9.8)](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-fmc-javarce-y2NypXwk)- A vulnerability in the External Database Access feature of FMC Software that could allow an unauthenticated, remote attacker to execute arbitrary commands as root on an affected device.[CVE-2026-20353 (CVSS score: 9.8), CVE-2026-76440 (CVSS score: 9.8), CVE-2026-76441 (CVSS score: 9.8), CVE-2026-76442 (CVSS score: 9.8), CVE-2026-76443](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-hardening-esa-dfCrfXkm)- Multiple vulnerabilities in Cisco Secure Email Gateway and Cisco Secure Email and Web Manager that could lead to path traversal, authentication or authorization bypass, uncontrolled resource consumption, and command injection.
+Although none of these vulnerabilities have been listed as actively exploited, it's essential that users apply the fixes as soon as possible given the criticality of the weaknesses and the fact that they offer multiple pathways for arbitrary code execution.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-2" class="article-body">
+        <div id="art-6" class="article-body">
+            <h2 class="article-title">Unpacking a laZzzy Donut</h2>
+            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/unpacking-a-lazzzy-donut" target="_blank">Original Link</a></p>
+            <div class="content-text">Unpacking a laZzzy Donut
+Table of contents
+Recently, we came across an interesting malware sample. It used a multi-stage malware loader that chains together obfuscation and shellcode-injection techniques. The sample begins as obfuscated Python bytecode and concludes with encrypted .NET resources, using nested layers of shellcode generation, encryption, and obfuscation to frustrate detection and analysis at each stage.
+While I performed the initial triage of the malware manually, it was a significant time saver to find existing public tooling to speed up the recovery. Public tools needed to be modified, and in some cases, we needed to create a customer tool to address a specific technique. In this post, we will walk through the steps used and what needed to be created or modified.
+The Full Chain
+Each stage encrypts or obfuscates the next, and each must be reversed in order to trace the execution path and understand the final payload.
+Stage 1: Obfuscated Python Bytecode
+The file we first analyzed had the extension .pyc, meaning that it is most likely Python bytecode. To verify this, we run the file command:
+******.pyc: Byte-compiled Python module for CPython 3.13 (magic: 3571), timestamp-based, .py timestamp: Wed Jun 24 06:18:29 2026 UTC, .py size: 8371083 bytes
+Let’s see what strings are visible in the file. Most of the time, I will use strings, but this time I opened the file in Vim. I noticed the string Kramer right away, and later in the file there is a large blob of text, which seemed to make no sense at first.
+Next, we need to get from a .pyc file to .py. I used the [NPX](https://classic.yarnpkg.com/en/package/depyo) to convert from the bytecode to standard Python, which makes the script much easier to read.
+After searching for a little while, I came across the [Kramer GitHub repo](https://github.com/billythegoat356/Kramer/tree/main). This matched what I was seeing perfectly. The only problem was that it was protected by a key, so back to searching again. This time I came across a tool to brute-force the key, [kramer_python_](https://gist.githubusercontent.com/bobby-tablez/bb1f13c10231192a8e0ebc58548951d3/raw/a4937a65eb1a494ee4fe43e2f3beb2713991a2ed/kramer_python_deobfuscator.py)[deobfuscator.py](http://deobfuscator.py). I launched the deobfuscator against the sample and my server was immediately spiked.
+I let this run for an hour before going to bed. In the morning, it recovered the sample. However, I did not look close enough at the code and missed that it wrote the output to STDOUT, so I needed to run the tool again. It took hours to complete, and I didn't want to wait for that. After reading the code, I realized the tool was reading in the whole encoded command but only needed a small section. After the modifications below, the key was recovered in less than a minute.
+The Python source code was recovered as sampled below.
+The Python code contained a base64 encoded string that is RC4 encrypted. This shellcode is then copied into a section of memory with the permissions needed to execute, and execution is passed to that code. After decoding and decrypting the string, we have access to our first shellcode.
+Stage 2: First Donut Layer
+The Python script hands off to shellcode generated by [Thewover's Donut](https://github.com/thewover/donut), a tool that wraps arbitrary executables or .NET assemblies into position-independent x86-64 shellcode. During the initial analysis, I did not know this was created with the tool Donut. I loaded the sample into Ghidra and started resolving strings and function pointers. Only after I manually decoded and extracted the embedded executable did I identify the Donut tool. After comparing my static analysis to the source code, it was quick work to verify my analysis.
+Now that we know the tool used to create it, we looked for a tool to extract the embedded executable without the need to open a debugger. This first Donut layer was decoded using Volexity's [donut_decryptor](https://github.com/volexity/donut-decryptor) tool, which extracts the unencrypted instance (metadata) and module (payload) components.
+The decoded module from this stage is an executable, specifically a laZzzy-wrapped binary containing the second stage of the chain.
+Stage 3: laZzzy Layer - A Gap in Tooling
+With this new binary, quick strings resulted in meaningful intel, which led to some open source leads.
+[laZzzy](https://github.com/capt-meelo/laZzzy) is a shellcode-loader. It uses multiple techniques to inject shellcode into the current or remote process, with the options above. This tool is also open source, so I loaded it into Ghidra and walked along with the code to make sure there are no modifications. laZzzy reads in a shellcode and creates an encrypted shellcode payload using AES-CBC with an additional XOR layer. It then builds the rest of the Windows PE stub that decrypts and executes at runtime. Unlike Donut, laZzzy produces a complete PE executable rather than position-independent shellcode.
+Looking through the executable, we get to the AESDecrypt function. Here it loads the AES key, initialization vector, and the encrypted payload (DAT_14002f010). The FUN_1400013b0 is the AES init function, FUN_1400014e0 is the AES update function, and finally FUN_14002beb0 is the encryption function, where the local_138 is the context, the DAT_14002f010 is the ciphertext, and the 0x12a50 is the length of the ciphertext.
+The AESDecrypt function is called by a function named MovePayload. This decrypt function is used by all but one (1) of the injection methods, meaning that the payload is encrypted and obfuscated the same way every time.
+Once the payload is decrypted, it is XOR'd to get the embedded shellcode. Manual decryption using this method is highly annoying, so we employed automation to make our analysis easier.
+Closing the Gap: Static Extraction
+I was unable to identify a public tool to extract laZzzy payloads statically. The solution was to build a custom extraction tool using static analysis of the laZzzy PE binary and the source code. As a result, [laZzzy_dump](https://github.com/trustedsec/LazZzy_Dump) was born.
+The approach:
+- Locate the decryption routine: laZzzy's AES-CBC decryption wrapper function has a distinctive compiled footprint (a specific sequence of x86-64 instructions: AES initialization, a LEA loading the encrypted data, a MOV with the payload size, the decryption call, an XOR post-processing step, and a stack-frame teardown). Scanning the PE binary for this byte-pattern signature identifies the function without needing a disassembler.
+- Extract the key material and ciphertext location: Once the function is found, RIP-relative addressing (LEA, MOV instructions with displacement operands) are resolved to recover the file offsets of the AES key, initialization vector (IV), and the encrypted shellcode.
+- Decrypt offline: The ciphertext, key, and IV are pulled from the binary and decrypted using standard AES-CBC, followed by the secondary XOR layer that laZzzy applies.
+This technique requires no debugger, emulator, or dynamic execution, only a copy of the compiled binary. The extracted tool was validated against multiple independently generated laZzzy samples to confirm the pattern was successful across different build configurations.
+Stage 4: Second Donut Layer
+Once the shellcode is extracted from the laZzzy binary, donut-decryptor is run again on the recovered bytes. This yields another instance/module pair, where the module is now the final payload: an embedded .NET DLL.
+Stage 5: Embedded .NET DLL
+The recovered .NET assembly is the true endpoint of the chain. At this point, standard .NET analysis tools (dnSpy, ILSpy, etc.) can decompile the C# source and analyze the malware's behavior.
+Stage 6: .NET Resources
+The final part of this malware chain is the .NET resources. I am not going to go into detail, but mainly the resources are encrypted, sections are parsed out of them and loaded into memory like shellcode, and then code execution is passed to them.
+Conclusion
+This multi-stage design accomplishes several goals for the attacker:
+- Each layer uses a different obfuscation/encryption scheme and format (Python obfuscation, Donut shellcode generation, laZzzy AES+XOR encryption, another donut layer). A signature scanner looking for one (1) format will miss the others.
+- Public tooling can make life easier by reducing time needed to manually walk through a malware sample, BUT sometimes these tools need a little attention to produce the correct results.
+- Mixing shellcode generation (Donut) with a PE-based loader (laZzzy) and Python orchestration gives the attacker multiple execution contexts and flexibility in where each stage can run.
+The key technical insight is that encryption and format layering can be unwound statically if the compiled code's structure is understood. This analysis shows that even without dynamic execution, knowledge of a loader generator's source code or reverse-engineered instruction patterns can yield a path to the final payload.</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-7" class="article-body">
             <h2 class="article-title">Data Broker Radaris Loses Domains in Privacy Fight</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/09/data-broker-radaris-loses-domains-in-privacy-fight/" target="_blank">Original Link</a></p>
             <div class="content-text">The consumer data broker Radaris.com has long had a reputation for ignoring requests to remove personal information from its vast empire of people-search services online. That reputation caught up with the company recently in a lawsuit alleging Radaris violated a New Jersey privacy law that provides for hefty fines against data brokers that publish personal information on state law enforcement officials. In the face of repeated stonewalling and prevarication by attorneys for Radaris, the judge in the case ordered that radaris.com and more than a dozen other data broker domains be transferred to the plaintiffs.
@@ -125,370 +289,11 @@ Dear Brian,
 I have been a loyal customer of analslappers.com since 2006, I would be devastated if analslappers.com is seized due to your incredible journalism.
 Please Mr. Krebs, we in Russia love analslappers.com it is the #1 website in Kourtoknysk Oblast.
 Thank you Krebs,
-IGOR</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-3" class="article-body">
-            <h2 class="article-title">Ghostwriter v7.3.0: A Fresh New Look</h2>
-            <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/09/16/ghostwriter-v7-3-0/" target="_blank">Original Link</a></p>
-            <div class="content-text"><p>TL;DR: The upcoming Ghostwriter v7.3.0 release brings a major UI refresh to nearly every part of the application. The new design is easier on the eyes, more accessible, and better organized, with a new engagement bar, customizable sidebar with pinned work, a completely redesigned dashboard, and a plethora of other changes. Introduction As it is [&#8230;]</p>
-<p>The post <a href="https://specterops.io/blog/2026/09/16/ghostwriter-v7-3-0/">Ghostwriter v7.3.0: A Fresh New Look</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">Attackers Exploit Issabel Framework Flaw Enabling Unauthenticated OS Command Execution</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/attackers-exploit-issabel-framework.html" target="_blank">Original Link</a></p>
-            <div class="content-text">A critical security flaw in [Issabel Framework](https://github.com/IssabelFoundation/framework), a web-based framework for the open-source unified communications PBX software, has come under active exploitation.
-The vulnerability in question is [CVE-2026-89026](https://www.cve.org/CVERecord?id=CVE-2026-89026) (CVSS v3.1 score: 9.8/CVSS v4.0 score: 9.3), which can allow an unauthenticated remote attacker to execute arbitrary operating system (OS) commands by taking advantage of a hard-coded JSON Web Token (JWT) signing key.
-The Issabel Framework "contains a hard-coded HS256 JWT signing key in the pbxapi index.php file that is identical across every installation, allowing unauthenticated remote attackers to forge valid bearer tokens," VulnCheck [said](https://www.vulncheck.com/advisories/issabel-pbx-hard-coded-jwt-key-rce-via-pbxapi-manager-originate) in an alert.
-"Attackers can use the forged token to call the manager ['/pbxapi/manager/originate' endpoint](https://github.com/wwwakcan/Issabel-PBXAPI-Extension) with the System application parameter, causing Asterisk to execute arbitrary OS commands as the Asterisk user."
-A [patch for the vulnerability](https://github.com/IssabelFoundation/framework/commit/b97dbaf0b71c1c36f841e672b664afbeb02773bd) was pushed on August 1, 2026, and plugs the flaw by replacing the hard-coded JWT key ("da893kasdfam43k29akdkfaFFlsdfhj23rasdf") with a JWT key stored in the "/etc/issabel.conf" file.
-According to the cybersecurity company, the Shadowserver Foundation first observed exploitation of CVE-2026-89026 on September 9, 2026. That said, there are currently no details on how the vulnerability is being abused in real-world attacks, who is behind them, and the scale of such efforts.
-Users of the Issabel Framework are advised to apply the latest fixes for optimal protection.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-5" class="article-body">
-            <h2 class="article-title">Iranian Hackers Use Telegram-Controlled Malware to Spy on Dissidents and Journalists</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/iranian-hackers-use-telegram-controlled.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Cybersecurity agencies in the United States, the United Kingdom, and the Netherlands have detailed a Windows malware that they say Iran's intelligence service uses to spy on dissidents, journalists, and activists around the world.
-The malware is controlled via the Telegram messaging app and can copy a target's emails and chat messages, take screenshots, and activate the microphone to record audio.
-The FBI calls it HEAVYGRAM, and the U.K.'s National Cyber Security Center (NCSC) calls it CHOSEN BRICK.
-The [joint advisory](https://www.ic3.gov/CSA/2026/260915-2.pdf) was published on September 15 by the [NCSC](https://www.ncsc.gov.uk/news/iranian-cyber-targeting-of-dissidents-activists-and-journalists), the FBI, and the Netherlands' intelligence service, the AIVD. The FBI also released an [updated analysis](https://www.ic3.gov/CSA/2026/260915.pdf) of the malware that expands on a [March 2026 alert](https://www.fbi.gov/investigate/cyber/alerts/2026/government-of-iran-cyber-actors-deploy-telegram-c2-to-push-malware-to-identified-targets), the first to describe the campaign, with more technical detail and new indicators of compromise.
-The FBI attributes the malware to Iran's Ministry of Intelligence and Security (MOIS), the country's main intelligence agency, and dates the wider campaign to the autumn of 2023. The advisory says CHOSEN BRICK has been used against people in the U.K., the U.S., and the Netherlands, and around the world, since at least 2025.
-The targets are mainly Iranian dissidents, journalists who oppose Iran, activists, and members of groups whose views clash with the government, the agencies say. But the FBI has warned that anyone Iran considers of interest could be a target.
-The agencies say the danger goes beyond stolen data. Screenshots and other collected information can show a target's contacts, location, and daily routine. The personal details of some victims have appeared on pro-Iranian leak sites, which the advisory says can increase the risk to their safety.
-In March, the U.S. Justice Department [seized four such Iranian leak sites](https://www.justice.gov/opa/pr/justice-department-disrupts-iranian-cyber-enabled-psychological-operations), which it said had been used to [post stolen data](https://thehackernews.com/2026/03/iran-linked-hackers-breach-fbi.html) and to call for the killing of dissidents, journalists, and others.
-Iran almost certainly uses this kind of cyber activity to help suppress those it sees as a threat, the agencies say. In some cases, they add, its intelligence services have plotted to kidnap or kill such people abroad.
-How the Attack Works
-The attack begins with a message. The attackers pose as someone the target knows or as tech support for a messaging app, building trust before sending a file that appears to be a legitimate program, the agencies say.
-The attackers often start on a target's work computer, the agencies say. If that does not succeed, they try to move to a personal device, which company security does not protect.
-Reported disguises include the AI video app Pictory, the password manager KeePass, Telegram itself, RunwayML, Norton Antivirus, and Adobe Flash Player. In some cases, the file was made to look like MRI scan results.
-When the target opens the file, a convincing fake screen appears while the real malware installs in the background. A first stage poses as the app, and a second stage connects the computer to a Telegram bot that the attackers use to control it and collect stolen data. Every version seen so far runs only on Windows.
-To survive a restart, the malware adds itself to a Windows registry "Run" key, so it starts again each time the user logs in. It also tells Microsoft Defender, the built-in antivirus, to skip certain folders so its files are not scanned.
-Each infected computer is given its own Telegram bot, which the agencies say keeps one victim's activity from mixing with another's.
-Once running, the malware can be told to do many things: list running programs, take screenshots, turn on the microphone, copy Telegram and WhatsApp data from the browser, steal saved passwords and email addresses, download additional malware, and delete files. At least one version can also wipe the computer, according to the joint advisory.
-The agencies say the malware has not been seen spreading across a network on its own, though it can download more tools. Stolen files leave the computer through the Telegram bot and through cloud storage services such as Vultr and Storj. Newer versions send their Telegram traffic through proxy servers to hide it, the advisory says.
-Signs to Look For
-The advisories list signs that defenders and at-risk users can check for, including:
-- Registry key: a "Run" key entry named SMQDService or winappx, added so the malware starts at login.
-- File path: a folder with an added space, C:\Windows \SysWOW64, where the malware drops extra files.
-- Network: unexpected connections to otherwise-legitimate services, including api.telegram.org, vultrobjects.com, storjshare.io, backblazeb2.com, iproyal.com, and lightningproxies.net.
-- Mutex: name markers the malware sets to avoid running twice, such as ytyjyujyu and noi672pp434awkc12f.
-The FBI's analysis and the joint advisory contain the full list, including file hashes. The agencies warn that the malware's file names and folders can change, so these signs should not be treated as the only ones to watch for.
-How to Protect Yourself
-To lower the risk, the agencies recommend that individuals:
-- Do not open files sent through messages or links, and download software only from official websites or app stores.
-- Keep the operating system and all apps up to date, ideally with automatic updates.
-- Run antivirus software and keep it switched on and current.
-- Do not ignore SmartScreen warnings when downloading files.
-They advise network administrators to:
-- Turn on phishing-resistant multi-factor authentication.
-- Use application allowlisting and managed-device controls.
-- Use the scanning and security tools their email provider offers.
-- Monitor computers and network traffic, and search logs for the indicators above.
-Anyone who suspects an infection should check the "Run" key described above, tell their IT support, and report it to their national cyber agency. The advisories do not say whether removing the malware alone clears a compromise.
-When the FBI first warned about the campaign in March, Telegram told [TechCrunch](https://techcrunch.com/2026/03/23/fbi-says-iranian-hackers-are-using-telegram-to-steal-data-in-malware-attacks/) that its moderators "routinely remove any accounts found to be involved with malware." The agencies present their conclusions as assessments rather than as matters settled in court.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-6" class="article-body">
-            <h2 class="article-title">Protecting organizations from AI-assisted executive impersonation and invoice fraud</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/09/10/protecting-organizations-ai-assisted-executive-impersonation-invoice-fraud/" target="_blank">Original Link</a></p>
-            <div class="content-text">Threat actors are increasingly improving their tactics to make suspicious emails look like legitimate email notifications to potential victims, deploying techniques that impersonate internally sent emails from executive team members. While this technique is not new, the adoption of AI has enabled threat actors to improve their campaign templates and construct emails tailored to their recipients. Additionally, threat actors are incorporating multiple techniques within the same email to improve the overall narrative further.
-In this blog, we will discuss a recent campaign observed using third-party email delivery infrastructure to send out over a million financial fraud scam emails that displayed multiple indicators consistent with the use of generative AI during email template creation. The threat actor impersonated CEOs of multiple target companies, attempting to convince accounts payable departments of the same companies to process an Automated Clearing House (ACH) payment of nearly $50,000. To add legitimacy, the actor included a forwarded email thread (and a fabricated invoice) between the impersonated CEO and ServiceNow (which was also being impersonated).
-Attack chain overview
-The campaign follows steps before and during the execution of the campaign: threat actors register impersonation domains, send executive-themed payment requests through trusted infrastructure, embed fabricated invoices and supporting conversations, and attempt to convince finance personnel to initiate ACH transfers.
-Email Delivery
-Between August 3 and 5, Microsoft detected a campaign consisting of more than a million emails targeting enterprise users. The attacker used multiple third-party email service accounts to send out the emails. A huge majority of these emails were sent to users in the United States (87.7% of the total campaign).
-Unlike traditional invoice scams that rely on a single social engineering lure, this campaign layered executive impersonation, vendor branding, fabricated invoices, and supporting email conversations into a unified narrative intended to reduce recipient skepticism.
-The threat actor impersonated executive team members (such as a CEO, CFO, President) of multiple targeted companies, attempting to convince accounts payable departments of the same companies to process an ACH payment of nearly $50,000. More specifically, the CEOs were impersonated in multiple places in the email such as in the sender display name, reply-to display name, and in the email signature. Email bodies contained a simple and direct “approval” of the “invoice below” as well as urged users to request a PDF version if they need it. Additionally, as mentioned earlier, the email signature contained certain details about the spoofed CEO such as name and email address.
-Important note: Throughout this campaign, threat actors impersonated legitimate organizations using attacker-controlled infrastructure, fabricated communications, and lookalike domains. Microsoft found no evidence that the legitimate organizations referenced in the lures, including ServiceNow, were compromised or involved in the activity. Rather, the campaign relied on fraudulent domains and content designed to mimic trusted brands and individuals.
-The threat actor did not stop there. To add further legitimacy, directly below the CEO signature, the actor included “forwarded” content , specifically a professional looking but fabricated “ServiceNow Platform — Annual Subscription” invoice. The extremely detailed invoice contains various ServiceNow branding and logos. It has basic invoice details such as invoice number, issue and due dates, currency, amount due, payment method, and itemized line items. The payment method instructed is a bank transfer to accounts controlled by the threat actor. Microsoft observed the use of multiple financial institutions across samples, indicating that payment destinations may vary between targets. Certain parts of the invoice are personalized to the recipient. Specifically, the “BILLED TO” section has the recipient company name and executive name.
-The invoice shown below is a threat actor-created impersonation and was not issued by ServiceNow.
-Finally, directly below the fake invoice, two more “forwarded” emails are included which are essentially a short conversation between the two spoofed executives (the targeted company executive, and ServiceNow President). The two executives are seen discussing the ServiceNow purchase, implementation and handling of the invoice.
-From a defender point of view there are several indicators within the email indicating that the email and the “forwarded” thread are not genuine.
-- “From” headers from the spoofed thread lack any data headers like actual forwarded emails.
-- Suspicious language used in the spoofed thread such as “no need to copy me”.
-- Suspicious language in headers i.e display name not matching sender address, subjects using financial lure keywords like ‘due bill’, ‘ACH Parment’ etc.
-- Despite the sophistication of the generated content, several inconsistencies remained visible to defenders
-- In real email threads, the previous threads are normally tabbed or otherwise visually grouped, while the previous threads in this example were left aligned.
-- An additional inconsistency was observed where the targeted company’s CEO requested the recipient to send the invoice directly to victims and not CC the sender. However, in the most recent thread, the CEO stated that the invoice is approved and the invoice is sent from his address.
-Domain registration
-Before initiating the campaign, the threat actor registered several domains. A ‘ServiceNow’ lookalike domain service-nowinc[.]com was registered on July 31, shortly before the campaign activity was observed. This domain was used for the spoofed email address of ServiceNow President. It was also used in several places in the fabricated invoice such as in the contact email in case of any questions. The actor also registered another domain on the same day. The domain domainlify[.]net was used in the Reply-To email.
-Generative AI usage
-Microsoft observed several indicators consistent with AI-assisted template development. These included extensive HTML comments, structured section labeling, and highly uniform template construction. While these indicators suggest generative AI involvement, they do not independently establish the extent to which AI generated campaign content.
-Examples:
-Additionally, the use of ‘em dash’ (“—”) and banner ‘===========’ have also become other indicators associated with AI usage.
-One possible indication of template-based generation is that invoice identifiers and narrative structure remained largely consistent across samples while organization-specific details changed between targets.
-Mitigation and protection guidance
-Microsoft provides layered protection against this type of executive-impersonation and invoice-fraud campaign. Properly configured email authentication, spoof protection, mail-flow connectors, and Microsoft Defender for Office 365 help identify and block suspicious messages before delivery; messages later determined to be malicious can be quarantined or removed through post-delivery remediation, including Zero-hour Auto Purge. Security teams can then use Microsoft Defender XDR and Security Copilot to investigate related alerts, affected users, and campaign indicators, coordinate response, and take remediation actions.
-Together, these capabilities help reduce the likelihood that fraudulent payment requests reach finance personnel and support faster containment if a message is delivered.
-To defend against social engineering campaigns involving executive impersonation, invoice fraud, and potentially AI-assisted content development, Microsoft recommends the following mitigations:
-Configure [automatic attack disruption](https://learn.microsoft.com/en-us/defender-xdr/configure-attack-disruption) in Microsoft Defender XDR. Automatic attack disruption is designed to contain attacks in progress, limit the impact on an organization’s assets, and provide more time for security teams to remediate the attack fully.
-Enable [Zero-hour auto purge (ZAP)](https://learn.microsoft.com/en-us/defender-office-365/zero-hour-auto-purge) in Office 365 to quarantine sent mail in response to newly acquired threat intelligence and retroactively neutralize malicious phishing, spam, or malware messages that have already been delivered to mailboxes.
-Invest in advanced anti-phishing solutions that monitor and scan incoming emails and visited websites. For example, organizations can leverage web browsers like Microsoft Edge that automatically [identify and block malicious websites](https://learn.microsoft.com/en-us/deployedge/microsoft-edge-security-smartscreen?ocid=magicti_ta_learndoc), including those used in this phishing campaign, and solutions that [detect and block malicious emails, links, and files](https://www.microsoft.com/en-us/security/business/siem-and-xdr/microsoft-defender-office-365?ocid=magicti_ta_abbreviatedmktgpage).
-These links provide information on how to properly configure mail flow with connectors:
-[Manage mail flow using a third-party cloud service with Exchange Online](https://learn.microsoft.com/en-us/exchange/mail-flow-best-practices/manage-mail-flow-using-third-party-cloud)[Configure mail flow using connectors in Exchange Online](https://learn.microsoft.com/en-us/exchange/mail-flow-best-practices/use-connectors-to-configure-mail-flow/use-connectors-to-configure-mail-flow)[Mail flow rules (transport rules) in Exchange Online](https://learn.microsoft.com/en-us/exchange/security-and-compliance/mail-flow-rules/mail-flow-rules)[Enhanced filtering for connectors in Exchange Online](https://learn.microsoft.com/en-us/exchange/mail-flow-best-practices/use-connectors-to-configure-mail-flow/enhanced-filtering-for-connectors)
-These links provide information on configuring SPF, DKIM, and DMARC:
-[Email authentication in cloud organizations](https://learn.microsoft.com/en-us/defender-office-365/email-authentication-about)[Set up SPF to identify valid email sources for your custom cloud domains](https://learn.microsoft.com/en-us/defender-office-365/email-authentication-spf-configure)[Set up DKIM to sign mail from your cloud domain](https://learn.microsoft.com/en-us/defender-office-365/email-authentication-dkim-configure)
-Microsoft Defender detections
-[Microsoft Defender](https://www.microsoft.com/security/business/microsoft-defender) customers can refer to the list of applicable detections below. Microsoft Defender coordinates detection, prevention, investigation, and response across endpoints, identities, email, and apps to provide integrated protection against attacks like the threat discussed in this blog.
-| Tactic | Observed activity | Microsoft Defender coverage |
-| Financial Theft | Scam emails | Microsoft Defender for Office 365 – Invoice scams delivered detected as Spam and malicious categories. – Email messages marked malicious removed after delivery and spam moved to quarantine – Email messages removed after delivery – Messages retroactively removed through Zero-hour Auto Purge (ZAP). |
-Microsoft Security Copilot
-Security Copilot customers can use the standalone experience to [create their own prompts](https://learn.microsoft.com/copilot/security/prompting-security-copilot#create-your-own-prompts) or run the following [prebuilt promptbooks](https://learn.microsoft.com/copilot/security/using-promptbooks) to automate incident response or investigation tasks related to this threat:
-- Incident investigation
-- Microsoft User analysis
-- Threat actor profile
-- Threat Intelligence 360 report based on MDTI article
-- Vulnerability impact assessment
-Note that some promptbooks require access to plugins for Microsoft products such as Microsoft Defender XDR or Microsoft Sentinel.
-Threat intelligence reports
-Microsoft Defender XDR customers can use Threat Analytics reports in the Defender portal (requires license for at least one Defender XDR product) to get the most up-to-date information about the malicious activity and techniques discussed in this blog. These reports provide the intelligence, protection information, and recommended actions to prevent, mitigate, or respond to associated threats found in customer environments.
-MITRE ATT&CK Techniques observed
-This threat has exhibited use of the following attack techniques. For standard industry documentation about these techniques, refer to the [MITRE ATT&CK framewo](https://attack.mitre.org/)[r](https://attack.mitre.org/)[k](https://attack.mitre.org/).
-Reconnaissance
-[T1591 – Gather Victim Organization Information](https://attack.mitre.org/techniques/T1591/)
-Threat actors collect publicly available information about target organizations, executives, finance personnel, vendors, and business relationships to build convincing invoice-fraud narratives.
-[T1598 – Phishing for Information](https://attack.mitre.org/techniques/T1598/)
-Information gathered from victims and public sources is used to craft highly targeted business email compromise (BEC) lures.
-Resource Development
-[T1583.001 – Acquire Infrastructure: Domains](https://attack.mitre.org/techniques/T1583/001/)
-Threat actors register domains that impersonate trusted organizations, vendors, or business partners.
-[T1585.002 – Establish Accounts: Email Accounts](https://attack.mitre.org/techniques/T1585/002/)
-Attacker-controlled email accounts are created to support impersonation and fraudulent communications.
-[T1583 – Acquire Infrastructure](https://attack.mitre.org/techniques/T1583/)
-Third-party email delivery infrastructure and supporting services are leveraged to distribute campaigns.
-Initial Access
-[T1566 – Phishing](https://attack.mitre.org/techniques/T1566/)
-Targeted phishing emails are delivered to finance personnel using executive and vendor impersonation themes.
-[T1566.001 – Spearphishing Attachment](https://attack.mitre.org/techniques/T1566/001/)
-Fraudulent invoices or supporting documents are attached to phishing emails.
-[T1566.003 – Spearphishing via Service](https://attack.mitre.org/techniques/T1566/003/)
-Third-party email services are used to distribute phishing messages and improve legitimacy.
-Defense evasion
-[T1036 – Masquerading](https://attack.mitre.org/techniques/T1036/)
-Attackers disguise emails, domains, invoices, and business correspondence as legitimate communications.
-[T1656 – Impersonation](https://attack.mitre.org/techniques/T1656/)
-Executives, vendors, and trusted business entities are impersonated to establish credibility and influence payment decisions.
-Impact
-[T1657 – Financial Theft](https://attack.mitre.org/techniques/T1657/)
-Victims are deceived into transferring funds to attacker-controlled financial accounts through fraudulent invoice payment requests.
-Indicators of compromise (IOC)
-| Indicator | Type | Description |
-| service-nowinc[.]com | Domain | Domain impersonating ServiceNow |
-| gomez@service-nowinc[.]com | Email address | Email address associated with bank account |
-| notifications@uinsure[.]co[.]uk info@tivityhealth[.]com no-reply@lumalisboa[.]com noreply@mctci[.]com info@nuf[.]co[.]jp info@lohnsteuerhilfe-aktuell-verein[.]de info@tovimbatista[.]pt contact@eemusicclass[.]co[.]uk info@lifeones[.]com | Email address | Sender email address used to send out emails |
-| domainlify[.]net | Domain | Newly registered domain used in Reply-to address |
-Learn More
-For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
-To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
-To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
-Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
-- Learn more about
-[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection) - Evaluate your AI readiness with our latest
-[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). [Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)
-[How Microsoft discovers and mitigates evolving attacks against AI guardrails | Microsoft Security Blog](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)[Manipulating AI memory for profit: The rise of AI Recommendation Poisoning | Microsoft Security Blog](https://www.microsoft.com/en-us/security/blog/2026/02/10/ai-recommendation-poisoning/)– a related example of an AI-era technique observed in email traffic[Defending the inbox against prompt injection attacks | Microsoft Defender for Office 365 Blog](https://techcommunity.microsoft.com/blog/microsoftdefenderforoffice365blog/defending-the-inbox-against-prompt-injection-attacks/4534636)– feature announcement introducing prompt injection protection in Microsoft Defender for Office 365.[Prompt injection protection in Microsoft Defender for Office 365](https://learn.microsoft.com/en-us/defender-office-365/step-by-step-guides/prompt-injection-protection-defender-for-office-365)– official documentation of the prompt injection protection in Microsoft Defender for Office 365.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-7" class="article-body">
-            <h2 class="article-title">So… You Found AWS Access Keys (Part 1)</h2>
-            <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/so-you-found-aws-access-keys-part-1" target="_blank">Original Link</a></p>
-            <div class="content-text">So… You Found AWS Access Keys (Part 1)
-Table of contents
-Finding plaintext access keys to an AWS account during an engagement is always great thrill. What can be done with them? What do they have access to? Are they even for any of the accounts in scope? It can be super difficult to tell any of this just from the access key, security key, and maybe session token that you found.
-After all, AWS has more than 200 freaking services and products, at least based on how they tend to count things. They also don’t all necessarily authenticate in the same way or with the same looking token formats. Regardless, it can be a lot. But we’re going to walk through some of it today and see if we can get some clarity for everyone that may just be looking at the report of whatever secret scanning tool was just run and your mind is just shouting into the void, “Great! Now what the frak do I do with this?!”
-AKIA to ASIA and In-Between
-The main form of AWS access that most people know about is one of two types: Long-Term Access Keys and Temporary Access Keys. These are what we’re focusing on today. Both are combinations of strings that provide the access and look like the popular “AKIA” identifier for long-term keys and “ASIA” identifier for maybe lesser known but far more utilized temporary keys.
-- AKIA: Long-term access keys for an IAM user’s programmatic access.
-- ASIA: Temporary access keys created by AWS services on your behalf, such as when a
-sts:AssumeRole
-or similar is used to assume an IAM role.
-“He went to find AKIA?”
-Well, what can be done with these? That’s what we’re trying to get to! Oh! And there’s more access methods than just these, but we’ll start here. We’ll get into others in later posts, but these two are kind of the queens of the realm. And we’re not authenticating to anything unless we have both in our hands.
-- AWS Access Key ID (AKIA) is usually 20 characters that always have AKIA’ as the first four characters.
-- AWS Secret Access Key is a 40-character alpha-numeric string made up of randomized upper, lower, digits, and some symbols characters.
-Most secret scanning tools have regex patterns just for the AKIA key. If you get a ping for one, then look at the surrounding data to see if you’re lucky enough to get the secret key as well.
-While we need both to authenticate, it’s not to say our hands are completely tied if we only find the AKIA access key ID. With just the AKIA string[ we can get the account ID](https://hackingthe.cloud/aws/enumeration/get-account-id-from-keys/) and further checks that can be made with it below in [12 Digits to Discovery](#Digits).
-Last note, I swear. S3 Presigned URLs also include an AKIA key and secret value in their URLs, but these are slightly different. They are temporary key values in their own way and just provide direct access to the object in S3 that has been shared for a small window of time (One hour by default, 12 hours max). So, while they don’t provide access like IAM user access keys do, they may still let you download the object specified in the URL. And that may be useful.
-Longing To Return To ASIA
-The other kind of AWS access Key ID is the ASIA one. It requires three parts to check if you’ll have any luck with using it to gain access. Similar to AKIA access, all three are needed to be able to authenticate to AWS.
-- AWS Access Key ID (ASIA) is the same kind of 20 characters, but this time has ‘ASIA’ as the first four characters.
-- AWS Secret Access Key has same characteristics as before being a 40-character alpha-numeric string made up of randomized upper, lower, digits, and some symbols characters.
-- AWS Session Token is an 825-character string that is also made up of randomized upper, lower, digits, and some symbols characters.
-But wait, there’s another hitch! ASIA keys are just temporary credentials and are only valid for a minimum of one hour to a maximum of 12 hours. The actual max duration is based on what’s configured on the actual role. Which is sometimes unchangeable, such as with AWS defined linked service-roles.
-Uhh… I don’t have a meme for this part, but I live as a digital nomad, so enjoy this picture of a pair of crows that I took when I last roamed around Japan!
-Maybe Getting Lucky
-I didn’t really want to get into the question of “Where can I find AWS keys or tokens?”, because that is a big question with a lot of different answers; each of which depends on the differences with various AWS environments, corporate security hygiene, deployment pipeline security, and many, many more variations. [BUTT](https://www.slurmed.com/fanart/paul/005_benders-new-butt.gif), I feel like I should at least cover common credential locations if local system access is obtained in some way. It’s kinnnnda important.
-Basically:
-That’s the meat of it, but here’s why:
-~/.aws/credentials
-can be configured with AKIA and ASIA credentials. Take note of [profile] and region for operational awareness. (i.e. if set to us-east-1, maybe don’t start enumerating eu-west-1 and cause Blue Team lights to start flashing. Regions can matter more in AWS than they may in other cloud providers, so it’s worth taking note.)~/.aws/config
-can be used to store configuration data, but AWS CLI also supports role-chain assumptions and those can be set up here throughsource_profile
-declarations, as seen[here](https://docs.aws.amazon.com/cli/v1/userguide/cli-configure-files.html). Check profile and region for similar reasons.~/.aws/sso/
-and~/.aws/cli/
-are used to store AWS SSO login and SYS AssumeRole details. Copy to a test environment and see what access may be there. Access here may be especially short lived and may need to be refreshed after the user logs in again. (Grabbing the logged in SSO session from their browser may be good to do if possible)
-Also, be sure to check ENV for access key ID, secret access key, and session token. Similarly, check ~/.bash_history
-for them. Just like with other tooling, they can all be specified as in-line environmental variables. (e.x. AWS_ACCESS_KEY_ID=AKIA... AWS_SECRET_ACCESS_KEY=qazWSX... aws s3 ls)
-Also check any log files you can find, especially if you're interacting with a CI/CD system for deploying into AWS.
-The ~/.aws/
-directory isn’t encrypted by default, so maybe use something like [aws-vault](https://github.com/99designs/aws-vault) to do this for you.
-Lastly, if you’re not sure where exactly your shell landed or if you got an SSRF and are just curious, give the below addresses a shot. If they return something fun, then you may be on those resources.
-URL | Resource | Notes |
-|---|---|---|
-http://169.254.169.254/latest/meta-data/instance-id | EC2 | IMDSv2 is required if it complains about being unauthorized. If local execution is possible then just get the |
-http://169.254.170.2/v4/credentials | ECS | No token required, so SSRF is straightforward. |
-http://169.254.170.23/v1/credentials | EKS IRSA | Endpoint depends on EKS identity configuration. IRSA typically uses web identity tokens; Pod Identity uses the agent credential endpoint. |
-But… finding initial access is a rabbit hole that goes deep, so we’ll move along for now…
-What To Do With the Things You Found
-The first thing to do is to set up a place to use these compromised keys. The easiest way is to install the AWS CLI (Steps for which can be found [here](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)).
-Once installed, the keys can be tested using in-line, system environmental variables or by saving them to a profile in ~/.aws/credentials
-like below. The profile can also be set up with AWS CLI’s configure command by specifying a profile on run:
-aws configure --profile $PROFILE-NAME.
-The annoying thing though, is that it doesn’t allow specifying the aws_session_token value. So if you find an ASIA key, then manually updating the credentials file is your only real option to use profiles.
-[AKIA-PROFILE]
-aws_access_key_id = AKIAI44444444EXAMPLE
-aws_secret_access_key = je7MtGbCwBF/2...[rest of key]...
-[ASIA-PROFILE]
-aws_access_key_id = ASIAI66666666EXAMPLE
-aws_secret_access_key = qRstUvwXyZ12...[rest of key]...
-aws_session_token = FwoGZXIvYXdzEGo...[rest of token]...
-You can also specify a default AWS region for commands to be sent to, which can always be overridden with the --region
-flag. There are a lot of options for these configuration files, as seen [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html). Using profiles in your AWS configuration files makes it all so much easier. You’ll thank me later.
-A Teaspoon of Stealth Helps the AWS Mapping Go Down
-Before you start firing off API calls, consider taking advantage of [VPC Endpoints](https://docs.aws.amazon.com/vpc/latest/privatelink/create-interface-endpoint.html). They're VPC resources that enable private connectivity to AWS services and can add a little bit of stealth to our enumeration activities. Data is still logged by CloudTrail, but the only two real flags for detection.
-The biggest flag or detection is that the vpcEndpointId value will not exist in the target account because it exists in your test AWS account. A target SOC team will need to have a means to check this value against known valid VPC IDs to flag noncompliance. The other is the sourceIPAddress which will be a RFC1918 private IP address and still could be in a valid range. I’m not sure why, but AWS decided to not log the source account ID or organization ID, which would help a lot here.
-Each type of endpoint breads down like this:
-[Gateway](https://docs.aws.amazon.com/vpc/latest/privatelink/gateway-endpoints.html)endpoints only support S3 and DynamoDB by setting up a Route53 DNS record for AWS API calls and doesn’t cost anything at all.[Interface](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_interface_vpc_endpoints.html)endpoints support many, many more services (including S3 and DynamoDB as well) by setting up an Elastic Network Interface (ENI) with a private IP in your subnet for each AWS service. Each of these has a cost associated with their use. It’s not much, but it’s not nothing.
-I considered providing example commands, but I’ll leave that as an exercise for the reader.
-“Who is it that can tell me who I am?”
-Okay! You’ve got keys. They’re configured. But who even are you? Before you go off trying to list S3 buckets and EC2 instances, you should probably figure out what identity you’re actually operating under. The action, sts:GetCallerIdentity
-,is sort of the gold standard because it’s basically the whoami
-of AWS. It always works, it can’t be denied by IAM policy, and it tells you exactly who you are, and it validates that the credentials are legitimate!
-aws --profile $PROFILE sts get-caller-identity
-And from it, you get three things:
-- UserId: The AIDA (for IAM users) or AROA (for assumed roles) unique identifier. Kinda useless in a way now since we already know the principal details from the other two, but we can save them for later.
-- Account: The 12-digit account ID. Good for finding out what else may be public in the account. See
-[Search for Public Data](#search-for-public-data). - A Resource Name (ARN): This is the full identifying details of the calling identity. Most resources in AWS have one so that they can be found a bit more easily. But there’s some good stuff here since you can potentially infer the use for the identity based on its name. Which can influence what services you enumerate first. You can also look for the ARNs or the role name when doing additional recon, see
-[Mining for a Clue](#mining-for-a-clue).
-The downside is that it gets logged by CloudTrail, which looks like this:
-As expected, it includes the IP address of whatever coffee shop you’re working out of today unless you’re masking it. But thanks to plenty of legitimate tooling, calling sts get-caller-identity
-isn’t super suspicious, but it is visible. So, if the target’s log warriors have alerting on identity-check API calls, it may get some attention.
-Doing Wrong the Right Way
-Another way to get the ARN for the identity is to just do things the wrong way. You see, when a call is made to an AWS API that the identity doesn’t have permission for it gets a classic AccessDenied error. This is expected; but AWS’s sage wisdom decided to also include the ARN of the identity used for the API call.
-aws --profile $PROFILE cloudtrail describe-trails
-In this case, if you don’t have CloudTrail permissions, the error response will typically look something like:
-An error occurred (AccessDeniedException) when calling the DescribeTrails operation: User: arn:aws:iam::123456654321:user/demo.user is not authorized to perform: cloudtrail:DescribeTrails because no identity-based policy allows the cloudtrail:DescribeTrails action.
-You can try this with other services as well, but each attempt is another logged event in CloudTrail. Just something to keep in mind if you’re really trying to focus on stealth. This method looks like a failed API call rather than an explicit “who am I?” check, so this paired with using VPC Endpoints may cause it to blend in with the cacophony that is the rest of the operational noise.
-It’s worth noting that this method will also validate if the keys are legitimate. If the credentials are invalid, then AWS just returns this error:
-An error occurred (SignatureDoesNotMatch) when calling the GetCallerIdentity operation: The request signature we calculated does not match the signature you provided. Check your AWS Secret Access Key and signing method. Consult the service documentation for details.
-12 Digits to Discovery
-So now we know the account ID and potentially name of the identity. So, where do we go from here? Well, we can check a few things with just the account ID before we need to touch the verified credentials again. Some resources in AWS can be configured so that they can be shared with other specific AWS accounts or even public to anyone. So, using an AWS account we control we can check to see if any of those may publicly available.
-Why? Because I said so! But also, because these may be interesting resources like Elastic Block Storage (EBS) snapshots, Relational Database Service (RDS) snapshots, prebuilt Amazon Machine Image (AMI) resource, or Elastic Container Registry (ECR) images. They’re all used in different ways, but each could contain some useful operational context of the account you’re trying to get into and, if you’re lucky, additional credentials to do so.
-EBS Snapshots. Search for snapshots owned by the target account and you might be surprised what delicious things are found.
-aws --profile $TEST-ACCOUNT-PROFILE ec2 describe-snapshots --owner-id $TARGET-ACCOUNT-ID --query 'Snapshots[*].[SnapshotId,Description,VolumeSize,StartTime]' --output table
-If you find any, then, in your own account, create a volume from the snapshot, attach it to an instance, mount it, and browse it. Snapshots may include application data, database files, credentials, SSH keys, and config files that were never meant to leave the environment.
-AMIs: Publicly available prebuilt images used to deploy new EC2 instances and could suffer from the same malady as EBS snapshots.
-aws --profile $TEST-ACCOUNT-PROFILE ec2 describe-images --owners $TARGET-ACCOUNT-ID --query 'Images[*].[ImageId,Name,Description,CreationDate]' --output table
-Launch one as an EC2 instance in your own account and explore to hunt for useful files that should have remained private.
-RDS Snapshots: Public database snapshots that can be restored into your own account. Filtering for these by account is clunky via CLI, but they’re worth hunting for because finding a public snapshot may give you the full database details.
-aws --profile $TEST-ACCOUNT-PROFILE rds describe-db-snapshots --include-public | jq -r --arg acct "$TARGET-ACCOUNT-ID" '.DBSnapshots[] | select(.DBSnapshotArn | contains($acct)) | [.DBSnapshotIdentifier, .Engine, .SnapshotCreateTime] | @tsv'
-ECR Public Repositories: Container images may contain embedded secrets, internal source code, and configuration that reveal architecture patterns. Another good resource to check for potential easy wins.
-aws --profile $TEST-ACCOUNT-PROFILE ecr-public describe-repositories | jq -r --arg acct "$TARGET-ACCOUNT-ID" '.repositories[] | select(.repositoryArn | contains($acct)) | [.repositoryName, .repositoryUri, .createdAt] | @tsv'
-OSINT: Just Do It!
-Another option is to just take advantage of what another service may have already found out. I’m talking about those online services that index environments and set up a searchable dataset to help reconnaissance. Good stuff! What’s found may reveal exposed infrastructure for your awareness without burning API calls and therefore not generating events in the target account.
-Honestly, it doesn’t take too long to do, and it can reveal a fair bit of information. At this point, we already know the target AWS account ID, so it only takes a few minutes if everything turns up empty but can provide good context if something is found.
-[GrayhatWarfare](https://grayhatwarfare.com/): Searchable index of publicly exposed S3 buckets, Azure blobs, and other cloud storage. Search by keyword, file type, or bucket name patterns. If the target org has any storage resources hanging out in public, this is one place you might find it.
-[Awseye](https://awseye.com/): A searchable index of publicly identifiable AWS resources, helping provide visibility for S3 buckets, IAM principals, Lambda functions and other such resources that are generally not publicly accessible. Good stuff to add to the target dataset for future attacks.
-Later, when more specific resources in the AWS account are known, then run them through [crt.sh](https://crt.sh), [Shodan](https://www.shodan.io/), and [Censys](https://search.censys.io/) for a little additional reconnaissance. I’m talking about DNS, public IPs, common host names, and so on. Each may help identify additional resources in the account which may not have come into view yet.
-Mining for a Clue
-Code repositories may help with understanding a target’s AWS infrastructure without ever touching the account. Developers may hard code account IDs into Terraform configurations, CloudFormation template files, CI/CD pipelines, IAM policies, and deployment scripts. Sometimes intentionally, but other times not so much. After all, AWS says they’re not secrets, so why would they be treated as such?
-“While account IDs, like any identifying information, should be used and shared carefully, they are not considered secret, sensitive, or confidential information.” |
-The goal is to map the account’s infrastructure from public code before you start authenticated enumeration. If you find their Terraform configs, then you know exactly which services they deploy, which regions they operate in, and what their IAM structure looks like. Far better than shooting in the dark with blind API calls.
-[Sourcegraph](https://sourcegraph.com/): Code search across public repositories. Start with the account ID as a bare string, then narrow by file type to zero in on Infrastructure as Code (IaC) definitions:
-context:global "$TARGET-ACCOUNT-ID"
-context:global file:\.tf$ "$TARGET-ACCOUNT-ID"
-context:global file:\.(yaml|yml)$ "$TARGET-ACCOUNT-ID"
-context:global "arn:aws:iam::<$TARGET-ACCOUNT-ID"
-[GitHub Code Search](https://github.com/search): Native code search works for the same account-ID-first approach. Search the account ID as a string, then filter by language or file extension to focus on IaC and deployment configs.
-[GitLab](https://gitlab.com/): Supports code search across public projects. Same thing here, search the account ID and see what comes back.
-[Bitbucket](https://bitbucket.org/): Search is more limited than the others, but public repos from target organizations can still save hard coded account IDs in committed files.
-If more details about the account surface during your work, circle back and run similar repo searches with those identifiers too. These could be things like DNS names, public IPs, organization names, or GitHub organization names.
-Statistically Likely AWS Configurations
-So which services should you focus on for a targeted and less noisy approach? As mentioned before, there are like more than 200 AWS products and it can be a lot to go through. All of which would be really noisy just given the volume of checks made for all of these against all regions for a single AWS account.
-Instead of completely guessing, we wanted a rough proxy for what’s likely deployed in a typical AWS account. Public IaC repos aren’t a census of production environments, but they’re one of the better signals available for what organizations are actually spinning up.
-A Consensus of Repos
-To get a sense of this, we used Sourcegraph to search public GitHub repos for Terraform resource declarations (resource "aws_..."
-) and CloudFormation type references (Type: AWS::...
-) across every AWS service family and then we counted how many distinct repos reference each one. The full methodology, query categories, and result data are available [here](https://github.com/confused-binary/sourcegraph_query).
-More repos deploying a service suggests more organizations using it, which suggests a higher chance that they’re also configured in whatever account you just got keys to. It’s not proof, but it’s better than flipping a coin. Either way, the results from this can be seen summarized here:
-Service | Repos | Top Resource | What’s There |
-|---|---|---|---|
-IAM | 3,090 | aws_iam_role | Roles, users, policies, access keys can be useful for password attacks and role assumption attempts. |
-EC2 / VPC | 2,526 | aws_security_group | Compute, networking, security groups may contain secrets in user data. |
-S3 | 2,273 | aws_s3_bucket | Object storage that could be publicly accessible. |
-Lambda | 1,300 | aws_lambda_function | Serverless compute that could contain secrets in env vars. |
-DynamoDB | 966 | aws_dynamodb_table | NoSQL data stores that support application backends. |
-Load Balancing | 729 | aws_lb_target_group | ALBs, NLBs, and target groups can point to where the apps live. |
-SNS | 696 | aws_sns_topic | Notification topics can help map event flows and may allow data poisoning for downstream compute services. |
-Route53 | 657 | aws_route53_record | DNS records may reveal additional external assets and internal infrastructure. |
-SSM | 635 | aws_ssm_parameter | Parameter Store is a key/value store, and SSM can provide features like EC2 fleet management and deploying commands to them. |
-CloudWatch Logs | 623 | aws_cloudwatch_log_group | Log groups can help search for what else may be deployed and hunt for secrets. |
-None of this data guarantees the same is available in your target account, but these are about as close to “safe bets” as you’re going to get without authenticated recon. If an account has anything deployed, it almost certainly has IAM roles, security groups, and at couple of S3 buckets.
-Pop Shots in the Dark
-For these, you don’t need anything except valid credentials. You will get AccessDenied
-on most of these. That’s fine. You’re fishing. Any that comes back with actual data provides you with details about what you can do and where you can go. It also gives you a spot to start reading up additional attack possibilities that may be mentioned on sites like [HackTricks](https://cloud.hacktricks.wiki/en/pentesting-cloud/aws-security/index.html) or [HackingTheCloud](https://hackingthe.cloud/) to start.
-They’re roughly ordered by how frequently each service appears in the Sourcegraph data above, so start at the top and work your way down. And remember, each one of these is a management event in CloudTrail, so don’t pretend this is stealthy.
-Service | Command | Use |
-|---|---|---|
-IAM | aws iam get-account-authorization-details | May return users, roles, groups, and policies in one call |
-IAM | aws iam list-roles | Role names can reveal trust relationships and purpose |
-IAM | aws iam list-users | Human accounts, potential password spray candidates |
-EC2 | aws ec2 describe-instances | Running compute VMs, possible pivot points |
-EC2 | aws ec2 describe-security-groups | Firewall rules, may reveal network topology |
-S3 | aws s3 ls | Top data exfil target, sometimes misconfigured |
-Lambda | aws lambda list-functions | Serverless code, env vars may contain secrets |
-DynamoDB | aws dynamodb list-tables | NoSQL data stores, may back application backends |
-SNS | aws sns list-topics | Notification channels, can help map event flows |
-Route53 | aws route53 list-hosted-zones | DNS zones, may reveal internal infrastructure |
-SSM | aws ssm describe-parameters | Parameter Store, sometimes used as a secret store |
-Logs | aws logs describe-log-groups | Log groups, can show what the defender sees |
-ECS | aws ecs list-clusters | Container workloads, may lead to task definitions |
-RDS | aws rds describe-db-instances | Relational databases, potential high-value data targets |
-ECR | aws ecr describe-repositories | Container images, may contain embedded secrets or source code |
-Secrets Manager | aws secretsmanager list-secrets | Stored secrets, worth checking if accessible |
-EKS | aws eks list-clusters | Kubernetes clusters, potential for kubeconfig extraction |
-SQS | aws sqs list-queues | Message queues, may contain data in transit |
-CloudTrail | aws cloudtrail describe-trails | Can show if and how you’re being watched |
-CloudFront | aws cloudfront list-distributions | CDN distributions, possible public-facing entry points |
-If iam get-account-authorization-details
-actually works, then stop and review the results. That one call returns every user, role, group, and inline/managed policy in the entire account. One management event in CloudTrail for the full IAM map. It’s beautiful but also something I’d for sure add a detection for because of how revealing it is.
-Gotta go brrrr
-Alright, time to make some noise. These tools are loud and they will add lots of logs to CloudTrail, which may trigger alarms depending on SIEM configurations. But they’re effective at quickly mapping what your credentials can access. If stealth isn’t your primary concern (or you’ve already done your quiet recon and decided to go fast), these are going to save you a ton of time.
-jidou: Currently an internal tool at TrustedSec that will be released publicly once it’s all buttoned up and shiny. It scans more than 80 service operations, allows support for custom scripting, and has artifacts template generator to build your own csv/md/png artifact files. All with all of the API results saved to local JSON file for later analysis. I’m excited for it and hope you all will be, too. Keep an eye out for a future blog post about it!
-[Pacu](https://github.com/RhinoSecurityLabs/pacu): The AWS exploitation framework that’s kind of like Metasploit for AWS. Various modules can be used for different tasks but run iam__enum_permissions
-is a good command to start with to help map out access.
-[enumerate-iam](https://github.com/andresriancho/enumerate-iam): Brute-forces AWS API calls to determine what permissions an access key has. It tries a large list of Describe*, List*, and Get* calls across AWS services and reports which ones succeed. Quick, simple, and effective for getting a permissions snapshot.
-python enumerate-iam.py --access-key AKIA... --secret-key qaz...
-[aws-enumerator](https://github.com/shabarkin/aws-enumerator): Another access enumeration tool that focuses on quickly identifying what services and permissions are accessible with a given set of credentials. Similar to the others but does so in its own way.
-aws-enumerator cred -aws_access_key_id AKIA... -aws_region $REGION -aws_secret_access_key kIm6m...aws-enumerator enum --services all
-Conclusion
-Finding AWS credentials is just the beginning. The difference between a noisy assessment that gets credentials revoked in minutes and a thorough one that maps out the full attack surface comes down to understanding what’s logged, what isn’t, and where to focus your limited API call budget. There is a lot out there, so it’s worthwhile to search with some enumeration before jumping into mass API calls. If you have it, take your time to review and analyze things. But, if you don’t, then rock and roll.
-References
-[https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html#identifiers-prefixes](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html#identifiers-prefixes)[https://docs.aws.amazon.com/ebs/latest/userguide/ebs-modifying-snapshot-permissions.html](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-modifying-snapshot-permissions.html)[https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-presigned-url.html](https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-presigned-url.html)[https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)[https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-management-events-with-cloudtrail.html](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-management-events-with-cloudtrail.html)[https://docs.aws.amazon.com/STS/latest/APIReference/API_GetCallerIdentity.html](https://docs.aws.amazon.com/STS/latest/APIReference/API_GetCallerIdentity.html)[https://rhinosecuritylabs.com/aws/aws-role-enumeration-iam-p2/](https://rhinosecuritylabs.com/aws/aws-role-enumeration-iam-p2/)[https://securitylabs.datadoghq.com/articles/non-production-endpoints-as-an-attack-surface-in-aws/](https://securitylabs.datadoghq.com/articles/non-production-endpoints-as-an-attack-surface-in-aws/)</div>
+IGOR
+Now we need someone to look into ZoomInfo and their use of malware to steal data to post on their website
+it seems you have entered your enantiodromia era, B dawg. Looks like youve shrunk another half an inch or two.
+Had a day, sir
+Why are you trying to find my address,email, phone number and more information about me?</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
