@@ -59,12 +59,54 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-09-18</h1>
+        <h1>Security Briefing // 2026-09-19</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">New RatHat Android malware uses AI to automate device control</button></li><li><button onclick="show('art-1')">Critical Check Point Management Flaw Lets Unauthenticated Attackers Run Code as Root</button></li><li><button onclick="show('art-2')">From guidance to action: Security fundamentals that materially reduce risk</button></li><li><button onclick="show('art-3')">CiliumHound: Graphing Kubernetes Network Policies</button></li><li><button onclick="show('art-4')">Cisco warns of max severity ISE zero-day exploited in attacks</button></li><li><button onclick="show('art-5')">Cisco Warns of New Zero-Day ISE Auth Bypass (CVSS 10.0) Exploited in Active Attacks</button></li><li><button onclick="show('art-6')">Unpacking a laZzzy Donut</button></li><li><button onclick="show('art-7')">Data Broker Radaris Loses Domains in Privacy Fight</button></li><li><button onclick="show('art-8')">Microsoft Plugs Nearly 1,000 Security Holes</button></li><li><button onclick="show('art-9')">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager</button></li></ul>
+            <ul><li><button onclick="show('art-0')">Critical Pre-Auth RCE in Orkes Conductor Workflow Platform Exploited in the Wild</button></li><li><button onclick="show('art-1')">CISA Flags Three Linux Kernel Vulnerabilities Exploited in the Wild</button></li><li><button onclick="show('art-2')">Gyazo server flaw exploited to steal 23.6 million user records</button></li><li><button onclick="show('art-3')">New RatHat Android malware uses AI to automate device control</button></li><li><button onclick="show('art-4')">From guidance to action: Security fundamentals that materially reduce risk</button></li><li><button onclick="show('art-5')">CiliumHound: Graphing Kubernetes Network Policies</button></li><li><button onclick="show('art-6')">Unpacking a laZzzy Donut</button></li><li><button onclick="show('art-7')">Data Broker Radaris Loses Domains in Privacy Fight</button></li><li><button onclick="show('art-8')">Microsoft Plugs Nearly 1,000 Security Holes</button></li><li><button onclick="show('art-9')">Zero-Day Exploitation of Vulnerability (CVE-2026-20245) in Cisco Catalyst SD-WAN Manager</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
+            <h2 class="article-title">Critical Pre-Auth RCE in Orkes Conductor Workflow Platform Exploited in the Wild</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/critical-pre-auth-rce-in-orkes.html" target="_blank">Original Link</a></p>
+            <div class="content-text">A critical vulnerability impacting Orkes Conductor is being actively exploited in the wild, according to Fortinet.
+The vulnerability in question is [CVE-2026-58138](https://nvd.nist.gov/vuln/detail/cve-2026-58138) (CVSS v3.1 score: 9.8/CVSS v4 score: 9.3), which relates to a case of unauthenticated remote code execution.
+"Orkes Conductor 3.21.21 before 3.30.2 contains an unauthenticated remote code execution vulnerability that allows remote attackers to execute arbitrary OS commands by submitting inline workflow definitions containing malicious JavaScript or Python expressions to the workflow API endpoint prior to authentication," a description of the flaw on the NIST National Vulnerability Database (NVD) reads.
+"Attackers can exploit unsandboxed GraalVM evaluators configured with HostAccess.ALL or allowAllAccess(true) through INLINE, LAMBDA, DO_WHILE, and SWITCH task types to invoke arbitrary system commands via Java reflection or direct subprocess calls."
+In an outbreak alert [issued](https://www.fortiguard.com/outbreak-alert/orkes-conductor-rce) this week, Fortinet said it has observed attackers actively targeting Orkes Conductor servers susceptible to CVE-2026-58138 by submitting crafted workflow definitions containing JavaScript or Python expressions to the Conductor workflow API.
+"Because vulnerable evaluators can be configured with unrestricted host access, the attacker can escape the intended scripting environment and execute arbitrary operating system commands with the privileges of the Conductor process," Fortinet said.
+As of September 9, 2026, the company [said](https://www.fortiguard.com/threat-signal-report/6527/orkes-conductor-evaluator-remote-code-execution) it had blocked 1,290 attack attempts within a span of 24 hours, representing a 132% increase in daily activity. Nearly 7,000 attempts were blocked between September 2 and 9, 2026. The majority of the attack activity is said to have originated from Germany, Hong Kong, Indonesia, the U.A.E., and India.
+Telemetry data from Previdian [shows](https://previdian.com/CVE-2026-58138#telemetry) three exploitation attempts against its honeypots since July 24, 2026, from two unique IP addresses in France and the U.S. Similarly, Empirical Security [noted](https://research.empiricalsecurity.com/research/september-2026-cve-of-the-month) that it detected in-the-wild exploitation as recently as August 21, 2026.
+Organizations using affected versions are advised to upgrade to [Conductor 3.30.2](https://github.com/conductor-oss/conductor/releases/tag/v3.30.2) or later, which addresses the vulnerability. If immediate patching is not an option, it's recommended to restrict external access to Conductor workflow API endpoints, place Conductor instances behind appropriate network access controls, and monitor for suspicious workflow submissions and unexpected command execution.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">CISA Flags Three Linux Kernel Vulnerabilities Exploited in the Wild</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/cisa-flags-three-linux-kernel.html" target="_blank">Original Link</a></p>
+            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Friday added [three security flaws](https://www.cisa.gov/news-events/alerts/2026/09/18/cisa-adds-two-known-exploited-vulnerabilities-catalog) impacting the [Linux kernel](https://www.cisa.gov/news-events/alerts/2026/09/18/cisa-adds-one-known-exploited-vulnerability-catalog) to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, citing evidence of active exploitation.
+The vulnerabilities are listed below -
+[CVE-2025-39682](https://www.cve.org/CVERecord?id=CVE-2025-39682)(CVSS score: 9.8) - An improper check for unusual or exceptional conditions vulnerability in the TLS receive path that could allow local authenticated users to trigger memory disclosure or denial-of-service (DoS).[CVE-2026-53266](https://www.cve.org/CVERecord?id=CVE-2026-53266)(CVSS score: 8.8) - An out-of-bounds write vulnerability in the ebtables Source Network Address Translation (SNAT) Address Resolution Protocol (ARP) rewrite path that could allow a local attacker to trigger unintended system behavior, DoS, or local privilege escalation.[CVE-2025-39964](https://www.cve.org/CVERecord?id=CVE-2025-39964)(CVSS score: 7.8) - A race condition vulnerability that could allow concurrent writes to the same AF_ALG socket, allowing a local attacker to crash the system or corrupt cryptographic operation results, causing DoS or data integrity issues.
+There are currently no details on how the three vulnerabilities are being exploited in the wild, and if they are being weaponized as part of a single attack chain. However, Red Hat has [updated](https://access.redhat.com/security/cve/cve-2025-39682) the [advisories](https://access.redhat.com/security/cve/cve-2026-53266) for [all the flaws](https://access.redhat.com/security/cve/cve-2025-39964) as of September 19, 2026, at 2 a.m. UTC to acknowledge active exploitation.
+"This CVE is high risk and there are known public exploits leveraging this vulnerability," Red Hat said. "Address this vulnerability with high priority."
+Pursuant to Binding Operational Directive (BOD) 26-04: Prioritizing Security Updates Based on Risk, Federal Civilian Executive Branch (FCEB) agencies are recommended to apply the necessary fixes by September 21, 2026.
+The development comes as a security researcher named Asim Manizada [disclosed](https://thehackernews.com/2026/09/public-exploits-released-for-four-linux.html) four local privilege escalation flaws impacting the Linux kernel: CVE-2026-80844 (aka DirtyAH6), CVE-2026-81000 (aka TUNderflow), CVE-2026-68121 (aka PPPoEject), and CVE-2026-74469 (aka DiagSpill).
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">Gyazo server flaw exploited to steal 23.6 million user records</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/gyazo-server-flaw-exploited-to-steal-236-million-user-records/" target="_blank">Original Link</a></p>
+            <div class="content-text">The Gyazo image-sharing platform has confirmed it suffered a data breach after hackers exploited a server vulnerability that allowed them to steal 23.6 million user records. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
             <h2 class="article-title">New RatHat Android malware uses AI to automate device control</h2>
             <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/new-rathat-android-malware-uses-ai-to-automate-device-control/" target="_blank">Original Link</a></p>
             <div class="content-text">A new Android malware called RatHat has been discovered, targeting users with an AI-powered subsystem that helps operators remotely navigate compromised devices. [...]
@@ -74,47 +116,7 @@
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-1" class="article-body">
-            <h2 class="article-title">Critical Check Point Management Flaw Lets Unauthenticated Attackers Run Code as Root</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/critical-check-point-management-server.html" target="_blank">Original Link</a></p>
-            <div class="content-text">A critical vulnerability in Check Point's Security Management and Log Servers could allow an attacker without login credentials to run code as root on those servers over the network.
-The Security Management Server is the system that controls firewall policy and administrator access. Check Point has released a fix through its LivePatch update channel and says it has no indication that the flaw has been exploited.
-Check Point told The Hacker News that the vulnerable path runs only through the Trusted Clients setting, which controls which hosts may connect to the management server through SmartConsole.
-The flaw, tracked as CVE-2026-91843 and rated 9.8 out of 10 on the CVSS scale by Check Point, is a stack overflow in the login process, which handles requests before a user is authenticated. Internet scanning company Censys said the overflow is triggered by a login request that carries a very long username.
-Check Point said in a notice on its [CheckMates community](https://community.checkpoint.com/t5/General-Topics/Important-Notification-Action-required-Critical-Security-Update/m-p/282409) on September 16, 2026, that customers with automatic updates enabled are already protected, and that everyone else should apply the LivePatch fix described in advisory [sk1000155](https://support.checkpoint.com/results/sk/sk1000155). It urged customers to take immediate action because of the flaw's severity and potential impact.
-"At this time, there is no indication that this vulnerability has been exploited in the wild," the notice said. The U.S. Cybersecurity and Infrastructure Security Agency (CISA) recorded exploitation as "none" in its assessment attached to the [CVE record](https://www.cve.org/CVERecord?id=CVE-2026-91843) on September 17.
-The flaw was not in CISA's Known Exploited Vulnerabilities catalog as of the catalog's September 16 release, which The Hacker News checked on September 17. Censys said no public proof-of-concept exploit existed as of September 16. Aviv Abramovich, vice president of product management for network security at Check Point, told The Hacker News that the company had not received any reports of exploitation.
-Affected Versions
-Check Point's CVE record lists the following branches as affected, by Jumbo Hotfix Take, the numbered level of the update package that collects the fixes for a release.
-A server on a listed branch at the listed Take or an older one is affected.
-- R82.10 with Jumbo Hotfix Take 44 or below
-- R82 with Jumbo Hotfix Take 126 or below
-- R81.20 with Jumbo Hotfix Take 166 or below
-- R81.10 with Jumbo Hotfix Take 190 or below, and R81, R80.40, R80.30, R80.20, R80.10 and R80, all of which are end of support
-The record does not list R82.20, but Abramovich said R82.20 is also vulnerable. Censys said in its [advisory](https://censys.com/advisory/cve-2026-91843/) that every R82.20 build is affected and that no Jumbo Hotfix yet protects that branch.
-Standalone deployments, which run management and gateway on one system, Log Servers and Multi-Domain servers are also vulnerable, Abramovich said. An [alert from NHS England Digital](https://digital.nhs.uk/cyber-alerts/2026/cc-4854), citing sk1000155, says the hosted Smart-1 Cloud service is not affected because the fix is already in place there.
-The CVE record marks R81.10 and the older branches as end-of-support. Check Point has a fix ready for those out-of-support versions, Abramovich said, and customers who need it should log a ticket with Check Point support.
-What Administrators Should Do
-- Apply the LivePatch fix described in sk1000155 to every Security Management Server and Log Server.
-- If automatic updates are enabled, confirm the fix has been installed rather than assume it. The cplp list command shows which LivePatches are installed and their status.
-- Whether or not the fix is installed, check that management Trusted Clients access is limited to known, trusted hosts and is not set to any IP address, and do not expose management access directly to the internet.
-"Automatic updates" means the setting described in sk175504, according to Check Point's [hardening guide](https://sc1.checkpoint.com/documents/Check_Point_Gateway_and_Management_Hardening/CP_Check_Point_Gateway_and_Management_Hardening.pdf). It is the checkbox in SmartConsole, under Global Properties and Data Access Control, labeled "Automatically download and install Software Blade Contracts, security updates, and other important data (highly recommended)," followed by the installation of the Access Control policy. LivePatch is the channel Check Point uses to push urgent security fixes to systems where that option is turned on.
-Delivery is not always immediate. When Check Point pushed fixes for [two VPN certificate flaws](https://thehackernews.com/2026/09/check-point-discloses-two-98-rated-vpn.html) last week, several customers wrote in its community that the automatic package had not reached their systems on the day of the announcement, and a Check Point community admin replied that it was presumably being rolled out in stages rather than to everyone at once. Customers also found that the download links in those advisories appeared only after signing in to the User Center.
-The Trusted Clients setting is in SmartConsole under Manage & Settings, Permissions & Administrators, Trusted Clients, according to the hardening guide, which also says that direct internet access to management should be avoided and that a VPN is required. The vulnerable path is "only through trusted clients," Abramovich said, and Check Point recommends that customers verify the setting is not set to any IP address but to trusted hosts.
-Censys said it observes 3,836 hosts worldwide that present the default identity Check Point gives its management and log servers, a method it chose because build and hotfix level are not visible in scan data. "This figure is total role presence, not a confirmed-vulnerable count," the company said.
-Fifth Critical Management Flaw Since July
-By The Hacker News' count of Check Point's CVE records, CVE-2026-91843 is the fifth critical flaw since July 22 that an attacker could reach on the Security Management Server without logging in.
-The first, CVE-2026-16232, a SmartConsole authentication bypass, was [exploited in July](https://thehackernews.com/2026/07/check-point-patches-exploited.html). Check Point's Lotem Finkelstein wrote then that it affected "a handful of customers" in one configuration, "when Management is exposed directly to the internet without IP restrictions." The first mitigation step then was the one recommended now: limit Trusted Clients to trusted addresses.
-CISA added CVE-2026-16232 to its Known Exploited Vulnerabilities catalog the same day. A second management bypass disclosed that day, CVE-2026-62144, was not reported as exploited.
-Two more followed: [CVE-2026-18574](https://www.cve.org/CVERecord?id=CVE-2026-18574), an authentication bypass that could allow command execution on the management server, on August 3, and CVE-2026-85103, a heap overflow in VPN certificate decoding that also reaches Quantum Security Management, on September 9. Check Point said it found both internally and had no indication of exploitation.
-Who found CVE-2026-91843 has not been disclosed, and Check Point did not address that question in its response.
-Update: This article was updated on September 18, 2026, with responses from Check Point confirming that R82.20, standalone deployments, Log Servers and Multi-Domain servers are vulnerable, that the vulnerable path runs only through the Trusted Clients setting, and that a fix for out-of-support versions is available through Check Point support.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-2" class="article-body">
+        <div id="art-4" class="article-body">
             <h2 class="article-title">From guidance to action: Security fundamentals that materially reduce risk</h2>
             <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/09/17/from-guidance-to-action-security-fundamentals-that-materially-reduce-risk/" target="_blank">Original Link</a></p>
             <div class="content-text">AI has already made fundamental changes to the operating environment for cybersecurity. Cyberattackers are testing more paths, adapting their techniques, and moving across digital environments with greater speed and persistence. The weaknesses they exploit remain familiar: excessive permissions, unprotected authentication flows, unpatched systems, exposed execution paths, and gaps between controls. What has changed is how quickly these weaknesses can combine into attack paths that cross identities, endpoints, applications, networks, and AI systems. A single foothold can become a broader compromise, making it increasingly difficult for security teams to determine which risks matter most and where to act first as their organizations adopt AI.
@@ -148,51 +150,13 @@ To learn more about Microsoft Security solutions, visit our [website.](https://w
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-3" class="article-body">
+        <div id="art-5" class="article-body">
             <h2 class="article-title">CiliumHound: Graphing Kubernetes Network Policies</h2>
             <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/09/17/ciliumhound-graphing-kubernetes-network-policies/" target="_blank">Original Link</a></p>
             <div class="content-text"><p>TLDR: CiliumHound is a BloodHound OpenGraph extension for auditing Cilium network policies. It ingests a folder of JSON or YAML policies and creates a searchable, Kubernetes namespace-scoped graph. Introduction On some recent assessments, I’ve had to review large, complex Cilium network policies in a Kubernetes cluster, looking for ways in or out of isolated namespaces. [&#8230;]</p>
 <p>The post <a href="https://specterops.io/blog/2026/09/17/ciliumhound-graphing-kubernetes-network-policies/">CiliumHound: Graphing Kubernetes Network Policies</a> appeared first on <a href="https://specterops.io">SpecterOps</a>.</p>
 
 [Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-4" class="article-body">
-            <h2 class="article-title">Cisco warns of max severity ISE zero-day exploited in attacks</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/cisco-warns-of-identity-service-engine-zero-day-exploited-in-attacks/" target="_blank">Original Link</a></p>
-            <div class="content-text">Cisco has released security updates to address a maximum-severity Identity Services Engine vulnerability that attackers are actively exploiting in the wild. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-5" class="article-body">
-            <h2 class="article-title">Cisco Warns of New Zero-Day ISE Auth Bypass (CVSS 10.0) Exploited in Active Attacks</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/cisco-warns-of-new-zero-day-ise-auth.html" target="_blank">Original Link</a></p>
-            <div class="content-text">Cisco has warned of a fresh maximum-severity security flaw impacting Identity Services Engine (ISE) that has come under active exploitation.
-The vulnerability, tracked as [CVE-2026-76460](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ISE-ABP-VNSW7Tn5) (CVSS score: 10.0), could allow an unauthenticated, remote attacker to bypass authentication.
-"This vulnerability is due to insufficient authentication control on an API endpoint," Cisco said. "An attacker could exploit this vulnerability by sending a crafted request to an affected API endpoint. A successful exploit could allow the attacker to gain unauthorized access to the affected device by bypassing the web-based management interface."
-The issue affects Cisco ISE and Cisco ISE Passive Identity Connector (ISE-PIC), regardless of device configuration. It has been addressed in the following versions -
-- 3.1 - Fixed in 3.1 Patch 12
-- 3.2 - Fixed in 3.2 Patch 11
-- 3.3 - Fixed in 3.3 Patch 12
-- 3.4 - Fixed in 3.4 Patch 7
-- 3.51 - Fixed in 3.5 Patch 4
-Cisco said it's "aware of active exploitation of this vulnerability," urging customers to upgrade to a fixed software release to counter the threat. The company did not share any details on the nature of the attacks exploiting the flaw, or who is behind them.
-As indicators of compromise (IoCs), Cisco is recommending that users review "access.log" and look for suspicious usernames. If the device is part of a distributed deployment, it's essential to review the logs of each node. It has provided the following command to detect unexpected usernames -
-admin#show logging application ise-kong/access.log | include dummyuser
-The presence of any entry in the command output likely points to malicious activity. If such activity is detected, users are advised to re-image the affected nodes and restore from configuration backup if needed.
-"Upon successful exploitation of this vulnerability, threat actors may obtain command execution with root privileges," Cisco said. "Because of this level of access, evidence of exploitation and indicators of compromise may be removed or hidden by the threat actors."
-Cisco also emphasized that there are no workarounds, but as a mitigation, customers can use infrastructure access control lists (iACLs) to allow only required management and control plane traffic that is destined to the affected device.
-The U.S. Cybersecurity and Infrastructure Security Agency (CISA), on September 16, 2026, [added](https://www.cisa.gov/news-events/alerts/2026/09/16/cisa-adds-two-known-exploited-vulnerabilities-catalog) CVE-2026-76460 to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, requiring Federal Civilian Executive Branch (FCEB) agencies to apply the patches by September 19, 2026.
-The disclosure comes merely days after Cisco said a critical vulnerability impacting AsyncOS Software for Cisco Secure Email Gateway ([CVE-2026-76461](https://thehackernews.com/2026/09/cisco-secure-email-gateway-flaw.html), CVSS score: 9.8) has come under active exploitation in the wild.
-Besides CVE-2026-76460, Cisco has rolled out fixes for a number of critical security vulnerabilities spanning its product portfolio, some of which are hardening measures released as part of an ongoing review. Of the 77 new CVEs issued Wednesday, 41 affect ISE and 28 affect the Secure Firewall portfolio. A brief description of the flaws is below -
-[CVE-2026-20176 (CVSS score: 9.9), CVE-2026-20211 (CVSS score: 9.1), CVE-2026-20307 (CVSS score: 9.1)](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ise-rce-se7bYU57)- Multiple vulnerabilities in ISE that could allow an authenticated, remote attacker to execute arbitrary commands on the underlying operating system of an affected device. To exploit these vulnerabilities, the attacker must have valid administrative credentials.[CVE-2026-76423 (CVSS score: 10.0), CVE-2026-76424, CVE-2026-76425, CVE-2026-76426, CVE-2026-76427, CVE-2026-76428](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ise-multi-hrP9jQSQ)- Multiple vulnerabilities in ISE and Cisco ISE Passive Identity Connector (ISE-PIC) that could allow a remote attacker to bypass authentication to the REST API, achieve remote code execution, perform SQL injection, and conduct XML External Entity injection attacks on an affected device.[CVE-2026-20282 (CVSS score: 9.1), CVE-2026-20283, CVE-2026-20284](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ise-mult-vul-ymSsTLCc)- Multiple vulnerabilities in ISE that could allow an authenticated, remote attacker to conduct SQL injections, modify data, or execute arbitrary commands on the underlying operating system on an affected device.[CVE-2026-20305 (CVSS score: 9.1), CVE-2026-20306 (CVSS score: 9.1)](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ise-cmd-inj-e2CuZCYZ)- Multiple vulnerabilities in ISE and ISE-PIC that could allow an authenticated, remote attacker to perform command injection attacks on an affected device and execute arbitrary commands as the root user. To exploit these vulnerabilities, the attacker must have valid administrative credentials.[CVE-2026-20322 (CVSS score: 9.9), CVE-2026-20325 (CVSS score: 9.9), CVE-2026-20326 (CVSS score: 9.8), CVE-2026-20360, CVE-2026-20361, CVE-2026-76409](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-hardening-ndw1-psFvnrg)- Multiple vulnerabilities in Cisco Nexus Dashboard that could lead to command injection, authentication or authorization bypass, and information disclosure.[CVE-2026-20130 (CVSS score: 10.0), CVE-2026-20192 (CVSS score: 10.0), CVE-2026-20194 (CVSS score: 9.1), CVE-2026-20234 (CVSS score: 9.9), CVE-2026-20237 (CVSS score: 9.9), CVE-2026-20287](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-hardening-ise-XU5EwX5T)- Multiple vulnerabilities in ISE and ISE-PIC that could lead to command injection, authentication or authorization bypass, and information disclosure.[CVE-2026-20329 (CVSS score: 9.9), CVE-2026-20330 (CVSS score: 9.9), CVE-2026-20331 (CVSS score: 9.6), CVE-2026-20332 (CVSS score: 9.0), CVE-2026-20333, CVE-2026-20334, CVE-2026-20335, CVE-2026-20336](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-hardening-asaftdfmc-uvpPROhN)- Multiple vulnerabilities in Cisco Secure Firewall Adaptive Security Appliance (ASA) Software, Cisco Secure Firewall Threat Defense (FTD) Software and Cisco Secure Firewall Management Center (FMC) Software that are grouped by CWE category, covering areas like improper handling of exceptional conditions, improper access control, improper adherence to coding standards, and improper control of a resource through its lifetime.[CVE-2026-76412, CVE-2026-76413, CVE-2026-76420 (CVSS score: 9.0)](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-fmc2-multivulns-HXgcqRG)- Multiple vulnerabilities in Cisco Secure Firewall Management Center (FMC) Software that could allow a remote attacker to gain root access and perform session forgery or session impersonation.[CVE-2026-20324 (CVSS score: 9.9)](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-fmc-sftunn-codex-c3O4Jft2)- A vulnerability in the sftunnel inter-device communication protocol of FMC Software that could allow an authenticated, remote attacker to execute arbitrary commands as root.[CVE-2026-20340, CVE-2026-20341 (CVSS score: 9.1), CVE-2026-20342, CVE-2026-20343, CVE-2026-20344](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-fmc-mulivulns-4PsnFwvx)- Multiple vulnerabilities in FMC Software that could allow a remote attacker to gain root access, download sensitive files, perform a SQL injection attack, or cause a denial-of-service (DoS) condition.[CVE-2026-20242 (CVSS score: 9.8)](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-fmc-javarce-y2NypXwk)- A vulnerability in the External Database Access feature of FMC Software that could allow an unauthenticated, remote attacker to execute arbitrary commands as root on an affected device.[CVE-2026-20353 (CVSS score: 9.8), CVE-2026-76440 (CVSS score: 9.8), CVE-2026-76441 (CVSS score: 9.8), CVE-2026-76442 (CVSS score: 9.8), CVE-2026-76443](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-hardening-esa-dfCrfXkm)- Multiple vulnerabilities in Cisco Secure Email Gateway and Cisco Secure Email and Web Manager that could lead to path traversal, authentication or authorization bypass, uncontrolled resource consumption, and command injection.
-Although none of these vulnerabilities have been listed as actively exploited, it's essential that users apply the fixes as soon as possible given the criticality of the weaknesses and the fact that they offer multiple pathways for arbitrary code execution.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
@@ -293,7 +257,13 @@ IGOR
 Now we need someone to look into ZoomInfo and their use of malware to steal data to post on their website
 it seems you have entered your enantiodromia era, B dawg. Looks like youve shrunk another half an inch or two.
 Had a day, sir
-Why are you trying to find my address,email, phone number and more information about me?</div>
+Why are you trying to find my address,email, phone number and more information about me?
+A big thanks to Brian Krebs! Without your doubling down we would not know this.
+And to ATLAS! For sticking with it.
+No federal investigators would have the gumption to do this, in spite of being paid for it!
+Like the Helen Keller of cyber-wrong-writing.
+So typically American for the law to have a cutout that privacy for cops and their families is worth protecting but not everyone else.
+I actually doubt that’s an America only thing.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
