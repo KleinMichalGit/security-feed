@@ -3,114 +3,466 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
     <title>Daily Security Briefing</title>
+    <script>
+        document.documentElement.classList.add('js');
+        // Refraction via backdrop-filter: url(#svg) only renders in Chromium; other engines get plain frost.
+        if (navigator.userAgentData?.brands?.some(b => b.brand === 'Chromium')) document.documentElement.classList.add('refract');
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap">
     <style>
+        :root {
+            --bg: #00112b;
+            --ps-blue: #012456;
+            --window: rgba(1, 30, 72, 0.84);
+            --surface: #0a2d5c;
+            --surface-2: rgba(255, 255, 255, 0.07);
+            --fg: #F2F2F2;
+            --dim: #9aa7bd;
+            --accent: #EBCB8B;
+            --green: #A3BE8C;
+            --link: #88C0D0;
+            --line: rgba(255, 255, 255, 0.12);
+            --code-bg: rgba(0, 10, 30, 0.55);
+            --rim: rgba(255, 255, 255, 0.16);
+            --radius: 14px;
+            --mono: 'JetBrains Mono', 'Cascadia Code', 'SF Mono', Consolas, 'Lucida Console', monospace;
+        }
+        .cat-news { --c: #88C0D0; }
+        .cat-threat-intel { --c: #EBCB8B; }
+        .cat-red-team { --c: #E07A84; }
+
+        * { box-sizing: border-box; }
+        [hidden] { display: none !important; }
+        html { background: var(--bg); }
         body {
-            background-color: #012456;
-            color: #F2F2F2;
-            font-family: 'Consolas', 'Lucida Console', monospace;
-            padding: 20px;
-            line-height: 1.6;
+            margin: 0;
+            padding: 24px 16px 0;
+            background: transparent;
+            color: var(--fg);
+            font: 15px/1.6 var(--mono);
+            font-variant-ligatures: none;
+            -webkit-font-smoothing: antialiased;
+        }
+        ::selection { background: rgba(235, 203, 139, 0.35); }
+        a { color: var(--link); }
+        :focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
+
+        /* Backdrop glow behind the window (html carries the solid fallback color) */
+        .aurora {
+            position: fixed; inset: 0; z-index: -1; pointer-events: none;
+            background:
+                radial-gradient(45vmax 32vmax at 12% 8%, rgba(46, 120, 255, 0.38), transparent 70%),
+                radial-gradient(38vmax 30vmax at 92% 28%, rgba(0, 190, 200, 0.18), transparent 70%),
+                radial-gradient(42vmax 34vmax at 55% 105%, rgba(235, 203, 139, 0.14), transparent 70%),
+                linear-gradient(160deg, var(--ps-blue), var(--bg) 65%);
+        }
+
+        /* Liquid glass: frost + rim + sheen; refraction layered on in Chromium */
+        .glass {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.03)), rgba(1, 36, 86, 0.42);
+            -webkit-backdrop-filter: blur(14px) saturate(180%);
+            backdrop-filter: blur(14px) saturate(180%);
+            border: 1px solid var(--rim);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.30),
+                inset 0 -1px 0 rgba(255, 255, 255, 0.05),
+                inset 1px 0 0 rgba(255, 255, 255, 0.07),
+                0 8px 24px rgba(0, 0, 0, 0.30);
+            isolation: isolate;
+        }
+        .glass::after {
+            content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.20), rgba(255, 255, 255, 0.04) 28%, transparent 55%);
+            mix-blend-mode: screen;
+        }
+        html.refract .liquid { backdrop-filter: blur(3px) url(#liquid) saturate(180%); }
+
+        .window {
             max-width: 1000px;
-            margin: auto;
+            margin: 0 auto;
+            background: var(--window);
+            border: 1px solid var(--rim);
+            border-radius: var(--radius);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            overflow: clip;
         }
-        h1 { color: #FFFFFF; font-size: 1.4em; border-bottom: 2px solid #F2F2F2; padding-bottom: 10px; margin-bottom: 30px; }
-        .menu { margin-bottom: 40px; }
-        .menu ul { list-style-type: decimal-leading-zero; padding-left: 25px; }
-        .menu li { margin-bottom: 14px; color: #EBCB8B; }
-        .meta { display: block; color: #A3BE8C; font-size: 0.85em; }
-        .tag { color: #EBCB8B; }
-        button {
-            background: none; border: none; color: #F2F2F2;
-            text-align: left; cursor: pointer; font-family: inherit;
-            font-size: 1.05em; padding: 0;
+
+        .progress { display: none; }
+        @supports (animation-timeline: scroll()) {
+            body.reading .progress {
+                display: block; position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 20;
+                background: linear-gradient(90deg, var(--link), var(--accent));
+                box-shadow: 0 0 10px var(--accent);
+                transform-origin: 0 50%;
+                animation: grow linear both;
+                animation-timeline: scroll(root);
+            }
+            @keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
         }
-        button:hover { color: #FFFF00; text-decoration: underline; }
-        .article-body { display: none; margin-top: 20px; }
-        .article-body.active { display: block; }
-        .article-title { color: #FFFFFF; font-size: 1.3em; margin-bottom: 5px; }
-        .source-link { color: #A3BE8C; font-size: 0.9em; }
-        .source-link a { color: #A3BE8C; text-decoration: none; }
-        .source-link a:hover { text-decoration: underline; }
+
+        .view { padding: 26px 28px 32px; }
+        .head { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 14px; margin-bottom: 18px; }
+        h1 { font-size: 1.25em; margin: 0; color: #fff; font-weight: 700; letter-spacing: -0.01em; }
+        h1 .sep { color: var(--dim); font-weight: 400; }
+        .palette-btn {
+            margin-left: auto; position: relative;
+            font: inherit; font-size: 0.85em; color: var(--dim); cursor: pointer;
+            padding: 3px 10px; border-radius: 999px;
+        }
+        .palette-btn:hover { color: var(--fg); }
+        kbd {
+            font: inherit; font-size: 0.85em; padding: 0 5px; border-radius: 4px;
+            border: 1px solid var(--line); background: var(--surface-2); color: var(--fg);
+        }
+
+        .tag {
+            display: inline-block; padding: 0 0.6em; border-radius: 999px; line-height: 1.5;
+            font: inherit; color: var(--c, var(--fg));
+            border: 1px solid color-mix(in srgb, var(--c, var(--fg)) 45%, transparent);
+            background: color-mix(in srgb, var(--c, var(--fg)) 12%, transparent);
+        }
+        button.tag { position: relative; z-index: 1; cursor: pointer; transition: border-color 0.12s, background-color 0.12s; }
+        button.tag:hover { border-color: var(--c, var(--fg)); background: color-mix(in srgb, var(--c, var(--fg)) 22%, transparent); }
+        .filter-clear { font-size: 0.85em; }
+        .filter-clear .x { opacity: 0.7; margin-left: 0.4em; }
+
+        /* Article list; the title link stretches over the whole row, the tag button sits above it */
+        .list { list-style: none; margin: 0; padding: 0; }
+        .list li {
+            position: relative;
+            display: grid; grid-template-columns: 2.5ch 1fr; gap: 0 1.2ch;
+            padding: 9px 12px; margin: 0 -12px;
+            border-radius: 8px;
+            transition: background-color 0.12s;
+        }
+        .list li:hover, .list li:has(.row:focus-visible) { background: var(--surface-2); box-shadow: inset 0 0 0 1px var(--line); }
+        .row { display: block; font-weight: 600; color: #e6ebf3; text-decoration: none; }
+        .row::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+        .row:focus-visible { outline: none; }
+        .list li:hover .row, .row:focus-visible { color: #fff; }
+        .idx { color: var(--dim); }
+        .meta { display: block; color: var(--dim); font-size: 0.85em; margin-top: 2px; }
+        .meta .also { opacity: 0.8; }
+        .empty { color: var(--dim); font-style: italic; }
+
+        /* Article view */
+        .article-title { font-size: 1.35em; line-height: 1.35; color: #fff; margin: 0 0 8px; outline: none; }
+        .article .meta { font-size: 0.9em; }
+        .article .meta a { color: var(--green); text-decoration: none; }
+        .article .meta a:hover { text-decoration: underline; }
         .content {
-            padding: 15px 0;
-            border-top: 1px solid #4C566A;
-            margin-top: 15px;
+            padding: 18px 0 8px; margin-top: 18px;
+            border-top: 1px solid var(--line);
             overflow-wrap: anywhere;
         }
-        .content a { color: #88C0D0; }
-        .content h2, .content h3, .content h4 { color: #FFFFFF; font-size: 1.1em; margin-top: 1.6em; }
-        .content img { display: block; max-width: 100%; height: auto; margin: 16px 0; background: #F2F2F2; }
+        .content h2, .content h3, .content h4 { color: #fff; font-size: 1.08em; margin-top: 1.8em; }
+        .content img { display: block; max-width: 100%; height: auto; margin: 16px 0; background: #F2F2F2; border-radius: 8px; }
         .content figure { margin: 16px 0; }
-        .content figcaption { color: #A3BE8C; font-size: 0.85em; }
-        .content pre { background: #001633; border: 1px solid #4C566A; padding: 12px; overflow-x: auto; overflow-wrap: normal; }
-        .content code { background: #001633; padding: 0 3px; }
-        .content pre code { padding: 0; }
-        .content blockquote { border-left: 3px solid #EBCB8B; margin: 16px 0; padding-left: 14px; color: #D8DEE9; }
+        .content figcaption { color: var(--green); font-size: 0.85em; }
+        .content pre {
+            background: var(--code-bg); border: 1px solid var(--line); border-radius: 10px;
+            padding: 14px 16px; overflow-x: auto; overflow-wrap: normal;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        }
+        .content code { background: var(--code-bg); padding: 1px 5px; border-radius: 4px; font-size: 0.92em; }
+        .content pre code { padding: 0; background: none; }
+        .content blockquote { border-left: 3px solid var(--accent); margin: 16px 0; padding: 2px 0 2px 16px; color: #D8DEE9; background: linear-gradient(90deg, rgba(235, 203, 139, 0.06), transparent 60%); }
         .table-wrap { overflow-x: auto; margin: 16px 0; }
         .content table { border-collapse: collapse; min-width: 50%; overflow-wrap: normal; }
-        .content th, .content td { border: 1px solid #4C566A; padding: 6px 10px; text-align: left; vertical-align: top; }
-        .content th { background: #001633; color: #FFFFFF; }
-        .note { color: #EBCB8B; font-style: italic; }
-        .back-btn { color: #FFFF00; border: 1px solid #FFFF00; padding: 6px 12px; margin-top: 15px; transition: 0.2s; }
-        .back-btn:hover { background: #FFFF00; color: #012456; }
-        .separator { border: 0; border-top: 1px dashed #4C566A; margin: 50px 0; }
-        footer {
-            text-align: center;
-            margin-top: 60px;
-            padding: 30px;
-            border-top: 1px solid #4C566A;
-            font-size: 0.85em;
-            color: #A3BE8C;
+        .content th, .content td { border: 1px solid var(--line); padding: 6px 10px; text-align: left; vertical-align: top; }
+        .content th { background: var(--code-bg); color: #fff; }
+        .note { color: var(--accent); font-style: italic; }
+        .back-btn {
+            position: relative;
+            margin-top: 22px; padding: 6px 14px; border-radius: 999px;
+            font: inherit; color: var(--accent); cursor: pointer;
         }
-        footer a { color: #A3BE8C; text-decoration: underline; }
-        .disclaimer { opacity: 0.8; font-size: 0.9em; max-width: 700px; margin: 15px auto; line-height: 1.4; }
-        @media (max-width: 600px) {
-            body { padding: 15px; font-size: 15px; }
-            h1 { font-size: 1.2em; }
-            .menu ul { padding-left: 20px; }
+        .back-btn:hover { color: #fff; }
+
+        /* Command palette */
+        dialog.palette {
+            width: min(640px, 100% - 32px); max-height: min(70vh, 560px);
+            margin: 12vh auto auto; padding: 0;
+            border-radius: var(--radius);
+            color: var(--fg); font: inherit;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)), rgba(1, 36, 86, 0.55);
+            opacity: 0; transform: translateY(-8px) scale(0.98);
+            transition: opacity 0.18s, transform 0.18s, overlay 0.18s allow-discrete, display 0.18s allow-discrete;
+        }
+        dialog.palette[open] { opacity: 1; transform: none; }
+        @starting-style { dialog.palette[open] { opacity: 0; transform: translateY(-8px) scale(0.98); } }
+        dialog.palette::backdrop { background: rgba(0, 8, 24, 0.45); }
+        .pal-inner { display: flex; flex-direction: column; max-height: inherit; position: relative; z-index: 1; }
+        .pal-input { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+        .pal-input .ps { color: var(--green); font-weight: 700; }
+        .pal-input input { flex: 1; min-width: 0; background: none; border: 0; outline: none; color: var(--fg); font: inherit; font-size: 1.05em; }
+        .pal-input input::placeholder { color: var(--dim); }
+        .pal-list { list-style: none; margin: 0; padding: 6px; overflow-y: auto; }
+        .pal-list li { padding: 8px 12px; border-radius: 8px; cursor: pointer; }
+        .pal-list .title { display: block; font-weight: 600; color: #e6ebf3; }
+        .pal-list li[aria-selected="true"] { background: rgba(255, 255, 255, 0.10); box-shadow: inset 0 0 0 1px var(--line); }
+        .pal-list li[aria-selected="true"] .title { color: #fff; }
+        .pal-list .none { color: var(--dim); cursor: default; }
+        .pal-foot { padding: 8px 18px; border-top: 1px solid var(--line); color: var(--dim); font-size: 0.78em; }
+
+        ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.18s; }
+
+        footer.credits {
+            text-align: center; max-width: 760px; margin: 0 auto; padding: 36px 0 40px;
+            font-size: 0.8em; color: var(--dim); line-height: 1.5;
+        }
+        footer.credits a { color: var(--green); }
+        .disclaimer { opacity: 0.85; }
+
+        /* Without JS: plain list followed by every article */
+        html:not(.js) .palette-btn, html:not(.js) .back-btn { display: none; }
+        html.js .article:not(.active), html.js body.reading #menu { display: none; }
+
+        @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+            .glass, dialog.palette { background: var(--surface); }
+        }
+        @media (prefers-reduced-transparency: reduce) {
+            .glass, dialog.palette, html.refract .liquid { -webkit-backdrop-filter: none; backdrop-filter: none; background: var(--surface); }
+            .glass::after { display: none; }
+            .window { background: var(--ps-blue); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            dialog.palette, .list li, button.tag { transition: none; }
+        }
+        @media (max-width: 640px) {
+            body { padding: 0; font-size: 14px; }
+            .window { border-radius: 0; border-width: 0; }
+            .view { padding: 18px 16px 24px; }
+            .list li { margin: 0 -8px; padding: 9px 8px; }
+            .palette-btn kbd { display: none; }
+            footer.credits { padding: 28px 16px 32px; }
+            dialog.palette { width: 100%; max-width: none; height: 100%; max-height: none; margin: 0; border-radius: 0; border: 0; }
         }
     </style>
 </head>
 <body>
-    <h1>Security Briefing // {{ generated }}</h1>
-    <div class="menu">
-        <ul>
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+        <filter id="liquid" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+            <feTurbulence type="fractalNoise" baseFrequency="0.006 0.014" numOctaves="2" seed="7" result="noise"/>
+            <feGaussianBlur in="noise" stdDeviation="2" result="soft"/>
+            <feDisplacementMap in="SourceGraphic" in2="soft" scale="28" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+    </svg>
+    <div class="aurora" aria-hidden="true"></div>
+    <div class="progress" aria-hidden="true"></div>
+
+    <main class="window">
+        <section id="menu" class="view">
+            <div class="head">
+                <h1>Security Briefing <span class="sep">//</span> {{ generated }}</h1>
+                <button type="button" class="tag filter-clear" hidden></button>
+                <button class="palette-btn glass liquid" type="button" aria-label="Search articles">search <kbd>ctrl</kbd><kbd>k</kbd></button>
+            </div>
+            <ol class="list">
+            {% for a in articles %}
+                <li class="cat-{{ a.category }}" data-category="{{ a.category }}" data-search="{{ (a.title ~ ' ' ~ a.source ~ ' ' ~ a.category) | lower }}">
+                    <span class="idx">{{ "%02d" | format(loop.index) }}</span>
+                    <span>
+                        <a class="row" href="#art-{{ loop.index0 }}">{{ a.title }}</a>
+                        <span class="meta"><button type="button" class="tag" data-cat="{{ a.category }}" title="Show only {{ a.category }}">{{ a.category }}</button> {{ a.source }} · {{ a.date }}{% if a.also %} <span class="also">· also: {{ a.also | join(", ") }}</span>{% endif %}</span>
+                    </span>
+                </li>
+            {% endfor %}
+            </ol>
+            <p class="empty" hidden>No articles in this category.</p>
+        </section>
+
         {% for a in articles %}
-            <li>
-                <button data-target="art-{{ loop.index0 }}">{{ a.title }}</button>
-                <span class="meta"><span class="tag">[{{ a.category }}]</span> {{ a.source }} · {{ a.date }}{% if a.also %} · also: {{ a.also | join(", ") }}{% endif %}</span>
-            </li>
+        <article id="art-{{ loop.index0 }}" class="view article cat-{{ a.category }}">
+            <h2 class="article-title" tabindex="-1">{{ a.title }}</h2>
+            <p class="meta"><span class="tag">{{ a.category }}</span> {{ a.source }} · {{ a.date }} · <a href="{{ a.link }}" target="_blank" rel="noopener noreferrer">↗ original</a></p>
+            <div class="content">
+                {{ a.body | safe }}
+                {% if a.origin == "summary" %}<p class="note">Full content could not be extracted. Read the article at the source.</p>{% endif %}
+            </div>
+            <button type="button" class="back-btn glass">← back to list</button>
+        </article>
         {% endfor %}
-        </ul>
-    </div>
-    {% for a in articles %}
-    <div id="art-{{ loop.index0 }}" class="article-body">
-        <h2 class="article-title">{{ a.title }}</h2>
-        <p class="source-link">[{{ a.category }}] {{ a.source }} · {{ a.date }} | <a href="{{ a.link }}" target="_blank" rel="noopener noreferrer">Original link</a></p>
-        <div class="content">
-            {{ a.body | safe }}
-            {% if a.origin == "summary" %}<p class="note">Full content could not be extracted. Read the article at the source.</p>{% endif %}
+    </main>
+
+    <dialog class="palette glass liquid" aria-label="Search articles">
+        <div class="pal-inner">
+            <div class="pal-input">
+                <span class="ps" aria-hidden="true">&gt;</span>
+                <input type="text" placeholder="search titles, sources, categories…" autocomplete="off" spellcheck="false"
+                       role="combobox" aria-expanded="true" aria-controls="pal-list" aria-label="Search articles">
+            </div>
+            <ul id="pal-list" class="pal-list" role="listbox"></ul>
+            <div class="pal-foot"><kbd>↑</kbd><kbd>↓</kbd> select · <kbd>⏎</kbd> open · <kbd>esc</kbd> close</div>
         </div>
-        <button class="back-btn">[ Back to Menu ]</button>
-        <hr class="separator">
-    </div>
-    {% endfor %}
-    <script>
-        document.querySelectorAll('.menu button').forEach(btn => btn.addEventListener('click', () => {
-            document.querySelectorAll('.article-body').forEach(el => el.classList.remove('active'));
-            const target = document.getElementById(btn.dataset.target);
-            target.classList.add('active');
-            target.scrollIntoView({behavior: 'smooth'});
-        }));
-        document.querySelectorAll('.back-btn').forEach(btn => btn.addEventListener('click', () => window.scrollTo(0, 0)));
-    </script>
-    <footer>
+    </dialog>
+
+    <footer class="credits">
         <p>News aggregator designed and maintained by <a href="https://github.com/KleinMichalGit/security-feed" target="_blank" rel="noopener noreferrer">Michal Klein</a></p>
         <div class="disclaimer">
             <p>This is an <strong>open-source educational project</strong> intended for research and personal productivity. The aggregator is available on <a href="https://github.com/KleinMichalGit/security-feed" target="_blank" rel="noopener noreferrer">GitHub</a>.</p>
             <p><em>Notice: The articles above are automated scrapes from third-party RSS feeds. Full credit belongs to the original authors and publications linked in each source. This site does not claim ownership of the reported content.</em></p>
         </div>
     </footer>
+
+    <script>
+    (() => {
+        const $ = (s, root = document) => root.querySelector(s);
+        const $$ = (s, root = document) => [...root.querySelectorAll(s)];
+        const items = $$('.list li');
+        const articles = $$('.article');
+        const baseTitle = document.title;
+        const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+        const present = new Set(items.map(li => li.dataset.category));
+        const cats = [...new Set(['news', 'threat-intel', 'red-team', ...present])].filter(c => present.has(c));
+
+        // --- Filter: clicking a category tag shows only that category ---------
+        const clear = $('.filter-clear');
+        let only = null;
+
+        function setFilter(cat) {
+            only = cat === only ? null : cat;
+            items.forEach(li => li.hidden = only !== null && li.dataset.category !== only);
+            $('.empty').hidden = items.some(li => !li.hidden);
+            clear.hidden = only === null;
+            if (only !== null) {
+                clear.className = `tag filter-clear cat-${only}`;
+                clear.innerHTML = '';
+                clear.append(only, Object.assign(document.createElement('span'), { className: 'x', textContent: '×' }));
+                clear.title = 'Show all categories';
+            }
+        }
+        $$('.list button.tag').forEach(b => b.addEventListener('click', () => setFilter(b.dataset.cat)));
+        clear.addEventListener('click', () => setFilter(only));
+
+        // --- Hash routing: #art-N shows one article, empty hash shows the list ---
+        let listScroll = 0, lastOpened = null, openedFromList = false;
+
+        function route(animate = true) {
+            const id = location.hash.slice(1);
+            const art = /^art-\d+$/.test(id) ? document.getElementById(id) : null;
+            const wasReading = document.body.classList.contains('reading');
+            if (art && !wasReading) listScroll = scrollY;
+            if (!art) openedFromList = false;
+
+            const swap = () => {
+                articles.forEach(a => a.classList.toggle('active', a === art));
+                document.body.classList.toggle('reading', !!art);
+                document.title = art ? `${$('.article-title', art).textContent} · Security Briefing` : baseTitle;
+                if (art) { lastOpened = id; scrollTo(0, 0); }
+                else scrollTo(0, listScroll);
+            };
+            const focus = () => {
+                if (art) $('.article-title', art).focus({ preventScroll: true });
+                else if (lastOpened) $(`.row[href="#${lastOpened}"]`)?.focus({ preventScroll: true });
+            };
+            if (animate && document.startViewTransition && !reduceMotion.matches && !!art !== wasReading) {
+                document.startViewTransition(swap).updateCallbackDone.then(focus);
+            } else { swap(); focus(); }
+        }
+
+        function goHome() {
+            if (openedFromList) history.back();
+            else { history.replaceState(null, '', location.pathname + location.search); route(); }
+        }
+
+        addEventListener('hashchange', () => {
+            if (/^#art-\d+$/.test(location.hash) && !document.body.classList.contains('reading')) openedFromList = true;
+            route();
+        });
+        $$('.back-btn').forEach(b => b.addEventListener('click', goHome));
+        route(false);
+
+        // --- Command palette ---------------------------------------------------
+        const pal = $('dialog.palette');
+        const input = $('input', pal);
+        const list = $('#pal-list');
+        const entries = items.map(li => ({
+            href: $('.row', li).getAttribute('href'),
+            title: $('.row', li).textContent,
+            meta: $('.meta', li).textContent.replace(/\s+/g, ' ').trim(),
+            search: li.dataset.search,
+            cat: li.dataset.category,
+        }));
+        let hits = [], sel = 0;
+
+        function renderPalette() {
+            const terms = input.value.toLowerCase().split(/\s+/).filter(Boolean);
+            hits = entries.filter(e => terms.every(t => e.search.includes(t)));
+            list.replaceChildren(...hits.map((e, i) => {
+                const li = document.createElement('li');
+                li.id = `pal-${i}`;
+                li.setAttribute('role', 'option');
+                li.className = `cat-${e.cat}`;
+                const t = document.createElement('span'); t.className = 'title'; t.textContent = e.title;
+                const m = document.createElement('span'); m.className = 'meta'; m.textContent = e.meta;
+                li.append(t, m);
+                li.addEventListener('click', () => pick(i));
+                li.addEventListener('mousemove', () => sel !== i && select(i));
+                return li;
+            }));
+            if (!hits.length) {
+                const li = document.createElement('li');
+                li.className = 'none'; li.textContent = 'No matching articles.';
+                list.append(li);
+            }
+            select(0);
+        }
+        function select(i) {
+            sel = i;
+            [...list.children].forEach((c, j) => c.id && c.setAttribute('aria-selected', j === i));
+            list.children[i]?.scrollIntoView({ block: 'nearest' });
+            if (hits.length) input.setAttribute('aria-activedescendant', `pal-${i}`);
+            else input.removeAttribute('aria-activedescendant');
+        }
+        function pick(i) {
+            if (!hits[i]) return;
+            pal.close();
+            location.hash = hits[i].href;
+        }
+        function openPalette() {
+            input.value = '';
+            renderPalette();
+            pal.showModal();
+            input.focus();
+        }
+        input.addEventListener('input', renderPalette);
+        input.addEventListener('keydown', e => {
+            if (e.key === 'ArrowDown') { e.preventDefault(); if (hits.length) select((sel + 1) % hits.length); }
+            else if (e.key === 'ArrowUp') { e.preventDefault(); if (hits.length) select((sel - 1 + hits.length) % hits.length); }
+            else if (e.key === 'Enter') { e.preventDefault(); pick(sel); }
+        });
+        pal.addEventListener('click', e => { if (e.target === pal) pal.close(); });
+        $('.palette-btn').addEventListener('click', openPalette);
+
+        // --- Keyboard navigation ----------------------------------------------
+        document.addEventListener('keydown', e => {
+            if (pal.open || e.target.matches('input, textarea, select')) return;
+            const k = e.key;
+            if (((e.ctrlKey || e.metaKey) && k.toLowerCase() === 'k') || k === '/') {
+                e.preventDefault(); openPalette(); return;
+            }
+            if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+            if (document.body.classList.contains('reading')) {
+                if (k === 'Escape' || k === 'q' || k === 'Backspace') { e.preventDefault(); goHome(); }
+                else if (k === 'g') scrollTo(0, 0);
+                else if (k === 'G') scrollTo(0, document.documentElement.scrollHeight);
+                return;
+            }
+            const rows = items.filter(li => !li.hidden).map(li => $('.row', li));
+            const i = rows.indexOf(document.activeElement);
+            if (k === 'j' || k === 'ArrowDown') { e.preventDefault(); rows[Math.min(i + 1, rows.length - 1)]?.focus(); }
+            else if (k === 'k' || k === 'ArrowUp') { e.preventDefault(); rows[Math.max(i - 1, 0)]?.focus(); }
+            else if (k === 'o' && i >= 0) rows[i].click();
+            else if (k === 'Escape' && only !== null) setFilter(only);
+            else if (/^[1-9]$/.test(k) && cats[k - 1]) setFilter(cats[k - 1]);
+        });
+    })();
+    </script>
 </body>
 </html>

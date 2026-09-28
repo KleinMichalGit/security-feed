@@ -3,149 +3,367 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
     <title>Daily Security Briefing</title>
+    <script>
+        document.documentElement.classList.add('js');
+        // Refraction via backdrop-filter: url(#svg) only renders in Chromium; other engines get plain frost.
+        if (navigator.userAgentData?.brands?.some(b => b.brand === 'Chromium')) document.documentElement.classList.add('refract');
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap">
     <style>
+        :root {
+            --bg: #00112b;
+            --ps-blue: #012456;
+            --window: rgba(1, 30, 72, 0.84);
+            --surface: #0a2d5c;
+            --surface-2: rgba(255, 255, 255, 0.07);
+            --fg: #F2F2F2;
+            --dim: #9aa7bd;
+            --accent: #EBCB8B;
+            --green: #A3BE8C;
+            --link: #88C0D0;
+            --line: rgba(255, 255, 255, 0.12);
+            --code-bg: rgba(0, 10, 30, 0.55);
+            --rim: rgba(255, 255, 255, 0.16);
+            --radius: 14px;
+            --mono: 'JetBrains Mono', 'Cascadia Code', 'SF Mono', Consolas, 'Lucida Console', monospace;
+        }
+        .cat-news { --c: #88C0D0; }
+        .cat-threat-intel { --c: #EBCB8B; }
+        .cat-red-team { --c: #E07A84; }
+
+        * { box-sizing: border-box; }
+        [hidden] { display: none !important; }
+        html { background: var(--bg); }
         body {
-            background-color: #012456;
-            color: #F2F2F2;
-            font-family: 'Consolas', 'Lucida Console', monospace;
-            padding: 20px;
-            line-height: 1.6;
+            margin: 0;
+            padding: 24px 16px 0;
+            background: transparent;
+            color: var(--fg);
+            font: 15px/1.6 var(--mono);
+            font-variant-ligatures: none;
+            -webkit-font-smoothing: antialiased;
+        }
+        ::selection { background: rgba(235, 203, 139, 0.35); }
+        a { color: var(--link); }
+        :focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
+
+        /* Backdrop glow behind the window (html carries the solid fallback color) */
+        .aurora {
+            position: fixed; inset: 0; z-index: -1; pointer-events: none;
+            background:
+                radial-gradient(45vmax 32vmax at 12% 8%, rgba(46, 120, 255, 0.38), transparent 70%),
+                radial-gradient(38vmax 30vmax at 92% 28%, rgba(0, 190, 200, 0.18), transparent 70%),
+                radial-gradient(42vmax 34vmax at 55% 105%, rgba(235, 203, 139, 0.14), transparent 70%),
+                linear-gradient(160deg, var(--ps-blue), var(--bg) 65%);
+        }
+
+        /* Liquid glass: frost + rim + sheen; refraction layered on in Chromium */
+        .glass {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.03)), rgba(1, 36, 86, 0.42);
+            -webkit-backdrop-filter: blur(14px) saturate(180%);
+            backdrop-filter: blur(14px) saturate(180%);
+            border: 1px solid var(--rim);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.30),
+                inset 0 -1px 0 rgba(255, 255, 255, 0.05),
+                inset 1px 0 0 rgba(255, 255, 255, 0.07),
+                0 8px 24px rgba(0, 0, 0, 0.30);
+            isolation: isolate;
+        }
+        .glass::after {
+            content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.20), rgba(255, 255, 255, 0.04) 28%, transparent 55%);
+            mix-blend-mode: screen;
+        }
+        html.refract .liquid { backdrop-filter: blur(3px) url(#liquid) saturate(180%); }
+
+        .window {
             max-width: 1000px;
-            margin: auto;
+            margin: 0 auto;
+            background: var(--window);
+            border: 1px solid var(--rim);
+            border-radius: var(--radius);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            overflow: clip;
         }
-        h1 { color: #FFFFFF; font-size: 1.4em; border-bottom: 2px solid #F2F2F2; padding-bottom: 10px; margin-bottom: 30px; }
-        .menu { margin-bottom: 40px; }
-        .menu ul { list-style-type: decimal-leading-zero; padding-left: 25px; }
-        .menu li { margin-bottom: 14px; color: #EBCB8B; }
-        .meta { display: block; color: #A3BE8C; font-size: 0.85em; }
-        .tag { color: #EBCB8B; }
-        button {
-            background: none; border: none; color: #F2F2F2;
-            text-align: left; cursor: pointer; font-family: inherit;
-            font-size: 1.05em; padding: 0;
+
+        .progress { display: none; }
+        @supports (animation-timeline: scroll()) {
+            body.reading .progress {
+                display: block; position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 20;
+                background: linear-gradient(90deg, var(--link), var(--accent));
+                box-shadow: 0 0 10px var(--accent);
+                transform-origin: 0 50%;
+                animation: grow linear both;
+                animation-timeline: scroll(root);
+            }
+            @keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
         }
-        button:hover { color: #FFFF00; text-decoration: underline; }
-        .article-body { display: none; margin-top: 20px; }
-        .article-body.active { display: block; }
-        .article-title { color: #FFFFFF; font-size: 1.3em; margin-bottom: 5px; }
-        .source-link { color: #A3BE8C; font-size: 0.9em; }
-        .source-link a { color: #A3BE8C; text-decoration: none; }
-        .source-link a:hover { text-decoration: underline; }
+
+        .view { padding: 26px 28px 32px; }
+        .head { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 14px; margin-bottom: 18px; }
+        h1 { font-size: 1.25em; margin: 0; color: #fff; font-weight: 700; letter-spacing: -0.01em; }
+        h1 .sep { color: var(--dim); font-weight: 400; }
+        .palette-btn {
+            margin-left: auto; position: relative;
+            font: inherit; font-size: 0.85em; color: var(--dim); cursor: pointer;
+            padding: 3px 10px; border-radius: 999px;
+        }
+        .palette-btn:hover { color: var(--fg); }
+        kbd {
+            font: inherit; font-size: 0.85em; padding: 0 5px; border-radius: 4px;
+            border: 1px solid var(--line); background: var(--surface-2); color: var(--fg);
+        }
+
+        .tag {
+            display: inline-block; padding: 0 0.6em; border-radius: 999px; line-height: 1.5;
+            font: inherit; color: var(--c, var(--fg));
+            border: 1px solid color-mix(in srgb, var(--c, var(--fg)) 45%, transparent);
+            background: color-mix(in srgb, var(--c, var(--fg)) 12%, transparent);
+        }
+        button.tag { position: relative; z-index: 1; cursor: pointer; transition: border-color 0.12s, background-color 0.12s; }
+        button.tag:hover { border-color: var(--c, var(--fg)); background: color-mix(in srgb, var(--c, var(--fg)) 22%, transparent); }
+        .filter-clear { font-size: 0.85em; }
+        .filter-clear .x { opacity: 0.7; margin-left: 0.4em; }
+
+        /* Article list; the title link stretches over the whole row, the tag button sits above it */
+        .list { list-style: none; margin: 0; padding: 0; }
+        .list li {
+            position: relative;
+            display: grid; grid-template-columns: 2.5ch 1fr; gap: 0 1.2ch;
+            padding: 9px 12px; margin: 0 -12px;
+            border-radius: 8px;
+            transition: background-color 0.12s;
+        }
+        .list li:hover, .list li:has(.row:focus-visible) { background: var(--surface-2); box-shadow: inset 0 0 0 1px var(--line); }
+        .row { display: block; font-weight: 600; color: #e6ebf3; text-decoration: none; }
+        .row::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+        .row:focus-visible { outline: none; }
+        .list li:hover .row, .row:focus-visible { color: #fff; }
+        .idx { color: var(--dim); }
+        .meta { display: block; color: var(--dim); font-size: 0.85em; margin-top: 2px; }
+        .meta .also { opacity: 0.8; }
+        .empty { color: var(--dim); font-style: italic; }
+
+        /* Article view */
+        .article-title { font-size: 1.35em; line-height: 1.35; color: #fff; margin: 0 0 8px; outline: none; }
+        .article .meta { font-size: 0.9em; }
+        .article .meta a { color: var(--green); text-decoration: none; }
+        .article .meta a:hover { text-decoration: underline; }
         .content {
-            padding: 15px 0;
-            border-top: 1px solid #4C566A;
-            margin-top: 15px;
+            padding: 18px 0 8px; margin-top: 18px;
+            border-top: 1px solid var(--line);
             overflow-wrap: anywhere;
         }
-        .content a { color: #88C0D0; }
-        .content h2, .content h3, .content h4 { color: #FFFFFF; font-size: 1.1em; margin-top: 1.6em; }
-        .content img { display: block; max-width: 100%; height: auto; margin: 16px 0; background: #F2F2F2; }
+        .content h2, .content h3, .content h4 { color: #fff; font-size: 1.08em; margin-top: 1.8em; }
+        .content img { display: block; max-width: 100%; height: auto; margin: 16px 0; background: #F2F2F2; border-radius: 8px; }
         .content figure { margin: 16px 0; }
-        .content figcaption { color: #A3BE8C; font-size: 0.85em; }
-        .content pre { background: #001633; border: 1px solid #4C566A; padding: 12px; overflow-x: auto; overflow-wrap: normal; }
-        .content code { background: #001633; padding: 0 3px; }
-        .content pre code { padding: 0; }
-        .content blockquote { border-left: 3px solid #EBCB8B; margin: 16px 0; padding-left: 14px; color: #D8DEE9; }
+        .content figcaption { color: var(--green); font-size: 0.85em; }
+        .content pre {
+            background: var(--code-bg); border: 1px solid var(--line); border-radius: 10px;
+            padding: 14px 16px; overflow-x: auto; overflow-wrap: normal;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        }
+        .content code { background: var(--code-bg); padding: 1px 5px; border-radius: 4px; font-size: 0.92em; }
+        .content pre code { padding: 0; background: none; }
+        .content blockquote { border-left: 3px solid var(--accent); margin: 16px 0; padding: 2px 0 2px 16px; color: #D8DEE9; background: linear-gradient(90deg, rgba(235, 203, 139, 0.06), transparent 60%); }
         .table-wrap { overflow-x: auto; margin: 16px 0; }
         .content table { border-collapse: collapse; min-width: 50%; overflow-wrap: normal; }
-        .content th, .content td { border: 1px solid #4C566A; padding: 6px 10px; text-align: left; vertical-align: top; }
-        .content th { background: #001633; color: #FFFFFF; }
-        .note { color: #EBCB8B; font-style: italic; }
-        .back-btn { color: #FFFF00; border: 1px solid #FFFF00; padding: 6px 12px; margin-top: 15px; transition: 0.2s; }
-        .back-btn:hover { background: #FFFF00; color: #012456; }
-        .separator { border: 0; border-top: 1px dashed #4C566A; margin: 50px 0; }
-        footer {
-            text-align: center;
-            margin-top: 60px;
-            padding: 30px;
-            border-top: 1px solid #4C566A;
-            font-size: 0.85em;
-            color: #A3BE8C;
+        .content th, .content td { border: 1px solid var(--line); padding: 6px 10px; text-align: left; vertical-align: top; }
+        .content th { background: var(--code-bg); color: #fff; }
+        .note { color: var(--accent); font-style: italic; }
+        .back-btn {
+            position: relative;
+            margin-top: 22px; padding: 6px 14px; border-radius: 999px;
+            font: inherit; color: var(--accent); cursor: pointer;
         }
-        footer a { color: #A3BE8C; text-decoration: underline; }
-        .disclaimer { opacity: 0.8; font-size: 0.9em; max-width: 700px; margin: 15px auto; line-height: 1.4; }
-        @media (max-width: 600px) {
-            body { padding: 15px; font-size: 15px; }
-            h1 { font-size: 1.2em; }
-            .menu ul { padding-left: 20px; }
+        .back-btn:hover { color: #fff; }
+
+        /* Command palette */
+        dialog.palette {
+            width: min(640px, 100% - 32px); max-height: min(70vh, 560px);
+            margin: 12vh auto auto; padding: 0;
+            border-radius: var(--radius);
+            color: var(--fg); font: inherit;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)), rgba(1, 36, 86, 0.55);
+            opacity: 0; transform: translateY(-8px) scale(0.98);
+            transition: opacity 0.18s, transform 0.18s, overlay 0.18s allow-discrete, display 0.18s allow-discrete;
+        }
+        dialog.palette[open] { opacity: 1; transform: none; }
+        @starting-style { dialog.palette[open] { opacity: 0; transform: translateY(-8px) scale(0.98); } }
+        dialog.palette::backdrop { background: rgba(0, 8, 24, 0.45); }
+        .pal-inner { display: flex; flex-direction: column; max-height: inherit; position: relative; z-index: 1; }
+        .pal-input { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+        .pal-input .ps { color: var(--green); font-weight: 700; }
+        .pal-input input { flex: 1; min-width: 0; background: none; border: 0; outline: none; color: var(--fg); font: inherit; font-size: 1.05em; }
+        .pal-input input::placeholder { color: var(--dim); }
+        .pal-list { list-style: none; margin: 0; padding: 6px; overflow-y: auto; }
+        .pal-list li { padding: 8px 12px; border-radius: 8px; cursor: pointer; }
+        .pal-list .title { display: block; font-weight: 600; color: #e6ebf3; }
+        .pal-list li[aria-selected="true"] { background: rgba(255, 255, 255, 0.10); box-shadow: inset 0 0 0 1px var(--line); }
+        .pal-list li[aria-selected="true"] .title { color: #fff; }
+        .pal-list .none { color: var(--dim); cursor: default; }
+        .pal-foot { padding: 8px 18px; border-top: 1px solid var(--line); color: var(--dim); font-size: 0.78em; }
+
+        ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.18s; }
+
+        footer.credits {
+            text-align: center; max-width: 760px; margin: 0 auto; padding: 36px 0 40px;
+            font-size: 0.8em; color: var(--dim); line-height: 1.5;
+        }
+        footer.credits a { color: var(--green); }
+        .disclaimer { opacity: 0.85; }
+
+        /* Without JS: plain list followed by every article */
+        html:not(.js) .palette-btn, html:not(.js) .back-btn { display: none; }
+        html.js .article:not(.active), html.js body.reading #menu { display: none; }
+
+        @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+            .glass, dialog.palette { background: var(--surface); }
+        }
+        @media (prefers-reduced-transparency: reduce) {
+            .glass, dialog.palette, html.refract .liquid { -webkit-backdrop-filter: none; backdrop-filter: none; background: var(--surface); }
+            .glass::after { display: none; }
+            .window { background: var(--ps-blue); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            dialog.palette, .list li, button.tag { transition: none; }
+        }
+        @media (max-width: 640px) {
+            body { padding: 0; font-size: 14px; }
+            .window { border-radius: 0; border-width: 0; }
+            .view { padding: 18px 16px 24px; }
+            .list li { margin: 0 -8px; padding: 9px 8px; }
+            .palette-btn kbd { display: none; }
+            footer.credits { padding: 28px 16px 32px; }
+            dialog.palette { width: 100%; max-width: none; height: 100%; max-height: none; margin: 0; border-radius: 0; border: 0; }
         }
     </style>
 </head>
 <body>
-    <h1>Security Briefing // 2026-09-28</h1>
-    <div class="menu">
-        <ul>
-        
-            <li>
-                <button data-target="art-0">OpenAI pauses some training amid allegations its rogue agents behaved more badly than first thought</button>
-                <span class="meta"><span class="tag">[news]</span> The Register · 2026-09-28</span>
-            </li>
-        
-            <li>
-                <button data-target="art-1">Wireshark 4.6.9 Released</button>
-                <span class="meta"><span class="tag">[threat-intel]</span> SANS ISC · 2026-09-27</span>
-            </li>
-        
-            <li>
-                <button data-target="art-2">Anthropic turns Claude into an AI marketplace with 2,000+ plugins and connectors</button>
-                <span class="meta"><span class="tag">[news]</span> BleepingComputer · 2026-09-27</span>
-            </li>
-        
-            <li>
-                <button data-target="art-3">Microsoft SharePoint Flaw CVE-2026-65660 Now Exploited in Attacks</button>
-                <span class="meta"><span class="tag">[news]</span> SecurityWeek · 2026-09-27</span>
-            </li>
-        
-            <li>
-                <button data-target="art-4">Warning: Two Unpatched Citrix NetScaler RCE Zero-Days Under Active Exploitation</button>
-                <span class="meta"><span class="tag">[news]</span> The Hacker News · 2026-09-27 · also: BleepingComputer, SecurityWeek</span>
-            </li>
-        
-            <li>
-                <button data-target="art-5">Trading Maintenance for Momentum: Scaling Security Validation Across 230+ Sites</button>
-                <span class="meta"><span class="tag">[red-team]</span> Horizon3.ai · 2026-09-25</span>
-            </li>
-        
-            <li>
-                <button data-target="art-6">3 Consulting Myths Debunked by Unit 42 Experts</button>
-                <span class="meta"><span class="tag">[threat-intel]</span> Unit 42 · 2026-09-25</span>
-            </li>
-        
-            <li>
-                <button data-target="art-7">ShinyHunters Renewed Mass Exploitation Campaign Targeting Oracle PeopleSoft</button>
-                <span class="meta"><span class="tag">[threat-intel]</span> Google Threat Intelligence · 2026-09-25 · also: BleepingComputer</span>
-            </li>
-        
-            <li>
-                <button data-target="art-8">AI for Offensive Security: What Works, What Does Not, and How to Adopt It</button>
-                <span class="meta"><span class="tag">[red-team]</span> SpecterOps · 2026-09-24</span>
-            </li>
-        
-            <li>
-                <button data-target="art-9">Is This A Joke? In The Auth Header? (F5 BIG-IP UnAuth Heap-Overflow to RCE CVE-2026-94127)</button>
-                <span class="meta"><span class="tag">[red-team]</span> watchTowr Labs · 2026-09-23</span>
-            </li>
-        
-        </ul>
-    </div>
-    
-    <div id="art-0" class="article-body">
-        <h2 class="article-title">OpenAI pauses some training amid allegations its rogue agents behaved more badly than first thought</h2>
-        <p class="source-link">[news] The Register · 2026-09-28 | <a href="https://www.theregister.com/ai-and-ml/2026/09/28/openai-pauses-some-training-amid-allegations-its-rogue-agents-behaved-more-badly-than-first-thought/5299350" target="_blank" rel="noopener noreferrer">Original link</a></p>
-        <div class="content">
-            The AI safety debate advanced at high speed over the weekend, amid new allegations that rogue agents have behaved more badly than first thought – and in greater numbers. The fun started on Friday when OpenAI quietly disclosed it had paused training of its most advanced models. The AI upstart buried that news in a “misalignment report” – that’s OpenAI-speak for its reports on rogue agents – titled “An agent used DNS to reach an external chatbot.” The good news is that the agent involved in this incident never reached the open internet. The bad news is that the agent, which was attempting to complete a search-based training task, was able to reach the chatbot due to insufficient DNS filtering in a training sandbox. Or as OpenAI put it, “a gap in our internet-access restrictions” – which was also a problem in the Hugging Face attack. “The incident exposed a gap in our controls over network restrictions,” the report reads. “We therefore stopped the affected training run and have subsequently decided to pause all other training, evaluation, and inference with tool-use (defined broadly) for our most capable models until we have both validated that the gap is resolved and performed additional red-teaming of the system.” Also on Friday, AI startup Parse published an analysis of the Hugging Face attack that the authors claim revealed new details including that OpenAI’s agent swarm gained credentials to Docker Hub and built modified versions of existing images they hoped would make it easier to complete their capture the flag mission. The agents also mapped Hugging Face’s Kubernetes environment. Friday got worse for OpenAI after the New York Times reported that its agents also “meddled with the websites for the Education Department, the Commerce Department and the Securities and Exchange Commission.” OpenAI acknowledged the incidents. The company also admitted “agents in our research environment transmitted training and evaluation data while using third-party services.” That mess saw 53 user-generated images posted to image hosting sites. OpenAI CEO Sam Altman responded by admitting that his company’s investigations into rogue agents “have not been as fast as we would have liked but we are trying to balance our desire for transparency with gaining a clear understanding from petabytes of agent activity logs, and working with impacted organizations.” One of those impacted organizations is the Australian government, which last week revealed it was the target of over-eager OpenAI agents that inappropriately accessed a healthcare research data portal. Over the weekend, Australia indicated it wants Altman and Anthropic CEO Dario Amodei to appear before a Senate inquiry. Australian leaders have softened their rhetoric on the incident, with deputy prime minister Richard Marles describing it as “minor” and akin to “climbing a fence” rather than cracking layers of security controls – perhaps because members of the opposition are suggesting that lax cybersecurity was to blame. If Altman and Amodei do front Australia’s Senate, they may face a new line of questions after Axios reported that their companies are investigating “tens of thousands” of worrying incidents. That level of agentic misbehavior sounds like the sort of thing that regulators might consider strong evidence of products being unsafe. Two very important people – Chinese president Xi Jinping and US president Donald Trump – seem unworried, as the AI-related result of their summit meeting last week was to establish a “China-U.S. AI Dialogue to exchange views on risks and benefits related to AI” plus “a bilateral communication channel for AI incidents.” That sounds like a hotline the two nations can use to inform each other of agentic incidents that either could see as signs of ill-intent. The two nations also decided their respective militaries will “conclude a memorandum of understanding on crisis communication and prevention as soon as possible.” China’s AI giants, meanwhile, remain silent on the extent and results of any tests they have conducted with agentic tools. ®
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+        <filter id="liquid" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+            <feTurbulence type="fractalNoise" baseFrequency="0.006 0.014" numOctaves="2" seed="7" result="noise"/>
+            <feGaussianBlur in="noise" stdDeviation="2" result="soft"/>
+            <feDisplacementMap in="SourceGraphic" in2="soft" scale="28" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+    </svg>
+    <div class="aurora" aria-hidden="true"></div>
+    <div class="progress" aria-hidden="true"></div>
+
+    <main class="window">
+        <section id="menu" class="view">
+            <div class="head">
+                <h1>Security Briefing <span class="sep">//</span> 2026-09-28</h1>
+                <button type="button" class="tag filter-clear" hidden></button>
+                <button class="palette-btn glass liquid" type="button" aria-label="Search articles">search <kbd>ctrl</kbd><kbd>k</kbd></button>
+            </div>
+            <ol class="list">
             
-        </div>
-        <button class="back-btn">[ Back to Menu ]</button>
-        <hr class="separator">
-    </div>
-    
-    <div id="art-1" class="article-body">
-        <h2 class="article-title">Wireshark 4.6.9 Released</h2>
-        <p class="source-link">[threat-intel] SANS ISC · 2026-09-27 | <a href="https://isc.sans.edu/diary/rss/33372" target="_blank" rel="noopener noreferrer">Original link</a></p>
-        <div class="content">
-            <p>Wireshark release <a target="_blank" href="https://www.wireshark.org/docs/relnotes/wireshark-4.6.9.html" rel="noopener noreferrer">4.6.9</a> fixes 19 vulnerabilities and 16 bugs.</p>
+                <li class="cat-news" data-category="news" data-search="openai pauses some training amid allegations its rogue agents behaved more badly than first thought the register news">
+                    <span class="idx">01</span>
+                    <span>
+                        <a class="row" href="#art-0">OpenAI pauses some training amid allegations its rogue agents behaved more badly than first thought</a>
+                        <span class="meta"><button type="button" class="tag" data-cat="news" title="Show only news">news</button> The Register · 2026-09-28</span>
+                    </span>
+                </li>
+            
+                <li class="cat-threat-intel" data-category="threat-intel" data-search="wireshark 4.6.9 released sans isc threat-intel">
+                    <span class="idx">02</span>
+                    <span>
+                        <a class="row" href="#art-1">Wireshark 4.6.9 Released</a>
+                        <span class="meta"><button type="button" class="tag" data-cat="threat-intel" title="Show only threat-intel">threat-intel</button> SANS ISC · 2026-09-27</span>
+                    </span>
+                </li>
+            
+                <li class="cat-news" data-category="news" data-search="anthropic turns claude into an ai marketplace with 2,000+ plugins and connectors bleepingcomputer news">
+                    <span class="idx">03</span>
+                    <span>
+                        <a class="row" href="#art-2">Anthropic turns Claude into an AI marketplace with 2,000+ plugins and connectors</a>
+                        <span class="meta"><button type="button" class="tag" data-cat="news" title="Show only news">news</button> BleepingComputer · 2026-09-27</span>
+                    </span>
+                </li>
+            
+                <li class="cat-news" data-category="news" data-search="microsoft sharepoint flaw cve-2026-65660 now exploited in attacks securityweek news">
+                    <span class="idx">04</span>
+                    <span>
+                        <a class="row" href="#art-3">Microsoft SharePoint Flaw CVE-2026-65660 Now Exploited in Attacks</a>
+                        <span class="meta"><button type="button" class="tag" data-cat="news" title="Show only news">news</button> SecurityWeek · 2026-09-27</span>
+                    </span>
+                </li>
+            
+                <li class="cat-news" data-category="news" data-search="warning: two unpatched citrix netscaler rce zero-days under active exploitation the hacker news news">
+                    <span class="idx">05</span>
+                    <span>
+                        <a class="row" href="#art-4">Warning: Two Unpatched Citrix NetScaler RCE Zero-Days Under Active Exploitation</a>
+                        <span class="meta"><button type="button" class="tag" data-cat="news" title="Show only news">news</button> The Hacker News · 2026-09-27 <span class="also">· also: BleepingComputer, SecurityWeek</span></span>
+                    </span>
+                </li>
+            
+                <li class="cat-red-team" data-category="red-team" data-search="trading maintenance for momentum: scaling security validation across 230+ sites horizon3.ai red-team">
+                    <span class="idx">06</span>
+                    <span>
+                        <a class="row" href="#art-5">Trading Maintenance for Momentum: Scaling Security Validation Across 230+ Sites</a>
+                        <span class="meta"><button type="button" class="tag" data-cat="red-team" title="Show only red-team">red-team</button> Horizon3.ai · 2026-09-25</span>
+                    </span>
+                </li>
+            
+                <li class="cat-threat-intel" data-category="threat-intel" data-search="3 consulting myths debunked by unit 42 experts unit 42 threat-intel">
+                    <span class="idx">07</span>
+                    <span>
+                        <a class="row" href="#art-6">3 Consulting Myths Debunked by Unit 42 Experts</a>
+                        <span class="meta"><button type="button" class="tag" data-cat="threat-intel" title="Show only threat-intel">threat-intel</button> Unit 42 · 2026-09-25</span>
+                    </span>
+                </li>
+            
+                <li class="cat-threat-intel" data-category="threat-intel" data-search="shinyhunters renewed mass exploitation campaign targeting oracle peoplesoft google threat intelligence threat-intel">
+                    <span class="idx">08</span>
+                    <span>
+                        <a class="row" href="#art-7">ShinyHunters Renewed Mass Exploitation Campaign Targeting Oracle PeopleSoft</a>
+                        <span class="meta"><button type="button" class="tag" data-cat="threat-intel" title="Show only threat-intel">threat-intel</button> Google Threat Intelligence · 2026-09-25 <span class="also">· also: BleepingComputer</span></span>
+                    </span>
+                </li>
+            
+                <li class="cat-red-team" data-category="red-team" data-search="ai for offensive security: what works, what does not, and how to adopt it specterops red-team">
+                    <span class="idx">09</span>
+                    <span>
+                        <a class="row" href="#art-8">AI for Offensive Security: What Works, What Does Not, and How to Adopt It</a>
+                        <span class="meta"><button type="button" class="tag" data-cat="red-team" title="Show only red-team">red-team</button> SpecterOps · 2026-09-24</span>
+                    </span>
+                </li>
+            
+                <li class="cat-red-team" data-category="red-team" data-search="is this a joke? in the auth header? (f5 big-ip unauth heap-overflow to rce cve-2026-94127) watchtowr labs red-team">
+                    <span class="idx">10</span>
+                    <span>
+                        <a class="row" href="#art-9">Is This A Joke? In The Auth Header? (F5 BIG-IP UnAuth Heap-Overflow to RCE CVE-2026-94127)</a>
+                        <span class="meta"><button type="button" class="tag" data-cat="red-team" title="Show only red-team">red-team</button> watchTowr Labs · 2026-09-23</span>
+                    </span>
+                </li>
+            
+            </ol>
+            <p class="empty" hidden>No articles in this category.</p>
+        </section>
+
+        
+        <article id="art-0" class="view article cat-news">
+            <h2 class="article-title" tabindex="-1">OpenAI pauses some training amid allegations its rogue agents behaved more badly than first thought</h2>
+            <p class="meta"><span class="tag">news</span> The Register · 2026-09-28 · <a href="https://www.theregister.com/ai-and-ml/2026/09/28/openai-pauses-some-training-amid-allegations-its-rogue-agents-behaved-more-badly-than-first-thought/5299350" target="_blank" rel="noopener noreferrer">↗ original</a></p>
+            <div class="content">
+                The AI safety debate advanced at high speed over the weekend, amid new allegations that rogue agents have behaved more badly than first thought – and in greater numbers. The fun started on Friday when OpenAI quietly disclosed it had paused training of its most advanced models. The AI upstart buried that news in a “misalignment report” – that’s OpenAI-speak for its reports on rogue agents – titled “An agent used DNS to reach an external chatbot.” The good news is that the agent involved in this incident never reached the open internet. The bad news is that the agent, which was attempting to complete a search-based training task, was able to reach the chatbot due to insufficient DNS filtering in a training sandbox. Or as OpenAI put it, “a gap in our internet-access restrictions” – which was also a problem in the Hugging Face attack. “The incident exposed a gap in our controls over network restrictions,” the report reads. “We therefore stopped the affected training run and have subsequently decided to pause all other training, evaluation, and inference with tool-use (defined broadly) for our most capable models until we have both validated that the gap is resolved and performed additional red-teaming of the system.” Also on Friday, AI startup Parse published an analysis of the Hugging Face attack that the authors claim revealed new details including that OpenAI’s agent swarm gained credentials to Docker Hub and built modified versions of existing images they hoped would make it easier to complete their capture the flag mission. The agents also mapped Hugging Face’s Kubernetes environment. Friday got worse for OpenAI after the New York Times reported that its agents also “meddled with the websites for the Education Department, the Commerce Department and the Securities and Exchange Commission.” OpenAI acknowledged the incidents. The company also admitted “agents in our research environment transmitted training and evaluation data while using third-party services.” That mess saw 53 user-generated images posted to image hosting sites. OpenAI CEO Sam Altman responded by admitting that his company’s investigations into rogue agents “have not been as fast as we would have liked but we are trying to balance our desire for transparency with gaining a clear understanding from petabytes of agent activity logs, and working with impacted organizations.” One of those impacted organizations is the Australian government, which last week revealed it was the target of over-eager OpenAI agents that inappropriately accessed a healthcare research data portal. Over the weekend, Australia indicated it wants Altman and Anthropic CEO Dario Amodei to appear before a Senate inquiry. Australian leaders have softened their rhetoric on the incident, with deputy prime minister Richard Marles describing it as “minor” and akin to “climbing a fence” rather than cracking layers of security controls – perhaps because members of the opposition are suggesting that lax cybersecurity was to blame. If Altman and Amodei do front Australia’s Senate, they may face a new line of questions after Axios reported that their companies are investigating “tens of thousands” of worrying incidents. That level of agentic misbehavior sounds like the sort of thing that regulators might consider strong evidence of products being unsafe. Two very important people – Chinese president Xi Jinping and US president Donald Trump – seem unworried, as the AI-related result of their summit meeting last week was to establish a “China-U.S. AI Dialogue to exchange views on risks and benefits related to AI” plus “a bilateral communication channel for AI incidents.” That sounds like a hotline the two nations can use to inform each other of agentic incidents that either could see as signs of ill-intent. The two nations also decided their respective militaries will “conclude a memorandum of understanding on crisis communication and prevention as soon as possible.” China’s AI giants, meanwhile, remain silent on the extent and results of any tests they have conducted with agentic tools. ®
+                
+            </div>
+            <button type="button" class="back-btn glass">← back to list</button>
+        </article>
+        
+        <article id="art-1" class="view article cat-threat-intel">
+            <h2 class="article-title" tabindex="-1">Wireshark 4.6.9 Released</h2>
+            <p class="meta"><span class="tag">threat-intel</span> SANS ISC · 2026-09-27 · <a href="https://isc.sans.edu/diary/rss/33372" target="_blank" rel="noopener noreferrer">↗ original</a></p>
+            <div class="content">
+                <p>Wireshark release <a target="_blank" href="https://www.wireshark.org/docs/relnotes/wireshark-4.6.9.html" rel="noopener noreferrer">4.6.9</a> fixes 19 vulnerabilities and 16 bugs.</p>
 
 <p>&nbsp;</p>
 
@@ -155,17 +373,16 @@ Senior handler<br>
 
  
  (c) SANS Internet Storm Center. https://isc.sans.edu Creative Commons Attribution-Noncommercial 3.0 United States License.
-            
-        </div>
-        <button class="back-btn">[ Back to Menu ]</button>
-        <hr class="separator">
-    </div>
-    
-    <div id="art-2" class="article-body">
-        <h2 class="article-title">Anthropic turns Claude into an AI marketplace with 2,000+ plugins and connectors</h2>
-        <p class="source-link">[news] BleepingComputer · 2026-09-27 | <a href="https://www.bleepingcomputer.com/news/artificial-intelligence/anthropic-turns-claude-into-an-ai-marketplace-with-2-000-plus-plugins-and-connectors/" target="_blank" rel="noopener noreferrer">Original link</a></p>
-        <div class="content">
-            
+                
+            </div>
+            <button type="button" class="back-btn glass">← back to list</button>
+        </article>
+        
+        <article id="art-2" class="view article cat-news">
+            <h2 class="article-title" tabindex="-1">Anthropic turns Claude into an AI marketplace with 2,000+ plugins and connectors</h2>
+            <p class="meta"><span class="tag">news</span> BleepingComputer · 2026-09-27 · <a href="https://www.bleepingcomputer.com/news/artificial-intelligence/anthropic-turns-claude-into-an-ai-marketplace-with-2-000-plus-plugins-and-connectors/" target="_blank" rel="noopener noreferrer">↗ original</a></p>
+            <div class="content">
+                
 	   
 <p><img loading="lazy" referrerpolicy="no-referrer" alt="Claude" src="https://www.bleepstatic.com/content/hl-images/2026/02/13/Claude_chats.jpg"></p>
 
@@ -214,17 +431,16 @@ Senior handler<br>
  
 	  
          
-            
-        </div>
-        <button class="back-btn">[ Back to Menu ]</button>
-        <hr class="separator">
-    </div>
-    
-    <div id="art-3" class="article-body">
-        <h2 class="article-title">Microsoft SharePoint Flaw CVE-2026-65660 Now Exploited in Attacks</h2>
-        <p class="source-link">[news] SecurityWeek · 2026-09-27 | <a href="https://www.securityweek.com/microsoft-sharepoint-flaw-cve-2026-65660-now-exploited-in-attacks/" target="_blank" rel="noopener noreferrer">Original link</a></p>
-        <div class="content">
-            <img loading="lazy" referrerpolicy="no-referrer" src="https://www.securityweek.com/wp-content/uploads/2026/07/SharePoint.jpeg" alt="">
+                
+            </div>
+            <button type="button" class="back-btn glass">← back to list</button>
+        </article>
+        
+        <article id="art-3" class="view article cat-news">
+            <h2 class="article-title" tabindex="-1">Microsoft SharePoint Flaw CVE-2026-65660 Now Exploited in Attacks</h2>
+            <p class="meta"><span class="tag">news</span> SecurityWeek · 2026-09-27 · <a href="https://www.securityweek.com/microsoft-sharepoint-flaw-cve-2026-65660-now-exploited-in-attacks/" target="_blank" rel="noopener noreferrer">↗ original</a></p>
+            <div class="content">
+                <img loading="lazy" referrerpolicy="no-referrer" src="https://www.securityweek.com/wp-content/uploads/2026/07/SharePoint.jpeg" alt="">
     
 <p><strong>A Microsoft SharePoint vulnerability tracked as CVE-2026-65660 is now being exploited in attacks, roughly six weeks after Microsoft announced patches and a couple of days after researchers disclosed technical details.</strong>
 
@@ -282,17 +498,16 @@ Senior handler<br>
       </p>
   
   
-            
-        </div>
-        <button class="back-btn">[ Back to Menu ]</button>
-        <hr class="separator">
-    </div>
-    
-    <div id="art-4" class="article-body">
-        <h2 class="article-title">Warning: Two Unpatched Citrix NetScaler RCE Zero-Days Under Active Exploitation</h2>
-        <p class="source-link">[news] The Hacker News · 2026-09-27 | <a href="https://thehackernews.com/2026/09/warning-two-unpatched-citrix-netscaler.html" target="_blank" rel="noopener noreferrer">Original link</a></p>
-        <div class="content">
-            <img loading="lazy" referrerpolicy="no-referrer" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrnnWi_EE_zogEngdPWZDYXQTXqcArqvXtXYDj7_yLDzfVamEw9Nx7taRyM1SQf8-78qtxnt3nhNzcn36WnzYwZvFDQNvglCilw0Ltb4NjVkjjC8GH2nOUTnxIBPvRn8JVPcXJaidmbU0A6z-1RiX_OKgcpkzvL6xV7aM_YpQj6XdYIfalQH3h6o3b7pQ/s1700-nu-rw-lo-l85-e365/citrix-zero-day.jpg" alt="">
+                
+            </div>
+            <button type="button" class="back-btn glass">← back to list</button>
+        </article>
+        
+        <article id="art-4" class="view article cat-news">
+            <h2 class="article-title" tabindex="-1">Warning: Two Unpatched Citrix NetScaler RCE Zero-Days Under Active Exploitation</h2>
+            <p class="meta"><span class="tag">news</span> The Hacker News · 2026-09-27 · <a href="https://thehackernews.com/2026/09/warning-two-unpatched-citrix-netscaler.html" target="_blank" rel="noopener noreferrer">↗ original</a></p>
+            <div class="content">
+                <img loading="lazy" referrerpolicy="no-referrer" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrnnWi_EE_zogEngdPWZDYXQTXqcArqvXtXYDj7_yLDzfVamEw9Nx7taRyM1SQf8-78qtxnt3nhNzcn36WnzYwZvFDQNvglCilw0Ltb4NjVkjjC8GH2nOUTnxIBPvRn8JVPcXJaidmbU0A6z-1RiX_OKgcpkzvL6xV7aM_YpQj6XdYIfalQH3h6o3b7pQ/s1700-nu-rw-lo-l85-e365/citrix-zero-day.jpg" alt="">
 <p><i></i>Swati Khandelwal<i></i>Sep 27, 2026Vulnerability / Network Security</p>
 
 <p>Two critical vulnerabilities in Citrix NetScaler ADC and NetScaler Gateway that allow remote code execution have been exploited in the wild, Citrix confirmed on September 27. It released fixes for both, along with six other flaws. One of the two affects every deployment on an affected version, including those in the default configuration.</p>
@@ -366,17 +581,16 @@ Senior handler<br>
 
 
 
-            
-        </div>
-        <button class="back-btn">[ Back to Menu ]</button>
-        <hr class="separator">
-    </div>
-    
-    <div id="art-5" class="article-body">
-        <h2 class="article-title">Trading Maintenance for Momentum: Scaling Security Validation Across 230+ Sites</h2>
-        <p class="source-link">[red-team] Horizon3.ai · 2026-09-25 | <a href="https://horizon3.ai/customer-story/scaling-security-validation-230-sites/" target="_blank" rel="noopener noreferrer">Original link</a></p>
-        <div class="content">
-            <img loading="lazy" referrerpolicy="no-referrer" src="https://horizon3.ai/wp-content/uploads/2026/09/Anonymous_CaseStudy_US_Global-automotive-technology-manufacturer-mockup.png" alt="">
+                
+            </div>
+            <button type="button" class="back-btn glass">← back to list</button>
+        </article>
+        
+        <article id="art-5" class="view article cat-red-team">
+            <h2 class="article-title" tabindex="-1">Trading Maintenance for Momentum: Scaling Security Validation Across 230+ Sites</h2>
+            <p class="meta"><span class="tag">red-team</span> Horizon3.ai · 2026-09-25 · <a href="https://horizon3.ai/customer-story/scaling-security-validation-230-sites/" target="_blank" rel="noopener noreferrer">↗ original</a></p>
+            <div class="content">
+                <img loading="lazy" referrerpolicy="no-referrer" src="https://horizon3.ai/wp-content/uploads/2026/09/Anonymous_CaseStudy_US_Global-automotive-technology-manufacturer-mockup.png" alt="">
 <p>Security validation programs can become difficult to scale when the testing infrastructure itself creates operational drag.</p>
 
 
@@ -545,17 +759,16 @@ Senior handler<br>
 
 
 
-            
-        </div>
-        <button class="back-btn">[ Back to Menu ]</button>
-        <hr class="separator">
-    </div>
-    
-    <div id="art-6" class="article-body">
-        <h2 class="article-title">3 Consulting Myths Debunked by Unit 42 Experts</h2>
-        <p class="source-link">[threat-intel] Unit 42 · 2026-09-25 | <a href="https://unit42.paloaltonetworks.com/3-consulting-myths-debunked-by-unit-42-experts/" target="_blank" rel="noopener noreferrer">Original link</a></p>
-        <div class="content">
-            <img loading="lazy" referrerpolicy="no-referrer" src="https://unit42.paloaltonetworks.com/wp-content/uploads/2025/08/01_Listicle_Category_1505x922.jpg" alt="">
+                
+            </div>
+            <button type="button" class="back-btn glass">← back to list</button>
+        </article>
+        
+        <article id="art-6" class="view article cat-threat-intel">
+            <h2 class="article-title" tabindex="-1">3 Consulting Myths Debunked by Unit 42 Experts</h2>
+            <p class="meta"><span class="tag">threat-intel</span> Unit 42 · 2026-09-25 · <a href="https://unit42.paloaltonetworks.com/3-consulting-myths-debunked-by-unit-42-experts/" target="_blank" rel="noopener noreferrer">↗ original</a></p>
+            <div class="content">
+                <img loading="lazy" referrerpolicy="no-referrer" src="https://unit42.paloaltonetworks.com/wp-content/uploads/2025/08/01_Listicle_Category_1505x922.jpg" alt="">
                 <p>We interviewed three Unit 42 consultants to examine the most critical cybersecurity misconceptions observed in their casework across customer environments, and the strategic shifts needed to correct them.</p>
 <h2><a target="_blank" rel="noopener noreferrer"></a>Myth 1: The More Security Tools, The Better</h2>
 <p>A widespread assumption is that purchasing a new, specialized security tool for every emerging threat always results in stronger protection. In reality, continuously adding tools without a unified security strategy can lead to tool overload and create critical operational vulnerabilities.</p>
@@ -609,17 +822,16 @@ Senior handler<br>
               
               
               
-            
-        </div>
-        <button class="back-btn">[ Back to Menu ]</button>
-        <hr class="separator">
-    </div>
-    
-    <div id="art-7" class="article-body">
-        <h2 class="article-title">ShinyHunters Renewed Mass Exploitation Campaign Targeting Oracle PeopleSoft</h2>
-        <p class="source-link">[threat-intel] Google Threat Intelligence · 2026-09-25 | <a href="https://cloud.google.com/blog/topics/threat-intelligence/shinyhunters-renewed-mass-exploitation-campaign-targeting-oracle-peoplesoft/" target="_blank" rel="noopener noreferrer">Original link</a></p>
-        <div class="content">
-            <img loading="lazy" referrerpolicy="no-referrer" src="https://storage.googleapis.com/gweb-cloudblog-publish/images/03_ThreatIntelligenceWebsiteBannerIdeas_BA.max-2600x2600.png" alt="">ShinyHunters Renewed Mass Exploitation Campaign Targeting Oracle PeopleSoftMandiant<h3>Introduction<strong>&nbsp;</strong></h3>
+                
+            </div>
+            <button type="button" class="back-btn glass">← back to list</button>
+        </article>
+        
+        <article id="art-7" class="view article cat-threat-intel">
+            <h2 class="article-title" tabindex="-1">ShinyHunters Renewed Mass Exploitation Campaign Targeting Oracle PeopleSoft</h2>
+            <p class="meta"><span class="tag">threat-intel</span> Google Threat Intelligence · 2026-09-25 · <a href="https://cloud.google.com/blog/topics/threat-intelligence/shinyhunters-renewed-mass-exploitation-campaign-targeting-oracle-peoplesoft/" target="_blank" rel="noopener noreferrer">↗ original</a></p>
+            <div class="content">
+                <img loading="lazy" referrerpolicy="no-referrer" src="https://storage.googleapis.com/gweb-cloudblog-publish/images/03_ThreatIntelligenceWebsiteBannerIdeas_BA.max-2600x2600.png" alt="">ShinyHunters Renewed Mass Exploitation Campaign Targeting Oracle PeopleSoftMandiant<h3>Introduction<strong>&nbsp;</strong></h3>
 <p>As an update to the June 2026 post, <a target="_blank" href="https://cloud.google.com/blog/topics/threat-intelligence/shinyhunters-targets-education-sector-oracle-exploit?e=48754805" rel="noopener noreferrer">ShinyHunters Targets Education Sector with Oracle PeopleSoft Exploit</a>, Mandiant and Google Threat Intelligence Group (GTIG) have identified renewed mass exploitation of CVE-2026-35273 by UNC6240 (ShinyHunters), along with expanded global targeting across multiple sectors. In June, the threat actor exploited this vulnerability as a zero-day predominantly against academic institutions. This new wave of activity stems from UNC6240 modifying its exploit to bypass web application firewall (WAF) rules blocking the vulnerable Environment Management Hub (PSEMHUB) endpoint.</p><p>The threat actor bypassed these string-based WAF rules by URL-encoding a single character in the request path, requesting </p><code>/%50SEMHUB/</code> in place of <code>/PSEMHUB/</code>. Many WAF and reverse proxy rules match the literal path before URL decoding, while the PeopleSoft application server decodes the request and routes it to the vulnerable servlet. This allows the threat actor to reach the endpoint on systems whose operators may have believed their WAF rules had mitigated the exposure.<p>Our analysis indicates that the threat actor expanded their targeting in this recent campaign, deploying web shells on dozens of systems globally, spanning higher education, technology, IT services, healthcare, agriculture, transportation, and government.</p><p>Mandiant recommends that organizations running Oracle PeopleSoft take the following immediate actions. Additional remediation and hardening guidance is included later in this post.</p><p>Figure 1: Remediation and hardening quick guide</p><h3>Background: From Zero-Day to N-Day</h3><p>In June 2026, we reported a UNC6240 campaign that exploited CVE-2026-35273 as a zero-day between May 27 and June 9, 2026, predominantly against higher education institutions. Oracle released an out-of-band Security Alert on June 10, 2026. Mandiant’s June guidance recommended patching and, where patching or disabling EMHub was not immediately possible, blocking external access to </p><code>/PSEMHUB/*</code> at the perimeter, noting that WAF body-inspection rules alone were insufficient.<p>The current campaign demonstrates that UNC6240 adapted to published defensive guidance, targeting organizations that implemented WAF rules but did not patch the vulnerability.</p><h3>Attack Lifecycle</h3><p>We observed a consistent sequence of events in targeted PeopleSoft environments, progressing from discovery and verification to web shell deployment and hands-on-keyboard activity.</p><h4>Target Verification</h4><p>Before exploitation, targeted servers typically received five to 15 </p><code>POST</code> requests to <code>/%50SEMHUB/hub</code> containing a serialized Java object. Unpatched servers respond with the host operating system without writing files or disrupting the service, allowing the threat actor to quietly confirm exploitability. On hosts that the threat actor validated but did not yet exploit, organizations may see this request in logs, with no follow-on activity.<h4>WAF Bypass</h4><p>All requests addressed the vulnerable servlet through a url-encoded path. </p><code>%50</code> is the encoded form of the character <code>P</code>. WAF and proxy rules that match the literal string <code>/PSEMHUB</code> before decoding do not match <code>/%50SEMHUB/</code>, while WebLogic decodes the path and serves the application normally.<p>Defenders should assume that threat actors may use any percent-encoded, mixed-case, or otherwise non-normalized variant of </p><code>/PSEMHUB/</code>, and should enforce blocking on the normalized path.<p>Figure 2: PSEMHUB WAF bypass</p><h4>Exploitation</h4><p>We observed two exploitation methods, both abusing Java deserialization in the PSEMHUB hub servlet:</p><ul><li>
 <strong>Web shell deployment.</strong>To access web shells behind some load balanced environments, the threat actor sent a burst of multiple<code>POST</code>requests to<code>/%50SEMHUB/hub</code>, followed by the creation of a new JSP files, such as<code>x.jsp</code>, or sequentially numbered JSP files in the<code>PSEMHUB.war</code>directory. The repetition likely ensures that every node behind a load balancer receives a copy of the web shell, so organizations should check all WebLogic nodes, not only the first one identified.</li><li>
 <strong>Fileless command execution.</strong><code>POST</code>requests to<code>/%50SEMHUB/hub</code>that return command output directly in the HTTP response, with no file written to disk. On the host, this appears as shell processes (<code>cmd.exe</code>or<code>/bin/sh</code>) spawned by the WebLogic Java process. Detections that rely on JSP file creation will not identify this method.</li></ul><h3>Post-Exploitation Tooling</h3><h4>Dual Web Shells</h4><p>To establish persistent access and stage follow-on payloads, the threat actor deployed two complementary, single-line JSP web shells into the </p><code>PSEMHUB.war</code> directory. Both shells were designed to minimize web application firewall (WAF) detections during post-exploitation.<p>The primary shell, </p><code>x.jsp</code>, provides cross-platform command execution. Rather than passing cleartext commands in URL query strings, <code>x.jsp</code> accepts hex-encoded commands via HTTP <code>POST</code> (<code>c</code>) along with an optional execution timeout (<code>t</code>). It automatically detects the underlying operating system, spawning <code>cmd.exe</code> on Windows or reconstructing <code>/bin/sh</code> from an ASCII character array on Linux to avoid static string signatures, and returns the process output prefixed with <code>R:</code>.<pre>&lt;%@ page import="java.util.*,java.io.*" %&gt;&lt;%
@@ -730,17 +942,16 @@ tasklist | findstr /i Ple64</pre>
 <p>Data Archiving or Compression via Zstd Utility</p></li><li>
 <p>MeshCentral Command Execution via Meshctrl</p></li></ul><p>Pending deployment in the Mandiant Frontline Threats rule pack:</p><ul><li>
 <p>Oracle PeopleSoft Suspicious File Write to Web Application Archive Directory</p></li></ul><h3>MITRE ATT&amp;CK Mapping</h3><p>Table 3: MITRE ATT&amp;CK</p>
-            
-        </div>
-        <button class="back-btn">[ Back to Menu ]</button>
-        <hr class="separator">
-    </div>
-    
-    <div id="art-8" class="article-body">
-        <h2 class="article-title">AI for Offensive Security: What Works, What Does Not, and How to Adopt It</h2>
-        <p class="source-link">[red-team] SpecterOps · 2026-09-24 | <a href="https://specterops.io/blog/2026/09/24/ai-for-offensive-security/" target="_blank" rel="noopener noreferrer">Original link</a></p>
-        <div class="content">
-            <p>Companies&nbsp;frequently&nbsp;ask&nbsp;SpecterOps&nbsp;some version of the same question:&nbsp;<strong>How are you using AI in offensive security, and how can we begin using it too?</strong>&nbsp;They want practical guidance. Which parts of an assessment are improving now? Where does&nbsp;the technology&nbsp;still fail? What should a team&nbsp;learn or&nbsp;build&nbsp;first?&nbsp;</p>
+                
+            </div>
+            <button type="button" class="back-btn glass">← back to list</button>
+        </article>
+        
+        <article id="art-8" class="view article cat-red-team">
+            <h2 class="article-title" tabindex="-1">AI for Offensive Security: What Works, What Does Not, and How to Adopt It</h2>
+            <p class="meta"><span class="tag">red-team</span> SpecterOps · 2026-09-24 · <a href="https://specterops.io/blog/2026/09/24/ai-for-offensive-security/" target="_blank" rel="noopener noreferrer">↗ original</a></p>
+            <div class="content">
+                <p>Companies&nbsp;frequently&nbsp;ask&nbsp;SpecterOps&nbsp;some version of the same question:&nbsp;<strong>How are you using AI in offensive security, and how can we begin using it too?</strong>&nbsp;They want practical guidance. Which parts of an assessment are improving now? Where does&nbsp;the technology&nbsp;still fail? What should a team&nbsp;learn or&nbsp;build&nbsp;first?&nbsp;</p>
 
 
 
@@ -942,17 +1153,16 @@ tasklist | findstr /i Ple64</pre>
 
 <p>The field is still moving quickly.&nbsp;<a target="_blank" href="https://www.aisi.gov.uk/blog/how-fast-is-autonomous-ai-cyber-capability-advancing" rel="noopener noreferrer">AISI reports</a>&nbsp;that the time horizon of cyber tasks agents can complete is increasing over a period measured in months, while also emphasizing uncertainty and the limits of current ranges.&nbsp;SpecterOps&nbsp;will keep publishing the work, the failures, and the boundaries. That is how we demystify where AI belongs in offensive security without claiming the problem is already solved.&nbsp;Where are you&nbsp;and your teams using AI in your offensive security workflows?&nbsp;Join&nbsp;our&nbsp;<a target="_blank" href="http://slack.specterops.io/" rel="noopener noreferrer">Slack community</a>&nbsp;to continue the conversation&nbsp;in&nbsp;the #deepthought channel.&nbsp;&nbsp;</p>
 <p>The post <a target="_blank" href="https://specterops.io/blog/2026/09/24/ai-for-offensive-security/" rel="noopener noreferrer">AI for Offensive Security: What Works, What Does Not, and How to Adopt It&nbsp;</a> appeared first on <a target="_blank" href="https://specterops.io" rel="noopener noreferrer">SpecterOps</a>.</p>
-            
-        </div>
-        <button class="back-btn">[ Back to Menu ]</button>
-        <hr class="separator">
-    </div>
-    
-    <div id="art-9" class="article-body">
-        <h2 class="article-title">Is This A Joke? In The Auth Header? (F5 BIG-IP UnAuth Heap-Overflow to RCE CVE-2026-94127)</h2>
-        <p class="source-link">[red-team] watchTowr Labs · 2026-09-23 | <a href="https://labs.watchtowr.com/is-this-a-joke-in-the-auth-header-f5-big-ip-unauth-heap-overflow-to-rce-cve-2026-94127/" target="_blank" rel="noopener noreferrer">Original link</a></p>
-        <div class="content">
-            <img loading="lazy" referrerpolicy="no-referrer" alt="Is This A Joke? In The Auth Header? (F5 BIG-IP UnAuth Heap-Overflow to RCE CVE-2026-94127)" src="https://storage.ghost.io/c/a0/dc/a0dcbbe4-0ae7-4d7e-90f7-ebbc3a0f5a84/content/images/2026/09/1.png"><p>Well, well, well, well, well, well, well, well, well, well, well, well, well, well, well. We're back. Sorry.</p><figure><img loading="lazy" referrerpolicy="no-referrer" alt="Is This A Joke? In The Auth Header? (F5 BIG-IP UnAuth Heap-Overflow to RCE CVE-2026-94127)" src="https://storage.ghost.io/c/a0/dc/a0dcbbe4-0ae7-4d7e-90f7-ebbc3a0f5a84/content/images/2026/09/image.png"></figure><p>We've been watching the onslaught of vulnerabilities flood the internet. Every man, dog, <strong>and</strong> their grandmas (apparently?) are now using LLMs to find and reproduce vulnerabilities - it’s a free-for-all (unless you’re trying to buy RAM).</p><p>Unfortunately, while we're all finding more vulnerabilities and flexing obfuscated stack traces…</p><blockquote>(or emoji-ridden HTTP requests that are actually complete slop and not real, and please, for the love of god, no, those slop-ridden payloads appearing in your access_log are not proof of exploitation jesus wept, it’s becoming traumatic)</blockquote><p>…on many social media networks, some things have remained reassuringly steadfast: the vendors and their struggle to seemingly care about the security of your network.</p><p><strong>Yes, that’s right - it’s time for more Secure by Design jokes. Welcome back to another watchTowr Labs blog post.</strong></p><p>We’ve missed you (admit you’ve missed us, please).</p><figure><img loading="lazy" referrerpolicy="no-referrer" alt="Is This A Joke? In The Auth Header? (F5 BIG-IP UnAuth Heap-Overflow to RCE CVE-2026-94127)" src="https://storage.ghost.io/c/a0/dc/a0dcbbe4-0ae7-4d7e-90f7-ebbc3a0f5a84/content/images/2026/09/image-1.png"></figure><p>You’ve guessed it - we’re looking at F5’s BIG-IP solution today.</p><h3>What Is CVE-2026-94127, and How Does Refresh Have A CVE?</h3><p>Hah.</p><p>F5, the Seattle-based vendor quietly responsible for a worrying amount of the internet's plumbing, makes BIG-IP: an application delivery controller (ADC) that sits in front of your applications and decides where every request goes.</p><p>Beyond basic load balancing, a typical BIG-IP deployment handles Layer 4 and Layer 7 traffic management, SSL/TLS offloading, DNS and global server load balancing, and, depending on how many licenses procurement signed off on, a web application firewall (Advanced WAF) and a remote access and SSO gateway (APM).</p><p>All of this runs on F5's own TMOS operating system and is administered through a web-based Configuration Utility (TMUI) and the iControl REST API.</p><p>In other words, it lives at the very edge of your network, terminates your TLS, sees all of your traffic in plaintext, and holds the keys to your authentication.</p><p>But what is CVE-2026-94127?</p><p>As with all good stories, it began with a new KB ID. On Sept 22nd (yesterday), F5 published the following advisory:</p><figure><img loading="lazy" referrerpolicy="no-referrer" alt="Is This A Joke? In The Auth Header? (F5 BIG-IP UnAuth Heap-Overflow to RCE CVE-2026-94127)" src="https://storage.ghost.io/c/a0/dc/a0dcbbe4-0ae7-4d7e-90f7-ebbc3a0f5a84/content/images/2026/09/image-2.png"></figure><p>Despite the talk about planes, there was no flying (see! you’ve missed this humor!).</p><p>The F5 <a target="_blank" href="https://my.f5.com/manage/s/article/K000162605?ref=labs.watchtowr.com" rel="noopener noreferrer">official advisory (K000162605)</a> lists the following versions as affected:</p>
+                
+            </div>
+            <button type="button" class="back-btn glass">← back to list</button>
+        </article>
+        
+        <article id="art-9" class="view article cat-red-team">
+            <h2 class="article-title" tabindex="-1">Is This A Joke? In The Auth Header? (F5 BIG-IP UnAuth Heap-Overflow to RCE CVE-2026-94127)</h2>
+            <p class="meta"><span class="tag">red-team</span> watchTowr Labs · 2026-09-23 · <a href="https://labs.watchtowr.com/is-this-a-joke-in-the-auth-header-f5-big-ip-unauth-heap-overflow-to-rce-cve-2026-94127/" target="_blank" rel="noopener noreferrer">↗ original</a></p>
+            <div class="content">
+                <img loading="lazy" referrerpolicy="no-referrer" alt="Is This A Joke? In The Auth Header? (F5 BIG-IP UnAuth Heap-Overflow to RCE CVE-2026-94127)" src="https://storage.ghost.io/c/a0/dc/a0dcbbe4-0ae7-4d7e-90f7-ebbc3a0f5a84/content/images/2026/09/1.png"><p>Well, well, well, well, well, well, well, well, well, well, well, well, well, well, well. We're back. Sorry.</p><figure><img loading="lazy" referrerpolicy="no-referrer" alt="Is This A Joke? In The Auth Header? (F5 BIG-IP UnAuth Heap-Overflow to RCE CVE-2026-94127)" src="https://storage.ghost.io/c/a0/dc/a0dcbbe4-0ae7-4d7e-90f7-ebbc3a0f5a84/content/images/2026/09/image.png"></figure><p>We've been watching the onslaught of vulnerabilities flood the internet. Every man, dog, <strong>and</strong> their grandmas (apparently?) are now using LLMs to find and reproduce vulnerabilities - it’s a free-for-all (unless you’re trying to buy RAM).</p><p>Unfortunately, while we're all finding more vulnerabilities and flexing obfuscated stack traces…</p><blockquote>(or emoji-ridden HTTP requests that are actually complete slop and not real, and please, for the love of god, no, those slop-ridden payloads appearing in your access_log are not proof of exploitation jesus wept, it’s becoming traumatic)</blockquote><p>…on many social media networks, some things have remained reassuringly steadfast: the vendors and their struggle to seemingly care about the security of your network.</p><p><strong>Yes, that’s right - it’s time for more Secure by Design jokes. Welcome back to another watchTowr Labs blog post.</strong></p><p>We’ve missed you (admit you’ve missed us, please).</p><figure><img loading="lazy" referrerpolicy="no-referrer" alt="Is This A Joke? In The Auth Header? (F5 BIG-IP UnAuth Heap-Overflow to RCE CVE-2026-94127)" src="https://storage.ghost.io/c/a0/dc/a0dcbbe4-0ae7-4d7e-90f7-ebbc3a0f5a84/content/images/2026/09/image-1.png"></figure><p>You’ve guessed it - we’re looking at F5’s BIG-IP solution today.</p><h3>What Is CVE-2026-94127, and How Does Refresh Have A CVE?</h3><p>Hah.</p><p>F5, the Seattle-based vendor quietly responsible for a worrying amount of the internet's plumbing, makes BIG-IP: an application delivery controller (ADC) that sits in front of your applications and decides where every request goes.</p><p>Beyond basic load balancing, a typical BIG-IP deployment handles Layer 4 and Layer 7 traffic management, SSL/TLS offloading, DNS and global server load balancing, and, depending on how many licenses procurement signed off on, a web application firewall (Advanced WAF) and a remote access and SSO gateway (APM).</p><p>All of this runs on F5's own TMOS operating system and is administered through a web-based Configuration Utility (TMUI) and the iControl REST API.</p><p>In other words, it lives at the very edge of your network, terminates your TLS, sees all of your traffic in plaintext, and holds the keys to your authentication.</p><p>But what is CVE-2026-94127?</p><p>As with all good stories, it began with a new KB ID. On Sept 22nd (yesterday), F5 published the following advisory:</p><figure><img loading="lazy" referrerpolicy="no-referrer" alt="Is This A Joke? In The Auth Header? (F5 BIG-IP UnAuth Heap-Overflow to RCE CVE-2026-94127)" src="https://storage.ghost.io/c/a0/dc/a0dcbbe4-0ae7-4d7e-90f7-ebbc3a0f5a84/content/images/2026/09/image-2.png"></figure><p>Despite the talk about planes, there was no flying (see! you’ve missed this humor!).</p><p>The F5 <a target="_blank" href="https://my.f5.com/manage/s/article/K000162605?ref=labs.watchtowr.com" rel="noopener noreferrer">official advisory (K000162605)</a> lists the following versions as affected:</p>
 
 <div class="table-wrap"><table>
 <thead>
@@ -1179,27 +1389,187 @@ write(fd, "/usr/bin/touch /watchTowr.txt;", 30);
             
             
         </figure><p>It is 2026, AGI is here, and we are still writing overflow 101 vulnerability analyses.</p>
-            
+                
+            </div>
+            <button type="button" class="back-btn glass">← back to list</button>
+        </article>
+        
+    </main>
+
+    <dialog class="palette glass liquid" aria-label="Search articles">
+        <div class="pal-inner">
+            <div class="pal-input">
+                <span class="ps" aria-hidden="true">&gt;</span>
+                <input type="text" placeholder="search titles, sources, categories…" autocomplete="off" spellcheck="false"
+                       role="combobox" aria-expanded="true" aria-controls="pal-list" aria-label="Search articles">
+            </div>
+            <ul id="pal-list" class="pal-list" role="listbox"></ul>
+            <div class="pal-foot"><kbd>↑</kbd><kbd>↓</kbd> select · <kbd>⏎</kbd> open · <kbd>esc</kbd> close</div>
         </div>
-        <button class="back-btn">[ Back to Menu ]</button>
-        <hr class="separator">
-    </div>
-    
-    <script>
-        document.querySelectorAll('.menu button').forEach(btn => btn.addEventListener('click', () => {
-            document.querySelectorAll('.article-body').forEach(el => el.classList.remove('active'));
-            const target = document.getElementById(btn.dataset.target);
-            target.classList.add('active');
-            target.scrollIntoView({behavior: 'smooth'});
-        }));
-        document.querySelectorAll('.back-btn').forEach(btn => btn.addEventListener('click', () => window.scrollTo(0, 0)));
-    </script>
-    <footer>
+    </dialog>
+
+    <footer class="credits">
         <p>News aggregator designed and maintained by <a href="https://github.com/KleinMichalGit/security-feed" target="_blank" rel="noopener noreferrer">Michal Klein</a></p>
         <div class="disclaimer">
             <p>This is an <strong>open-source educational project</strong> intended for research and personal productivity. The aggregator is available on <a href="https://github.com/KleinMichalGit/security-feed" target="_blank" rel="noopener noreferrer">GitHub</a>.</p>
             <p><em>Notice: The articles above are automated scrapes from third-party RSS feeds. Full credit belongs to the original authors and publications linked in each source. This site does not claim ownership of the reported content.</em></p>
         </div>
     </footer>
+
+    <script>
+    (() => {
+        const $ = (s, root = document) => root.querySelector(s);
+        const $$ = (s, root = document) => [...root.querySelectorAll(s)];
+        const items = $$('.list li');
+        const articles = $$('.article');
+        const baseTitle = document.title;
+        const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+        const present = new Set(items.map(li => li.dataset.category));
+        const cats = [...new Set(['news', 'threat-intel', 'red-team', ...present])].filter(c => present.has(c));
+
+        // --- Filter: clicking a category tag shows only that category ---------
+        const clear = $('.filter-clear');
+        let only = null;
+
+        function setFilter(cat) {
+            only = cat === only ? null : cat;
+            items.forEach(li => li.hidden = only !== null && li.dataset.category !== only);
+            $('.empty').hidden = items.some(li => !li.hidden);
+            clear.hidden = only === null;
+            if (only !== null) {
+                clear.className = `tag filter-clear cat-${only}`;
+                clear.innerHTML = '';
+                clear.append(only, Object.assign(document.createElement('span'), { className: 'x', textContent: '×' }));
+                clear.title = 'Show all categories';
+            }
+        }
+        $$('.list button.tag').forEach(b => b.addEventListener('click', () => setFilter(b.dataset.cat)));
+        clear.addEventListener('click', () => setFilter(only));
+
+        // --- Hash routing: #art-N shows one article, empty hash shows the list ---
+        let listScroll = 0, lastOpened = null, openedFromList = false;
+
+        function route(animate = true) {
+            const id = location.hash.slice(1);
+            const art = /^art-\d+$/.test(id) ? document.getElementById(id) : null;
+            const wasReading = document.body.classList.contains('reading');
+            if (art && !wasReading) listScroll = scrollY;
+            if (!art) openedFromList = false;
+
+            const swap = () => {
+                articles.forEach(a => a.classList.toggle('active', a === art));
+                document.body.classList.toggle('reading', !!art);
+                document.title = art ? `${$('.article-title', art).textContent} · Security Briefing` : baseTitle;
+                if (art) { lastOpened = id; scrollTo(0, 0); }
+                else scrollTo(0, listScroll);
+            };
+            const focus = () => {
+                if (art) $('.article-title', art).focus({ preventScroll: true });
+                else if (lastOpened) $(`.row[href="#${lastOpened}"]`)?.focus({ preventScroll: true });
+            };
+            if (animate && document.startViewTransition && !reduceMotion.matches && !!art !== wasReading) {
+                document.startViewTransition(swap).updateCallbackDone.then(focus);
+            } else { swap(); focus(); }
+        }
+
+        function goHome() {
+            if (openedFromList) history.back();
+            else { history.replaceState(null, '', location.pathname + location.search); route(); }
+        }
+
+        addEventListener('hashchange', () => {
+            if (/^#art-\d+$/.test(location.hash) && !document.body.classList.contains('reading')) openedFromList = true;
+            route();
+        });
+        $$('.back-btn').forEach(b => b.addEventListener('click', goHome));
+        route(false);
+
+        // --- Command palette ---------------------------------------------------
+        const pal = $('dialog.palette');
+        const input = $('input', pal);
+        const list = $('#pal-list');
+        const entries = items.map(li => ({
+            href: $('.row', li).getAttribute('href'),
+            title: $('.row', li).textContent,
+            meta: $('.meta', li).textContent.replace(/\s+/g, ' ').trim(),
+            search: li.dataset.search,
+            cat: li.dataset.category,
+        }));
+        let hits = [], sel = 0;
+
+        function renderPalette() {
+            const terms = input.value.toLowerCase().split(/\s+/).filter(Boolean);
+            hits = entries.filter(e => terms.every(t => e.search.includes(t)));
+            list.replaceChildren(...hits.map((e, i) => {
+                const li = document.createElement('li');
+                li.id = `pal-${i}`;
+                li.setAttribute('role', 'option');
+                li.className = `cat-${e.cat}`;
+                const t = document.createElement('span'); t.className = 'title'; t.textContent = e.title;
+                const m = document.createElement('span'); m.className = 'meta'; m.textContent = e.meta;
+                li.append(t, m);
+                li.addEventListener('click', () => pick(i));
+                li.addEventListener('mousemove', () => sel !== i && select(i));
+                return li;
+            }));
+            if (!hits.length) {
+                const li = document.createElement('li');
+                li.className = 'none'; li.textContent = 'No matching articles.';
+                list.append(li);
+            }
+            select(0);
+        }
+        function select(i) {
+            sel = i;
+            [...list.children].forEach((c, j) => c.id && c.setAttribute('aria-selected', j === i));
+            list.children[i]?.scrollIntoView({ block: 'nearest' });
+            if (hits.length) input.setAttribute('aria-activedescendant', `pal-${i}`);
+            else input.removeAttribute('aria-activedescendant');
+        }
+        function pick(i) {
+            if (!hits[i]) return;
+            pal.close();
+            location.hash = hits[i].href;
+        }
+        function openPalette() {
+            input.value = '';
+            renderPalette();
+            pal.showModal();
+            input.focus();
+        }
+        input.addEventListener('input', renderPalette);
+        input.addEventListener('keydown', e => {
+            if (e.key === 'ArrowDown') { e.preventDefault(); if (hits.length) select((sel + 1) % hits.length); }
+            else if (e.key === 'ArrowUp') { e.preventDefault(); if (hits.length) select((sel - 1 + hits.length) % hits.length); }
+            else if (e.key === 'Enter') { e.preventDefault(); pick(sel); }
+        });
+        pal.addEventListener('click', e => { if (e.target === pal) pal.close(); });
+        $('.palette-btn').addEventListener('click', openPalette);
+
+        // --- Keyboard navigation ----------------------------------------------
+        document.addEventListener('keydown', e => {
+            if (pal.open || e.target.matches('input, textarea, select')) return;
+            const k = e.key;
+            if (((e.ctrlKey || e.metaKey) && k.toLowerCase() === 'k') || k === '/') {
+                e.preventDefault(); openPalette(); return;
+            }
+            if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+            if (document.body.classList.contains('reading')) {
+                if (k === 'Escape' || k === 'q' || k === 'Backspace') { e.preventDefault(); goHome(); }
+                else if (k === 'g') scrollTo(0, 0);
+                else if (k === 'G') scrollTo(0, document.documentElement.scrollHeight);
+                return;
+            }
+            const rows = items.filter(li => !li.hidden).map(li => $('.row', li));
+            const i = rows.indexOf(document.activeElement);
+            if (k === 'j' || k === 'ArrowDown') { e.preventDefault(); rows[Math.min(i + 1, rows.length - 1)]?.focus(); }
+            else if (k === 'k' || k === 'ArrowUp') { e.preventDefault(); rows[Math.max(i - 1, 0)]?.focus(); }
+            else if (k === 'o' && i >= 0) rows[i].click();
+            else if (k === 'Escape' && only !== null) setFilter(only);
+            else if (/^[1-9]$/.test(k) && cats[k - 1]) setFilter(cats[k - 1]);
+        });
+    })();
+    </script>
 </body>
 </html>
