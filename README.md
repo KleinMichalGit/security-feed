@@ -1,56 +1,27 @@
 # Security Briefing Aggregator
 
-An automated, open-source security intelligence feed that scrapes, scores, and balances news from top-tier cybersecurity sources. Designed to provide a focused daily briefing, it prevents brain fatigue by limiting context switching and providing an ad-free reading experience.
+A daily page of 10 cybersecurity articles, picked from 28 RSS feeds covering news, threat intelligence and offensive security research. Each article is shown in full on the page, without ads or cookie banners. A GitHub Actions job rebuilds the page every morning, and an article that has been shown once is not shown again.
 
-The live feed is hosted at: https://kleinmichalgit.github.io/security-feed/
+Live page: https://kleinmichalgit.github.io/security-feed/
 
-## Key Features
+## Installation and local use
 
-- **Balanced Selection**: Uses a Round-Robin approach to ensure independent research blogs aren't buried by high-frequency news sites.
-- **Smart Scoring**: Prioritizes content based on freshness, cross-feed trending topics, and high-impact keywords.
-- **Deep Extraction**: Employs Playwright and Trafilatura to scrape actual article text, bypassing cookie walls for a unified reading experience.
-- **Terminal UI**: High-contrast design optimized for desktop and mobile.
-- **Automated**: Powered by GitHub Actions for daily updates at 06:17AM UTC.
-
-## Tech Stack
-
-- **Python 3.10**: Core logic and scoring.
-- **Playwright**: Headless browser automation.
-- **Feedparser**: RSS/Atom processing.
-- **Trafilatura**: Content extraction.
-- **GitHub Actions**: Scheduled execution and deployment.
-
-## Installation and Local Use
-
-### 1. Clone the Repository
+Requires Python 3.12.
 
 ```bash
-git clone https://github.com/KleinMichalGit/security-feed.git
-cd security-feed
-```
-
-### 2. Install Dependencies
-
-```bash
-pip install -r requirements.txt
+pip install -r requirements.txt pytest
 playwright install chromium
 ```
 
-### 3. Generate the Feed
+| Command                                | What it does                                                            |
+| -------------------------------------- | ----------------------------------------------------------------------- |
+| `python aggregator.py`                 | Builds `index.html` and records the shown articles in `data/state.json` |
+| `python aggregator.py --no-state`      | Builds `index.html` without reading or writing the state file           |
+| `python aggregator.py --limit 15`      | Changes the number of articles                                          |
+| `python aggregator.py --check-sources` | Checks every feed and exits non-zero if any fails                       |
+| `pytest`                               | Runs the tests in `tests/`                                              |
 
-```bash
-python aggregator.py
-```
-
-## GitHub Actions Workflow
-
-The `.github/workflows/daily_update.yml` script automates the process:
-
-1. **Triggers**: Runs daily at 06:17AM UTC or manually.
-2. **Execution**: Installs Chromium and runs `aggregator.py`.
-3. **Deployment**: Commits the new `index.html` to the `master` branch.
-
-## Disclaimer and Legal
+## Disclaimer and legal
 
 This is an open-source educational non-commercial project.
 

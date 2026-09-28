@@ -1,221 +1,168 @@
-import feedparser
-import datetime
-import time
-import collections
-from playwright.sync_api import sync_playwright
-import trafilatura
+"""Builds index.html: fetch feeds -> select articles -> extract bodies -> render -> save state."""
+import argparse
+import calendar
+import os
+import re
+from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime, timedelta, timezone
 
-# --- CONFIGURATION ---
-SOURCES = [
-    "https://thehackernews.com/rss.xml",
-    "https://krebsonsecurity.com/feed/",
-    "https://www.bleepingcomputer.com/feed/",
-    "https://www.cisa.gov/cybersecurity-advisories/all.xml",
-    "https://www.microsoft.com/en-us/security/blog/feed/",    
-    "https://trustedsec.com/feed.rss",
-    "https://specterops.io/blog/category/research/feed/",
-    "https://cloudblog.withgoogle.com/topics/threat-intelligence/rss/"
-]
+import feedparser
+import requests
+from jinja2 import Environment, FileSystemLoader
+
+import state as state_store
+from extract import USER_AGENT, PageFetcher, article_body, text_length
+from selection import normalize_url, select
+from sources import SOURCES
 
 LIMIT = 10
 OUTPUT_FILE = "index.html"
+TEMPLATE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates")
+FEED_TIMEOUT = 20
+# SANS ISC appends the date to titles: "Wireshark 4.6.9 Released, (Sun, Sep 27th)"
+_DATE_SUFFIX = re.compile(r",?\s*\((Mon|Tue|Wed|Thu|Fri|Sat|Sun), \w{3} \d{1,2}(st|nd|rd|th)\)$")
 
-def fetch_full_text_with_browser(url):
-    """Opens a headless browser, waits for content, and extracts it."""
+
+def fetch_feed(source):
+    """Download and parse one feed. Returns (source, parsed feed or None, error)."""
     try:
-        with sync_playwright() as p:
-            browser = p.chromium.launch(headless=True)
-            context = browser.new_context(
-                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
-            )
-            page = context.new_page()
-            page.goto(url, wait_until="networkidle", timeout=30000)
-            time.sleep(2) 
-            html = page.content()
-            browser.close()
-            content = trafilatura.extract(html, include_links=True)
-            return content
+        resp = requests.get(source["url"], headers={"User-Agent": USER_AGENT}, timeout=FEED_TIMEOUT)
+        resp.raise_for_status()
+        feed = feedparser.parse(resp.content)
+        if not feed.entries and feed.bozo:
+            return source, None, str(feed.bozo_exception)
+        return source, feed, None
     except Exception as e:
-        print(f"  [!] Error fetching {url}: {e}")
+        return source, None, str(e)
+
+
+def fetch_all():
+    with ThreadPoolExecutor(max_workers=12) as ex:
+        return list(ex.map(fetch_feed, SOURCES))
+
+
+def entry_date(entry):
+    parsed = entry.get("published_parsed") or entry.get("updated_parsed")
+    if not parsed:
         return None
+    try:
+        return datetime.fromtimestamp(calendar.timegm(parsed), timezone.utc)
+    except (OverflowError, OSError, ValueError):
+        return None  # nonsense dates such as year 0 are treated as missing
 
-def calculate_score(entry, all_titles):
-    """Ranks articles based on Freshness and 'Popularity' Proxy."""
-    score = 0
-    # 1. Freshness (Newer = Higher Score)
-    hours_old = (datetime.datetime.now() - entry['date']).total_seconds() / 3600
-    score += max(0, 100 - hours_old) 
 
-    # 2. Popularity Proxy (Is this trending across other feeds?)
-    for other_title in all_titles:
-        if entry['title'] != other_title:
-            common_words = set(entry['title'].lower().split()) & set(other_title.lower().split())
-            if len(common_words) > 3: 
-                score += 25
-    
-    # 3. High-Value Keyword Bonus
-    keywords = ['zero-day', 'exploit', 'critical', 'vulnerability', 'ransomware', 'breach']
-    if any(k in entry['title'].lower() for k in keywords):
-        score += 20
+def entry_content(entry):
+    contents = entry.get("content") or []
+    return max((c.get("value", "") for c in contents), key=len, default="")
 
-    return score
 
-def generate_site():
-    print("Step 1: Fetching and Balancing Sources...")
-    source_buckets = collections.defaultdict(list)
-    all_titles = []
+def collect_items(results, state, now):
+    """Turn feed entries into items. Undated entries get the time they first appeared."""
+    bootstrap = not state
+    items = []
+    for source, feed, error in results:
+        if error:
+            print(f"  [!] {source['name']}: {error}")
+            continue
+        exclude = re.compile(source["exclude"], re.I) if source.get("exclude") else None
+        for entry in feed.entries:
+            link = entry.get("link")
+            title = _DATE_SUFFIX.sub("", (entry.get("title") or "").strip())
+            if not link or not title or (exclude and exclude.search(title)):
+                continue
+            date = entry_date(entry)
+            if date and date > now + timedelta(days=1):
+                continue  # announcements of future events, not news
+            if date is None:
+                if bootstrap:
+                    # First run: no way to tell old undated posts from new ones, so record
+                    # them as old and skip them.
+                    state_store.first_seen(state, normalize_url(link), now, first=now - timedelta(days=30))
+                    continue
+                date = state_store.first_seen(state, normalize_url(link), now)
+            items.append({
+                "title": title,
+                "link": link,
+                "date": min(date, now),
+                "summary": entry.get("summary", ""),
+                "content": entry_content(entry),
+                "source": source["name"],
+                "category": source["category"],
+                "weight": source.get("weight", 1.0),
+            })
+    return items
 
-    for url in SOURCES:
-        try:
-            feed = feedparser.parse(url)
-            # Get clean source name from feed or URL
-            source_name = feed.feed.get('title', url.split('/')[2])
-            for entry in feed.entries:
-                p_time = entry.get('published_parsed', entry.get('updated_parsed'))
-                dt = datetime.datetime.fromtimestamp(time.mktime(p_time)) if p_time else datetime.datetime.min
-                
-                item = {
-                    'title': entry.title, 
-                    'link': entry.link, 
-                    'date': dt, 
-                    'summary': entry.get('summary', ''),
-                    'source': source_name
-                }
-                source_buckets[source_name].append(item)
-                all_titles.append(entry.title)
-        except Exception as e:
-            print(f"  [!] Failed to parse {url}: {e}")
 
-    # Step 2: Smart Selection (Round-Robin)
-    selected_articles = []
-    for name in source_buckets:
-        source_buckets[name].sort(key=lambda x: calculate_score(x, all_titles), reverse=True)
+def check_sources():
+    ok = True
+    for source, feed, error in fetch_all():
+        if error:
+            ok = False
+            print(f"FAIL  {source['name']:<28} {error[:80]}")
+            continue
+        dates = [d for d in map(entry_date, feed.entries) if d]
+        newest = max(dates).strftime("%Y-%m-%d") if dates else "no dates"
+        full = sum(1 for e in feed.entries if text_length(entry_content(e)) >= 1500)
+        print(f"ok    {source['name']:<28} {len(feed.entries):3d} entries  newest {newest}  "
+              f"full-text {full}/{len(feed.entries)}")
+    return ok
 
-    while len(selected_articles) < LIMIT and any(source_buckets.values()):
-        for name in list(source_buckets.keys()):
-            if source_buckets[name]:
-                selected_articles.append(source_buckets[name].pop(0))
-            if len(selected_articles) == LIMIT:
-                break
 
-    # Final sort by date for display
-    selected_articles.sort(key=lambda x: x['date'], reverse=True)
+def render(articles, now):
+    env = Environment(loader=FileSystemLoader(TEMPLATE_DIR), autoescape=True)
+    html = env.get_template("index.html.j2").render(articles=articles, generated=now.date().isoformat())
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+        f.write(html)
 
-    article_html = ""
-    menu_html = ""
 
-    print(f"Step 2: Deep-Scraping {len(selected_articles)} Balanced Articles...")
+def generate_site(limit, use_state):
+    now = datetime.now(timezone.utc)
+    state = state_store.load() if use_state else {}
 
-    for i, item in enumerate(selected_articles):
-        print(f"[{i+1}/10] From {item['source']}: {item['title'][:40]}...")
-        full_text = fetch_full_text_with_browser(item['link'])
-        
-        if full_text and len(full_text) > 400:
-            final_body = full_text
-        else:
-            final_body = item['summary'] + "\n\n[Full content could not be extracted. Visit source for details.]"
-        
-        art_id = f"art-{i}"
-        menu_html += f"<li><button onclick=\"show('{art_id}')\">{item['title']}</button></li>"
-        article_html += f"""
-        <div id="{art_id}" class="article-body">
-            <h2 class="article-title">{item['title']}</h2>
-            <p class="source-link">Source: {item['source']} | <a href="{item['link']}" target="_blank">Original Link</a></p>
-            <div class="content-text">{final_body}</div>
-            <br>
-            <button class="back-btn" onclick="window.scrollTo(0,0)">[ Back to Menu ]</button>
-            <hr class="separator">
-        </div>"""
+    print("Step 1: Fetching feeds...")
+    items = collect_items(fetch_all(), state, now)
+    print(f"  {len(items)} entries from {len({i['source'] for i in items})} sources")
 
-    # Final HTML Construction
-    full_page = f"""
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Daily Security Briefing</title>
-        <style>
-            body {{ 
-                background-color: #012456; 
-                color: #F2F2F2; 
-                font-family: 'Consolas', 'Lucida Console', monospace; 
-                padding: 20px; 
-                line-height: 1.6; 
-                max-width: 1000px; 
-                margin: auto; 
-            }}
-            h1 {{ color: #FFFFFF; font-size: 1.4em; border-bottom: 2px solid #F2F2F2; padding-bottom: 10px; margin-bottom: 30px; }}
-            .menu {{ margin-bottom: 40px; }}
-            ul {{ list-style-type: decimal-leading-zero; padding-left: 25px; }}
-            li {{ margin-bottom: 12px; color: #EBCB8B; }}
-            button {{ 
-                background: none; border: none; color: #F2F2F2; 
-                text-align: left; cursor: pointer; font-family: inherit; 
-                font-size: 1.05em; padding: 0;
-            }}
-            button:hover {{ color: #FFFF00; text-decoration: underline; }}
-            .article-body {{ display: none; margin-top: 20px; }}
-            .article-title {{ color: #FFFFFF; font-size: 1.3em; margin-bottom: 5px; }}
-            .source-link {{ color: #A3BE8C; font-size: 0.9em; }}
-            .source-link a {{ color: #A3BE8C; text-decoration: none; }}
-            .source-link a:hover {{ text-decoration: underline; }}
-            .content-text {{ 
-                white-space: pre-wrap; 
-                padding: 15px 0;
-                font-size: 1em;
-                border-top: 1px solid #4C566A;
-                margin-top: 15px;
-            }}
-            .back-btn {{ color: #FFFF00; border: 1px solid #FFFF00; padding: 6px 12px; margin-top: 15px; transition: 0.2s; }}
-            .back-btn:hover {{ background: #FFFF00; color: #012456; }}
-            .separator {{ border: 0; border-top: 1px dashed #4C566A; margin: 50px 0; }}
-            .active {{ display: block; }}
-            footer {{ 
-                text-align: center; 
-                margin-top: 60px; 
-                padding: 30px; 
-                border-top: 1px solid #4C566A; 
-                font-size: 0.85em; 
-                color: #A3BE8C;
-            }}
-            footer a {{ color: #A3BE8C; text-decoration: underline; }}
-            .disclaimer {{ opacity: 0.8; font-size: 0.9em; max-width: 700px; margin: 15px auto; line-height: 1.4; }}
-            @media (max-width: 600px) {{
-                body {{ padding: 15px; font-size: 15px; }}
-                h1 {{ font-size: 1.2em; }}
-                ul {{ padding-left: 20px; }}
-            }}
-        </style>
-    </head>
-    <body>
-        <h1>Security Briefing // {datetime.date.today()}</h1>
-        <div class="menu">
-            <ul>{menu_html}</ul>
-        </div>
-        {article_html}
-        <script>
-            function show(id) {{
-                document.querySelectorAll('.article-body').forEach(el => el.classList.remove('active'));
-                const target = document.getElementById(id);
-                target.classList.add('active');
-                target.scrollIntoView({{behavior: 'smooth'}});
-            }}
-        </script>
-        <footer>
-            <p>News aggregator designed and maintained by <a href="https://github.com/KleinMichalGit/security-feed" target="_blank">Michal Klein</a></p>
-            <div class="disclaimer">
-                <p>This is an <strong>open-source educational project</strong> intended for research and personal productivity. The aggregator is available on <a href="https://github.com/KleinMichalGit/security-feed" target="_blank">GitHub</a>.</p>
-                <p><em>Notice: The articles above are automated scrapes from third-party RSS feeds. Full credit belongs to the original authors and publications linked in each source. This site does not claim ownership of the reported content.</em></p>
-            </div>
-        </footer>
-    </body>
-    </html>
-    """
-    
-    with open(OUTPUT_FILE, "w", encoding='utf-8') as f:
-        f.write(full_page)
-    print(f"\nSuccess! index.html generated with balanced sources.")
+    picked = select(items, state_store.shown_urls(state), limit, now)
+    if len(picked) < limit:
+        print(f"  [!] Only {len(picked)} unseen articles in the last 14 days")
+
+    print(f"Step 2: Extracting {len(picked)} articles...")
+    articles = []
+    with PageFetcher() as fetcher:
+        for n, choice in enumerate(picked, 1):
+            item = choice["item"]
+            body, origin = article_body(item, fetcher)
+            print(f"[{n}/{len(picked)}] {item['source']}: {item['title'][:60]} "
+                  f"(score {choice['score']:.2f}, from {origin})")
+            also = sorted({m["source"] for m in choice["members"]} - {item["source"]})
+            articles.append({
+                **item,
+                "date": item["date"].strftime("%Y-%m-%d"),
+                "body": body,
+                "origin": origin,
+                "also": also,
+            })
+
+    render(articles, now)
+    if use_state:
+        state_store.mark_shown(
+            state, [normalize_url(m["link"]) for c in picked for m in c["members"]], now)
+        state_store.save(state, now)
+    print(f"\nWrote {OUTPUT_FILE} with {len(articles)} articles.")
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--check-sources", action="store_true", help="fetch every feed and report its status")
+    parser.add_argument("--no-state", action="store_true",
+                        help="ignore data/state.json and do not mark articles as shown (dry run)")
+    parser.add_argument("--limit", type=int, default=LIMIT, help=f"number of articles (default {LIMIT})")
+    args = parser.parse_args()
+    if args.check_sources:
+        raise SystemExit(0 if check_sources() else 1)
+    generate_site(args.limit, use_state=not args.no_state)
+
 
 if __name__ == "__main__":
-    generate_site()
+    main()
